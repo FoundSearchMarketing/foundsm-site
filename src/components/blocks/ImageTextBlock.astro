@@ -1,0 +1,41 @@
+---
+interface Props {
+  image: string;
+  heading?: string;
+  body?: any[];
+  ctaText?: string;
+  ctaUrl?: string;
+  imagePosition?: 'left' | 'right';
+  theme?: 'light' | 'dark';
+}
+
+const { image, heading, body = [], ctaText, ctaUrl, imagePosition = 'left', theme = 'light' } = Astro.props;
+const isDark = theme === 'dark';
+const isReversed = imagePosition === 'right';
+---
+
+<section class={`section ${isDark ? 'section--dark' : ''}`} aria-label={heading || 'Content'}>
+  <div class="container">
+    <div class={`outcomes__grid ${isReversed ? 'lp-img-text--reversed' : ''}`}>
+      <div class="outcomes__image fade-in-up">
+        <img src={image} alt={heading || ''} loading="lazy" width="600" height="450" />
+      </div>
+      <div class="outcomes__content fade-in-up">
+        {heading && <h2 class="outcomes__headline">{heading}</h2>}
+        {body.map((block: any) => {
+          if (block._type === 'block') {
+            const text = block.children?.map((child: any) => child.text).join('') || '';
+            return <p class="outcomes__description">{text}</p>;
+          }
+          return null;
+        })}
+        {ctaText && ctaUrl && (
+          <a href={ctaUrl} class="link-arrow">
+            {ctaText}
+            <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        )}
+      </div>
+    </div>
+  </div>
+</section>

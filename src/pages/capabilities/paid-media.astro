@@ -1,0 +1,144 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const title = "Paid Media | Found Search Marketing";
+const description = "Found Search Marketing's Paid Media services span search, shopping, social, programmatic, display, video, and connected TV advertising for enterprise brands.";
+const canonical = "https://www.foundsm.com/capabilities/paid-media";
+const robots = "index, follow";
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Paid Media | Found Search Marketing",
+  "url": "https://www.foundsm.com/capabilities/paid-media",
+  "description": "Found Search Marketing's Paid Media services span search, shopping, social, programmatic, display, video, and connected TV advertising for enterprise brands.",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Found Search Marketing"
+  }
+};
+---
+
+<BaseLayout title={title} description={description} canonical={canonical} robots={robots} schema={schema}>
+
+    <!-- ============================================
+         HERO SECTION
+         ============================================ -->
+    <section class="hero hero--dark" aria-label="Paid Media hero">
+      <div class="hero__overlay" aria-hidden="true"></div>
+      <div class="hero__bg-image" aria-hidden="true">
+        <img src="/images/paid-media-hero-bg.jpg" alt="" loading="lazy" width="1920" height="900">
+      </div>
+
+      <div class="container hero__content">
+        <div class="hero-stagger">
+          <p class="hero__breadcrumb"><a href="/capabilities">Capabilities</a> / Paid Media</p>
+        </div>
+        <div class="hero-stagger">
+          <h1 class="hero__headline">Paid Media</h1>
+        </div>
+        <div class="hero-stagger">
+          <p class="hero__subtitle">Strategic media buying across every major platform, optimized by data and driven by performance to maximize your return on ad spend.</p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================
+         WORK PILLARS
+         ============================================ -->
+    <section class="pillars" aria-label="Paid media work pillars">
+      <div class="container">
+        <h2 class="pillars__heading fade-in-up">Our Work Pillars</h2>
+        <p class="pillars__subheading fade-in-up">Four core disciplines that form the foundation of our paid media practice.</p>
+
+        <div class="pillars__grid fade-in-up">
+
+          <!-- Pillar 1: Search & Shopping -->
+          <div class="pillar-card">
+            <div class="pillar-card__icon" aria-hidden="true">
+              <svg width="48" height="48" viewBox="0 0 48 48"><circle cx="20" cy="20" r="14" stroke="currentColor" stroke-width="2.5" fill="none"/><line x1="30" y1="30" x2="42" y2="42" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+            </div>
+            <h3 class="pillar-card__title">Search &amp; Shopping</h3>
+            <p class="pillar-card__description">Expert management of Google Ads, Microsoft Advertising, and shopping campaigns that capture high-intent audiences at the moment they are searching for your products and services.</p>
+          </div>
+
+          <!-- Pillar 2: Social Media Advertising -->
+          <div class="pillar-card">
+            <div class="pillar-card__icon" aria-hidden="true">
+              <svg width="48" height="48" viewBox="0 0 48 48"><circle cx="24" cy="14" r="8" stroke="currentColor" stroke-width="2.5" fill="none"/><circle cx="12" cy="34" r="6" stroke="currentColor" stroke-width="2.5" fill="none"/><circle cx="36" cy="34" r="6" stroke="currentColor" stroke-width="2.5" fill="none"/><line x1="19" y1="20" x2="14" y2="29" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="29" y1="20" x2="34" y2="29" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+            <h3 class="pillar-card__title">Social Media Advertising</h3>
+            <p class="pillar-card__description">Full-funnel campaigns across Facebook, Instagram, LinkedIn, and TikTok that build brand awareness, drive engagement, and generate qualified leads with precision targeting.</p>
+          </div>
+
+          <!-- Pillar 3: Programmatic & Display -->
+          <div class="pillar-card">
+            <div class="pillar-card__icon" aria-hidden="true">
+              <svg width="48" height="48" viewBox="0 0 48 48"><rect x="4" y="8" width="40" height="28" rx="4" stroke="currentColor" stroke-width="2.5" fill="none"/><path d="M4 16H44" stroke="currentColor" stroke-width="2"/><path d="M20 40H28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M24 36V40" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+            </div>
+            <h3 class="pillar-card__title">Programmatic &amp; Display</h3>
+            <p class="pillar-card__description">Programmatic media buying and retargeting strategies that place your brand in front of the right audiences across premium publisher networks at scale.</p>
+          </div>
+
+          <!-- Pillar 4: Video & Connected TV -->
+          <div class="pillar-card">
+            <div class="pillar-card__icon" aria-hidden="true">
+              <svg width="48" height="48" viewBox="0 0 48 48"><rect x="6" y="10" width="36" height="24" rx="4" stroke="currentColor" stroke-width="2.5" fill="none"/><polygon points="20,16 20,30 32,23" stroke="currentColor" stroke-width="2" fill="none" stroke-linejoin="round"/><path d="M16 40H32" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+            </div>
+            <h3 class="pillar-card__title">Video &amp; Connected TV</h3>
+            <p class="pillar-card__description">YouTube, CTV, and OTT advertising strategies that combine the storytelling power of video with the precision targeting capabilities of digital media.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================
+         CHANNEL TYPES
+         ============================================ -->
+    <section class="channel-types" aria-label="Channel types">
+      <div class="container">
+        <h2 class="channel-types__heading fade-in-up">Channel Expertise</h2>
+        <p class="channel-types__subheading fade-in-up">Deep expertise across every paid media channel your enterprise needs.</p>
+
+        <div class="channel-types__grid fade-in-up">
+
+          <div class="channel-card">
+            <h3 class="channel-card__title">Search Advertising</h3>
+            <p class="channel-card__description">Keyword strategy, bid management, ad copy optimization, and quality score improvement across Google and Microsoft search networks to drive cost-efficient conversions.</p>
+          </div>
+
+          <div class="channel-card">
+            <h3 class="channel-card__title">Social Advertising</h3>
+            <p class="channel-card__description">Audience development, creative testing, and campaign optimization across Meta, LinkedIn, TikTok, and emerging platforms to engage users throughout the customer journey.</p>
+          </div>
+
+          <div class="channel-card">
+            <h3 class="channel-card__title">Display &amp; Programmatic</h3>
+            <p class="channel-card__description">Real-time bidding, audience targeting, contextual placements, and dynamic creative optimization that maximize reach while maintaining cost efficiency.</p>
+          </div>
+
+          <div class="channel-card">
+            <h3 class="channel-card__title">Video &amp; Streaming</h3>
+            <p class="channel-card__description">Pre-roll, mid-roll, and connected TV campaigns that deliver measurable brand lift and drive performance outcomes through premium video inventory.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================
+         CTA BANNER
+         ============================================ -->
+    <section class="cta-banner" aria-label="Call to action">
+      <div class="cta-banner__bg" aria-hidden="true"></div>
+      <div class="container cta-banner__inner fade-in-up">
+        <h2 class="cta-banner__headline">Ready to Amplify Your Paid Media?</h2>
+        <p class="cta-banner__text">Let our team build a data-driven paid media strategy tailored to your enterprise goals.</p>
+        <a href="/contact-us" class="btn btn--green btn--lg">Start the Conversation</a>
+      </div>
+    </section>
+
+</BaseLayout>

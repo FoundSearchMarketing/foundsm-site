@@ -1,0 +1,304 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "name": "Found Search Marketing",
+      "url": "https://www.foundsm.com",
+      "logo": "https://www.foundsm.com/images/logo.svg"
+    },
+    {
+      "@type": "WebPage",
+      "name": "Insights | Found Search Marketing",
+      "url": "https://www.foundsm.com/insights",
+      "description": "Perspectives on paid media, data strategy, and digital marketing from the Found Search Marketing team.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Found Search Marketing"
+      }
+    }
+  ]
+};
+---
+
+<BaseLayout
+  title="Insights | Found Search Marketing"
+  description="Perspectives on paid media, data strategy, and digital marketing from the Found Search Marketing team. Explore insights on AI, analytics, and enterprise advertising."
+  canonical="https://www.foundsm.com/insights"
+  robots="index, follow"
+  schema={schema}
+>
+
+    <!-- ============================================
+         HERO SECTION
+         ============================================ -->
+    <section class="hero hero--compact" aria-label="Page hero">
+      <div class="hero__overlay" aria-hidden="true"></div>
+      <div class="container hero__content">
+        <div class="hero-stagger">
+          <h1 class="hero__headline">Insights</h1>
+        </div>
+        <div class="hero-stagger">
+          <p class="hero__subtitle">Perspectives on paid media, data strategy, and digital marketing from the Found team.</p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================
+         CATEGORY FILTER SECTION
+         ============================================ -->
+    <section class="blog-filters-section" aria-label="Filter blog posts by category">
+      <div class="container">
+        <div class="blog-filters" role="group" aria-label="Category filters">
+          <button class="blog-filters__btn blog-filters__btn--active" data-filter="all" aria-pressed="true">All</button>
+          <button class="blog-filters__btn" data-filter="ai" aria-pressed="false">AI</button>
+          <button class="blog-filters__btn" data-filter="industry-insights" aria-pressed="false">Industry Insights</button>
+          <button class="blog-filters__btn" data-filter="life-at-found" aria-pressed="false">Life at Found</button>
+          <button class="blog-filters__btn" data-filter="marketing-analytics" aria-pressed="false">Marketing Analytics &amp; Tracking</button>
+          <button class="blog-filters__btn" data-filter="meta" aria-pressed="false">Meta</button>
+          <button class="blog-filters__btn" data-filter="paid-media-strategy" aria-pressed="false">Paid Media Strategy</button>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================
+         BLOG POST GRID
+         ============================================ -->
+    <section class="blog-listing" aria-label="Blog posts">
+      <div class="container">
+        <div class="blog-grid">
+
+          <!-- Post 1 -->
+          <article class="blog-card fade-in-up" data-category="ai">
+            <a href="/insights/future-of-ai-in-paid-media" class="blog-card__image-link">
+              <img src="/images/blog/blog-placeholder-01.jpg" alt="" class="blog-card__image" loading="lazy" width="400" height="240">
+            </a>
+            <div class="blog-card__body">
+              <span class="blog-card__category">AI</span>
+              <time class="blog-card__date" datetime="2026-03-18">March 18, 2026</time>
+              <h3 class="blog-card__title">
+                <a href="/insights/future-of-ai-in-paid-media">The Future of AI in Paid Media Strategy</a>
+              </h3>
+              <p class="blog-card__excerpt">Artificial intelligence is transforming how enterprise brands plan, execute, and optimize paid media campaigns. Explore the key AI capabilities reshaping the industry and what they mean for your marketing strategy.</p>
+            </div>
+          </article>
+
+          <!-- Post 2 -->
+          <article class="blog-card fade-in-up" data-category="marketing-analytics">
+            <a href="/insights/first-party-data-digital-advertising" class="blog-card__image-link">
+              <img src="/images/blog/blog-placeholder-02.jpg" alt="" class="blog-card__image" loading="lazy" width="400" height="240">
+            </a>
+            <div class="blog-card__body">
+              <span class="blog-card__category">Marketing Analytics &amp; Tracking</span>
+              <time class="blog-card__date" datetime="2026-03-12">March 12, 2026</time>
+              <h3 class="blog-card__title">
+                <a href="/insights/first-party-data-digital-advertising">How First-Party Data Is Reshaping Digital Advertising</a>
+              </h3>
+              <p class="blog-card__excerpt">With third-party cookies on the decline, first-party data has become the most valuable asset in digital marketing. Learn how leading brands are building robust data strategies to maintain targeting precision.</p>
+            </div>
+          </article>
+
+          <!-- Post 3 -->
+          <article class="blog-card fade-in-up" data-category="paid-media-strategy">
+            <a href="/insights/enterprise-paid-media-trends-2026" class="blog-card__image-link">
+              <img src="/images/blog/blog-placeholder-03.jpg" alt="" class="blog-card__image" loading="lazy" width="400" height="240">
+            </a>
+            <div class="blog-card__body">
+              <span class="blog-card__category">Paid Media Strategy</span>
+              <time class="blog-card__date" datetime="2026-03-05">March 5, 2026</time>
+              <h3 class="blog-card__title">
+                <a href="/insights/enterprise-paid-media-trends-2026">5 Trends Shaping Enterprise Paid Media in 2026</a>
+              </h3>
+              <p class="blog-card__excerpt">From automation-first bidding to the rise of connected TV, the enterprise paid media landscape is evolving fast. Here are the five trends every marketer needs to have on their radar this year.</p>
+            </div>
+          </article>
+
+          <!-- Post 4 -->
+          <article class="blog-card fade-in-up" data-category="life-at-found">
+            <a href="/insights/culture-of-innovation" class="blog-card__image-link">
+              <img src="/images/blog/blog-placeholder-04.jpg" alt="" class="blog-card__image" loading="lazy" width="400" height="240">
+            </a>
+            <div class="blog-card__body">
+              <span class="blog-card__category">Life at Found</span>
+              <time class="blog-card__date" datetime="2026-02-26">February 26, 2026</time>
+              <h3 class="blog-card__title">
+                <a href="/insights/culture-of-innovation">Building a Culture of Innovation at Found</a>
+              </h3>
+              <p class="blog-card__excerpt">Innovation is not just a buzzword at Found Search Marketing. Discover how our team fosters creative thinking and continuous improvement through collaborative rituals and a growth-oriented environment.</p>
+            </div>
+          </article>
+
+          <!-- Post 5 -->
+          <article class="blog-card fade-in-up" data-category="meta">
+            <a href="/insights/meta-ad-platform-updates" class="blog-card__image-link">
+              <img src="/images/blog/blog-placeholder-05.jpg" alt="" class="blog-card__image" loading="lazy" width="400" height="240">
+            </a>
+            <div class="blog-card__body">
+              <span class="blog-card__category">Meta</span>
+              <time class="blog-card__date" datetime="2026-02-19">February 19, 2026</time>
+              <h3 class="blog-card__title">
+                <a href="/insights/meta-ad-platform-updates">Meta's Latest Ad Platform Updates: What Marketers Need to Know</a>
+              </h3>
+              <p class="blog-card__excerpt">Meta continues to roll out significant changes to its advertising platform, from Advantage+ enhancements to new audience targeting tools. Here is what enterprise advertisers should be paying attention to.</p>
+            </div>
+          </article>
+
+          <!-- Post 6 -->
+          <article class="blog-card fade-in-up" data-category="marketing-analytics">
+            <a href="/insights/cross-channel-attribution-guide" class="blog-card__image-link">
+              <img src="/images/blog/blog-placeholder-06.jpg" alt="" class="blog-card__image" loading="lazy" width="400" height="240">
+            </a>
+            <div class="blog-card__body">
+              <span class="blog-card__category">Marketing Analytics &amp; Tracking</span>
+              <time class="blog-card__date" datetime="2026-02-10">February 10, 2026</time>
+              <h3 class="blog-card__title">
+                <a href="/insights/cross-channel-attribution-guide">Cross-Channel Attribution: A Practical Guide</a>
+              </h3>
+              <p class="blog-card__excerpt">Understanding which channels drive conversions is critical for budget allocation. This guide walks through the most effective attribution models and how to implement them across your media mix.</p>
+            </div>
+          </article>
+
+          <!-- Post 7 -->
+          <article class="blog-card fade-in-up" data-category="industry-insights">
+            <a href="/insights/server-side-tracking-enterprise" class="blog-card__image-link">
+              <img src="/images/blog/blog-placeholder-07.jpg" alt="" class="blog-card__image" loading="lazy" width="400" height="240">
+            </a>
+            <div class="blog-card__body">
+              <span class="blog-card__category">Industry Insights</span>
+              <time class="blog-card__date" datetime="2026-02-03">February 3, 2026</time>
+              <h3 class="blog-card__title">
+                <a href="/insights/server-side-tracking-enterprise">Why Enterprise Brands Are Shifting to Server-Side Tracking</a>
+              </h3>
+              <p class="blog-card__excerpt">Browser-based tracking is becoming increasingly unreliable due to privacy restrictions and ad blockers. Learn why server-side tracking is emerging as the gold standard for enterprise measurement.</p>
+            </div>
+          </article>
+
+          <!-- Post 8 -->
+          <article class="blog-card fade-in-up" data-category="ai">
+            <a href="/insights/ai-bid-strategies" class="blog-card__image-link">
+              <img src="/images/blog/blog-placeholder-08.jpg" alt="" class="blog-card__image" loading="lazy" width="400" height="240">
+            </a>
+            <div class="blog-card__body">
+              <span class="blog-card__category">AI</span>
+              <time class="blog-card__date" datetime="2026-01-27">January 27, 2026</time>
+              <h3 class="blog-card__title">
+                <a href="/insights/ai-bid-strategies">Leveraging AI for Smarter Bid Strategies</a>
+              </h3>
+              <p class="blog-card__excerpt">Machine learning-powered bidding can dramatically improve campaign efficiency, but only when paired with the right data signals. Explore how to set up AI-driven bid strategies that actually deliver results.</p>
+            </div>
+          </article>
+
+          <!-- Post 9 -->
+          <article class="blog-card fade-in-up" data-category="life-at-found">
+            <a href="/insights/ibj-fast-25" class="blog-card__image-link">
+              <img src="/images/blog/blog-placeholder-09.jpg" alt="" class="blog-card__image" loading="lazy" width="400" height="240">
+            </a>
+            <div class="blog-card__body">
+              <span class="blog-card__category">Life at Found</span>
+              <time class="blog-card__date" datetime="2026-01-20">January 20, 2026</time>
+              <h3 class="blog-card__title">
+                <a href="/insights/ibj-fast-25">Found Named to IBJ Fast 25 List</a>
+              </h3>
+              <p class="blog-card__excerpt">We are proud to announce that Found Search Marketing has been recognized on the Indianapolis Business Journal Fast 25 list, honoring the fastest-growing private companies in the region.</p>
+            </div>
+          </article>
+
+          <!-- Post 10 -->
+          <article class="blog-card fade-in-up" data-category="paid-media-strategy">
+            <a href="/insights/performance-max-guide" class="blog-card__image-link">
+              <img src="/images/blog/blog-placeholder-10.jpg" alt="" class="blog-card__image" loading="lazy" width="400" height="240">
+            </a>
+            <div class="blog-card__body">
+              <span class="blog-card__category">Paid Media Strategy</span>
+              <time class="blog-card__date" datetime="2026-01-13">January 13, 2026</time>
+              <h3 class="blog-card__title">
+                <a href="/insights/performance-max-guide">The Complete Guide to Performance Max Campaigns</a>
+              </h3>
+              <p class="blog-card__excerpt">Performance Max campaigns offer unprecedented reach across Google properties, but they require a different strategic approach. This guide covers setup, asset optimization, and reporting best practices.</p>
+            </div>
+          </article>
+
+          <!-- Post 11 -->
+          <article class="blog-card fade-in-up" data-category="industry-insights">
+            <a href="/insights/privacy-first-marketing" class="blog-card__image-link">
+              <img src="/images/blog/blog-placeholder-11.jpg" alt="" class="blog-card__image" loading="lazy" width="400" height="240">
+            </a>
+            <div class="blog-card__body">
+              <span class="blog-card__category">Industry Insights</span>
+              <time class="blog-card__date" datetime="2026-01-06">January 6, 2026</time>
+              <h3 class="blog-card__title">
+                <a href="/insights/privacy-first-marketing">Privacy-First Marketing: Preparing for a Cookieless World</a>
+              </h3>
+              <p class="blog-card__excerpt">The transition away from third-party cookies is accelerating, and brands that fail to adapt risk losing competitive advantage. Here is a practical roadmap for building a privacy-first marketing strategy.</p>
+            </div>
+          </article>
+
+          <!-- Post 12 -->
+          <article class="blog-card fade-in-up" data-category="meta">
+            <a href="/insights/meta-conversions-api-attribution" class="blog-card__image-link">
+              <img src="/images/blog/blog-placeholder-12.jpg" alt="" class="blog-card__image" loading="lazy" width="400" height="240">
+            </a>
+            <div class="blog-card__body">
+              <span class="blog-card__category">Meta</span>
+              <time class="blog-card__date" datetime="2025-12-16">December 16, 2025</time>
+              <h3 class="blog-card__title">
+                <a href="/insights/meta-conversions-api-attribution">Understanding Meta Conversions API for Better Attribution</a>
+              </h3>
+              <p class="blog-card__excerpt">The Meta Conversions API provides a server-side data connection that improves attribution accuracy and campaign optimization. Learn how to implement CAPI and why it matters for enterprise advertisers.</p>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================
+         PAGINATION
+         ============================================ -->
+    <nav class="pagination" aria-label="Blog pagination">
+      <div class="container">
+        <ul class="pagination__list">
+          <li class="pagination__item">
+            <a href="#" class="pagination__link pagination__link--prev" aria-label="Previous page" aria-disabled="true">
+              <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M9 3L5 7L9 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+              Previous
+            </a>
+          </li>
+          <li class="pagination__item">
+            <a href="/insights" class="pagination__link pagination__link--number pagination__link--active" aria-current="page" aria-label="Page 1">1</a>
+          </li>
+          <li class="pagination__item">
+            <a href="/insights?page=2" class="pagination__link pagination__link--number" aria-label="Page 2">2</a>
+          </li>
+          <li class="pagination__item">
+            <a href="/insights?page=3" class="pagination__link pagination__link--number" aria-label="Page 3">3</a>
+          </li>
+          <li class="pagination__item">
+            <a href="/insights?page=2" class="pagination__link pagination__link--next" aria-label="Next page">
+              Next
+              <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M5 3L9 7L5 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+
+    <!-- ============================================
+         CTA BANNER
+         ============================================ -->
+    <section class="cta-banner" aria-label="Call to action">
+      <div class="cta-banner__bg" aria-hidden="true"></div>
+      <div class="container cta-banner__inner fade-in-up">
+        <h2 class="cta-banner__headline">Start the Conversation</h2>
+        <a href="/contact-us" class="btn btn--green btn--lg">Contact Us</a>
+      </div>
+    </section>
+
+</BaseLayout>

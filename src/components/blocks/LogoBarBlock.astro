@@ -1,0 +1,26 @@
+---
+interface Logo {
+  url: string;
+  alt: string;
+}
+
+interface Props {
+  heading?: string;
+  logos?: Logo[];
+}
+
+const { heading, logos = [] } = Astro.props;
+---
+
+<section class="section" aria-label={heading || 'Partners'}>
+  <div class="container">
+    {heading && <h2 class="logo-marquee__heading fade-in-up">{heading}</h2>}
+    <div class="partners__grid fade-in-up">
+      {logos.map((logo) => (
+        <div class="partners__badge">
+          <img src={logo.url} alt={logo.alt} loading="lazy" width="160" height="80" />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,24 @@
+{
+  "name": "foundsm-site",
+  "type": "module",
+  "version": "1.0.0",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@sanity/astro": "^3.3.1",
+    "@sanity/client": "^7.14.1",
+    "@sanity/image-url": "^1.1.0",
+    "astro": "^5.18.1"
+  },
+  "devDependencies": {
+    "@astrojs/vercel": "^8.2.11"
+  }
+}

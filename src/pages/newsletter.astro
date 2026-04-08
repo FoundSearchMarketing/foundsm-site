@@ -1,0 +1,91 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Newsletter | Found Search Marketing",
+  "description": "Subscribe to the Found Search Marketing newsletter for enterprise paid media insights.",
+  "url": "https://www.foundsm.com/newsletter",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Found Search Marketing",
+    "url": "https://www.foundsm.com"
+  }
+};
+---
+
+<BaseLayout
+  title="Newsletter | Found Search Marketing"
+  description="Subscribe to the Found Search Marketing newsletter. Get the latest insights on enterprise paid media, data intelligence, and performance marketing delivered to your inbox."
+  canonical="https://www.foundsm.com/newsletter"
+  robots="index, follow"
+  schema={schema}
+>
+
+        <!-- Hero Section -->
+        <section class="hero hero-dark" aria-labelledby="newsletter-hero-heading">
+            <div class="container">
+                <div class="hero-content fade-in-up">
+                    <h1 id="newsletter-hero-heading">Stay In The Know</h1>
+                    <p class="hero-subtitle">Subscribe to our newsletter and get the latest enterprise paid media insights, industry trends, and expert perspectives delivered straight to your inbox.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter Signup Section -->
+        <section class="section newsletter-section" aria-labelledby="newsletter-signup-heading">
+            <div class="container">
+                <div class="newsletter-signup-wrapper fade-in-up">
+                    <div class="newsletter-signup-content">
+                        <h2 id="newsletter-signup-heading">What You'll Get</h2>
+                        <div class="newsletter-benefits">
+                            <div class="newsletter-benefit-item">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                <p>Expert analysis of the latest paid media trends and platform updates</p>
+                            </div>
+                            <div class="newsletter-benefit-item">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                <p>Data-driven strategies and frameworks for enterprise performance marketing</p>
+                            </div>
+                            <div class="newsletter-benefit-item">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                <p>Case studies and real-world results from enterprise campaigns</p>
+                            </div>
+                            <div class="newsletter-benefit-item">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                <p>Thought leadership from our team of industry veterans</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- HubSpot Newsletter Form: 36bfcb11-1834-4066-8dca-b8d3ae24eda0 -->
+                    <div class="newsletter-form-wrapper">
+                        <form class="newsletter-signup-form" action="#" method="post" aria-label="Newsletter subscription">
+                            <div class="newsletter-input-group-large">
+                                <label for="newsletter-email" class="sr-only">Email address</label>
+                                <input type="email" id="newsletter-email" name="email" placeholder="Enter your email address" required aria-required="true">
+                                <button type="submit" class="btn btn-green">Go &rarr;</button>
+                            </div>
+                        </form>
+                        <p class="newsletter-privacy-note">By subscribing, you agree to receive marketing emails from Found Search Marketing. You can unsubscribe at any time. View our <a href="/privacy-policy">Privacy Policy</a>.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Banner -->
+        <section class="cta-banner" aria-labelledby="newsletter-cta-heading">
+            <div class="container">
+                <div class="cta-content fade-in-up">
+                    <h2 id="newsletter-cta-heading">Ready to Transform Your Paid Media?</h2>
+                    <p>Our team of enterprise paid media experts is ready to help you unlock new levels of performance. Let's talk about what Found can do for your brand.</p>
+                    <div class="cta-buttons">
+                        <a href="/contact-us" class="btn btn-green">Start the Conversation</a>
+                        <a href="/our-approach" class="btn btn-outline">Learn Our Approach</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+</BaseLayout>

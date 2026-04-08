@@ -1,0 +1,34 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BlockRenderer from '../../components/blocks/BlockRenderer.astro';
+import { sanityClient, landingPageBySlugQuery, allLandingPagesQuery } from '../../lib/sanity';
+
+export async function getStaticPaths() {
+  const pages = await sanityClient.fetch(allLandingPagesQuery);
+  return pages.map((page: any) => ({
+    params: { slug: page.slug.current },
+  }));
+}
+
+const { slug } = Astro.params;
+const page = await sanityClient.fetch(landingPageBySlugQuery, { slug });
+
+if (!page) {
+  return Astro.redirect('/404');
+}
+
+const seoTitle = page.seoTitle || page.title;
+const seoDescription = page.seoDescription || '';
+---
+
+<BaseLayout
+  title={`${seoTitle} | Found Search Marketing`}
+  description={seoDescription}
+  canonical={`https://www.foundsm.com/lp/${slug}`}
+  hideNavigation={page.hideNavigation}
+  hideFooter={page.hideFooter}
+>
+  {page.sections?.map((section: any) => (
+    <BlockRenderer section={section} />
+  ))}
+</BaseLayout>

@@ -1,0 +1,36 @@
+---
+interface Feature {
+  icon?: string;
+  title: string;
+  description?: string;
+}
+
+interface Props {
+  heading?: string;
+  subheading?: string;
+  features?: Feature[];
+  columns?: 2 | 3 | 4;
+}
+
+const { heading, subheading, features = [], columns = 3 } = Astro.props;
+---
+
+<section class="section" aria-label={heading || 'Features'}>
+  <div class="container">
+    {(heading || subheading) && (
+      <div class="section-header section-header--center fade-in-up">
+        {heading && <h2>{heading}</h2>}
+        {subheading && <p class="section-header__text">{subheading}</p>}
+      </div>
+    )}
+    <div class={`grid grid--${columns}`}>
+      {features.map((feature) => (
+        <div class="lp-feature-card fade-in-up">
+          {feature.icon && <div class="lp-feature-card__icon" aria-hidden="true">{feature.icon}</div>}
+          <h3 class="lp-feature-card__title">{feature.title}</h3>
+          {feature.description && <p class="lp-feature-card__desc">{feature.description}</p>}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

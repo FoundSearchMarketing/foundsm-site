@@ -1,0 +1,223 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "name": "Found Search Marketing",
+      "url": "https://www.foundsm.com",
+      "logo": "https://www.foundsm.com/images/logo.svg",
+      "description": "An enterprise paid media agency that drives measurable growth.",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "8475 Nightfall Lane, Suite 200",
+        "addressLocality": "Fishers",
+        "addressRegion": "IN",
+        "postalCode": "46037",
+        "addressCountry": "US"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+1-317-721-2229",
+        "contactType": "sales",
+        "email": "info@foundsm.com"
+      },
+      "sameAs": [
+        "https://www.facebook.com/foundsm/",
+        "https://www.instagram.com/found_sm/",
+        "https://www.linkedin.com/company/found-search-marketing/",
+        "https://x.com/FoundSM"
+      ]
+    },
+    {
+      "@type": "WebPage",
+      "name": "About Us | Found Search Marketing",
+      "url": "https://www.foundsm.com/about-us",
+      "description": "Learn about Found Search Marketing, an enterprise paid media agency based in Fishers, Indiana. Meet our team of 50+ experts across 12 states driving measurable growth.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Found Search Marketing"
+      }
+    }
+  ]
+};
+---
+
+<BaseLayout
+  title="About Us | Found Search Marketing"
+  description="Learn about Found Search Marketing, an enterprise paid media agency based in Fishers, Indiana. Meet our team of 50+ experts across 12 states driving measurable growth."
+  canonical="https://www.foundsm.com/about-us"
+  schema={schema}
+>
+
+    <!-- ============================================
+         HERO SECTION
+         ============================================ -->
+    <section class="hero hero--short" aria-label="About Us hero">
+      <div class="hero__overlay" aria-hidden="true"></div>
+      <div class="container hero__content">
+        <div class="hero-stagger">
+          <h1 class="hero__headline">About Us</h1>
+        </div>
+        <div class="hero-stagger">
+          <p class="hero__subtitle">The story behind an enterprise paid media agency built on data, transparency, and a relentless focus on outcomes.</p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================
+         FOUNDER STORY SECTION
+         ============================================ -->
+    <section class="about-story" aria-label="Our story">
+      <div class="container about-story__grid">
+
+        <div class="about-story__image fade-in-up">
+          <img src="/images/about-hero.jpg" alt="Found Search Marketing team collaborating in the Fishers, Indiana office" loading="lazy" width="600" height="450">
+        </div>
+
+        <div class="about-story__content fade-in-up">
+          <h2 class="about-story__headline">Our Story</h2>
+          <p>Found Search Marketing was founded with a simple but powerful idea: enterprise brands deserve a paid media partner that operates with complete transparency and is accountable to real business outcomes, not vanity metrics.</p>
+          <p>What started as a small, scrappy team of search marketing specialists has grown into an enterprise paid media agency with more than 50 employees across 12 states. Headquartered in Fishers, Indiana, we serve some of the most recognized brands in healthcare, education, home services, and financial services.</p>
+          <p>Over the years, our capabilities have expanded well beyond paid search. Today, we bring together data intelligence, data activation, performance creative, and strategic media buying to deliver full-funnel programs that drive measurable growth. But our founding principle has never changed: we believe the best work happens when agencies and clients operate as true partners with shared goals and shared accountability.</p>
+          <p>That commitment to partnership, combined with deep platform expertise and proprietary data technology, is what sets Found Search Marketing apart &mdash; and why the brands we work with stay with us year after year.</p>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ============================================
+         CORE VALUES SECTION
+         ============================================ -->
+    <section class="values" aria-label="Our core values">
+      <div class="container">
+        <h2 class="values__heading fade-in-up">Our Core Values</h2>
+
+        <div class="values__grid">
+
+          <div class="values__card fade-in-up">
+            <div class="values__icon" aria-hidden="true">
+              <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                <circle cx="24" cy="24" r="22" stroke="currentColor" stroke-width="2"/>
+                <path d="M16 28C16 28 18 32 24 32C30 32 32 28 32 28" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M24 16V24L28 20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3 class="values__card-heading">Innovation</h3>
+            <p class="values__card-description">We embrace new technology, platforms, and approaches to stay ahead of the curve. Our team continuously tests and iterates so your campaigns benefit from the latest advancements in paid media and data science.</p>
+          </div>
+
+          <div class="values__card fade-in-up">
+            <div class="values__icon" aria-hidden="true">
+              <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                <rect x="4" y="8" width="40" height="32" rx="4" stroke="currentColor" stroke-width="2" fill="none"/>
+                <path d="M4 16H44" stroke="currentColor" stroke-width="2"/>
+                <circle cx="24" cy="30" r="6" stroke="currentColor" stroke-width="2" fill="none"/>
+                <path d="M24 27V30L26 31" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3 class="values__card-heading">Transparency</h3>
+            <p class="values__card-description">Honest reporting and open communication are the foundation of every client relationship. You will always know exactly where your budget is going, how campaigns are performing, and what we recommend next.</p>
+          </div>
+
+          <div class="values__card fade-in-up">
+            <div class="values__icon" aria-hidden="true">
+              <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                <path d="M16 20C16 15.5817 19.5817 12 24 12C28.4183 12 32 15.5817 32 20" stroke="currentColor" stroke-width="2" fill="none"/>
+                <circle cx="16" cy="28" r="6" stroke="currentColor" stroke-width="2" fill="none"/>
+                <circle cx="32" cy="28" r="6" stroke="currentColor" stroke-width="2" fill="none"/>
+                <path d="M22 28H26" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M12 36V38" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M20 36V38" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M28 36V38" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M36 36V38" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h3 class="values__card-heading">Partnership</h3>
+            <p class="values__card-description">We treat every client as a true partner, not just another account. Our teams embed alongside yours, sharing goals, celebrating wins, and tackling challenges together with full accountability.</p>
+          </div>
+
+          <div class="values__card fade-in-up">
+            <div class="values__icon" aria-hidden="true">
+              <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                <path d="M8 36L16 24L24 30L32 18L40 12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="40" cy="12" r="4" stroke="currentColor" stroke-width="2" fill="none"/>
+                <path d="M8 40H40" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h3 class="values__card-heading">Results</h3>
+            <p class="values__card-description">Everything we do is measured against real business outcomes &mdash; qualified leads, revenue growth, and customer lifetime value. We focus on the metrics that move your business forward, not the ones that just look good in a report.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================
+         TEAM TEASER SECTION
+         ============================================ -->
+    <section class="team-teaser" aria-label="Meet our team">
+      <div class="container">
+        <h2 class="team-teaser__heading fade-in-up">Meet Our Team</h2>
+        <p class="team-teaser__description fade-in-up">Our 50+ person team spans 12 states, bringing together deep expertise in paid media, data science, analytics, and creative strategy. Here are some of the leaders driving results for our clients every day.</p>
+
+        <div class="team-teaser__grid">
+
+          <div class="team-teaser__card fade-in-up">
+            <div class="team-teaser__photo">
+              <img src="/images/team/julie-warnecke.jpg" alt="Julie Warnecke, CEO of Found Search Marketing" loading="lazy" width="300" height="300">
+            </div>
+            <h3 class="team-teaser__name">Julie Warnecke</h3>
+            <p class="team-teaser__title">CEO</p>
+          </div>
+
+          <div class="team-teaser__card fade-in-up">
+            <div class="team-teaser__photo">
+              <img src="/images/team/adam-persinger.jpg" alt="Adam Persinger, Head of Strategic Media" loading="lazy" width="300" height="300">
+            </div>
+            <h3 class="team-teaser__name">Adam Persinger</h3>
+            <p class="team-teaser__title">Head of Strategic Media</p>
+          </div>
+
+          <div class="team-teaser__card fade-in-up">
+            <div class="team-teaser__photo">
+              <img src="/images/team/kelley-swart.jpg" alt="Kelley Swart, VP Strategy &amp; Growth" loading="lazy" width="300" height="300">
+            </div>
+            <h3 class="team-teaser__name">Kelley Swart</h3>
+            <p class="team-teaser__title">VP Strategy &amp; Growth</p>
+          </div>
+
+          <div class="team-teaser__card fade-in-up">
+            <div class="team-teaser__photo">
+              <img src="/images/team/rachel-puls.jpg" alt="Rachel Puls, VP Delivery" loading="lazy" width="300" height="300">
+            </div>
+            <h3 class="team-teaser__name">Rachel Puls</h3>
+            <p class="team-teaser__title">VP Delivery</p>
+          </div>
+
+        </div>
+
+        <div class="team-teaser__cta fade-in-up">
+          <a href="/team" class="btn btn--green">View Full Team</a>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================
+         CTA BANNER
+         ============================================ -->
+    <section class="cta-banner" aria-label="Call to action">
+      <div class="cta-banner__bg" aria-hidden="true"></div>
+      <div class="container cta-banner__inner fade-in-up">
+        <h2 class="cta-banner__headline">Let's Find A Solution</h2>
+        <a href="/contact-us" class="btn btn--green btn--lg">Start the Conversation</a>
+      </div>
+    </section>
+
+</BaseLayout>

@@ -1,0 +1,176 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const title = "Capabilities | Found Search Marketing";
+const description = "Explore Found Search Marketing's comprehensive capabilities: Paid Media, Data Activation, Data Intelligence, and Performance Creative for enterprise brands.";
+const canonical = "https://www.foundsm.com/capabilities";
+const robots = "index, follow";
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Capabilities | Found Search Marketing",
+  "url": "https://www.foundsm.com/capabilities",
+  "description": "Explore Found Search Marketing's comprehensive capabilities: Paid Media, Data Activation, Data Intelligence, and Performance Creative for enterprise brands.",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Found Search Marketing"
+  }
+};
+---
+
+<BaseLayout title={title} description={description} canonical={canonical} robots={robots} schema={schema}>
+
+    <!-- ============================================
+         HERO SECTION
+         ============================================ -->
+    <section class="hero hero--dark" aria-label="Capabilities hero">
+      <div class="hero__overlay" aria-hidden="true"></div>
+      <div class="hero__bg-image" aria-hidden="true">
+        <img src="/images/capabilities-hero-bg.jpg" alt="" loading="lazy" width="1920" height="900">
+      </div>
+
+      <div class="container hero__content">
+        <div class="hero-stagger">
+          <h1 class="hero__headline">Our Capabilities</h1>
+        </div>
+        <div class="hero-stagger">
+          <p class="hero__subtitle">Comprehensive paid media services powered by data intelligence, strategic activation, and performance-driven creative to deliver measurable results for enterprise brands.</p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================
+         HERO IMAGE
+         ============================================ -->
+    <section class="page-image" aria-label="Capabilities team">
+      <div class="container fade-in-up">
+        <div class="page-image__wrapper">
+          <img src="/images/capabilities-team.jpg" alt="Found Search Marketing capabilities team collaborating on strategy" loading="lazy" width="1200" height="500">
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================
+         ECOSYSTEM DIAGRAM
+         ============================================ -->
+    <section class="ecosystem" aria-label="Service ecosystem">
+      <div class="container">
+        <h2 class="ecosystem__heading fade-in-up">Our Service Ecosystem</h2>
+        <p class="ecosystem__subheading fade-in-up">Every capability works together to create an integrated system that drives performance across the full marketing funnel.</p>
+
+        <div class="ecosystem__diagram fade-in-up">
+          <div class="ecosystem__center">
+            <div class="ecosystem__hub">
+              <span class="ecosystem__hub-label">Your Business Goals</span>
+            </div>
+          </div>
+
+          <div class="ecosystem__ring">
+            <div class="ecosystem__node ecosystem__node--top">
+              <svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect x="4" y="4" width="24" height="24" rx="4" stroke="currentColor" stroke-width="2" fill="none"/><path d="M10 16L14 20L22 12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span>Paid Media</span>
+            </div>
+            <div class="ecosystem__node ecosystem__node--right">
+              <svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="12" stroke="currentColor" stroke-width="2" fill="none"/><path d="M16 10V16L20 20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span>Data Activation</span>
+            </div>
+            <div class="ecosystem__node ecosystem__node--bottom">
+              <svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><path d="M4 24L10 16L16 20L28 8" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="28" cy="8" r="3" fill="currentColor"/></svg>
+              <span>Data Intelligence</span>
+            </div>
+            <div class="ecosystem__node ecosystem__node--left">
+              <svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect x="6" y="6" width="20" height="20" rx="3" stroke="currentColor" stroke-width="2" fill="none"/><path d="M12 16H20M16 12V20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              <span>Performance Creative</span>
+            </div>
+          </div>
+
+          <div class="ecosystem__connectors" aria-hidden="true">
+            <div class="ecosystem__connector ecosystem__connector--1"></div>
+            <div class="ecosystem__connector ecosystem__connector--2"></div>
+            <div class="ecosystem__connector ecosystem__connector--3"></div>
+            <div class="ecosystem__connector ecosystem__connector--4"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================
+         CAPABILITY CARDS
+         ============================================ -->
+    <section class="capability-cards" aria-label="Our capabilities">
+      <div class="container">
+        <div class="capability-cards__grid fade-in-up">
+
+          <!-- Paid Media -->
+          <a href="/capabilities/paid-media" class="capability-card">
+            <div class="capability-card__icon" aria-hidden="true">
+              <svg width="48" height="48" viewBox="0 0 48 48"><rect x="6" y="6" width="36" height="36" rx="6" stroke="currentColor" stroke-width="2.5" fill="none"/><path d="M16 30V22M22 30V18M28 30V24M34 30V14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+            </div>
+            <h3 class="capability-card__title">Paid Media</h3>
+            <p class="capability-card__description">Strategic media buying across search, social, programmatic, and video channels to maximize ROI and reach your target audience at every stage of the funnel.</p>
+            <span class="capability-card__link link-arrow">
+              Learn More
+              <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </a>
+
+          <!-- Data Activation -->
+          <a href="/capabilities/data-activation" class="capability-card">
+            <div class="capability-card__icon" aria-hidden="true">
+              <svg width="48" height="48" viewBox="0 0 48 48"><circle cx="24" cy="24" r="18" stroke="currentColor" stroke-width="2.5" fill="none"/><path d="M24 12V24L32 32" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <h3 class="capability-card__title">Data Activation</h3>
+            <p class="capability-card__description">Transform your first-party data into actionable audience strategies with advanced segmentation, CDP integration, and privacy-compliant data collection.</p>
+            <span class="capability-card__link link-arrow">
+              Learn More
+              <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </a>
+
+          <!-- Data Intelligence -->
+          <a href="/capabilities/data-intelligence" class="capability-card">
+            <div class="capability-card__icon" aria-hidden="true">
+              <svg width="48" height="48" viewBox="0 0 48 48"><path d="M6 38L14 26L22 32L42 10" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="42" cy="10" r="4" fill="currentColor"/></svg>
+            </div>
+            <h3 class="capability-card__title">Data Intelligence</h3>
+            <p class="capability-card__description">Gain a competitive edge with marketing mix modeling, predictive analytics, custom dashboards, and incrementality testing that inform smarter decisions.</p>
+            <span class="capability-card__link link-arrow">
+              Learn More
+              <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </a>
+
+          <!-- Performance Creative -->
+          <a href="/capabilities/performance-creative" class="capability-card">
+            <div class="capability-card__icon" aria-hidden="true">
+              <svg width="48" height="48" viewBox="0 0 48 48"><rect x="8" y="8" width="32" height="32" rx="4" stroke="currentColor" stroke-width="2.5" fill="none"/><path d="M18 24H30M24 18V30" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+            </div>
+            <h3 class="capability-card__title">Performance Creative</h3>
+            <p class="capability-card__description">Data-informed ad creative, landing page design, A/B testing, and creative analytics that drive conversions and continuously improve performance.</p>
+            <span class="capability-card__link link-arrow">
+              Learn More
+              <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================
+         CTA BANNER
+         ============================================ -->
+    <section class="cta-banner" aria-label="Call to action">
+      <div class="cta-banner__bg" aria-hidden="true"></div>
+      <div class="container cta-banner__inner fade-in-up">
+        <h2 class="cta-banner__headline">Start the Conversation</h2>
+        <p class="cta-banner__text">Ready to see how our integrated capabilities can drive measurable growth for your brand?</p>
+        <a href="/contact-us" class="btn btn--green btn--lg">Get in Touch</a>
+      </div>
+    </section>
+
+</BaseLayout>

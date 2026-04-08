@@ -1,0 +1,26 @@
+---
+interface Props {
+  body?: any[];
+  alignment?: 'left' | 'center';
+  maxWidth?: 'narrow' | 'medium' | 'full';
+}
+
+const { body = [], alignment = 'left', maxWidth = 'medium' } = Astro.props;
+const isCenter = alignment === 'center';
+const widthClass = maxWidth === 'narrow' ? 'lp-text--narrow' : maxWidth === 'full' ? 'lp-text--full' : 'lp-text--medium';
+---
+
+<section class="section" aria-label="Content">
+  <div class="container">
+    <div class={`lp-text-block ${widthClass} ${isCenter ? 'lp-text--center' : ''} fade-in-up`}>
+      {body.map((block: any) => {
+        if (block._type === 'block') {
+          const Tag = block.style === 'h2' ? 'h2' : block.style === 'h3' ? 'h3' : block.style === 'h4' ? 'h4' : 'p';
+          const text = block.children?.map((child: any) => child.text).join('') || '';
+          return <Tag>{text}</Tag>;
+        }
+        return null;
+      })}
+    </div>
+  </div>
+</section>

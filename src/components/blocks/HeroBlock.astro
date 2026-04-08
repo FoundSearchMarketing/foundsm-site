@@ -1,0 +1,32 @@
+---
+interface Props {
+  headline: string;
+  subheadline?: string;
+  ctaText?: string;
+  ctaUrl?: string;
+  backgroundImage?: string;
+  alignment?: 'left' | 'center';
+  theme?: 'light' | 'dark' | 'green';
+}
+
+const { headline, subheadline, ctaText, ctaUrl, backgroundImage, alignment = 'left', theme = 'dark' } = Astro.props;
+const isCenter = alignment === 'center';
+---
+
+<section class={`hero hero--short ${theme === 'light' ? 'hero--light' : ''}`} aria-label={headline}>
+  {theme !== 'light' && <div class="hero__overlay" aria-hidden="true"></div>}
+  {backgroundImage && (
+    <div class="hero__bg-image" aria-hidden="true">
+      <img src={backgroundImage} alt="" loading="lazy" width="1920" height="600" />
+    </div>
+  )}
+  <div class={`container hero__content ${isCenter ? 'lp-hero--center' : ''}`}>
+    <h1 class="hero__headline fade-in-up">{headline}</h1>
+    {subheadline && <p class="hero__subtitle fade-in-up">{subheadline}</p>}
+    {ctaText && ctaUrl && (
+      <div class="hero__actions fade-in-up">
+        <a href={ctaUrl} class={`btn ${theme === 'green' ? 'btn--green' : 'btn--green'} btn--lg`}>{ctaText}</a>
+      </div>
+    )}
+  </div>
+</section>

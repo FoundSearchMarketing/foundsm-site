@@ -1,0 +1,40 @@
+---
+interface Props {
+  quote: string;
+  authorName?: string;
+  authorRole?: string;
+  authorCompany?: string;
+  authorImage?: string;
+  theme?: 'light' | 'dark';
+}
+
+const { quote, authorName, authorRole, authorCompany, authorImage, theme = 'light' } = Astro.props;
+const isDark = theme === 'dark';
+---
+
+<section class={`section ${isDark ? 'section--dark' : ''}`} aria-label="Testimonial">
+  <div class="container">
+    <div class="testimonial fade-in-up">
+      <div class="testimonial__inner">
+        <blockquote class="testimonial__quote">
+          <p>&ldquo;{quote}&rdquo;</p>
+        </blockquote>
+        {(authorName || authorImage) && (
+          <div class="testimonial__attribution">
+            {authorImage && (
+              <div class="testimonial__avatar">
+                <img src={authorImage} alt={authorName || ''} loading="lazy" width="64" height="64" />
+              </div>
+            )}
+            <div class="testimonial__meta">
+              {authorName && <cite class="testimonial__name">{authorName}</cite>}
+              {(authorRole || authorCompany) && (
+                <span class="testimonial__role">{[authorRole, authorCompany].filter(Boolean).join(', ')}</span>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  </div>
+</section>

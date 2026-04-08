@@ -1,0 +1,226 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// TODO: Replace with dynamic Sanity CMS query when connected
+export async function getStaticPaths() {
+  return [
+    { params: { slug: 'future-of-ai-paid-media-strategy' } },
+  ];
+}
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "The Future of AI in Paid Media Strategy",
+  "description": "Explore how artificial intelligence is reshaping paid media strategy, from automated bidding and audience targeting to creative optimization and predictive analytics.",
+  "image": "https://www.foundsm.com/images/insights/ai-paid-media-featured.jpg",
+  "datePublished": "2026-01-15T09:00:00-05:00",
+  "dateModified": "2026-01-15T09:00:00-05:00",
+  "author": {
+    "@type": "Person",
+    "name": "Emily Carter",
+    "jobTitle": "VP of Strategy",
+    "url": "https://www.foundsm.com/team"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Found Search Marketing",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.foundsm.com/images/logo.svg"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://www.foundsm.com/insights/the-future-of-ai-in-paid-media"
+  },
+  "articleSection": "AI",
+  "wordCount": 950
+};
+---
+
+<BaseLayout
+  title="The Future of AI in Paid Media Strategy | Found Search Marketing"
+  description="Explore how artificial intelligence is reshaping paid media strategy, from automated bidding and audience targeting to creative optimization and predictive analytics."
+  canonical="https://www.foundsm.com/insights/future-of-ai-paid-media-strategy"
+  robots="index, follow"
+  schema={schema}
+>
+
+    <!-- ============================================
+         BREADCRUMB
+         ============================================ -->
+    <nav class="breadcrumb" aria-label="Breadcrumb" style="padding-top: calc(var(--header-height) + var(--space-md)); padding-bottom: var(--space-md); background: var(--color-light);">
+      <div class="container">
+        <ol class="breadcrumb__list" style="display: flex; gap: 0.5rem; font-size: var(--text-caption); color: var(--color-mid); list-style: none; flex-wrap: wrap;">
+          <li class="breadcrumb__item"><a href="/" style="color: var(--color-primary);">Home</a></li>
+          <li class="breadcrumb__separator" aria-hidden="true">/</li>
+          <li class="breadcrumb__item"><a href="/insights" style="color: var(--color-primary);">Insights</a></li>
+          <li class="breadcrumb__separator" aria-hidden="true">/</li>
+          <li class="breadcrumb__item" aria-current="page">The Future of AI in Paid Media Strategy</li>
+        </ol>
+      </div>
+    </nav>
+
+
+    <!-- ============================================
+         BLOG POST ARTICLE
+         ============================================ -->
+    <section class="section" style="padding-top: var(--space-xl);">
+      <div class="container">
+        <article class="prose" itemscope itemtype="https://schema.org/BlogPosting">
+
+          <!-- Category Badge -->
+          <span class="card__tag" style="position: static; display: inline-block; margin-bottom: var(--space-md);">AI</span>
+
+          <!-- Title -->
+          <h1 class="fade-in-up" itemprop="headline">The Future of AI in Paid Media Strategy</h1>
+
+          <!-- Meta Row -->
+          <div class="fade-in-up" style="display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-sm); margin-top: var(--space-md); font-size: var(--text-caption); color: var(--color-mid);">
+            <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+              By <span itemprop="name" style="font-weight: 600; color: var(--color-dark);">Emily Carter</span>
+            </span>
+            <span aria-hidden="true">&middot;</span>
+            <time datetime="2026-01-15" itemprop="datePublished">January 15, 2026</time>
+            <span aria-hidden="true">&middot;</span>
+            <span>5 min read</span>
+          </div>
+
+          <!-- Featured Image -->
+          <figure class="fade-in-up" style="margin-top: var(--space-lg); margin-bottom: var(--space-xl);">
+            <img
+              src="/images/insights/ai-paid-media-featured.jpg"
+              alt="Abstract visualization of artificial intelligence algorithms powering paid media campaign optimization"
+              loading="lazy"
+              width="1200"
+              height="630"
+              style="width: 100%; height: auto; border-radius: var(--radius-lg); aspect-ratio: 1200/630; object-fit: cover; background: var(--color-light);"
+              itemprop="image"
+            >
+          </figure>
+
+          <!-- Article Body -->
+          <div class="fade-in-up" itemprop="articleBody">
+
+            <p>Artificial intelligence has moved well beyond the buzzword phase in digital advertising. For enterprise brands managing seven- and eight-figure media budgets, AI is now a core operational layer that influences everything from bid management and audience segmentation to creative iteration and attribution modeling. The question is no longer whether to adopt AI-powered tools, but how to build an organizational strategy that harnesses them effectively while maintaining the strategic oversight that only experienced practitioners can provide.</p>
+
+            <h2>Automated Bidding Is Only the Beginning</h2>
+
+            <p>Most advertisers are already familiar with automated bidding strategies like Google's Target CPA and Meta's Advantage+ campaigns. These systems use machine learning to adjust bids in real time based on signals that would be impossible for a human to process manually &mdash; device type, location, time of day, browsing history, and hundreds of other variables that inform conversion probability.</p>
+
+            <p>However, the real competitive advantage lies in how you configure and constrain these systems. Left unchecked, automated bidding can optimize toward low-quality conversions, cannibalize brand traffic, or allocate budget in ways that ignore lifetime customer value. The agencies and brands that win are the ones layering first-party data, custom conversion actions, and value-based bidding frameworks on top of platform algorithms to steer automation toward genuine business outcomes.</p>
+
+            <blockquote>
+              <p>&ldquo;AI doesn&rsquo;t replace strategy &mdash; it amplifies the strategy you already have. The brands seeing the strongest returns are the ones pairing machine learning with a clear understanding of what a valuable customer actually looks like.&rdquo;</p>
+            </blockquote>
+
+            <h2>Predictive Audiences and First-Party Data</h2>
+
+            <p>As third-party cookies continue to erode and privacy regulations expand globally, the ability to build predictive audience models from first-party data has become a critical differentiator. AI-driven tools can analyze CRM data, website behavior, and offline conversion signals to identify patterns that predict which prospects are most likely to convert &mdash; and, critically, which ones are most likely to become high-value, long-term customers.</p>
+
+            <p>Enterprise brands that have invested in clean, well-structured data pipelines are finding themselves at a significant advantage. Key applications include:</p>
+
+            <ul>
+              <li><strong>Lookalike modeling</strong> built from first-party seed lists of top-tier customers rather than broad pixel-based audiences</li>
+              <li><strong>Predictive lead scoring</strong> that helps sales teams prioritize follow-up based on behavioral signals weighted by AI</li>
+              <li><strong>Customer lifetime value forecasting</strong> that enables media teams to bid more aggressively for prospects who match high-LTV profiles</li>
+              <li><strong>Churn prediction models</strong> that trigger retention campaigns before a customer disengages</li>
+            </ul>
+
+            <h2>Creative Optimization at Scale</h2>
+
+            <p>One of the most exciting frontiers for AI in paid media is dynamic creative optimization. Platforms like Google's Performance Max and Meta's Advantage+ Creative now generate and test hundreds of ad variations automatically, combining headlines, images, descriptions, and calls to action in ways that would take a human creative team weeks to produce manually.</p>
+
+            <p>For enterprise brands with large product catalogs or multi-location operations, this capability is transformative. AI can personalize ad creative at the individual user level, serving different messaging based on a prospect's stage in the buying journey, geographic location, or even the weather in their area. The result is a level of relevance and personalization that dramatically improves click-through rates, quality scores, and ultimately, conversion efficiency.</p>
+
+            <h2>The Human Element Remains Essential</h2>
+
+            <p>Despite these advances, the most successful paid media programs still depend on experienced strategists who understand how to set guardrails, interpret data holistically, and make the kind of cross-channel decisions that AI cannot. Machine learning excels at pattern recognition and real-time optimization within defined parameters, but it lacks the ability to understand broader business context, navigate organizational dynamics, or adapt strategy in response to market shifts that fall outside historical data patterns.</p>
+
+            <p>The future of AI in paid media is not about replacing human expertise. It is about giving skilled practitioners more powerful tools so they can focus on the work that creates the greatest strategic leverage &mdash; defining what success looks like, building the data infrastructure that feeds smart automation, and continuously refining the models that drive performance.</p>
+
+          </div>
+
+          <!-- Author Bio Box -->
+          <aside class="fade-in-up" style="display: flex; gap: var(--space-md); align-items: flex-start; margin-top: var(--space-2xl); padding: var(--space-lg); background: var(--color-light); border-radius: var(--radius-lg);">
+            <div style="flex-shrink: 0; width: 5rem; height: 5rem; border-radius: 50%; overflow: hidden; background: var(--color-border);">
+              <img src="/images/team/emily-carter.jpg" alt="Emily Carter" loading="lazy" width="80" height="80" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <div>
+              <p style="font-weight: 600; font-size: 1.125rem; color: var(--color-dark);">Emily Carter</p>
+              <p style="font-size: var(--text-caption); color: var(--color-primary); font-weight: 500;">VP of Strategy</p>
+              <p style="font-size: var(--text-caption); color: var(--color-mid); margin-top: 0.5rem; line-height: 1.65;">Emily leads Found Search Marketing&rsquo;s strategy practice, helping enterprise brands build data-driven paid media programs that deliver measurable growth. With over 12 years of experience in digital advertising, she specializes in connecting media investment to real business outcomes.</p>
+            </div>
+          </aside>
+
+        </article>
+      </div>
+    </section>
+
+
+    <!-- ============================================
+         RELATED POSTS
+         ============================================ -->
+    <section class="section section--light" aria-label="Related posts">
+      <div class="container">
+        <h2 class="section-header--center fade-in-up" style="text-align: center; margin-bottom: var(--space-xl);">Related Posts</h2>
+
+        <div class="grid grid--3 stagger">
+
+          <!-- Related Post 1 -->
+          <article class="card fade-in-up">
+            <div class="card__image">
+              <img src="/images/insights/first-party-data-thumb.jpg" alt="Data visualization showing first-party audience segments" loading="lazy" width="400" height="225">
+              <span class="card__tag">Data Strategy</span>
+            </div>
+            <div class="card__body">
+              <p class="card__meta">December 10, 2025</p>
+              <h3 class="card__title"><a href="/insights/building-first-party-data-strategy">Building a First-Party Data Strategy for 2026</a></h3>
+              <p class="card__excerpt">How enterprise brands can prepare for a cookieless future by investing in first-party data collection, clean rooms, and server-side tracking.</p>
+            </div>
+          </article>
+
+          <!-- Related Post 2 -->
+          <article class="card fade-in-up">
+            <div class="card__image">
+              <img src="/images/insights/pmax-best-practices-thumb.jpg" alt="Google Performance Max campaign interface" loading="lazy" width="400" height="225">
+              <span class="card__tag">Paid Media</span>
+            </div>
+            <div class="card__body">
+              <p class="card__meta">November 22, 2025</p>
+              <h3 class="card__title"><a href="/insights/performance-max-best-practices">Performance Max Best Practices for Enterprise Brands</a></h3>
+              <p class="card__excerpt">A practical guide to structuring, launching, and optimizing Performance Max campaigns when you manage complex product lines and large budgets.</p>
+            </div>
+          </article>
+
+          <!-- Related Post 3 -->
+          <article class="card fade-in-up">
+            <div class="card__image">
+              <img src="/images/insights/creative-testing-thumb.jpg" alt="A/B testing dashboard for ad creative performance" loading="lazy" width="400" height="225">
+              <span class="card__tag">Creative</span>
+            </div>
+            <div class="card__body">
+              <p class="card__meta">October 5, 2025</p>
+              <h3 class="card__title"><a href="/insights/creative-testing-framework">A Framework for Systematic Creative Testing</a></h3>
+              <p class="card__excerpt">Move beyond random creative swaps. Learn the structured testing methodology our team uses to identify winning ad variations at scale.</p>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================
+         CTA BANNER
+         ============================================ -->
+    <section class="cta-banner" aria-label="Call to action">
+      <div class="cta-banner__bg" aria-hidden="true"></div>
+      <div class="container cta-banner__inner fade-in-up">
+        <h2 class="cta-banner__headline">Let's Find A Solution</h2>
+        <a href="/contact-us" class="btn btn--green btn--lg">Start the Conversation</a>
+      </div>
+    </section>
+
+</BaseLayout>

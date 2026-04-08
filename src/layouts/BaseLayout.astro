@@ -1,0 +1,70 @@
+---
+import SEOHead from '../components/SEOHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  canonical: string;
+  ogImage?: string;
+  ogType?: string;
+  robots?: string;
+  schema?: object;
+  hideNavigation?: boolean;
+  hideFooter?: boolean;
+}
+
+const { title, description, canonical, ogImage, ogType, robots, schema, hideNavigation = false, hideFooter = false } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <SEOHead
+    title={title}
+    description={description}
+    canonical={canonical}
+    ogImage={ogImage}
+    ogType={ogType}
+    robots={robots}
+    schema={schema}
+  />
+  <!-- A/B Test: push variants to GTM dataLayer -->
+  <script is:inline>
+  (function() {
+    var cookies = document.cookie.split(';');
+    var abTests = {};
+    cookies.forEach(function(cookie) {
+      var parts = cookie.trim().split('=');
+      if (parts[0].startsWith('ab-')) {
+        abTests[parts[0]] = parts[1];
+      }
+    });
+    if (Object.keys(abTests).length > 0) {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: 'ab_test_loaded',
+        abTests: abTests
+      });
+    }
+  })();
+  </script>
+</head>
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://sst.foundsm.com/ns.html?id=GTM-PG7TGGG" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+  {!hideNavigation && <Header />}
+  <main id="main-content">
+    <slot />
+  </main>
+  {!hideFooter && <Footer />}
+
+  <script is:inline src="/scripts/main.js"></script>
+
+  <!-- HubSpot Tracking Code -->
+  <script is:inline type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/5045186.js"></script>
+</body>
+</html>

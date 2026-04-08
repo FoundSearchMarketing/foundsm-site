@@ -1,0 +1,44 @@
+---
+interface FaqItem {
+  question: string;
+  answer?: any[];
+}
+
+interface Props {
+  heading?: string;
+  items?: FaqItem[];
+}
+
+const { heading, items = [] } = Astro.props;
+---
+
+<section class="section" aria-label={heading || 'FAQ'}>
+  <div class="container">
+    {heading && (
+      <div class="section-header section-header--center fade-in-up">
+        <h2>{heading}</h2>
+      </div>
+    )}
+    <div class="accordion fade-in-up" data-single-open="true">
+      {items.map((item, index) => (
+        <div class="accordion-item">
+          <button class="accordion-item__trigger" aria-expanded="false" aria-controls={`faq-panel-${index}`}>
+            <span class="accordion-item__title">{item.question}</span>
+            <svg class="accordion-item__icon" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="accordion-item__content" id={`faq-panel-${index}`} role="region">
+            <div class="accordion-item__body">
+              {item.answer?.map((block: any) => {
+                if (block._type === 'block') {
+                  const text = block.children?.map((child: any) => child.text).join('') || '';
+                  return <p>{text}</p>;
+                }
+                return null;
+              })}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

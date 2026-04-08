@@ -1,0 +1,214 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Our Approach | Found Search Marketing",
+  "url": "https://www.foundsm.com/our-approach",
+  "description": "Discover Found Search Marketing's approach to enterprise paid media. Our data-driven methodology delivers measurable ROI through cross-channel integration, transparent reporting, and continuous optimization.",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Found Search Marketing",
+    "url": "https://www.foundsm.com",
+    "logo": "https://www.foundsm.com/images/logo.svg"
+  }
+};
+---
+
+<BaseLayout
+  title="Our Approach | Found Search Marketing"
+  description="Discover Found Search Marketing's approach to enterprise paid media. Our data-driven methodology delivers measurable ROI through cross-channel integration, transparent reporting, and continuous optimization."
+  canonical="https://www.foundsm.com/our-approach"
+  schema={schema}
+>
+
+    <!-- ============================================
+         HERO SECTION
+         ============================================ -->
+    <section class="hero hero--short" aria-label="Hero">
+      <div class="hero__overlay" aria-hidden="true"></div>
+      <div class="container hero__content">
+        <div class="hero-stagger">
+          <h1 class="hero__headline">Our Approach</h1>
+        </div>
+        <div class="hero-stagger">
+          <p class="hero__subtitle">A proven methodology built on data intelligence, strategic execution, and relentless optimization &mdash; engineered to deliver measurable growth for enterprise brands.</p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================
+         8 KEY ADVANTAGES ACCORDION
+         ============================================ -->
+    <section class="section" aria-label="8 Key Advantages">
+      <div class="container">
+        <h2 class="section__heading fade-in-up">8 Key Advantages</h2>
+
+        <div class="accordion fade-in-up" data-single-open="true">
+
+          <!-- Advantage 1 -->
+          <div class="accordion-item">
+            <h3 class="accordion-item__heading">
+              <button class="accordion-item__trigger" aria-expanded="false" aria-controls="accordion-panel-1" id="accordion-header-1">
+                <span class="accordion-item__title">Enterprise-Level Expertise</span>
+                <svg class="accordion-item__icon" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M6 8L10 12L14 8" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </h3>
+            <div class="accordion-item__content" id="accordion-panel-1" role="region" aria-labelledby="accordion-header-1" hidden>
+              <div class="accordion-item__body">
+                <p>Our team has managed over $210 million in media spend across complex, multi-brand enterprise accounts. We understand the nuances of large-scale campaign architecture, governance requirements, and the cross-functional stakeholder alignment needed to succeed at the enterprise level. Every strategist on your account brings deep platform certifications and years of hands-on experience with high-budget programs.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Advantage 2 -->
+          <div class="accordion-item">
+            <h3 class="accordion-item__heading">
+              <button class="accordion-item__trigger" aria-expanded="false" aria-controls="accordion-panel-2" id="accordion-header-2">
+                <span class="accordion-item__title">Data-Driven Decision Making</span>
+                <svg class="accordion-item__icon" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M6 8L10 12L14 8" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </h3>
+            <div class="accordion-item__content" id="accordion-panel-2" role="region" aria-labelledby="accordion-header-2" hidden>
+              <div class="accordion-item__body">
+                <p>We never rely on intuition alone. Every recommendation is backed by rigorous data analysis, from audience segmentation and competitive intelligence to predictive modeling and attribution. Our data intelligence practice ensures that media investments are guided by evidence, not assumptions &mdash; so every dollar is allocated where it will drive the greatest return.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Advantage 3 -->
+          <div class="accordion-item">
+            <h3 class="accordion-item__heading">
+              <button class="accordion-item__trigger" aria-expanded="false" aria-controls="accordion-panel-3" id="accordion-header-3">
+                <span class="accordion-item__title">Cross-Channel Integration</span>
+                <svg class="accordion-item__icon" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M6 8L10 12L14 8" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </h3>
+            <div class="accordion-item__content" id="accordion-panel-3" role="region" aria-labelledby="accordion-header-3" hidden>
+              <div class="accordion-item__body">
+                <p>Siloed campaigns leave performance on the table. We orchestrate paid search, social, programmatic display, connected TV, and retail media into a unified strategy where each channel reinforces the others. Our cross-channel approach ensures consistent messaging, optimized frequency, and a seamless customer journey from first impression to conversion.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Advantage 4 -->
+          <div class="accordion-item">
+            <h3 class="accordion-item__heading">
+              <button class="accordion-item__trigger" aria-expanded="false" aria-controls="accordion-panel-4" id="accordion-header-4">
+                <span class="accordion-item__title">Transparent Reporting</span>
+                <svg class="accordion-item__icon" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M6 8L10 12L14 8" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </h3>
+            <div class="accordion-item__content" id="accordion-panel-4" role="region" aria-labelledby="accordion-header-4" hidden>
+              <div class="accordion-item__body">
+                <p>No black boxes, no vanity metrics. Our clients receive real-time access to custom dashboards built on Google Cloud and Looker Studio, providing complete visibility into spend, performance, and pipeline impact. We report on the KPIs that matter to your business and deliver actionable insights &mdash; not just data dumps &mdash; so you always know exactly where your investment stands.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Advantage 5 -->
+          <div class="accordion-item">
+            <h3 class="accordion-item__heading">
+              <button class="accordion-item__trigger" aria-expanded="false" aria-controls="accordion-panel-5" id="accordion-header-5">
+                <span class="accordion-item__title">Dedicated Account Teams</span>
+                <svg class="accordion-item__icon" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M6 8L10 12L14 8" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </h3>
+            <div class="accordion-item__content" id="accordion-panel-5" role="region" aria-labelledby="accordion-header-5" hidden>
+              <div class="accordion-item__body">
+                <p>You will never be passed off to a rotating roster of junior associates. Every client is supported by a dedicated team of senior strategists, analysts, and creative specialists who deeply understand your business, industry, and goals. Your team operates as a true extension of your marketing department, participating in planning sessions, QBRs, and strategic workshops alongside your internal stakeholders.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Advantage 6 -->
+          <div class="accordion-item">
+            <h3 class="accordion-item__heading">
+              <button class="accordion-item__trigger" aria-expanded="false" aria-controls="accordion-panel-6" id="accordion-header-6">
+                <span class="accordion-item__title">Proprietary Technology</span>
+                <svg class="accordion-item__icon" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M6 8L10 12L14 8" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </h3>
+            <div class="accordion-item__content" id="accordion-panel-6" role="region" aria-labelledby="accordion-header-6" hidden>
+              <div class="accordion-item__body">
+                <p>Our in-house technology stack gives clients an edge that off-the-shelf tools simply cannot match. From automated bid management and budget pacing algorithms to custom audience activation pipelines and first-party data integrations, our proprietary solutions are built to solve the specific challenges enterprise brands face in paid media at scale.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Advantage 7 -->
+          <div class="accordion-item">
+            <h3 class="accordion-item__heading">
+              <button class="accordion-item__trigger" aria-expanded="false" aria-controls="accordion-panel-7" id="accordion-header-7">
+                <span class="accordion-item__title">Continuous Optimization</span>
+                <svg class="accordion-item__icon" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M6 8L10 12L14 8" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </h3>
+            <div class="accordion-item__content" id="accordion-panel-7" role="region" aria-labelledby="accordion-header-7" hidden>
+              <div class="accordion-item__body">
+                <p>Launch day is just the beginning. Our teams run structured testing programs &mdash; from ad copy and creative variations to audience segments, bidding strategies, and landing page experiences. We analyze performance daily, identify opportunities weekly, and refine strategies monthly to ensure your campaigns are always improving and never stagnating.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Advantage 8 -->
+          <div class="accordion-item">
+            <h3 class="accordion-item__heading">
+              <button class="accordion-item__trigger" aria-expanded="false" aria-controls="accordion-panel-8" id="accordion-header-8">
+                <span class="accordion-item__title">Measurable ROI Focus</span>
+                <svg class="accordion-item__icon" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M6 8L10 12L14 8" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </h3>
+            <div class="accordion-item__content" id="accordion-panel-8" role="region" aria-labelledby="accordion-header-8" hidden>
+              <div class="accordion-item__body">
+                <p>Everything we do ties back to business outcomes. We align campaign goals with your revenue targets and build measurement frameworks that connect media performance to pipeline, customer acquisition cost, and lifetime value. Our commitment to measurable ROI means you can confidently demonstrate the impact of your paid media investment to leadership and the boardroom.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================
+         PARTNERSHIP BADGES
+         ============================================ -->
+    <section class="partners" aria-label="Our Partners">
+      <div class="container">
+        <h2 class="section__heading fade-in-up">Our Partners</h2>
+        <div class="partners__grid fade-in-up">
+          <div class="partners__badge">
+            <img src="/images/partners/google-marketing-platform.png" alt="Google Marketing Platform Partner" loading="lazy" width="160" height="80">
+          </div>
+          <div class="partners__badge">
+            <img src="/images/partners/google-cloud-partner.png" alt="Google Cloud Partner" loading="lazy" width="160" height="80">
+          </div>
+          <div class="partners__badge">
+            <img src="/images/partners/google-partner.png" alt="Google Partner" loading="lazy" width="160" height="80">
+          </div>
+          <div class="partners__badge">
+            <img src="/images/partners/microsoft-premier-elite-2026.png" alt="Microsoft Advertising Premier Elite Partner 2026" loading="lazy" width="160" height="80">
+          </div>
+          <div class="partners__badge">
+            <img src="/images/partners/meta-business-partner.png" alt="Meta Business Partner" loading="lazy" width="160" height="80">
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================
+         CTA BANNER
+         ============================================ -->
+    <section class="cta-banner" aria-label="Call to action">
+      <div class="cta-banner__bg" aria-hidden="true"></div>
+      <div class="container cta-banner__inner fade-in-up">
+        <h2 class="cta-banner__headline">Let's Find A Solution</h2>
+        <a href="/contact-us" class="btn btn--green btn--lg">Start the Conversation</a>
+      </div>
+    </section>
+
+</BaseLayout>

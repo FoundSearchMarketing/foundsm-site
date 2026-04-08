@@ -1,0 +1,29 @@
+---
+import HeroBlock from './HeroBlock.astro';
+import StatsBlock from './StatsBlock.astro';
+import FeaturesBlock from './FeaturesBlock.astro';
+import TestimonialBlock from './TestimonialBlock.astro';
+import CtaBlock from './CtaBlock.astro';
+import FormBlock from './FormBlock.astro';
+import TextBlock from './TextBlock.astro';
+import ImageTextBlock from './ImageTextBlock.astro';
+import LogoBarBlock from './LogoBarBlock.astro';
+import FaqBlock from './FaqBlock.astro';
+
+interface Props {
+  section: any;
+}
+
+const { section } = Astro.props;
+---
+
+{section._type === 'heroBlock' && <HeroBlock {...section} />}
+{section._type === 'statsBlock' && <StatsBlock {...section} />}
+{section._type === 'featuresBlock' && <FeaturesBlock {...section} />}
+{section._type === 'testimonialBlock' && <TestimonialBlock {...section} />}
+{section._type === 'ctaBlock' && <CtaBlock {...section} />}
+{section._type === 'formBlock' && <FormBlock {...section} />}
+{section._type === 'textBlock' && <TextBlock {...section} />}
+{section._type === 'imageTextBlock' && <ImageTextBlock {...section} />}
+{section._type === 'logoBarBlock' && <LogoBarBlock {...section} />}
+{section._type === 'faqBlock' && <FaqBlock {...section} />}

@@ -1,0 +1,23 @@
+{
+  "trailingSlash": false,
+
+  "redirects": [
+    { "source": "/index.html", "destination": "/", "permanent": true },
+    { "source": "/our-approach.html", "destination": "/our-approach", "permanent": true },
+    { "source": "/capabilities.html", "destination": "/capabilities", "permanent": true },
+    { "source": "/paid-media.html", "destination": "/capabilities/paid-media", "permanent": true },
+    { "source": "/data-activation.html", "destination": "/capabilities/data-activation", "permanent": true },
+    { "source": "/data-intelligence.html", "destination": "/capabilities/data-intelligence", "permanent": true },
+    { "source": "/performance-creative.html", "destination": "/capabilities/performance-creative", "permanent": true },
+    { "source": "/about-us.html", "destination": "/about-us", "permanent": true },
+    { "source": "/team.html", "destination": "/team", "permanent": true },
+    { "source": "/insights.html", "destination": "/insights", "permanent": true },
+    { "source": "/contact-us.html", "destination": "/contact-us", "permanent": true },
+    { "source": "/newsletter.html", "destination": "/newsletter", "permanent": true },
+    { "source": "/privacy-policy.html", "destination": "/privacy-policy", "permanent": true },
+    { "source": "/join-us", "destination": "/about-us", "permanent": true },
+    { "source": "/lp/:slug/", "destination": "/lp/:slug", "permanent": true },
+    { "source": "/events/lunch-and-learn/", "destination": "/events/lunch-and-learn", "permanent": true },
+    { "source": "/lunch-and-learn", "destination": "/events/lunch-and-learn", "permanent": false }
+  ]
+}

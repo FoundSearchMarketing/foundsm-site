@@ -1,0 +1,32 @@
+[
+  {
+    "wp_id": 32,
+    "name": "Blog",
+    "slug": "blog",
+    "count": 10
+  },
+  {
+    "wp_id": 33,
+    "name": "Quiz",
+    "slug": "quiz",
+    "count": 1
+  },
+  {
+    "wp_id": 29,
+    "name": "Tools and Guides",
+    "slug": "toolsandguides",
+    "count": 1
+  },
+  {
+    "wp_id": 31,
+    "name": "Webinars",
+    "slug": "webinars",
+    "count": 3
+  },
+  {
+    "wp_id": 30,
+    "name": "White Papers",
+    "slug": "whitepapers",
+    "count": 1
+  }
+]

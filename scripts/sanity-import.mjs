@@ -519,12 +519,33 @@ async function importPosts(posts) {
       };
     }
 
-    // 5. Write to Sanity
+    // 5. Validate body blocks — remove any malformed ones
+    doc.body = doc.body.filter((block) => {
+      if (block._type === 'block') {
+        // Ensure children array is valid
+        if (!block.children || block.children.length === 0) return false;
+        // Ensure all children have _type and _key
+        block.children = block.children.filter(
+          (c) => c._type && c._key && typeof c.text === 'string'
+        );
+        if (block.children.length === 0) return false;
+        // Ensure markDefs is an array
+        if (!Array.isArray(block.markDefs)) block.markDefs = [];
+      }
+      return true;
+    });
+
+    // 6. Write to Sanity
     try {
       await client.createOrReplace(doc);
-      console.log(`  ✓ ${post.title} (${body.length} blocks)`);
+      console.log(`  ✓ ${post.title} (${doc.body.length} blocks)`);
     } catch (err) {
       console.error(`  ✗ ${post.title}: ${err.message}`);
+      // Log the first few blocks for debugging
+      console.error(`    Body blocks: ${doc.body.length}`);
+      if (doc.body.length > 0) {
+        console.error(`    First block:`, JSON.stringify(doc.body[0]).substring(0, 200));
+      }
     }
   }
 }

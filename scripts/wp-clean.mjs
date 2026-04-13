@@ -50,61 +50,99 @@ function rewriteUrls(html, rewrites) {
 /**
  * Extract clean article content from Elementor HTML.
  *
- * Strategy: find all text-editor and image widgets by their data-widget_type
- * attribute, extract their inner content, and concatenate.
- *
- * We skip the first text-editor widgets that appear inside the header section
- * (post-info area) since those contain author/date metadata, not article content.
+ * Strategy: Extract all text-editor widget content blocks, then do a second
+ * pass to strip any remaining Elementor/div wrapper artifacts.
  */
 function extractCleanContent(elementorHtml) {
   const blocks = [];
 
-  // Extract text-editor widget contents
-  // Pattern: data-widget_type="text-editor.default"> followed by the content wrapper
-  // The actual content is inside the innermost div after the widget wrapper
-  const textEditorRegex =
-    /data-widget_type="text-editor\.default">\s*(?:<div[^>]*>\s*)*\t*([\s\S]*?)\t*\s*<\/div>\s*<\/div>/g;
+  // Phase 1: Extract content from text-editor widgets
+  // Split on widget type markers, then grab content from text-editor sections
+  const widgetSections = elementorHtml.split(/data-widget_type="/);
 
-  let match;
-  while ((match = textEditorRegex.exec(elementorHtml)) !== null) {
-    let content = match[1].trim();
+  for (let i = 1; i < widgetSections.length; i++) {
+    const section = widgetSections[i];
+    const widgetType = section.substring(0, section.indexOf('"'));
 
-    // Skip if it's just a navigation button or empty
-    if (!content || content.includes('← All Articles')) continue;
+    if (widgetType === 'text-editor.default') {
+      // Content starts right after 'text-editor.default">\n'
+      // and ends at the next </div> that closes the widget
+      let content = section.substring(section.indexOf('>') + 1);
 
-    // Skip author attribution lines that are just italic text with em-dash
-    if (content.startsWith('<em>—') || content.startsWith('<em>\u2014')) {
-      // This is a quote attribution, include it as part of the blockquote
-      blocks.push(`<figcaption>${content}</figcaption>`);
-      continue;
+      // Take content up to the closing </div> pattern
+      // The widget content ends where we see </div> followed by another element
+      content = content.replace(/<\/div>[\s\S]*$/, '');
+
+      content = content.trim();
+      if (!content) continue;
+
+      // Skip navigation buttons
+      if (content.includes('← All Articles')) continue;
+      // Skip "table of contents" header
+      if (content.includes('table of contents</b>')) continue;
+
+      // Detect blockquotes (bold text starting with opening curly quote)
+      const isQuote =
+        content.startsWith('<strong>\u201C') ||
+        content.startsWith('<strong>&#8220;');
+      if (isQuote) {
+        blocks.push(`<blockquote>${content}</blockquote>`);
+        continue;
+      }
+
+      // Detect quote attributions
+      const isAttribution =
+        content.startsWith('<em>—') ||
+        content.startsWith('<em>\u2014');
+      if (isAttribution) {
+        blocks.push(`<p>${content}</p>`);
+        continue;
+      }
+
+      blocks.push(content);
     }
-
-    // Skip if it's just a bold quote (will be captured as blockquote)
-    if (
-      content.startsWith('<strong>\u201C') ||
-      content.startsWith('<strong>&#8220;')
-    ) {
-      blocks.push(`<blockquote>${content}</blockquote>`);
-      continue;
-    }
-
-    blocks.push(content);
   }
-
-  // Extract standalone image widgets
-  const imageWidgetRegex =
-    /data-widget_type="image\.default">\s*[\s\S]*?<img[^>]+src="([^"]+)"[^>]*alt="([^"]*)"[^>]*>/g;
-
-  // We already have inline images from the text content, but let's not double-add
-  // Images inside text-editor widgets are already captured above
 
   let html = blocks.join('\n\n');
 
-  // Clean up empty headings (e.g., <h2> </h2> or <h2>&nbsp;</h2>)
+  // Phase 2: Strip any remaining Elementor/div artifacts
+  // Remove all div tags (opening and closing, with any attributes)
+  html = html.replace(/<div[^>]*>/gi, '');
+  html = html.replace(/<\/div>/gi, '');
+
+  // Remove Elementor-specific elements
+  html = html.replace(/<[^>]*class="[^"]*elementor[^"]*"[^>]*>/gi, '');
+  html = html.replace(/<[^>]*data-(?:elementor|widget|element|e-)[^>]*>/gi, '');
+
+  // Remove empty span wrappers with no meaningful attributes
+  html = html.replace(/<span\s*>/gi, '');
+  html = html.replace(/<\/span>/gi, '');
+
+  // Remove font tags (Elementor uses these for styling)
+  html = html.replace(/<\/?font[^>]*>/gi, '');
+
+  // Clean up empty headings
   html = html.replace(/<h([1-6])>\s*(&nbsp;|\s)*<\/h[1-6]>/g, '');
 
-  // Clean up excessive whitespace
+  // Clean up empty paragraphs
+  html = html.replace(/<p>\s*(&nbsp;|\s)*<\/p>/g, '');
+
+  // Remove srcset and sizes attributes (we just need src)
+  html = html.replace(/\s*srcset="[^"]*"/gi, '');
+  html = html.replace(/\s*sizes="[^"]*"/gi, '');
+
+  // Remove inline styles
+  html = html.replace(/\s*style="[^"]*"/gi, '');
+
+  // Remove class attributes
+  html = html.replace(/\s*class="[^"]*"/gi, '');
+
+  // Remove data- attributes
+  html = html.replace(/\s*data-[a-z-]+="[^"]*"/gi, '');
+
+  // Remove excessive whitespace
   html = html.replace(/\n{3,}/g, '\n\n');
+  html = html.replace(/\t+/g, '');
 
   return html.trim();
 }

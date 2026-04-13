@@ -1,0 +1,32 @@
+{
+  "name": "Found Search Marketing Website",
+  "description": "Enterprise paid media agency website built with Astro and Sanity CMS",
+  "techStack": {
+    "framework": "Astro 5.x",
+    "cms": "Sanity v3",
+    "hosting": "Vercel",
+    "analytics": "Google Tag Manager",
+    "forms": "HubSpot",
+    "node": ">=20.0.0"
+  },
+  "recommendedSkills": [
+    "engineering:deploy-checklist",
+    "design:accessibility-review"
+  ],
+  "guidelines": "GUIDELINES.md",
+  "development": {
+    "scripts": {
+      "dev": "npm run dev",
+      "build": "npm run build",
+      "preview": "npm run preview"
+    },
+    "siteUrl": "http://localhost:3000",
+    "sanityStudio": "cd studio && npm run dev"
+  },
+  "keyFiles": {
+    "guidelines": "GUIDELINES.md",
+    "readme": "README.md",
+    "astroConfig": "astro.config.mjs",
+    "sanityConfig": "studio/sanity.config.ts"
+  }
+}

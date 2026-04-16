@@ -99,13 +99,20 @@ Sanity → Manage → API → Webhooks → **Create webhook** — do this **twic
 | ----------------- | ------------------------------------------------------------------------------------- | ----------------------------------------- |
 | Name              | `Rebuild staging site`                                                                | `Rebuild production site`                 |
 | Dataset           | `staging`                                                                             | `production`                              |
-| URL               | `https://api.github.com/repos/<OWNER>/<REPO>/dispatches`                              | same                                      |
+| URL               | `https://api.github.com/repos/FoundSearchMarketing/foundsm-site/dispatches`           | same                                      |
 | HTTP method       | POST                                                                                  | POST                                      |
 | Trigger on        | Create, Update, Delete                                                                | Create, Update, Delete                    |
 | HTTP Headers      | `Authorization: Bearer <GH_TOKEN>` and `Accept: application/vnd.github.v3+json`       | same                                      |
 | Projection (body) | `{ "event_type": "sanity-content-update", "client_payload": { "dataset": "staging" } }` | same but `"dataset": "production"`      |
 
-`<GH_TOKEN>` is a GitHub personal access token (classic) with `repo` scope, or a fine-grained token with Actions: Write on this repo. Store it **only** inside the Sanity webhook config; do not commit it.
+**`<GH_TOKEN>` setup:**
+1. Go to github.com → Settings → Developer settings → Personal access tokens → Tokens (classic)
+2. Click **Generate new token (classic)**
+3. Name it something like `Sanity webhook`
+4. Check only `repo` scope
+5. Click **Generate token** and copy it immediately (you won't see it again)
+6. Paste it into the Authorization header in Sanity (replace `<GH_TOKEN>`)
+7. Do **NOT** commit this token anywhere — it lives only in Sanity's webhook config
 
 ## Local Development
 

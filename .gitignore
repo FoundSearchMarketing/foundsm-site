@@ -14,6 +14,10 @@ pnpm-lock.yaml
 studio/node_modules/
 studio/bun.lock
 studio/.sanity/
+studio/dist/
+
+# Claude Code worktrees
+.claude/worktrees/
 
 # Downloaded media (large binary files)
 scripts/wp-export/images/

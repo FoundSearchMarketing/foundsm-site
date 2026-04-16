@@ -3,13 +3,29 @@ import { structureTool } from 'sanity/structure';
 import { visionTool } from '@sanity/vision';
 import { schemaTypes } from './schemas';
 
-export default defineConfig({
-  name: 'foundsm',
-  title: 'Found Search Marketing',
-  projectId: 'vzneqxsx',
-  dataset: 'production',
-  plugins: [structureTool(), visionTool()],
-  schema: {
-    types: schemaTypes,
+const projectId = 'vzneqxsx';
+
+export default defineConfig([
+  {
+    name: 'production',
+    title: 'Production',
+    projectId,
+    dataset: 'production',
+    basePath: '/production',
+    plugins: [structureTool(), visionTool()],
+    schema: {
+      types: schemaTypes,
+    },
   },
-});
+  {
+    name: 'staging',
+    title: 'Staging',
+    projectId,
+    dataset: 'staging',
+    basePath: '/staging',
+    plugins: [structureTool(), visionTool()],
+    schema: {
+      types: schemaTypes,
+    },
+  },
+]);

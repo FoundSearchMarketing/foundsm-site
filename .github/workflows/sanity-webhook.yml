@@ -1,0 +1,64 @@
+name: Sanity Content Rebuild
+
+# Triggered by Sanity when content changes. Sanity posts to the GitHub
+# "repository_dispatch" API endpoint with an event_type of
+# "sanity-content-update" and a payload that tells us which dataset changed.
+#
+# Expected payload shape (configure in the Sanity webhook "Payload" field):
+#   { "dataset": "production" }   // or "staging"
+#
+# Sanity webhook URL:
+#   https://api.github.com/repos/<OWNER>/<REPO>/dispatches
+# Sanity webhook headers:
+#   Authorization: Bearer <GITHUB_PERSONAL_ACCESS_TOKEN>   (scope: repo)
+#   Accept: application/vnd.github.v3+json
+# Sanity webhook body (use the "Projection" to control shape):
+#   { "event_type": "sanity-content-update", "client_payload": { "dataset": "^._type match ... etc" } }
+#
+# Simpler: hard-code one webhook per dataset (one for production, one for staging).
+
+on:
+  repository_dispatch:
+    types: [sanity-content-update]
+
+jobs:
+  route:
+    name: Route rebuild to the correct environment
+    runs-on: ubuntu-latest
+    steps:
+      - name: Determine target dataset
+        id: target
+        run: |
+          DATASET="${{ github.event.client_payload.dataset }}"
+          if [ -z "$DATASET" ]; then
+            echo "No dataset in payload. Defaulting to production."
+            DATASET="production"
+          fi
+          echo "dataset=$DATASET" >> $GITHUB_OUTPUT
+          echo "Sanity content changed in dataset: $DATASET"
+
+      - name: Trigger production deploy
+        if: steps.target.outputs.dataset == 'production'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'deploy-production.yml',
+              ref: 'main',
+            });
+            core.info('Dispatched deploy-production.yml on main');
+
+      - name: Trigger staging deploy
+        if: steps.target.outputs.dataset == 'staging'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'deploy-staging.yml',
+              ref: 'develop',
+            });
+            core.info('Dispatched deploy-staging.yml on develop');

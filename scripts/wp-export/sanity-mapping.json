@@ -1,0 +1,105 @@
+{
+  "authors": [
+    {
+      "_id": "author-adam",
+      "name": "Adam Persinger",
+      "slug": "adam",
+      "title": "Head of Strategic Media"
+    },
+    {
+      "_id": "author-julie",
+      "name": "Julie Warnecke",
+      "slug": "julie",
+      "title": "CEO of Found Search Marketing"
+    },
+    {
+      "_id": "author-kelley",
+      "name": "Kelley Swart",
+      "slug": "kelley",
+      "title": ""
+    },
+    {
+      "_id": "author-kelsey",
+      "name": "Kelsey Connor",
+      "slug": "kelsey",
+      "title": "Director, Marketing & Brand Strategy"
+    },
+    {
+      "_id": "author-maria",
+      "name": "Maria Escobedo",
+      "slug": "maria",
+      "title": "Associate Data Analyst"
+    },
+    {
+      "_id": "author-nicholas",
+      "name": "Nicholas Hoium",
+      "slug": "nicholas",
+      "title": "Head of Data Engineering"
+    },
+    {
+      "_id": "author-ryan",
+      "name": "Ryan Eme",
+      "slug": "ryan",
+      "title": "Director of Data Intelligence"
+    }
+  ],
+
+  "authorLookup": {
+    "Adam Persinger": "author-adam",
+    "Julie Warnecke": "author-julie",
+    "Kelley Swart": "author-kelley",
+    "Kelsey Connor": "author-kelsey",
+    "Maria Escobedo": "author-maria",
+    "Nicholas Hoium": "author-nicholas",
+    "Ryan Eme": "author-ryan"
+  },
+
+  "categories": [
+    { "_id": "category-ai", "title": "AI", "slug": "ai", "wp_id": 21 },
+    { "_id": "category-industry-insights", "title": "Industry Insights", "slug": "industry-insights", "wp_id": 14 },
+    { "_id": "category-life-at-found", "title": "Life at Found", "slug": "life-at-found", "wp_id": 19 },
+    { "_id": "category-marketing-analytics-tracking", "title": "Marketing Analytics & Tracking", "slug": "marketing-analytics-tracking", "wp_id": 17 },
+    { "_id": "category-meta", "title": "Meta", "slug": "meta", "wp_id": 20 },
+    { "_id": "category-paid-media-strategy", "title": "Paid Media Strategy", "slug": "paid-media-strategy", "wp_id": 15 },
+    { "_id": "category-social-advertising", "title": "Social Advertising", "slug": "social-advertising", "wp_id": 16 }
+  ],
+
+  "categoryLookup": {
+    "21": "category-ai",
+    "14": "category-industry-insights",
+    "19": "category-life-at-found",
+    "17": "category-marketing-analytics-tracking",
+    "20": "category-meta",
+    "15": "category-paid-media-strategy",
+    "16": "category-social-advertising"
+  },
+
+  "urlRewrites": [
+    { "from": "https://foundsm.com/insights/", "to": "/insights/" },
+    { "from": "https://foundsm.com/capabilities/", "to": "/capabilities/" },
+    { "from": "https://foundsm.com/our-approach/", "to": "/our-approach" },
+    { "from": "https://foundsm.com/contact-us/", "to": "/contact-us" },
+    { "from": "https://foundsm.com/about-us/", "to": "/about-us" },
+    { "from": "https://foundsm.com/team/", "to": "/team" },
+    { "from": "https://foundsm.com/newsletter/", "to": "/newsletter" },
+    { "from": "https://foundsm.com/whitepapers/", "to": "/whitepapers/" },
+    { "from": "https://foundsm.com/signal-quiz/", "to": "/signal-quiz" },
+    { "from": "https://foundsm.com/dataconnect/", "to": "/dataconnect" }
+  ],
+
+  "elementorWidgetsToExtract": [
+    "text-editor.default",
+    "image.default"
+  ],
+
+  "elementorWidgetsToSkip": [
+    "button.default",
+    "spacer.default",
+    "divider.default",
+    "post-navigation.default",
+    "post-info.default",
+    "theme-post-title.default",
+    "icon.default",
+    "heading.default"
+  ]
+}

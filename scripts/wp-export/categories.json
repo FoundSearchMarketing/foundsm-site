@@ -1,0 +1,58 @@
+[
+  {
+    "wp_id": 21,
+    "name": "AI",
+    "slug": "ai",
+    "description": "",
+    "count": 2
+  },
+  {
+    "wp_id": 14,
+    "name": "Industry Insights",
+    "slug": "industry-insights",
+    "description": "",
+    "count": 7
+  },
+  {
+    "wp_id": 19,
+    "name": "Life at Found",
+    "slug": "life-at-found",
+    "description": "",
+    "count": 1
+  },
+  {
+    "wp_id": 17,
+    "name": "Marketing Analytics &amp; Tracking",
+    "slug": "marketing-analytics-tracking",
+    "description": "",
+    "count": 5
+  },
+  {
+    "wp_id": 20,
+    "name": "Meta",
+    "slug": "meta",
+    "description": "",
+    "count": 1
+  },
+  {
+    "wp_id": 15,
+    "name": "Paid Media Strategy",
+    "slug": "paid-media-strategy",
+    "description": "",
+    "count": 3
+  },
+  {
+    "wp_id": 16,
+    "name": "Social Advertising",
+    "slug": "social-advertising",
+    "description": "",
+    "count": 0
+  },
+  {
+    "wp_id": 1,
+    "name": "Uncategorized",
+    "slug": "uncategorized",
+    "description": "",
+    "count": 0
+  }
+]

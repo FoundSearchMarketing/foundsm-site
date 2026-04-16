@@ -1,0 +1,29 @@
+# Generated/Build files
+node_modules/
+*.lock
+bun.lock
+yarn.lock
+pnpm-lock.yaml
+
+# Development
+.env
+.env.local
+.env.*.local
+
+# Sanity
+studio/node_modules/
+studio/bun.lock
+studio/.sanity/
+
+# Downloaded media (large binary files)
+scripts/wp-export/images/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo

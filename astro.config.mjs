@@ -3,7 +3,7 @@ import sanity from '@sanity/astro';
 import vercel from '@astrojs/vercel';
 
 const SANITY_PROJECT_ID = process.env.SANITY_PROJECT_ID || 'vzneqxsx';
-const SANITY_DATASET = process.env.SANITY_DATASET || 'production';
+const SANITY_DATASET = process.env.SANITY_DATASET || 'staging';
 
 export default defineConfig({
   output: 'static',

@@ -545,6 +545,14 @@ p + p {
     visibility var(--transition-base);
 }
 
+.site-header__submenu::before {
+  content: "";
+  position: absolute;
+  inset-block-end: 100%;
+  inset-inline: 0;
+  block-size: 10px;
+}
+
 .site-header__submenu > li:not(:last-child) {
   border-block-end: 1px solid rgba(26, 26, 26, 0.25);
 }
@@ -1143,9 +1151,9 @@ p + p {
 
 .site-footer__address {
   color: var(--color-dark);
-  font-size: 1rem;
+  font-size: 1.25rem;
   font-style: normal;
-  line-height: 1.875rem;
+  line-height: 2.25rem;
 }
 
 .site-footer__address a {
@@ -1159,18 +1167,18 @@ p + p {
 
 .site-footer__heading {
   font-family: var(--font-body);
-  font-size: clamp(1.5rem, 1.8vw, 1.875rem);
+  font-size: 1.875rem;
   font-weight: 700;
   letter-spacing: -0.0125rem;
-  line-height: clamp(2rem, 2.4vw, 2.5rem);
+  line-height: 2.5rem;
   color: var(--color-dark);
 }
 
 .site-footer__copy {
   max-inline-size: 25rem;
   color: var(--color-dark);
-  font-size: 1rem;
-  line-height: 1.875rem;
+  font-size: 1.25rem;
+  line-height: 2.25rem;
 }
 
 .site-footer__button,
@@ -1183,9 +1191,9 @@ p + p {
   border-radius: var(--radius-pill);
   background: var(--color-dark);
   color: var(--color-white);
-  font-size: 1.125rem;
+  font-size: 1.25rem;
   font-weight: 500;
-  line-height: 1.25rem;
+  line-height: 1.5rem;
   cursor: pointer;
   transition:
     background-color var(--transition-fast),
@@ -1345,6 +1353,24 @@ p + p {
     max-inline-size: 34rem;
   }
 
+  .site-footer__heading {
+    font-size: 1.5rem;
+    line-height: 2rem;
+    letter-spacing: -0.03125rem;
+  }
+
+  .site-footer__copy,
+  .site-footer__address {
+    font-size: 1.125rem;
+    line-height: 1.875rem;
+  }
+
+  .site-footer__button,
+  .site-footer__newsletter-button {
+    font-size: 1rem;
+    line-height: 1.25rem;
+  }
+
   .site-footer__lower-inner {
     flex-direction: column;
     text-align: center;
@@ -1363,7 +1389,7 @@ p + p {
 
   .site-footer__copy,
   .site-footer__address {
-    font-size: 1rem;
+    font-size: 1.125rem;
     line-height: 1.875rem;
   }
 

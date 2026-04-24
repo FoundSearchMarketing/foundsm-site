@@ -169,6 +169,17 @@
       setMenuOpen(!header.classList.contains("is-menu-open"));
     });
 
+    const closeTimers = new WeakMap<HTMLElement, number>();
+    const HOVER_CLOSE_DELAY = 150;
+
+    const cancelCloseTimer = (item: HTMLElement) => {
+      const timer = closeTimers.get(item);
+      if (timer !== undefined) {
+        window.clearTimeout(timer);
+        closeTimers.delete(item);
+      }
+    };
+
     submenuItems.forEach((item) => {
       const toggle = item.querySelector<HTMLButtonElement>(".site-header__submenu-toggle");
       if (!toggle) return;
@@ -177,6 +188,7 @@
         event.preventDefault();
         event.stopPropagation();
 
+        cancelCloseTimer(item);
         const open = !item.classList.contains("is-submenu-open");
         closeAllSubmenus(open ? item : null);
         setSubmenuOpen(item, open);
@@ -184,6 +196,7 @@
 
       item.addEventListener("mouseenter", () => {
         if (!mobileQuery.matches) {
+          cancelCloseTimer(item);
           closeAllSubmenus(item);
           setSubmenuOpen(item, true);
         }
@@ -191,7 +204,12 @@
 
       item.addEventListener("mouseleave", () => {
         if (!mobileQuery.matches) {
-          setSubmenuOpen(item, false);
+          cancelCloseTimer(item);
+          const timer = window.setTimeout(() => {
+            setSubmenuOpen(item, false);
+            closeTimers.delete(item);
+          }, HOVER_CLOSE_DELAY);
+          closeTimers.set(item, timer);
         }
       });
 

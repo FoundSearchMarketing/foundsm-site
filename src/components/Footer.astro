@@ -1,91 +1,96 @@
 ---
-interface Props {
-  emailId?: string;
-}
-
-const { emailId = "footer-email" } = Astro.props;
 ---
 
-<footer class="site-footer" aria-label="Site footer">
-  <div class="container">
-
-    <!-- Footer Top -->
-    <div class="footer__top">
-
-      <!-- Column 1: Logo, Tagline, Contact, Social -->
-      <div class="footer__col footer__col--brand">
-        <a href="/" class="footer__logo" aria-label="Found Search Marketing - Home">
-          <svg class="footer__logo-icon" width="32" height="32" viewBox="0 0 32 32" aria-hidden="true">
-            <rect width="32" height="32" rx="6" fill="#2ECC71"/>
-            <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" fill="#fff" font-size="16" font-weight="700">F</text>
-          </svg>
-          <span class="footer__logo-text">Found<span class="footer__logo-text--accent">SM</span></span>
-        </a>
-        <p class="footer__tagline">An Enterprise Paid Media Agency</p>
-
-        <address class="footer__contact">
-          <p>8475 Nightfall Lane, Suite 200<br>Fishers, IN 46037</p>
-          <p><a href="mailto:info@foundsm.com">info@foundsm.com</a></p>
-          <p><a href="tel:+13177212229">1.317.721.2229</a></p>
-        </address>
-
-        <div class="footer__social" aria-label="Social media links">
-          <a href="https://www.facebook.com/foundsm/" class="footer__social-link" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
-            <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M18 10a8 8 0 10-9.25 7.9v-5.59H6.78V10h1.97V8.22c0-1.94 1.16-3.02 2.93-3.02.85 0 1.74.15 1.74.15v1.91h-.98c-.97 0-1.27.6-1.27 1.21V10h2.15l-.34 2.31h-1.81v5.59A8 8 0 0018 10z" fill="currentColor"/></svg>
+<footer class="site-footer">
+  <div class="site-footer__upper">
+    <div class="site-footer__inner">
+      <div class="site-footer__columns">
+        <section class="site-footer__column" aria-labelledby="footer-brand-title">
+          <h2 class="site-footer__sr-only" id="footer-brand-title">Found Search Marketing</h2>
+          <a class="site-footer__brand" href="/" aria-label="Found Search Marketing - Home">
+            <img class="site-footer__logo" src="/images/logo.svg" alt="Found Search Marketing" width="250" height="52" loading="lazy" />
           </a>
-          <a href="https://www.instagram.com/found_sm/" class="footer__social-link" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
-            <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><rect x="2" y="2" width="16" height="16" rx="5" stroke="currentColor" stroke-width="1.5" fill="none"/><circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="1.5" fill="none"/><circle cx="14.5" cy="5.5" r="1" fill="currentColor"/></svg>
-          </a>
-          <a href="https://www.linkedin.com/company/found-search-marketing/" class="footer__social-link" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
-            <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M4.5 3a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM3 8h3v9H3V8zm5.5 0H11v1.2h.04c.35-.66 1.2-1.35 2.46-1.35 2.63 0 3.12 1.73 3.12 3.98V17h-3v-4.58c0-1.09-.02-2.5-1.52-2.5-1.53 0-1.76 1.19-1.76 2.42V17h-3V8z" fill="currentColor"/></svg>
-          </a>
-          <a href="https://x.com/FoundSM" class="footer__social-link" aria-label="X (formerly Twitter)" target="_blank" rel="noopener noreferrer">
-            <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M11.46 8.56L17.47 2h-1.42l-5.22 5.7L6.6 2H2l6.3 8.62L2 18h1.42l5.51-6.01L13.4 18H18l-6.54-9.44zm-1.95 2.13l-.64-.86L4.12 3.1h2.19l4.1 5.51.64.86 5.33 7.16h-2.19l-4.68-6.94z" fill="currentColor"/></svg>
-          </a>
-        </div>
-      </div>
 
-      <!-- Column 2: Quick Links -->
-      <div class="footer__col footer__col--links">
-        <h3 class="footer__col-heading">Quick Links</h3>
-        <ul class="footer__link-list">
-          <li><a href="/our-approach">Our Approach</a></li>
-          <li><a href="/capabilities">Capabilities</a></li>
-          <li><a href="/insights">Insights</a></li>
-          <li><a href="/about-us">About Us</a></li>
-          <li><a href="/contact-us">Contact Us</a></li>
-        </ul>
-      </div>
+          <ul class="site-footer__socials" role="list" aria-label="Social links">
+            <li>
+              <a class="site-footer__social-link" href="https://www.facebook.com/foundsm/" target="_blank" rel="noreferrer" aria-label="Facebook">
+                <svg viewBox="0 0 320 512" aria-hidden="true"><path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"/></svg>
+              </a>
+            </li>
+            <li>
+              <a class="site-footer__social-link" href="https://www.instagram.com/found_sm/" target="_blank" rel="noreferrer" aria-label="Instagram">
+                <svg viewBox="0 0 448 512" aria-hidden="true"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg>
+              </a>
+            </li>
+            <li>
+              <a class="site-footer__social-link" href="https://www.linkedin.com/company/found-search-marketing/" target="_blank" rel="noreferrer" aria-label="LinkedIn">
+                <svg viewBox="0 0 448 512" aria-hidden="true"><path d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3zM447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.88-48.3 94 0 111.28 61.9 111.28 142.3V448z"/></svg>
+              </a>
+            </li>
+            <li>
+              <a class="site-footer__social-link" href="https://x.com/FoundSM" target="_blank" rel="noreferrer" aria-label="X">
+                <svg viewBox="0 0 512 512" aria-hidden="true"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/></svg>
+              </a>
+            </li>
+          </ul>
 
-      <!-- Column 3: Newsletter Signup -->
-      <div class="footer__col footer__col--newsletter">
-        <h3 class="footer__col-heading">Stay in the Know</h3>
-        <p class="footer__newsletter-text">Get the latest insights on paid media, data strategy, and performance marketing delivered to your inbox.</p>
+          <address class="site-footer__address">
+            8475 Nightfall Lane<br>
+            Suite 200<br>
+            Fishers, IN 46037<br>
+            <a href="mailto:info@foundsm.com">info@foundsm.com</a><br>
+            <a href="tel:317-721-2229">1.317.721.2229</a>
+          </address>
+        </section>
 
-        <!-- HubSpot Form Placeholder -->
-        <form class="footer__newsletter-form" aria-label="Newsletter signup" data-hubspot-form-id="placeholder">
-          <label for={emailId} class="sr-only">Email address</label>
-          <div class="footer__newsletter-input-wrap">
-            <input type="email" id={emailId} name="email" placeholder="Your email address" required autocomplete="email" class="footer__newsletter-input" />
-            <button type="submit" class="footer__newsletter-btn" aria-label="Subscribe to newsletter">
-              Go
-              <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 7H11M11 7L7 3M11 7L7 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
+        <section class="site-footer__column" aria-labelledby="footer-conversation-title">
+          <h2 class="site-footer__heading" id="footer-conversation-title">Start the Conversation</h2>
+          <p class="site-footer__copy">
+            We're ready to talk about all the ways we can help elevate your paid media approach. Let us know a little bit about yourself to see if we're a good fit.
+          </p>
+          <a class="site-footer__button" href="/contact-us/">Let's Get Started</a>
+        </section>
+
+        <section class="site-footer__column" aria-labelledby="footer-newsletter-title">
+          <h2 class="site-footer__heading" id="footer-newsletter-title">Sign Up for Our Newsletter</h2>
+          <div class="site-footer__newsletter-card">
+            <form class="site-footer__newsletter-form" action="#">
+              <label class="site-footer__label" for="footer-newsletter-email">Email address</label>
+              <div class="site-footer__field-row">
+                <input
+                  class="site-footer__input"
+                  id="footer-newsletter-email"
+                  name="email"
+                  type="email"
+                  placeholder="name@company.com"
+                  autocomplete="email"
+                />
+                <button class="site-footer__newsletter-button" type="button">Join the List</button>
+              </div>
+            </form>
           </div>
-        </form>
-      </div>
-
-    </div>
-
-    <!-- Footer Bottom -->
-    <div class="footer__bottom">
-      <p class="footer__copyright">&copy; 2006&ndash;2026, Found Search Marketing. All rights reserved.</p>
-      <div class="footer__legal">
-        <a href="/privacy-policy" class="footer__legal-link">Privacy Policy</a>
-        <!-- OneTrust "Do Not Sell or Share My Personal Information" button -->
-        <button class="footer__legal-link footer__do-not-sell" id="ot-sdk-btn" aria-label="Do Not Sell or Share My Personal Information">Do Not Sell or Share My Personal Information</button>
+        </section>
       </div>
     </div>
+  </div>
 
+  <div class="site-footer__lower">
+    <div class="site-footer__inner site-footer__lower-inner">
+      <p class="site-footer__copyright">&copy; 2006&ndash;2026, Found Search Marketing. All rights reserved.</p>
+
+      <nav aria-label="Footer legal">
+        <ul class="site-footer__legal" role="list">
+          <li class="site-footer__legal-item">
+            <a class="site-footer__legal-link" href="/about-us/">Career Opportunities</a>
+          </li>
+          <li class="site-footer__legal-item">
+            <a class="site-footer__legal-link" href="/privacy-policy/">Privacy Policy</a>
+          </li>
+          <li class="site-footer__legal-item">
+            <button class="site-footer__cookie" id="ot-sdk-btn" type="button">Cookie Settings</button>
+          </li>
+        </ul>
+      </nav>
+    </div>
   </div>
 </footer>

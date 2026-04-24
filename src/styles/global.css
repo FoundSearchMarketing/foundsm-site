@@ -670,6 +670,13 @@ p + p {
   transform-origin: left center;
 }
 
+/* Dark-hero pages: pull the page content up under the sticky white header so
+   the hero's black background bleeds behind it (no visible seam between
+   header and hero). The hero itself adds top padding to clear the header. */
+.page--dark-hero main {
+  margin-block-start: calc(-1 * var(--header-height));
+}
+
 /* Mobile menu open state */
 .site-header.is-menu-open {
   background: rgba(255, 255, 255, 0.985);

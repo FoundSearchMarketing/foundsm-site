@@ -283,86 +283,7 @@ document.addEventListener('DOMContentLoaded', () => {
     elements.forEach(el => observer.observe(el));
   }
 
-  // =========================================================
-  // 7. STICKY NAVIGATION
-  // Add .scrolled class after 100px scroll
-  // =========================================================
-  function initStickyNav() {
-    const nav = document.querySelector('.site-header');
-    if (!nav) return;
-
-    let ticking = false;
-
-    function onScroll() {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          if (window.scrollY > 100) {
-            nav.classList.add('scrolled');
-          } else {
-            nav.classList.remove('scrolled');
-          }
-          ticking = false;
-        });
-        ticking = true;
-      }
-    }
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    // Check initial state
-    onScroll();
-  }
-
-  // =========================================================
-  // 8. MOBILE MENU
-  // Hamburger toggle, slide-in, close on link click
-  // =========================================================
-  function initMobileMenu() {
-    const toggle = document.querySelector('.navbar__hamburger');
-    const menu = document.querySelector('.navbar__menu');
-    if (!toggle || !menu) return;
-
-    function openMenu() {
-      menu.classList.add('is-open');
-      toggle.classList.add('is-active');
-      toggle.setAttribute('aria-expanded', 'true');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeMenu() {
-      menu.classList.remove('is-open');
-      toggle.classList.remove('is-active');
-      toggle.setAttribute('aria-expanded', 'false');
-      document.body.style.overflow = '';
-    }
-
-    toggle.addEventListener('click', () => {
-      const isOpen = menu.classList.contains('is-open');
-      isOpen ? closeMenu() : openMenu();
-    });
-
-    // Close on nav link click
-    menu.addEventListener('click', (e) => {
-      if (e.target.closest('a') && !e.target.closest('.navbar__item--dropdown')) {
-        closeMenu();
-      }
-    });
-
-    // Handle dropdown submenus in mobile
-    menu.addEventListener('click', (e) => {
-      const dropdownToggle = e.target.closest('.navbar__dropdown-toggle');
-      if (!dropdownToggle) return;
-      e.preventDefault();
-      const parentItem = dropdownToggle.closest('.navbar__item--dropdown');
-      const submenu = dropdownToggle.nextElementSibling;
-      if (parentItem) {
-        parentItem.classList.toggle('is-open');
-      }
-      if (submenu) {
-        submenu.classList.toggle('is-open');
-        dropdownToggle.classList.toggle('is-open');
-      }
-    });
-  }
+  // Sticky nav + mobile menu behavior moved to Header.astro inline script.
 
   // =========================================================
   // 9. BLOG CATEGORY FILTERING (Insights page)
@@ -473,8 +394,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // =========================================================
   // INITIALIZE ALL MODULES
   // =========================================================
-  initStickyNav();
-  initMobileMenu();
   initSmoothScroll();
   initHeroStagger();
   initTypewriter();

@@ -14,9 +14,10 @@ interface Props {
   schema?: object;
   hideNavigation?: boolean;
   hideFooter?: boolean;
+  bodyClass?: string;
 }
 
-const { title, description, canonical, ogImage, ogType, robots, schema, hideNavigation = false, hideFooter = false } = Astro.props;
+const { title, description, canonical, ogImage, ogType, robots, schema, hideNavigation = false, hideFooter = false, bodyClass } = Astro.props;
 ---
 
 <!DOCTYPE html>
@@ -52,7 +53,7 @@ const { title, description, canonical, ogImage, ogType, robots, schema, hideNavi
   })();
   </script>
 </head>
-<body>
+<body class={bodyClass}>
   <!-- Google Tag Manager (noscript) -->
   <noscript><iframe src="https://sst.foundsm.com/ns.html?id=GTM-PG7TGGG" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 

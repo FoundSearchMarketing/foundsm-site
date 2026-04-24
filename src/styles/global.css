@@ -45,7 +45,9 @@
 
   /* Layout */
   --max-width: 75rem;
+  --content-max-width: 87.5rem;
   --gutter: clamp(1rem, 3vw, 2rem);
+  --page-gutter: clamp(1rem, 2.2vw, 1.5625rem);
   --radius: 0.5rem;
   --radius-lg: 1rem;
   --radius-pill: 50rem;
@@ -54,14 +56,19 @@
   --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
   --duration: 0.3s;
   --transition-fast: 180ms ease;
-  --transition-base: 240ms ease;
+  --transition-base: 220ms ease;
 
   /* Header */
   --header-height: 5.3125rem;
-  --header-gutter: clamp(1rem, 2.2vw, 1.5625rem);
-  --transition-fast: 180ms ease;
-  --transition-base: 220ms ease;
   --z-header: 40;
+}
+
+@media (max-width: 1024px) {
+  :root { --content-max-width: 64rem; }
+}
+
+@media (max-width: 767px) {
+  :root { --content-max-width: 100%; }
 }
 
 /* --------------------------------------------------------------------------
@@ -388,10 +395,11 @@ p + p {
   grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: var(--space-sm);
-  inline-size: 100%;
+  inline-size: min(calc(100% - (2 * var(--page-gutter))), var(--content-max-width));
   min-block-size: var(--header-height);
   margin-inline: auto;
-  padding-inline: var(--header-gutter);
+  padding-block: 1.25rem;
+  padding-inline-end: 1.5625rem;
 }
 
 .site-header__brand {
@@ -705,7 +713,7 @@ p + p {
     border-radius: 0;
     background: var(--color-white);
     box-shadow: none;
-    padding: 0 var(--header-gutter) var(--space-sm);
+    padding: 0 var(--page-gutter) var(--space-sm);
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
@@ -1067,7 +1075,7 @@ p + p {
 }
 
 .site-footer__inner {
-  inline-size: min(calc(100% - (2 * var(--page-gutter))), 87.5rem);
+  inline-size: min(calc(100% - (2 * var(--page-gutter))), var(--content-max-width));
   margin-inline: auto;
 }
 

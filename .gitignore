@@ -1,5 +1,7 @@
 # Generated/Build files
 node_modules/
+.astro/
+dist/
 *.lock
 bun.lock
 yarn.lock
@@ -21,6 +23,20 @@ studio/dist/
 
 # Downloaded media (large binary files)
 scripts/wp-export/images/
+
+# WordPress migration scratch (local-only)
+foundsm-backup-checklist.md
+foundsm-wordpress-pages.csv
+public/foundsm-header-rebuild.html
+public/images/imported/
+public/vendor/
+scripts/wp-convert.mjs
+scripts/wp-convert/
+scripts/wp-scrape/
+src/pages/imported/
+src/scripts/imported/
+src/styles/imported/
+tests/
 
 # OS
 .DS_Store

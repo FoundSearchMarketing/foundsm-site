@@ -10,7 +10,9 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "test": "node --test",
+    "wp:convert": "node scripts/wp-convert.mjs"
   },
   "dependencies": {
     "@sanity/astro": "^3.3.1",
@@ -19,6 +21,8 @@
     "astro": "^5.18.1"
   },
   "devDependencies": {
-    "@astrojs/vercel": "^8.2.11"
+    "@astrojs/vercel": "^8.2.11",
+    "jsdom": "^29.0.1",
+    "playwright": "^1.59.1"
   }
 }

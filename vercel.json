@@ -1,6 +1,12 @@
 {
   "trailingSlash": false,
 
+  "git": {
+    "deploymentEnabled": {
+      "main": true
+    }
+  },
+
   "redirects": [
     { "source": "/index.html", "destination": "/", "permanent": true },
     { "source": "/our-approach.html", "destination": "/our-approach", "permanent": true },

@@ -478,8 +478,9 @@ p + p {
 .site-header__link:not(.site-header__cta)::after {
   content: "";
   position: absolute;
-  inset-inline: 0;
+  inset-inline-start: 1rem;
   inset-block-end: 0;
+  inline-size: calc(100% - 2rem);
   block-size: 7px;
   background: var(--color-primary);
   opacity: 0;
@@ -488,6 +489,10 @@ p + p {
   transition:
     opacity 0.3s cubic-bezier(0.58, 0.3, 0.005, 1),
     transform 0.3s cubic-bezier(0.58, 0.3, 0.005, 1);
+}
+
+.site-header__item--has-submenu > .site-header__link:not(.site-header__cta)::after {
+  inline-size: calc(100% - 1.4375rem);
 }
 
 .site-header__item > .site-header__link:not(.site-header__cta):is(:hover, :focus-visible)::after,

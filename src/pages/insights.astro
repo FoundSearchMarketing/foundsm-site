@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import InsightsHero from '../components/InsightsHero.astro';
 import LatestPostsSection from '../components/LatestPostsSection.astro';
+import InsightsArticlesTabs from '../components/InsightsArticlesTabs.astro';
 
 const schema = {
   "@context": "https://schema.org",
@@ -42,23 +43,7 @@ const schema = {
 
     <LatestPostsSection />
 
-    <!-- ============================================
-         CATEGORY FILTER SECTION
-         ============================================ -->
-    <section class="blog-filters-section" aria-label="Filter blog posts by category">
-      <div class="container">
-        <div class="blog-filters" role="group" aria-label="Category filters">
-          <button class="blog-filters__btn blog-filters__btn--active" data-filter="all" aria-pressed="true">All</button>
-          <button class="blog-filters__btn" data-filter="ai" aria-pressed="false">AI</button>
-          <button class="blog-filters__btn" data-filter="industry-insights" aria-pressed="false">Industry Insights</button>
-          <button class="blog-filters__btn" data-filter="life-at-found" aria-pressed="false">Life at Found</button>
-          <button class="blog-filters__btn" data-filter="marketing-analytics" aria-pressed="false">Marketing Analytics &amp; Tracking</button>
-          <button class="blog-filters__btn" data-filter="meta" aria-pressed="false">Meta</button>
-          <button class="blog-filters__btn" data-filter="paid-media-strategy" aria-pressed="false">Paid Media Strategy</button>
-        </div>
-      </div>
-    </section>
-
+    <InsightsArticlesTabs />
 
     <!-- ============================================
          BLOG POST GRID

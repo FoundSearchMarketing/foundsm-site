@@ -1,0 +1,597 @@
+---
+interface ArticleCategory {
+  label: string;
+  slug: string;
+}
+
+interface ArticleImage {
+  src: string;
+  srcset?: string;
+  sizes?: string;
+  width: number;
+  height: number;
+  alt: string;
+  wpImageId: number;
+}
+
+interface ArticleCard {
+  id: number;
+  title: string;
+  url: string;
+  categories: ArticleCategory[];
+  dateLabel: string;
+  datetime: string;
+  excerpt: string;
+  image: ArticleImage;
+}
+
+interface Props {
+  articles?: ArticleCard[];
+  filterScope?: string;
+}
+
+const defaultArticles: ArticleCard[] = [
+  {
+    id: 5535,
+    title: 'Bot Traffic and Bad Lookalikes: How Dirty Signals Can Wreck Your Funnel and Your Targeting',
+    url: 'https://foundsm.com/insights/dirty-signals-bot-traffic-junk-leads/',
+    categories: [
+      { label: 'Marketing Analytics & Tracking', slug: 'marketing-analytics-tracking' },
+      { label: 'Paid Media Strategy', slug: 'paid-media-strategy' },
+    ],
+    dateLabel: 'March 20, 2026',
+    datetime: '2026-03-20',
+    excerpt:
+      'Leads are up. Pipeline quality is down. Dirty signals can poison optimization and steer budget to the wrong audiences. Here’s what executives should watch.',
+    image: {
+      src: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/bot-traffic-sm-768x513.webp',
+      srcset:
+        'https://foundsm.com/found2025/wp-content/uploads/2026/03/bot-traffic-sm-768x513.webp 768w, https://foundsm.com/found2025/wp-content/uploads/2026/03/bot-traffic-sm-300x200.webp 300w, https://foundsm.com/found2025/wp-content/uploads/2026/03/bot-traffic-sm-1024x684.webp 1024w, https://foundsm.com/found2025/wp-content/uploads/2026/03/bot-traffic-sm.webp 1200w',
+      sizes: '(max-width: 768px) 100vw, 768px',
+      width: 768,
+      height: 513,
+      alt: '',
+      wpImageId: 6711,
+    },
+  },
+  {
+    id: 6193,
+    title: 'Google Ads API Update: A Critical Change for Customer Match',
+    url: 'https://foundsm.com/insights/customer-match-uploads-disabled-in-google-ads-api/',
+    categories: [
+      { label: 'Industry Insights', slug: 'industry-insights' },
+      { label: 'Marketing Analytics & Tracking', slug: 'marketing-analytics-tracking' },
+    ],
+    dateLabel: 'March 11, 2026',
+    datetime: '2026-03-11',
+    excerpt: "Google Ads API Update could disrupt your Customer Match workflows starting April 2026. Here's how to prepare.",
+    image: {
+      src: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/GA-API-update-hero-768x513.webp',
+      srcset:
+        'https://foundsm.com/found2025/wp-content/uploads/2026/03/GA-API-update-hero-768x513.webp 768w, https://foundsm.com/found2025/wp-content/uploads/2026/03/GA-API-update-hero-300x200.webp 300w, https://foundsm.com/found2025/wp-content/uploads/2026/03/GA-API-update-hero-1024x684.webp 1024w, https://foundsm.com/found2025/wp-content/uploads/2026/03/GA-API-update-hero.webp 1200w',
+      sizes: '(max-width: 768px) 100vw, 768px',
+      width: 768,
+      height: 513,
+      alt: '',
+      wpImageId: 6599,
+    },
+  },
+  {
+    id: 5376,
+    title: 'When Marketing Metrics and Financial Results Don’t Align: Understanding Signal Loss',
+    url: 'https://foundsm.com/insights/signal-loss-costs-real-revenue/',
+    categories: [
+      { label: 'Industry Insights', slug: 'industry-insights' },
+      { label: 'Marketing Analytics & Tracking', slug: 'marketing-analytics-tracking' },
+    ],
+    dateLabel: 'March 6, 2026',
+    datetime: '2026-03-06',
+    excerpt:
+      "Marketing says ROAS is 3.5:1. Finance disagrees. The gap isn't a reporting error, it's signal loss. Here's where to find it.",
+    image: {
+      src: 'https://foundsm.com/found2025/wp-content/uploads/2026/02/Untitled-1200-x-801-px-768x513.webp',
+      srcset:
+        'https://foundsm.com/found2025/wp-content/uploads/2026/02/Untitled-1200-x-801-px-768x513.webp 768w, https://foundsm.com/found2025/wp-content/uploads/2026/02/Untitled-1200-x-801-px-300x200.webp 300w, https://foundsm.com/found2025/wp-content/uploads/2026/02/Untitled-1200-x-801-px-1024x684.webp 1024w, https://foundsm.com/found2025/wp-content/uploads/2026/02/Untitled-1200-x-801-px.webp 1200w',
+      sizes: '(max-width: 768px) 100vw, 768px',
+      width: 768,
+      height: 513,
+      alt: 'ROAS vs. Profit',
+      wpImageId: 5443,
+    },
+  },
+  {
+    id: 4980,
+    title: 'Google’s Vision for 2026: Building a Revenue Engine Powered by Data',
+    url: 'https://foundsm.com/insights/googles-vision-for-2026-building-a-revenue-engine-powered-by-data/',
+    categories: [
+      { label: 'Industry Insights', slug: 'industry-insights' },
+      { label: 'Marketing Analytics & Tracking', slug: 'marketing-analytics-tracking' },
+      { label: 'Paid Media Strategy', slug: 'paid-media-strategy' },
+    ],
+    dateLabel: 'February 18, 2026',
+    datetime: '2026-02-18',
+    excerpt: 'Explore Google’s 2026 vision for building a scalable revenue engine powered by data, AI, and smarter monetization strategies.',
+    image: {
+      src: 'https://foundsm.com/found2025/wp-content/uploads/2026/02/dataengine-768x432.webp',
+      srcset:
+        'https://foundsm.com/found2025/wp-content/uploads/2026/02/dataengine-768x432.webp 768w, https://foundsm.com/found2025/wp-content/uploads/2026/02/dataengine-300x169.webp 300w, https://foundsm.com/found2025/wp-content/uploads/2026/02/dataengine-1024x576.webp 1024w, https://foundsm.com/found2025/wp-content/uploads/2026/02/dataengine.webp 1200w',
+      sizes: '(max-width: 768px) 100vw, 768px',
+      width: 768,
+      height: 432,
+      alt: '',
+      wpImageId: 4983,
+    },
+  },
+  {
+    id: 4486,
+    title: 'ICDPA Isn’t Just Compliance. It’s the Foundation of Smarter Data Strategy.',
+    url: 'https://foundsm.com/insights/indiana-consumer-data-protection-act/',
+    categories: [
+      { label: 'Industry Insights', slug: 'industry-insights' },
+      { label: 'Marketing Analytics & Tracking', slug: 'marketing-analytics-tracking' },
+    ],
+    dateLabel: 'February 2, 2026',
+    datetime: '2026-02-02',
+    excerpt: 'Indiana’s ICDPA reshapes how businesses collect, consent to, and optimize first-party data for growth.',
+    image: {
+      src: 'https://foundsm.com/found2025/wp-content/uploads/2026/02/ICDPA-blog-feature-768x513.webp',
+      srcset:
+        'https://foundsm.com/found2025/wp-content/uploads/2026/02/ICDPA-blog-feature-768x513.webp 768w, https://foundsm.com/found2025/wp-content/uploads/2026/02/ICDPA-blog-feature-300x200.webp 300w, https://foundsm.com/found2025/wp-content/uploads/2026/02/ICDPA-blog-feature-1024x684.webp 1024w, https://foundsm.com/found2025/wp-content/uploads/2026/02/ICDPA-blog-feature.webp 1200w',
+      sizes: '(max-width: 768px) 100vw, 768px',
+      width: 768,
+      height: 513,
+      alt: "Indiana's New Data Privacy Laws",
+      wpImageId: 4488,
+    },
+  },
+  {
+    id: 4358,
+    title: 'Closing the Loop: How Conversion APIs and Value-Based Bidding Transform Performance Marketing',
+    url: 'https://foundsm.com/insights/closing-the-loop-how-conversion-apis-and-value-based-bidding-transform-performance-marketing/',
+    categories: [
+      { label: 'AI', slug: 'ai' },
+      { label: 'Paid Media Strategy', slug: 'paid-media-strategy' },
+    ],
+    dateLabel: 'January 23, 2026',
+    datetime: '2026-01-23',
+    excerpt:
+      'Unlock the next evolution in performance marketing by moving beyond basic pixel tracking and embracing Conversion APIs (CAPI) and value-based bidding. In this post, we break down how server-to-server data integration helps advertisers send high-quality, first-party conversion signals back to ad platforms, enabling smarter machine learning and better bid optimization for real business value. Learn why revenue-focused marketers are shifting from traditional tracking to CAPI for more accurate measurement, how value-based bidding prioritizes high-value outcomes over volume, and actionable strategies to close the loop on conversion data to drive stronger ROI across campaigns.',
+    image: {
+      src: 'https://foundsm.com/found2025/wp-content/uploads/2026/01/closing-the-loop-main-768x768.webp',
+      srcset:
+        'https://foundsm.com/found2025/wp-content/uploads/2026/01/closing-the-loop-main-768x768.webp 768w, https://foundsm.com/found2025/wp-content/uploads/2026/01/closing-the-loop-main-300x300.webp 300w, https://foundsm.com/found2025/wp-content/uploads/2026/01/closing-the-loop-main-150x150.webp 150w, https://foundsm.com/found2025/wp-content/uploads/2026/01/closing-the-loop-main.webp 1000w',
+      sizes: '(max-width: 768px) 100vw, 768px',
+      width: 768,
+      height: 768,
+      alt: '',
+      wpImageId: 4207,
+    },
+  },
+  {
+    id: 3810,
+    title: 'Wrapping Up 19 Years With Purpose: Found’s Year-End Tradition of Giving Back',
+    url: 'https://foundsm.com/insights/wrapping-up-19-years-with-purpose-founds-year-end-tradition-of-giving-back/',
+    categories: [{ label: 'Life at Found', slug: 'life-at-found' }],
+    dateLabel: 'January 6, 2026',
+    datetime: '2026-01-06',
+    excerpt:
+      'Found has always believed that great work starts with great people, and great people make an even greater impact when they come together for good. This year, our team leaned into compassion, local involvement, and service.',
+    image: {
+      src: 'https://foundsm.com/found2025/wp-content/uploads/2026/01/img_0446-768x576.jpg',
+      srcset:
+        'https://foundsm.com/found2025/wp-content/uploads/2026/01/img_0446-1024x768.jpg 1024w, https://foundsm.com/found2025/wp-content/uploads/2026/01/img_0446-300x225.jpg 300w, https://foundsm.com/found2025/wp-content/uploads/2026/01/img_0446-768x576.jpg 768w, https://foundsm.com/found2025/wp-content/uploads/2026/01/img_0446.jpg 1200w',
+      sizes: '(max-width: 768px) 100vw, 768px',
+      width: 768,
+      height: 576,
+      alt: '',
+      wpImageId: 3815,
+    },
+  },
+  {
+    id: 3436,
+    title: 'A 3 Minute Implementation Guide to Segmenting AI Traffic in GA4',
+    url: 'https://foundsm.com/insights/a-3-minute-implementation-guide-to-segmenting-ai-traffic-in-ga4/',
+    categories: [
+      { label: 'AI', slug: 'ai' },
+      { label: 'Industry Insights', slug: 'industry-insights' },
+    ],
+    dateLabel: 'January 2, 2026',
+    datetime: '2026-01-02',
+    excerpt:
+      'Segmenting AI search traffic in GA4 allows you to see traffic trends from answer engines over time and analyze correlations between other traffic sources (for example, organic search). This change in Google Analytics is very straightforward and should not take more than 3 minutes to implement.',
+    image: {
+      src: 'https://foundsm.com/found2025/wp-content/uploads/2025/12/GA4-Blog-image-768x512.png',
+      srcset:
+        'https://foundsm.com/found2025/wp-content/uploads/2025/12/GA4-Blog-image-1024x683.png 1024w, https://foundsm.com/found2025/wp-content/uploads/2025/12/GA4-Blog-image-300x200.png 300w, https://foundsm.com/found2025/wp-content/uploads/2025/12/GA4-Blog-image-768x512.png 768w, https://foundsm.com/found2025/wp-content/uploads/2025/12/GA4-Blog-image.png 1200w',
+      sizes: '(max-width: 768px) 100vw, 768px',
+      width: 768,
+      height: 512,
+      alt: '',
+      wpImageId: 3872,
+    },
+  },
+  {
+    id: 2464,
+    title: 'How Advantage+ Is Reshaping Student Recruitment, Insights from a Meta Education Summit',
+    url: 'https://foundsm.com/insights/how-advantage-is-reshaping-student-recruitment-insights-from-a-meta-education-summit/',
+    categories: [
+      { label: 'Industry Insights', slug: 'industry-insights' },
+      { label: 'Meta', slug: 'meta' },
+    ],
+    dateLabel: 'November 10, 2025',
+    datetime: '2025-11-10',
+    excerpt:
+      'Over the past few years, we’ve seen Meta’s Advantage+ Audience feature evolve from a simple reach-expanding tool into a powerful AI-driven solution for higher education marketers. It’s helping institutions move beyond manual segmentation to discover new, high-value audiences.',
+    image: {
+      src: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/PXL_20251105_210949084-768x579.webp',
+      srcset:
+        'https://foundsm.com/found2025/wp-content/uploads/2025/11/PXL_20251105_210949084-1024x771.webp 1024w, https://foundsm.com/found2025/wp-content/uploads/2025/11/PXL_20251105_210949084-300x226.webp 300w, https://foundsm.com/found2025/wp-content/uploads/2025/11/PXL_20251105_210949084-768x579.webp 768w, https://foundsm.com/found2025/wp-content/uploads/2025/11/PXL_20251105_210949084.webp 1200w',
+      sizes: '(max-width: 768px) 100vw, 768px',
+      width: 768,
+      height: 579,
+      alt: '',
+      wpImageId: 2544,
+    },
+  },
+  {
+    id: 2256,
+    title: 'Our Top Takeaways From Search Marketing Expo Advanced 2025',
+    url: 'https://foundsm.com/insights/our-top-takeaways-from-search-marketing-expo-advanced-2025/',
+    categories: [{ label: 'Industry Insights', slug: 'industry-insights' }],
+    dateLabel: 'June 10, 2025',
+    datetime: '2025-06-10',
+    excerpt:
+      'In June 2025, four of our Found Search Marketing team members traveled to Boston, MA, for the first in-person SMX conference since 2019. We’ve compiled many of our thoughts and takeaways for those that missed it.',
+    image: {
+      src: 'https://foundsm.com/found2025/wp-content/uploads/2025/06/SMX-Conference-2025-1-sm.webp',
+      srcset:
+        'https://foundsm.com/found2025/wp-content/uploads/2025/06/SMX-Conference-2025-1-sm.webp 800w, https://foundsm.com/found2025/wp-content/uploads/2025/06/SMX-Conference-2025-1-sm-300x225.webp 300w, https://foundsm.com/found2025/wp-content/uploads/2025/06/SMX-Conference-2025-1-sm-768x576.webp 768w',
+      sizes: '(max-width: 768px) 100vw, 768px',
+      width: 800,
+      height: 600,
+      alt: '',
+      wpImageId: 6600,
+    },
+  },
+];
+
+const { articles = defaultArticles, filterScope = 'insights-articles' } = Astro.props;
+---
+
+<section
+  class="insights-article-cards"
+  data-filter-scope={filterScope}
+  data-source-page-id="2283"
+  aria-label="Article list"
+>
+  <div
+    class="insights-article-cards__grid-region"
+    data-source-widget="a93972f"
+    data-source-template="2487"
+    data-grid-settings='{"row_gap":{"unit":"px","size":30,"sizes":[]},"columns":"3","columns_tablet":"2","columns_mobile":"1"}'
+  >
+    <div class="insights-article-cards__grid" id="insights-article-cards-grid" role="list">
+      {
+        articles.map((article, index) => {
+          const dataCategory = article.categories.map((category) => category.slug).join(' ');
+
+          return (
+            <article
+              class="insights-article-card"
+              data-source-template="2487"
+              data-article-id={article.id}
+              data-category={dataCategory}
+              data-filter-card
+              role="listitem"
+            >
+              <div class="insights-article-card__inner" data-source-widget="d7c28da">
+                <a class="insights-article-card__image-link" href={article.url} data-source-widget="d798176">
+                  <img
+                    fetchpriority={index === 0 ? 'high' : undefined}
+                    loading={index === 0 ? undefined : 'lazy'}
+                    decoding="async"
+                    width={article.image.width}
+                    height={article.image.height}
+                    src={article.image.src}
+                    class={`insights-article-card__image wp-image-${article.image.wpImageId}`}
+                    alt={article.image.alt}
+                    srcset={article.image.srcset}
+                    sizes={article.image.sizes}
+                  />
+                </a>
+
+                <ul
+                  class="insights-article-card__categories"
+                  aria-label="Article categories"
+                  data-source-widget="3310647"
+                  itemprop="about"
+                >
+                  {article.categories.map((category) => (
+                    <li class="insights-article-card__category">{category.label}</li>
+                  ))}
+                </ul>
+
+                <h3 class="insights-article-card__title" data-source-widget="bad4e0c">
+                  <a class="insights-article-card__title-link" href={article.url}>
+                    {article.title}
+                  </a>
+                </h3>
+
+                <p class="insights-article-card__date" data-source-widget="01dc494" itemprop="datePublished">
+                  <time datetime={article.datetime}>{article.dateLabel}</time>
+                </p>
+
+                <p class="insights-article-card__excerpt" data-source-widget="d3ab759">
+                  {article.excerpt}
+                </p>
+
+                <a class="insights-article-card__button" href={article.url} data-source-widget="841dbf1">
+                  <span class="insights-article-card__button-text">Read Article →</span>
+                </a>
+              </div>
+            </article>
+          );
+        })
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .insights-article-cards {
+    --article-cards-accent: #8dc63f;
+    --article-cards-text: #231f20;
+    --article-cards-muted-text: #231f2099;
+    --article-cards-columns: 3;
+    --article-cards-column-gap: 30px;
+    --article-cards-row-gap: 30px;
+    --article-card-title-size: 30px;
+    --article-card-title-line-height: 38px;
+    --article-card-copy-size: 20px;
+    --article-card-copy-line-height: 36px;
+    --article-card-button-size: 15px;
+    --article-card-button-line-height: 24px;
+
+    width: min(100% - 48px, 1362px);
+    margin-block: 0 100px;
+    margin-inline: auto;
+    padding-block: 0 100px;
+    background: #ffffff;
+    color: var(--article-cards-text);
+    font-family: var(--font-body, 'Poppins', sans-serif);
+  }
+
+  .insights-article-cards *,
+  .insights-article-cards *::before,
+  .insights-article-cards *::after {
+    box-sizing: border-box;
+  }
+
+  .insights-article-cards a {
+    box-shadow: none;
+    text-decoration: none;
+  }
+
+  .insights-article-cards img:not(.insights-article-card__image) {
+    max-width: 100%;
+    height: auto;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .insights-article-cards__grid {
+    display: grid;
+    grid-auto-rows: 0.5fr;
+    grid-template-columns: repeat(var(--article-cards-columns), minmax(0, 1fr));
+    column-gap: var(--article-cards-column-gap);
+    row-gap: var(--article-cards-row-gap);
+    align-items: stretch;
+  }
+
+  .insights-article-card {
+    min-width: 0;
+    position: relative;
+    height: 100%;
+  }
+
+  .insights-article-card[hidden] {
+    display: none;
+  }
+
+  .insights-article-card__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 20px 10px;
+    height: 100%;
+    margin-block-start: 25px;
+    padding-inline: 10px;
+  }
+
+  .insights-article-card__image-link {
+    display: block;
+  }
+
+  .insights-article-card__image {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: 280px;
+    object-fit: cover;
+    object-position: center center;
+    border-radius: 40px;
+  }
+
+  .insights-article-card__categories {
+    margin: 0;
+    padding: 0 0 0 10px;
+    list-style: none;
+    border-style: solid;
+    border-width: 0 0 0 4px;
+    border-color: var(--article-cards-accent);
+    color: var(--article-cards-text);
+    font-family: var(--font-body, 'Poppins', sans-serif);
+    font-size: 12px;
+    font-weight: 300;
+    text-transform: uppercase;
+    line-height: 21px;
+    letter-spacing: 3px;
+  }
+
+  .insights-article-card__category {
+    display: inline;
+  }
+
+  .insights-article-card__category:not(:last-child)::after {
+    content: ', ';
+  }
+
+  .insights-article-card__title {
+    margin: 0;
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  .insights-article-card__title-link {
+    color: var(--article-cards-text);
+    font-family: var(--font-body, 'Poppins', sans-serif);
+    font-size: var(--article-card-title-size);
+    font-weight: 700;
+    line-height: var(--article-card-title-line-height);
+    letter-spacing: -0.2px;
+  }
+
+  .insights-article-card__date {
+    margin: 0;
+    padding: 0;
+    color: var(--article-cards-muted-text);
+    font-family: var(--font-body, 'Poppins', sans-serif);
+    font-size: 14px;
+    line-height: 30px;
+  }
+
+  .insights-article-card__excerpt {
+    margin: 0;
+    display: -webkit-box;
+    overflow: hidden;
+    color: var(--article-cards-text);
+    font-family: var(--font-body, 'Poppins', sans-serif);
+    font-size: var(--article-card-copy-size);
+    font-weight: 400;
+    line-height: 29px;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  .insights-article-card__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-start;
+    min-width: 170px;
+    padding: 18px 36px;
+    border-style: none;
+    border-radius: 30px;
+    background-color: #231f20;
+    color: #ffffff;
+    font-family: var(--font-body, 'Poppins', sans-serif);
+    font-size: var(--article-card-button-size);
+    font-weight: 500;
+    text-transform: none;
+    line-height: var(--article-card-button-line-height);
+    text-align: center;
+    transition: all 0.3s;
+  }
+
+  .insights-article-card__button:hover,
+  .insights-article-card__button:focus {
+    background-color: #353132;
+    color: var(--article-cards-accent);
+  }
+
+  .insights-article-card__button:focus-visible {
+    outline: 2px solid var(--article-cards-accent);
+    outline-offset: 4px;
+  }
+
+  .insights-article-card__button-text {
+    display: inline-block;
+  }
+
+  @media (max-width: 1599px) {
+    .insights-article-card__image {
+      height: 100%;
+      object-position: center center;
+      border-radius: 30px;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .insights-article-cards {
+      --article-cards-columns: 2;
+      --article-card-title-size: 24px;
+      --article-card-title-line-height: 32px;
+      --article-card-copy-size: 18px;
+      --article-card-copy-line-height: 30px;
+      --article-card-button-size: 16px;
+      --article-card-button-line-height: 20px;
+
+      margin-block-end: 50px;
+      padding-block-end: 40px;
+    }
+
+    .insights-article-card__image {
+      border-radius: 20px;
+    }
+
+    .insights-article-card__categories {
+      font-size: 18px;
+      line-height: 22px;
+    }
+
+    .insights-article-card__title {
+      -webkit-line-clamp: 3;
+    }
+
+    .insights-article-card__title-link {
+      letter-spacing: -0.5px;
+    }
+
+    .insights-article-card__excerpt {
+      line-height: var(--article-card-copy-line-height);
+      -webkit-line-clamp: 3;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .insights-article-cards {
+      --article-cards-columns: 1;
+
+      width: min(100% - 24px, 1362px);
+      margin-block-end: 0;
+      padding-block: 0 50px;
+    }
+
+    .insights-article-cards__grid-region {
+      padding: 0 0 50px 0;
+    }
+
+    .insights-article-card__inner {
+      margin: 10px;
+    }
+
+    .insights-article-card__title,
+    .insights-article-card__excerpt {
+      display: block;
+      overflow: visible;
+      text-overflow: unset;
+      white-space: normal;
+      -webkit-line-clamp: unset;
+      -webkit-box-orient: unset;
+    }
+  }
+</style>

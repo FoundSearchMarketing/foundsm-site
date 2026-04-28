@@ -335,3 +335,33 @@ body.blog-post-page .blog-post__content-section th {
   background: var(--color-panel);
   font-weight: 700;
 }
+
+body.blog-post-page .blog-post__content-section blockquote {
+  margin-block: clamp(2rem, 5vw, 3.5rem);
+  margin-inline: calc(var(--space-page) * -1);
+  padding: clamp(2rem, 5vw, 4rem) var(--space-page);
+  background: var(--color-dark);
+  color: var(--color-dark-text);
+  font-size: clamp(1.35rem, 3vw, 2.15rem);
+  font-weight: 700;
+  line-height: 1.24;
+}
+
+body.blog-post-page .blog-post__content-section blockquote > * {
+  max-inline-size: 760px;
+}
+
+body.blog-post-page .blog-post__figure figcaption {
+  margin-block-start: 0.75rem;
+  color: var(--color-muted);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
+body.blog-post-page .blog-post__content-section code {
+  border-radius: 0.35rem;
+  padding: 0.1em 0.35em;
+  background: var(--color-panel);
+  font-size: 0.9em;
+}

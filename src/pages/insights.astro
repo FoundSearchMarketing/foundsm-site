@@ -5,11 +5,19 @@ import LatestPostsSection from '../components/LatestPostsSection.astro';
 import InsightsArticlesTabs from '../components/InsightsArticlesTabs.astro';
 import InsightsArticleCards from '../components/InsightsArticleCards.astro';
 import InsightsPagination from '../components/InsightsPagination.astro';
-import { getAllBlogPosts, toInsightsArticleCards, toLatestPostCards } from '../lib/blogPosts';
+import { getAllBlogCategories, getAllBlogPosts, getLatestBlogPosts, toInsightsArticleCards, toLatestPostCards } from '../lib/blogPosts';
 
-const posts = getAllBlogPosts();
-const latestPosts = toLatestPostCards(posts, 2);
+const [posts, categories, latestBlogPosts] = await Promise.all([
+  getAllBlogPosts(),
+  getAllBlogCategories(),
+  getLatestBlogPosts(2),
+]);
+const latestPosts = toLatestPostCards(latestBlogPosts);
 const articleCards = toInsightsArticleCards(posts);
+const articleTabs = [
+  { label: 'All', filter: '__all', active: true },
+  ...categories.map((category) => ({ label: category.label, filter: category.slug })),
+];
 const postsPerPage = 6;
 const totalPages = Math.ceil(posts.length / postsPerPage);
 
@@ -52,7 +60,7 @@ const schema = {
 
     <LatestPostsSection posts={latestPosts} />
 
-    <InsightsArticlesTabs />
+    <InsightsArticlesTabs tabs={articleTabs} />
 
     <InsightsArticleCards articles={articleCards} postsPerPage={postsPerPage}>
       <InsightsPagination slot="pagination" pageSize={postsPerPage} totalPages={totalPages} />

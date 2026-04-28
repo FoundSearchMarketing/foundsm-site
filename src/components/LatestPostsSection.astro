@@ -12,36 +12,10 @@ interface LatestPost {
 }
 
 interface Props {
-  posts?: LatestPost[];
+  posts: LatestPost[];
 }
 
-const defaultPosts: LatestPost[] = [
-  {
-    type: 'Blog',
-    categories: 'Marketing Analytics & Tracking, Paid Media Strategy',
-    title: 'Bot Traffic and Bad Lookalikes: How Dirty Signals Can Wreck Your Funnel and Your Targeting',
-    href: 'https://foundsm.com/insights/dirty-signals-bot-traffic-junk-leads/',
-    imageSrc: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/bot-traffic-sm-850x500.webp',
-    imageAlt: '',
-    date: 'March 20, 2026',
-    excerpt:
-      "Leads are up. Pipeline quality is down. Dirty signals can poison optimization and steer budget to the wrong audiences. Here's what executives should watch.",
-    ctaLabel: 'Keep Reading',
-  },
-  {
-    type: 'Blog',
-    categories: 'Industry Insights, Marketing Analytics & Tracking',
-    title: 'Google Ads API Update: A Critical Change for Customer Match',
-    href: 'https://foundsm.com/insights/customer-match-uploads-disabled-in-google-ads-api/',
-    imageSrc: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/GA-API-update-hero-850x500.webp',
-    imageAlt: '',
-    date: 'March 11, 2026',
-    excerpt: "Google Ads API Update could disrupt your Customer Match workflows starting April 2026. Here's how to prepare.",
-    ctaLabel: 'Keep Reading',
-  },
-];
-
-const { posts = defaultPosts } = Astro.props;
+const { posts } = Astro.props;
 ---
 
 <section class="elementor-section latest-posts" aria-labelledby="latest-posts-heading">

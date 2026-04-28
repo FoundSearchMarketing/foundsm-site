@@ -8,24 +8,14 @@ interface ArticleTab {
 interface Props {
   title?: string;
   subtitle?: string;
-  tabs?: ArticleTab[];
+  tabs: ArticleTab[];
   filterScope?: string;
 }
-
-const defaultTabs: ArticleTab[] = [
-  { label: 'All', filter: '__all', active: true },
-  { label: 'AI', filter: 'ai' },
-  { label: 'Industry Insights', filter: 'industry-insights' },
-  { label: 'Life at Found', filter: 'life-at-found' },
-  { label: 'Marketing Analytics & Tracking', filter: 'marketing-analytics-tracking' },
-  { label: 'Meta', filter: 'meta' },
-  { label: 'Paid Media Strategy', filter: 'paid-media-strategy' },
-];
 
 const {
   title = 'Articles',
   subtitle = 'Find inspiration and insights from the experts at Found.',
-  tabs = defaultTabs,
+  tabs,
   filterScope = 'insights-articles',
 } = Astro.props;
 

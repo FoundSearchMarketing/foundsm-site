@@ -1,20 +1,9 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { sanityClient, allPostsQuery, allCategoriesQuery, urlFor } from '../../lib/sanity';
+import { getAllBlogCategories, getAllBlogPosts } from '../../lib/blogPosts';
 
-const [posts, categories] = await Promise.all([
-  sanityClient.fetch(allPostsQuery),
-  sanityClient.fetch(allCategoriesQuery),
-]);
-
-function formatDate(iso?: string) {
-  if (!iso) return '';
-  return new Date(iso).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
-}
+const posts = await getAllBlogPosts();
+const categories = await getAllBlogCategories();
 ---
 
 <BaseLayout
@@ -47,32 +36,30 @@ function formatDate(iso?: string) {
 
       <div class="insights-layout">
         <div class="insights-list">
-          {posts.map((post: any) => {
-            const thumb = post.featuredImage?.asset
-              ? urlFor(post.featuredImage).width(800).height(450).fit('crop').auto('format').url()
-              : null;
+          {posts.map((post) => {
+            const thumb = post.heroImage || null;
             return (
               <article class="insight-card">
                 {thumb && (
-                  <a href={`/insights/${post.slug.current}`} class="insight-card__image">
-                    <img src={thumb} alt={post.featuredImage?.alt || post.title} loading="lazy" width="800" height="450" />
+                  <a href={`/insights/${post.slug}/`} class="insight-card__image">
+                    <img src={thumb} alt={post.heroImageAlt || post.title} loading="lazy" width="800" height="450" />
                   </a>
                 )}
                 <div class="insight-card__body">
                   <p class="insight-card__meta">
-                    <time datetime={post.publishedAt}>{formatDate(post.publishedAt)}</time>
-                    {post.category?.title && (
+                    <time datetime={post.publishedAt}>{post.publishedLabel}</time>
+                    {post.categories.length > 0 && (
                       <>
                         <span aria-hidden="true">&middot;</span>
-                        <span>{post.category.title}</span>
+                        <span>{post.categories.map((category) => category.label).join(', ')}</span>
                       </>
                     )}
                   </p>
                   <h2 class="insight-card__title">
-                    <a href={`/insights/${post.slug.current}`}>{post.title}</a>
+                    <a href={`/insights/${post.slug}/`}>{post.title}</a>
                   </h2>
                   {post.excerpt && <p class="insight-card__excerpt">{post.excerpt}</p>}
-                  <a href={`/insights/${post.slug.current}`} class="insight-card__link">Keep Reading &rarr;</a>
+                  <a href={`/insights/${post.slug}/`} class="insight-card__link">Keep Reading &rarr;</a>
                 </div>
               </article>
             );
@@ -82,8 +69,8 @@ function formatDate(iso?: string) {
         <aside class="insights-sidebar">
           <h3>Categories</h3>
           <ul>
-            {categories.map((c: any) => (
-              <li><a href={`/insights/blog`}>{c.title}</a></li>
+            {categories.map((category) => (
+              <li><a href="/insights/blog">{category.label}</a></li>
             ))}
           </ul>
         </aside>

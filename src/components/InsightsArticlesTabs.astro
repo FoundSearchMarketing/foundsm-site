@@ -1,0 +1,279 @@
+---
+interface ArticleTab {
+  label: string;
+  filter: string;
+  active?: boolean;
+}
+
+interface Props {
+  title?: string;
+  subtitle?: string;
+  tabs?: ArticleTab[];
+}
+
+const defaultTabs: ArticleTab[] = [
+  { label: 'All', filter: '__all', active: true },
+  { label: 'AI', filter: 'ai' },
+  { label: 'Industry Insights', filter: 'industry-insights' },
+  { label: 'Life at Found', filter: 'life-at-found' },
+  { label: 'Marketing Analytics & Tracking', filter: 'marketing-analytics-tracking' },
+  { label: 'Meta', filter: 'meta' },
+  { label: 'Paid Media Strategy', filter: 'paid-media-strategy' },
+];
+
+const {
+  title = 'Articles',
+  subtitle = 'Find inspiration and insights from the experts at Found.',
+  tabs = defaultTabs,
+} = Astro.props;
+
+const hasActiveTab = tabs.some((tab) => tab.active);
+const normalizedTabs = tabs.map((tab, index) => ({
+  ...tab,
+  active: tab.active ?? (!hasActiveTab && index === 0),
+}));
+---
+
+<section
+  class="insights-articles-tabs"
+  aria-labelledby="insights-articles-tabs-heading"
+  data-source-section="dc3b546"
+>
+  <div class="insights-articles-tabs__intro" data-source-section="2816d29">
+    <div class="insights-articles-tabs__content">
+      <h2
+        class="insights-articles-tabs__title"
+        id="insights-articles-tabs-heading"
+        data-source-widget="7e04a71"
+      >
+        {title}
+      </h2>
+      <p class="insights-articles-tabs__subtitle" data-source-widget="af1385f">
+        {subtitle}
+      </p>
+    </div>
+  </div>
+
+  <div class="insights-articles-tabs__tabs-row" data-source-section="23096be">
+    <div class="insights-articles-tabs__content">
+      <search
+        class="insights-articles-tabs__filter"
+        role="search"
+        aria-label="Filter articles by category"
+        data-source-widget="dd2c96b"
+        data-page-num="1"
+      >
+        {
+          normalizedTabs.map((tab) => (
+            <button
+              type="button"
+              class="insights-articles-tabs__filter-button"
+              data-filter={tab.filter}
+              aria-pressed={tab.active ? 'true' : 'false'}
+            >
+              {tab.label}
+            </button>
+          ))
+        }
+      </search>
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  .insights-articles-tabs {
+    --articles-tabs-text: #231f20;
+    --articles-tabs-accent: #8dc63f;
+    --articles-tabs-content-width: 1140px;
+    --articles-tabs-filter-gap: 22px;
+    --articles-tabs-filter-letter-spacing: 3px;
+
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin-block: 100px;
+    padding-block: 50px 100px;
+    overflow: hidden;
+    background: #ffffff;
+    color: var(--articles-tabs-text);
+    font-family: var(--font-body, 'Poppins', system-ui, -apple-system, sans-serif);
+  }
+
+  .insights-articles-tabs,
+  .insights-articles-tabs * {
+    box-sizing: border-box;
+  }
+
+  .insights-articles-tabs__intro,
+  .insights-articles-tabs__tabs-row {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background: #ffffff;
+  }
+
+  .insights-articles-tabs__content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: min(100% - 40px, var(--articles-tabs-content-width));
+    margin-inline: auto;
+  }
+
+  .insights-articles-tabs__title {
+    margin: 0;
+    color: var(--articles-tabs-text);
+    font-family: var(--font-heading, 'Fraunces', Georgia, serif);
+    font-size: 40px;
+    font-weight: 900;
+    line-height: 44px;
+    letter-spacing: -1px;
+    text-align: center;
+  }
+
+  .insights-articles-tabs__subtitle {
+    margin: 16px 0 0;
+    color: var(--articles-tabs-text);
+    font-family: var(--font-body, 'Poppins', system-ui, -apple-system, sans-serif);
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 36px;
+    text-align: center;
+  }
+
+  .insights-articles-tabs__tabs-row {
+    margin-block-start: 54px;
+  }
+
+  .insights-articles-tabs__filter {
+    display: flex;
+    flex-shrink: 0;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--articles-tabs-filter-gap);
+    width: 100%;
+    padding: 10px;
+    overflow-x: visible;
+    background: #ffffff;
+    border: solid transparent;
+    border-width: 0;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .insights-articles-tabs__filter::-webkit-scrollbar {
+    display: none;
+  }
+
+  .insights-articles-tabs__filter-button {
+    position: relative;
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    max-width: none;
+    min-width: 40px;
+    padding: 0 0 4px;
+    overflow: visible;
+    overflow-wrap: break-word;
+    border: solid transparent;
+    border-width: 0;
+    border-radius: 0;
+    background: transparent;
+    color: var(--articles-tabs-text);
+    cursor: pointer;
+    font-family: var(--font-body, 'Poppins', system-ui, -apple-system, sans-serif);
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: var(--articles-tabs-filter-letter-spacing);
+    line-height: 28px;
+    text-align: center;
+    text-transform: uppercase;
+    white-space: nowrap;
+    appearance: none;
+  }
+
+  .insights-articles-tabs__filter-button::after {
+    content: '';
+    position: absolute;
+    inset-block-end: 0;
+    inset-inline-start: -3px;
+    inline-size: calc(100% - var(--articles-tabs-filter-letter-spacing) + 6px);
+    block-size: 2px;
+    background: transparent;
+  }
+
+  .insights-articles-tabs__filter-button:hover:not([aria-pressed='true'])::after {
+    background: var(--articles-tabs-text);
+  }
+
+  .insights-articles-tabs__filter-button[aria-pressed='true'] {
+    color: var(--articles-tabs-accent);
+  }
+
+  .insights-articles-tabs__filter-button[aria-pressed='true']::after {
+    background: var(--articles-tabs-accent);
+  }
+
+  .insights-articles-tabs__filter-button:focus-visible {
+    outline: 2px solid var(--articles-tabs-accent);
+    outline-offset: 5px;
+  }
+
+  @media (max-width: 1024px) {
+    .insights-articles-tabs {
+      margin-block: 50px;
+      padding-block: 40px;
+    }
+
+    .insights-articles-tabs__title {
+      font-size: 34px;
+      line-height: 39px;
+    }
+
+    .insights-articles-tabs__subtitle {
+      font-size: 18px;
+      line-height: 30px;
+    }
+
+    .insights-articles-tabs__tabs-row {
+      margin-block-start: 42px;
+      margin-inline: 1px;
+      padding: 1px;
+    }
+
+    .insights-articles-tabs__filter-button {
+      font-size: 10px;
+      line-height: 22px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .insights-articles-tabs {
+      --articles-tabs-filter-gap: 5px;
+
+      margin-block: 0;
+      padding-block: 0 50px;
+    }
+
+    .insights-articles-tabs__content {
+      width: min(100% - 32px, var(--articles-tabs-content-width));
+    }
+
+    .insights-articles-tabs__subtitle {
+      margin-block-start: 12px;
+    }
+
+    .insights-articles-tabs__tabs-row {
+      margin-block-start: 34px;
+    }
+
+    .insights-articles-tabs__filter-button {
+      font-size: 13px;
+      line-height: 24px;
+    }
+  }
+</style>

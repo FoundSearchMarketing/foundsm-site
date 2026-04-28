@@ -1,0 +1,196 @@
+---
+interface Props {
+  currentPage?: number;
+  totalPages?: number;
+  pageSize?: number;
+  basePath?: string;
+  loopId?: string;
+  sourcePageId?: string;
+  sourceTemplateId?: string;
+}
+
+const {
+  currentPage = 1,
+  totalPages = 1,
+  pageSize = 6,
+  basePath = '/insights/',
+  loopId = 'a93972f',
+  sourcePageId = '2283',
+  sourceTemplateId = '2487',
+} = Astro.props;
+
+const pageNumbers = Array.from({ length: totalPages }, (_, index) => index + 1);
+const pageHref = (page: number) => (page === 1 ? basePath : `${basePath}?e-page-${loopId}=${page}`);
+const previousPage = Math.max(currentPage - 1, 1);
+const nextPage = Math.min(currentPage + 1, totalPages);
+const hasPreviousPage = currentPage > 1;
+const hasNextPage = currentPage < totalPages;
+---
+
+<div
+  class="insights-pagination"
+  data-insights-pagination
+  data-source-route={basePath}
+  data-source-page-id={sourcePageId}
+  data-source-loop-id={loopId}
+  data-source-template-id={sourceTemplateId}
+  data-current-page={currentPage}
+  data-total-pages={totalPages}
+  data-page-size={pageSize}
+  hidden={totalPages <= 1}
+>
+  <div
+    class="insights-pagination__load-anchor"
+    data-insights-pagination-load-anchor
+    data-page={currentPage}
+    data-max-page={totalPages}
+    data-next-page={hasNextPage ? pageHref(nextPage) : undefined}
+  >
+  </div>
+
+  <nav class="insights-pagination__nav" aria-label="Pagination" data-insights-pagination-nav>
+    {
+      hasPreviousPage ? (
+        <a
+          class="insights-pagination__item insights-pagination__link insights-pagination__item--previous"
+          href={pageHref(previousPage)}
+        >
+          Previous
+        </a>
+      ) : (
+        <span
+          class="insights-pagination__item insights-pagination__item--disabled insights-pagination__item--previous"
+          aria-disabled="true"
+        >
+          Previous
+        </span>
+      )
+    }
+
+    {
+      pageNumbers.map((page) =>
+        page === currentPage ? (
+          <span
+            class="insights-pagination__item insights-pagination__item--current"
+            aria-current="page"
+          >
+            <span class="insights-pagination__sr-only">Page</span>
+            {page}
+          </span>
+        ) : (
+          <a class="insights-pagination__item insights-pagination__link" href={pageHref(page)}>
+            <span class="insights-pagination__sr-only">Page</span>
+            {page}
+          </a>
+        )
+      )
+    }
+
+    {
+      hasNextPage ? (
+        <a
+          class="insights-pagination__item insights-pagination__link insights-pagination__item--next"
+          href={pageHref(nextPage)}
+        >
+          Next
+        </a>
+      ) : (
+        <span
+          class="insights-pagination__item insights-pagination__item--disabled insights-pagination__item--next"
+          aria-disabled="true"
+        >
+          Next
+        </span>
+      )
+    }
+  </nav>
+</div>
+
+<style is:global>
+  .insights-pagination {
+    --insights-pagination-accent: #8dc63f;
+    --insights-pagination-text: #231f20;
+    --insights-pagination-font-family: var(--font-body, 'Poppins', system-ui, -apple-system, sans-serif);
+    --insights-pagination-font-size: 20px;
+    --insights-pagination-font-weight: 400;
+    --insights-pagination-line-height: 36px;
+    --insights-pagination-gap: 10px;
+    --insights-pagination-offset-block-start: 100px;
+    --insights-pagination-focus-ring-size: 2px;
+    --insights-pagination-focus-ring-offset: 4px;
+
+    margin-block-start: var(--insights-pagination-offset-block-start);
+    text-align: center;
+  }
+
+  .insights-pagination,
+  .insights-pagination * {
+    box-sizing: border-box;
+  }
+
+  .insights-pagination__load-anchor {
+    display: none;
+  }
+
+  .insights-pagination__nav {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: var(--insights-pagination-gap);
+    color: var(--insights-pagination-text);
+    font-family: var(--insights-pagination-font-family);
+    font-size: var(--insights-pagination-font-size);
+    font-weight: var(--insights-pagination-font-weight);
+    line-height: var(--insights-pagination-line-height);
+  }
+
+  .insights-pagination__item {
+    display: inline-block;
+    color: var(--insights-pagination-accent);
+    text-decoration: none;
+  }
+
+  .insights-pagination__item--current,
+  .insights-pagination__item--disabled {
+    color: var(--insights-pagination-text);
+  }
+
+  .insights-pagination__link {
+    transition: color 160ms ease;
+  }
+
+  .insights-pagination__link:hover,
+  .insights-pagination__link:focus {
+    color: var(--insights-pagination-text);
+  }
+
+  .insights-pagination__link:focus-visible {
+    outline: var(--insights-pagination-focus-ring-size) solid var(--insights-pagination-accent);
+    outline-offset: var(--insights-pagination-focus-ring-offset);
+  }
+
+  .insights-pagination__sr-only {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  @media (max-width: 1024px) {
+    .insights-pagination {
+      --insights-pagination-font-size: 18px;
+      --insights-pagination-line-height: 32px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .insights-pagination {
+      --insights-pagination-offset-block-start: 65px;
+    }
+  }
+</style>

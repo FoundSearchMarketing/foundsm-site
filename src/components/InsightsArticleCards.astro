@@ -28,6 +28,7 @@ interface ArticleCard {
 interface Props {
   articles?: ArticleCard[];
   filterScope?: string;
+  postsPerPage?: number;
 }
 
 const defaultArticles: ArticleCard[] = [
@@ -255,12 +256,13 @@ const defaultArticles: ArticleCard[] = [
   },
 ];
 
-const { articles = defaultArticles, filterScope = 'insights-articles' } = Astro.props;
+const { articles = defaultArticles, filterScope = 'insights-articles', postsPerPage = 6 } = Astro.props;
 ---
 
 <section
   class="insights-article-cards"
   data-filter-scope={filterScope}
+  data-posts-per-page={postsPerPage}
   data-source-page-id="2283"
   aria-label="Article list"
 >
@@ -335,7 +337,191 @@ const { articles = defaultArticles, filterScope = 'insights-articles' } = Astro.
       }
     </div>
   </div>
+
+  <slot name="pagination" />
 </section>
+
+<script>
+  const initInsightsArticlePagination = () => {
+    const articleSections = document.querySelectorAll<HTMLElement>('.insights-article-cards');
+
+    articleSections.forEach((section) => {
+      if (section.dataset.paginationInitialized === 'true') {
+        return;
+      }
+
+      const pagination = section.querySelector<HTMLElement>('[data-insights-pagination]');
+      const nav = pagination?.querySelector<HTMLElement>('[data-insights-pagination-nav]');
+      const loadAnchor = pagination?.querySelector<HTMLElement>('[data-insights-pagination-load-anchor]');
+      const cards = Array.from(section.querySelectorAll<HTMLElement>('[data-filter-card]'));
+
+      if (!pagination || !nav || cards.length === 0) {
+        return;
+      }
+
+      section.dataset.paginationInitialized = 'true';
+
+      const filterScope = section.dataset.filterScope ?? 'insights-articles';
+      const tabList = Array.from(document.querySelectorAll<HTMLElement>('[data-filter-tabs]')).find((candidate) => {
+        const tabsSection = candidate.closest<HTMLElement>('.insights-articles-tabs');
+        return (tabsSection?.dataset.filterScope ?? 'insights-articles') === filterScope;
+      });
+      const filterButtons = tabList
+        ? Array.from(tabList.querySelectorAll<HTMLButtonElement>('[data-filter]'))
+        : [];
+      const pageSize = Number(section.dataset.postsPerPage ?? pagination.dataset.pageSize) || 6;
+      const loopId = pagination.dataset.sourceLoopId ?? 'a93972f';
+      let currentPage = Number(pagination.dataset.currentPage) || 1;
+
+      const pageHref = (page: number) => (page === 1 ? '/insights/' : `/insights/?e-page-${loopId}=${page}`);
+
+      const getActiveFilter = () => {
+        const activeButton = filterButtons.find((button) => button.getAttribute('aria-pressed') === 'true');
+        return activeButton?.dataset.filter ?? '__all';
+      };
+
+      const createScreenReaderLabel = () => {
+        const label = document.createElement('span');
+        label.className = 'insights-pagination__sr-only';
+        label.textContent = 'Page';
+        return label;
+      };
+
+      const createPageNode = ({
+        page,
+        label,
+        modifier,
+        disabled = false,
+        current = false,
+      }: {
+        page: number;
+        label: string;
+        modifier?: string;
+        disabled?: boolean;
+        current?: boolean;
+      }) => {
+        const node = document.createElement(disabled || current ? 'span' : 'a');
+        const classes = ['insights-pagination__item'];
+
+        if (!disabled && !current) {
+          classes.push('insights-pagination__link');
+          node.setAttribute('href', pageHref(page));
+          node.setAttribute('data-pagination-page', String(page));
+        }
+
+        if (modifier) {
+          classes.push(`insights-pagination__item--${modifier}`);
+        }
+
+        if (disabled) {
+          classes.push('insights-pagination__item--disabled');
+          node.setAttribute('aria-disabled', 'true');
+        }
+
+        if (current) {
+          classes.push('insights-pagination__item--current');
+          node.setAttribute('aria-current', 'page');
+        }
+
+        node.className = classes.join(' ');
+
+        if (/^\d+$/.test(label)) {
+          node.append(createScreenReaderLabel(), document.createTextNode(label));
+        } else {
+          node.textContent = label;
+        }
+
+        return node;
+      };
+
+      const render = () => {
+        const activeFilter = getActiveFilter();
+        const matchingCards = cards.filter((card) => {
+          const categories = (card.dataset.category ?? '').split(/\s+/).filter(Boolean);
+          return activeFilter === '__all' || categories.includes(activeFilter);
+        });
+        const totalPages = Math.max(1, Math.ceil(matchingCards.length / pageSize));
+
+        currentPage = Math.min(Math.max(currentPage, 1), totalPages);
+
+        const pageStart = (currentPage - 1) * pageSize;
+        const pageEnd = pageStart + pageSize;
+        const visibleCards = new Set(matchingCards.slice(pageStart, pageEnd));
+
+        cards.forEach((card) => {
+          card.hidden = !visibleCards.has(card);
+        });
+
+        pagination.dataset.currentPage = String(currentPage);
+        pagination.dataset.totalPages = String(totalPages);
+        pagination.hidden = totalPages <= 1;
+
+        if (loadAnchor) {
+          loadAnchor.dataset.page = String(currentPage);
+          loadAnchor.dataset.maxPage = String(totalPages);
+
+          if (currentPage < totalPages) {
+            loadAnchor.dataset.nextPage = pageHref(currentPage + 1);
+          } else {
+            delete loadAnchor.dataset.nextPage;
+          }
+        }
+
+        nav.replaceChildren();
+        nav.append(
+          createPageNode({
+            page: Math.max(currentPage - 1, 1),
+            label: 'Previous',
+            modifier: 'previous',
+            disabled: currentPage === 1,
+          }),
+        );
+
+        Array.from({ length: totalPages }, (_, index) => index + 1).forEach((page) => {
+          nav.append(createPageNode({ page, label: String(page), current: page === currentPage }));
+        });
+
+        nav.append(
+          createPageNode({
+            page: Math.min(currentPage + 1, totalPages),
+            label: 'Next',
+            modifier: 'next',
+            disabled: currentPage === totalPages,
+          }),
+        );
+      };
+
+      nav.addEventListener('click', (event) => {
+        const target = event.target instanceof Element ? event.target.closest<HTMLElement>('[data-pagination-page]') : null;
+
+        if (!target) {
+          return;
+        }
+
+        event.preventDefault();
+        currentPage = Number(target.dataset.paginationPage) || 1;
+        render();
+      });
+
+      filterButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          currentPage = 1;
+          window.requestAnimationFrame(render);
+        });
+      });
+
+      render();
+    });
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initInsightsArticlePagination, { once: true });
+  } else {
+    initInsightsArticlePagination();
+  }
+
+  document.addEventListener('astro:page-load', initInsightsArticlePagination);
+</script>
 
 <style>
   .insights-article-cards {
@@ -355,7 +541,6 @@ const { articles = defaultArticles, filterScope = 'insights-articles' } = Astro.
     width: min(100% - 48px, 1362px);
     margin-block: 0 100px;
     margin-inline: auto;
-    padding-block: 0 100px;
     background: #ffffff;
     color: var(--article-cards-text);
     font-family: var(--font-body, 'Poppins', sans-serif);

@@ -4,6 +4,7 @@ import InsightsHero from '../components/InsightsHero.astro';
 import LatestPostsSection from '../components/LatestPostsSection.astro';
 import InsightsArticlesTabs from '../components/InsightsArticlesTabs.astro';
 import InsightsArticleCards from '../components/InsightsArticleCards.astro';
+import InsightsPagination from '../components/InsightsPagination.astro';
 
 const schema = {
   "@context": "https://schema.org",
@@ -46,6 +47,8 @@ const schema = {
 
     <InsightsArticlesTabs />
 
-    <InsightsArticleCards />
+    <InsightsArticleCards postsPerPage={6}>
+      <InsightsPagination slot="pagination" pageSize={6} totalPages={2} />
+    </InsightsArticleCards>
 
 </BaseLayout>

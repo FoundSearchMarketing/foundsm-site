@@ -19,7 +19,6 @@ export interface BlogPost {
   heroImage: string;
   heroImageAlt: string;
   contentHtml: string;
-  sourceType: string;
   categories: BlogPostCategory[];
 }
 
@@ -214,7 +213,6 @@ function mapSanityPost(post: SanityBlogPost, slugs: Set<string>): BlogPost | und
     heroImage,
     heroImageAlt: post.featuredImage?.alt || post.title,
     contentHtml: renderContentHtml(post.body || [], slugs),
-    sourceType: 'sanity',
     categories: category ? [category] : [],
   };
 }

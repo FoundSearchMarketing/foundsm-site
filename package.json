@@ -12,7 +12,6 @@
     "preview": "astro preview",
     "astro": "astro",
     "test": "node --test",
-    "blog:generate": "node scripts/blog-posts/generate-blog-post-data.mjs",
     "wp:convert": "node scripts/wp-convert.mjs"
   },
   "dependencies": {

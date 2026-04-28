@@ -11,7 +11,7 @@ const { post, navigation } = Astro.props;
 const authorLabel = [post.authorName, post.authorTitle].filter(Boolean).join(', ');
 ---
 
-<div class="blog-post" data-post-slug={post.slug} data-source-type={post.sourceType}>
+<div class="blog-post" data-post-slug={post.slug}>
   <article class="blog-post__article" aria-labelledby="post-title" itemscope itemtype="https://schema.org/BlogPosting">
     <header class="blog-post__hero">
       <div class="blog-post__hero-inner">

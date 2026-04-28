@@ -5,6 +5,13 @@ import LatestPostsSection from '../components/LatestPostsSection.astro';
 import InsightsArticlesTabs from '../components/InsightsArticlesTabs.astro';
 import InsightsArticleCards from '../components/InsightsArticleCards.astro';
 import InsightsPagination from '../components/InsightsPagination.astro';
+import { getAllBlogPosts, toInsightsArticleCards, toLatestPostCards } from '../lib/blogPosts';
+
+const posts = getAllBlogPosts();
+const latestPosts = toLatestPostCards(posts, 2);
+const articleCards = toInsightsArticleCards(posts);
+const postsPerPage = 6;
+const totalPages = Math.ceil(posts.length / postsPerPage);
 
 const schema = {
   "@context": "https://schema.org",
@@ -43,12 +50,12 @@ const schema = {
          ============================================ -->
     <InsightsHero />
 
-    <LatestPostsSection />
+    <LatestPostsSection posts={latestPosts} />
 
     <InsightsArticlesTabs />
 
-    <InsightsArticleCards postsPerPage={6}>
-      <InsightsPagination slot="pagination" pageSize={6} totalPages={2} />
+    <InsightsArticleCards articles={articleCards} postsPerPage={postsPerPage}>
+      <InsightsPagination slot="pagination" pageSize={postsPerPage} totalPages={totalPages} />
     </InsightsArticleCards>
 
 </BaseLayout>

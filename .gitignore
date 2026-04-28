@@ -36,7 +36,8 @@ scripts/wp-scrape/
 src/pages/imported/
 src/scripts/imported/
 src/styles/imported/
-tests/
+tests/*
+!tests/blog-post-importer.test.mjs
 
 # OS
 .DS_Store

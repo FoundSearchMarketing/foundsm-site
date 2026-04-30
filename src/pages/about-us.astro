@@ -1,223 +1,1007 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
+const pageTitle = 'About Found Search Marketing | An Enterprise Paid Media Agency';
+const pageDescription = 'Founded in 2006, Found Search Marketing helps enterprise brands achieve consistent, measurable growth through trusted partnerships and precision media execution.';
+
+const credentials = [
+  {
+    image: 'https://foundsm.com/found2025/wp-content/uploads/2025/09/google-partner.png',
+    srcset: 'https://foundsm.com/found2025/wp-content/uploads/2025/09/google-partner.png 190w, https://foundsm.com/found2025/wp-content/uploads/2025/09/google-partner-150x150.png 150w',
+    width: 190,
+    height: 190,
+    alt: 'Google Partner badge',
+    text: 'Certified in many Google marketing products',
+  },
+  {
+    image: 'https://foundsm.com/found2025/wp-content/uploads/2025/09/ibj.png',
+    srcset: 'https://foundsm.com/found2025/wp-content/uploads/2025/09/ibj.png 190w, https://foundsm.com/found2025/wp-content/uploads/2025/09/ibj-150x150.png 150w',
+    width: 190,
+    height: 190,
+    alt: 'Indianapolis Business Journal badge',
+    text: 'Named one of the largest Marketing Firms in Indianapolis',
+  },
+  {
+    image: 'https://foundsm.com/found2025/wp-content/uploads/2026/01/WBE-Digital-Badge.svg',
+    width: 500,
+    height: 500,
+    alt: 'Women-Owned Business Enterprise badge',
+    text: 'Independently owned, certified Women-Owned Business',
+  },
+  {
+    image: 'https://foundsm.com/found2025/wp-content/uploads/2025/09/indiana.png',
+    width: 95,
+    height: 95,
+    alt: 'Indiana badge',
+    text: 'Multiple winners of Best Places to Work awards',
+  },
+];
+
+const missionCards = [
+  {
+    title: 'Smarter',
+    image: 'https://foundsm.com/found2025/wp-content/uploads/2025/09/icon-smarter.svg',
+    text: 'by leveraging cutting-edge technology, first-party data, and custom methodologies to drive measurable business impact.',
+  },
+  {
+    title: 'Faster',
+    image: 'https://foundsm.com/found2025/wp-content/uploads/2025/09/icon-faster.svg',
+    text: 'by providing full-service paid media solutions, from campaign strategy and execution to high-performing ads and landing pages that convert.',
+  },
+  {
+    title: 'Together',
+    image: 'https://foundsm.com/found2025/wp-content/uploads/2025/09/icon-together.svg',
+    text: 'by sitting on the same side of the table as our clients, while empowering our team to thrive, collaborate, and grow alongside them.',
+  },
+];
+
+const values = [
+  {
+    id: 'client-aligned',
+    title: 'Client Aligned',
+    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/09/icon-about-tab1.svg',
+    image: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/about-tab3.webp?ver=1775055851',
+    width: 368,
+    height: 474,
+    copy: "We're more than partners&mdash;we sit on the same side of the table. We work alongside our clients, driven by trust, shared goals, and a commitment to long-term growth.",
+  },
+  {
+    id: 'challenge-assumptions',
+    title: 'Challenge Assumptions',
+    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/09/icon-about-tab2.svg',
+    image: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/about-tab2.webp',
+    width: 368,
+    height: 474,
+    copy: 'We encourage our team, agency, and clients to question the status quo. Innovation starts with curiosity&mdash;and better outcomes come from testing, learning, and evolving together.',
+  },
+  {
+    id: 'own-outcome',
+    title: 'Own The Outcome',
+    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/09/icon-about-tab3.svg',
+    image: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/about-tab1.webp',
+    width: 368,
+    height: 474,
+    copy: 'We focus on what works, measure what matters, and are committed to quality and doing things the right way for our clients&mdash;always for the growth of our team and agency.',
+  },
+  {
+    id: 'scale-intent',
+    title: 'Scale With Intent',
+    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/09/icon-about-tab4.svg',
+    image: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/about-tab4.webp',
+    width: 368,
+    height: 474,
+    copy: 'Smart growth is shared growth. Our strategies are built to drive measurable, sustainable impact&mdash;for our clients, for our agency, and for the people who make it happen.',
+  },
+];
+
 const schema = {
-  "@context": "https://schema.org",
-  "@graph": [
+  '@context': 'https://schema.org',
+  '@graph': [
     {
-      "@type": "Organization",
-      "name": "Found Search Marketing",
-      "url": "https://www.foundsm.com",
-      "logo": "https://www.foundsm.com/images/logo.svg",
-      "description": "An enterprise paid media agency that drives measurable growth.",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "8475 Nightfall Lane, Suite 200",
-        "addressLocality": "Fishers",
-        "addressRegion": "IN",
-        "postalCode": "46037",
-        "addressCountry": "US"
+      '@type': 'Organization',
+      name: 'Found Search Marketing',
+      url: 'https://www.foundsm.com',
+      logo: 'https://www.foundsm.com/images/logo.svg',
+      foundingDate: '2006',
+      description: pageDescription,
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: '8475 Nightfall Lane, Suite 200',
+        addressLocality: 'Fishers',
+        addressRegion: 'IN',
+        postalCode: '46037',
+        addressCountry: 'US',
       },
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "telephone": "+1-317-721-2229",
-        "contactType": "sales",
-        "email": "info@foundsm.com"
+      contactPoint: {
+        '@type': 'ContactPoint',
+        telephone: '+1-317-721-2229',
+        contactType: 'sales',
+        email: 'info@foundsm.com',
       },
-      "sameAs": [
-        "https://www.facebook.com/foundsm/",
-        "https://www.instagram.com/found_sm/",
-        "https://www.linkedin.com/company/found-search-marketing/",
-        "https://x.com/FoundSM"
-      ]
+      sameAs: [
+        'https://www.facebook.com/foundsm/',
+        'https://www.instagram.com/found_sm/',
+        'https://www.linkedin.com/company/found-search-marketing/',
+        'https://x.com/FoundSM',
+      ],
     },
     {
-      "@type": "WebPage",
-      "name": "About Us | Found Search Marketing",
-      "url": "https://www.foundsm.com/about-us",
-      "description": "Learn about Found Search Marketing, an enterprise paid media agency based in Fishers, Indiana. Meet our team of 50+ experts across 12 states driving measurable growth.",
-      "publisher": {
-        "@type": "Organization",
-        "name": "Found Search Marketing"
-      }
-    }
-  ]
+      '@type': 'AboutPage',
+      name: pageTitle,
+      url: 'https://www.foundsm.com/about-us',
+      description: pageDescription,
+      publisher: {
+        '@type': 'Organization',
+        name: 'Found Search Marketing',
+      },
+    },
+  ],
 };
 ---
 
 <BaseLayout
-  title="About Us | Found Search Marketing"
-  description="Learn about Found Search Marketing, an enterprise paid media agency based in Fishers, Indiana. Meet our team of 50+ experts across 12 states driving measurable growth."
+  title={pageTitle}
+  description={pageDescription}
   canonical="https://www.foundsm.com/about-us"
   schema={schema}
+  bodyClass="about-page-modern"
 >
-
-    <!-- ============================================
-         HERO SECTION
-         ============================================ -->
-    <section class="hero hero--short" aria-label="About Us hero">
-      <div class="hero__overlay" aria-hidden="true"></div>
-      <div class="container hero__content">
-        <div class="hero-stagger">
-          <h1 class="hero__headline">About Us</h1>
-        </div>
-        <div class="hero-stagger">
-          <p class="hero__subtitle">The story behind an enterprise paid media agency built on data, transparency, and a relentless focus on outcomes.</p>
-        </div>
-      </div>
-    </section>
-
-
-    <!-- ============================================
-         FOUNDER STORY SECTION
-         ============================================ -->
-    <section class="about-story" aria-label="Our story">
-      <div class="container about-story__grid">
-
-        <div class="about-story__image fade-in-up">
-          <img src="/images/about-hero.jpg" alt="Found Search Marketing team collaborating in the Fishers, Indiana office" loading="lazy" width="600" height="450">
+  <article class="about-modern">
+    <section class="about-hero" aria-labelledby="about-hero-heading">
+      <div class="about-shell about-hero__grid">
+        <div class="about-hero__copy fade-in-up">
+          <h1 id="about-hero-heading">Built for Paid Media Performance</h1>
+          <div class="about-hero__text">
+            <p>Found Search Marketing is a full-service data engineering agency that leverages advanced analytics to drive smart, paid media strategies. By integrating data-driven insights, strategy and paid media execution under one roof, we deliver customized solutions that generate high-intent leads and measurable results.</p>
+            <p>Our team values transparency, accountability, and innovative problem solving. That's why many of our clients have stuck with us for more than a decade.</p>
+          </div>
         </div>
 
-        <div class="about-story__content fade-in-up">
-          <h2 class="about-story__headline">Our Story</h2>
-          <p>Found Search Marketing was founded with a simple but powerful idea: enterprise brands deserve a paid media partner that operates with complete transparency and is accountable to real business outcomes, not vanity metrics.</p>
-          <p>What started as a small, scrappy team of search marketing specialists has grown into an enterprise paid media agency with more than 50 employees across 12 states. Headquartered in Fishers, Indiana, we serve some of the most recognized brands in healthcare, education, home services, and financial services.</p>
-          <p>Over the years, our capabilities have expanded well beyond paid search. Today, we bring together data intelligence, data activation, performance creative, and strategic media buying to deliver full-funnel programs that drive measurable growth. But our founding principle has never changed: we believe the best work happens when agencies and clients operate as true partners with shared goals and shared accountability.</p>
-          <p>That commitment to partnership, combined with deep platform expertise and proprietary data technology, is what sets Found Search Marketing apart &mdash; and why the brands we work with stay with us year after year.</p>
-        </div>
-
-      </div>
-    </section>
-
-
-    <!-- ============================================
-         CORE VALUES SECTION
-         ============================================ -->
-    <section class="values" aria-label="Our core values">
-      <div class="container">
-        <h2 class="values__heading fade-in-up">Our Core Values</h2>
-
-        <div class="values__grid">
-
-          <div class="values__card fade-in-up">
-            <div class="values__icon" aria-hidden="true">
-              <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-                <circle cx="24" cy="24" r="22" stroke="currentColor" stroke-width="2"/>
-                <path d="M16 28C16 28 18 32 24 32C30 32 32 28 32 28" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                <path d="M24 16V24L28 20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <h3 class="values__card-heading">Innovation</h3>
-            <p class="values__card-description">We embrace new technology, platforms, and approaches to stay ahead of the curve. Our team continuously tests and iterates so your campaigns benefit from the latest advancements in paid media and data science.</p>
-          </div>
-
-          <div class="values__card fade-in-up">
-            <div class="values__icon" aria-hidden="true">
-              <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-                <rect x="4" y="8" width="40" height="32" rx="4" stroke="currentColor" stroke-width="2" fill="none"/>
-                <path d="M4 16H44" stroke="currentColor" stroke-width="2"/>
-                <circle cx="24" cy="30" r="6" stroke="currentColor" stroke-width="2" fill="none"/>
-                <path d="M24 27V30L26 31" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <h3 class="values__card-heading">Transparency</h3>
-            <p class="values__card-description">Honest reporting and open communication are the foundation of every client relationship. You will always know exactly where your budget is going, how campaigns are performing, and what we recommend next.</p>
-          </div>
-
-          <div class="values__card fade-in-up">
-            <div class="values__icon" aria-hidden="true">
-              <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-                <path d="M16 20C16 15.5817 19.5817 12 24 12C28.4183 12 32 15.5817 32 20" stroke="currentColor" stroke-width="2" fill="none"/>
-                <circle cx="16" cy="28" r="6" stroke="currentColor" stroke-width="2" fill="none"/>
-                <circle cx="32" cy="28" r="6" stroke="currentColor" stroke-width="2" fill="none"/>
-                <path d="M22 28H26" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                <path d="M12 36V38" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                <path d="M20 36V38" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                <path d="M28 36V38" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                <path d="M36 36V38" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <h3 class="values__card-heading">Partnership</h3>
-            <p class="values__card-description">We treat every client as a true partner, not just another account. Our teams embed alongside yours, sharing goals, celebrating wins, and tackling challenges together with full accountability.</p>
-          </div>
-
-          <div class="values__card fade-in-up">
-            <div class="values__icon" aria-hidden="true">
-              <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-                <path d="M8 36L16 24L24 30L32 18L40 12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-                <circle cx="40" cy="12" r="4" stroke="currentColor" stroke-width="2" fill="none"/>
-                <path d="M8 40H40" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <h3 class="values__card-heading">Results</h3>
-            <p class="values__card-description">Everything we do is measured against real business outcomes &mdash; qualified leads, revenue growth, and customer lifetime value. We focus on the metrics that move your business forward, not the ones that just look good in a report.</p>
-          </div>
-
+        <div class="about-hero__media fade-in-up" aria-hidden="true">
+          <img
+            src="https://foundsm.com/found2025/wp-content/uploads/2025/09/hero-about-1.webp?ver=1773660460"
+            srcset="https://foundsm.com/found2025/wp-content/uploads/2025/09/hero-about-1.webp 682w, https://foundsm.com/found2025/wp-content/uploads/2025/09/hero-about-1-300x290.webp 300w"
+            sizes="(min-width: 1024px) 42vw, 100vw"
+            alt=""
+            width="682"
+            height="660"
+            loading="eager"
+            fetchpriority="high"
+          />
         </div>
       </div>
     </section>
 
+    <section class="about-who" aria-labelledby="about-who-heading">
+      <div class="about-shell about-who__intro fade-in-up">
+        <p class="about-eyebrow">EST. 2006</p>
+        <h2 id="about-who-heading">Who We Are</h2>
+      </div>
 
-    <!-- ============================================
-         TEAM TEASER SECTION
-         ============================================ -->
-    <section class="team-teaser" aria-label="Meet our team">
-      <div class="container">
-        <h2 class="team-teaser__heading fade-in-up">Meet Our Team</h2>
-        <p class="team-teaser__description fade-in-up">Our 50+ person team spans 12 states, bringing together deep expertise in paid media, data science, analytics, and creative strategy. Here are some of the leaders driving results for our clients every day.</p>
+      <div class="about-shell about-who__grid">
+        <div class="about-who__copy fade-in-up">
+          <p>Our company was founded in 2006 by Julie Warnecke&mdash;the fourth employee on the Google Ads team. Based in the suburbs of Indianapolis, Indiana, Found has grown to include more than 50 employees&mdash;including three former Googlers&mdash;across 12 states.</p>
 
-        <div class="team-teaser__grid">
-
-          <div class="team-teaser__card fade-in-up">
-            <div class="team-teaser__photo">
-              <img src="/images/team/julie-warnecke.jpg" alt="Julie Warnecke, CEO of Found Search Marketing" loading="lazy" width="300" height="300">
-            </div>
-            <h3 class="team-teaser__name">Julie Warnecke</h3>
-            <p class="team-teaser__title">CEO</p>
+          <h3>We're Also:</h3>
+          <div class="credential-grid">
+            {credentials.map((credential) => (
+              <article class="credential-card">
+                <div class="credential-card__media">
+                  <img
+                    src={credential.image}
+                    srcset={'srcset' in credential ? credential.srcset : undefined}
+                    sizes="(max-width: 767px) 5rem, 6rem"
+                    alt={credential.alt}
+                    width={credential.width}
+                    height={credential.height}
+                    loading="lazy"
+                  />
+                </div>
+                <p>{credential.text}</p>
+              </article>
+            ))}
           </div>
-
-          <div class="team-teaser__card fade-in-up">
-            <div class="team-teaser__photo">
-              <img src="/images/team/adam-persinger.jpg" alt="Adam Persinger, Head of Strategic Media" loading="lazy" width="300" height="300">
-            </div>
-            <h3 class="team-teaser__name">Adam Persinger</h3>
-            <p class="team-teaser__title">Head of Strategic Media</p>
-          </div>
-
-          <div class="team-teaser__card fade-in-up">
-            <div class="team-teaser__photo">
-              <img src="/images/team/kelley-swart.jpg" alt="Kelley Swart, VP Strategy &amp; Growth" loading="lazy" width="300" height="300">
-            </div>
-            <h3 class="team-teaser__name">Kelley Swart</h3>
-            <p class="team-teaser__title">VP Strategy &amp; Growth</p>
-          </div>
-
-          <div class="team-teaser__card fade-in-up">
-            <div class="team-teaser__photo">
-              <img src="/images/team/rachel-puls.jpg" alt="Rachel Puls, VP Delivery" loading="lazy" width="300" height="300">
-            </div>
-            <h3 class="team-teaser__name">Rachel Puls</h3>
-            <p class="team-teaser__title">VP Delivery</p>
-          </div>
-
         </div>
 
-        <div class="team-teaser__cta fade-in-up">
-          <a href="/team" class="btn btn--green">View Full Team</a>
+        <div class="about-who__media fade-in-up">
+          <img
+            src="https://foundsm.com/found2025/wp-content/uploads/2026/03/whoweare.webp"
+            srcset="https://foundsm.com/found2025/wp-content/uploads/2026/03/whoweare.webp 652w, https://foundsm.com/found2025/wp-content/uploads/2026/03/whoweare-155x300.webp 155w, https://foundsm.com/found2025/wp-content/uploads/2026/03/whoweare-527x1024.webp 527w"
+            sizes="(min-width: 1024px) 34vw, 82vw"
+            alt="Found Search Marketing team members collaborating"
+            width="652"
+            height="1266"
+            loading="lazy"
+          />
         </div>
       </div>
     </section>
 
+    <section class="about-mission" aria-labelledby="about-mission-heading">
+      <div class="about-shell">
+        <div class="about-section-heading about-section-heading--center fade-in-up">
+          <p class="about-eyebrow">Guided By Our Mission</p>
+          <h2 id="about-mission-heading">Scale Smarter, Move Faster,<br /> Grow Together</h2>
+        </div>
 
-    <!-- ============================================
-         CTA BANNER
-         ============================================ -->
-    <section class="cta-banner" aria-label="Call to action">
-      <div class="cta-banner__bg" aria-hidden="true"></div>
-      <div class="container cta-banner__inner fade-in-up">
-        <h2 class="cta-banner__headline">Let's Find A Solution</h2>
-        <a href="/contact-us" class="btn btn--green btn--lg">Start the Conversation</a>
+        <div class="mission-grid">
+          {missionCards.map((card) => (
+            <article class="mission-card fade-in-up">
+              <img src={card.image} alt="" width="50" height="50" loading="lazy" />
+              <h3>{card.title}</h3>
+              <p>{card.text}</p>
+            </article>
+          ))}
+        </div>
       </div>
     </section>
 
+    <section class="about-values" aria-labelledby="about-values-heading" data-about-values-tabs>
+      <div class="about-shell">
+        <div class="values-tabs">
+          <div class="values-tabs__nav fade-in-up">
+            <h2 id="about-values-heading">Rooted In Our Values</h2>
+            <div class="values-tabs__tablist" role="tablist" aria-label="Found Search Marketing values">
+              {values.map((value, index) => (
+                <button
+                  class:list={['values-tabs__tab', { 'is-active': index === 0 }]}
+                  type="button"
+                  id={`about-values-tab-${value.id}`}
+                  role="tab"
+                  aria-selected={index === 0 ? 'true' : 'false'}
+                  aria-controls={`about-values-panel-${value.id}`}
+                  tabindex={index === 0 ? undefined : '-1'}
+                >
+                  <span class="values-tabs__tab-bar" aria-hidden="true"></span>
+                  <img src={value.icon} alt="" width="50" height="50" loading="lazy" />
+                  <span>{value.title}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div class="values-tabs__panels fade-in-up">
+            {values.map((value, index) => (
+              <div
+                class:list={['values-tabs__panel', { 'is-active': index === 0 }]}
+                id={`about-values-panel-${value.id}`}
+                role="tabpanel"
+                aria-labelledby={`about-values-tab-${value.id}`}
+                hidden={index !== 0}
+              >
+                <div class="values-tabs__panel-copy">
+                  <h3>{value.title}</h3>
+                  <p set:html={value.copy} />
+                  <a class="about-link" href="/contact-us/">Let's Talk</a>
+                </div>
+                <div class="values-tabs__panel-media">
+                  <img
+                    src={value.image}
+                    alt={value.title}
+                    width={value.width}
+                    height={value.height}
+                    loading={index === 0 ? 'eager' : 'lazy'}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="about-approach" aria-labelledby="about-approach-heading">
+      <div class="about-shell about-split">
+        <div class="about-split__media fade-in-up">
+          <img
+            src="https://foundsm.com/found2025/wp-content/uploads/2026/03/about-approach.webp"
+            srcset="https://foundsm.com/found2025/wp-content/uploads/2026/03/about-approach.webp 604w, https://foundsm.com/found2025/wp-content/uploads/2026/03/about-approach-300x300.webp 300w, https://foundsm.com/found2025/wp-content/uploads/2026/03/about-approach-150x150.webp 150w"
+            sizes="(min-width: 900px) 38vw, 90vw"
+            alt="Found Search Marketing planning process"
+            width="604"
+            height="604"
+            loading="lazy"
+          />
+        </div>
+        <div class="about-split__copy fade-in-up">
+          <h2 id="about-approach-heading">Our Proven Approach</h2>
+          <p>First-party data. Custom playbooks. Automation. Innovative bid strategies. Bespoke dashboards. Our approach combines all of these things and more to create a self-reinforcing optimization cycle that gives us the complete picture of your paid media ecosystem. It's all about turning your data into better insights&mdash;and more clicks into more customers.</p>
+          <a class="about-button" href="/our-approach/">See What Makes Us Unique</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="about-team" aria-labelledby="about-team-heading">
+      <div class="about-shell">
+        <h2 id="about-team-heading" class="fade-in-up">Meet The Team</h2>
+        <div class="about-team__image fade-in-up">
+          <img
+            src="https://foundsm.com/found2025/wp-content/uploads/2026/03/about-team.webp"
+            srcset="https://foundsm.com/found2025/wp-content/uploads/2026/03/about-team.webp 1399w, https://foundsm.com/found2025/wp-content/uploads/2026/03/about-team-300x150.webp 300w, https://foundsm.com/found2025/wp-content/uploads/2026/03/about-team-1024x512.webp 1024w, https://foundsm.com/found2025/wp-content/uploads/2026/03/about-team-768x384.webp 768w"
+            sizes="(min-width: 1200px) 86rem, 94vw"
+            alt="The Found Search Marketing team"
+            width="1399"
+            height="699"
+            loading="lazy"
+          />
+        </div>
+      </div>
+    </section>
+
+    <section class="about-team-cta" aria-label="About the Found team">
+      <div class="about-shell about-team-cta__grid fade-in-up">
+        <div class="about-team-cta__copy">
+          <p>Over nearly two decades, our agency has grown substantially. The reason is our team&mdash;they're among the best in the world at what they do. That's because we're client-first thinkers. We move fast&mdash;but always with intention. We focus on working smarter, while executing through the minutia. We put our egos in the back seat. And we love what we do.</p>
+          <p>We also work together seamlessly for the benefit of our clients&mdash;a big reason many of our team members stay for five or even ten-plus years.</p>
+        </div>
+        <a class="about-button about-button--dark" href="/team/">Meet the Team</a>
+      </div>
+    </section>
+  </article>
+
+  <script>
+    document.querySelectorAll('[data-about-values-tabs]').forEach((root) => {
+      const tabs = Array.from(root.querySelectorAll('[role="tab"]'));
+      const panels = Array.from(root.querySelectorAll('[role="tabpanel"]'));
+
+      const activateTab = (tab) => {
+        const panelId = tab.getAttribute('aria-controls');
+
+        tabs.forEach((item) => {
+          const selected = item === tab;
+          item.classList.toggle('is-active', selected);
+          item.setAttribute('aria-selected', selected ? 'true' : 'false');
+          item.tabIndex = selected ? 0 : -1;
+        });
+
+        panels.forEach((panel) => {
+          const selected = panel.id === panelId;
+          panel.classList.toggle('is-active', selected);
+          panel.hidden = !selected;
+        });
+      };
+
+      tabs.forEach((tab, index) => {
+        tab.addEventListener('click', () => activateTab(tab));
+        tab.addEventListener('keydown', (event) => {
+          if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) {
+            return;
+          }
+
+          event.preventDefault();
+          let nextIndex = index;
+          if (event.key === 'ArrowRight') nextIndex = (index + 1) % tabs.length;
+          if (event.key === 'ArrowLeft') nextIndex = (index - 1 + tabs.length) % tabs.length;
+          if (event.key === 'Home') nextIndex = 0;
+          if (event.key === 'End') nextIndex = tabs.length - 1;
+
+          const nextTab = tabs[nextIndex];
+          activateTab(nextTab);
+          nextTab.focus();
+        });
+      });
+    });
+  </script>
+
+  <style>
+    .about-modern {
+      --about-green: #8bc53f;
+      --about-green-dark: #76a834;
+      --about-ink: #1a1a1a;
+      --about-muted: #5f625c;
+      --about-surface: #f4f6f0;
+      --about-surface-strong: #e7ebdf;
+      --about-border: rgba(26, 26, 26, 0.12);
+      --about-shadow: 0 1.5rem 3.5rem rgba(26, 26, 26, 0.12);
+      background: #ffffff;
+      color: var(--about-ink);
+      overflow-x: hidden;
+    }
+
+    .about-modern h1,
+    .about-modern h2,
+    .about-modern h3,
+    .about-modern p {
+      letter-spacing: 0;
+    }
+
+    .about-modern h1,
+    .about-modern h2 {
+      font-family: var(--font-heading);
+      line-height: 1.08;
+      color: var(--about-ink);
+    }
+
+    .about-modern h1 {
+      font-size: 2.75rem;
+      font-weight: 700;
+    }
+
+    .about-modern h2 {
+      font-size: 2.25rem;
+      font-weight: 700;
+    }
+
+    .about-modern h3 {
+      font-family: var(--font-body);
+      font-size: 1.3rem;
+      line-height: 1.25;
+      font-weight: 700;
+      color: var(--about-ink);
+    }
+
+    .about-modern p {
+      margin: 0;
+      color: var(--about-muted);
+      font-size: 1rem;
+      line-height: 1.72;
+    }
+
+    .about-modern p + p {
+      margin-top: 1rem;
+    }
+
+    .about-shell {
+      inline-size: min(calc(100% - 2rem), 86rem);
+      margin-inline: auto;
+    }
+
+    .about-eyebrow {
+      margin: 0 0 0.75rem;
+      color: var(--about-green-dark);
+      font-size: 0.78rem;
+      font-weight: 800;
+      line-height: 1.2;
+      text-transform: uppercase;
+    }
+
+    .about-button,
+    .about-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 3rem;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      line-height: 1.2;
+      text-align: center;
+      transition: background-color var(--duration) var(--ease), color var(--duration) var(--ease), border-color var(--duration) var(--ease), transform var(--duration) var(--ease);
+    }
+
+    .about-button {
+      padding: 0.9rem 1.35rem;
+      background: var(--about-green);
+      color: #ffffff;
+    }
+
+    .about-button:hover,
+    .about-button:focus-visible {
+      background: var(--about-green-dark);
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+
+    .about-button--dark {
+      background: var(--about-ink);
+      color: #ffffff;
+    }
+
+    .about-button--dark:hover,
+    .about-button--dark:focus-visible {
+      background: #343434;
+    }
+
+    .about-link {
+      padding: 0.2rem 0;
+      color: var(--about-green);
+      min-height: 0;
+    }
+
+    .about-link:hover,
+    .about-link:focus-visible {
+      color: #ffffff;
+    }
+
+    .about-hero {
+      min-height: 38rem;
+      display: grid;
+      align-items: center;
+      padding: 5.25rem 0 4.5rem;
+      background:
+        linear-gradient(90deg, #ffffff 0%, #ffffff 54%, var(--about-surface) 54%, var(--about-surface) 100%);
+    }
+
+    .about-hero__grid {
+      display: grid;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .about-hero__copy {
+      max-width: 43rem;
+    }
+
+    .about-hero__text {
+      margin-top: 1.35rem;
+      max-width: 39rem;
+    }
+
+    .about-hero__media {
+      display: none;
+    }
+
+    .about-hero__media img {
+      width: min(42vw, 42.625rem);
+      aspect-ratio: 682 / 660;
+      object-fit: contain;
+      filter: drop-shadow(0 2rem 2.5rem rgba(26, 26, 26, 0.16));
+    }
+
+    .about-who {
+      position: relative;
+      padding: 4.5rem 0;
+      background-color: var(--about-surface);
+      background-image: url("https://foundsm.com/found2025/wp-content/uploads/2026/03/topography-light_sm.svg");
+      background-size: 34rem;
+      overflow: hidden;
+    }
+
+    .about-who::before {
+      position: absolute;
+      inset: 0;
+      content: "";
+      background: linear-gradient(90deg, rgba(244, 246, 240, 0.96), rgba(244, 246, 240, 0.82));
+      pointer-events: none;
+    }
+
+    .about-who > * {
+      position: relative;
+    }
+
+    .about-who__intro {
+      margin-bottom: 2.25rem;
+    }
+
+    .about-who__grid {
+      display: grid;
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    .about-who__copy {
+      max-width: 43rem;
+    }
+
+    .about-who__copy h3 {
+      margin-top: 2rem;
+      font-size: 1rem;
+      text-transform: uppercase;
+    }
+
+    .credential-grid {
+      display: grid;
+      gap: 0.85rem;
+      margin-top: 1rem;
+    }
+
+    .credential-card {
+      display: grid;
+      grid-template-columns: 4.5rem minmax(0, 1fr);
+      gap: 1rem;
+      align-items: center;
+      min-height: 6rem;
+      padding: 0.95rem;
+      border: 1px solid var(--about-border);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(4px);
+    }
+
+    .credential-card__media {
+      display: grid;
+      place-items: center;
+      width: 4.5rem;
+      height: 4.5rem;
+      border-radius: 8px;
+      background: #ffffff;
+    }
+
+    .credential-card img {
+      max-width: 3.5rem;
+      max-height: 3.5rem;
+      object-fit: contain;
+    }
+
+    .credential-card p {
+      color: var(--about-ink);
+      font-size: 0.92rem;
+      line-height: 1.45;
+      font-weight: 600;
+    }
+
+    .about-who__media {
+      justify-self: center;
+      max-width: 22rem;
+    }
+
+    .about-who__media img {
+      width: 100%;
+      aspect-ratio: 652 / 1266;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: var(--about-shadow);
+    }
+
+    .about-mission {
+      padding: 4.5rem 0;
+      background: #ffffff;
+    }
+
+    .about-section-heading {
+      margin-bottom: 2rem;
+    }
+
+    .about-section-heading--center {
+      text-align: center;
+    }
+
+    .mission-grid {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .mission-card {
+      display: grid;
+      align-content: start;
+      gap: 0.85rem;
+      min-height: 16rem;
+      padding: 1.4rem;
+      border: 1px solid var(--about-border);
+      border-radius: 8px;
+      background: var(--about-surface);
+    }
+
+    .mission-card img {
+      width: 3.125rem;
+      height: 3.125rem;
+      object-fit: contain;
+    }
+
+    .mission-card p {
+      color: var(--about-muted);
+      font-size: 0.95rem;
+      line-height: 1.65;
+    }
+
+    .about-values {
+      padding: 4.5rem 0;
+      background: var(--about-ink);
+      color: #ffffff;
+    }
+
+    .values-tabs {
+      position: relative;
+      display: grid;
+      gap: 2rem;
+      min-height: 34rem;
+      padding: 1rem;
+      border-radius: 8px;
+      background: #222222;
+      overflow: hidden;
+    }
+
+    .values-tabs::before {
+      position: absolute;
+      inset: 0;
+      content: "";
+      background-image: url("https://foundsm.com/found2025/wp-content/themes/found2025/assets/images/topography-light.svg");
+      background-size: 34rem;
+      opacity: 0.08;
+      pointer-events: none;
+    }
+
+    .values-tabs > * {
+      position: relative;
+    }
+
+    .values-tabs__nav {
+      display: grid;
+      align-content: start;
+      gap: 1.2rem;
+      padding: 1rem;
+    }
+
+    .values-tabs__nav h2 {
+      color: #ffffff;
+      font-size: 2rem;
+    }
+
+    .values-tabs__tablist {
+      display: grid;
+      gap: 0.55rem;
+    }
+
+    .values-tabs__tab {
+      position: relative;
+      display: grid;
+      grid-template-columns: 0.25rem 2.5rem minmax(0, 1fr);
+      align-items: center;
+      gap: 0.85rem;
+      width: 100%;
+      min-height: 4rem;
+      padding: 0.55rem 0.7rem;
+      border-radius: 8px;
+      color: rgba(255, 255, 255, 0.72);
+      text-align: left;
+      transition: background-color var(--duration) var(--ease), color var(--duration) var(--ease);
+    }
+
+    .values-tabs__tab:hover,
+    .values-tabs__tab:focus-visible,
+    .values-tabs__tab.is-active {
+      background: rgba(255, 255, 255, 0.08);
+      color: #ffffff;
+    }
+
+    .values-tabs__tab-bar {
+      display: block;
+      width: 0.25rem;
+      height: 2.5rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .values-tabs__tab.is-active .values-tabs__tab-bar {
+      background: var(--about-green);
+    }
+
+    .values-tabs__tab img {
+      width: 2.5rem;
+      height: 2.5rem;
+      object-fit: contain;
+    }
+
+    .values-tabs__tab span:last-child {
+      font-size: 0.95rem;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .values-tabs__panels {
+      min-width: 0;
+    }
+
+    .values-tabs__panel {
+      display: grid;
+      gap: 1.5rem;
+      height: 100%;
+      min-height: 27rem;
+      padding: 1rem;
+    }
+
+    .values-tabs__panel[hidden] {
+      display: none;
+    }
+
+    .values-tabs__panel-copy {
+      display: grid;
+      align-content: center;
+      gap: 1rem;
+    }
+
+    .values-tabs__panel h3 {
+      color: #ffffff;
+      font-size: 1.85rem;
+    }
+
+    .values-tabs__panel p {
+      max-width: 34rem;
+      color: rgba(255, 255, 255, 0.76);
+    }
+
+    .values-tabs__panel-media {
+      align-self: end;
+      overflow: hidden;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.07);
+    }
+
+    .values-tabs__panel-media img {
+      width: 100%;
+      height: 100%;
+      max-height: 28rem;
+      aspect-ratio: 368 / 474;
+      object-fit: cover;
+    }
+
+    .about-approach {
+      padding: 4.5rem 0;
+      background: #ffffff;
+    }
+
+    .about-split {
+      display: grid;
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    .about-split__media {
+      overflow: hidden;
+      border-radius: 8px;
+      background: var(--about-surface);
+    }
+
+    .about-split__media img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+    }
+
+    .about-split__copy {
+      display: grid;
+      gap: 1.15rem;
+      max-width: 38rem;
+    }
+
+    .about-team {
+      padding: 4.5rem 0 2rem;
+      background: var(--about-surface);
+      text-align: center;
+    }
+
+    .about-team__image {
+      margin-top: 2rem;
+      overflow: hidden;
+      border-radius: 8px;
+      box-shadow: var(--about-shadow);
+    }
+
+    .about-team__image img {
+      width: 100%;
+      aspect-ratio: 1399 / 699;
+      object-fit: cover;
+    }
+
+    .about-team-cta {
+      padding: 2rem 0 4.5rem;
+      background: var(--about-surface);
+    }
+
+    .about-team-cta__grid {
+      display: grid;
+      gap: 1.5rem;
+      align-items: center;
+      padding: 1.35rem;
+      border-radius: 8px;
+      background: #ffffff;
+      box-shadow: 0 1rem 3rem rgba(26, 26, 26, 0.08);
+    }
+
+    .about-team-cta__copy {
+      max-width: 54rem;
+    }
+
+    .about-team-cta .about-button {
+      justify-self: start;
+    }
+
+    @media (min-width: 640px) {
+      .about-modern h1 {
+        font-size: 3.35rem;
+      }
+
+      .about-modern h2 {
+        font-size: 2.75rem;
+      }
+
+      .credential-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (min-width: 900px) {
+      .about-hero__grid {
+        grid-template-columns: minmax(0, 1fr) minmax(20rem, 0.85fr);
+      }
+
+      .about-hero__media {
+        display: block;
+      }
+
+      .about-who__grid {
+        grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.62fr);
+      }
+
+      .mission-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .values-tabs {
+        grid-template-columns: minmax(15rem, 0.65fr) minmax(0, 1fr);
+        gap: 1rem;
+        padding: 1.5rem;
+      }
+
+      .values-tabs__panel {
+        grid-template-columns: minmax(0, 1fr) minmax(15rem, 0.55fr);
+        gap: 2rem;
+        padding: 1.5rem;
+      }
+
+      .about-split {
+        grid-template-columns: minmax(18rem, 0.8fr) minmax(0, 1fr);
+      }
+
+      .about-team-cta__grid {
+        grid-template-columns: minmax(0, 1fr) auto;
+        padding: 2rem;
+      }
+    }
+
+    @media (min-width: 1200px) {
+      .about-modern h1 {
+        font-size: 4.25rem;
+      }
+
+      .about-modern h2 {
+        font-size: 3.25rem;
+      }
+
+      .about-modern p {
+        font-size: 1.05rem;
+      }
+
+      .about-hero {
+        min-height: 42rem;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .about-hero {
+        min-height: auto;
+        padding-top: 4rem;
+        background: #ffffff;
+      }
+
+      .about-section-heading--center {
+        text-align: left;
+      }
+
+      .about-section-heading--center br {
+        display: none;
+      }
+
+      .values-tabs {
+        margin-inline: -0.25rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .about-modern h1 {
+        font-size: 2.35rem;
+      }
+
+      .about-modern h2 {
+        font-size: 2rem;
+      }
+
+      .credential-card {
+        grid-template-columns: 4rem minmax(0, 1fr);
+      }
+
+      .credential-card__media {
+        width: 4rem;
+        height: 4rem;
+      }
+
+      .values-tabs__tab {
+        grid-template-columns: 0.2rem 2.25rem minmax(0, 1fr);
+      }
+
+      .values-tabs__panel h3 {
+        font-size: 1.55rem;
+      }
+    }
+  </style>
 </BaseLayout>

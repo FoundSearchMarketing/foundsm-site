@@ -1,214 +1,864 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
+const title = 'Our Approach | Found Search Marketing';
+const description = 'At Found Search Marketing, our proven paid media approach transforms complex data into actionable insights that fuel smarter strategy and measurable results.';
+const canonical = 'https://foundsm.com/our-approach/';
+
 const schema = {
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "name": "Our Approach | Found Search Marketing",
-  "url": "https://www.foundsm.com/our-approach",
-  "description": "Discover Found Search Marketing's approach to enterprise paid media. Our data-driven methodology delivers measurable ROI through cross-channel integration, transparent reporting, and continuous optimization.",
-  "publisher": {
-    "@type": "Organization",
-    "name": "Found Search Marketing",
-    "url": "https://www.foundsm.com",
-    "logo": "https://www.foundsm.com/images/logo.svg"
-  }
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: title,
+  url: canonical,
+  description,
+  publisher: {
+    '@type': 'Organization',
+    name: 'Found Search Marketing',
+    url: 'https://foundsm.com',
+    logo: 'https://foundsm.com/images/logo.svg',
+  },
 };
+
+const advantages = [
+  {
+    title: '1. Google Background',
+    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/09/icon-difference-1.svg',
+    body: "Our team includes three former Google employees. That means we're not only well versed in the entire Google suite of analytics and paid media channels&mdash;we're also leveraging the latest trends in ad tech. Julie Warnecke, our CEO, was the fourth employee on the Google AdWords Ad Operations team, and has experienced the evolution of digital marketing firsthand.",
+  },
+  {
+    title: '2. Big Picture View',
+    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/09/icon-difference-2.svg',
+    body: "Your performance lead generation ecosystem has lots of interworking parts that need to synergize to create better quality leads. We see your lead generation ecosystem from every angle&mdash;from performance paid media to engineering audience models to creative and landing pages, and beyond&mdash;making sure you're always moving in alignment with your business objectives.",
+  },
+  {
+    title: '3. Singular Focus',
+    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/09/icon-difference-3.svg',
+    body: "We aren't here to help create new logos, build custom fonts, or reposition your branding. We're here to drive leads through performance paid media, protect your brand, and deliver consistent, measurable wins that maximize profitability.",
+  },
+  {
+    title: '4. Uniquely Dedicated People',
+    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/09/icon-difference-4.svg',
+    body: 'Not many companies can say their people stay for more than six years on average&mdash;or that they actually love to solve problems without seeking credit. With no hourly billing or upselling, our outcomes-obsessed team focuses solely on delivering measurable results through a transparent, customized, and innovative process.',
+  },
+  {
+    title: '5. Simplicity',
+    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/09/icon-difference-5.svg',
+    body: "A single scope of work and point of contact. Transparent pricing. No hourly billing. We take on the complexity&mdash;whether it's navigating data privacy policies, engineering dashboards, or reconciling media spend&mdash;so our clients can experience simplicity and confidence in every aspect of their campaigns. Bottom line: Our partnership will be simple, agile, and above all, value-and-performance driven.",
+  },
+  {
+    title: '6. Results Without Fluff',
+    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/09/icon-difference-6.svg',
+    body: "Our team doesn't get caught up in vanity metrics, cherry pick the best stats, or build fancy presentations. But we do give you the clearest possible picture of exactly what's working and what isn't with powerful analytics models and custom dashboards&mdash;and we tie everything back to what you're trying to accomplish internally.",
+  },
+  {
+    title: '7. Leading Tech Stack',
+    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/09/icon-difference-7.svg',
+    body: "AI is transforming the way we work. New, more powerful analytics platforms are available almost daily. Methods of data visualization are becoming more intuitive. We're on the leading edge of paid media strategies and we make sure our clients are, too.",
+  },
+  {
+    title: '8. Extreme Customization',
+    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/09/icon-difference-8.svg',
+    body: "We don't like templates. Everything we do is built and customized just for you, because there's no other business exactly like yours. Unique problems need unique solutions&mdash;and an outside, expert perspective focused on your business goals. We're glad you found us.",
+  },
+];
+
+const advantageColumns = [advantages.slice(0, 4), advantages.slice(4)];
+
+const partnerships = [
+  {
+    id: 'gmp',
+    label: 'Google Marketing Platform Certified',
+    body: 'Our team is trained across GMP tools, with decades of experience using the platform. That gives you lots of perks, including early access to Google alpha and beta programs, advanced targeting and measurement strategies, and optimization tools to drive smarter campaigns.',
+    image: 'https://foundsm.com/found2025/wp-content/uploads/2025/09/google-marketing-platform-badge.svg',
+  },
+  {
+    id: 'microsoft',
+    label: 'Microsoft Advertising Elite Partner',
+    body: "Elite Partner status is Microsoft's highest recognition, granted only to a select group of top-performing agencies globally. This status translates to many benefits for you, including exclusive access to new programs, and early visibility into product roadmaps, search trends, and audience insights.",
+    image: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/microsoft-badge_2026.svg',
+  },
+  {
+    id: 'google',
+    label: 'Google Partner',
+    body: 'Being named a Google Partner is recognition for maximizing campaign success for our clients by driving growth and demonstrating Google Ads skills and expertise. You can rest assured that many of our team members are certified in Google Ads and its products.',
+    image: 'https://foundsm.com/found2025/wp-content/uploads/2025/09/google-partner-badge.svg',
+  },
+  {
+    id: 'meta',
+    label: 'Meta Business Partner',
+    body: "Earning a partnership with Meta means doing more than just demonstrating excellence across Meta platforms. It means giving our clients early access to Meta alpha and beta programs, a direct connection to Meta's evolving roadmap, and assurance that our team is leveraging exclusive tools that drive higher-performing campaigns.",
+    image: 'https://foundsm.com/found2025/wp-content/uploads/2025/09/meta-badge.svg',
+  },
+  {
+    id: 'onetrust',
+    label: 'OneTrust Privacy Professional',
+    body: "At Found, we have a deep understanding of how privacy impacts marketing. As a certified OneTrust partner, we bring expertise in privacy, security, and data governance&mdash;empowering your organization to confidently navigate today's complex regulatory landscape.",
+    image: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Group-52.png',
+  },
+];
 ---
 
-<BaseLayout
-  title="Our Approach | Found Search Marketing"
-  description="Discover Found Search Marketing's approach to enterprise paid media. Our data-driven methodology delivers measurable ROI through cross-channel integration, transparent reporting, and continuous optimization."
-  canonical="https://www.foundsm.com/our-approach"
-  schema={schema}
->
+<BaseLayout title={title} description={description} canonical={canonical} schema={schema} bodyClass="our-approach-modern">
+  <article class="our-approach-page">
+    <section class="approach-hero" aria-labelledby="approach-hero-title">
+      <div class="approach-wrap approach-hero__grid">
+        <div class="approach-hero__copy">
+          <h1 id="approach-hero-title">
+            It&rsquo;s Not What We Do.<br />
+            It&rsquo;s How We Do It.
+          </h1>
+          <p>
+            Found Search Marketing exists because we saw a need for a new kind of agency. One that not only had background in the industry with an expert understanding of paid media, but that could also serve as a true extension of client teams through creative problem solving and customized solutions.
+          </p>
+          <p>
+            We&rsquo;ve used that formula for nearly two decades to consistently build strategies and campaigns that convert, while driving maximum profitability for our clients.
+          </p>
+        </div>
 
-    <!-- ============================================
-         HERO SECTION
-         ============================================ -->
-    <section class="hero hero--short" aria-label="Hero">
-      <div class="hero__overlay" aria-hidden="true"></div>
-      <div class="container hero__content">
-        <div class="hero-stagger">
-          <h1 class="hero__headline">Our Approach</h1>
-        </div>
-        <div class="hero-stagger">
-          <p class="hero__subtitle">A proven methodology built on data intelligence, strategic execution, and relentless optimization &mdash; engineered to deliver measurable growth for enterprise brands.</p>
-        </div>
+        <figure class="approach-hero__media" aria-label="Found Search Marketing team member">
+          <img
+            src="https://foundsm.com/found2025/wp-content/uploads/2026/03/hero-approach-matt.webp"
+            alt=""
+            loading="eager"
+            decoding="async"
+          />
+        </figure>
       </div>
     </section>
 
+    <section class="approach-overview" aria-labelledby="approach-overview-title">
+      <div class="approach-wrap">
+        <p class="approach-eyebrow">Our Approach</p>
+        <h2 id="approach-overview-title">
+          Your Search for an<br />
+          Unfair Advantage is Over
+        </h2>
 
-    <!-- ============================================
-         8 KEY ADVANTAGES ACCORDION
-         ============================================ -->
-    <section class="section" aria-label="8 Key Advantages">
-      <div class="container">
-        <h2 class="section__heading fade-in-up">8 Key Advantages</h2>
-
-        <div class="accordion fade-in-up" data-single-open="true">
-
-          <!-- Advantage 1 -->
-          <div class="accordion-item">
-            <h3 class="accordion-item__heading">
-              <button class="accordion-item__trigger" aria-expanded="false" aria-controls="accordion-panel-1" id="accordion-header-1">
-                <span class="accordion-item__title">Enterprise-Level Expertise</span>
-                <svg class="accordion-item__icon" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M6 8L10 12L14 8" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </button>
-            </h3>
-            <div class="accordion-item__content" id="accordion-panel-1" role="region" aria-labelledby="accordion-header-1" hidden>
-              <div class="accordion-item__body">
-                <p>Our team has managed over $210 million in media spend across complex, multi-brand enterprise accounts. We understand the nuances of large-scale campaign architecture, governance requirements, and the cross-functional stakeholder alignment needed to succeed at the enterprise level. Every strategist on your account brings deep platform certifications and years of hands-on experience with high-budget programs.</p>
-              </div>
-            </div>
+        <div class="approach-overview__grid">
+          <div class="approach-overview__copy">
+            <p>
+              Over the past 20 years, we&rsquo;ve perfected a unique, proprietary approach that has consistently elevated performance for many top brands, driving measurable results and sustained growth. It works by combining first-party data, automation, innovative bid strategies, custom playbook formulation, audience modeling, and a unique understanding of our client&rsquo;s paid media ecosystem. Our approach is a fully custom, self-reinforcing optimization cycle designed to achieve predictable and profitable outcomes while relentlessly eliminating paid media waste.
+            </p>
           </div>
 
-          <!-- Advantage 2 -->
-          <div class="accordion-item">
-            <h3 class="accordion-item__heading">
-              <button class="accordion-item__trigger" aria-expanded="false" aria-controls="accordion-panel-2" id="accordion-header-2">
-                <span class="accordion-item__title">Data-Driven Decision Making</span>
-                <svg class="accordion-item__icon" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M6 8L10 12L14 8" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </button>
-            </h3>
-            <div class="accordion-item__content" id="accordion-panel-2" role="region" aria-labelledby="accordion-header-2" hidden>
-              <div class="accordion-item__body">
-                <p>We never rely on intuition alone. Every recommendation is backed by rigorous data analysis, from audience segmentation and competitive intelligence to predictive modeling and attribution. Our data intelligence practice ensures that media investments are guided by evidence, not assumptions &mdash; so every dollar is allocated where it will drive the greatest return.</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Advantage 3 -->
-          <div class="accordion-item">
-            <h3 class="accordion-item__heading">
-              <button class="accordion-item__trigger" aria-expanded="false" aria-controls="accordion-panel-3" id="accordion-header-3">
-                <span class="accordion-item__title">Cross-Channel Integration</span>
-                <svg class="accordion-item__icon" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M6 8L10 12L14 8" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </button>
-            </h3>
-            <div class="accordion-item__content" id="accordion-panel-3" role="region" aria-labelledby="accordion-header-3" hidden>
-              <div class="accordion-item__body">
-                <p>Siloed campaigns leave performance on the table. We orchestrate paid search, social, programmatic display, connected TV, and retail media into a unified strategy where each channel reinforces the others. Our cross-channel approach ensures consistent messaging, optimized frequency, and a seamless customer journey from first impression to conversion.</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Advantage 4 -->
-          <div class="accordion-item">
-            <h3 class="accordion-item__heading">
-              <button class="accordion-item__trigger" aria-expanded="false" aria-controls="accordion-panel-4" id="accordion-header-4">
-                <span class="accordion-item__title">Transparent Reporting</span>
-                <svg class="accordion-item__icon" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M6 8L10 12L14 8" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </button>
-            </h3>
-            <div class="accordion-item__content" id="accordion-panel-4" role="region" aria-labelledby="accordion-header-4" hidden>
-              <div class="accordion-item__body">
-                <p>No black boxes, no vanity metrics. Our clients receive real-time access to custom dashboards built on Google Cloud and Looker Studio, providing complete visibility into spend, performance, and pipeline impact. We report on the KPIs that matter to your business and deliver actionable insights &mdash; not just data dumps &mdash; so you always know exactly where your investment stands.</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Advantage 5 -->
-          <div class="accordion-item">
-            <h3 class="accordion-item__heading">
-              <button class="accordion-item__trigger" aria-expanded="false" aria-controls="accordion-panel-5" id="accordion-header-5">
-                <span class="accordion-item__title">Dedicated Account Teams</span>
-                <svg class="accordion-item__icon" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M6 8L10 12L14 8" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </button>
-            </h3>
-            <div class="accordion-item__content" id="accordion-panel-5" role="region" aria-labelledby="accordion-header-5" hidden>
-              <div class="accordion-item__body">
-                <p>You will never be passed off to a rotating roster of junior associates. Every client is supported by a dedicated team of senior strategists, analysts, and creative specialists who deeply understand your business, industry, and goals. Your team operates as a true extension of your marketing department, participating in planning sessions, QBRs, and strategic workshops alongside your internal stakeholders.</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Advantage 6 -->
-          <div class="accordion-item">
-            <h3 class="accordion-item__heading">
-              <button class="accordion-item__trigger" aria-expanded="false" aria-controls="accordion-panel-6" id="accordion-header-6">
-                <span class="accordion-item__title">Proprietary Technology</span>
-                <svg class="accordion-item__icon" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M6 8L10 12L14 8" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </button>
-            </h3>
-            <div class="accordion-item__content" id="accordion-panel-6" role="region" aria-labelledby="accordion-header-6" hidden>
-              <div class="accordion-item__body">
-                <p>Our in-house technology stack gives clients an edge that off-the-shelf tools simply cannot match. From automated bid management and budget pacing algorithms to custom audience activation pipelines and first-party data integrations, our proprietary solutions are built to solve the specific challenges enterprise brands face in paid media at scale.</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Advantage 7 -->
-          <div class="accordion-item">
-            <h3 class="accordion-item__heading">
-              <button class="accordion-item__trigger" aria-expanded="false" aria-controls="accordion-panel-7" id="accordion-header-7">
-                <span class="accordion-item__title">Continuous Optimization</span>
-                <svg class="accordion-item__icon" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M6 8L10 12L14 8" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </button>
-            </h3>
-            <div class="accordion-item__content" id="accordion-panel-7" role="region" aria-labelledby="accordion-header-7" hidden>
-              <div class="accordion-item__body">
-                <p>Launch day is just the beginning. Our teams run structured testing programs &mdash; from ad copy and creative variations to audience segments, bidding strategies, and landing page experiences. We analyze performance daily, identify opportunities weekly, and refine strategies monthly to ensure your campaigns are always improving and never stagnating.</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Advantage 8 -->
-          <div class="accordion-item">
-            <h3 class="accordion-item__heading">
-              <button class="accordion-item__trigger" aria-expanded="false" aria-controls="accordion-panel-8" id="accordion-header-8">
-                <span class="accordion-item__title">Measurable ROI Focus</span>
-                <svg class="accordion-item__icon" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M6 8L10 12L14 8" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </button>
-            </h3>
-            <div class="accordion-item__content" id="accordion-panel-8" role="region" aria-labelledby="accordion-header-8" hidden>
-              <div class="accordion-item__body">
-                <p>Everything we do ties back to business outcomes. We align campaign goals with your revenue targets and build measurement frameworks that connect media performance to pipeline, customer acquisition cost, and lifetime value. Our commitment to measurable ROI means you can confidently demonstrate the impact of your paid media investment to leadership and the boardroom.</p>
-              </div>
-            </div>
-          </div>
-
+          <figure class="approach-overview__media" aria-label="Found Search Marketing approach visual">
+            <img
+              src="https://foundsm.com/found2025/wp-content/uploads/2026/03/approach.webp"
+              alt=""
+              loading="lazy"
+              decoding="async"
+            />
+          </figure>
         </div>
       </div>
     </section>
 
-
-    <!-- ============================================
-         PARTNERSHIP BADGES
-         ============================================ -->
-    <section class="partners" aria-label="Our Partners">
-      <div class="container">
-        <h2 class="section__heading fade-in-up">Our Partners</h2>
-        <div class="partners__grid fade-in-up">
-          <div class="partners__badge">
-            <img src="/images/partners/google-marketing-platform.png" alt="Google Marketing Platform Partner" loading="lazy" width="160" height="80">
-          </div>
-          <div class="partners__badge">
-            <img src="/images/partners/google-cloud-partner.png" alt="Google Cloud Partner" loading="lazy" width="160" height="80">
-          </div>
-          <div class="partners__badge">
-            <img src="/images/partners/google-partner.png" alt="Google Partner" loading="lazy" width="160" height="80">
-          </div>
-          <div class="partners__badge">
-            <img src="/images/partners/microsoft-premier-elite-2026.png" alt="Microsoft Advertising Premier Elite Partner 2026" loading="lazy" width="160" height="80">
-          </div>
-          <div class="partners__badge">
-            <img src="/images/partners/meta-business-partner.png" alt="Meta Business Partner" loading="lazy" width="160" height="80">
-          </div>
+    <section class="approach-conversation" aria-label="Start the conversation">
+      <div class="approach-wrap approach-conversation__grid">
+        <p class="approach-conversation__copy">
+          Every piece of your lead generation ecosystem complementing another&mdash;perpetually adapting and improving with each iteration&mdash;is what our formula is all about.
+        </p>
+        <div class="approach-conversation__action">
+          <a class="approach-button approach-button--green" href="/contact-us/">Start the Conversation</a>
         </div>
       </div>
     </section>
 
+    <section class="approach-difference" aria-labelledby="approach-difference-title">
+      <div class="approach-wrap">
+        <div class="approach-section-intro">
+          <p class="approach-eyebrow">The Found Difference</p>
+          <h2 id="approach-difference-title">Eight Key Advantages</h2>
+          <p>
+            We drive value by seamlessly integrating with your team, applying our unique approach, and delivering industry-leading performance that drives customer acquisition at scale. But that&rsquo;s easier said than done. We&rsquo;ll help you succeed with unique competitive edges that put your business goals first.
+          </p>
+        </div>
 
-    <!-- ============================================
-         CTA BANNER
-         ============================================ -->
-    <section class="cta-banner" aria-label="Call to action">
-      <div class="cta-banner__bg" aria-hidden="true"></div>
-      <div class="container cta-banner__inner fade-in-up">
-        <h2 class="cta-banner__headline">Let's Find A Solution</h2>
-        <a href="/contact-us" class="btn btn--green btn--lg">Start the Conversation</a>
+        <div class="approach-advantages">
+          {advantageColumns.map((column, columnIndex) => (
+            <div class="approach-advantages__column">
+              {column.map((advantage, index) => (
+                <details class="approach-advantage" open={columnIndex === 0 && index === 0}>
+                  <summary>
+                    <span class="approach-advantage__bar" aria-hidden="true"></span>
+                    <span class="approach-advantage__title">{advantage.title}</span>
+                  </summary>
+                  <div class="approach-advantage__body">
+                    <img src={advantage.icon} alt="" loading="lazy" decoding="async" width="50" height="50" />
+                    <p set:html={advantage.body} />
+                  </div>
+                </details>
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
     </section>
 
+    <section class="approach-partnerships" id="partnerships" aria-labelledby="approach-partnerships-title">
+      <span class="approach-anchor" id="approach-partnerships"></span>
+      <div class="approach-wrap">
+        <div class="approach-section-intro">
+          <p class="approach-eyebrow">Top-Tier Partnerships</p>
+          <h2 id="approach-partnerships-title">
+            Your VIP Access to<br />
+            Premium Benefits
+          </h2>
+          <p>
+            We have industry-leading partnerships giving you a huge range of benefits&mdash;which means you can trust your media investment to an agency that&rsquo;s proven to maximize campaign success.
+          </p>
+        </div>
+
+        <div class="approach-partnerships__surface">
+          <div class="tabs approach-partnerships__tab-list" role="tablist" aria-label="Partnership benefits">
+            {partnerships.map((partnership, index) => (
+              <button
+                class:list={[
+                  'tabs__tab',
+                  'approach-partnerships__tab',
+                  index === 0 && 'tabs__tab--active',
+                ]}
+                id={`partnership-tab-${partnership.id}`}
+                type="button"
+                role="tab"
+                aria-selected={index === 0 ? 'true' : 'false'}
+                aria-controls={`partnership-panel-${partnership.id}`}
+                tabindex={index === 0 ? undefined : -1}
+              >
+                {partnership.label}
+              </button>
+            ))}
+          </div>
+
+          <div class="tabs__panels approach-partnerships__panels">
+            {partnerships.map((partnership, index) => (
+              <div
+                class:list={[
+                  'tabs__panel',
+                  'approach-partnerships__panel',
+                  index === 0 && 'tabs__panel--active',
+                ]}
+                id={`partnership-panel-${partnership.id}`}
+                role="tabpanel"
+                aria-labelledby={`partnership-tab-${partnership.id}`}
+                hidden={index !== 0}
+              >
+                <div class="approach-partnerships__panel-copy">
+                  <h3>{partnership.label}</h3>
+                  <p set:html={partnership.body} />
+                </div>
+                <figure class="approach-partnerships__media">
+                  <img
+                    src={partnership.image}
+                    alt={partnership.label}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </figure>
+              </div>
+            ))}
+          </div>
+
+          <div class="approach-partnerships__cta">
+            <p>
+              Comprehensive Capabilities.<br />
+              Designed for Your Business.
+            </p>
+            <span aria-hidden="true"></span>
+            <a class="approach-button approach-button--green" href="/contact-us/">Let&rsquo;s Find A Solution</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </article>
 </BaseLayout>
+
+<style>
+  .our-approach-page {
+    --approach-text: #231f20;
+    --approach-muted: #51484a;
+    --approach-green: #8bc53f;
+    --approach-green-soft: #b9dc89;
+    --approach-surface: #f2f3f2;
+    --approach-rule: rgba(35, 31, 32, 0.16);
+    color: var(--approach-text);
+    overflow-x: clip;
+  }
+
+  .approach-wrap {
+    inline-size: min(calc(100% - 2rem), 71.25rem);
+    margin-inline: auto;
+  }
+
+  .our-approach-page h1,
+  .our-approach-page h2 {
+    color: var(--approach-text);
+    font-family: var(--font-heading);
+    font-weight: 700;
+    letter-spacing: 0;
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .our-approach-page h1 {
+    font-size: 3.75rem;
+    line-height: 1.083333;
+  }
+
+  .our-approach-page h2 {
+    font-size: 2.5rem;
+    line-height: 1.1;
+  }
+
+  .our-approach-page h3 {
+    color: inherit;
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: 1.1;
+    margin: 0;
+  }
+
+  .our-approach-page p {
+    color: inherit;
+    font-size: 1.25rem;
+    line-height: 1.8;
+    margin: 0;
+  }
+
+  .our-approach-page p + p {
+    margin-top: 1rem;
+  }
+
+  .our-approach-page .approach-eyebrow {
+    color: var(--approach-text);
+    font-size: 1.25rem;
+    font-weight: 300;
+    letter-spacing: 0;
+    line-height: 1.4;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+  }
+
+  .approach-button {
+    align-items: center;
+    border-radius: 999px;
+    display: inline-flex;
+    font-size: 1rem;
+    font-weight: 600;
+    justify-content: center;
+    line-height: 1.25;
+    min-block-size: 3.5rem;
+    padding: 0.95rem 1.8rem;
+    text-align: center;
+    transition: background-color 180ms ease, transform 180ms ease;
+    white-space: normal;
+  }
+
+  .approach-button:hover,
+  .approach-button:focus-visible {
+    transform: translateY(-1px);
+  }
+
+  .approach-button--green {
+    background: var(--approach-green);
+    color: var(--approach-text);
+  }
+
+  .approach-button--green:hover,
+  .approach-button--green:focus-visible {
+    background: var(--approach-green-soft);
+    color: var(--approach-text);
+  }
+
+  .approach-hero {
+    padding-block: 6.25rem 3.125rem;
+  }
+
+  .approach-hero__grid {
+    align-items: center;
+    display: grid;
+    gap: 3.4rem;
+    grid-template-columns: minmax(0, 1.15fr) minmax(18rem, 0.85fr);
+  }
+
+  .approach-hero__copy {
+    max-inline-size: 48rem;
+  }
+
+  .approach-hero__copy p:first-of-type {
+    margin-top: 1.75rem;
+  }
+
+  .approach-hero__media,
+  .approach-overview__media,
+  .approach-partnerships__media {
+    margin: 0;
+  }
+
+  .approach-hero__media img,
+  .approach-overview__media img {
+    aspect-ratio: 1 / 1;
+    border-radius: var(--radius);
+    inline-size: 100%;
+    object-fit: cover;
+  }
+
+  .approach-overview {
+    background-color: var(--approach-surface);
+    background-image: url('/images/imported/home/f4dccf8d-topography-light.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding-block: 6.25rem;
+    text-align: center;
+  }
+
+  .approach-overview__grid {
+    align-items: center;
+    display: grid;
+    gap: 3.125rem;
+    grid-template-columns: minmax(0, 2fr) minmax(16rem, 1fr);
+    margin-top: 2rem;
+    text-align: left;
+  }
+
+  .approach-overview__copy {
+    max-inline-size: 48rem;
+  }
+
+  .approach-overview__media img {
+    aspect-ratio: 0.9 / 1;
+  }
+
+  .approach-conversation {
+    background-color: var(--approach-text);
+    background-image: url('https://foundsm.com/found2025/wp-content/uploads/2026/03/contact_bg_fc-1.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: #ffffff;
+    padding-block: 3.125rem 2.5rem;
+  }
+
+  .approach-conversation__grid {
+    align-items: center;
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: minmax(0, 1.5fr) minmax(13rem, 0.5fr);
+  }
+
+  .our-approach-page .approach-conversation__copy {
+    color: #ffffff;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.333333;
+  }
+
+  .approach-conversation__action {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .approach-difference {
+    background-color: var(--approach-surface);
+    background-image: url('/images/imported/home/4da6a6c7-streets-light.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding-block: 6.25rem;
+  }
+
+  .approach-section-intro {
+    margin-inline: auto;
+    max-inline-size: 49rem;
+    text-align: center;
+  }
+
+  .approach-section-intro > p:last-child {
+    margin-top: 1.25rem;
+  }
+
+  .approach-advantages {
+    display: grid;
+    gap: 4.5rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: 5rem;
+  }
+
+  .approach-advantages__column {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .approach-advantage {
+    padding-inline-start: 2.25rem;
+    position: relative;
+  }
+
+  .approach-advantage summary {
+    cursor: pointer;
+    display: block;
+    list-style: none;
+    min-block-size: 2.5rem;
+    outline: none;
+    position: relative;
+  }
+
+  .approach-advantage summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .approach-advantage summary:focus-visible .approach-advantage__title {
+    outline: 3px solid rgba(139, 197, 63, 0.45);
+    outline-offset: 4px;
+  }
+
+  .approach-advantage__bar {
+    background: var(--approach-rule);
+    border-radius: 999px;
+    display: block;
+    inset-block: 0;
+    inset-inline-start: -1.75rem;
+    overflow: hidden;
+    position: absolute;
+    inline-size: 0.375rem;
+  }
+
+  .approach-advantage__bar::after {
+    background: var(--approach-text);
+    border-radius: inherit;
+    content: '';
+    display: block;
+    block-size: 0;
+    inline-size: 100%;
+    transition: block-size 180ms ease;
+  }
+
+  .approach-advantage[open] .approach-advantage__bar::after,
+  .approach-advantage:hover .approach-advantage__bar::after {
+    block-size: 100%;
+  }
+
+  .approach-advantage__title {
+    color: var(--approach-text);
+    display: block;
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.6;
+  }
+
+  .approach-advantage__body {
+    align-items: flex-start;
+    display: flex;
+    gap: 1.25rem;
+    padding-block-start: 1.5rem;
+  }
+
+  .approach-advantage__body img {
+    flex: 0 0 3.125rem;
+    inline-size: 3.125rem;
+  }
+
+  .approach-advantage__body p {
+    font-size: 1.125rem;
+    line-height: 1.555556;
+  }
+
+  .approach-partnerships {
+    padding-block: 6.25rem 3.125rem;
+    position: relative;
+    scroll-margin-top: calc(var(--header-height) + 1.5rem);
+  }
+
+  .approach-anchor {
+    inset-block-start: calc(-1 * var(--header-height));
+    position: relative;
+  }
+
+  .approach-partnerships__surface {
+    background-color: var(--approach-text);
+    border-radius: var(--radius);
+    color: #ffffff;
+    display: grid;
+    gap: 3.125rem;
+    grid-template-columns: minmax(14rem, 0.8fr) minmax(0, 1.7fr);
+    margin-top: 2rem;
+    overflow: hidden;
+    padding: 5rem 3.125rem;
+    position: relative;
+  }
+
+  .approach-partnerships__surface::before {
+    background-image: url('/images/imported/home/f4dccf8d-topography-light.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    content: '';
+    inset: 0;
+    opacity: 0.18;
+    pointer-events: none;
+    position: absolute;
+  }
+
+  .approach-partnerships__surface > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .approach-partnerships__tab-list[role='tablist'] {
+    border: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    overflow: visible;
+  }
+
+  .approach-partnerships__tab.tabs__tab {
+    border: 0;
+    border-radius: 0;
+    color: rgba(255, 255, 255, 0.72);
+    display: block;
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.6;
+    margin: 0;
+    min-block-size: 4.6875rem;
+    padding: 0.65rem 1rem 0.65rem 1.75rem;
+    position: relative;
+    text-align: left;
+    white-space: normal;
+    inline-size: 100%;
+  }
+
+  .approach-partnerships__tab::before {
+    background: rgba(255, 255, 255, 0.18);
+    border-radius: 999px;
+    content: '';
+    inset-block: 0;
+    inset-inline-start: 0;
+    position: absolute;
+    inline-size: 0.375rem;
+  }
+
+  .approach-partnerships__tab:hover,
+  .approach-partnerships__tab:focus-visible,
+  .approach-partnerships__tab.tabs__tab--active {
+    color: #ffffff;
+  }
+
+  .approach-partnerships__tab.tabs__tab--active::before {
+    background: #ffffff;
+  }
+
+  .approach-partnerships__panels {
+    min-inline-size: 0;
+  }
+
+  .approach-partnerships__panel.tabs__panel {
+    padding: 0;
+  }
+
+  .approach-partnerships__panel.tabs__panel--active {
+    align-items: flex-start;
+    display: grid;
+    gap: 3.4rem;
+    grid-template-columns: minmax(0, 1fr) minmax(13rem, 0.85fr);
+  }
+
+  .approach-partnerships__panel-copy {
+    min-inline-size: 0;
+  }
+
+  .approach-partnerships__panel-copy p {
+    color: rgba(255, 255, 255, 0.86);
+    margin-top: 1rem;
+  }
+
+  .approach-partnerships__media {
+    align-items: center;
+    background: #ffffff;
+    border-radius: var(--radius);
+    display: flex;
+    justify-content: center;
+    min-block-size: 16rem;
+    padding: 2rem;
+  }
+
+  .approach-partnerships__media img {
+    block-size: auto;
+    max-block-size: 13rem;
+    object-fit: contain;
+    inline-size: min(100%, 22rem);
+  }
+
+  .approach-partnerships__cta {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    grid-column: 1 / -1;
+    justify-content: center;
+    padding-top: 1rem;
+  }
+
+  .our-approach-page .approach-partnerships__cta p {
+    color: #ffffff;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.333333;
+  }
+
+  .approach-partnerships__cta span {
+    background: rgba(255, 255, 255, 0.38);
+    block-size: 5rem;
+    inline-size: 1px;
+  }
+
+  @media (max-width: 1024px) {
+    .our-approach-page h1 {
+      font-size: 2.375rem;
+      line-height: 1.105263;
+    }
+
+    .our-approach-page h2 {
+      font-size: 2.125rem;
+      line-height: 1.147059;
+    }
+
+    .our-approach-page h3 {
+      font-size: 2.125rem;
+      line-height: 1.235294;
+    }
+
+    .our-approach-page p {
+      font-size: 1.125rem;
+      line-height: 1.666667;
+    }
+
+    .our-approach-page .approach-eyebrow {
+      font-size: 1.125rem;
+      line-height: 1.222222;
+    }
+
+    .our-approach-page .approach-conversation__copy,
+    .our-approach-page .approach-partnerships__cta p {
+      font-size: 1.25rem;
+      line-height: 1.3;
+    }
+
+    .approach-advantage__title {
+      font-size: 1.125rem;
+      line-height: 1.666667;
+    }
+
+    .approach-advantage__body p {
+      font-size: 1.125rem;
+      line-height: 1.555556;
+    }
+
+    .approach-partnerships__tab.tabs__tab {
+      font-size: 1.125rem;
+      line-height: 1.333333;
+    }
+
+    .approach-hero {
+      padding-block: 4rem 2.5rem;
+    }
+
+    .approach-hero__grid,
+    .approach-overview__grid,
+    .approach-conversation__grid,
+    .approach-partnerships__surface,
+    .approach-partnerships__panel.tabs__panel--active {
+      grid-template-columns: 1fr;
+    }
+
+    .approach-overview,
+    .approach-difference,
+    .approach-partnerships {
+      padding-block: 4rem;
+    }
+
+    .approach-overview__copy {
+      max-inline-size: none;
+      text-align: center;
+    }
+
+    .approach-conversation__action {
+      justify-content: flex-start;
+    }
+
+    .approach-advantages {
+      gap: 1.5rem;
+      grid-template-columns: 1fr;
+      margin-top: 2.5rem;
+    }
+
+    .approach-partnerships__surface {
+      padding: 2.25rem 1.5rem;
+    }
+
+    .approach-partnerships__tab-list[role='tablist'] {
+      gap: 0.5rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .approach-wrap {
+      inline-size: min(calc(100% - 1.5rem), 71.25rem);
+    }
+
+    .our-approach-page h1 {
+      font-size: 2.375rem;
+      line-height: 1.105263;
+    }
+
+    .our-approach-page h2 {
+      font-size: 2.125rem;
+      line-height: 1.147059;
+    }
+
+    .our-approach-page h3 {
+      font-size: 2.125rem;
+      line-height: 1.235294;
+    }
+
+    .approach-hero__grid,
+    .approach-overview__grid {
+      gap: 2rem;
+    }
+
+    .our-approach-page .approach-conversation__copy {
+      font-size: 1.25rem;
+      line-height: 1.3;
+    }
+
+    .approach-advantage {
+      padding-inline-start: 1.75rem;
+    }
+
+    .approach-advantage__body {
+      display: block;
+    }
+
+    .approach-advantage__body img {
+      display: none;
+    }
+
+    .approach-partnerships__media {
+      min-block-size: 12rem;
+      padding: 1.25rem;
+    }
+
+    .approach-partnerships__cta {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .approach-partnerships__cta span {
+      display: none;
+    }
+  }
+</style>

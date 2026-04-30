@@ -1,0 +1,161 @@
+---
+interface ImageProps {
+  src: string;
+  alt: string;
+  width?: number;
+  height?: number;
+}
+
+interface CtaLink {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  body: string | string[];
+  image?: ImageProps;
+  imagePosition?: 'left' | 'right';
+  theme?: 'light' | 'muted' | 'dark';
+  cta?: CtaLink;
+}
+
+const {
+  eyebrow,
+  title,
+  body,
+  image,
+  imagePosition = 'left',
+  theme = 'light',
+  cta,
+} = Astro.props;
+
+const paragraphs = Array.isArray(body) ? body : [body];
+---
+
+<section class={`split-feature split-feature--${theme} split-feature--image-${imagePosition}`} aria-labelledby={`${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-heading`}>
+  <div class="split-feature__inner">
+    {image && (
+      <div class="split-feature__media">
+        <img src={image.src} alt={image.alt} width={image.width} height={image.height} loading="lazy" decoding="async" />
+      </div>
+    )}
+
+    <div class="split-feature__copy">
+      {eyebrow && <p class="split-feature__eyebrow">{eyebrow}</p>}
+      <h2 id={`${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-heading`}>{title}</h2>
+      <div class="split-feature__body">
+        {paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+      {cta && <a class="split-feature__link" href={cta.href}>{cta.label}</a>}
+    </div>
+  </div>
+</section>
+
+<style>
+  .split-feature {
+    padding: 5rem var(--gutter);
+  }
+
+  .split-feature--muted {
+    background: #f2f3f2;
+  }
+
+  .split-feature--dark {
+    background: #1a1a1a;
+    color: #ffffff;
+  }
+
+  .split-feature__inner {
+    display: grid;
+    grid-template-columns: minmax(18rem, 0.9fr) minmax(0, 1.1fr);
+    align-items: center;
+    gap: 4rem;
+    inline-size: min(100%, var(--content-max-width));
+    margin-inline: auto;
+  }
+
+  .split-feature--image-right .split-feature__media {
+    order: 2;
+  }
+
+  .split-feature--image-right .split-feature__copy {
+    order: 1;
+  }
+
+  .split-feature__media {
+    overflow: hidden;
+    border-radius: 2.5rem;
+    background: #e6e9e4;
+  }
+
+  .split-feature__media img {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+
+  .split-feature__copy {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .split-feature__eyebrow {
+    color: var(--color-primary);
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  .split-feature h2 {
+    max-inline-size: 45rem;
+    margin: 0;
+    font-size: 2.5rem;
+    line-height: 1.1;
+    letter-spacing: 0;
+  }
+
+  .split-feature--dark h2 {
+    color: #ffffff;
+  }
+
+  .split-feature__body {
+    display: grid;
+    gap: 0.85rem;
+    color: rgba(26, 26, 26, 0.78);
+    font-size: 1.25rem;
+    line-height: 1.8;
+  }
+
+  .split-feature--dark .split-feature__body {
+    color: rgba(255, 255, 255, 0.78);
+  }
+
+  .split-feature__link {
+    display: inline-flex;
+    justify-self: start;
+    margin-block-start: 0.35rem;
+    color: var(--color-primary);
+    font-weight: 700;
+  }
+
+  @media (max-width: 900px) {
+    .split-feature__inner {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .split-feature--image-right .split-feature__media,
+    .split-feature--image-right .split-feature__copy {
+      order: initial;
+    }
+
+    .split-feature h2 {
+      font-size: 2.125rem;
+      line-height: 1.147;
+    }
+  }
+</style>

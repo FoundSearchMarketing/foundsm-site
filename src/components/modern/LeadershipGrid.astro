@@ -1,0 +1,152 @@
+---
+interface Leader {
+  name: string;
+  role: string;
+  image: string;
+}
+
+interface Props {
+  title: string;
+  intro: string | string[];
+  leaders: Leader[];
+}
+
+const { title, intro, leaders } = Astro.props;
+const paragraphs = Array.isArray(intro) ? intro : [intro];
+---
+
+<section class="leadership-section" aria-labelledby="leadership-heading">
+  <div class="leadership-section__inner">
+    <div class="leadership-section__header">
+      <h2 id="leadership-heading">{title}</h2>
+      <div>
+        {paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+    </div>
+
+    <div class="leadership-grid">
+      {leaders.map((leader) => (
+        <article class="leader-card">
+          <img src={leader.image} alt={`${leader.name}, ${leader.role}`} loading="lazy" decoding="async" />
+          <div class="leader-card__overlay">
+            <h3>{leader.name}</h3>
+            <p>{leader.role}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .leadership-section {
+    padding: 5rem var(--gutter);
+    background: #ffffff;
+  }
+
+  .leadership-section__inner {
+    inline-size: min(100%, var(--content-max-width));
+    margin-inline: auto;
+  }
+
+  .leadership-section__header {
+    display: grid;
+    grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+    gap: 2rem;
+    margin-block-end: 2.5rem;
+  }
+
+  .leadership-section h2 {
+    margin: 0;
+    font-size: 2.8rem;
+    line-height: 1.12;
+    letter-spacing: 0;
+  }
+
+  .leadership-section__header div {
+    display: grid;
+    gap: 0.85rem;
+    color: rgba(26, 26, 26, 0.76);
+    font-size: 1.05rem;
+    line-height: 1.75;
+  }
+
+  .leadership-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  .leader-card {
+    position: relative;
+    overflow: hidden;
+    min-block-size: 25rem;
+    border-radius: 1.875rem;
+    background: #e8ebe6;
+  }
+
+  .leader-card img {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    transition: transform 360ms ease;
+  }
+
+  .leader-card:hover img {
+    transform: scale(1.03);
+  }
+
+  .leader-card__overlay {
+    position: absolute;
+    inset-block-start: 17.5rem;
+    inset-inline-start: 0;
+    display: grid;
+    gap: 0.25rem;
+    inline-size: 80%;
+    min-block-size: 4.375rem;
+    padding: 0.75rem 1rem 0.75rem 0.9375rem;
+    border-radius: 0 1.875rem 1.875rem 0;
+    background: #f2f3f2;
+    color: #1a1a1a;
+  }
+
+  .leader-card h3 {
+    margin: 0;
+    color: #1a1a1a;
+    font-size: 1rem;
+    line-height: 1.25;
+  }
+
+  .leader-card p {
+    color: rgba(26, 26, 26, 0.78);
+    font-size: 0.875rem;
+    line-height: 1.25;
+  }
+
+  @media (max-width: 1024px) {
+    .leadership-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 700px) {
+    .leadership-section {
+      padding-block: 3.5rem;
+    }
+
+    .leadership-section__header,
+    .leadership-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .leader-card {
+      min-block-size: 23rem;
+    }
+
+    .leader-card__overlay {
+      inset-block-start: auto;
+      inset-block-end: 1.75rem;
+      inline-size: 85%;
+    }
+  }
+</style>

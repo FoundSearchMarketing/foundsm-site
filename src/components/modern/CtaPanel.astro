@@ -1,0 +1,123 @@
+---
+interface Props {
+  title?: string;
+  body?: string | string[];
+  ctaLabel?: string;
+  ctaHref?: string;
+  theme?: 'dark' | 'green' | 'light';
+}
+
+const { title, body, ctaLabel, ctaHref, theme = 'dark' } = Astro.props;
+const paragraphs = Array.isArray(body) ? body : body ? [body] : [];
+---
+
+<section class={`modern-cta modern-cta--${theme}`} aria-label={title ?? ctaLabel ?? 'Call to action'}>
+  <div class="modern-cta__inner">
+    <div class="modern-cta__copy">
+      {title && <h2>{title}</h2>}
+      {paragraphs.length > 0 && (
+        <div class="modern-cta__body">
+          {paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+        </div>
+      )}
+    </div>
+    {ctaLabel && ctaHref && <a class="modern-cta__button" href={ctaHref}>{ctaLabel}</a>}
+  </div>
+</section>
+
+<style>
+  .modern-cta {
+    padding: 4rem var(--gutter);
+  }
+
+  .modern-cta--dark {
+    background: #1a1a1a;
+    color: #ffffff;
+  }
+
+  .modern-cta--green {
+    background: var(--color-primary);
+    color: #1a1a1a;
+  }
+
+  .modern-cta--light {
+    background: #f2f3f2;
+    color: #1a1a1a;
+  }
+
+  .modern-cta__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 2rem;
+    inline-size: min(100%, var(--content-max-width));
+    margin-inline: auto;
+  }
+
+  .modern-cta__copy {
+    display: grid;
+    gap: 0.85rem;
+    max-inline-size: 64rem;
+  }
+
+  .modern-cta h2 {
+    margin: 0;
+    color: inherit;
+    font-size: 2.35rem;
+    line-height: 1.16;
+    letter-spacing: 0;
+  }
+
+  .modern-cta__body {
+    display: grid;
+    gap: 0.6rem;
+    color: currentColor;
+    font-size: 1.08rem;
+    line-height: 1.7;
+    opacity: 0.84;
+  }
+
+  .modern-cta__button {
+    display: inline-flex;
+    justify-content: center;
+    min-block-size: 3.25rem;
+    padding: 0.9rem 1.55rem;
+    border-radius: 999px;
+    background: var(--color-primary);
+    color: #1a1a1a;
+    font-weight: 700;
+    line-height: 1.2;
+    white-space: nowrap;
+    transition: background-color var(--transition-fast), transform var(--transition-fast);
+  }
+
+  .modern-cta--green .modern-cta__button {
+    background: #1a1a1a;
+    color: #ffffff;
+  }
+
+  .modern-cta--light .modern-cta__button {
+    background: #1a1a1a;
+    color: #ffffff;
+  }
+
+  .modern-cta__button:hover,
+  .modern-cta__button:focus-visible {
+    transform: translateY(-1px);
+  }
+
+  @media (max-width: 760px) {
+    .modern-cta__inner {
+      grid-template-columns: 1fr;
+    }
+
+    .modern-cta h2 {
+      font-size: 2rem;
+    }
+
+    .modern-cta__button {
+      justify-self: start;
+      white-space: normal;
+    }
+  }
+</style>

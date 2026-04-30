@@ -1,127 +1,138 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import ModernHero from '../../components/modern/ModernHero.astro';
+import SplitFeature from '../../components/modern/SplitFeature.astro';
+import CardGrid from '../../components/modern/CardGrid.astro';
+import LogoMarquee from '../../components/modern/LogoMarquee.astro';
+import CtaPanel from '../../components/modern/CtaPanel.astro';
 
-const title = "Data Intelligence | Found Search Marketing";
-const description = "Found Search Marketing's Data Intelligence services include marketing mix modeling, predictive analytics, custom dashboards, competitive intelligence, and incrementality testing.";
-const canonical = "https://www.foundsm.com/capabilities/data-intelligence";
-const robots = "index, follow";
+const title = 'Data Intelligence | Found Search Marketing';
+const description = 'Data sits at the core of our operations. From powering your CRM, to feeding downstream systems, it is used to inform channel mixes, create audience models and more. Your data lives everywhere. We bring it together: cross-platform, API-driven, and unified into a single view.';
+const canonical = 'https://www.foundsm.com/capabilities/data-intelligence';
 const schema = {
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "name": "Data Intelligence | Found Search Marketing",
-  "url": "https://www.foundsm.com/capabilities/data-intelligence",
-  "description": "Found Search Marketing's Data Intelligence services include marketing mix modeling, predictive analytics, custom dashboards, competitive intelligence, and incrementality testing.",
-  "publisher": {
-    "@type": "Organization",
-    "name": "Found Search Marketing"
-  }
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: title,
+  url: canonical,
+  description,
+  publisher: {
+    '@type': 'Organization',
+    name: 'Found Search Marketing',
+  },
 };
+
+const capabilityCards = [
+  {
+    title: 'Discovery, Audit & Analysis',
+    body: 'The process begins by mapping your entire data landscape to get the full picture of your business. Then, we perform an in-depth analysis of your tech stack to uncover insights that drive clear recommendations and implementation plans.',
+    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/User-Question-Streamline-Ultimate-Light-Free.svg',
+  },
+  {
+    title: 'Tagging & Tracking',
+    body: "To ensure maximum measurement durability, our team configures the tracking and validates every event and conversion. Whether it's deploying scripts through GTM or building accurate tracking parameters back to your CRM, we'll ensure your downstream outcomes are connected to marketing data.",
+    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Curly-Brackets-Streamline-Ultimate-Light-Free.svg',
+  },
+  {
+    title: 'Engineering Audience Models',
+    body: "We don't just use data to activate campaigns; we engineer high-intent audience models that uncover your most valuable customers with precision. Those audiences are activated across channels to drive efficiency, relevance, and growth.",
+    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Design-Tool-Compass-Streamline-Ultimate-Light-Free.svg',
+  },
+  {
+    title: 'Customized Solutions & Reporting',
+    body: 'We create customized solutions for you and your stakeholders, so each report or dashboard speaks your language and tells a clear story based on your business goals. From clicks to downstream metrics, our expertise pulls your data into one clear, powerful view.',
+    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Content-Pen-Write-Streamline-Ultimate-Light-Free.svg',
+  },
+  {
+    title: 'Platform Agnostic',
+    body: 'We specialize in leveraging APIs that connect disparate, complex data sources into one unified view, no matter the platform or quantity of data sources. Our team is fluent across platforms, working within your existing stack to drive results.',
+    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Button-Loop-Streamline-Ultimate-Light-Free.svg',
+  },
+  {
+    title: 'Privacy, Security & Governance',
+    body: 'As a certified OneTrust partner, our team has a strategic understanding of how privacy impacts your marketing. By partnering with Found, you gain a trusted advisor that will help you stay compliant and turn privacy into a competitive advantage.',
+    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Lock-Shield-Streamline-Ultimate-Light-Free.svg',
+  },
+];
+
+const analyticsCards = [
+  { title: 'Detect anomalies', body: 'Detect anomalies in real time, enabling rapid media adjustments.' },
+  { title: 'Run predictive models', body: 'Run predictive models for customer behavior.' },
+  { title: 'Perform causality analysis', body: 'Perform causality analysis that pinpoints which tactics are getting the best results.' },
+  { title: 'Prove ROI', body: 'Prove ROI by tying marketing performance directly to business outcomes.' },
+];
+
+const toolLogos = [
+  { src: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Dynamics-CRM-1.svg', alt: 'Dynamics CRM', width: 189, height: 52 },
+  { src: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/funnel-logo-green-1.svg', alt: 'Funnel', width: 169, height: 24 },
+  { src: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Google-Analytics-1.svg', alt: 'Google Analytics', width: 247, height: 47 },
+  { src: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Google-Analytics-2.svg', alt: 'Google Analytics 360', width: 178, height: 63 },
+  { src: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Google-Analytics-3.svg', alt: 'Google Analytics certification', width: 177, height: 79 },
+  { src: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/OneTrust-2.svg', alt: 'OneTrust', width: 187, height: 41 },
+  { src: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Google-Mktg-Certified-1.svg', alt: 'Google Marketing Platform certified', width: 219, height: 49 },
+  { src: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Salesforce-1.svg', alt: 'Salesforce', width: 82, height: 54 },
+  { src: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Vertex-AI-1.svg', alt: 'Vertex AI', width: 123, height: 41 },
+  { src: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Vertex-AI-2.svg', alt: 'Vertex AI logo', width: 67, height: 56 },
+  { src: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Google-Cloud-Partner-1.svg', alt: 'Google Cloud Partner', width: 41, height: 47 },
+];
 ---
 
-<BaseLayout title={title} description={description} canonical={canonical} robots={robots} schema={schema}>
+<BaseLayout title={title} description={description} canonical={canonical} schema={schema}>
+  <ModernHero
+    tone="soft"
+    titleScale="display"
+    title="Transform Complex Data Into Growth"
+    intro="Data sits at the core of our operations. From powering your CRM, to feeding downstream systems, it's used to inform channel mixes, create audience models, and more. Your data lives everywhere. We bring it together: cross-platform, API-driven, and unified into a single view."
+    image={{
+      src: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/capi-cactus.webp',
+      alt: 'Cactus data intelligence illustration',
+      width: 1024,
+      height: 983,
+      loading: 'eager',
+    }}
+    imageFit="contain"
+    imageMaxWidth="72%"
+  />
 
-    <!-- ============================================
-         HERO SECTION
-         ============================================ -->
-    <section class="hero hero--dark" aria-label="Data Intelligence hero">
-      <div class="hero__overlay" aria-hidden="true"></div>
-      <div class="hero__bg-image" aria-hidden="true">
-        <img src="/images/data-intelligence-hero-bg.jpg" alt="" loading="lazy" width="1920" height="900">
-      </div>
+  <SplitFeature
+    title="How We Work"
+    body="Our Data Intelligence team serves as a catalyst to paid media and creative solutions, ensuring campaigns are built on accuracy, agility, and insight. Certified in Google Analytics and Google Cloud, our DI specialists integrate seamlessly with client systems, whether it's IT, compliance, or sales, to ensure data integrity and alignment on what matters most. Our platform-agnostic approach allows us to easily adapt to your tools and workflows to create clarity, speed, and confidence in every move."
+    image={{
+      src: 'https://foundsm.com/found2025/wp-content/uploads/elementor/thumbs/image-12-sm-rklftw47a5209wpm1nsj6dy26hm6l6scb1lq0q4j58.webp',
+      alt: 'Data intelligence workflow illustration',
+      width: 500,
+      height: 382,
+    }}
+  />
 
-      <div class="container hero__content">
-        <div class="hero-stagger">
-          <p class="hero__breadcrumb"><a href="/capabilities">Capabilities</a> / Data Intelligence</p>
-        </div>
-        <div class="hero-stagger">
-          <h1 class="hero__headline">Data Intelligence</h1>
-        </div>
-        <div class="hero-stagger">
-          <p class="hero__subtitle">Advanced analytics, modeling, and insights that empower smarter marketing decisions and prove the true impact of your media investments.</p>
-        </div>
-      </div>
-    </section>
+  <CardGrid
+    theme="muted"
+    title="Your Data + Our Intelligence"
+    subtitle="Let Found unlock the potential of your data."
+    cards={capabilityCards}
+    columns={3}
+  />
 
+  <LogoMarquee logos={toolLogos} />
 
-    <!-- ============================================
-         FEATURE CARDS GRID
-         ============================================ -->
-    <section class="features-grid" aria-label="Data intelligence capabilities">
-      <div class="container">
-        <h2 class="features-grid__heading fade-in-up">Our Analytical Toolkit</h2>
-        <p class="features-grid__subheading fade-in-up">Six core capabilities that transform raw data into strategic advantage.</p>
+  <SplitFeature
+    theme="muted"
+    imagePosition="right"
+    title="Getting the Most From Advanced Analytics & AI"
+    body="We go beyond dashboards, leveraging a variety of tools to turn complex data into decisions your team can act on."
+    image={{
+      src: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/ai-chip-sm.webp',
+      alt: 'AI chip analytics illustration',
+      width: 800,
+      height: 1000,
+    }}
+  />
 
-        <div class="features-grid__cards fade-in-up">
+  <CardGrid cards={analyticsCards} columns={4} />
 
-          <!-- Card 1: Marketing Mix Modeling -->
-          <div class="feature-card">
-            <div class="feature-card__icon" aria-hidden="true">
-              <svg width="48" height="48" viewBox="0 0 48 48"><path d="M6 38L14 26L22 32L42 10" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6" cy="38" r="3" fill="currentColor"/><circle cx="14" cy="26" r="3" fill="currentColor"/><circle cx="22" cy="32" r="3" fill="currentColor"/><circle cx="42" cy="10" r="3" fill="currentColor"/></svg>
-            </div>
-            <h3 class="feature-card__title">Marketing Mix Modeling</h3>
-            <p class="feature-card__description">Quantify the impact of each media channel on your business outcomes. Our marketing mix models isolate the contribution of paid media, organic efforts, and external factors to optimize your budget allocation.</p>
-          </div>
-
-          <!-- Card 2: Predictive Analytics -->
-          <div class="feature-card">
-            <div class="feature-card__icon" aria-hidden="true">
-              <svg width="48" height="48" viewBox="0 0 48 48"><rect x="6" y="6" width="36" height="36" rx="6" stroke="currentColor" stroke-width="2.5" fill="none"/><path d="M14 34V26M22 34V20M30 34V24M38 34V16" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M14 18L22 14L30 16L38 10" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-dasharray="4 3"/></svg>
-            </div>
-            <h3 class="feature-card__title">Predictive Analytics</h3>
-            <p class="feature-card__description">Forecast future performance with machine learning models trained on your historical data. Anticipate trends, identify opportunities, and allocate budget proactively rather than reactively.</p>
-          </div>
-
-          <!-- Card 3: Custom Dashboard Development -->
-          <div class="feature-card">
-            <div class="feature-card__icon" aria-hidden="true">
-              <svg width="48" height="48" viewBox="0 0 48 48"><rect x="4" y="6" width="40" height="30" rx="4" stroke="currentColor" stroke-width="2.5" fill="none"/><path d="M4 14H44" stroke="currentColor" stroke-width="2"/><rect x="8" y="18" width="14" height="8" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/><rect x="26" y="18" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/><rect x="8" y="28" width="14" height="4" rx="1" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M20 42H28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M24 36V42" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
-            </div>
-            <h3 class="feature-card__title">Custom Dashboard Development</h3>
-            <p class="feature-card__description">Real-time performance dashboards built on Google Cloud that surface the metrics that matter most to your business. Our dashboards provide full transparency and actionable insights for every stakeholder.</p>
-          </div>
-
-          <!-- Card 4: Competitive Intelligence -->
-          <div class="feature-card">
-            <div class="feature-card__icon" aria-hidden="true">
-              <svg width="48" height="48" viewBox="0 0 48 48"><circle cx="24" cy="24" r="18" stroke="currentColor" stroke-width="2.5" fill="none"/><circle cx="24" cy="24" r="10" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="24" cy="24" r="3" fill="currentColor"/><path d="M24 6V12M24 36V42M6 24H12M36 24H42" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-            </div>
-            <h3 class="feature-card__title">Competitive Intelligence</h3>
-            <p class="feature-card__description">Monitor competitor ad strategies, spend patterns, and messaging to identify gaps and opportunities. Our competitive analysis keeps you one step ahead in your market.</p>
-          </div>
-
-          <!-- Card 5: Conversion Rate Analysis -->
-          <div class="feature-card">
-            <div class="feature-card__icon" aria-hidden="true">
-              <svg width="48" height="48" viewBox="0 0 48 48"><path d="M10 38L18 24L26 30L38 12" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M30 12H38V20" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 42H42" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-            </div>
-            <h3 class="feature-card__title">Conversion Rate Analysis</h3>
-            <p class="feature-card__description">Deep-dive analysis of your conversion funnel to identify drop-off points, friction areas, and optimization opportunities. We use statistical rigor to ensure recommendations are data-backed and impactful.</p>
-          </div>
-
-          <!-- Card 6: Incrementality Testing -->
-          <div class="feature-card">
-            <div class="feature-card__icon" aria-hidden="true">
-              <svg width="48" height="48" viewBox="0 0 48 48"><rect x="6" y="14" width="16" height="24" rx="3" stroke="currentColor" stroke-width="2.5" fill="none"/><rect x="26" y="8" width="16" height="30" rx="3" stroke="currentColor" stroke-width="2.5" fill="none"/><path d="M10 22H18M10 28H18M10 34H18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M30 16H38M30 22H38M30 28H38M30 34H38" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M34 10L34 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-            </div>
-            <h3 class="feature-card__title">Incrementality Testing</h3>
-            <p class="feature-card__description">Measure the true incremental value of your media spend through controlled experiments. Our geo-lift tests and holdout studies reveal what is truly driving growth versus what would have happened organically.</p>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-
-    <!-- ============================================
-         CTA BANNER
-         ============================================ -->
-    <section class="cta-banner" aria-label="Call to action">
-      <div class="cta-banner__bg" aria-hidden="true"></div>
-      <div class="container cta-banner__inner fade-in-up">
-        <h2 class="cta-banner__headline">Unlock Smarter Insights</h2>
-        <p class="cta-banner__text">Let our data intelligence team show you what your marketing data is really telling you.</p>
-        <a href="/contact-us" class="btn btn--green btn--lg">Start the Conversation</a>
-      </div>
-    </section>
-
+  <CtaPanel
+    title="Your data gives you unlimited potential."
+    body="Find out how we can work together to leverage the power of your data to generate consistent, predictable revenue for your business."
+    ctaLabel="Let's Connect Data to Outcomes"
+    ctaHref="/contact-us/"
+  />
 </BaseLayout>

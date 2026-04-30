@@ -1,0 +1,325 @@
+---
+import '../../styles/homepage.css';
+
+const assetBase = 'https://foundsm.com/found2025/wp-content';
+const themeAssetBase = `${assetBase}/themes/found2025/assets/images`;
+const uploadsBase = `${assetBase}/uploads`;
+
+const searchPrompts = [
+  'What does AI mean for performance media?',
+  'What are industry benchmarks for CVR, CPL, close rates etc?',
+  'How to overcome AI Overviews and keep traffic high via SERPs',
+  'Should we use Target CPA or Target ROAS and what are the trade-offs?',
+  'How do we get more leads this month?',
+];
+
+const logos = [
+  { src: `${uploadsBase}/2025/09/Bar_Keepers.png`, alt: 'Bar Keepers Friend' },
+  { src: `${uploadsBase}/2025/09/AccuChek.png`, alt: 'Accu-Chek' },
+  { src: `${uploadsBase}/2025/09/ADT.png`, alt: 'ADT' },
+  { src: `${uploadsBase}/2025/09/Bastian.png`, alt: 'Bastian Solutions' },
+  { src: `${uploadsBase}/2025/09/IWU.png`, alt: 'Indiana Wesleyan University' },
+  { src: `${uploadsBase}/2025/09/Hendricks.png`, alt: 'Hendricks' },
+  { src: `${uploadsBase}/2025/09/IU_Kelley.png`, alt: 'Indiana University Kelley School of Business' },
+  { src: `${uploadsBase}/2025/09/LawnPride.png`, alt: 'Lawn Pride' },
+  { src: `${uploadsBase}/2026/03/Indy_Ignite.png`, alt: 'Indy Ignite' },
+  { src: `${uploadsBase}/2026/03/Farm_Bureau.png`, alt: 'Farm Bureau Insurance' },
+  { src: `${uploadsBase}/2025/09/Roche.png`, alt: 'Roche' },
+  { src: `${uploadsBase}/2025/09/Duke_CE.png`, alt: 'Duke Corporate Education' },
+  { src: `${uploadsBase}/2025/09/Cook_Medical.png`, alt: 'Cook Medical' },
+  { src: `${uploadsBase}/2025/09/MrQuik.png`, alt: 'Mr. Quik' },
+  { src: `${uploadsBase}/2025/09/BNE.png`, alt: 'BNE' },
+  { src: `${uploadsBase}/2025/09/Artboard-1.png`, alt: 'Client logo' },
+];
+
+const partnerLogos = [
+  { src: `${uploadsBase}/2025/09/google-partner-150x150.png`, alt: 'Google Partner', width: 150, height: 150 },
+  { src: `${uploadsBase}/2025/09/google-marketing-platform.png`, alt: 'Google Marketing Platform', width: 323, height: 90 },
+  { src: `${uploadsBase}/2025/09/google-cloud-partner.png`, alt: 'Google Cloud Partner', width: 226, height: 87 },
+  {
+    src: `${uploadsBase}/elementor/thumbs/Microsoft_Premier_Elite_2026_sm-rka1b7x3sf6wfj0z2pn1fa5lbo4pr7vwx2ixsiyuf4.png`,
+    alt: 'Microsoft Advertising Premier Elite Partner 2026',
+    width: 184,
+    height: 64,
+  },
+  { src: `${uploadsBase}/2025/09/meta.png`, alt: 'Meta Business Partner', width: 184, height: 76 },
+];
+
+const capabilityTabs = [
+  {
+    id: 'data',
+    title: 'Data, Reporting, & Analytics',
+    icon: `${uploadsBase}/2025/09/icon-home-tab1.svg`,
+    body:
+      "What's your CPL? Are you using first-party data to inform your campaigns? Do you have a clear line of sight from dollars spent to results? We turn your first party data into powerful audience models and unified insights - then activate it through precision paid media that converts.",
+    ctaText: 'See How We Leverage Data',
+    ctaUrl: '/capabilities/data-intelligence/',
+    image: `${uploadsBase}/2026/03/home-tab1.webp`,
+  },
+  {
+    id: 'media',
+    title: 'Paid Media',
+    icon: `${uploadsBase}/2025/09/icon-home-tab2.svg`,
+    body:
+      'We apply a custom media mix framework, rooted in data modeling and precision bidding, to architect high-performing paid media strategies that drive more qualified leads for your business, and maximize profitability.',
+    ctaText: 'Get Better Leads',
+    ctaUrl: '/capabilities/paid-media/',
+    image: `${uploadsBase}/2026/03/home-tab2.webp`,
+  },
+  {
+    id: 'creative',
+    title: 'Performance Creative & CRO',
+    icon: `${uploadsBase}/2025/09/icon-home-tab3.svg`,
+    body:
+      'To us, performance means generating high-quality leads that drive customer growth. We distill and clarify your messaging, take a UI/UX-focused approach to design, and complement it with engaging content that drives action. This includes conversion rate optimization (CRO) and other multivariate testing strategies to identify the highest level of performance from click to conversion to customer.',
+    ctaText: 'Explore Our Creativity',
+    ctaUrl: '/capabilities/performance-creative/',
+    image: `${uploadsBase}/2026/03/home-tab3.webp`,
+  },
+];
+---
+
+<div class="homepage" data-homepage>
+  <section class="home-splash" aria-labelledby="home-splash-title">
+    <div class="home-shell home-splash__inner">
+      <h1 class="home-splash__headline display" id="home-splash-title">
+        <span>Drive Profitable Growth.</span>
+        <span>Get Found.</span>
+      </h1>
+      <p class="home-splash__content">Combining the power of advanced data engineering with paid media expertise.</p>
+
+      <div class="home-search" aria-label="Search prompt examples">
+        <img class="home-search__brand" width="125" height="38" src={`${themeAssetBase}/search.svg`} alt="Search" loading="eager" />
+        <div class="home-search__input">
+          <span class="home-search__text" data-home-search-text>{searchPrompts[0]}</span>
+          <div class="home-search__icons" aria-hidden="true">
+            <img width="25" height="24" src={`${themeAssetBase}/searchx.svg`} alt="" loading="eager" />
+            <span class="home-search__divider"></span>
+            <img width="27" height="27" src={`${themeAssetBase}/microphone.svg`} alt="" loading="eager" />
+            <img width="25" height="25" src={`${themeAssetBase}/searchglass.svg`} alt="" loading="eager" />
+          </div>
+        </div>
+        <div class="home-search__prompts" data-home-search-prompts hidden>
+          {searchPrompts.map((prompt) => <span>{prompt}</span>)}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-intro" aria-labelledby="home-intro-title">
+    <div class="home-shell home-intro__grid">
+      <div class="home-intro__copy">
+        <h2 id="home-intro-title">A Seamless Extension of Your Team</h2>
+        <p>Unusually great performance takes a different kind of agency. One that&rsquo;s highly collaborative with a deep understanding of your business goals. One relentlessly focused on solving problems with forward-thinking, custom solutions. One that always prioritizes outcomes above hours.</p>
+        <p><strong>Found Search Marketing is that partner.</strong> We&rsquo;re experts at fitting into your internal workflows, bringing clarity, and optimizing your resources for stronger leads, better conversion rates, and smarter spend. Unlike traditional agencies, we are a data engineering firm that activates paid media strategies, not the other way around.</p>
+      </div>
+      <figure class="home-intro__media">
+        <img src={`${uploadsBase}/2026/03/hero-home-sm.webp`} alt="" width="742" height="739" loading="eager" />
+      </figure>
+    </div>
+  </section>
+
+  <section class="home-cta-strip" aria-label="Contact Found Search Marketing">
+    <div class="home-shell home-cta-strip__inner">
+      <h2>If you want to scale your paid media performance with strategic intention, let&rsquo;s talk.</h2>
+      <a class="home-button" href="/contact-us/">Let&rsquo;s Find A Solution</a>
+    </div>
+  </section>
+
+  <section class="home-logo-marquee" aria-labelledby="home-logo-title">
+    <h2 id="home-logo-title">Trusted by Leading Brands</h2>
+    <div class="home-logo-marquee__frame" aria-label="Client logos">
+      <div class="home-logo-marquee__track">
+        {[...logos, ...logos].map((logo, index) => (
+          <figure class="home-logo-marquee__item" aria-hidden={index >= logos.length ? 'true' : undefined}>
+            <img src={logo.src} alt={index >= logos.length ? '' : logo.alt} width="500" height="500" loading="lazy" />
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="home-outcomes" aria-labelledby="home-outcomes-title">
+    <div class="home-shell home-outcomes__grid">
+      <figure class="home-outcomes__media">
+        <img src={`${uploadsBase}/2026/03/outcomes.webp`} alt="" width="950" height="794" loading="lazy" />
+      </figure>
+      <div class="home-outcomes__copy">
+        <h2 id="home-outcomes-title">Focused On Outcomes</h2>
+        <p>At Found, we integrate advanced data engineering and strategic paid media expertise to drive customer acquisitions at scale. By combining first-party data, automation, audience and media mix modeling, and adaptive creative, we create a self-reinforcing optimization cycle that&rsquo;s always finding new ways to boost your results. And we collaborate with you, sharing our expertise on the same side of the table, to target your audiences more effectively, place ads more efficiently, and improve without wasting budget.</p>
+        <a class="home-button home-button--dark" href="/capabilities/">Explore Our Capabilities</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-metrics" aria-label="Found Search Marketing metrics">
+    <div class="home-shell home-metrics__grid">
+      <article class="home-metric-card home-metric-card--spend">
+        <p class="home-metric-card__eyebrow">Paid Media Spend</p>
+        <p class="home-metric-card__value"><span>$</span><span data-count-to="210">210</span><span>M</span></p>
+        <p class="home-metric-card__label">Managed in 2025</p>
+      </article>
+
+      <article class="home-metric-card home-metric-card--leads home-metric-card--green">
+        <p class="home-metric-card__eyebrow">Leads Generated</p>
+        <p class="home-metric-card__value"><span data-count-to="1">1</span><span>M+</span></p>
+        <p class="home-metric-card__label">in 2025</p>
+      </article>
+
+      <div class="home-metric-flourish home-metric-flourish--narrow" aria-hidden="true"><span></span></div>
+      <div class="home-metric-flourish home-metric-flourish--wide" aria-hidden="true"><span></span></div>
+
+      <article class="home-metric-card home-metric-card--wide home-metric-card--quote">
+        <blockquote class="home-metric-card__quote">
+          <p>&ldquo;It is rare to find an external partner as good as Found. They have excelled in quality of work, responsiveness and professional presence.&rdquo;</p>
+          <footer>
+            <img src={`${uploadsBase}/2025/09/marcus-dennis.png`} alt="" width="21" height="21" loading="lazy" />
+            <span>
+              <strong>Marcus Dennis</strong>
+              <span>Sr. International Marketing Manager of Global Marketing - Roche</span>
+            </span>
+          </footer>
+        </blockquote>
+        <div class="home-metric-card__experience">
+          <p class="home-metric-card__value"><span data-count-to="20">20</span><span>+</span></p>
+          <p class="home-metric-card__label">Years Performance Marketing Experience</p>
+        </div>
+      </article>
+
+      <article class="home-metric-card home-metric-card--dark">
+        <h2>Independently Owned, Certified Women-Owned Business</h2>
+        <div>
+          <p class="home-metric-card__value"><span data-count-to="50">50</span><span>+</span></p>
+          <p class="home-metric-card__label">Full-Time Employees Across 12 States</p>
+        </div>
+        <a class="home-button" href="/about-us/">About Us</a>
+      </article>
+
+      <div class="home-metric-flourish home-metric-flourish--medium" aria-hidden="true"><span></span></div>
+
+      <figure class="home-metric-card home-metric-card--image">
+        <img src={`${uploadsBase}/2026/03/bullseye.webp`} alt="" width="337" height="276" loading="eager" />
+      </figure>
+    </div>
+  </section>
+
+  <section class="home-partners" aria-labelledby="home-partners-title">
+    <div class="home-shell">
+      <h2 id="home-partners-title">Top-Tier Partnerships</h2>
+      <p>We&rsquo;re only as good as our partnerships, which is why we work together with industry-leading organizations in paid media and marketing analytics.</p>
+      <div class="home-partners__logos" aria-label="Partner logos">
+        {partnerLogos.map((logo) => (
+          <figure>
+            <img src={logo.src} alt={logo.alt} width={logo.width} height={logo.height} loading="eager" />
+          </figure>
+        ))}
+      </div>
+      <a class="home-button home-button--dark" href="/our-approach/#partnerships">Learn More About Our Partnerships</a>
+    </div>
+  </section>
+
+  <section class="home-system" aria-labelledby="home-system-title">
+    <div class="home-shell">
+      <div class="home-system__intro">
+        <h2 id="home-system-title">Data Powered,<br />Paid Media System</h2>
+        <p>Getting the most out of your paid media investment means we are working together to understand your business objectives and customers, and taking a holistic view of everything that&rsquo;s part of your performance lead generation ecosystem. Our team blends advanced data integration with paid media expertise to create lead engines that deliver predictable, scalable customer acquisition.</p>
+      </div>
+
+      <div class="home-tabs" data-home-tabs>
+        <div class="home-tabs__nav">
+          <h3>We handle your entire performance lead generation ecosystem, including:</h3>
+          <div class="home-tabs__buttons" role="tablist" aria-label="Performance lead generation ecosystem">
+            {capabilityTabs.map((tab, index) => (
+              <button
+                class={`home-tabs__button ${index === 0 ? 'is-active' : ''}`}
+                type="button"
+                role="tab"
+                id={`home-tab-${tab.id}`}
+                aria-selected={index === 0 ? 'true' : 'false'}
+                aria-controls={`home-panel-${tab.id}`}
+                data-home-tab={tab.id}
+              >
+                <span class="home-tabs__button-bar" aria-hidden="true"></span>
+                <img src={tab.icon} alt="" width="50" height="50" loading="eager" />
+                <span>{tab.title}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div class="home-tabs__panels">
+          {capabilityTabs.map((tab, index) => (
+            <article
+              class={`home-tabs__panel ${index === 0 ? 'is-active' : ''}`}
+              id={`home-panel-${tab.id}`}
+              role="tabpanel"
+              aria-labelledby={`home-tab-${tab.id}`}
+              data-home-panel={tab.id}
+              hidden={index !== 0}
+            >
+              <div class="home-tabs__panel-copy">
+                <p>{tab.body}</p>
+                <a class="home-button home-button--dark" href={tab.ctaUrl}>{tab.ctaText}</a>
+              </div>
+              <figure class="home-tabs__panel-media">
+                <img src={tab.image} alt={tab.title} width="413" height="535" loading="eager" />
+              </figure>
+            </article>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+  const initHomepage = () => {
+    document.querySelectorAll('[data-homepage]').forEach((root) => {
+      if (!(root instanceof HTMLElement) || root.dataset.initialized === 'true') return;
+      root.dataset.initialized = 'true';
+
+      const searchText = root.querySelector('[data-home-search-text]');
+      const promptItems = Array.from(root.querySelectorAll('[data-home-search-prompts] span')).map((item) => item.textContent || '');
+      if (searchText && promptItems.length > 0) {
+        let index = 0;
+        window.setInterval(() => {
+          index = (index + 1) % promptItems.length;
+          searchText.textContent = promptItems[index];
+        }, 2600);
+      }
+
+      root.querySelectorAll('[data-home-tabs]').forEach((tabs) => {
+        const buttons = Array.from(tabs.querySelectorAll('[data-home-tab]'));
+        const panels = Array.from(tabs.querySelectorAll('[data-home-panel]'));
+
+        buttons.forEach((button) => {
+          button.addEventListener('click', () => {
+            if (!(button instanceof HTMLElement)) return;
+            const id = button.dataset.homeTab;
+
+            buttons.forEach((candidate) => {
+              const isActive = candidate === button;
+              candidate.classList.toggle('is-active', isActive);
+              candidate.setAttribute('aria-selected', String(isActive));
+            });
+
+            panels.forEach((panel) => {
+              if (!(panel instanceof HTMLElement)) return;
+              const isActive = panel.dataset.homePanel === id;
+              panel.classList.toggle('is-active', isActive);
+              panel.hidden = !isActive;
+            });
+          });
+        });
+      });
+    });
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initHomepage, { once: true });
+  } else {
+    initHomepage();
+  }
+
+  document.addEventListener('astro:page-load', initHomepage);
+</script>

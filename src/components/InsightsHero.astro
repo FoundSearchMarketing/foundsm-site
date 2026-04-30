@@ -36,31 +36,30 @@ const {
 <style>
   /* Values sourced from foundsm.wpress (page `data-elementor-id="2283"`,
      Elementor kit 5): section bg #000, margin-bottom 50px, gutter 25px, 100px
-     column gap, copy column 45% desktop / 50% tablet / 100% mobile, heading
-     Fraunces 60px/65px/-1.5px/900 desktop and 38px/42px/-1.2px mobile.
-     Applied with a saner grid layout than the original Elementor flex hacks. */
+     column gap, copy column behavior, and heading Fraunces 60px/65px/900
+     desktop and 38px/42px/900 tablet/mobile. Letter spacing is normalized
+     to match the project CSS guidance. */
 
   .insights-hero {
     background-color: #000000;
     color: #ffffff;
     margin-block-end: 50px;
-    padding-inline: 25px;
   }
 
   .insights-hero__inner {
     display: grid;
-    grid-template-columns: 45fr 55fr;
+    grid-template-columns: minmax(0, 50%) minmax(0, calc(50% - 100px));
     align-items: center;
-    gap: 100px;
-    max-inline-size: 1400px;
+    column-gap: 100px;
+    inline-size: min(calc(100% - (2 * var(--page-gutter))), var(--content-max-width));
+    min-block-size: calc(609px + var(--header-height, 5.3125rem));
     margin-inline: auto;
-    padding-block:
-      calc(var(--header-height, 5.3125rem) + clamp(2rem, 4vw, 4rem))
-      clamp(3rem, 6vw, 5.5rem);
+    padding-block-start: var(--header-height, 5.3125rem);
   }
 
   .insights-hero__copy {
     min-inline-size: 0;
+    padding: 10px;
   }
 
   .insights-hero__headline {
@@ -70,15 +69,15 @@ const {
     font-size: 60px;
     font-weight: 900;
     line-height: 65px;
-    letter-spacing: -1.5px;
+    letter-spacing: 0;
   }
 
   .insights-hero__body {
-    margin: 24px 0 0;
+    margin: 20px 0;
     color: #ffffff;
     font-family: var(--font-body);
-    font-size: 18px;
-    line-height: 1.6;
+    font-size: 20px;
+    line-height: 36px;
   }
 
   .insights-hero__figure {
@@ -91,44 +90,36 @@ const {
   .insights-hero__figure :global(img) {
     display: block;
     inline-size: 100%;
-    max-inline-size: 32rem;
+    max-inline-size: 434px;
     block-size: auto;
   }
 
   @media (max-width: 1024px) {
     .insights-hero__inner {
-      grid-template-columns: 50fr 50fr;
-      gap: 60px;
-    }
-
-    .insights-hero__headline {
-      font-size: 48px;
-      line-height: 54px;
-      letter-spacing: -1.2px;
-    }
-  }
-
-  @media (max-width: 767px) {
-    .insights-hero {
-      padding-inline: 20px;
-    }
-
-    .insights-hero__inner {
-      grid-template-columns: 1fr;
-      gap: 32px;
-      padding-block:
-        calc(var(--header-height, 5.3125rem) + 1.5rem)
-        2rem;
+      display: block;
+      min-block-size: 0;
+      padding-block: var(--header-height, 5.3125rem) 55px;
     }
 
     .insights-hero__headline {
       font-size: 38px;
       line-height: 42px;
-      letter-spacing: -1.2px;
+      letter-spacing: 0;
     }
 
-    .insights-hero__figure :global(img) {
-      max-inline-size: 18rem;
+    .insights-hero__body {
+      font-size: 18px;
+      line-height: 30px;
+    }
+
+    .insights-hero__figure {
+      display: none;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .insights-hero__inner {
+      inline-size: min(calc(100% - (2 * var(--page-gutter))), var(--content-max-width));
     }
   }
 </style>

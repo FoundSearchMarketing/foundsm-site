@@ -53,26 +53,38 @@ const { posts } = Astro.props;
     --found-green: #8dc63f;
     --found-tag-blue: rgba(10, 173, 239, 0.3);
     --found-white: #ffffff;
-    --content: 1140px;
 
     position: relative;
     margin-block: 0 100px;
-    padding-block-start: 25px;
+    padding-block-start: 50px;
     background-color: var(--found-white);
     color: var(--found-black);
     font-family: var(--font-body);
   }
 
+  .latest-posts::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("https://foundsm.com/found2025/wp-content/uploads/2025/09/topography-light.svg");
+    background-position: center top;
+    background-repeat: repeat;
+    background-size: auto;
+    opacity: 0.75;
+    pointer-events: none;
+  }
+
   .e-con-inner {
     position: relative;
     z-index: 1;
-    width: min(var(--content), calc(100% - 50px));
+    inline-size: min(calc(100% - (2 * var(--page-gutter))), var(--content-max-width));
     margin: 0 auto;
   }
 
   .latest-posts__heading-wrap {
     z-index: 2;
     margin-bottom: 0;
+    padding-block: 10px;
   }
 
   .latest-posts__heading {
@@ -89,14 +101,14 @@ const { posts } = Astro.props;
   .latest-posts__panel {
     z-index: 1;
     background: transparent;
-    padding: 0;
+    padding-block: 10px;
   }
 
   .latest-posts__grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 30px;
-    padding-top: 30px;
+    padding-top: 0;
   }
 
   .featured-card {
@@ -117,7 +129,7 @@ const { posts } = Astro.props;
     display: flex;
     min-height: 100%;
     flex-direction: column;
-    gap: 14px;
+    gap: 20px 10px;
   }
 
   .tag-line,
@@ -162,8 +174,8 @@ const { posts } = Astro.props;
     font-family: var(--font-body);
     font-size: 30px;
     font-weight: 700;
-    letter-spacing: -0.2px;
-    line-height: 40px;
+    letter-spacing: 0;
+    line-height: 38px;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
   }
@@ -204,7 +216,7 @@ const { posts } = Astro.props;
     font-family: var(--font-body);
     font-size: 20px;
     font-weight: 400;
-    line-height: 36px;
+    line-height: 29px;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
   }
@@ -214,11 +226,10 @@ const { posts } = Astro.props;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-height: 48px;
     border-radius: 30px;
     background: var(--found-black);
     color: var(--found-white);
-    padding: 12px 24px;
+    padding: 18px 30px;
     font-family: var(--font-body);
     font-size: 16px;
     font-weight: 500;
@@ -230,7 +241,7 @@ const { posts } = Astro.props;
   @media (max-width: 1024px) {
     .latest-posts {
       margin-block: 0 50px;
-      padding-block-start: 20px;
+      padding-block-start: 40px;
     }
 
     .latest-posts__heading {
@@ -242,9 +253,15 @@ const { posts } = Astro.props;
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
+    .tag-line {
+      font-size: 18px;
+      line-height: 22px;
+    }
+
     .featured-card__title {
       font-size: 24px;
       line-height: 32px;
+      letter-spacing: 0;
       -webkit-line-clamp: 3;
     }
 
@@ -258,15 +275,16 @@ const { posts } = Astro.props;
       line-height: 30px;
       -webkit-line-clamp: 3;
     }
+
+    .button {
+      padding: 18px 25px;
+      line-height: 20px;
+    }
   }
 
   @media (max-width: 767px) {
     .latest-posts {
-      margin-block: 0;
-    }
-
-    .e-con-inner {
-      width: min(100% - 40px, var(--content));
+      margin-block: 0 50px;
     }
 
     .latest-posts__heading-wrap {
@@ -275,12 +293,7 @@ const { posts } = Astro.props;
 
     .latest-posts__grid {
       grid-template-columns: 1fr;
-      gap: 34px;
-      padding-top: 30px;
-    }
-
-    .featured-card {
-      padding: 25px 24px;
+      gap: 30px;
     }
 
     .featured-card__title,
@@ -288,6 +301,10 @@ const { posts } = Astro.props;
       display: block;
       overflow: visible;
       -webkit-line-clamp: unset;
+    }
+
+    .button {
+      padding: 15px 22px;
     }
   }
 </style>

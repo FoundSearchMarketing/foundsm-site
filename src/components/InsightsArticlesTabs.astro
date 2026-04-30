@@ -143,7 +143,6 @@ const normalizedTabs = tabs.map((tab, index) => ({
   .insights-articles-tabs {
     --articles-tabs-text: #231f20;
     --articles-tabs-accent: #8dc63f;
-    --articles-tabs-content-width: 1140px;
     --articles-tabs-item-gap: 20px;
     --articles-tabs-letter-spacing: 3px;
 
@@ -176,7 +175,7 @@ const normalizedTabs = tabs.map((tab, index) => ({
     position: relative;
     display: flex;
     flex-direction: column;
-    width: min(100% - 40px, var(--articles-tabs-content-width));
+    inline-size: min(calc(100% - (2 * var(--page-gutter))), var(--content-max-width));
     margin-inline: auto;
   }
 
@@ -299,8 +298,8 @@ const normalizedTabs = tabs.map((tab, index) => ({
     }
 
     .insights-articles-tabs__tab-bar {
-      margin-inline: 1px;
-      padding: 1px;
+      margin-inline: 0;
+      padding: 0;
     }
 
     .insights-articles-tabs__tab {
@@ -315,10 +314,6 @@ const normalizedTabs = tabs.map((tab, index) => ({
 
       margin-block: 0;
       padding-block: 0;
-    }
-
-    .insights-articles-tabs__inner {
-      width: min(100% - 32px, var(--articles-tabs-content-width));
     }
 
     .insights-articles-tabs__subtitle {

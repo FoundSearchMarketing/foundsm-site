@@ -305,7 +305,7 @@ const { articles, filterScope = 'insights-articles', postsPerPage = 6 } = Astro.
     --article-cards-muted-text: #231f2099;
     --article-cards-columns: 3;
     --article-cards-column-gap: 30px;
-    --article-cards-row-gap: 30px;
+    --article-cards-row-gap: 60px;
     --article-card-title-size: 30px;
     --article-card-title-line-height: 38px;
     --article-card-copy-size: 20px;
@@ -313,7 +313,7 @@ const { articles, filterScope = 'insights-articles', postsPerPage = 6 } = Astro.
     --article-card-button-size: 15px;
     --article-card-button-line-height: 24px;
 
-    width: min(100% - 48px, 1362px);
+    inline-size: min(calc(100% - (2 * var(--page-gutter))), var(--content-max-width));
     margin-block: 0 100px;
     margin-inline: auto;
     background: #ffffff;
@@ -531,7 +531,6 @@ const { articles, filterScope = 'insights-articles', postsPerPage = 6 } = Astro.
     .insights-article-cards {
       --article-cards-columns: 1;
 
-      width: min(100% - 24px, 1362px);
       margin-block-end: 0;
       padding-block: 0 50px;
     }

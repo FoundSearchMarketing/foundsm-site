@@ -166,7 +166,7 @@ const schema = {
     <section class="capability-detail capability-detail--creative" id="capabilities-performance-creative" aria-labelledby="capability-creative-title">
       <div class="capability-detail__inner">
         <div class="capability-detail__copy">
-          <h2 id="capability-creative-title" class="capability-detail__title">Performance Creative + CRO</h2>
+          <h2 id="capability-creative-title" class="capability-detail__title">Performance Creative &amp; CRO</h2>
           <div class="capability-detail__text">
             <p>
               Performance creative bridges the gap between storytelling and sales. We design motion graphics, ad creative, and landing pages that don&rsquo;t just look good&mdash;they drive traffic and conversions. Everything we do is tested and built with intention: messaging tailored to your audience, strategic rapid experimentation, visuals designed specifically for the platform, and performance that keeps improving.
@@ -201,7 +201,7 @@ const schema = {
     --capabilities-green: #8dc63f;
     --capabilities-blue: #0aadef;
     --capabilities-orange: #fa9828;
-    --capabilities-gutter: clamp(1.25rem, 4vw, 2.1875rem);
+    --capabilities-red: #f05660;
     color: var(--capabilities-dark);
     background: #ffffff;
     font-family: var(--font-body);
@@ -217,10 +217,8 @@ const schema = {
   .outcomes-section__inner,
   .workflow-section__inner,
   .capability-detail__inner {
-    width: 100%;
-    max-width: 90rem;
+    inline-size: min(calc(100% - (2 * var(--page-gutter))), var(--content-max-width));
     margin-inline: auto;
-    padding-inline: var(--capabilities-gutter);
   }
 
   .capabilities-hero__inner {
@@ -234,14 +232,14 @@ const schema = {
   .workflow-section__title {
     margin: 0 0 1.25rem;
     color: var(--capabilities-dark);
-    font-family: var(--font-body);
-    font-weight: 700;
-    line-height: 1.08;
+    font-family: var(--font-heading);
+    font-weight: 900;
+    line-height: 1.083;
     letter-spacing: 0;
   }
 
   .capabilities-hero__title {
-    font-size: 3.5rem;
+    font-size: 3.75rem;
   }
 
   .workflow-section__title {
@@ -285,7 +283,7 @@ const schema = {
     content: "";
     position: absolute;
     inset: 0;
-    background-image: url("/images/imported/home/f4dccf8d-topography-light.svg");
+    background-image: url("https://foundsm.com/found2025/wp-content/uploads/2026/03/topography-light_sm.svg");
     background-position: center top;
     background-size: 130rem auto;
     opacity: 0.75;
@@ -299,9 +297,8 @@ const schema = {
   }
 
   .outcomes-section__heading {
-    max-width: 90rem;
+    inline-size: min(calc(100% - (2 * var(--page-gutter))), var(--content-max-width));
     margin: 0 auto 3.75rem;
-    padding-inline: var(--capabilities-gutter);
     text-align: center;
   }
 
@@ -311,16 +308,16 @@ const schema = {
     font-size: 1.25rem;
     font-weight: 300;
     line-height: 1.4;
-    letter-spacing: 0.15em;
+    letter-spacing: 0;
     text-transform: uppercase;
   }
 
   .outcomes-section__title {
     margin: 0;
     color: var(--capabilities-dark);
-    font-family: var(--font-body);
+    font-family: var(--font-heading);
     font-size: 2.5rem;
-    font-weight: 700;
+    font-weight: 900;
     line-height: 1.1;
     letter-spacing: 0;
   }
@@ -416,7 +413,7 @@ const schema = {
   }
 
   .capability-detail--paid .capability-detail__title {
-    border-color: var(--capabilities-green);
+    border-color: var(--capabilities-red);
   }
 
   .capability-detail--creative .capability-detail__title {
@@ -460,7 +457,7 @@ const schema = {
   }
 
   .capability-detail__button--green {
-    background: var(--capabilities-green);
+    background: var(--capabilities-red);
   }
 
   .capability-detail__button--orange {
@@ -473,7 +470,7 @@ const schema = {
     object-fit: contain;
   }
 
-  @media (max-width: 1023px) {
+  @media (max-width: 1024px) {
     .capabilities-hero {
       padding: 1.875rem 0 5.625rem;
     }
@@ -484,7 +481,6 @@ const schema = {
     .capability-detail__inner,
     .capability-detail__inner--reverse {
       display: block;
-      max-width: 48rem;
     }
 
     .capabilities-hero__title,
@@ -515,12 +511,11 @@ const schema = {
 
     .outcomes-section__heading {
       margin-bottom: 2rem;
-      padding-inline: 0.625rem;
     }
 
     .outcomes-section__eyebrow {
-      font-size: 1.25rem;
-      line-height: 1.4;
+      font-size: 1.125rem;
+      line-height: 1.22;
     }
 
     .outcomes-section__title {

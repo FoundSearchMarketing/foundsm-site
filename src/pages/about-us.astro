@@ -387,9 +387,9 @@ const schema = {
     .about-modern {
       --about-green: #8bc53f;
       --about-green-dark: #76a834;
-      --about-ink: #1a1a1a;
+      --about-ink: #231f20;
       --about-muted: #5f625c;
-      --about-surface: #f4f6f0;
+      --about-surface: #f2f3f2;
       --about-surface-strong: #e7ebdf;
       --about-border: rgba(26, 26, 26, 0.12);
       --about-shadow: 0 1.5rem 3.5rem rgba(26, 26, 26, 0.12);
@@ -413,28 +413,30 @@ const schema = {
     }
 
     .about-modern h1 {
-      font-size: 2.75rem;
-      font-weight: 700;
+      font-size: 2.375rem;
+      font-weight: 900;
+      line-height: 1.105;
     }
 
     .about-modern h2 {
-      font-size: 2.25rem;
-      font-weight: 700;
+      font-size: 2.125rem;
+      font-weight: 900;
+      line-height: 1.15;
     }
 
     .about-modern h3 {
       font-family: var(--font-body);
-      font-size: 1.3rem;
-      line-height: 1.25;
+      font-size: 1.25rem;
+      line-height: 1.3;
       font-weight: 700;
       color: var(--about-ink);
     }
 
     .about-modern p {
       margin: 0;
-      color: var(--about-muted);
-      font-size: 1rem;
-      line-height: 1.72;
+      color: var(--about-ink);
+      font-size: 1.125rem;
+      line-height: 1.667;
     }
 
     .about-modern p + p {
@@ -442,16 +444,16 @@ const schema = {
     }
 
     .about-shell {
-      inline-size: min(calc(100% - 2rem), 86rem);
+      inline-size: min(calc(100% - (2 * var(--page-gutter))), var(--content-max-width));
       margin-inline: auto;
     }
 
-    .about-eyebrow {
+    .about-modern .about-eyebrow {
       margin: 0 0 0.75rem;
-      color: var(--about-green-dark);
-      font-size: 0.78rem;
-      font-weight: 800;
-      line-height: 1.2;
+      color: var(--about-ink);
+      font-size: 1.125rem;
+      font-weight: 300;
+      line-height: 1.22;
       text-transform: uppercase;
     }
 
@@ -514,7 +516,7 @@ const schema = {
 
     .about-hero__grid {
       display: grid;
-      gap: 3rem;
+      gap: 2.5rem;
       align-items: center;
     }
 
@@ -575,8 +577,7 @@ const schema = {
 
     .about-who__copy h3 {
       margin-top: 2rem;
-      font-size: 1rem;
-      text-transform: uppercase;
+      text-transform: none;
     }
 
     .credential-grid {
@@ -615,9 +616,9 @@ const schema = {
 
     .credential-card p {
       color: var(--about-ink);
-      font-size: 0.92rem;
-      line-height: 1.45;
-      font-weight: 600;
+      font-size: 1rem;
+      line-height: 1.875;
+      font-weight: 400;
     }
 
     .about-who__media {
@@ -629,7 +630,7 @@ const schema = {
       width: 100%;
       aspect-ratio: 652 / 1266;
       object-fit: cover;
-      border-radius: 8px;
+      border-radius: 2.5rem;
       box-shadow: var(--about-shadow);
     }
 
@@ -648,7 +649,7 @@ const schema = {
 
     .mission-grid {
       display: grid;
-      gap: 1rem;
+      gap: 1.5rem;
     }
 
     .mission-card {
@@ -669,15 +670,15 @@ const schema = {
     }
 
     .mission-card p {
-      color: var(--about-muted);
-      font-size: 0.95rem;
-      line-height: 1.65;
+      color: var(--about-ink);
+      font-size: 1rem;
+      line-height: 1.875;
     }
 
     .about-values {
       padding: 4.5rem 0;
-      background: var(--about-ink);
-      color: #ffffff;
+      background: #ffffff;
+      color: var(--about-ink);
     }
 
     .values-tabs {
@@ -685,9 +686,10 @@ const schema = {
       display: grid;
       gap: 2rem;
       min-height: 34rem;
-      padding: 1rem;
-      border-radius: 8px;
-      background: #222222;
+      padding: 2.1875rem 1.5625rem;
+      border-radius: 2.5rem;
+      background: var(--about-ink);
+      color: #ffffff;
       overflow: hidden;
     }
 
@@ -709,45 +711,46 @@ const schema = {
       display: grid;
       align-content: start;
       gap: 1.2rem;
-      padding: 1rem;
+      padding: 0;
     }
 
     .values-tabs__nav h2 {
       color: #ffffff;
-      font-size: 2rem;
+      font-family: var(--font-body);
+      font-size: 1.25rem;
+      font-weight: 700;
+      line-height: 1.3;
     }
 
     .values-tabs__tablist {
       display: grid;
-      gap: 0.55rem;
+      gap: 1.25rem;
     }
 
     .values-tabs__tab {
       position: relative;
       display: grid;
-      grid-template-columns: 0.25rem 2.5rem minmax(0, 1fr);
+      grid-template-columns: 0.375rem 3.125rem minmax(0, 1fr);
       align-items: center;
-      gap: 0.85rem;
+      gap: 1.25rem;
       width: 100%;
-      min-height: 4rem;
-      padding: 0.55rem 0.7rem;
-      border-radius: 8px;
+      min-height: 4.6875rem;
+      padding: 0 1.25rem 0 0;
       color: rgba(255, 255, 255, 0.72);
       text-align: left;
-      transition: background-color var(--duration) var(--ease), color var(--duration) var(--ease);
+      transition: color var(--duration) var(--ease);
     }
 
     .values-tabs__tab:hover,
     .values-tabs__tab:focus-visible,
     .values-tabs__tab.is-active {
-      background: rgba(255, 255, 255, 0.08);
       color: #ffffff;
     }
 
     .values-tabs__tab-bar {
       display: block;
-      width: 0.25rem;
-      height: 2.5rem;
+      width: 0.375rem;
+      height: 100%;
       border-radius: 999px;
       background: rgba(255, 255, 255, 0.18);
     }
@@ -757,15 +760,23 @@ const schema = {
     }
 
     .values-tabs__tab img {
-      width: 2.5rem;
-      height: 2.5rem;
+      width: 3.125rem;
+      height: 3.125rem;
       object-fit: contain;
+      opacity: 0.18;
+      transition: opacity var(--duration) var(--ease);
+    }
+
+    .values-tabs__tab:hover img,
+    .values-tabs__tab:focus-visible img,
+    .values-tabs__tab.is-active img {
+      opacity: 1;
     }
 
     .values-tabs__tab span:last-child {
-      font-size: 0.95rem;
+      font-size: 1.125rem;
       font-weight: 700;
-      line-height: 1.2;
+      line-height: 1.333;
     }
 
     .values-tabs__panels {
@@ -777,7 +788,7 @@ const schema = {
       gap: 1.5rem;
       height: 100%;
       min-height: 27rem;
-      padding: 1rem;
+      padding: 0;
     }
 
     .values-tabs__panel[hidden] {
@@ -792,18 +803,23 @@ const schema = {
 
     .values-tabs__panel h3 {
       color: #ffffff;
-      font-size: 1.85rem;
+      font-family: var(--font-body);
+      font-size: 2.125rem;
+      font-weight: 700;
+      line-height: 1.235;
     }
 
     .values-tabs__panel p {
       max-width: 34rem;
-      color: rgba(255, 255, 255, 0.76);
+      color: #ffffff;
+      font-size: 1.125rem;
+      line-height: 1.667;
     }
 
     .values-tabs__panel-media {
       align-self: end;
       overflow: hidden;
-      border-radius: 8px;
+      border-radius: 2.5rem;
       background: rgba(255, 255, 255, 0.07);
     }
 
@@ -822,13 +838,13 @@ const schema = {
 
     .about-split {
       display: grid;
-      gap: 2.5rem;
+      gap: 3.125rem;
       align-items: center;
     }
 
     .about-split__media {
       overflow: hidden;
-      border-radius: 8px;
+      border-radius: 2.5rem;
       background: var(--about-surface);
     }
 
@@ -853,7 +869,7 @@ const schema = {
     .about-team__image {
       margin-top: 2rem;
       overflow: hidden;
-      border-radius: 8px;
+      border-radius: 2.5rem;
       box-shadow: var(--about-shadow);
     }
 
@@ -887,20 +903,12 @@ const schema = {
     }
 
     @media (min-width: 640px) {
-      .about-modern h1 {
-        font-size: 3.35rem;
-      }
-
-      .about-modern h2 {
-        font-size: 2.75rem;
-      }
-
       .credential-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
 
-    @media (min-width: 900px) {
+    @media (min-width: 1025px) {
       .about-hero__grid {
         grid-template-columns: minmax(0, 1fr) minmax(20rem, 0.85fr);
       }
@@ -915,18 +923,19 @@ const schema = {
 
       .mission-grid {
         grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 3.125rem;
       }
 
       .values-tabs {
-        grid-template-columns: minmax(15rem, 0.65fr) minmax(0, 1fr);
-        gap: 1rem;
-        padding: 1.5rem;
+        grid-template-columns: minmax(17rem, 21.875rem) minmax(0, 1fr);
+        gap: 3.125rem;
+        padding: 5rem 3.125rem;
       }
 
       .values-tabs__panel {
         grid-template-columns: minmax(0, 1fr) minmax(15rem, 0.55fr);
-        gap: 2rem;
-        padding: 1.5rem;
+        gap: 3.4375rem;
+        min-height: 29.625rem;
       }
 
       .about-split {
@@ -939,19 +948,54 @@ const schema = {
       }
     }
 
-    @media (min-width: 1200px) {
+    @media (min-width: 1025px) {
       .about-modern h1 {
-        font-size: 4.25rem;
+        font-size: 3.75rem;
+        line-height: 1.083;
       }
 
       .about-modern h2 {
-        font-size: 3.25rem;
+        font-size: 2.5rem;
+        line-height: 1.1;
+      }
+
+      .about-modern h3 {
+        font-size: 1.5rem;
+        line-height: 1.333;
       }
 
       .about-modern p {
-        font-size: 1.05rem;
+        font-size: 1.25rem;
+        line-height: 1.8;
       }
 
+      .about-modern .about-eyebrow {
+        font-size: 1.25rem;
+        line-height: 1.4;
+      }
+
+      .values-tabs__nav h2 {
+        font-size: 1.5rem;
+        line-height: 1.333;
+      }
+
+      .values-tabs__tab span:last-child {
+        font-size: 1.25rem;
+        line-height: 1.6;
+      }
+
+      .values-tabs__panel h3 {
+        font-size: 2.5rem;
+        line-height: 1.1;
+      }
+
+      .values-tabs__panel p {
+        font-size: 1.25rem;
+        line-height: 1.8;
+      }
+    }
+
+    @media (min-width: 1200px) {
       .about-hero {
         min-height: 42rem;
       }
@@ -971,21 +1015,9 @@ const schema = {
       .about-section-heading--center br {
         display: none;
       }
-
-      .values-tabs {
-        margin-inline: -0.25rem;
-      }
     }
 
     @media (max-width: 480px) {
-      .about-modern h1 {
-        font-size: 2.35rem;
-      }
-
-      .about-modern h2 {
-        font-size: 2rem;
-      }
-
       .credential-card {
         grid-template-columns: 4rem minmax(0, 1fr);
       }
@@ -993,14 +1025,6 @@ const schema = {
       .credential-card__media {
         width: 4rem;
         height: 4rem;
-      }
-
-      .values-tabs__tab {
-        grid-template-columns: 0.2rem 2.25rem minmax(0, 1fr);
-      }
-
-      .values-tabs__panel h3 {
-        font-size: 1.55rem;
       }
     }
   </style>

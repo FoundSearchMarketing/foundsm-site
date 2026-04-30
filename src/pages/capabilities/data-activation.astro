@@ -1,117 +1,79 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import ModernHero from '../../components/modern/ModernHero.astro';
+import CardGrid from '../../components/modern/CardGrid.astro';
+import StatementBand from '../../components/modern/StatementBand.astro';
+import CtaPanel from '../../components/modern/CtaPanel.astro';
 
-const title = "Data Activation | Found Search Marketing";
-const description = "Found Search Marketing's Data Activation services include audience segmentation, CDP integration, first-party data strategy, cross-channel attribution, and privacy-compliant data collection.";
-const canonical = "https://www.foundsm.com/capabilities/data-activation";
-const robots = "index, follow";
+const title = 'Data Activation | Found Search Marketing';
+const description = 'Found Search Marketing brings your first-party customer data directly to the ad platforms where growth happens, creating a continuous feedback loop that improves targeting, reduces wasted spend, and scales qualified lead generation.';
+const canonical = 'https://www.foundsm.com/capabilities/data-activation';
 const schema = {
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "name": "Data Activation | Found Search Marketing",
-  "url": "https://www.foundsm.com/capabilities/data-activation",
-  "description": "Found Search Marketing's Data Activation services include audience segmentation, CDP integration, first-party data strategy, cross-channel attribution, and privacy-compliant data collection.",
-  "publisher": {
-    "@type": "Organization",
-    "name": "Found Search Marketing"
-  }
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: title,
+  url: canonical,
+  description,
+  publisher: {
+    '@type': 'Organization',
+    name: 'Found Search Marketing',
+  },
 };
+
+const taskCards = [
+  {
+    title: 'Connect your first-party data to ad platforms',
+    body: 'Transform your fragmented customer data into a single, actionable source that powers every campaign.',
+  },
+  {
+    title: 'Create always-on data automation',
+    body: 'Make your data work for you 24/7 - continually updating audiences, refining targeting, and improving performance behind the scenes.',
+  },
+  {
+    title: 'Modernize your data foundation',
+    body: 'Modernize your data to take advantage of the ever-changing marketing world.',
+  },
+  {
+    title: 'Fuel AI with real customer insight',
+    body: 'Build upon the AI systems already driving these platforms, ensuring the algorithms are learning from your real customer insights, not generic lookalike data.',
+  },
+];
 ---
 
-<BaseLayout title={title} description={description} canonical={canonical} robots={robots} schema={schema}>
+<BaseLayout title={title} description={description} canonical={canonical} schema={schema}>
+  <ModernHero
+    tone="soft"
+    title="Activate Your Customer Data To Actually Drive Revenue"
+    intro="In today's AI marketing landscape, data is your most valuable asset, yet many companies are not using it to its full potential. Found Search Marketing brings your first-party customer data directly to the ad platforms where growth happens, creating a continuous feedback loop that improves targeting, reduces wasted spend, and engineers revenue."
+    image={{
+      src: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/kitchen-island_1250px.webp?ver=1773768289',
+      alt: 'Kitchen island used as a data activation visual metaphor',
+      width: 1250,
+      height: 834,
+      loading: 'eager',
+    }}
+    mediaHeight="35.9375rem"
+    mediaHeightTablet="20rem"
+    mediaHeightMobile="12.5rem"
+  />
 
-    <!-- ============================================
-         HERO SECTION
-         ============================================ -->
-    <section class="hero hero--dark" aria-label="Data Activation hero">
-      <div class="hero__overlay" aria-hidden="true"></div>
-      <div class="hero__bg-image" aria-hidden="true">
-        <img src="/images/data-activation-hero-bg.jpg" alt="" loading="lazy" width="1920" height="900">
-      </div>
+  <CardGrid title="What We'll Do" cards={taskCards} columns={4} />
 
-      <div class="container hero__content">
-        <div class="hero-stagger">
-          <p class="hero__breadcrumb"><a href="/capabilities">Capabilities</a> / Data Activation</p>
-        </div>
-        <div class="hero-stagger">
-          <h1 class="hero__headline">Data Activation</h1>
-        </div>
-        <div class="hero-stagger">
-          <p class="hero__subtitle">Turn your data into your greatest competitive advantage. We help enterprise brands activate first-party data across every channel with privacy at the forefront.</p>
-        </div>
-      </div>
-    </section>
+  <StatementBand
+    lead="Why It's Needed"
+    body={[
+      "In today's AI-driven marketing world, your product, data, and creative are what truly set you apart. We're moving away from a time when marketers could manually tweak campaigns, handpick audiences, and rely on human judgment to outperform the competition.",
+      "AI and automation now drive performance, but their success depends entirely on the quality of the data they're given. If the system is fed incomplete, outdated or misaligned information, it will optimize toward the wrong outcomes, wasting ad spend and missing high-value opportunities.",
+      "Found solves this by bringing together first-party data and insights from across your organization into one centralized, actionable system. This unified data feeds directly into ad platforms, powering advanced targeting, better lead quality, and more efficient scaling.",
+      "Through Found's proven process, we pull valuable data from every corner of your business to fuel smarter automation, reduce waste, and create a foundation for continuous, AI-powered growth.",
+    ]}
+  />
 
-
-    <!-- ============================================
-         FEATURE LIST
-         ============================================ -->
-    <section class="feature-list" aria-label="Data activation capabilities">
-      <div class="container">
-        <h2 class="feature-list__heading fade-in-up">What We Deliver</h2>
-
-        <div class="feature-list__items">
-
-          <!-- Feature 1 -->
-          <div class="feature-item fade-in-up">
-            <div class="feature-item__number" aria-hidden="true">01</div>
-            <div class="feature-item__content">
-              <h3 class="feature-item__title">Audience Segmentation &amp; Targeting</h3>
-              <p class="feature-item__description">We build granular audience segments based on behavioral signals, demographic data, and intent indicators to ensure your campaigns reach the most valuable prospects. Our segmentation strategies go beyond basic demographics to identify high-value micro-audiences that drive measurable outcomes.</p>
-            </div>
-          </div>
-
-          <!-- Feature 2 -->
-          <div class="feature-item fade-in-up">
-            <div class="feature-item__number" aria-hidden="true">02</div>
-            <div class="feature-item__content">
-              <h3 class="feature-item__title">Customer Data Platform Integration</h3>
-              <p class="feature-item__description">We integrate with leading CDPs to unify your customer data into a single source of truth. Whether you are working with Segment, Tealium, or a custom solution, we connect your data infrastructure to your media strategy so every campaign benefits from a complete view of your customer.</p>
-            </div>
-          </div>
-
-          <!-- Feature 3 -->
-          <div class="feature-item fade-in-up">
-            <div class="feature-item__number" aria-hidden="true">03</div>
-            <div class="feature-item__content">
-              <h3 class="feature-item__title">First-Party Data Strategy</h3>
-              <p class="feature-item__description">As third-party cookies continue to deprecate, a robust first-party data strategy is essential. We help you build, organize, and activate your owned data assets to maintain targeting precision and measurement accuracy in a privacy-first digital landscape.</p>
-            </div>
-          </div>
-
-          <!-- Feature 4 -->
-          <div class="feature-item fade-in-up">
-            <div class="feature-item__number" aria-hidden="true">04</div>
-            <div class="feature-item__content">
-              <h3 class="feature-item__title">Cross-Channel Attribution</h3>
-              <p class="feature-item__description">Understand the true value of every touchpoint in your customer journey. Our attribution models go beyond last-click to provide a holistic view of how your media investments work together to drive conversions and long-term customer value.</p>
-            </div>
-          </div>
-
-          <!-- Feature 5 -->
-          <div class="feature-item fade-in-up">
-            <div class="feature-item__number" aria-hidden="true">05</div>
-            <div class="feature-item__content">
-              <h3 class="feature-item__title">Privacy-Compliant Data Collection</h3>
-              <p class="feature-item__description">We design data collection frameworks that comply with GDPR, CCPA, and emerging privacy regulations while still delivering the insights you need. Our approach ensures you can activate data confidently, with consent management and governance built into every workflow.</p>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-
-    <!-- ============================================
-         CTA BANNER
-         ============================================ -->
-    <section class="cta-banner" aria-label="Call to action">
-      <div class="cta-banner__bg" aria-hidden="true"></div>
-      <div class="container cta-banner__inner fade-in-up">
-        <h2 class="cta-banner__headline">Activate Your Data Today</h2>
-        <p class="cta-banner__text">Ready to turn your first-party data into a competitive advantage?</p>
-        <a href="/contact-us" class="btn btn--green btn--lg">Start the Conversation</a>
-      </div>
-    </section>
-
+  <CtaPanel
+    theme="green"
+    title="Let's Unlock Your Data's Potential"
+    body="In a world where everyone uses AI and data, it's too risky to fly blind. Clean, connected data fueling your systems and paid media is the only path to smarter growth. That's what we deliver."
+    ctaLabel="Let's Chat Data"
+    ctaHref="https://foundsm.com/dataconnect/"
+  />
 </BaseLayout>

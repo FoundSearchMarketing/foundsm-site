@@ -1,144 +1,166 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import ModernHero from '../../components/modern/ModernHero.astro';
+import SplitFeature from '../../components/modern/SplitFeature.astro';
+import FeatureTabs from '../../components/modern/FeatureTabs.astro';
+import CardGrid from '../../components/modern/CardGrid.astro';
+import CtaPanel from '../../components/modern/CtaPanel.astro';
+import LogoMarquee from '../../components/modern/LogoMarquee.astro';
 
-const title = "Paid Media | Found Search Marketing";
-const description = "Found Search Marketing's Paid Media services span search, shopping, social, programmatic, display, video, and connected TV advertising for enterprise brands.";
-const canonical = "https://www.foundsm.com/capabilities/paid-media";
-const robots = "index, follow";
+const title = 'Paid Media | Found Search Marketing';
+const description = 'Found Search Marketing brings deep channel expertise, custom analytics, and agile strategy together to maximize performance across your entire media ecosystem.';
+const canonical = 'https://www.foundsm.com/capabilities/paid-media';
 const schema = {
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "name": "Paid Media | Found Search Marketing",
-  "url": "https://www.foundsm.com/capabilities/paid-media",
-  "description": "Found Search Marketing's Paid Media services span search, shopping, social, programmatic, display, video, and connected TV advertising for enterprise brands.",
-  "publisher": {
-    "@type": "Organization",
-    "name": "Found Search Marketing"
-  }
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: title,
+  url: canonical,
+  description,
+  publisher: {
+    '@type': 'Organization',
+    name: 'Found Search Marketing',
+  },
 };
+
+const tabs = [
+  {
+    title: 'Platform Mastery and Experimentation',
+    body: "We don't just do what's worked in the past. Our team is always learning and testing every ad platform's latest features to find the best use cases.",
+    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Settings-Slider-Desktop-Horizontal-Streamline-Ultimate-Light-Free.png',
+    image: '/images/migrated/paid-media-platform-mastery.webp',
+    imageAlt: 'Platform mastery and experimentation illustration',
+  },
+  {
+    title: 'Data-Driven Bid Strategies',
+    body: 'From target-ROAS to Advantage+ bidding, strategies are intentionally crafted based on your specific business goals to balance volume with efficiency.',
+    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Monetization-Touch-Coin-Streamline-Ultimate-Light-Free.png',
+    image: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/Group-2-1.webp',
+    imageAlt: 'Data-driven bid strategy illustration',
+  },
+  {
+    title: 'Cross-Channel Synergy',
+    body: 'We use data from each channel to inform the next, ensuring your customers see the right message at the right moment. By treating every platform as an interconnected engine, your media mix continuously optimizes to maximize returns.',
+    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Synchronize-Arrows-Three-Streamline-Ultimate-Light-Free.png',
+    image: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/Group-2-2.webp',
+    imageAlt: 'Cross-channel synergy illustration',
+  },
+  {
+    title: 'Transparent Reporting and Rapid Iteration',
+    body: 'Performance scorecards, dashboards, and real-time monitoring tools keep us aligned on spend, CPL, downstream performance, and more, allowing our team to quickly adapt while your team has visibility into performance.',
+    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Graph-Stats-Circle-Streamline-Ultimate-Light-Free.png',
+    image: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/Group-2-3.webp',
+    imageAlt: 'Transparent reporting and rapid iteration illustration',
+  },
+];
+
+const channelCards = [
+  {
+    title: 'Paid Search',
+    lead: 'Reach qualified prospects the moment they signal intent.',
+    body: 'By combining smart data engineering, value-based bidding, and first-party data, we design search strategies that maximize your investment and reach the right prospects at the most impactful point in their research process.',
+    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Group-122.png',
+  },
+  {
+    title: 'Paid Social',
+    lead: 'Drive consideration and engagement across key platforms.',
+    body: 'Paid social can offset rising paid search costs, generate awareness, and help create demand. Layered audiences and creative tests help us identify the ads that drive performance.',
+    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Like-Chat-Streamline-Ultimate-Light-Free.png',
+  },
+  {
+    title: 'Display',
+    lead: 'Keep your brand top-of-mind and create demand during the research phase.',
+    body: 'We look beyond last-click attribution to understand the role display has on search and the broader customer journey, then tie every adjustment back to your data.',
+    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Browser-Page-Layout-Streamline-Ultimate-Light-Free.png',
+  },
+  {
+    title: 'Programmatic',
+    lead: 'Expand your reach with precision on programmatic networks and native platforms.',
+    body: 'Audience-based bid multipliers, frequency capping, and dynamic creative optimization help control ad fatigue and scale efficiently, with every adjustment informed by data.',
+    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Programming-Hold-Code-2-Streamline-Ultimate-Light-Free.png',
+  },
+];
+
+const analyticsCards = [
+  {
+    title: 'Attribution & Media Mix Modeling',
+    body: "Using a powerful tech stack guided by our team's expertise, we identify what's working and reallocate budgets to the initiatives driving the strongest outcomes.",
+    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Reward-Stars-4-Streamline-Ultimate-Regular-Free.svg',
+  },
+  {
+    title: 'AI-Driven Optimization',
+    body: 'We use AI-driven optimization to detect outliers in CPC and conversion rate, triggering automated bid adjustments before costs spiral.',
+    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Controls-Forward-Streamline-Ultimate.svg.svg',
+  },
+  {
+    title: 'Predictive Forecasting',
+    body: 'Our projections help you anticipate spend pacing and ROI, so you can hit targets without guesswork.',
+    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Multiple-Users-1-Streamline-Ultimate.svg.svg',
+  },
+];
+
+const logos = [
+  { src: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Google-Ads-4.png', alt: 'Google Ads partner badge', width: 294, height: 294 },
+  { src: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Google-Ads-1.png', alt: 'Google Ads logo', width: 828, height: 177 },
+  { src: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Google-Ads-2.png', alt: 'Google Ads certification badge', width: 330, height: 234 },
+  { src: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Google-Ads-3.png', alt: 'Google Ads certification wordmark', width: 636, height: 192 },
+  { src: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Google-Ads-5.png', alt: 'Google Ads search badge', width: 312, height: 294 },
+  { src: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Google-Ads-6.png', alt: 'Google Ads display badge', width: 1284, height: 141 },
+  { src: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Google-Ads-7.png', alt: 'Google Ads shopping badge', width: 246, height: 231 },
+  { src: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Google-Ads-8.png', alt: 'Google Ads video badge', width: 243, height: 210 },
+];
 ---
 
-<BaseLayout title={title} description={description} canonical={canonical} robots={robots} schema={schema}>
+<BaseLayout title={title} description={description} canonical={canonical} schema={schema}>
+  <ModernHero
+    tone="soft"
+    titleScale="display"
+    title="Achieve the Perfect Mix of Paid Media"
+    intro={[
+      'Like a great cup of coffee, creating the ideal blend of paid media strategy requires true expertise. Our ability to engineer paid media solutions that convert higher-quality leads, eliminate waste, and drive consistent revenue growth is unmatched.',
+      'Blending your data with our comprehensive understanding of the most effective paid media strategy delivers efficiency and continually improves your business outcomes.',
+    ]}
+    image={{
+      src: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/coffee-blend.webp',
+      alt: 'Coffee beans blended with Found Search Marketing paid media visuals',
+      width: 800,
+      height: 800,
+      loading: 'eager',
+    }}
+  />
 
-    <!-- ============================================
-         HERO SECTION
-         ============================================ -->
-    <section class="hero hero--dark" aria-label="Paid Media hero">
-      <div class="hero__overlay" aria-hidden="true"></div>
-      <div class="hero__bg-image" aria-hidden="true">
-        <img src="/images/paid-media-hero-bg.jpg" alt="" loading="lazy" width="1920" height="900">
-      </div>
+  <SplitFeature
+    title="How We Work"
+    body="At Found Search Marketing, Paid Media is far more than campaign management. It's the strategic core of an integrated system that works in lockstep with Data Intelligence, Landing Pages, and Performance Creative. Together, this ecosystem informs bid strategies, engineers audience models, drives creative and landing page testing, and refines channel mix to optimize marketing spend and drive profitable growth."
+    image={{
+      src: 'https://foundsm.com/found2025/wp-content/uploads/elementor/thumbs/FSM-PaidMedia-Ecosystem-rkgj6y6kb054y1fhsz0yz1lk5k19c684p7877ild64.webp',
+      alt: 'Found Search Marketing paid media ecosystem diagram',
+      width: 500,
+      height: 382,
+    }}
+  />
 
-      <div class="container hero__content">
-        <div class="hero-stagger">
-          <p class="hero__breadcrumb"><a href="/capabilities">Capabilities</a> / Paid Media</p>
-        </div>
-        <div class="hero-stagger">
-          <h1 class="hero__headline">Paid Media</h1>
-        </div>
-        <div class="hero-stagger">
-          <p class="hero__subtitle">Strategic media buying across every major platform, optimized by data and driven by performance to maximize your return on ad spend.</p>
-        </div>
-      </div>
-    </section>
+  <FeatureTabs idPrefix="paid-media-capabilities" tabs={tabs} />
 
+  <CardGrid
+    theme="muted"
+    title="Maximize Impact Across the Full Customer Journey"
+    subtitle="Found creates a diverse media mix that builds awareness, nurtures interest, and captures intent at the right moment."
+    cards={channelCards}
+    columns={4}
+  />
 
-    <!-- ============================================
-         WORK PILLARS
-         ============================================ -->
-    <section class="pillars" aria-label="Paid media work pillars">
-      <div class="container">
-        <h2 class="pillars__heading fade-in-up">Our Work Pillars</h2>
-        <p class="pillars__subheading fade-in-up">Four core disciplines that form the foundation of our paid media practice.</p>
+  <CardGrid
+    title="Advanced Analytics & AI"
+    subtitle="Found's Paid Media and Data Intelligence teams work hand-in-hand to leverage first-party data, media mix modeling, and real-time performance alerts."
+    cards={analyticsCards}
+    columns={3}
+  />
 
-        <div class="pillars__grid fade-in-up">
+  <CtaPanel
+    body="With our paid media expertise, you'll never wonder if your budget is working optimally, because you'll see exactly how every dollar is being spent and driving growth."
+    ctaLabel="Let's Talk Paid Media"
+    ctaHref="/contact-us/"
+  />
 
-          <!-- Pillar 1: Search & Shopping -->
-          <div class="pillar-card">
-            <div class="pillar-card__icon" aria-hidden="true">
-              <svg width="48" height="48" viewBox="0 0 48 48"><circle cx="20" cy="20" r="14" stroke="currentColor" stroke-width="2.5" fill="none"/><line x1="30" y1="30" x2="42" y2="42" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
-            </div>
-            <h3 class="pillar-card__title">Search &amp; Shopping</h3>
-            <p class="pillar-card__description">Expert management of Google Ads, Microsoft Advertising, and shopping campaigns that capture high-intent audiences at the moment they are searching for your products and services.</p>
-          </div>
-
-          <!-- Pillar 2: Social Media Advertising -->
-          <div class="pillar-card">
-            <div class="pillar-card__icon" aria-hidden="true">
-              <svg width="48" height="48" viewBox="0 0 48 48"><circle cx="24" cy="14" r="8" stroke="currentColor" stroke-width="2.5" fill="none"/><circle cx="12" cy="34" r="6" stroke="currentColor" stroke-width="2.5" fill="none"/><circle cx="36" cy="34" r="6" stroke="currentColor" stroke-width="2.5" fill="none"/><line x1="19" y1="20" x2="14" y2="29" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="29" y1="20" x2="34" y2="29" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-            </div>
-            <h3 class="pillar-card__title">Social Media Advertising</h3>
-            <p class="pillar-card__description">Full-funnel campaigns across Facebook, Instagram, LinkedIn, and TikTok that build brand awareness, drive engagement, and generate qualified leads with precision targeting.</p>
-          </div>
-
-          <!-- Pillar 3: Programmatic & Display -->
-          <div class="pillar-card">
-            <div class="pillar-card__icon" aria-hidden="true">
-              <svg width="48" height="48" viewBox="0 0 48 48"><rect x="4" y="8" width="40" height="28" rx="4" stroke="currentColor" stroke-width="2.5" fill="none"/><path d="M4 16H44" stroke="currentColor" stroke-width="2"/><path d="M20 40H28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M24 36V40" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
-            </div>
-            <h3 class="pillar-card__title">Programmatic &amp; Display</h3>
-            <p class="pillar-card__description">Programmatic media buying and retargeting strategies that place your brand in front of the right audiences across premium publisher networks at scale.</p>
-          </div>
-
-          <!-- Pillar 4: Video & Connected TV -->
-          <div class="pillar-card">
-            <div class="pillar-card__icon" aria-hidden="true">
-              <svg width="48" height="48" viewBox="0 0 48 48"><rect x="6" y="10" width="36" height="24" rx="4" stroke="currentColor" stroke-width="2.5" fill="none"/><polygon points="20,16 20,30 32,23" stroke="currentColor" stroke-width="2" fill="none" stroke-linejoin="round"/><path d="M16 40H32" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
-            </div>
-            <h3 class="pillar-card__title">Video &amp; Connected TV</h3>
-            <p class="pillar-card__description">YouTube, CTV, and OTT advertising strategies that combine the storytelling power of video with the precision targeting capabilities of digital media.</p>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-
-    <!-- ============================================
-         CHANNEL TYPES
-         ============================================ -->
-    <section class="channel-types" aria-label="Channel types">
-      <div class="container">
-        <h2 class="channel-types__heading fade-in-up">Channel Expertise</h2>
-        <p class="channel-types__subheading fade-in-up">Deep expertise across every paid media channel your enterprise needs.</p>
-
-        <div class="channel-types__grid fade-in-up">
-
-          <div class="channel-card">
-            <h3 class="channel-card__title">Search Advertising</h3>
-            <p class="channel-card__description">Keyword strategy, bid management, ad copy optimization, and quality score improvement across Google and Microsoft search networks to drive cost-efficient conversions.</p>
-          </div>
-
-          <div class="channel-card">
-            <h3 class="channel-card__title">Social Advertising</h3>
-            <p class="channel-card__description">Audience development, creative testing, and campaign optimization across Meta, LinkedIn, TikTok, and emerging platforms to engage users throughout the customer journey.</p>
-          </div>
-
-          <div class="channel-card">
-            <h3 class="channel-card__title">Display &amp; Programmatic</h3>
-            <p class="channel-card__description">Real-time bidding, audience targeting, contextual placements, and dynamic creative optimization that maximize reach while maintaining cost efficiency.</p>
-          </div>
-
-          <div class="channel-card">
-            <h3 class="channel-card__title">Video &amp; Streaming</h3>
-            <p class="channel-card__description">Pre-roll, mid-roll, and connected TV campaigns that deliver measurable brand lift and drive performance outcomes through premium video inventory.</p>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-
-    <!-- ============================================
-         CTA BANNER
-         ============================================ -->
-    <section class="cta-banner" aria-label="Call to action">
-      <div class="cta-banner__bg" aria-hidden="true"></div>
-      <div class="container cta-banner__inner fade-in-up">
-        <h2 class="cta-banner__headline">Ready to Amplify Your Paid Media?</h2>
-        <p class="cta-banner__text">Let our team build a data-driven paid media strategy tailored to your enterprise goals.</p>
-        <a href="/contact-us" class="btn btn--green btn--lg">Start the Conversation</a>
-      </div>
-    </section>
-
+  <LogoMarquee logos={logos} theme="muted" />
 </BaseLayout>

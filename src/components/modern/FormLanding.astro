@@ -1,0 +1,196 @@
+---
+interface Props {
+  eyebrow?: string;
+  title: string;
+  intro: string;
+  formId: string;
+  portalId?: string;
+  summary?: string;
+  variant?: 'contact' | 'newsletter';
+}
+
+const {
+  eyebrow,
+  title,
+  intro,
+  formId,
+  portalId = '5045186',
+  summary,
+  variant = 'contact',
+} = Astro.props;
+---
+
+<section class={`form-landing form-landing--${variant}`} aria-labelledby={`${variant}-form-heading`}>
+  <div class="form-landing__inner">
+    <div class="form-landing__copy">
+      {eyebrow && <p class="form-landing__eyebrow">{eyebrow}</p>}
+      <h1 id={`${variant}-form-heading`}>{title}</h1>
+      <p>{intro}</p>
+    </div>
+
+    <div class="form-landing__form-card">
+      <div class="hs-form-frame form-landing__frame" data-region="na1" data-form-id={formId} data-portal-id={portalId}></div>
+    </div>
+  </div>
+</section>
+
+{summary && (
+  <section class="form-landing-summary">
+    <div class="form-landing-summary__inner">
+      <p>{summary}</p>
+    </div>
+  </section>
+)}
+
+<script is:inline src="https://js.hsforms.net/forms/embed/5045186.js" defer></script>
+
+<style>
+  .form-landing {
+    position: relative;
+    overflow: hidden;
+    padding: 5rem var(--gutter);
+    background: #f2f3f2;
+  }
+
+  .form-landing--contact {
+    min-block-size: 56.25rem;
+    background-color: #231f20;
+    background-image: url("https://foundsm.com/found2025/wp-content/uploads/2026/03/contact_bg_fc.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: #ffffff;
+  }
+
+  .form-landing__inner {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(20rem, 1.1fr);
+    align-items: start;
+    gap: 3rem;
+    inline-size: min(100%, var(--content-max-width));
+    margin-inline: auto;
+  }
+
+  .form-landing__copy {
+    display: grid;
+    gap: 1rem;
+    padding-block-start: 2rem;
+  }
+
+  .form-landing__eyebrow {
+    color: var(--color-primary);
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  .form-landing h1 {
+    max-inline-size: 42rem;
+    margin: 0;
+    font-size: 4.375rem;
+    line-height: 1.071;
+    letter-spacing: 0;
+  }
+
+  .form-landing--newsletter h1 {
+    font-family: var(--font-body);
+    font-size: 3.375rem;
+    font-weight: 700;
+    line-height: 1.111;
+  }
+
+  .form-landing__copy > p {
+    max-inline-size: 40rem;
+    color: rgba(26, 26, 26, 0.78);
+    font-size: 1.25rem;
+    line-height: 1.8;
+  }
+
+  .form-landing--contact .form-landing__copy > p {
+    color: rgba(255, 255, 255, 0.82);
+  }
+
+  .form-landing--newsletter .form-landing__eyebrow {
+    color: #231f20;
+    font-family: var(--font-heading);
+    font-size: 7.9375rem;
+    font-weight: 700;
+    line-height: 0.9;
+    text-transform: none;
+  }
+
+  .form-landing__form-card {
+    min-block-size: 28rem;
+    padding: 1.5rem;
+    border: 1px solid rgba(26, 26, 26, 0.12);
+    border-radius: 2.5rem;
+    background: #ffffff;
+    box-shadow: 0 18px 42px rgba(26, 26, 26, 0.08);
+  }
+
+  .form-landing__frame {
+    min-block-size: 25rem;
+  }
+
+  .form-landing-summary {
+    padding: 3rem var(--gutter);
+    background: #1a1a1a;
+    color: #ffffff;
+  }
+
+  .form-landing-summary__inner {
+    inline-size: min(100%, 64rem);
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .form-landing-summary p {
+    font-size: 1.25rem;
+    line-height: 1.8;
+  }
+
+  :global(.form-landing__frame iframe) {
+    inline-size: 100%;
+  }
+
+  @media (max-width: 900px) {
+    .form-landing__inner {
+      grid-template-columns: 1fr;
+    }
+
+    .form-landing__copy {
+      padding-block-start: 0;
+    }
+
+    .form-landing h1 {
+      font-size: 2.8125rem;
+      line-height: 1.111;
+    }
+
+    .form-landing--newsletter .form-landing__eyebrow {
+      font-size: 5rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .form-landing {
+      padding-block: 3rem;
+    }
+
+    .form-landing h1 {
+      font-size: 2.375rem;
+      line-height: 1.105;
+    }
+
+    .form-landing--newsletter .form-landing__eyebrow {
+      font-size: 3.5rem;
+    }
+
+    .form-landing__form-card {
+      padding: 1rem;
+      border-radius: 1.875rem;
+    }
+  }
+</style>

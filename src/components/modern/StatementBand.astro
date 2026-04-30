@@ -1,0 +1,70 @@
+---
+interface Props {
+  lead: string;
+  body: string | string[];
+  theme?: 'dark' | 'muted' | 'light';
+}
+
+const { lead, body, theme = 'dark' } = Astro.props;
+const paragraphs = Array.isArray(body) ? body : [body];
+---
+
+<section class={`statement-band statement-band--${theme}`}>
+  <div class="statement-band__inner">
+    <p class="statement-band__lead">{lead}</p>
+    <div class="statement-band__body">
+      {paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+    </div>
+  </div>
+</section>
+
+<style>
+  .statement-band {
+    padding: 4rem var(--gutter);
+  }
+
+  .statement-band--dark {
+    background: #1a1a1a;
+    color: #ffffff;
+  }
+
+  .statement-band--muted {
+    background: #f2f3f2;
+  }
+
+  .statement-band__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: 3rem;
+    inline-size: min(100%, var(--content-max-width));
+    margin-inline: auto;
+  }
+
+  .statement-band__lead {
+    font-family: var(--font-body);
+    font-size: 1.75rem;
+    font-weight: 700;
+    line-height: 1.286;
+  }
+
+  .statement-band__body {
+    display: grid;
+    gap: 0.8rem;
+    color: currentColor;
+    font-size: 1rem;
+    line-height: 1.875;
+    opacity: 0.82;
+  }
+
+  @media (max-width: 800px) {
+    .statement-band__inner {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .statement-band__lead {
+      font-size: 1.125rem;
+      line-height: 1.778;
+    }
+  }
+</style>

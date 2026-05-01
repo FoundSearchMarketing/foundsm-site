@@ -16,6 +16,7 @@ interface ArticleTeaser {
   datetime?: string;
   excerpt: string;
   image?: ArticleImage;
+  ctaLabel?: string;
 }
 
 interface Props {
@@ -51,7 +52,7 @@ const { articles } = Astro.props;
           {article.datetime ? <time datetime={article.datetime}>{article.dateLabel}</time> : article.dateLabel}
         </p>
         <p class="article-teaser__excerpt">{article.excerpt}</p>
-        <a class="article-teaser__link" href={article.href}>Read Article &rarr;</a>
+        <a class="article-teaser__link" href={article.href}>{article.ctaLabel ?? 'Read Article'} &rarr;</a>
       </div>
     </article>
   ))}

@@ -4,14 +4,19 @@ import ModernHero from '../../components/modern/ModernHero.astro';
 import CardGrid from '../../components/modern/CardGrid.astro';
 import StatementBand from '../../components/modern/StatementBand.astro';
 import CtaPanel from '../../components/modern/CtaPanel.astro';
+import { capabilityDetailPageQuery, sanityClient } from '../../lib/sanity';
+import { defaultCapabilityDetailPages, mergeCapabilityDetailPageData } from '../../lib/fixedPageData';
+import { cardsFor, imageProps, richHtml, richText } from '../../lib/fixedPageRender';
 
-const title = 'Data Activation | Found Search Marketing';
-const description = 'Found Search Marketing brings your first-party customer data directly to the ad platforms where growth happens, creating a continuous feedback loop that improves targeting, reduces wasted spend, and scales qualified lead generation.';
-const canonical = 'https://www.foundsm.com/capabilities/data-activation';
+const sanityPage = await sanityClient.fetch(capabilityDetailPageQuery, { id: 'capabilityDataActivationPage' }).catch(() => null);
+const page = mergeCapabilityDetailPageData(defaultCapabilityDetailPages.dataActivation, sanityPage);
+const title = page.seoTitle || defaultCapabilityDetailPages.dataActivation.seoTitle;
+const description = page.seoDescription || defaultCapabilityDetailPages.dataActivation.seoDescription;
+const canonical = page.canonicalUrl || defaultCapabilityDetailPages.dataActivation.canonicalUrl;
 const schema = {
   '@context': 'https://schema.org',
-  '@type': 'WebPage',
-  name: title,
+    '@type': 'WebPage',
+    name: title,
   url: canonical,
   description,
   publisher: {
@@ -20,60 +25,32 @@ const schema = {
   },
 };
 
-const taskCards = [
-  {
-    title: 'Connect your first-party data to ad platforms',
-    body: 'Transform your fragmented customer data into a single, actionable source that powers every campaign.',
-  },
-  {
-    title: 'Create always-on data automation',
-    body: 'Make your data work for you 24/7 - continually updating audiences, refining targeting, and improving performance behind the scenes.',
-  },
-  {
-    title: 'Modernize your data foundation',
-    body: 'Modernize your data to take advantage of the ever-changing marketing world.',
-  },
-  {
-    title: 'Fuel AI with real customer insight',
-    body: 'Build upon the AI systems already driving these platforms, ensuring the algorithms are learning from your real customer insights, not generic lookalike data.',
-  },
-];
+const heroImage = imageProps(page.hero, 'eager');
+const taskCards = cardsFor(page.primaryCards?.cards);
 ---
 
-<BaseLayout title={title} description={description} canonical={canonical} schema={schema}>
+<BaseLayout title={title} description={description} canonical={canonical} robots={page.robots} schema={schema}>
   <ModernHero
     tone="soft"
-    title="Activate Your Customer Data To Actually Drive Revenue"
-    intro="In today's AI marketing landscape, data is your most valuable asset, yet many companies are not using it to its full potential. Found Search Marketing brings your first-party customer data directly to the ad platforms where growth happens, creating a continuous feedback loop that improves targeting, reduces wasted spend, and engineers revenue."
-    image={{
-      src: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/kitchen-island_1250px.webp?ver=1773768289',
-      alt: 'Kitchen island used as a data activation visual metaphor',
-      width: 1250,
-      height: 834,
-      loading: 'eager',
-    }}
+    title={page.hero.heading || ''}
+    intro={richText(page.hero.body)}
+    introHtml={richHtml(page.hero.body)}
+    image={heroImage}
     mediaHeight="35.9375rem"
     mediaHeightTablet="20rem"
     mediaHeightMobile="12.5rem"
   />
 
-  <CardGrid title="What We'll Do" cards={taskCards} columns={4} />
+  {page.primaryCards && <CardGrid title={page.primaryCards.title} cards={taskCards} columns={4} />}
 
-  <StatementBand
-    lead="Why It's Needed"
-    body={[
-      "In today's AI-driven marketing world, your product, data, and creative are what truly set you apart. We're moving away from a time when marketers could manually tweak campaigns, handpick audiences, and rely on human judgment to outperform the competition.",
-      "AI and automation now drive performance, but their success depends entirely on the quality of the data they're given. If the system is fed incomplete, outdated or misaligned information, it will optimize toward the wrong outcomes, wasting ad spend and missing high-value opportunities.",
-      "Found solves this by bringing together first-party data and insights from across your organization into one centralized, actionable system. This unified data feeds directly into ad platforms, powering advanced targeting, better lead quality, and more efficient scaling.",
-      "Through Found's proven process, we pull valuable data from every corner of your business to fuel smarter automation, reduce waste, and create a foundation for continuous, AI-powered growth.",
-    ]}
-  />
+  {page.statement && <StatementBand lead={page.statement.lead || ''} body={richText(page.statement.body)} bodyHtml={richHtml(page.statement.body)} />}
 
-  <CtaPanel
+  {page.cta && <CtaPanel
     theme="green"
-    title="Let's Unlock Your Data's Potential"
-    body="In a world where everyone uses AI and data, it's too risky to fly blind. Clean, connected data fueling your systems and paid media is the only path to smarter growth. That's what we deliver."
-    ctaLabel="Let's Chat Data"
-    ctaHref="https://foundsm.com/dataconnect/"
-  />
+    title={page.cta.title}
+    body={richText(page.cta.body)}
+    bodyHtml={richHtml(page.cta.body)}
+    ctaLabel={page.cta.cta?.label}
+    ctaHref={page.cta.cta?.href}
+  />}
 </BaseLayout>

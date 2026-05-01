@@ -15,6 +15,7 @@ interface Props {
   eyebrow?: string;
   title: string;
   body: string | string[];
+  bodyHtml?: string;
   image?: ImageProps;
   imagePosition?: 'left' | 'right';
   theme?: 'light' | 'muted' | 'dark';
@@ -25,6 +26,7 @@ const {
   eyebrow,
   title,
   body,
+  bodyHtml,
   image,
   imagePosition = 'left',
   theme = 'light',
@@ -45,9 +47,13 @@ const paragraphs = Array.isArray(body) ? body : [body];
     <div class="split-feature__copy">
       {eyebrow && <p class="split-feature__eyebrow">{eyebrow}</p>}
       <h2 id={`${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-heading`}>{title}</h2>
+      {bodyHtml ? (
+        <div class="split-feature__body" set:html={bodyHtml} />
+      ) : (
       <div class="split-feature__body">
         {paragraphs.map((paragraph) => <p>{paragraph}</p>)}
       </div>
+      )}
       {cta && <a class="split-feature__link" href={cta.href}>{cta.label}</a>}
     </div>
   </div>

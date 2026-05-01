@@ -2,6 +2,7 @@
 interface TabItem {
   title: string;
   body: string;
+  bodyHtml?: string;
   icon?: string;
   image?: string;
   imageAlt?: string;
@@ -66,7 +67,7 @@ const { title, subtitle, tabs, idPrefix, theme = 'muted' } = Astro.props;
             >
               <div class="feature-tabs__panel-copy">
                 <h3>{tab.title}</h3>
-                <p>{tab.body}</p>
+                {tab.bodyHtml ? <div set:html={tab.bodyHtml} /> : <p>{tab.body}</p>}
               </div>
               {tab.image && (
                 <div class="feature-tabs__panel-media">

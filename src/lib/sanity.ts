@@ -76,6 +76,86 @@ export const allLandingPagesQuery = `*[_type == "landingPage"] | order(_createdA
   seoDescription
 }`;
 
+export const homePageQuery = `*[_type == "homePage"][0] {
+  _id,
+  seoTitle,
+  seoDescription,
+  canonicalUrl,
+  robots,
+  "ogImage": ogImage.asset->url,
+  hero,
+  intro {
+    heading,
+    body,
+    "image": image.asset->url,
+    imageAlt
+  },
+  ctaStrip,
+  clientLogos {
+    heading,
+    logos[] {
+      "src": image.asset->url,
+      alt
+    }
+  },
+  outcomes {
+    "image": image.asset->url,
+    imageAlt,
+    heading,
+    body,
+    ctaText,
+    ctaUrl
+  },
+  metrics {
+    spend,
+    leads,
+    experience,
+    employees,
+    testimonial {
+      quote,
+      authorName,
+      authorTitle,
+      authorCompany,
+      "authorImage": authorImage.asset->url,
+      authorImageAlt
+    },
+    ownershipCard,
+    "image": image.asset->url,
+    imageAlt
+  },
+  partners {
+    heading,
+    body,
+    logos[] {
+      "src": image.asset->url,
+      alt
+    },
+    ctaText,
+    ctaUrl
+  },
+  ecosystem {
+    headingLines,
+    introBody,
+    tabListHeading,
+    tabs[] {
+      id,
+      title,
+      "icon": icon.asset->url,
+      body,
+      ctaText,
+      ctaUrl,
+      "image": image.asset->url,
+      imageAlt
+    }
+  }
+}`;
+
+export const aboutPageQuery = `*[_id == "aboutPage"][0]`;
+
+export const capabilitiesPageQuery = `*[_id == "capabilitiesPage"][0]`;
+
+export const capabilityDetailPageQuery = `*[_type == "capabilityDetailPage" && _id == $id][0]`;
+
 export const landingPageBySlugQuery = `*[_type == "landingPage" && slug.current == $slug][0] {
   _id,
   title,

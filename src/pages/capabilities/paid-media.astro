@@ -6,10 +6,15 @@ import FeatureTabs from '../../components/modern/FeatureTabs.astro';
 import CardGrid from '../../components/modern/CardGrid.astro';
 import CtaPanel from '../../components/modern/CtaPanel.astro';
 import LogoMarquee from '../../components/modern/LogoMarquee.astro';
+import { capabilityDetailPageQuery, sanityClient } from '../../lib/sanity';
+import { defaultCapabilityDetailPages, mergeCapabilityDetailPageData } from '../../lib/fixedPageData';
+import { cardsFor, imageProps, logosFor, richHtml, richText, tabsFor } from '../../lib/fixedPageRender';
 
-const title = 'Paid Media | Found Search Marketing';
-const description = 'Found Search Marketing brings deep channel expertise, custom analytics, and agile strategy together to maximize performance across your entire media ecosystem.';
-const canonical = 'https://www.foundsm.com/capabilities/paid-media';
+const sanityPage = await sanityClient.fetch(capabilityDetailPageQuery, { id: 'capabilityPaidMediaPage' }).catch(() => null);
+const page = mergeCapabilityDetailPageData(defaultCapabilityDetailPages.paidMedia, sanityPage);
+const title = page.seoTitle || defaultCapabilityDetailPages.paidMedia.seoTitle;
+const description = page.seoDescription || defaultCapabilityDetailPages.paidMedia.seoDescription;
+const canonical = page.canonicalUrl || defaultCapabilityDetailPages.paidMedia.canonicalUrl;
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'WebPage',
@@ -22,145 +27,52 @@ const schema = {
   },
 };
 
-const tabs = [
-  {
-    title: 'Platform Mastery and Experimentation',
-    body: "We don't just do what's worked in the past. Our team is always learning and testing every ad platform's latest features to find the best use cases.",
-    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Settings-Slider-Desktop-Horizontal-Streamline-Ultimate-Light-Free.png',
-    image: '/images/migrated/paid-media-platform-mastery.webp',
-    imageAlt: 'Platform mastery and experimentation illustration',
-  },
-  {
-    title: 'Data-Driven Bid Strategies',
-    body: 'From target-ROAS to Advantage+ bidding, strategies are intentionally crafted based on your specific business goals to balance volume with efficiency.',
-    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Monetization-Touch-Coin-Streamline-Ultimate-Light-Free.png',
-    image: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/Group-2-1.webp',
-    imageAlt: 'Data-driven bid strategy illustration',
-  },
-  {
-    title: 'Cross-Channel Synergy',
-    body: 'We use data from each channel to inform the next, ensuring your customers see the right message at the right moment. By treating every platform as an interconnected engine, your media mix continuously optimizes to maximize returns.',
-    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Synchronize-Arrows-Three-Streamline-Ultimate-Light-Free.png',
-    image: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/Group-2-2.webp',
-    imageAlt: 'Cross-channel synergy illustration',
-  },
-  {
-    title: 'Transparent Reporting and Rapid Iteration',
-    body: 'Performance scorecards, dashboards, and real-time monitoring tools keep us aligned on spend, CPL, downstream performance, and more, allowing our team to quickly adapt while your team has visibility into performance.',
-    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Graph-Stats-Circle-Streamline-Ultimate-Light-Free.png',
-    image: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/Group-2-3.webp',
-    imageAlt: 'Transparent reporting and rapid iteration illustration',
-  },
-];
-
-const channelCards = [
-  {
-    title: 'Paid Search',
-    lead: 'Reach qualified prospects the moment they signal intent.',
-    body: 'By combining smart data engineering, value-based bidding, and first-party data, we design search strategies that maximize your investment and reach the right prospects at the most impactful point in their research process.',
-    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Group-122.png',
-  },
-  {
-    title: 'Paid Social',
-    lead: 'Drive consideration and engagement across key platforms.',
-    body: 'Paid social can offset rising paid search costs, generate awareness, and help create demand. Layered audiences and creative tests help us identify the ads that drive performance.',
-    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Like-Chat-Streamline-Ultimate-Light-Free.png',
-  },
-  {
-    title: 'Display',
-    lead: 'Keep your brand top-of-mind and create demand during the research phase.',
-    body: 'We look beyond last-click attribution to understand the role display has on search and the broader customer journey, then tie every adjustment back to your data.',
-    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Browser-Page-Layout-Streamline-Ultimate-Light-Free.png',
-  },
-  {
-    title: 'Programmatic',
-    lead: 'Expand your reach with precision on programmatic networks and native platforms.',
-    body: 'Audience-based bid multipliers, frequency capping, and dynamic creative optimization help control ad fatigue and scale efficiently, with every adjustment informed by data.',
-    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Programming-Hold-Code-2-Streamline-Ultimate-Light-Free.png',
-  },
-];
-
-const analyticsCards = [
-  {
-    title: 'Attribution & Media Mix Modeling',
-    body: "Using a powerful tech stack guided by our team's expertise, we identify what's working and reallocate budgets to the initiatives driving the strongest outcomes.",
-    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Reward-Stars-4-Streamline-Ultimate-Regular-Free.svg',
-  },
-  {
-    title: 'AI-Driven Optimization',
-    body: 'We use AI-driven optimization to detect outliers in CPC and conversion rate, triggering automated bid adjustments before costs spiral.',
-    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Controls-Forward-Streamline-Ultimate.svg.svg',
-  },
-  {
-    title: 'Predictive Forecasting',
-    body: 'Our projections help you anticipate spend pacing and ROI, so you can hit targets without guesswork.',
-    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Multiple-Users-1-Streamline-Ultimate.svg.svg',
-  },
-];
-
-const logos = [
-  { src: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Google-Ads-4.png', alt: 'Google Ads partner badge', width: 294, height: 294 },
-  { src: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Google-Ads-1.png', alt: 'Google Ads logo', width: 828, height: 177 },
-  { src: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Google-Ads-2.png', alt: 'Google Ads certification badge', width: 330, height: 234 },
-  { src: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Google-Ads-3.png', alt: 'Google Ads certification wordmark', width: 636, height: 192 },
-  { src: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Google-Ads-5.png', alt: 'Google Ads search badge', width: 312, height: 294 },
-  { src: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Google-Ads-6.png', alt: 'Google Ads display badge', width: 1284, height: 141 },
-  { src: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Google-Ads-7.png', alt: 'Google Ads shopping badge', width: 246, height: 231 },
-  { src: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Google-Ads-8.png', alt: 'Google Ads video badge', width: 243, height: 210 },
-];
+const tabs = tabsFor(page.featureTabs?.tabs);
+const channelCards = cardsFor(page.primaryCards?.cards);
+const analyticsCards = cardsFor(page.secondaryCards?.cards);
+const logos = logosFor(page.logoMarquee?.logos);
 ---
 
-<BaseLayout title={title} description={description} canonical={canonical} schema={schema}>
+<BaseLayout title={title} description={description} canonical={canonical} robots={page.robots} schema={schema}>
   <ModernHero
     tone="soft"
     titleScale="display"
-    title="Achieve the Perfect Mix of Paid Media"
-    intro={[
-      'Like a great cup of coffee, creating the ideal blend of paid media strategy requires true expertise. Our ability to engineer paid media solutions that convert higher-quality leads, eliminate waste, and drive consistent revenue growth is unmatched.',
-      'Blending your data with our comprehensive understanding of the most effective paid media strategy delivers efficiency and continually improves your business outcomes.',
-    ]}
-    image={{
-      src: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/coffee-blend.webp',
-      alt: 'Coffee beans blended with Found Search Marketing paid media visuals',
-      width: 800,
-      height: 800,
-      loading: 'eager',
-    }}
+    title={page.hero.heading || ''}
+    intro={richText(page.hero.body)}
+    introHtml={richHtml(page.hero.body)}
+    image={imageProps(page.hero, 'eager')}
   />
 
   <SplitFeature
-    title="How We Work"
-    body="At Found Search Marketing, Paid Media is far more than campaign management. It's the strategic core of an integrated system that works in lockstep with Data Intelligence, Landing Pages, and Performance Creative. Together, this ecosystem informs bid strategies, engineers audience models, drives creative and landing page testing, and refines channel mix to optimize marketing spend and drive profitable growth."
-    image={{
-      src: 'https://foundsm.com/found2025/wp-content/uploads/elementor/thumbs/FSM-PaidMedia-Ecosystem-rkgj6y6kb054y1fhsz0yz1lk5k19c684p7877ild64.webp',
-      alt: 'Found Search Marketing paid media ecosystem diagram',
-      width: 500,
-      height: 382,
-    }}
+    title={page.split?.heading || ''}
+    body={richText(page.split?.body)}
+    bodyHtml={richHtml(page.split?.body)}
+    image={imageProps(page.split)}
   />
 
-  <FeatureTabs idPrefix="paid-media-capabilities" tabs={tabs} />
+  {tabs.length > 0 && <FeatureTabs idPrefix={page.featureTabs?.idPrefix || 'paid-media-capabilities'} tabs={tabs} />}
 
   <CardGrid
     theme="muted"
-    title="Maximize Impact Across the Full Customer Journey"
-    subtitle="Found creates a diverse media mix that builds awareness, nurtures interest, and captures intent at the right moment."
+    title={page.primaryCards?.title}
+    subtitle={page.primaryCards?.subtitle}
     cards={channelCards}
     columns={4}
   />
 
   <CardGrid
-    title="Advanced Analytics & AI"
-    subtitle="Found's Paid Media and Data Intelligence teams work hand-in-hand to leverage first-party data, media mix modeling, and real-time performance alerts."
+    title={page.secondaryCards?.title}
+    subtitle={page.secondaryCards?.subtitle}
     cards={analyticsCards}
     columns={3}
   />
 
   <CtaPanel
-    body="With our paid media expertise, you'll never wonder if your budget is working optimally, because you'll see exactly how every dollar is being spent and driving growth."
-    ctaLabel="Let's Talk Paid Media"
-    ctaHref="/contact-us/"
+    body={richText(page.cta?.body)}
+    bodyHtml={richHtml(page.cta?.body)}
+    ctaLabel={page.cta?.cta?.label}
+    ctaHref={page.cta?.cta?.href}
   />
 
-  <LogoMarquee logos={logos} theme="muted" />
+  {logos.length > 0 && <LogoMarquee logos={logos} theme="muted" />}
 </BaseLayout>

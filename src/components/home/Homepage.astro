@@ -1,106 +1,83 @@
 ---
 import '../../styles/homepage.css';
+import {
+  mergeHomePageData,
+  type HomePageData,
+  type PortableTextBlock,
+} from '../../lib/homePageData';
 
-const assetBase = 'https://foundsm.com/found2025/wp-content';
-const themeAssetBase = `${assetBase}/themes/found2025/assets/images`;
-const uploadsBase = `${assetBase}/uploads`;
+interface Props {
+  data?: Partial<HomePageData> | null;
+}
 
-const searchPrompts = [
-  'What does AI mean for performance media?',
-  'What are industry benchmarks for CVR, CPL, close rates etc?',
-  'How to overcome AI Overviews and keep traffic high via SERPs',
-  'Should we use Target CPA or Target ROAS and what are the trade-offs?',
-  'How do we get more leads this month?',
-];
+const { data = null } = Astro.props;
+const homepage = mergeHomePageData(data);
 
-const logos = [
-  { src: `${uploadsBase}/2025/09/Bar_Keepers.png`, alt: 'Bar Keepers Friend' },
-  { src: `${uploadsBase}/2025/09/AccuChek.png`, alt: 'Accu-Chek' },
-  { src: `${uploadsBase}/2025/09/ADT.png`, alt: 'ADT' },
-  { src: `${uploadsBase}/2025/09/Bastian.png`, alt: 'Bastian Solutions' },
-  { src: `${uploadsBase}/2025/09/IWU.png`, alt: 'Indiana Wesleyan University' },
-  { src: `${uploadsBase}/2025/09/Hendricks.png`, alt: 'Hendricks' },
-  { src: `${uploadsBase}/2025/09/IU_Kelley.png`, alt: 'Indiana University Kelley School of Business' },
-  { src: `${uploadsBase}/2025/09/LawnPride.png`, alt: 'Lawn Pride' },
-  { src: `${uploadsBase}/2026/03/Indy_Ignite.png`, alt: 'Indy Ignite' },
-  { src: `${uploadsBase}/2026/03/Farm_Bureau.png`, alt: 'Farm Bureau Insurance' },
-  { src: `${uploadsBase}/2025/09/Roche.png`, alt: 'Roche' },
-  { src: `${uploadsBase}/2025/09/Duke_CE.png`, alt: 'Duke Corporate Education' },
-  { src: `${uploadsBase}/2025/09/Cook_Medical.png`, alt: 'Cook Medical' },
-  { src: `${uploadsBase}/2025/09/MrQuik.png`, alt: 'Mr. Quik' },
-  { src: `${uploadsBase}/2025/09/BNE.png`, alt: 'BNE' },
-  { src: `${uploadsBase}/2025/09/Artboard-1.png`, alt: 'Client logo' },
-];
+type MarkDef = { _key: string; _type: string; href?: string };
+type Span = { text?: string; marks?: string[] };
 
-const partnerLogos = [
-  { src: `${uploadsBase}/2025/09/google-partner-150x150.png`, alt: 'Google Partner', width: 150, height: 150 },
-  { src: `${uploadsBase}/2025/09/google-marketing-platform.png`, alt: 'Google Marketing Platform', width: 323, height: 90 },
-  { src: `${uploadsBase}/2025/09/google-cloud-partner.png`, alt: 'Google Cloud Partner', width: 226, height: 87 },
-  {
-    src: `${uploadsBase}/elementor/thumbs/Microsoft_Premier_Elite_2026_sm-rka1b7x3sf6wfj0z2pn1fa5lbo4pr7vwx2ixsiyuf4.png`,
-    alt: 'Microsoft Advertising Premier Elite Partner 2026',
-    width: 184,
-    height: 64,
-  },
-  { src: `${uploadsBase}/2025/09/meta.png`, alt: 'Meta Business Partner', width: 184, height: 76 },
-];
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
 
-const capabilityTabs = [
-  {
-    id: 'data',
-    title: 'Data, Reporting, & Analytics',
-    icon: `${uploadsBase}/2025/09/icon-home-tab1.svg`,
-    body:
-      "What's your CPL? Are you using first-party data to inform your campaigns? Do you have a clear line of sight from dollars spent to results? We turn your first party data into powerful audience models and unified insights - then activate it through precision paid media that converts.",
-    ctaText: 'See How We Leverage Data',
-    ctaUrl: '/capabilities/data-intelligence/',
-    image: `${uploadsBase}/2026/03/home-tab1.webp`,
-  },
-  {
-    id: 'media',
-    title: 'Paid Media',
-    icon: `${uploadsBase}/2025/09/icon-home-tab2.svg`,
-    body:
-      'We apply a custom media mix framework, rooted in data modeling and precision bidding, to architect high-performing paid media strategies that drive more qualified leads for your business, and maximize profitability.',
-    ctaText: 'Get Better Leads',
-    ctaUrl: '/capabilities/paid-media/',
-    image: `${uploadsBase}/2026/03/home-tab2.webp`,
-  },
-  {
-    id: 'creative',
-    title: 'Performance Creative & CRO',
-    icon: `${uploadsBase}/2025/09/icon-home-tab3.svg`,
-    body:
-      'To us, performance means generating high-quality leads that drive customer growth. We distill and clarify your messaging, take a UI/UX-focused approach to design, and complement it with engaging content that drives action. This includes conversion rate optimization (CRO) and other multivariate testing strategies to identify the highest level of performance from click to conversion to customer.',
-    ctaText: 'Explore Our Creativity',
-    ctaUrl: '/capabilities/performance-creative/',
-    image: `${uploadsBase}/2026/03/home-tab3.webp`,
-  },
-];
+function renderSpan(span: Span, markDefs: MarkDef[]): string {
+  let text = escapeHtml(span.text || '').replace(/\n/g, '<br>');
+
+  for (const mark of span.marks || []) {
+    if (mark === 'strong') text = `<strong>${text}</strong>`;
+    else if (mark === 'em') text = `<em>${text}</em>`;
+    else {
+      const def = markDefs.find((candidate) => candidate._key === mark);
+      if (def?._type === 'link' && def.href) {
+        const href = escapeHtml(def.href);
+        const external = /^https?:\/\//i.test(def.href);
+        const rel = external ? ' rel="noopener noreferrer" target="_blank"' : '';
+        text = `<a href="${href}"${rel}>${text}</a>`;
+      }
+    }
+  }
+
+  return text;
+}
+
+function renderRichText(blocks?: PortableTextBlock[]): string {
+  return (blocks || [])
+    .filter((block) => block?._type === 'block')
+    .map((block) => {
+      const markDefs = (block.markDefs || []) as MarkDef[];
+      const inner = (block.children || []).map((child) => renderSpan(child, markDefs)).join('');
+      return inner ? `<p>${inner}</p>` : '';
+    })
+    .join('');
+}
+
+const showCta = (item?: { ctaText?: string; ctaUrl?: string }) => Boolean(item?.ctaText && item?.ctaUrl);
+const metricValue = (metric: { value?: number }) => String(metric.value ?? '');
+const clientLogos = homepage.clientLogos.logos.filter((logo) => logo.src);
+const partnerLogos = homepage.partners.logos.filter((logo) => logo.src);
+const firstPrompt = homepage.hero.searchPrompts[0] || '';
+const testimonialRole = [homepage.metrics.testimonial.authorTitle, homepage.metrics.testimonial.authorCompany].filter(Boolean).join(' - ');
 ---
 
 <div class="homepage" data-homepage>
   <section class="home-splash" aria-labelledby="home-splash-title">
     <div class="home-shell home-splash__inner">
       <h1 class="home-splash__headline display" id="home-splash-title">
-        <span>Drive Profitable Growth.</span>
-        <span>Get Found.</span>
+        {homepage.hero.headlineLines.map((line) => <span>{line}</span>)}
       </h1>
-      <p class="home-splash__content">Combining the power of advanced data engineering with paid media expertise.</p>
+      {homepage.hero.subheadline && <p class="home-splash__content">{homepage.hero.subheadline}</p>}
 
       <div class="home-search" aria-label="Search prompt examples">
-        <img class="home-search__brand" width="125" height="38" src={`${themeAssetBase}/search.svg`} alt="Search" loading="eager" />
+        <span class="home-search__brand" aria-hidden="true">Search</span>
         <div class="home-search__input">
-          <span class="home-search__text" data-home-search-text>{searchPrompts[0]}</span>
-          <div class="home-search__icons" aria-hidden="true">
-            <img width="25" height="24" src={`${themeAssetBase}/searchx.svg`} alt="" loading="eager" />
-            <span class="home-search__divider"></span>
-            <img width="27" height="27" src={`${themeAssetBase}/microphone.svg`} alt="" loading="eager" />
-            <img width="25" height="25" src={`${themeAssetBase}/searchglass.svg`} alt="" loading="eager" />
-          </div>
+          <span class="home-search__text" data-home-search-text>{firstPrompt}</span>
         </div>
         <div class="home-search__prompts" data-home-search-prompts hidden>
-          {searchPrompts.map((prompt) => <span>{prompt}</span>)}
+          {homepage.hero.searchPrompts.map((prompt) => <span>{prompt}</span>)}
         </div>
       </div>
     </div>
@@ -109,45 +86,50 @@ const capabilityTabs = [
   <section class="home-intro" aria-labelledby="home-intro-title">
     <div class="home-shell home-intro__grid">
       <div class="home-intro__copy">
-        <h2 id="home-intro-title">A Seamless Extension of Your Team</h2>
-        <p>Unusually great performance takes a different kind of agency. One that&rsquo;s highly collaborative with a deep understanding of your business goals. One relentlessly focused on solving problems with forward-thinking, custom solutions. One that always prioritizes outcomes above hours.</p>
-        <p><strong>Found Search Marketing is that partner.</strong> We&rsquo;re experts at fitting into your internal workflows, bringing clarity, and optimizing your resources for stronger leads, better conversion rates, and smarter spend. Unlike traditional agencies, we are a data engineering firm that activates paid media strategies, not the other way around.</p>
+        <h2 id="home-intro-title">{homepage.intro.heading}</h2>
+        <Fragment set:html={renderRichText(homepage.intro.body)} />
       </div>
-      <figure class="home-intro__media">
-        <img src={`${uploadsBase}/2026/03/hero-home-sm.webp`} alt="" width="742" height="739" loading="eager" />
-      </figure>
+      {homepage.intro.image && (
+        <figure class="home-intro__media">
+          <img src={homepage.intro.image} alt={homepage.intro.imageAlt || ''} width="742" height="739" loading="eager" />
+        </figure>
+      )}
     </div>
   </section>
 
   <section class="home-cta-strip" aria-label="Contact Found Search Marketing">
     <div class="home-shell home-cta-strip__inner">
-      <h2>If you want to scale your paid media performance with strategic intention, let&rsquo;s talk.</h2>
-      <a class="home-button" href="/contact-us/">Let&rsquo;s Find A Solution</a>
+      <h2>{homepage.ctaStrip.headline}</h2>
+      {showCta(homepage.ctaStrip) && <a class="home-button" href={homepage.ctaStrip.ctaUrl}>{homepage.ctaStrip.ctaText}</a>}
     </div>
   </section>
 
-  <section class="home-logo-marquee" aria-labelledby="home-logo-title">
-    <h2 id="home-logo-title">Trusted by Leading Brands</h2>
-    <div class="home-logo-marquee__frame" aria-label="Client logos">
-      <div class="home-logo-marquee__track">
-        {[...logos, ...logos].map((logo, index) => (
-          <figure class="home-logo-marquee__item" aria-hidden={index >= logos.length ? 'true' : undefined}>
-            <img src={logo.src} alt={index >= logos.length ? '' : logo.alt} width="500" height="500" loading="lazy" />
-          </figure>
-        ))}
+  {clientLogos.length > 0 && (
+    <section class="home-logo-marquee" aria-labelledby="home-logo-title">
+      <h2 id="home-logo-title">{homepage.clientLogos.heading}</h2>
+      <div class="home-logo-marquee__frame" aria-label="Client logos">
+        <div class="home-logo-marquee__track">
+          {[...clientLogos, ...clientLogos].map((logo, index) => (
+            <figure class="home-logo-marquee__item" aria-hidden={index >= clientLogos.length ? 'true' : undefined}>
+              <img src={logo.src} alt={index >= clientLogos.length ? '' : logo.alt || ''} width="500" height="500" loading="lazy" />
+            </figure>
+          ))}
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+  )}
 
   <section class="home-outcomes" aria-labelledby="home-outcomes-title">
     <div class="home-shell home-outcomes__grid">
-      <figure class="home-outcomes__media">
-        <img src={`${uploadsBase}/2026/03/outcomes.webp`} alt="" width="950" height="794" loading="lazy" />
-      </figure>
+      {homepage.outcomes.image && (
+        <figure class="home-outcomes__media">
+          <img src={homepage.outcomes.image} alt={homepage.outcomes.imageAlt || ''} width="950" height="794" loading="lazy" />
+        </figure>
+      )}
       <div class="home-outcomes__copy">
-        <h2 id="home-outcomes-title">Focused On Outcomes</h2>
-        <p>At Found, we integrate advanced data engineering and strategic paid media expertise to drive customer acquisitions at scale. By combining first-party data, automation, audience and media mix modeling, and adaptive creative, we create a self-reinforcing optimization cycle that&rsquo;s always finding new ways to boost your results. And we collaborate with you, sharing our expertise on the same side of the table, to target your audiences more effectively, place ads more efficiently, and improve without wasting budget.</p>
-        <a class="home-button home-button--dark" href="/capabilities/">Explore Our Capabilities</a>
+        <h2 id="home-outcomes-title">{homepage.outcomes.heading}</h2>
+        <Fragment set:html={renderRichText(homepage.outcomes.body)} />
+        {showCta(homepage.outcomes) && <a class="home-button home-button--dark" href={homepage.outcomes.ctaUrl}>{homepage.outcomes.ctaText}</a>}
       </div>
     </div>
   </section>
@@ -155,15 +137,23 @@ const capabilityTabs = [
   <section class="home-metrics" aria-label="Found Search Marketing metrics">
     <div class="home-shell home-metrics__grid">
       <article class="home-metric-card home-metric-card--spend">
-        <p class="home-metric-card__eyebrow">Paid Media Spend</p>
-        <p class="home-metric-card__value"><span>$</span><span data-count-to="210">210</span><span>M</span></p>
-        <p class="home-metric-card__label">Managed in 2025</p>
+        {homepage.metrics.spend.eyebrow && <p class="home-metric-card__eyebrow">{homepage.metrics.spend.eyebrow}</p>}
+        <p class="home-metric-card__value">
+          {homepage.metrics.spend.prefix && <span>{homepage.metrics.spend.prefix}</span>}
+          <span data-count-to={metricValue(homepage.metrics.spend)}>{metricValue(homepage.metrics.spend)}</span>
+          {homepage.metrics.spend.suffix && <span>{homepage.metrics.spend.suffix}</span>}
+        </p>
+        {homepage.metrics.spend.label && <p class="home-metric-card__label">{homepage.metrics.spend.label}</p>}
       </article>
 
       <article class="home-metric-card home-metric-card--leads home-metric-card--green">
-        <p class="home-metric-card__eyebrow">Leads Generated</p>
-        <p class="home-metric-card__value"><span data-count-to="1">1</span><span>M+</span></p>
-        <p class="home-metric-card__label">in 2025</p>
+        {homepage.metrics.leads.eyebrow && <p class="home-metric-card__eyebrow">{homepage.metrics.leads.eyebrow}</p>}
+        <p class="home-metric-card__value">
+          {homepage.metrics.leads.prefix && <span>{homepage.metrics.leads.prefix}</span>}
+          <span data-count-to={metricValue(homepage.metrics.leads)}>{metricValue(homepage.metrics.leads)}</span>
+          {homepage.metrics.leads.suffix && <span>{homepage.metrics.leads.suffix}</span>}
+        </p>
+        {homepage.metrics.leads.label && <p class="home-metric-card__label">{homepage.metrics.leads.label}</p>}
       </article>
 
       <div class="home-metric-flourish home-metric-flourish--narrow" aria-hidden="true"><span></span></div>
@@ -171,65 +161,91 @@ const capabilityTabs = [
 
       <article class="home-metric-card home-metric-card--wide home-metric-card--quote">
         <blockquote class="home-metric-card__quote">
-          <p>&ldquo;It is rare to find an external partner as good as Found. They have excelled in quality of work, responsiveness and professional presence.&rdquo;</p>
+          {homepage.metrics.testimonial.quote && <p>&ldquo;{homepage.metrics.testimonial.quote}&rdquo;</p>}
           <footer>
-            <img src={`${uploadsBase}/2025/09/marcus-dennis.png`} alt="" width="21" height="21" loading="lazy" />
+            {homepage.metrics.testimonial.authorImage && (
+              <img
+                src={homepage.metrics.testimonial.authorImage}
+                alt={homepage.metrics.testimonial.authorImageAlt || ''}
+                width="21"
+                height="21"
+                loading="lazy"
+              />
+            )}
             <span>
-              <strong>Marcus Dennis</strong>
-              <span>Sr. International Marketing Manager of Global Marketing - Roche</span>
+              {homepage.metrics.testimonial.authorName && <strong>{homepage.metrics.testimonial.authorName}</strong>}
+              {testimonialRole && <span>{testimonialRole}</span>}
             </span>
           </footer>
         </blockquote>
         <div class="home-metric-card__experience">
-          <p class="home-metric-card__value"><span data-count-to="20">20</span><span>+</span></p>
-          <p class="home-metric-card__label">Years Performance Marketing Experience</p>
+          <p class="home-metric-card__value">
+            {homepage.metrics.experience.prefix && <span>{homepage.metrics.experience.prefix}</span>}
+            <span data-count-to={metricValue(homepage.metrics.experience)}>{metricValue(homepage.metrics.experience)}</span>
+            {homepage.metrics.experience.suffix && <span>{homepage.metrics.experience.suffix}</span>}
+          </p>
+          {homepage.metrics.experience.label && <p class="home-metric-card__label">{homepage.metrics.experience.label}</p>}
         </div>
       </article>
 
       <article class="home-metric-card home-metric-card--dark">
-        <h2>Independently Owned, Certified Women-Owned Business</h2>
+        <h2>{homepage.metrics.ownershipCard.heading}</h2>
         <div>
-          <p class="home-metric-card__value"><span data-count-to="50">50</span><span>+</span></p>
-          <p class="home-metric-card__label">Full-Time Employees Across 12 States</p>
+          <p class="home-metric-card__value">
+            {homepage.metrics.employees.prefix && <span>{homepage.metrics.employees.prefix}</span>}
+            <span data-count-to={metricValue(homepage.metrics.employees)}>{metricValue(homepage.metrics.employees)}</span>
+            {homepage.metrics.employees.suffix && <span>{homepage.metrics.employees.suffix}</span>}
+          </p>
+          {homepage.metrics.employees.label && <p class="home-metric-card__label">{homepage.metrics.employees.label}</p>}
         </div>
-        <a class="home-button" href="/about-us/">About Us</a>
+        {showCta(homepage.metrics.ownershipCard) && (
+          <a class="home-button" href={homepage.metrics.ownershipCard.ctaUrl}>{homepage.metrics.ownershipCard.ctaText}</a>
+        )}
       </article>
 
       <div class="home-metric-flourish home-metric-flourish--medium" aria-hidden="true"><span></span></div>
 
-      <figure class="home-metric-card home-metric-card--image">
-        <img src={`${uploadsBase}/2026/03/bullseye.webp`} alt="" width="337" height="276" loading="eager" />
-      </figure>
+      {homepage.metrics.image && (
+        <figure class="home-metric-card home-metric-card--image">
+          <img src={homepage.metrics.image} alt={homepage.metrics.imageAlt || ''} width="337" height="276" loading="eager" />
+        </figure>
+      )}
     </div>
   </section>
 
   <section class="home-partners" aria-labelledby="home-partners-title">
     <div class="home-shell">
-      <h2 id="home-partners-title">Top-Tier Partnerships</h2>
-      <p>We&rsquo;re only as good as our partnerships, which is why we work together with industry-leading organizations in paid media and marketing analytics.</p>
-      <div class="home-partners__logos" aria-label="Partner logos">
-        {partnerLogos.map((logo) => (
-          <figure>
-            <img src={logo.src} alt={logo.alt} width={logo.width} height={logo.height} loading="eager" />
-          </figure>
-        ))}
-      </div>
-      <a class="home-button home-button--dark" href="/our-approach/#partnerships">Learn More About Our Partnerships</a>
+      <h2 id="home-partners-title">{homepage.partners.heading}</h2>
+      <Fragment set:html={renderRichText(homepage.partners.body)} />
+      {partnerLogos.length > 0 && (
+        <div class="home-partners__logos" aria-label="Partner logos">
+          {partnerLogos.map((logo) => (
+            <figure>
+              <img src={logo.src} alt={logo.alt || ''} width="184" height="80" loading="eager" />
+            </figure>
+          ))}
+        </div>
+      )}
+      {showCta(homepage.partners) && <a class="home-button home-button--dark" href={homepage.partners.ctaUrl}>{homepage.partners.ctaText}</a>}
     </div>
   </section>
 
   <section class="home-system" aria-labelledby="home-system-title">
     <div class="home-shell">
       <div class="home-system__intro">
-        <h2 id="home-system-title">Data Powered,<br />Paid Media System</h2>
-        <p>Getting the most out of your paid media investment means we are working together to understand your business objectives and customers, and taking a holistic view of everything that&rsquo;s part of your performance lead generation ecosystem. Our team blends advanced data integration with paid media expertise to create lead engines that deliver predictable, scalable customer acquisition.</p>
+        <h2 id="home-system-title">
+          {homepage.ecosystem.headingLines.map((line, index) => (
+            <Fragment>{line}{index < homepage.ecosystem.headingLines.length - 1 && <br />}</Fragment>
+          ))}
+        </h2>
+        <Fragment set:html={renderRichText(homepage.ecosystem.introBody)} />
       </div>
 
       <div class="home-tabs" data-home-tabs>
         <div class="home-tabs__nav">
-          <h3>We handle your entire performance lead generation ecosystem, including:</h3>
+          {homepage.ecosystem.tabListHeading && <h3>{homepage.ecosystem.tabListHeading}</h3>}
           <div class="home-tabs__buttons" role="tablist" aria-label="Performance lead generation ecosystem">
-            {capabilityTabs.map((tab, index) => (
+            {homepage.ecosystem.tabs.map((tab, index) => (
               <button
                 class={`home-tabs__button ${index === 0 ? 'is-active' : ''}`}
                 type="button"
@@ -240,7 +256,7 @@ const capabilityTabs = [
                 data-home-tab={tab.id}
               >
                 <span class="home-tabs__button-bar" aria-hidden="true"></span>
-                <img src={tab.icon} alt="" width="50" height="50" loading="eager" />
+                {tab.icon ? <img src={tab.icon} alt="" width="50" height="50" loading="eager" /> : <span aria-hidden="true"></span>}
                 <span>{tab.title}</span>
               </button>
             ))}
@@ -248,7 +264,7 @@ const capabilityTabs = [
         </div>
 
         <div class="home-tabs__panels">
-          {capabilityTabs.map((tab, index) => (
+          {homepage.ecosystem.tabs.map((tab, index) => (
             <article
               class={`home-tabs__panel ${index === 0 ? 'is-active' : ''}`}
               id={`home-panel-${tab.id}`}
@@ -258,12 +274,14 @@ const capabilityTabs = [
               hidden={index !== 0}
             >
               <div class="home-tabs__panel-copy">
-                <p>{tab.body}</p>
-                <a class="home-button home-button--dark" href={tab.ctaUrl}>{tab.ctaText}</a>
+                <Fragment set:html={renderRichText(tab.body)} />
+                {showCta(tab) && <a class="home-button home-button--dark" href={tab.ctaUrl}>{tab.ctaText}</a>}
               </div>
-              <figure class="home-tabs__panel-media">
-                <img src={tab.image} alt={tab.title} width="413" height="535" loading="eager" />
-              </figure>
+              {tab.image && (
+                <figure class="home-tabs__panel-media">
+                  <img src={tab.image} alt={tab.imageAlt || tab.title || ''} width="413" height="535" loading="eager" />
+                </figure>
+              )}
             </article>
           ))}
         </div>

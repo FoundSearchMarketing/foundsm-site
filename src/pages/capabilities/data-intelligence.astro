@@ -5,10 +5,15 @@ import SplitFeature from '../../components/modern/SplitFeature.astro';
 import CardGrid from '../../components/modern/CardGrid.astro';
 import LogoMarquee from '../../components/modern/LogoMarquee.astro';
 import CtaPanel from '../../components/modern/CtaPanel.astro';
+import { capabilityDetailPageQuery, sanityClient } from '../../lib/sanity';
+import { defaultCapabilityDetailPages, mergeCapabilityDetailPageData } from '../../lib/fixedPageData';
+import { cardsFor, imageProps, logosFor, richHtml, richText } from '../../lib/fixedPageRender';
 
-const title = 'Data Intelligence | Found Search Marketing';
-const description = 'Data sits at the core of our operations. From powering your CRM, to feeding downstream systems, it is used to inform channel mixes, create audience models and more. Your data lives everywhere. We bring it together: cross-platform, API-driven, and unified into a single view.';
-const canonical = 'https://www.foundsm.com/capabilities/data-intelligence';
+const sanityPage = await sanityClient.fetch(capabilityDetailPageQuery, { id: 'capabilityDataIntelligencePage' }).catch(() => null);
+const page = mergeCapabilityDetailPageData(defaultCapabilityDetailPages.dataIntelligence, sanityPage);
+const title = page.seoTitle || defaultCapabilityDetailPages.dataIntelligence.seoTitle;
+const description = page.seoDescription || defaultCapabilityDetailPages.dataIntelligence.seoDescription;
+const canonical = page.canonicalUrl || defaultCapabilityDetailPages.dataIntelligence.canonicalUrl;
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'WebPage',
@@ -21,118 +26,56 @@ const schema = {
   },
 };
 
-const capabilityCards = [
-  {
-    title: 'Discovery, Audit & Analysis',
-    body: 'The process begins by mapping your entire data landscape to get the full picture of your business. Then, we perform an in-depth analysis of your tech stack to uncover insights that drive clear recommendations and implementation plans.',
-    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/User-Question-Streamline-Ultimate-Light-Free.svg',
-  },
-  {
-    title: 'Tagging & Tracking',
-    body: "To ensure maximum measurement durability, our team configures the tracking and validates every event and conversion. Whether it's deploying scripts through GTM or building accurate tracking parameters back to your CRM, we'll ensure your downstream outcomes are connected to marketing data.",
-    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Curly-Brackets-Streamline-Ultimate-Light-Free.svg',
-  },
-  {
-    title: 'Engineering Audience Models',
-    body: "We don't just use data to activate campaigns; we engineer high-intent audience models that uncover your most valuable customers with precision. Those audiences are activated across channels to drive efficiency, relevance, and growth.",
-    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Design-Tool-Compass-Streamline-Ultimate-Light-Free.svg',
-  },
-  {
-    title: 'Customized Solutions & Reporting',
-    body: 'We create customized solutions for you and your stakeholders, so each report or dashboard speaks your language and tells a clear story based on your business goals. From clicks to downstream metrics, our expertise pulls your data into one clear, powerful view.',
-    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Content-Pen-Write-Streamline-Ultimate-Light-Free.svg',
-  },
-  {
-    title: 'Platform Agnostic',
-    body: 'We specialize in leveraging APIs that connect disparate, complex data sources into one unified view, no matter the platform or quantity of data sources. Our team is fluent across platforms, working within your existing stack to drive results.',
-    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Button-Loop-Streamline-Ultimate-Light-Free.svg',
-  },
-  {
-    title: 'Privacy, Security & Governance',
-    body: 'As a certified OneTrust partner, our team has a strategic understanding of how privacy impacts your marketing. By partnering with Found, you gain a trusted advisor that will help you stay compliant and turn privacy into a competitive advantage.',
-    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Lock-Shield-Streamline-Ultimate-Light-Free.svg',
-  },
-];
-
-const analyticsCards = [
-  { title: 'Detect anomalies', body: 'Detect anomalies in real time, enabling rapid media adjustments.' },
-  { title: 'Run predictive models', body: 'Run predictive models for customer behavior.' },
-  { title: 'Perform causality analysis', body: 'Perform causality analysis that pinpoints which tactics are getting the best results.' },
-  { title: 'Prove ROI', body: 'Prove ROI by tying marketing performance directly to business outcomes.' },
-];
-
-const toolLogos = [
-  { src: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Dynamics-CRM-1.svg', alt: 'Dynamics CRM', width: 189, height: 52 },
-  { src: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/funnel-logo-green-1.svg', alt: 'Funnel', width: 169, height: 24 },
-  { src: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Google-Analytics-1.svg', alt: 'Google Analytics', width: 247, height: 47 },
-  { src: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Google-Analytics-2.svg', alt: 'Google Analytics 360', width: 178, height: 63 },
-  { src: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Google-Analytics-3.svg', alt: 'Google Analytics certification', width: 177, height: 79 },
-  { src: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/OneTrust-2.svg', alt: 'OneTrust', width: 187, height: 41 },
-  { src: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Google-Mktg-Certified-1.svg', alt: 'Google Marketing Platform certified', width: 219, height: 49 },
-  { src: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Salesforce-1.svg', alt: 'Salesforce', width: 82, height: 54 },
-  { src: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Vertex-AI-1.svg', alt: 'Vertex AI', width: 123, height: 41 },
-  { src: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Vertex-AI-2.svg', alt: 'Vertex AI logo', width: 67, height: 56 },
-  { src: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Google-Cloud-Partner-1.svg', alt: 'Google Cloud Partner', width: 41, height: 47 },
-];
+const capabilityCards = cardsFor(page.primaryCards?.cards);
+const analyticsCards = cardsFor(page.secondaryCards?.cards);
+const toolLogos = logosFor(page.logoMarquee?.logos);
 ---
 
-<BaseLayout title={title} description={description} canonical={canonical} schema={schema}>
+<BaseLayout title={title} description={description} canonical={canonical} robots={page.robots} schema={schema}>
   <ModernHero
     tone="soft"
     titleScale="display"
-    title="Transform Complex Data Into Growth"
-    intro="Data sits at the core of our operations. From powering your CRM, to feeding downstream systems, it's used to inform channel mixes, create audience models, and more. Your data lives everywhere. We bring it together: cross-platform, API-driven, and unified into a single view."
-    image={{
-      src: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/capi-cactus.webp',
-      alt: 'Cactus data intelligence illustration',
-      width: 1024,
-      height: 983,
-      loading: 'eager',
-    }}
+    title={page.hero.heading || ''}
+    intro={richText(page.hero.body)}
+    introHtml={richHtml(page.hero.body)}
+    image={imageProps(page.hero, 'eager')}
     imageFit="contain"
     imageMaxWidth="72%"
   />
 
   <SplitFeature
-    title="How We Work"
-    body="Our Data Intelligence team serves as a catalyst to paid media and creative solutions, ensuring campaigns are built on accuracy, agility, and insight. Certified in Google Analytics and Google Cloud, our DI specialists integrate seamlessly with client systems, whether it's IT, compliance, or sales, to ensure data integrity and alignment on what matters most. Our platform-agnostic approach allows us to easily adapt to your tools and workflows to create clarity, speed, and confidence in every move."
-    image={{
-      src: 'https://foundsm.com/found2025/wp-content/uploads/elementor/thumbs/image-12-sm-rklftw47a5209wpm1nsj6dy26hm6l6scb1lq0q4j58.webp',
-      alt: 'Data intelligence workflow illustration',
-      width: 500,
-      height: 382,
-    }}
+    title={page.split?.heading || ''}
+    body={richText(page.split?.body)}
+    bodyHtml={richHtml(page.split?.body)}
+    image={imageProps(page.split)}
   />
 
   <CardGrid
     theme="muted"
-    title="Your Data + Our Intelligence"
-    subtitle="Let Found unlock the potential of your data."
+    title={page.primaryCards?.title}
+    subtitle={page.primaryCards?.subtitle}
     cards={capabilityCards}
     columns={3}
   />
 
-  <LogoMarquee logos={toolLogos} />
+  {toolLogos.length > 0 && <LogoMarquee logos={toolLogos} />}
 
   <SplitFeature
     theme="muted"
     imagePosition="right"
-    title="Getting the Most From Advanced Analytics & AI"
-    body="We go beyond dashboards, leveraging a variety of tools to turn complex data into decisions your team can act on."
-    image={{
-      src: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/ai-chip-sm.webp',
-      alt: 'AI chip analytics illustration',
-      width: 800,
-      height: 1000,
-    }}
+    title={page.secondarySplit?.heading || ''}
+    body={richText(page.secondarySplit?.body)}
+    bodyHtml={richHtml(page.secondarySplit?.body)}
+    image={imageProps(page.secondarySplit)}
   />
 
   <CardGrid cards={analyticsCards} columns={4} />
 
   <CtaPanel
-    title="Your data gives you unlimited potential."
-    body="Find out how we can work together to leverage the power of your data to generate consistent, predictable revenue for your business."
-    ctaLabel="Let's Connect Data to Outcomes"
-    ctaHref="/contact-us/"
+    title={page.cta?.title}
+    body={richText(page.cta?.body)}
+    bodyHtml={richHtml(page.cta?.body)}
+    ctaLabel={page.cta?.cta?.label}
+    ctaHref={page.cta?.cta?.href}
   />
 </BaseLayout>

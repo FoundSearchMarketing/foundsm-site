@@ -4,10 +4,15 @@ import ModernHero from '../../components/modern/ModernHero.astro';
 import SplitFeature from '../../components/modern/SplitFeature.astro';
 import FeatureTabs from '../../components/modern/FeatureTabs.astro';
 import CardGrid from '../../components/modern/CardGrid.astro';
+import { capabilityDetailPageQuery, sanityClient } from '../../lib/sanity';
+import { defaultCapabilityDetailPages, mergeCapabilityDetailPageData } from '../../lib/fixedPageData';
+import { cardsFor, imageProps, richHtml, richText, tabsFor } from '../../lib/fixedPageRender';
 
-const title = 'Performance Creative | Found Search Marketing';
-const description = 'Found Search Marketing brings deep channel expertise, custom analytics, and agile strategy together to maximize performance across your entire media ecosystem.';
-const canonical = 'https://www.foundsm.com/capabilities/performance-creative';
+const sanityPage = await sanityClient.fetch(capabilityDetailPageQuery, { id: 'capabilityPerformanceCreativePage' }).catch(() => null);
+const page = mergeCapabilityDetailPageData(defaultCapabilityDetailPages.performanceCreative, sanityPage);
+const title = page.seoTitle || defaultCapabilityDetailPages.performanceCreative.seoTitle;
+const description = page.seoDescription || defaultCapabilityDetailPages.performanceCreative.seoDescription;
+const canonical = page.canonicalUrl || defaultCapabilityDetailPages.performanceCreative.canonicalUrl;
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'WebPage',
@@ -20,91 +25,36 @@ const schema = {
   },
 };
 
-const creativeTabs = [
-  {
-    title: 'Understanding the "Why"',
-    body: 'We love digging into metrics and session behavior. Heat maps, click paths, and funnel drop-off points all help us better understand your audiences, their motivations, and what moves them down the funnel.',
-    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Messages-Bubble-Square-Question-Streamline-Ultimate-Light-Free.svg',
-    image: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/pct-question.webp',
-  },
-  {
-    title: 'Agile Motion and Media Design',
-    body: 'No months-long VFX shoots here. We specialize in fast-tracked creative that has one goal: perform. Our team creates images, videos, and landing pages in days or hours, not weeks.',
-    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Gauge-Dashboard-Streamline-Ultimate-Light-Free.svg',
-    image: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/pct-colorwave.webp',
-  },
-  {
-    title: 'Data-Backed Iteration',
-    body: 'Using innovative tools that include eye-tracking and scroll-map data, we validate creative and page tweaks in real time. Each test is measured, refined, and expanded according to results.',
-    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Move-To-Bottom-Streamline-Ultimate-Light-Free.svg',
-    image: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/pct-lightbeams.webp',
-  },
-  {
-    title: 'Fast-Track Creative and Testing',
-    body: "Found's Performance Creative Team combines inventive motion design, data-driven landing page builds, and conversion rate optimization into one workflow. We know creative sprints, and we hold brand safety and compliance to the highest standards.",
-    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Monitor-Flash-Streamline-Ultimate-Light-Free.svg',
-    image: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/pct-computer.webp',
-  },
-];
-
-const proofCards = [
-  {
-    title: 'Data-Led Page Builds',
-    body: 'We design around proven CRO principles with your goals top of mind, while measuring every scroll, click, and drop-off.',
-  },
-  {
-    title: 'Iterative Improvements',
-    body: 'Form fields, button colors, and countless details are refined through rapid A/B cycles and multivariate testing to fuel continuous conversion gains.',
-  },
-  {
-    title: 'Root-Cause Analysis',
-    body: 'Using session recordings, click maps, and funnel insights, we identify points of hesitation on your landing page and eliminate friction to boost conversions.',
-  },
-];
+const creativeTabs = tabsFor(page.featureTabs?.tabs);
+const proofCards = cardsFor(page.primaryCards?.cards);
 ---
 
-<BaseLayout title={title} description={description} canonical={canonical} schema={schema}>
+<BaseLayout title={title} description={description} canonical={canonical} robots={page.robots} schema={schema}>
   <ModernHero
     tone="soft"
     titleScale="display"
-    title="Make Every Interaction Count."
-    intro={[
-      'Our Performance Creative and CRO teams have one goal: transform prospects into customers. We understand the impact creative can have on CPL and your bottom line.',
-      "It's not just about looking good. It's about making data-based decisions that optimize your investment. Creative and landing pages are powerful levers to improve performance, drive efficiencies, and control costs.",
-    ]}
-    image={{
-      src: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/tr-sketch.webp',
-      alt: 'Performance creative sketch illustration',
-      width: 800,
-      height: 800,
-      loading: 'eager',
-    }}
+    title={page.hero.heading || ''}
+    intro={richText(page.hero.body)}
+    introHtml={richHtml(page.hero.body)}
+    image={imageProps(page.hero, 'eager')}
   />
 
   <SplitFeature
-    title="How We Work"
-    body="At Found, Performance Creative is where strategy meets storytelling. Our Creative and CRO teams collaborate closely with Paid Media and Data Intelligence to ensure every concept, variation, and landing page is informed by real-time data and optimized for measurable results. You have a significant investment in paid media, and we optimize each touch point to reduce CPL and improve CVR. We built our team to fast-track creative and landing page production specifically for paid media campaigns."
-    image={{
-      src: 'https://foundsm.com/found2025/wp-content/uploads/elementor/thumbs/image-13-rfuzrvv4zo9yuv5baoedpolgq23h2w23gpenh99s6a.png',
-      alt: 'Performance creative workflow illustration',
-      width: 500,
-      height: 381,
-    }}
+    title={page.split?.heading || ''}
+    body={richText(page.split?.body)}
+    bodyHtml={richHtml(page.split?.body)}
+    image={imageProps(page.split)}
   />
 
-  <FeatureTabs idPrefix="performance-creative-methods" tabs={creativeTabs} />
+  {creativeTabs.length > 0 && <FeatureTabs idPrefix={page.featureTabs?.idPrefix || 'performance-creative-methods'} tabs={creativeTabs} />}
 
   <SplitFeature
     theme="muted"
     imagePosition="right"
-    title="End to End Experience Design"
-    body="Our team has a detailed understanding of landing page UX/UI and how to use it to drive action, not just get attention. By incorporating CRO best practices, compliance intelligence, and data, we build landing pages that convert."
-    image={{
-      src: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/creative-sketch2.webp',
-      alt: 'Creative sketch for experience design',
-      width: 535,
-      height: 774,
-    }}
+    title={page.secondarySplit?.heading || ''}
+    body={richText(page.secondarySplit?.body)}
+    bodyHtml={richHtml(page.secondarySplit?.body)}
+    image={imageProps(page.secondarySplit)}
   />
 
   <CardGrid cards={proofCards} columns={3} />

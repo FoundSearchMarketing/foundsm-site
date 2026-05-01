@@ -2,7 +2,9 @@ import blogPost from './blogPost';
 import blogCategory from './blogCategory';
 import author from './author';
 import teamMember from './teamMember';
+import homePage from './homePage';
 import landingPage from './landingPage';
+import { aboutPage, capabilitiesPage, capabilityDetailPage } from './fixedPages';
 import heroBlock from './blocks/heroBlock';
 import statsBlock from './blocks/statsBlock';
 import featuresBlock from './blocks/featuresBlock';
@@ -19,6 +21,10 @@ export const schemaTypes = [
   blogCategory,
   author,
   teamMember,
+  homePage,
+  aboutPage,
+  capabilitiesPage,
+  capabilityDetailPage,
   landingPage,
   heroBlock,
   statsBlock,

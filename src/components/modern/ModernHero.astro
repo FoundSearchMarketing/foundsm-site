@@ -16,6 +16,7 @@ interface Props {
   eyebrow?: string;
   title: string;
   intro?: string | string[];
+  introHtml?: string;
   cta?: CtaLink;
   image?: HeroImage;
   tone?: 'light' | 'soft' | 'dark';
@@ -33,6 +34,7 @@ const {
   eyebrow,
   title,
   intro,
+  introHtml,
   cta,
   image,
   tone = 'light',
@@ -68,7 +70,9 @@ const mediaStyle = [
     <div class="modern-hero__copy">
       {eyebrow && <p class="modern-hero__eyebrow">{eyebrow}</p>}
       <h1 id={`${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-hero-heading`}>{title}</h1>
-      {paragraphs.length > 0 && (
+      {introHtml ? (
+        <div class="modern-hero__intro" set:html={introHtml} />
+      ) : paragraphs.length > 0 && (
         <div class="modern-hero__intro">
           {paragraphs.map((item) => <p>{item}</p>)}
         </div>

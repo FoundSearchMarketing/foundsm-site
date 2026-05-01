@@ -1,0 +1,248 @@
+---
+import { legacyAuthors, type LegacyAuthor } from '../../data/legacyResources';
+
+interface Props {
+  authors?: LegacyAuthor[];
+}
+
+const { authors = legacyAuthors } = Astro.props;
+---
+
+<section class="author-directory-hero" aria-labelledby="author-directory-heading">
+  <div class="author-directory-hero__inner">
+    <h1 id="author-directory-heading">From Google Roots<br />to Agile Results</h1>
+    <p>
+      Meet Found Search Marketing: an agency where decades of expertise meet agile execution.
+      With leadership grounded in foundational roles at Google and a team energized by complex
+      problem-solving, we break down silos to offer fully integrated strategies.
+    </p>
+  </div>
+</section>
+
+<section class="author-directory" aria-labelledby="author-directory-list-heading">
+  <div class="author-directory__inner">
+    <header class="author-directory__intro">
+      <h2 id="author-directory-list-heading">Blog Contributors</h2>
+      <p>
+        Dive into the articles below to see how our hands-on, results-obsessed experts apply
+        deep technical knowledge to transform business challenges into breakthroughs.
+      </p>
+    </header>
+
+    <div class="author-directory__grid">
+      {authors.map((author) => (
+        <article class="author-directory-card">
+          <img
+            src={author.image.src}
+            width={author.image.width}
+            height={author.image.height}
+            alt={author.image.alt}
+            loading="lazy"
+            decoding="async"
+          />
+          <div class="author-directory-card__body">
+            <p class="author-directory-card__role">{author.role}</p>
+            <h3>{author.name}</h3>
+            <dl>
+              <div>
+                <dt>Team</dt>
+                <dd>{author.team}</dd>
+              </div>
+              <div>
+                <dt>Found Start Date</dt>
+                <dd>{author.startDate}</dd>
+              </div>
+              <div>
+                <dt>Expertise</dt>
+                <dd>{author.expertise}</dd>
+              </div>
+            </dl>
+            <p>{author.directoryBio}</p>
+            <a href={`/insights/authors/${author.slug}/`}>Read More</a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .author-directory-hero {
+    padding: 5rem var(--gutter);
+    background: #1a1a1a;
+    color: #ffffff;
+  }
+
+  .author-directory-hero__inner {
+    display: grid;
+    gap: 1.25rem;
+    inline-size: min(100%, var(--content-max-width));
+    margin-inline: auto;
+  }
+
+  .author-directory-hero h1 {
+    max-inline-size: 48rem;
+    margin: 0;
+    color: #ffffff;
+    font-size: 4.375rem;
+    line-height: 1.04;
+    letter-spacing: 0;
+  }
+
+  .author-directory-hero p {
+    max-inline-size: 50rem;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 1.25rem;
+    line-height: 1.8;
+  }
+
+  .author-directory {
+    padding: 5rem var(--gutter) 6rem;
+    background: #ffffff;
+  }
+
+  .author-directory__inner {
+    display: grid;
+    gap: 2.5rem;
+    inline-size: min(100%, var(--content-max-width));
+    margin-inline: auto;
+  }
+
+  .author-directory__intro {
+    display: grid;
+    justify-items: center;
+    gap: 0.875rem;
+    text-align: center;
+  }
+
+  .author-directory__intro h2 {
+    margin: 0;
+    font-size: 3rem;
+    line-height: 1.1;
+  }
+
+  .author-directory__intro p {
+    max-inline-size: 50rem;
+    margin: 0;
+    color: rgba(26, 26, 26, 0.72);
+    font-size: 1.125rem;
+    line-height: 1.75;
+  }
+
+  .author-directory__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+
+  .author-directory-card {
+    display: grid;
+    grid-template-columns: 12rem minmax(0, 1fr);
+    gap: 1.25rem;
+    min-inline-size: 0;
+    padding: 1rem;
+    border: 1px solid rgba(26, 26, 26, 0.12);
+    border-radius: 0.5rem;
+    background: #f8f9f7;
+  }
+
+  .author-directory-card img {
+    inline-size: 100%;
+    aspect-ratio: 4 / 5;
+    border-radius: 0.5rem;
+    object-fit: cover;
+  }
+
+  .author-directory-card__body {
+    display: grid;
+    align-content: start;
+    gap: 0.75rem;
+    min-inline-size: 0;
+  }
+
+  .author-directory-card__role {
+    margin: 0;
+    color: var(--color-primary);
+    font-size: 0.75rem;
+    font-weight: 800;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  .author-directory-card h3 {
+    margin: 0;
+    font-size: 1.45rem;
+    line-height: 1.2;
+  }
+
+  .author-directory-card dl {
+    display: grid;
+    gap: 0.35rem;
+    margin: 0;
+  }
+
+  .author-directory-card dl div {
+    display: grid;
+    gap: 0.1rem;
+  }
+
+  .author-directory-card dt {
+    color: rgba(26, 26, 26, 0.58);
+    font-size: 0.72rem;
+    font-weight: 800;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  .author-directory-card dd {
+    margin: 0;
+    color: rgba(26, 26, 26, 0.8);
+    font-size: 0.875rem;
+    line-height: 1.45;
+  }
+
+  .author-directory-card p:not(.author-directory-card__role) {
+    margin: 0;
+    color: rgba(26, 26, 26, 0.76);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .author-directory-card a {
+    justify-self: start;
+    color: #1a1a1a;
+    font-weight: 800;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  @media (max-width: 1120px) {
+    .author-directory__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .author-directory-hero,
+    .author-directory {
+      padding-block: 3.5rem;
+    }
+
+    .author-directory-hero h1 {
+      font-size: 2.75rem;
+    }
+
+    .author-directory__intro h2 {
+      font-size: 2.25rem;
+    }
+
+    .author-directory-card {
+      grid-template-columns: 1fr;
+    }
+
+    .author-directory-card img {
+      max-inline-size: 16rem;
+    }
+  }
+</style>

@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import AuthorProfile from '../../../components/modern/AuthorProfile.astro';
+import { legacyAuthors, type LegacyAuthor } from '../../../data/legacyResources';
+
+export function getStaticPaths() {
+  return legacyAuthors.map((author) => ({
+    params: { slug: author.slug },
+    props: { author },
+  }));
+}
+
+interface Props {
+  author: LegacyAuthor;
+}
+
+const { author } = Astro.props;
+const title = `About the Author | ${author.name.split(' ')[0]} | Found Search Marketing`;
+const description = author.directoryBio;
+const canonical = `https://www.foundsm.com/insights/authors/${author.slug}/`;
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfilePage',
+  name: title,
+  url: canonical,
+  description,
+  mainEntity: {
+    '@type': 'Person',
+    name: author.name,
+    jobTitle: author.role,
+    image: author.image.src,
+    worksFor: {
+      '@type': 'Organization',
+      name: 'Found Search Marketing',
+    },
+  },
+};
+---
+
+<BaseLayout title={title} description={description} canonical={canonical} ogImage={author.image.src} schema={schema}>
+  <AuthorProfile author={author} />
+</BaseLayout>

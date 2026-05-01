@@ -1,0 +1,284 @@
+---
+import { localizedHref, type LegacyAuthor } from '../../data/legacyResources';
+
+interface Props {
+  author: LegacyAuthor;
+}
+
+const { author } = Astro.props;
+const headingId = `${author.slug}-author-heading`;
+---
+
+<article class="author-profile" aria-labelledby={headingId}>
+  <section class="author-profile__hero">
+    <div class="author-profile__hero-inner">
+      <div class="author-profile__media">
+        <img
+          src={author.image.src}
+          width={author.image.width}
+          height={author.image.height}
+          alt={author.image.alt}
+          loading="eager"
+          decoding="async"
+        />
+      </div>
+
+      <div class="author-profile__copy">
+        <p class="author-profile__eyebrow">About the Author</p>
+        <h1 id={headingId}>{author.name}</h1>
+        <p class="author-profile__role">{author.role}</p>
+        <dl class="author-profile__meta">
+          <div>
+            <dt>Team</dt>
+            <dd>{author.team}</dd>
+          </div>
+          <div>
+            <dt>Found Start Date</dt>
+            <dd>{author.startDate}</dd>
+          </div>
+          <div>
+            <dt>Expertise</dt>
+            <dd>{author.expertise}</dd>
+          </div>
+        </dl>
+        {author.linkedin && (
+          <a class="author-profile__button" href={author.linkedin}>Connect with {author.name.split(' ')[0]}</a>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <section class="author-profile__body" aria-label={`${author.name} biography`}>
+    <div class="author-profile__body-inner">
+      <div class="author-profile__bio">
+        {author.bio.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="author-profile__articles" aria-labelledby={`${author.slug}-articles-heading`}>
+    <div class="author-profile__articles-inner">
+      <h2 id={`${author.slug}-articles-heading`}>Latest Posts</h2>
+      {author.articles.length > 0 ? (
+        <div class="author-profile__article-grid">
+          {author.articles.map((article) => (
+            <article class="author-profile-article">
+              <p><time datetime={article.datetime}>{article.dateLabel}</time></p>
+              <h3><a href={localizedHref(article.href)}>{article.title}</a></h3>
+              <a href={localizedHref(article.href)}>Read More</a>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <p class="author-profile__empty">More articles from {author.name.split(' ')[0]} are coming soon.</p>
+      )}
+    </div>
+  </section>
+</article>
+
+<style>
+  .author-profile__hero {
+    padding: 5rem var(--gutter);
+    background: #f2f3f2;
+  }
+
+  .author-profile__hero-inner {
+    display: grid;
+    grid-template-columns: minmax(16rem, 24rem) minmax(0, 1fr);
+    align-items: center;
+    gap: 3rem;
+    inline-size: min(100%, var(--content-max-width));
+    margin-inline: auto;
+  }
+
+  .author-profile__media img {
+    inline-size: 100%;
+    aspect-ratio: 4 / 5;
+    border-radius: 0.5rem;
+    object-fit: cover;
+    box-shadow: 0 18px 42px rgba(26, 26, 26, 0.12);
+  }
+
+  .author-profile__copy {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .author-profile__eyebrow {
+    margin: 0;
+    color: var(--color-primary);
+    font-size: 0.875rem;
+    font-weight: 800;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  .author-profile h1 {
+    margin: 0;
+    font-size: 4rem;
+    line-height: 1.08;
+    letter-spacing: 0;
+  }
+
+  .author-profile__role {
+    margin: 0;
+    color: rgba(26, 26, 26, 0.76);
+    font-size: 1.35rem;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+
+  .author-profile__meta {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    margin: 0;
+    padding-block-start: 0.75rem;
+  }
+
+  .author-profile__meta div {
+    padding-block-start: 0.75rem;
+    border-block-start: 2px solid var(--color-primary);
+  }
+
+  .author-profile__meta dt {
+    color: rgba(26, 26, 26, 0.58);
+    font-size: 0.75rem;
+    font-weight: 800;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  .author-profile__meta dd {
+    margin: 0.25rem 0 0;
+    color: rgba(26, 26, 26, 0.82);
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .author-profile__button {
+    display: inline-flex;
+    justify-content: center;
+    justify-self: start;
+    min-block-size: 3rem;
+    margin-block-start: 0.25rem;
+    padding: 0.825rem 1.35rem;
+    border-radius: 999px;
+    background: var(--color-primary);
+    color: #1a1a1a;
+    font-weight: 800;
+    line-height: 1.25;
+  }
+
+  .author-profile__body {
+    padding: 4rem var(--gutter);
+    background: #ffffff;
+  }
+
+  .author-profile__body-inner,
+  .author-profile__articles-inner {
+    inline-size: min(100%, 68rem);
+    margin-inline: auto;
+  }
+
+  .author-profile__bio {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .author-profile__bio p {
+    margin: 0;
+    color: rgba(26, 26, 26, 0.8);
+    font-size: 1.1rem;
+    line-height: 1.85;
+  }
+
+  .author-profile__articles {
+    padding: 4rem var(--gutter) 6rem;
+    background: #1a1a1a;
+    color: #ffffff;
+  }
+
+  .author-profile__articles h2 {
+    margin: 0 0 1.5rem;
+    color: #ffffff;
+    font-size: 2.75rem;
+  }
+
+  .author-profile__article-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  .author-profile-article {
+    display: grid;
+    gap: 0.75rem;
+    padding: 1.25rem;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .author-profile-article p,
+  .author-profile__empty {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 0.875rem;
+    font-weight: 700;
+    line-height: 1.4;
+    text-transform: uppercase;
+  }
+
+  .author-profile-article h3 {
+    margin: 0;
+    color: #ffffff;
+    font-size: 1.25rem;
+    line-height: 1.3;
+  }
+
+  .author-profile-article a {
+    color: #ffffff;
+  }
+
+  .author-profile-article > a {
+    justify-self: start;
+    color: var(--color-primary);
+    font-weight: 800;
+  }
+
+  @media (max-width: 900px) {
+    .author-profile__hero-inner,
+    .author-profile__article-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .author-profile__media img {
+      max-inline-size: 21rem;
+    }
+
+    .author-profile__meta {
+      grid-template-columns: 1fr;
+    }
+
+    .author-profile h1 {
+      font-size: 3rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .author-profile__hero,
+    .author-profile__body,
+    .author-profile__articles {
+      padding-block: 3.5rem;
+    }
+
+    .author-profile h1 {
+      font-size: 2.5rem;
+    }
+
+    .author-profile__articles h2 {
+      font-size: 2.2rem;
+    }
+  }
+</style>

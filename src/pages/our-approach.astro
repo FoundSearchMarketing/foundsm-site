@@ -1,92 +1,50 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { approachPageQuery, sanityClient } from '../lib/sanity';
+import { defaultApproachPageData, mergeApproachPageData } from '../lib/morePageData';
+import { richHtml, srcFor } from '../lib/fixedPageRender';
 
 const assetPath = '/images/pages/our-approach';
 
-const title = 'Our Proven Paid Media Approach | Found Search Marketing';
-const description = 'At Found Search Marketing, our proven paid media approach transforms complex data into actionable insights that fuel smarter strategy and measurable results.';
-const canonical = 'https://www.foundsm.com/our-approach';
-
-const advantages = [
-  {
-    title: '1. Google Background',
-    icon: 'icon-difference-1.svg',
-    body: 'Our team includes three former Google employees. That means we&rsquo;re not only well versed in the entire Google suite of analytics and paid media channels&mdash;we&rsquo;re also leveraging the latest trends in ad tech. Julie Warnecke, our CEO, was the fourth employee on the Google AdWords Ad Operations team, and has experienced the evolution of digital marketing firsthand.'
-  },
-  {
-    title: '2. Big Picture View',
-    icon: 'icon-difference-2.svg',
-    body: 'Your performance lead generation ecosystem has lots of interworking parts that need to synergize to create better quality leads. We see your lead generation ecosystem from every angle&mdash;from performance paid media to engineering audience models to creative and landing pages, and beyond&mdash;making sure you&rsquo;re always moving in alignment with your business objectives.'
-  },
-  {
-    title: '3. Singular Focus',
-    icon: 'icon-difference-3.svg',
-    body: 'We aren&rsquo;t here to help create new logos, build custom fonts, or reposition your branding. We&rsquo;re here to drive leads through performance paid media, protect your brand, and deliver consistent, measurable wins that maximize profitability.'
-  },
-  {
-    title: '4. Uniquely Dedicated People',
-    icon: 'icon-difference-4.svg',
-    body: 'Not many companies can say their people stay for more than six years on average&mdash;or that they actually love to solve problems without seeking credit. With no hourly billing or upselling, our outcomes-obsessed team focuses solely on delivering measurable results through a transparent, customized, and innovative process.'
-  },
-  {
-    title: '5. Simplicity',
-    icon: 'icon-difference-5.svg',
-    body: 'A single scope of work and point of contact. Transparent pricing. No hourly billing. We take on the complexity&mdash;whether it&rsquo;s navigating data privacy policies, engineering dashboards, or reconciling media spend&mdash;so our clients can experience simplicity and confidence in every aspect of their campaigns. Bottom line: Our partnership will be simple, agile, and above all, value-and-performance driven.'
-  },
-  {
-    title: '6. Results Without Fluff',
-    icon: 'icon-difference-6.svg',
-    body: 'Our team doesn&rsquo;t get caught up in vanity metrics, cherry pick the best stats, or build fancy presentations. But we do give you the clearest possible picture of exactly what&rsquo;s working and what isn&rsquo;t with powerful analytics models and custom dashboards&mdash;and we tie everything back to what you&rsquo;re trying to accomplish internally.'
-  },
-  {
-    title: '7. Leading Tech Stack',
-    icon: 'icon-difference-7.svg',
-    body: 'AI is transforming the way we work. New, more powerful analytics platforms are available almost daily. Methods of data visualization are becoming more intuitive. We&rsquo;re on the leading edge of paid media strategies and we make sure our clients are, too.'
-  },
-  {
-    title: '8. Extreme Customization',
-    icon: 'icon-difference-8.svg',
-    body: 'We don&rsquo;t like templates. Everything we do is built and customized just for you, because there&rsquo;s no other business exactly like yours. Unique problems need unique solutions&mdash;and an outside, expert perspective focused on your business goals. We&rsquo;re glad you found us.'
-  }
+const sanityPage = await sanityClient.fetch(approachPageQuery).catch(() => null);
+const page = mergeApproachPageData(sanityPage);
+const title = page.seoTitle || defaultApproachPageData.seoTitle;
+const description = page.seoDescription || defaultApproachPageData.seoDescription;
+const canonical = page.canonicalUrl || defaultApproachPageData.canonicalUrl;
+const heroImage = srcFor(page.hero.image) || `${assetPath}/hero-approach-matt.webp`;
+const introImage = srcFor(page.intro.image) || `${assetPath}/approach.webp`;
+const defaultAdvantageIcons = [
+  'icon-difference-1.svg',
+  'icon-difference-2.svg',
+  'icon-difference-3.svg',
+  'icon-difference-4.svg',
+  'icon-difference-5.svg',
+  'icon-difference-6.svg',
+  'icon-difference-7.svg',
+  'icon-difference-8.svg',
 ];
-
+const advantages = page.advantages.items.map((item, index) => ({
+  ...item,
+  iconSrc: srcFor(item.icon) || `${assetPath}/${defaultAdvantageIcons[index]}`,
+}));
 const advantageColumns = [
   advantages.slice(0, 4),
-  advantages.slice(4)
+  advantages.slice(4),
 ];
-
-const partnershipTabs = [
-  {
-    label: 'Google Marketing Platform Certified',
-    image: 'google-marketing-platform-badge.svg',
-    alt: 'Google Marketing Platform Certified',
-    body: 'Our team is trained across GMP tools, with decades of experience using the platform. That gives you lots of perks, including early access to Google alpha and beta programs, advanced targeting and measurement strategies, and optimization tools to drive smarter campaigns.'
-  },
-  {
-    label: 'Microsoft Advertising Elite Partner',
-    image: 'microsoft-badge-2026.svg',
-    alt: 'Microsoft Advertising Elite Partner',
-    body: 'Elite Partner status is Microsoft&rsquo;s highest recognition, granted only to a select group of top-performing agencies globally. This status translates to many benefits for you, including exclusive access to new programs, and early visibility into product roadmaps, search trends, and audience insights.'
-  },
-  {
-    label: 'Google Partner',
-    image: 'google-partner-badge.svg',
-    alt: 'Google Partner',
-    body: 'Being named a Google Partner is recognition for maximizing campaign success for our clients by driving growth and demonstrating Google Ads skills and expertise. You can rest assured that many of our team members are certified in Google Ads and its products.'
-  },
-  {
-    label: 'Meta Business Partner',
-    image: 'meta-badge.svg',
-    alt: 'Meta Business Partner',
-    body: 'Earning a partnership with Meta means doing more than just demonstrating excellence across Meta platforms. It means giving our clients early access to Meta alpha and beta programs, a direct connection to Meta&rsquo;s evolving roadmap, and assurance that our team is leveraging exclusive tools that drive higher-performing campaigns.'
-  },
-  {
-    label: 'OneTrust Privacy Professional',
-    image: 'onetrust-privacy-professional.png',
-    alt: 'OneTrust Privacy Professional',
-    body: 'At Found, we have a deep understanding of how privacy impacts marketing. As a certified OneTrust partner, we bring expertise in privacy, security, and data governance&mdash;empowering your organization to confidently navigate today&rsquo;s complex regulatory landscape.'
-  }
+const defaultPartnershipImages = [
+  'google-marketing-platform-badge.svg',
+  'microsoft-badge-2026.svg',
+  'google-partner-badge.svg',
+  'meta-badge.svg',
+  'onetrust-privacy-professional.png',
 ];
+const partnershipTabs = page.partnerships.tabs.map((tab, index) => ({
+  ...tab,
+  imageSrc: srcFor(tab.image) || `${assetPath}/${defaultPartnershipImages[index]}`,
+}));
+const linesFor = (value?: string, fallback: string[] = []) => value?.split('\n').filter(Boolean) || fallback;
+const heroHeadingLines = linesFor(page.hero.heading);
+const introHeadingLines = linesFor(page.intro.heading, page.intro.headingLines);
 
 const schema = {
   "@context": "https://schema.org",
@@ -107,23 +65,25 @@ const schema = {
   title={title}
   description={description}
   canonical={canonical}
+  robots={page.robots}
   schema={schema}
 >
   <div class="approach-page">
     <section class="approach-hero" aria-labelledby="approach-hero-title">
       <div class="approach-shell approach-hero__grid">
         <div class="approach-hero__copy">
-          <h1 id="approach-hero-title">It&rsquo;s Not What We Do.<br />It&rsquo;s How We Do It.</h1>
-          <div class="approach-hero__intro">
-            <p>Found Search Marketing exists because we saw a need for a new kind of agency. One that not only had background in the industry with an expert understanding of paid media, but that could also serve as a true extension of client teams through creative problem solving and customized solutions.</p>
-            <p>We&rsquo;ve used that formula for nearly two decades to consistently build strategies and campaigns that convert, while driving maximum profitability for our clients.</p>
-          </div>
+          <h1 id="approach-hero-title">
+            {heroHeadingLines.map((line, index) => (
+              <Fragment>{index > 0 && <br />}{line}</Fragment>
+            ))}
+          </h1>
+          <div class="approach-hero__intro" set:html={richHtml(page.hero.body)} />
         </div>
 
-        <figure class="approach-hero__media" aria-hidden="true">
+        <figure class="approach-hero__media" aria-hidden={page.hero.imageAlt ? undefined : 'true'}>
           <img
-            src={`${assetPath}/hero-approach-matt.webp`}
-            alt=""
+            src={heroImage}
+            alt={page.hero.imageAlt || ''}
             width="692"
             height="722"
             loading="eager"
@@ -135,18 +95,20 @@ const schema = {
 
     <section class="approach-intro" aria-labelledby="approach-intro-title">
       <div class="approach-shell">
-        <p class="approach-eyebrow">Our Approach</p>
-        <h2 id="approach-intro-title">Your Search for an<br />Unfair Advantage is Over</h2>
+        {page.intro.eyebrow && <p class="approach-eyebrow">{page.intro.eyebrow}</p>}
+        <h2 id="approach-intro-title">
+          {introHeadingLines.map((line, index) => (
+            <Fragment>{index > 0 && <br />}{line}</Fragment>
+          ))}
+        </h2>
 
         <div class="approach-intro__grid">
-          <div class="approach-intro__copy">
-            <p>Over the past 20 years, we&rsquo;ve perfected a unique, proprietary approach that has consistently elevated performance for many top brands, driving measurable results and sustained growth. It works by combining first-party data, automation, innovative bid strategies, custom playbook formulation, audience modeling, and a unique understanding of our client&rsquo;s paid media ecosystem. Our approach is a fully custom, self-reinforcing optimization cycle designed to achieve predictable and profitable outcomes while relentlessly eliminating paid media waste.</p>
-          </div>
+          <div class="approach-intro__copy" set:html={richHtml(page.intro.body)} />
 
-          <figure class="approach-intro__media" aria-hidden="true">
+          <figure class="approach-intro__media" aria-hidden={page.intro.imageAlt ? undefined : 'true'}>
             <img
-              src={`${assetPath}/approach.webp`}
-              alt=""
+              src={introImage}
+              alt={page.intro.imageAlt || ''}
               width="424"
               height="401"
               loading="lazy"
@@ -159,9 +121,9 @@ const schema = {
 
     <section class="approach-callout" aria-label="Approach callout">
       <div class="approach-shell approach-callout__grid">
-        <h2>Every piece of your lead generation ecosystem complementing another&mdash;perpetually adapting and improving with each iteration&mdash;is what our formula is all about.</h2>
+        <h2>{page.callout.heading}</h2>
         <div class="approach-callout__action">
-          <a class="btn btn--green btn--lg" href="/contact-us/">Start the Conversation</a>
+          {page.callout.cta?.label && page.callout.cta?.href && <a class="btn btn--green btn--lg" href={page.callout.cta.href}>{page.callout.cta.label}</a>}
         </div>
       </div>
     </section>
@@ -169,9 +131,9 @@ const schema = {
     <section class="approach-advantages" aria-labelledby="approach-advantages-title">
       <div class="approach-shell">
         <div class="approach-section-header approach-section-header--center">
-          <p class="approach-eyebrow">The Found Difference</p>
-          <h2 id="approach-advantages-title">Eight Key Advantages</h2>
-          <p>We drive value by seamlessly integrating with your team, applying our unique approach, and delivering industry-leading performance that drives customer acquisition at scale. But that&rsquo;s easier said than done. We&rsquo;ll help you succeed with unique competitive edges that put your business goals first.</p>
+          {page.advantages.eyebrow && <p class="approach-eyebrow">{page.advantages.eyebrow}</p>}
+          <h2 id="approach-advantages-title">{page.advantages.heading}</h2>
+          <div class="approach-section-header__body" set:html={richHtml(page.advantages.body)} />
         </div>
 
         <div class="approach-advantages__accordion" data-approach-accordion>
@@ -206,14 +168,14 @@ const schema = {
                       hidden={!isOpen}
                     >
                       <img
-                        src={`${assetPath}/${item.icon}`}
+                        src={item.iconSrc}
                         alt=""
                         width="50"
                         height="50"
                         loading="lazy"
                         decoding="async"
                       />
-                      <p><Fragment set:html={item.body} /></p>
+                      <div set:html={richHtml(item.body)} />
                     </div>
                   </article>
                 );
@@ -227,9 +189,13 @@ const schema = {
     <section class="approach-partnerships" aria-labelledby="approach-partnerships-title">
       <div class="approach-shell">
         <div class="approach-section-header approach-section-header--center">
-          <p class="approach-eyebrow">Top-Tier Partnerships</p>
-          <h2 id="approach-partnerships-title" class="approach-partnerships__lede">Your VIP Access to<br />Premium Benefits</h2>
-          <p>We have industry-leading partnerships giving you a huge range of benefits&mdash;which means you can trust your media investment to an agency that&rsquo;s proven to maximize campaign success.</p>
+          {page.partnerships.eyebrow && <p class="approach-eyebrow">{page.partnerships.eyebrow}</p>}
+          <h2 id="approach-partnerships-title" class="approach-partnerships__lede">
+            {(page.partnerships.headingLines || []).map((line, index) => (
+              <Fragment>{index > 0 && <br />}{line}</Fragment>
+            ))}
+          </h2>
+          <div class="approach-section-header__body" set:html={richHtml(page.partnerships.body)} />
         </div>
 
         <div class="approach-partnerships__tabs" data-approach-tabs>
@@ -269,13 +235,13 @@ const schema = {
                   data-partnership-panel
                 >
                   <div class="approach-partnerships__panel-copy">
-                    <h3>{tab.label}</h3>
-                    <p><Fragment set:html={tab.body} /></p>
+                    <h3>{tab.heading || tab.label}</h3>
+                    <div set:html={richHtml(tab.body)} />
                   </div>
                   <div class="approach-partnerships__badge">
                     <img
-                      src={`${assetPath}/${tab.image}`}
-                      alt={tab.alt}
+                      src={tab.imageSrc}
+                      alt={tab.imageAlt || tab.label || ''}
                       loading="lazy"
                       decoding="async"
                     />
@@ -286,9 +252,13 @@ const schema = {
           </div>
 
           <div class="approach-partnerships__cta">
-            <h3>Comprehensive Capabilities.<br />Designed for Your Business.</h3>
+            <h3>
+              {(page.partnerships.ctaHeadingLines || []).map((line, index) => (
+                <Fragment>{index > 0 && <br />}{line}</Fragment>
+              ))}
+            </h3>
             <span aria-hidden="true"></span>
-            <a class="btn btn--green btn--lg" href="/contact-us/">Let&rsquo;s Find A Solution</a>
+            {page.partnerships.cta?.label && page.partnerships.cta?.href && <a class="btn btn--green btn--lg" href={page.partnerships.cta.href}>{page.partnerships.cta.label}</a>}
           </div>
         </div>
       </div>
@@ -434,7 +404,8 @@ const schema = {
       letter-spacing: 0;
     }
 
-    .approach-section-header p:not(.approach-eyebrow) {
+    .approach-section-header p:not(.approach-eyebrow),
+    .approach-section-header__body {
       margin: 1.5rem auto 0;
       max-inline-size: 48rem;
       color: var(--approach-color-text);

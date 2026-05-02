@@ -1,10 +1,15 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import FormLanding from '../components/modern/FormLanding.astro';
+import { formPageQuery, sanityClient } from '../lib/sanity';
+import { defaultContactPageData, mergeFormPageData } from '../lib/morePageData';
+import { richHtml, richText } from '../lib/fixedPageRender';
 
-const title = 'Contact Us - Found Search Marketing';
-const description = "Bring us your biggest challenge. We don't want to be your agency of record. We want to be your agency of results. Let's see what we can achieve together.";
-const canonical = 'https://www.foundsm.com/contact-us';
+const sanityPage = await sanityClient.fetch(formPageQuery, { id: 'contactPage' }).catch(() => null);
+const page = mergeFormPageData(defaultContactPageData, sanityPage);
+const title = page.seoTitle || defaultContactPageData.seoTitle;
+const description = page.seoDescription || defaultContactPageData.seoDescription;
+const canonical = page.canonicalUrl || defaultContactPageData.canonicalUrl;
 const schema = [
   {
     '@context': 'https://schema.org',
@@ -44,12 +49,16 @@ const schema = [
 ];
 ---
 
-<BaseLayout title={title} description={description} canonical={canonical} schema={schema}>
+<BaseLayout title={title} description={description} canonical={canonical} robots={page.robots} schema={schema}>
   <FormLanding
     variant="contact"
-    title="Bring Us Your Biggest Challenge."
-    intro="We don't want to be your agency of record. We want to be your agency of results. Let's see what we can achieve together."
-    formId="4f48ec0c-d036-4c2f-b461-4b5f4c03c3fc"
-    summary="We're ready to learn more about your business goals and talk about all the ways we can work together to find solutions that drive impact and lead to profitable revenue. Whether it's smarter paid media strategy, creative that converts, or finding clarity in your data, we're ready to sit on the same side of the table and get to work."
+    eyebrow={page.eyebrow}
+    title={page.heading || ''}
+    intro={richText(page.intro)}
+    introHtml={richHtml(page.intro)}
+    formId={page.formId || ''}
+    portalId={page.portalId}
+    summary={richText(page.summary)}
+    summaryHtml={richHtml(page.summary)}
   />
 </BaseLayout>

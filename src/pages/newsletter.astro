@@ -1,10 +1,15 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import FormLanding from '../components/modern/FormLanding.astro';
+import { formPageQuery, sanityClient } from '../lib/sanity';
+import { defaultNewsletterPageData, mergeFormPageData } from '../lib/morePageData';
+import { richHtml, richText } from '../lib/fixedPageRender';
 
-const title = "Sign Up For Found's Newsletter";
-const description = 'Found Search Marketing brings deep channel expertise, custom analytics, and agile strategy together to maximize performance across your entire media ecosystem.';
-const canonical = 'https://www.foundsm.com/newsletter';
+const sanityPage = await sanityClient.fetch(formPageQuery, { id: 'newsletterPage' }).catch(() => null);
+const page = mergeFormPageData(defaultNewsletterPageData, sanityPage);
+const title = page.seoTitle || defaultNewsletterPageData.seoTitle;
+const description = page.seoDescription || defaultNewsletterPageData.seoDescription;
+const canonical = page.canonicalUrl || defaultNewsletterPageData.canonicalUrl;
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'WebPage',
@@ -19,13 +24,16 @@ const schema = {
 };
 ---
 
-<BaseLayout title={title} description={description} canonical={canonical} schema={schema}>
+<BaseLayout title={title} description={description} canonical={canonical} robots={page.robots} schema={schema}>
   <FormLanding
     variant="newsletter"
-    eyebrow="Get Found in Your Inbox"
-    title="Sign Up for Our Newsletter"
-    intro="Get monthly insights, real-world strategies, and expert takes from the Found team."
-    formId="f757bd34-b8c5-4f2a-a1ef-19c3a364683b"
-    summary="Get monthly insights, real-world strategies, and expert takes from the Found team - plus the latest on upcoming events and recaps on any you missed."
+    eyebrow={page.eyebrow}
+    title={page.heading || ''}
+    intro={richText(page.intro)}
+    introHtml={richHtml(page.intro)}
+    formId={page.formId || ''}
+    portalId={page.portalId}
+    summary={richText(page.summary)}
+    summaryHtml={richHtml(page.summary)}
   />
 </BaseLayout>

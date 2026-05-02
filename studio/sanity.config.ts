@@ -3,9 +3,21 @@ import { structureTool } from 'sanity/structure';
 import { visionTool } from '@sanity/vision';
 import { schemaTypes } from './schemas';
 import { defaultCapabilityDetailPages } from '../src/lib/fixedPageData';
+import { defaultContactPageData, defaultNewsletterPageData } from '../src/lib/morePageData';
 
 const projectId = 'vzneqxsx';
-const singletonTypes = new Set(['homePage', 'aboutPage', 'capabilitiesPage', 'capabilityDetailPage']);
+const singletonTypes = new Set([
+  'homePage',
+  'aboutPage',
+  'capabilitiesPage',
+  'capabilityDetailPage',
+  'formPage',
+  'teamPage',
+  'notFoundPage',
+  'approachPage',
+  'privacyPolicyPage',
+  'eventLandingPage',
+]);
 const capabilityDetailTemplates = [
   {
     id: 'capabilityDataActivationPage',
@@ -32,11 +44,26 @@ const capabilityDetailTemplates = [
     value: defaultCapabilityDetailPages.performanceCreative,
   },
 ];
+const formPageTemplates = [
+  {
+    id: 'contactPage',
+    title: 'Contact Page',
+    schemaType: 'formPage',
+    value: defaultContactPageData,
+  },
+  {
+    id: 'newsletterPage',
+    title: 'Newsletter Page',
+    schemaType: 'formPage',
+    value: defaultNewsletterPageData,
+  },
+];
+const singletonTemplates = [...capabilityDetailTemplates, ...formPageTemplates];
 const schema = {
   types: schemaTypes,
   templates: (previousTemplates: any[]) => [
-    ...previousTemplates.filter((template) => !capabilityDetailTemplates.some((detailTemplate) => detailTemplate.id === template.id)),
-    ...capabilityDetailTemplates,
+    ...previousTemplates.filter((template) => !singletonTemplates.some((singletonTemplate) => singletonTemplate.id === template.id)),
+    ...singletonTemplates,
   ],
 };
 
@@ -56,6 +83,34 @@ const structure = (S: any) =>
         .title('Capabilities Page')
         .id('capabilitiesPage')
         .child(S.document().schemaType('capabilitiesPage').documentId('capabilitiesPage').title('Capabilities Page')),
+      S.listItem()
+        .title('Contact Page')
+        .id('contactPage')
+        .child(S.document().schemaType('formPage').documentId('contactPage').initialValueTemplate('contactPage').title('Contact Page')),
+      S.listItem()
+        .title('Newsletter Page')
+        .id('newsletterPage')
+        .child(S.document().schemaType('formPage').documentId('newsletterPage').initialValueTemplate('newsletterPage').title('Newsletter Page')),
+      S.listItem()
+        .title('Our Approach Page')
+        .id('approachPage')
+        .child(S.document().schemaType('approachPage').documentId('approachPage').title('Our Approach Page')),
+      S.listItem()
+        .title('Team Page')
+        .id('teamPage')
+        .child(S.document().schemaType('teamPage').documentId('teamPage').title('Team Page')),
+      S.listItem()
+        .title('Privacy Policy Page')
+        .id('privacyPolicyPage')
+        .child(S.document().schemaType('privacyPolicyPage').documentId('privacyPolicyPage').title('Privacy Policy Page')),
+      S.listItem()
+        .title('404 Page')
+        .id('notFoundPage')
+        .child(S.document().schemaType('notFoundPage').documentId('notFoundPage').title('404 Page')),
+      S.listItem()
+        .title('Lunch & Learn Event Page')
+        .id('eventLandingPage')
+        .child(S.document().schemaType('eventLandingPage').documentId('eventLandingPage').title('Lunch & Learn Event Page')),
       S.listItem()
         .title('Capability Detail Pages')
         .id('capabilityDetailPages')

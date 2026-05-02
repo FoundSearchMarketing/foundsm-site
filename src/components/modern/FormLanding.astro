@@ -3,9 +3,11 @@ interface Props {
   eyebrow?: string;
   title: string;
   intro: string;
+  introHtml?: string;
   formId: string;
   portalId?: string;
   summary?: string;
+  summaryHtml?: string;
   variant?: 'contact' | 'newsletter';
 }
 
@@ -13,9 +15,11 @@ const {
   eyebrow,
   title,
   intro,
+  introHtml,
   formId,
   portalId = '5045186',
   summary,
+  summaryHtml,
   variant = 'contact',
 } = Astro.props;
 ---
@@ -25,7 +29,7 @@ const {
     <div class="form-landing__copy">
       {eyebrow && <p class="form-landing__eyebrow">{eyebrow}</p>}
       <h1 id={`${variant}-form-heading`}>{title}</h1>
-      <p>{intro}</p>
+      {introHtml ? <div class="form-landing__intro" set:html={introHtml} /> : <p>{intro}</p>}
     </div>
 
     <div class="form-landing__form-card">
@@ -34,10 +38,10 @@ const {
   </div>
 </section>
 
-{summary && (
+{(summary || summaryHtml) && (
   <section class="form-landing-summary">
     <div class="form-landing-summary__inner">
-      <p>{summary}</p>
+      {summaryHtml ? <div set:html={summaryHtml} /> : <p>{summary}</p>}
     </div>
   </section>
 )}
@@ -55,7 +59,7 @@ const {
   .form-landing--contact {
     min-block-size: 56.25rem;
     background-color: #231f20;
-    background-image: url("https://foundsm.com/found2025/wp-content/uploads/2026/03/contact_bg_fc.svg");
+    background-image: url("/images/pages/our-approach/contact-bg-fc.svg");
     background-repeat: no-repeat;
     background-size: cover;
     color: #ffffff;
@@ -101,14 +105,16 @@ const {
     line-height: 1.111;
   }
 
-  .form-landing__copy > p {
+  .form-landing__copy > p,
+  .form-landing__intro {
     max-inline-size: 40rem;
     color: rgba(26, 26, 26, 0.78);
     font-size: 1.25rem;
     line-height: 1.8;
   }
 
-  .form-landing--contact .form-landing__copy > p {
+  .form-landing--contact .form-landing__copy > p,
+  .form-landing--contact .form-landing__intro {
     color: rgba(255, 255, 255, 0.82);
   }
 

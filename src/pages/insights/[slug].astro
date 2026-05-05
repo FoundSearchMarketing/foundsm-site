@@ -1,61 +1,87 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BlogPostTemplate from '../../components/BlogPostTemplate.astro';
+import LegacyPageRenderer from '../../components/legacy/LegacyPageRenderer.astro';
 import { getAllBlogPosts, getBlogPostNavigation, type BlogPost } from '../../lib/blogPosts';
+import { loadLegacyPages } from '../../lib/legacyPageFetch';
+import { getLegacyPageDefinitionsByGroup, pathToSingleSlug, type LegacyPageData } from '../../lib/legacyPageData';
 
 export async function getStaticPaths() {
-  const posts = await getAllBlogPosts();
+  const legacyInsightDefinitions = getLegacyPageDefinitionsByGroup('insights');
+  const [posts, legacyPages] = await Promise.all([
+    getAllBlogPosts(),
+    loadLegacyPages(legacyInsightDefinitions),
+  ]);
 
-  return posts.map((post) => ({
-    params: { slug: post.slug },
-    props: { post },
-  }));
+  return [
+    ...posts.map((post) => ({
+      params: { slug: post.slug },
+      props: { post },
+    })),
+    ...legacyInsightDefinitions.map((definition) => ({
+      params: { slug: pathToSingleSlug(definition.path) },
+      props: { page: legacyPages.get(definition.path) },
+    })),
+  ];
 }
 
 interface Props {
-  post: BlogPost;
+  post?: BlogPost;
+  page?: LegacyPageData;
 }
 
-const { post } = Astro.props;
-const navigation = await getBlogPostNavigation(post.slug);
-const canonical = `https://www.foundsm.com/insights/${post.slug}/`;
-const description = post.excerpt;
-const author = [post.authorName, post.authorTitle].filter(Boolean).join(', ');
-const schema = {
-  '@context': 'https://schema.org',
-  '@type': 'BlogPosting',
-  headline: post.title,
-  description,
-  image: post.heroImage,
-  datePublished: post.publishedAt,
-  dateModified: post.publishedAt,
-  ...(author
-    ? {
-        author: {
-          '@type': 'Person',
-          name: author,
-        },
-      }
-    : {}),
-  publisher: {
-    '@type': 'Organization',
-    name: 'Found Search Marketing',
-    logo: { '@type': 'ImageObject', url: 'https://www.foundsm.com/images/logo.svg' },
-  },
-  mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
-  ...(post.categories.length > 0 ? { articleSection: post.categories.map((category) => category.label) } : {}),
-};
+const { post, page } = Astro.props;
+const navigation = post ? await getBlogPostNavigation(post.slug) : {};
+const canonical = page?.canonicalUrl || (post ? `https://www.foundsm.com/insights/${post.slug}/` : 'https://www.foundsm.com/insights');
+const description = page?.seoDescription || post?.excerpt || '';
+const author = post ? [post.authorName, post.authorTitle].filter(Boolean).join(', ') : '';
+const schema = page
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      name: page.title,
+      url: canonical,
+      description,
+      publisher: {
+        '@type': 'Organization',
+        name: 'Found Search Marketing',
+      },
+    }
+  : {
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      headline: post?.title,
+      description,
+      image: post?.heroImage,
+      datePublished: post?.publishedAt,
+      dateModified: post?.publishedAt,
+      ...(author
+        ? {
+            author: {
+              '@type': 'Person',
+              name: author,
+            },
+          }
+        : {}),
+      publisher: {
+        '@type': 'Organization',
+        name: 'Found Search Marketing',
+        logo: { '@type': 'ImageObject', url: 'https://www.foundsm.com/images/logo.svg' },
+      },
+      mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
+      ...(post && post.categories.length > 0 ? { articleSection: post.categories.map((category) => category.label) } : {}),
+    };
 ---
 
 <BaseLayout
-  title={post.seoTitle}
+  title={page?.seoTitle || post?.seoTitle || 'Insights | Found Search Marketing'}
   description={description}
   canonical={canonical}
-  ogImage={post.heroImage || undefined}
-  ogType="article"
-  robots="index, follow"
+  ogImage={page?.ogImage || post?.heroImage || undefined}
+  ogType={post ? 'article' : undefined}
+  robots={page?.robots || 'index, follow'}
   schema={schema}
-  bodyClass="blog-post-page"
+  bodyClass={post ? 'blog-post-page' : 'legacy-page'}
 >
-  <BlogPostTemplate post={post} navigation={navigation} />
+  {page ? <LegacyPageRenderer page={page} /> : post && <BlogPostTemplate post={post} navigation={navigation} />}
 </BaseLayout>

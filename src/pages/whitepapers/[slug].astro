@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import LegacyPageRenderer from '../../components/legacy/LegacyPageRenderer.astro';
+import { loadLegacyPages } from '../../lib/legacyPageFetch';
+import { getLegacyPageDefinitionsByGroup, pathToSingleSlug, type LegacyPageData } from '../../lib/legacyPageData';
+
+export async function getStaticPaths() {
+  const whitepaperDefinitions = getLegacyPageDefinitionsByGroup('whitepapers').filter((definition) => definition.path !== '/whitepapers/');
+  const pages = await loadLegacyPages(whitepaperDefinitions);
+
+  return whitepaperDefinitions.map((definition) => ({
+    params: { slug: pathToSingleSlug(definition.path) },
+    props: { page: pages.get(definition.path) },
+  }));
+}
+
+interface Props {
+  page: LegacyPageData;
+}
+
+const { page } = Astro.props;
+---
+
+<BaseLayout
+  title={page.seoTitle}
+  description={page.seoDescription}
+  canonical={page.canonicalUrl}
+  ogImage={page.ogImage}
+  robots={page.robots}
+  bodyClass="legacy-page"
+>
+  <LegacyPageRenderer page={page} />
+</BaseLayout>

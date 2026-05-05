@@ -3,6 +3,7 @@ import { structureTool } from 'sanity/structure';
 import { visionTool } from '@sanity/vision';
 import { schemaTypes } from './schemas';
 import { defaultCapabilityDetailPages } from '../src/lib/fixedPageData';
+import { defaultLegacyPageTemplates } from '../src/lib/legacyPageData';
 import { defaultContactPageData, defaultNewsletterPageData } from '../src/lib/morePageData';
 
 const projectId = 'vzneqxsx';
@@ -17,6 +18,7 @@ const singletonTypes = new Set([
   'approachPage',
   'privacyPolicyPage',
   'eventLandingPage',
+  'legacyPage',
 ]);
 const capabilityDetailTemplates = [
   {
@@ -58,7 +60,13 @@ const formPageTemplates = [
     value: defaultNewsletterPageData,
   },
 ];
-const singletonTemplates = [...capabilityDetailTemplates, ...formPageTemplates];
+const legacyPageTemplates = defaultLegacyPageTemplates.map((template) => ({
+  id: template.id,
+  title: template.title,
+  schemaType: 'legacyPage',
+  value: template.value,
+}));
+const singletonTemplates = [...capabilityDetailTemplates, ...formPageTemplates, ...legacyPageTemplates];
 const schema = {
   types: schemaTypes,
   templates: (previousTemplates: any[]) => [
@@ -135,6 +143,27 @@ const structure = (S: any) =>
                 .id('capabilityPerformanceCreativePage')
                 .child(S.document().schemaType('capabilityDetailPage').documentId('capabilityPerformanceCreativePage').initialValueTemplate('capabilityPerformanceCreativePage').title('Performance Creative')),
             ]),
+        ),
+      S.listItem()
+        .title('Legacy WordPress Pages')
+        .id('legacyPages')
+        .child(
+          S.list()
+            .title('Legacy WordPress Pages')
+            .items(
+              legacyPageTemplates.map((template) =>
+                S.listItem()
+                  .title(template.title)
+                  .id(template.id)
+                  .child(
+                    S.document()
+                      .schemaType('legacyPage')
+                      .documentId(template.id)
+                      .initialValueTemplate(template.id)
+                      .title(template.title),
+                  ),
+              ),
+            ),
         ),
       S.divider(),
       ...S.documentTypeListItems().filter((listItem: any) => !singletonTypes.has(listItem.getId())),

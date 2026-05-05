@@ -168,6 +168,32 @@ export const privacyPolicyPageQuery = `*[_id == "privacyPolicyPage"][0]`;
 
 export const eventLandingPageQuery = `*[_id == "eventLandingPage"][0]`;
 
+export const legacyPagesByPathsQuery = `*[_type == "legacyPage" && path in $paths] {
+  _id,
+  title,
+  path,
+  seoTitle,
+  seoDescription,
+  canonicalUrl,
+  robots,
+  "ogImage": ogImage.asset->url,
+  hero,
+  body,
+  cards,
+  cta,
+  form
+}`;
+
+export const allAuthorsPageQuery = `*[_type == "author"] | order(name asc) {
+  _id,
+  name,
+  "slug": slug.current,
+  title,
+  bio,
+  linkedin,
+  "image": image.asset->url
+}`;
+
 export const landingPageBySlugQuery = `*[_type == "landingPage" && slug.current == $slug][0] {
   _id,
   title,

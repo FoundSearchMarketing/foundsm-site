@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import LegacyPageRenderer from '../../components/legacy/LegacyPageRenderer.astro';
+import { loadLegacyPage } from '../../lib/legacyPageFetch';
+import { getLegacyPageDefinitionByPath } from '../../lib/legacyPageData';
+
+const definition = getLegacyPageDefinitionByPath('/whitepapers/');
+if (!definition) throw new Error('Missing legacy page definition for /whitepapers/.');
+
+const page = await loadLegacyPage(definition);
+---
+
+<BaseLayout
+  title={page.seoTitle}
+  description={page.seoDescription}
+  canonical={page.canonicalUrl}
+  ogImage={page.ogImage}
+  robots={page.robots}
+  bodyClass="legacy-page"
+>
+  <LegacyPageRenderer page={page} />
+</BaseLayout>

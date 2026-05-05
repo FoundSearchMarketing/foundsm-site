@@ -4,6 +4,7 @@ import author from './author';
 import teamMember from './teamMember';
 import homePage from './homePage';
 import landingPage from './landingPage';
+import legacyPage from './legacyPage';
 import { aboutPage, capabilitiesPage, capabilityDetailPage } from './fixedPages';
 import { approachPage, eventLandingPage, formPage, notFoundPage, privacyPolicyPage, teamPage } from './moreFixedPages';
 import heroBlock from './blocks/heroBlock';
@@ -33,6 +34,7 @@ export const schemaTypes = [
   privacyPolicyPage,
   eventLandingPage,
   landingPage,
+  legacyPage,
   heroBlock,
   statsBlock,
   featuresBlock,

@@ -2,13 +2,14 @@
 interface Props {
   eyebrow?: string;
   title: string;
-  intro: string;
+  intro: string | string[];
   introHtml?: string;
+  lead?: string;
   formId: string;
   portalId?: string;
   summary?: string;
   summaryHtml?: string;
-  variant?: 'contact' | 'newsletter';
+  variant?: 'contact' | 'newsletter' | 'dataconnect';
 }
 
 const {
@@ -16,12 +17,14 @@ const {
   title,
   intro,
   introHtml,
+  lead,
   formId,
   portalId = '5045186',
   summary,
   summaryHtml,
   variant = 'contact',
 } = Astro.props;
+const introParagraphs = Array.isArray(intro) ? intro : [intro];
 ---
 
 <section class={`form-landing form-landing--${variant}`} aria-labelledby={`${variant}-form-heading`}>
@@ -29,7 +32,8 @@ const {
     <div class="form-landing__copy">
       {eyebrow && <p class="form-landing__eyebrow">{eyebrow}</p>}
       <h1 id={`${variant}-form-heading`}>{title}</h1>
-      {introHtml ? <div class="form-landing__intro" set:html={introHtml} /> : <p>{intro}</p>}
+      {lead && <p class="form-landing__lead"><strong>{lead}</strong></p>}
+      {introHtml ? <div class="form-landing__intro" set:html={introHtml} /> : introParagraphs.map((item) => <p>{item}</p>)}
     </div>
 
     <div class="form-landing__form-card">
@@ -62,6 +66,16 @@ const {
     background-image: url("/images/pages/our-approach/contact-bg-fc.svg");
     background-repeat: no-repeat;
     background-size: cover;
+    color: #ffffff;
+  }
+
+  .form-landing--dataconnect {
+    min-block-size: 43rem;
+    background-color: #231f20;
+    background-image: url("/images/pages/our-approach/contact-bg-fc.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
     color: #ffffff;
   }
 
@@ -105,6 +119,11 @@ const {
     line-height: 1.111;
   }
 
+  .form-landing--contact h1,
+  .form-landing--dataconnect h1 {
+    color: #ffffff;
+  }
+
   .form-landing__copy > p,
   .form-landing__intro {
     max-inline-size: 40rem;
@@ -113,8 +132,18 @@ const {
     line-height: 1.8;
   }
 
+  .form-landing__intro :global(p + p) {
+    margin-top: 1rem;
+  }
+
+  .form-landing__lead {
+    margin-block-end: -0.25rem;
+  }
+
   .form-landing--contact .form-landing__copy > p,
-  .form-landing--contact .form-landing__intro {
+  .form-landing--contact .form-landing__intro,
+  .form-landing--dataconnect .form-landing__copy > p,
+  .form-landing--dataconnect .form-landing__intro {
     color: rgba(255, 255, 255, 0.82);
   }
 

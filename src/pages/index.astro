@@ -1,8 +1,14 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Homepage from '../components/home/Homepage.astro';
+import { homePageQuery, sanityClient } from '../lib/sanity';
+import { mergeHomePageData } from '../lib/homePageData';
 
-const description = 'Trusted by leading brands, Found Search Marketing is an enterprise paid media agency delivering clarity, efficiency, and performance through advanced data-driven solutions.';
+const homePageData = await sanityClient.fetch(homePageQuery).catch(() => null);
+const homePage = mergeHomePageData(homePageData);
+const title = homePage.seoTitle || 'Found Search Marketing | An Enterprise Paid Media Agency';
+const description = homePage.seoDescription || 'Trusted by leading brands, Found Search Marketing is an enterprise paid media agency delivering clarity, efficiency, and performance through advanced data-driven solutions.';
+const canonical = homePage.canonicalUrl || 'https://foundsm.com/';
 
 const schema = {
   "@context": "https://schema.org",
@@ -36,8 +42,8 @@ const schema = {
     },
     {
       "@type": "WebPage",
-      "name": "Found Search Marketing | An Enterprise Paid Media Agency",
-      "url": "https://foundsm.com/",
+      "name": title,
+      "url": canonical,
       "description": description,
       "publisher": {
         "@type": "Organization",
@@ -49,11 +55,13 @@ const schema = {
 ---
 
 <BaseLayout
-  title="Found Search Marketing | An Enterprise Paid Media Agency"
+  title={title}
   description={description}
-  canonical="https://foundsm.com/"
+  canonical={canonical}
+  ogImage={homePage.ogImage}
+  robots={homePage.robots}
   schema={schema}
   bodyClass="home-page"
 >
-  <Homepage />
+  <Homepage data={homePage} />
 </BaseLayout>

@@ -1,12 +1,20 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { notFoundPageQuery, sanityClient } from '../lib/sanity';
+import { defaultNotFoundPageData, mergeNotFoundPageData } from '../lib/morePageData';
+import { richHtml } from '../lib/fixedPageRender';
 
+const sanityPage = await sanityClient.fetch(notFoundPageQuery).catch(() => null);
+const page = mergeNotFoundPageData(sanityPage);
+const title = page.seoTitle || defaultNotFoundPageData.seoTitle;
+const description = page.seoDescription || defaultNotFoundPageData.seoDescription;
+const canonical = page.canonicalUrl || defaultNotFoundPageData.canonicalUrl;
 const schema = {
   "@context": "https://schema.org",
   "@type": "WebPage",
-  "name": "Page Not Found",
-  "url": "https://www.foundsm.com/404",
-  "description": "The page you're looking for doesn't exist or has been moved.",
+  "name": page.heading,
+  "url": canonical,
+  "description": description,
   "publisher": {
     "@type": "Organization",
     "name": "Found Search Marketing",
@@ -16,10 +24,10 @@ const schema = {
 ---
 
 <BaseLayout
-  title="Page Not Found | Found Search Marketing"
-  description="The page you're looking for doesn't exist or has been moved. Return to Found Search Marketing's homepage or explore our latest insights."
-  canonical="https://www.foundsm.com/404"
-  robots="noindex, follow"
+  title={title}
+  description={description}
+  canonical={canonical}
+  robots={page.robots}
   schema={schema}
 >
 
@@ -29,15 +37,15 @@ const schema = {
     <section style="display: flex; align-items: center; justify-content: center; min-height: calc(100vh - var(--header-height) - 200px); padding-top: var(--header-height); text-align: center;">
       <div class="container">
 
-        <p class="fade-in-up" style="font-family: var(--font-heading); font-size: clamp(6rem, 15vw, 12rem); font-weight: 700; line-height: 1; color: var(--color-primary); letter-spacing: -0.03em;">404</p>
+        <p class="fade-in-up" style="font-family: var(--font-heading); font-size: clamp(6rem, 15vw, 12rem); font-weight: 700; line-height: 1; color: var(--color-primary); letter-spacing: -0.03em;">{page.code}</p>
 
-        <h1 class="fade-in-up" style="margin-top: var(--space-sm); font-size: var(--text-h2);">Page Not Found</h1>
+        <h1 class="fade-in-up" style="margin-top: var(--space-sm); font-size: var(--text-h2);">{page.heading}</h1>
 
-        <p class="fade-in-up" style="margin-top: var(--space-sm); font-size: var(--text-body); color: var(--color-mid); max-width: 28rem; margin-inline: auto; line-height: 1.7;">The page you&rsquo;re looking for doesn&rsquo;t exist or has been moved.</p>
+        <div class="fade-in-up" style="margin-top: var(--space-sm); font-size: var(--text-body); color: var(--color-mid); max-width: 28rem; margin-inline: auto; line-height: 1.7;" set:html={richHtml(page.body)} />
 
         <div class="fade-in-up" style="display: flex; flex-direction: column; align-items: center; gap: var(--space-md); margin-top: var(--space-xl);">
-          <a href="/" class="btn btn--green btn--lg">Return to Homepage</a>
-          <a href="/insights" class="cta-link" style="font-size: var(--text-body);">View Our Insights</a>
+          {page.primaryCta?.label && page.primaryCta?.href && <a href={page.primaryCta.href} class="btn btn--green btn--lg">{page.primaryCta.label}</a>}
+          {page.secondaryCta?.label && page.secondaryCta?.href && <a href={page.secondaryCta.href} class="cta-link" style="font-size: var(--text-body);">{page.secondaryCta.label}</a>}
         </div>
 
       </div>

@@ -4,10 +4,18 @@ import ModernHero from '../components/modern/ModernHero.astro';
 import StatementBand from '../components/modern/StatementBand.astro';
 import LeadershipGrid from '../components/modern/LeadershipGrid.astro';
 import CtaPanel from '../components/modern/CtaPanel.astro';
+import { allTeamMembersQuery, sanityClient, teamPageQuery } from '../lib/sanity';
+import { defaultTeamPageData, mergeTeamPageData } from '../lib/morePageData';
+import { imageProps, richHtml, richText, srcFor } from '../lib/fixedPageRender';
 
-const title = 'Our Team | Found Search Marketing';
-const description = 'Found Search Marketing brings deep channel expertise, custom analytics, and agile strategy together to maximize performance across your entire media ecosystem.';
-const canonical = 'https://www.foundsm.com/team';
+const [sanityPage, sanityLeaders] = await Promise.all([
+  sanityClient.fetch(teamPageQuery).catch(() => null),
+  sanityClient.fetch(allTeamMembersQuery).catch(() => []),
+]);
+const page = mergeTeamPageData(sanityPage);
+const title = page.seoTitle || defaultTeamPageData.seoTitle;
+const description = page.seoDescription || defaultTeamPageData.seoDescription;
+const canonical = page.canonicalUrl || defaultTeamPageData.canonicalUrl;
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'WebPage',
@@ -21,119 +29,44 @@ const schema = {
   },
 };
 
-const leaders = [
-  {
-    name: 'Julie Warnecke',
-    role: 'CEO',
-    image: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Julie_W_1800-1.webp?ver=1773664202',
-  },
-  {
-    name: 'Adam Persinger',
-    role: 'Head of Strategic Media',
-    image: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/Adam-P-main.webp',
-  },
-  {
-    name: 'Brandon Cangany',
-    role: 'Director, Finance',
-    image: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Julie_W_1800-1-2.webp?ver=1773663266',
-  },
-  {
-    name: 'Brian Walker',
-    role: 'Group Account Director',
-    image: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Julie_W_1800-1-3.webp?ver=1773663346',
-  },
-  {
-    name: 'Caroline Stoner',
-    role: 'Head of User Experience',
-    image: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Julie_W_1800-1-4.webp?ver=1773663451',
-  },
-  {
-    name: 'Kate Sadowski',
-    role: 'Group Account Director',
-    image: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Julie_W_1800-1-5.webp?ver=1773663531',
-  },
-  {
-    name: 'Kelley Swart',
-    role: 'VP, Strategy & Growth',
-    image: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Julie_W_1800-1-6.webp?ver=1773663606',
-  },
-  {
-    name: 'Kelsey Connor',
-    role: 'Director, Marketing & Brand Strategy',
-    image: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Julie_W_1800-1-7.webp?ver=1773663677',
-  },
-  {
-    name: 'Kylie Colquitt',
-    role: 'Group Account Director',
-    image: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Julie_W_1800-1-8.webp?ver=1773663767',
-  },
-  {
-    name: 'Megan Hackman',
-    role: 'VP, Agency Operations',
-    image: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Julie_W_1800-1-9.webp?ver=1773663834',
-  },
-  {
-    name: 'Nicholas Hoium',
-    role: 'Head of Data Engineering',
-    image: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/Nicholas-FoundSM.webp',
-  },
-  {
-    name: 'Rachel Puls',
-    role: 'VP, Delivery',
-    image: 'https://foundsm.com/found2025/wp-content/uploads/2026/01/Rachel_P_2026.webp',
-  },
-  {
-    name: 'Ryan Eme',
-    role: 'Head of Data Intelligence',
-    image: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Julie_W_1800-1-12.webp?ver=1773664036',
-  },
-  {
-    name: 'Stephanie Van Deven',
-    role: 'Director, Integrated Delivery Operations',
-    image: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Julie_W_1800-1-13.webp?ver=1773664130',
-  },
-  {
-    name: 'T.R. Scrivner',
-    role: 'Director, Agency Creative',
-    image: 'https://foundsm.com/found2025/wp-content/uploads/2026/01/TR.webp',
-  },
-];
+const leaders = ((sanityLeaders?.length ? sanityLeaders : page.leaders) || [])
+  .map((leader) => ({
+    name: leader.name || '',
+    role: leader.role || '',
+    image: srcFor(leader.image),
+  }))
+  .filter((leader) => leader.name);
 ---
 
-<BaseLayout title={title} description={description} canonical={canonical} schema={schema}>
+<BaseLayout title={title} description={description} canonical={canonical} robots={page.robots} schema={schema}>
   <ModernHero
     tone="light"
-    title="Together, We Solve."
-    intro="In an industry that never stops evolving, Found Search Marketing stands out as an agency that knows exactly who we are. Grounded in a deep commitment to our clients, we combine precision with agility to thrive in a fast-moving world. We're proud cool nerds, energized by the pursuit of high-ceiling, complex problems that drive significant business impact."
-    cta={{ label: 'Join Our Team', href: '/about-us/' }}
-    image={{
-      src: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/tr-andy-ryan.webp',
-      alt: 'Found Search Marketing team members collaborating',
-      width: 1000,
-      height: 700,
-      loading: 'eager',
-    }}
+    title={page.hero.heading || ''}
+    intro={richText(page.hero.body)}
+    introHtml={richHtml(page.hero.body)}
+    cta={page.hero.cta?.label && page.hero.cta?.href ? { label: page.hero.cta.label, href: page.hero.cta.href } : undefined}
+    image={imageProps(page.hero, 'eager')}
   />
 
   <StatementBand
-    lead="While many chase the next shiny idea, we stay focused, unapologetically ourselves."
-    body="Our clients have access to the people behind their brand. Unlike traditional agencies, Found is built to foster cross-functional expertise. Our integrated team structure breaks down silos and acts as a catalyst for client-focused strategy, deep analysis, and results-driven execution."
+    lead={page.statement.lead || ''}
+    body={richText(page.statement.body)}
+    bodyHtml={richHtml(page.statement.body)}
   />
 
   <LeadershipGrid
-    title="Leadership"
-    intro={[
-      "At Found, leadership isn't just about setting direction: it's about driving innovation, empowering each other to ask hard questions, and navigating complexity with care and intent to transform challenges into breakthroughs. Our executive team brings decades of hands-on experience in paid media, data engineering and analytics, and customer acquisition strategy, including foundational roles at Google.",
-      "Found's leadership stays close to the work, thinks like clients, and focuses on results. That's helped build an agency culture rooted in innovation, precision, and high-impact collaboration.",
-    ]}
+    title={page.leadership.heading || ''}
+    intro={richText(page.leadership.body)}
+    introHtml={richHtml(page.leadership.body)}
     leaders={leaders}
   />
 
   <CtaPanel
     theme="green"
-    title="Want to Join Our Team?"
-    body="We're always looking for people who share our passion for finding smart, innovative solutions for our clients and are excited to grow with a company. Sound like you? Let's chat."
-    ctaLabel="Discover Your New Career"
-    ctaHref="/about-us/#careers"
+    title={page.cta.heading}
+    body={richText(page.cta.body)}
+    bodyHtml={richHtml(page.cta.body)}
+    ctaLabel={page.cta.cta?.label}
+    ctaHref={page.cta.cta?.href}
   />
 </BaseLayout>

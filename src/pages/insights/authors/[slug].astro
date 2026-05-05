@@ -1,42 +1,88 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
-import AuthorProfile from '../../../components/modern/AuthorProfile.astro';
-import { legacyAuthors, type LegacyAuthor } from '../../../data/legacyResources';
+import LegacyPageRenderer from '../../../components/legacy/LegacyPageRenderer.astro';
+import LegacyPostList from '../../../components/legacy/LegacyPostList.astro';
+import { getAllBlogPosts } from '../../../lib/blogPosts';
+import { loadAuthors } from '../../../lib/legacyPageFetch';
+import { mergeLegacyPageData, slugifyAuthorName, type LegacyAuthorData } from '../../../lib/legacyPageData';
+import { block } from '../../../lib/simplePortableText';
 
-export function getStaticPaths() {
-  return legacyAuthors.map((author) => ({
+export async function getStaticPaths() {
+  const authors = await loadAuthors();
+
+  return authors.map((author) => ({
     params: { slug: author.slug },
     props: { author },
   }));
 }
 
 interface Props {
-  author: LegacyAuthor;
+  author: LegacyAuthorData;
 }
 
 const { author } = Astro.props;
-const title = `About the Author | ${author.name.split(' ')[0]} | Found Search Marketing`;
-const description = author.directoryBio;
-const canonical = `https://www.foundsm.com/insights/authors/${author.slug}/`;
+const posts = (await getAllBlogPosts()).filter((post) => {
+  const postAuthorSlug = slugifyAuthorName(post.authorName);
+  const authorName = author.name.toLowerCase();
+  const postAuthorName = post.authorName.toLowerCase();
+  return postAuthorSlug === author.slug || postAuthorSlug.startsWith(`${author.slug}-`) || postAuthorName.startsWith(authorName);
+});
+const canonical = `https://www.foundsm.com/insights/authors/${author.slug}`;
+const description = author.bio || `Insights by ${author.name} from Found Search Marketing.`;
+const page = mergeLegacyPageData(
+  {
+    id: `legacy-author-${author.slug}`,
+    path: `/insights/authors/${author.slug}/`,
+    title: author.name,
+    description,
+    group: 'authorIndex',
+  },
+  {
+    title: author.name,
+    seoTitle: `${author.name} | Found Search Marketing`,
+    seoDescription: description,
+    canonicalUrl: canonical,
+    hero: {
+      eyebrow: 'Author',
+      heading: author.name,
+      subheading: author.title || description,
+    },
+    body: [block(description)],
+    cards: author.linkedin
+      ? [
+          {
+            title: `Connect with ${author.name}`,
+            body: author.title ? [block(author.title)] : undefined,
+            cta: { label: 'View LinkedIn', href: author.linkedin },
+          },
+        ]
+      : undefined,
+  },
+);
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'ProfilePage',
-  name: title,
+  name: author.name,
   url: canonical,
-  description,
   mainEntity: {
     '@type': 'Person',
     name: author.name,
-    jobTitle: author.role,
-    image: author.image.src,
-    worksFor: {
-      '@type': 'Organization',
-      name: 'Found Search Marketing',
-    },
+    jobTitle: author.title,
+    image: author.image,
+    sameAs: author.linkedin ? [author.linkedin] : undefined,
   },
 };
 ---
 
-<BaseLayout title={title} description={description} canonical={canonical} ogImage={author.image.src} schema={schema}>
-  <AuthorProfile author={author} />
+<BaseLayout
+  title={page.seoTitle}
+  description={page.seoDescription}
+  canonical={page.canonicalUrl}
+  robots={page.robots}
+  schema={schema}
+  bodyClass="legacy-page"
+>
+  <LegacyPageRenderer page={page}>
+    <LegacyPostList posts={posts} heading={`Insights by ${author.name}`} emptyText="No posts are published for this author yet." />
+  </LegacyPageRenderer>
 </BaseLayout>

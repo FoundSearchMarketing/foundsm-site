@@ -2,6 +2,7 @@
 interface CardItem {
   title: string;
   body: string;
+  bodyHtml?: string;
   lead?: string;
   icon?: string;
   image?: string;
@@ -47,7 +48,7 @@ const {
           )}
           <h3>{card.title}</h3>
           {card.lead && <p class="modern-card__lead">{card.lead}</p>}
-          <p class="modern-card__body">{card.body}</p>
+          {card.bodyHtml ? <div class="modern-card__body" set:html={card.bodyHtml} /> : <p class="modern-card__body">{card.body}</p>}
         </article>
       ))}
     </div>

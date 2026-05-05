@@ -76,6 +76,124 @@ export const allLandingPagesQuery = `*[_type == "landingPage"] | order(_createdA
   seoDescription
 }`;
 
+export const homePageQuery = `*[_type == "homePage"][0] {
+  _id,
+  seoTitle,
+  seoDescription,
+  canonicalUrl,
+  robots,
+  "ogImage": ogImage.asset->url,
+  hero,
+  intro {
+    heading,
+    body,
+    "image": image.asset->url,
+    imageAlt
+  },
+  ctaStrip,
+  clientLogos {
+    heading,
+    logos[] {
+      "src": image.asset->url,
+      alt
+    }
+  },
+  outcomes {
+    "image": image.asset->url,
+    imageAlt,
+    heading,
+    body,
+    ctaText,
+    ctaUrl
+  },
+  metrics {
+    spend,
+    leads,
+    experience,
+    employees,
+    testimonial {
+      quote,
+      authorName,
+      authorTitle,
+      authorCompany,
+      "authorImage": authorImage.asset->url,
+      authorImageAlt
+    },
+    ownershipCard,
+    "image": image.asset->url,
+    imageAlt
+  },
+  partners {
+    heading,
+    body,
+    logos[] {
+      "src": image.asset->url,
+      alt
+    },
+    ctaText,
+    ctaUrl
+  },
+  ecosystem {
+    headingLines,
+    introBody,
+    tabListHeading,
+    tabs[] {
+      id,
+      title,
+      "icon": icon.asset->url,
+      body,
+      ctaText,
+      ctaUrl,
+      "image": image.asset->url,
+      imageAlt
+    }
+  }
+}`;
+
+export const aboutPageQuery = `*[_id == "aboutPage"][0]`;
+
+export const capabilitiesPageQuery = `*[_id == "capabilitiesPage"][0]`;
+
+export const capabilityDetailPageQuery = `*[_type == "capabilityDetailPage" && _id == $id][0]`;
+
+export const formPageQuery = `*[_type == "formPage" && _id == $id][0]`;
+
+export const teamPageQuery = `*[_id == "teamPage"][0]`;
+
+export const notFoundPageQuery = `*[_id == "notFoundPage"][0]`;
+
+export const approachPageQuery = `*[_id == "approachPage"][0]`;
+
+export const privacyPolicyPageQuery = `*[_id == "privacyPolicyPage"][0]`;
+
+export const eventLandingPageQuery = `*[_id == "eventLandingPage"][0]`;
+
+export const legacyPagesByPathsQuery = `*[_type == "legacyPage" && path in $paths] {
+  _id,
+  title,
+  path,
+  seoTitle,
+  seoDescription,
+  canonicalUrl,
+  robots,
+  "ogImage": ogImage.asset->url,
+  hero,
+  body,
+  cards,
+  cta,
+  form
+}`;
+
+export const allAuthorsPageQuery = `*[_type == "author"] | order(name asc) {
+  _id,
+  name,
+  "slug": slug.current,
+  title,
+  bio,
+  linkedin,
+  "image": image.asset->url
+}`;
+
 export const landingPageBySlugQuery = `*[_type == "landingPage" && slug.current == $slug][0] {
   _id,
   title,

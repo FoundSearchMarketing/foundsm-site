@@ -1,98 +1,32 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { aboutPageQuery, sanityClient } from '../lib/sanity';
+import { defaultAboutPageData, mergeAboutPageData } from '../lib/fixedPageData';
+import { richHtml, srcFor } from '../lib/fixedPageRender';
 
-const pageTitle = 'About Found Search Marketing | An Enterprise Paid Media Agency';
-const pageDescription = 'Founded in 2006, Found Search Marketing helps enterprise brands achieve consistent, measurable growth through trusted partnerships and precision media execution.';
-
-const credentials = [
-  {
-    image: 'https://foundsm.com/found2025/wp-content/uploads/2025/09/google-partner.png',
-    srcset: 'https://foundsm.com/found2025/wp-content/uploads/2025/09/google-partner.png 190w, https://foundsm.com/found2025/wp-content/uploads/2025/09/google-partner-150x150.png 150w',
-    width: 190,
-    height: 190,
-    alt: 'Google Partner badge',
-    text: 'Certified in many Google marketing products',
-  },
-  {
-    image: 'https://foundsm.com/found2025/wp-content/uploads/2025/09/ibj.png',
-    srcset: 'https://foundsm.com/found2025/wp-content/uploads/2025/09/ibj.png 190w, https://foundsm.com/found2025/wp-content/uploads/2025/09/ibj-150x150.png 150w',
-    width: 190,
-    height: 190,
-    alt: 'Indianapolis Business Journal badge',
-    text: 'Named one of the largest Marketing Firms in Indianapolis',
-  },
-  {
-    image: 'https://foundsm.com/found2025/wp-content/uploads/2026/01/WBE-Digital-Badge.svg',
-    width: 500,
-    height: 500,
-    alt: 'Women-Owned Business Enterprise badge',
-    text: 'Independently owned, certified Women-Owned Business',
-  },
-  {
-    image: 'https://foundsm.com/found2025/wp-content/uploads/2025/09/indiana.png',
-    width: 95,
-    height: 95,
-    alt: 'Indiana badge',
-    text: 'Multiple winners of Best Places to Work awards',
-  },
-];
-
-const missionCards = [
-  {
-    title: 'Smarter',
-    image: 'https://foundsm.com/found2025/wp-content/uploads/2025/09/icon-smarter.svg',
-    text: 'by leveraging cutting-edge technology, first-party data, and custom methodologies to drive measurable business impact.',
-  },
-  {
-    title: 'Faster',
-    image: 'https://foundsm.com/found2025/wp-content/uploads/2025/09/icon-faster.svg',
-    text: 'by providing full-service paid media solutions, from campaign strategy and execution to high-performing ads and landing pages that convert.',
-  },
-  {
-    title: 'Together',
-    image: 'https://foundsm.com/found2025/wp-content/uploads/2025/09/icon-together.svg',
-    text: 'by sitting on the same side of the table as our clients, while empowering our team to thrive, collaborate, and grow alongside them.',
-  },
-];
-
-const values = [
-  {
-    id: 'client-aligned',
-    title: 'Client Aligned',
-    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/09/icon-about-tab1.svg',
-    image: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/about-tab3.webp?ver=1775055851',
-    width: 368,
-    height: 474,
-    copy: "We're more than partners&mdash;we sit on the same side of the table. We work alongside our clients, driven by trust, shared goals, and a commitment to long-term growth.",
-  },
-  {
-    id: 'challenge-assumptions',
-    title: 'Challenge Assumptions',
-    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/09/icon-about-tab2.svg',
-    image: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/about-tab2.webp',
-    width: 368,
-    height: 474,
-    copy: 'We encourage our team, agency, and clients to question the status quo. Innovation starts with curiosity&mdash;and better outcomes come from testing, learning, and evolving together.',
-  },
-  {
-    id: 'own-outcome',
-    title: 'Own The Outcome',
-    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/09/icon-about-tab3.svg',
-    image: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/about-tab1.webp',
-    width: 368,
-    height: 474,
-    copy: 'We focus on what works, measure what matters, and are committed to quality and doing things the right way for our clients&mdash;always for the growth of our team and agency.',
-  },
-  {
-    id: 'scale-intent',
-    title: 'Scale With Intent',
-    icon: 'https://foundsm.com/found2025/wp-content/uploads/2025/09/icon-about-tab4.svg',
-    image: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/about-tab4.webp',
-    width: 368,
-    height: 474,
-    copy: 'Smart growth is shared growth. Our strategies are built to drive measurable, sustainable impact&mdash;for our clients, for our agency, and for the people who make it happen.',
-  },
-];
+const sanityPage = await sanityClient.fetch(aboutPageQuery).catch(() => null);
+const page = mergeAboutPageData(sanityPage);
+const pageTitle = page.seoTitle || defaultAboutPageData.seoTitle;
+const pageDescription = page.seoDescription || defaultAboutPageData.seoDescription;
+const canonical = page.canonicalUrl || defaultAboutPageData.canonicalUrl;
+const credentials = page.who.credentials.map((credential) => ({
+  ...credential,
+  imageSrc: srcFor(credential.image),
+}));
+const missionCards = page.mission.cards.map((card) => ({
+  ...card,
+  iconSrc: srcFor(card.icon),
+}));
+const values = page.values.tabs.map((value) => ({
+  ...value,
+  iconSrc: srcFor(value.icon),
+  imageSrc: srcFor(value.image),
+}));
+const heroImage = srcFor(page.hero.image);
+const whoImage = srcFor(page.who.image);
+const approachImage = srcFor(page.approach.image);
+const teamImage = srcFor(page.team.image);
+const missionHeadingLines = page.mission.headingLines.length > 0 ? page.mission.headingLines : defaultAboutPageData.mission.headingLines;
 
 const schema = {
   '@context': 'https://schema.org',
@@ -128,7 +62,7 @@ const schema = {
     {
       '@type': 'AboutPage',
       name: pageTitle,
-      url: 'https://www.foundsm.com/about-us',
+      url: canonical,
       description: pageDescription,
       publisher: {
         '@type': 'Organization',
@@ -142,60 +76,58 @@ const schema = {
 <BaseLayout
   title={pageTitle}
   description={pageDescription}
-  canonical="https://www.foundsm.com/about-us"
+  canonical={canonical}
+  robots={page.robots}
   schema={schema}
   bodyClass="about-page-modern"
 >
   <article class="about-modern">
     <section class="about-hero" aria-labelledby="about-hero-heading">
-      <div class="about-shell about-hero__grid">
+      <div class:list={['about-shell about-hero__grid', { 'about-hero__grid--text-only': !heroImage }]}>
         <div class="about-hero__copy fade-in-up">
-          <h1 id="about-hero-heading">Built for Paid Media Performance</h1>
-          <div class="about-hero__text">
-            <p>Found Search Marketing is a full-service data engineering agency that leverages advanced analytics to drive smart, paid media strategies. By integrating data-driven insights, strategy and paid media execution under one roof, we deliver customized solutions that generate high-intent leads and measurable results.</p>
-            <p>Our team values transparency, accountability, and innovative problem solving. That's why many of our clients have stuck with us for more than a decade.</p>
-          </div>
+          <h1 id="about-hero-heading">{page.hero.heading}</h1>
+          <div class="about-hero__text" set:html={richHtml(page.hero.body)} />
         </div>
 
-        <div class="about-hero__media fade-in-up" aria-hidden="true">
-          <img
-            src="https://foundsm.com/found2025/wp-content/uploads/2025/09/hero-about-1.webp?ver=1773660460"
-            srcset="https://foundsm.com/found2025/wp-content/uploads/2025/09/hero-about-1.webp 682w, https://foundsm.com/found2025/wp-content/uploads/2025/09/hero-about-1-300x290.webp 300w"
-            sizes="(min-width: 1024px) 42vw, 100vw"
-            alt=""
-            width="682"
-            height="660"
-            loading="eager"
-            fetchpriority="high"
-          />
-        </div>
+        {heroImage && (
+          <div class="about-hero__media fade-in-up" aria-hidden={page.hero.imageAlt ? undefined : 'true'}>
+            <img
+              src={heroImage}
+              sizes="(min-width: 1024px) 42vw, 100vw"
+              alt={page.hero.imageAlt || ''}
+              width="682"
+              height="660"
+              loading="eager"
+              fetchpriority="high"
+            />
+          </div>
+        )}
       </div>
     </section>
 
     <section class="about-who" aria-labelledby="about-who-heading">
       <div class="about-shell about-who__intro fade-in-up">
-        <p class="about-eyebrow">EST. 2006</p>
-        <h2 id="about-who-heading">Who We Are</h2>
+        {page.who.eyebrow && <p class="about-eyebrow">{page.who.eyebrow}</p>}
+        <h2 id="about-who-heading">{page.who.heading}</h2>
       </div>
 
-      <div class="about-shell about-who__grid">
+      <div class:list={['about-shell about-who__grid', { 'about-who__grid--text-only': !whoImage }]}>
         <div class="about-who__copy fade-in-up">
-          <p>Our company was founded in 2006 by Julie Warnecke&mdash;the fourth employee on the Google Ads team. Based in the suburbs of Indianapolis, Indiana, Found has grown to include more than 50 employees&mdash;including three former Googlers&mdash;across 12 states.</p>
+          <div set:html={richHtml(page.who.body)} />
 
-          <h3>We're Also:</h3>
+          {page.who.subheading && <h3>{page.who.subheading}</h3>}
           <div class="credential-grid">
             {credentials.map((credential) => (
               <article class="credential-card">
                 <div class="credential-card__media">
-                  <img
-                    src={credential.image}
-                    srcset={'srcset' in credential ? credential.srcset : undefined}
-                    sizes="(max-width: 767px) 5rem, 6rem"
-                    alt={credential.alt}
-                    width={credential.width}
-                    height={credential.height}
-                    loading="lazy"
-                  />
+                  {credential.imageSrc && (
+                    <img
+                      src={credential.imageSrc}
+                      sizes="(max-width: 767px) 5rem, 6rem"
+                      alt={credential.alt || ''}
+                      loading="lazy"
+                    />
+                  )}
                 </div>
                 <p>{credential.text}</p>
               </article>
@@ -203,33 +135,41 @@ const schema = {
           </div>
         </div>
 
-        <div class="about-who__media fade-in-up">
-          <img
-            src="https://foundsm.com/found2025/wp-content/uploads/2026/03/whoweare.webp"
-            srcset="https://foundsm.com/found2025/wp-content/uploads/2026/03/whoweare.webp 652w, https://foundsm.com/found2025/wp-content/uploads/2026/03/whoweare-155x300.webp 155w, https://foundsm.com/found2025/wp-content/uploads/2026/03/whoweare-527x1024.webp 527w"
-            sizes="(min-width: 1024px) 34vw, 82vw"
-            alt="Found Search Marketing team members collaborating"
-            width="652"
-            height="1266"
-            loading="lazy"
-          />
-        </div>
+        {whoImage && (
+          <div class="about-who__media fade-in-up">
+            <img
+              src={whoImage}
+              sizes="(min-width: 1024px) 34vw, 82vw"
+              alt={page.who.imageAlt || ''}
+              width="652"
+              height="1266"
+              loading="lazy"
+            />
+          </div>
+        )}
       </div>
     </section>
 
     <section class="about-mission" aria-labelledby="about-mission-heading">
       <div class="about-shell">
         <div class="about-section-heading about-section-heading--center fade-in-up">
-          <p class="about-eyebrow">Guided By Our Mission</p>
-          <h2 id="about-mission-heading">Scale Smarter, Move Faster,<br /> Grow Together</h2>
+          {page.mission.eyebrow && <p class="about-eyebrow">{page.mission.eyebrow}</p>}
+          <h2 id="about-mission-heading">
+            {missionHeadingLines.map((line, index) => (
+              <Fragment>
+                {index > 0 && <br />}
+                {line}
+              </Fragment>
+            ))}
+          </h2>
         </div>
 
         <div class="mission-grid">
           {missionCards.map((card) => (
             <article class="mission-card fade-in-up">
-              <img src={card.image} alt="" width="50" height="50" loading="lazy" />
+              {card.iconSrc && <img src={card.iconSrc} alt="" width="50" height="50" loading="lazy" />}
               <h3>{card.title}</h3>
-              <p>{card.text}</p>
+              <div set:html={richHtml(card.body)} />
             </article>
           ))}
         </div>
@@ -240,7 +180,7 @@ const schema = {
       <div class="about-shell">
         <div class="values-tabs">
           <div class="values-tabs__nav fade-in-up">
-            <h2 id="about-values-heading">Rooted In Our Values</h2>
+            <h2 id="about-values-heading">{page.values.heading}</h2>
             <div class="values-tabs__tablist" role="tablist" aria-label="Found Search Marketing values">
               {values.map((value, index) => (
                 <button
@@ -253,7 +193,9 @@ const schema = {
                   tabindex={index === 0 ? undefined : '-1'}
                 >
                   <span class="values-tabs__tab-bar" aria-hidden="true"></span>
-                  <img src={value.icon} alt="" width="50" height="50" loading="lazy" />
+                  <span class="values-tabs__tab-icon" aria-hidden="true">
+                    {value.iconSrc && <img src={value.iconSrc} alt="" width="50" height="50" loading="lazy" />}
+                  </span>
                   <span>{value.title}</span>
                 </button>
               ))}
@@ -271,18 +213,20 @@ const schema = {
               >
                 <div class="values-tabs__panel-copy">
                   <h3>{value.title}</h3>
-                  <p set:html={value.copy} />
+                  <div set:html={richHtml(value.body)} />
                   <a class="about-link" href="/contact-us/">Let's Talk</a>
                 </div>
-                <div class="values-tabs__panel-media">
-                  <img
-                    src={value.image}
-                    alt={value.title}
-                    width={value.width}
-                    height={value.height}
-                    loading={index === 0 ? 'eager' : 'lazy'}
-                  />
-                </div>
+                {value.imageSrc && (
+                  <div class="values-tabs__panel-media">
+                    <img
+                      src={value.imageSrc}
+                      alt={value.imageAlt || value.title || ''}
+                      width="368"
+                      height="474"
+                      loading={index === 0 ? 'eager' : 'lazy'}
+                    />
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -291,50 +235,53 @@ const schema = {
     </section>
 
     <section class="about-approach" aria-labelledby="about-approach-heading">
-      <div class="about-shell about-split">
-        <div class="about-split__media fade-in-up">
-          <img
-            src="https://foundsm.com/found2025/wp-content/uploads/2026/03/about-approach.webp"
-            srcset="https://foundsm.com/found2025/wp-content/uploads/2026/03/about-approach.webp 604w, https://foundsm.com/found2025/wp-content/uploads/2026/03/about-approach-300x300.webp 300w, https://foundsm.com/found2025/wp-content/uploads/2026/03/about-approach-150x150.webp 150w"
-            sizes="(min-width: 900px) 38vw, 90vw"
-            alt="Found Search Marketing planning process"
-            width="604"
-            height="604"
-            loading="lazy"
-          />
-        </div>
+      <div class:list={['about-shell about-split', { 'about-split--text-only': !approachImage }]}>
+        {approachImage && (
+          <div class="about-split__media fade-in-up">
+            <img
+              src={approachImage}
+              sizes="(min-width: 900px) 38vw, 90vw"
+              alt={page.approach.imageAlt || ''}
+              width="604"
+              height="604"
+              loading="lazy"
+            />
+          </div>
+        )}
         <div class="about-split__copy fade-in-up">
-          <h2 id="about-approach-heading">Our Proven Approach</h2>
-          <p>First-party data. Custom playbooks. Automation. Innovative bid strategies. Bespoke dashboards. Our approach combines all of these things and more to create a self-reinforcing optimization cycle that gives us the complete picture of your paid media ecosystem. It's all about turning your data into better insights&mdash;and more clicks into more customers.</p>
-          <a class="about-button" href="/our-approach/">See What Makes Us Unique</a>
+          <h2 id="about-approach-heading">{page.approach.heading}</h2>
+          <div set:html={richHtml(page.approach.body)} />
+          {page.approach.cta?.label && page.approach.cta?.href && (
+            <a class="about-button" href={page.approach.cta.href}>{page.approach.cta.label}</a>
+          )}
         </div>
       </div>
     </section>
 
     <section class="about-team" aria-labelledby="about-team-heading">
       <div class="about-shell">
-        <h2 id="about-team-heading" class="fade-in-up">Meet The Team</h2>
-        <div class="about-team__image fade-in-up">
-          <img
-            src="https://foundsm.com/found2025/wp-content/uploads/2026/03/about-team.webp"
-            srcset="https://foundsm.com/found2025/wp-content/uploads/2026/03/about-team.webp 1399w, https://foundsm.com/found2025/wp-content/uploads/2026/03/about-team-300x150.webp 300w, https://foundsm.com/found2025/wp-content/uploads/2026/03/about-team-1024x512.webp 1024w, https://foundsm.com/found2025/wp-content/uploads/2026/03/about-team-768x384.webp 768w"
-            sizes="(min-width: 1200px) 86rem, 94vw"
-            alt="The Found Search Marketing team"
-            width="1399"
-            height="699"
-            loading="lazy"
-          />
-        </div>
+        <h2 id="about-team-heading" class="fade-in-up">{page.team.heading}</h2>
+        {teamImage && (
+          <div class="about-team__image fade-in-up">
+            <img
+              src={teamImage}
+              sizes="(min-width: 1200px) 86rem, 94vw"
+              alt={page.team.imageAlt || ''}
+              width="1399"
+              height="699"
+              loading="lazy"
+            />
+          </div>
+        )}
       </div>
     </section>
 
     <section class="about-team-cta" aria-label="About the Found team">
       <div class="about-shell about-team-cta__grid fade-in-up">
-        <div class="about-team-cta__copy">
-          <p>Over nearly two decades, our agency has grown substantially. The reason is our team&mdash;they're among the best in the world at what they do. That's because we're client-first thinkers. We move fast&mdash;but always with intention. We focus on working smarter, while executing through the minutia. We put our egos in the back seat. And we love what we do.</p>
-          <p>We also work together seamlessly for the benefit of our clients&mdash;a big reason many of our team members stay for five or even ten-plus years.</p>
-        </div>
-        <a class="about-button about-button--dark" href="/team/">Meet the Team</a>
+        <div class="about-team-cta__copy" set:html={richHtml(page.teamCta.body)} />
+        {page.teamCta.cta?.label && page.teamCta.cta?.href && (
+          <a class="about-button about-button--dark" href={page.teamCta.cta.href}>{page.teamCta.cta.label}</a>
+        )}
       </div>
     </section>
   </article>
@@ -544,7 +491,7 @@ const schema = {
       position: relative;
       padding: 4.5rem 0;
       background-color: var(--about-surface);
-      background-image: url("https://foundsm.com/found2025/wp-content/uploads/2026/03/topography-light_sm.svg");
+      background-image: url("/images/pages/our-approach/topography-light.svg");
       background-size: 34rem;
       overflow: hidden;
     }
@@ -697,7 +644,7 @@ const schema = {
       position: absolute;
       inset: 0;
       content: "";
-      background-image: url("https://foundsm.com/found2025/wp-content/themes/found2025/assets/images/topography-light.svg");
+      background-image: url("/images/pages/our-approach/topography-light.svg");
       background-size: 34rem;
       opacity: 0.08;
       pointer-events: none;
@@ -759,7 +706,14 @@ const schema = {
       background: var(--about-green);
     }
 
-    .values-tabs__tab img {
+    .values-tabs__tab-icon {
+      display: grid;
+      place-items: center;
+      width: 3.125rem;
+      height: 3.125rem;
+    }
+
+    .values-tabs__tab-icon img {
       width: 3.125rem;
       height: 3.125rem;
       object-fit: contain;
@@ -767,9 +721,9 @@ const schema = {
       transition: opacity var(--duration) var(--ease);
     }
 
-    .values-tabs__tab:hover img,
-    .values-tabs__tab:focus-visible img,
-    .values-tabs__tab.is-active img {
+    .values-tabs__tab:hover .values-tabs__tab-icon img,
+    .values-tabs__tab:focus-visible .values-tabs__tab-icon img,
+    .values-tabs__tab.is-active .values-tabs__tab-icon img {
       opacity: 1;
     }
 
@@ -913,12 +867,20 @@ const schema = {
         grid-template-columns: minmax(0, 1fr) minmax(20rem, 0.85fr);
       }
 
+      .about-hero__grid--text-only {
+        grid-template-columns: minmax(0, 43rem);
+      }
+
       .about-hero__media {
         display: block;
       }
 
       .about-who__grid {
         grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.62fr);
+      }
+
+      .about-who__grid--text-only {
+        grid-template-columns: minmax(0, 43rem);
       }
 
       .mission-grid {
@@ -940,6 +902,10 @@ const schema = {
 
       .about-split {
         grid-template-columns: minmax(18rem, 0.8fr) minmax(0, 1fr);
+      }
+
+      .about-split--text-only {
+        grid-template-columns: minmax(0, 38rem);
       }
 
       .about-team-cta__grid {

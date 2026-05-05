@@ -1,11 +1,24 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { capabilitiesPageQuery, sanityClient } from '../../lib/sanity';
+import { defaultCapabilitiesPageData, mergeCapabilitiesPageData } from '../../lib/fixedPageData';
+import { richHtml, srcFor } from '../../lib/fixedPageRender';
 
-const title = 'Capabilities | Found Search Marketing | Enterprise Paid Media Agency';
-const description = 'Found Search Marketing brings deep channel expertise, custom analytics, and agile strategy together to maximize performance across your entire media ecosystem.';
-const canonical = 'https://www.foundsm.com/capabilities/';
-const robots = 'index, follow';
-const imageBase = 'https://foundsm.com/found2025/wp-content/uploads/2026/03';
+const sanityPage = await sanityClient.fetch(capabilitiesPageQuery).catch(() => null);
+const page = mergeCapabilitiesPageData(sanityPage);
+const title = page.seoTitle || defaultCapabilitiesPageData.seoTitle;
+const description = page.seoDescription || defaultCapabilitiesPageData.seoDescription;
+const canonical = page.canonicalUrl || defaultCapabilitiesPageData.canonicalUrl;
+const robots = page.robots || defaultCapabilitiesPageData.robots;
+const heroImage = srcFor(page.hero.image);
+const outcomesImage = srcFor(page.outcomes.image);
+const workflowImage = srcFor(page.workflow.image);
+const dataDetail = page.details[0];
+const paidDetail = page.details[1];
+const creativeDetail = page.details[2];
+const dataImage = srcFor(dataDetail?.image);
+const paidImage = srcFor(paidDetail?.image);
+const creativeImage = srcFor(creativeDetail?.image);
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'WebPage',
@@ -24,170 +37,158 @@ const schema = {
 <BaseLayout title={title} description={description} canonical={canonical} robots={robots} schema={schema}>
   <div class="capabilities-page">
     <section class="capabilities-hero" aria-labelledby="capabilities-hero-title">
-      <div class="capabilities-hero__inner">
+      <div class:list={['capabilities-hero__inner', { 'capabilities-hero__inner--text-only': !heroImage }]}>
         <div class="capabilities-hero__copy">
-          <h1 id="capabilities-hero-title" class="capabilities-hero__title">Smart Data. Smarter Media. Scalable Growth.</h1>
-          <p class="capabilities-hero__text">
-            Found Search Marketing is structured to be both strategic and agile, combining deep media channel expertise with expert talent and leading-edge tools.
-          </p>
+          <h1 id="capabilities-hero-title" class="capabilities-hero__title">{page.hero.heading}</h1>
+          <div class="capabilities-hero__text" set:html={richHtml(page.hero.body)} />
         </div>
 
-        <div class="capabilities-hero__media" aria-hidden="true">
-          <img
-            class="capabilities-hero__image"
-            src={`${imageBase}/capi-eye.webp`}
-            srcset={`${imageBase}/capi-eye.webp 800w, ${imageBase}/capi-eye-300x300.webp 300w, ${imageBase}/capi-eye-150x150.webp 150w, ${imageBase}/capi-eye-768x768.webp 768w`}
-            sizes="(min-width: 1024px) 40vw, 0px"
-            width="800"
-            height="800"
-            alt=""
-            loading="eager"
-            fetchpriority="high"
-            decoding="async"
-          />
-        </div>
+        {heroImage && (
+          <div class="capabilities-hero__media" aria-hidden={page.hero.imageAlt ? undefined : 'true'}>
+            <img
+              class="capabilities-hero__image"
+              src={heroImage}
+              sizes="(min-width: 1024px) 40vw, 0px"
+              width="800"
+              height="800"
+              alt={page.hero.imageAlt || ''}
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+            />
+          </div>
+        )}
       </div>
     </section>
 
     <section class="outcomes-section" aria-labelledby="outcomes-title">
       <div class="outcomes-section__heading">
-        <p class="outcomes-section__eyebrow">Our Capabilities</p>
-        <h2 id="outcomes-title" class="outcomes-section__title">Outcomes that Outperform</h2>
+        {page.outcomes.eyebrow && <p class="outcomes-section__eyebrow">{page.outcomes.eyebrow}</p>}
+        <h2 id="outcomes-title" class="outcomes-section__title">{page.outcomes.heading}</h2>
       </div>
 
-      <div class="outcomes-section__inner">
-        <div class="outcomes-section__media" aria-hidden="true">
-          <img
-            class="outcomes-section__image"
-            src={`${imageBase}/capibilities-mary-jake.webp`}
-            srcset={`${imageBase}/capibilities-mary-jake.webp 524w, ${imageBase}/capibilities-mary-jake-217x300.webp 217w`}
-            sizes="(min-width: 1024px) 36vw, 0px"
-            width="524"
-            height="725"
-            alt=""
-            loading="lazy"
-            decoding="async"
-          />
-        </div>
+      <div class:list={['outcomes-section__inner', { 'outcomes-section__inner--text-only': !outcomesImage }]}>
+        {outcomesImage && (
+          <div class="outcomes-section__media" aria-hidden={page.outcomes.imageAlt ? undefined : 'true'}>
+            <img
+              class="outcomes-section__image"
+              src={outcomesImage}
+              sizes="(min-width: 1024px) 36vw, 0px"
+              width="524"
+              height="725"
+              alt={page.outcomes.imageAlt || ''}
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        )}
 
-        <div class="outcomes-section__copy">
-          <p>
-            We build smart, custom systems for performance marketing by combining first-party data with our proven approach. That starts with a custom playbook where we map solutions tied directly to business outcomes. This includes development of initial KPIs and is our foundation for planning. We also create different versions for launch, expansion, and efficiency&mdash;always taking into account factors like brand strength, demand, revenue, profitability, and opportunity cost.
-          </p>
-          <p>
-            We handle every aspect of your performance lead generation ecosystem, making sure strategy and execution are always aligned.
-          </p>
-        </div>
+        <div class="outcomes-section__copy" set:html={richHtml(page.outcomes.body)} />
       </div>
     </section>
 
     <section class="workflow-section" aria-labelledby="workflow-title">
-      <div class="workflow-section__inner">
+      <div class:list={['workflow-section__inner', { 'workflow-section__inner--text-only': !workflowImage }]}>
         <div class="workflow-section__copy">
-          <h2 id="workflow-title" class="workflow-section__title">How We Work</h2>
-          <p class="workflow-section__text">
-            There are no silos here. Our Paid Media, Data Intelligence, and Performance Creative teams are deeply integrated with each other, creating a connected ecosystem designed to drive smarter decisions and stronger results. This collaboration extends far beyond our walls, as we aim to be a true extension of our clients&rsquo; teams, partnering across their functional teams, and integrating within existing systems and workflows to ensure alignment, agility, and shared success.
-          </p>
-          <p class="workflow-section__prompt">Explore Our Capabilities Below</p>
+          <h2 id="workflow-title" class="workflow-section__title">{page.workflow.heading}</h2>
+          <div class="workflow-section__text" set:html={richHtml(page.workflow.body)} />
+          {page.workflow.prompt && <p class="workflow-section__prompt">{page.workflow.prompt}</p>}
         </div>
 
-        <div class="workflow-section__media">
-          <img
-            class="workflow-section__image"
-            src="https://foundsm.com/found2025/wp-content/uploads/elementor/thumbs/Found-PerformanceMediaEcosystem-rfuzrtzgm07e7n81lnl4kp2jjacqnhumsg3oipclfs-copy-rkgq79yuxxktqtdg3t6nzctjrywzquvq6th88gkex4.webp"
-            width="500"
-            height="500"
-            alt="Found Performance Media Ecosystem"
-            loading="lazy"
-            decoding="async"
-          />
-        </div>
+        {workflowImage && (
+          <div class="workflow-section__media">
+            <img
+              class="workflow-section__image"
+              src={workflowImage}
+              width="500"
+              height="500"
+              alt={page.workflow.imageAlt || ''}
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        )}
       </div>
     </section>
 
     <section class="capability-detail capability-detail--data" id="capabilities-data-reporting-analytics" aria-labelledby="capability-data-title">
-      <div class="capability-detail__inner">
+      <div class:list={['capability-detail__inner', { 'capability-detail__inner--text-only': !dataImage }]}>
         <div class="capability-detail__copy">
-          <h2 id="capability-data-title" class="capability-detail__title">Data, Reporting &amp; Analytics</h2>
-          <div class="capability-detail__text">
-            <p>Do you have multiple data sources to connect? Or multiple CRMs? No problem.</p>
-            <p>
-              For us, analytics and reporting go beyond tracking paid media, and everything we build is uniquely customized to your business goals, data, and workflows. No templates or generic dashboards. From attribution models to automated scripts, we help your team understand what&rsquo;s happening, why, and what to do next.
-            </p>
-          </div>
-          <a class="capability-detail__button capability-detail__button--blue" href="/capabilities/data-intelligence/">Connect Data to Outcomes</a>
+          <h2 id="capability-data-title" class="capability-detail__title">{dataDetail?.heading}</h2>
+          <div class="capability-detail__text" set:html={richHtml(dataDetail?.body)} />
+          {dataDetail?.cta?.label && dataDetail?.cta?.href && (
+            <a class="capability-detail__button capability-detail__button--blue" href={dataDetail.cta.href}>{dataDetail.cta.label}</a>
+          )}
         </div>
 
-        <div class="capability-detail__media" aria-hidden="true">
-          <img
-            class="capability-detail__image"
-            src={`${imageBase}/capi-cactus.webp`}
-            srcset={`${imageBase}/capi-cactus.webp 1024w, ${imageBase}/capi-cactus-300x288.webp 300w, ${imageBase}/capi-cactus-768x737.webp 768w`}
-            sizes="(min-width: 1024px) 44vw, 0px"
-            width="1024"
-            height="983"
-            alt=""
-            loading="lazy"
-            decoding="async"
-          />
-        </div>
+        {dataImage && (
+          <div class="capability-detail__media" aria-hidden={dataDetail?.imageAlt ? undefined : 'true'}>
+            <img
+              class="capability-detail__image"
+              src={dataImage}
+              sizes="(min-width: 1024px) 44vw, 0px"
+              width="1024"
+              height="983"
+              alt={dataDetail?.imageAlt || ''}
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        )}
       </div>
     </section>
 
     <section class="capability-detail capability-detail--paid" id="capabilities-paid-media" aria-labelledby="capability-paid-title">
-      <div class="capability-detail__inner capability-detail__inner--reverse">
-        <div class="capability-detail__media" aria-hidden="true">
-          <img
-            class="capability-detail__image"
-            src={`${imageBase}/capi-typing.webp`}
-            srcset={`${imageBase}/capi-typing.webp 753w, ${imageBase}/capi-typing-294x300.webp 294w`}
-            sizes="(min-width: 1024px) 36vw, 0px"
-            width="753"
-            height="768"
-            alt=""
-            loading="lazy"
-            decoding="async"
-          />
-        </div>
+      <div class:list={['capability-detail__inner capability-detail__inner--reverse', { 'capability-detail__inner--text-only': !paidImage }]}>
+        {paidImage && (
+          <div class="capability-detail__media" aria-hidden={paidDetail?.imageAlt ? undefined : 'true'}>
+            <img
+              class="capability-detail__image"
+              src={paidImage}
+              sizes="(min-width: 1024px) 36vw, 0px"
+              width="753"
+              height="768"
+              alt={paidDetail?.imageAlt || ''}
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        )}
 
         <div class="capability-detail__copy">
-          <h2 id="capability-paid-title" class="capability-detail__title">Paid Media</h2>
-          <div class="capability-detail__text">
-            <p>
-              We don&rsquo;t just manage campaigns. We engineer ecosystems.<br />
-              Our team brings 20+ years of performance experience and a clear view on how to structure, optimize, and scale lead gen across platforms, all while finding new channels for experimentation and growth. Whether you need to diversify your portfolio or double down on what&rsquo;s working, we&rsquo;ll help you reduce risk, maximize efficiency, and push performance further.
-            </p>
-          </div>
-          <a class="capability-detail__button capability-detail__button--green" href="/capabilities/paid-media/">Let&rsquo;s Scale Smarter</a>
+          <h2 id="capability-paid-title" class="capability-detail__title">{paidDetail?.heading}</h2>
+          <div class="capability-detail__text" set:html={richHtml(paidDetail?.body)} />
+          {paidDetail?.cta?.label && paidDetail?.cta?.href && (
+            <a class="capability-detail__button capability-detail__button--green" href={paidDetail.cta.href}>{paidDetail.cta.label}</a>
+          )}
         </div>
       </div>
     </section>
 
     <section class="capability-detail capability-detail--creative" id="capabilities-performance-creative" aria-labelledby="capability-creative-title">
-      <div class="capability-detail__inner">
+      <div class:list={['capability-detail__inner', { 'capability-detail__inner--text-only': !creativeImage }]}>
         <div class="capability-detail__copy">
-          <h2 id="capability-creative-title" class="capability-detail__title">Performance Creative &amp; CRO</h2>
-          <div class="capability-detail__text">
-            <p>
-              Performance creative bridges the gap between storytelling and sales. We design motion graphics, ad creative, and landing pages that don&rsquo;t just look good&mdash;they drive traffic and conversions. Everything we do is tested and built with intention: messaging tailored to your audience, strategic rapid experimentation, visuals designed specifically for the platform, and performance that keeps improving.
-            </p>
-          </div>
-          <a class="capability-detail__button capability-detail__button--orange" href="/capabilities/performance-creative/">Creative Ads That Convert</a>
+          <h2 id="capability-creative-title" class="capability-detail__title">{creativeDetail?.heading}</h2>
+          <div class="capability-detail__text" set:html={richHtml(creativeDetail?.body)} />
+          {creativeDetail?.cta?.label && creativeDetail?.cta?.href && (
+            <a class="capability-detail__button capability-detail__button--orange" href={creativeDetail.cta.href}>{creativeDetail.cta.label}</a>
+          )}
         </div>
 
-        <div class="capability-detail__media" aria-hidden="true">
-          <img
-            class="capability-detail__image"
-            src={`${imageBase}/capi-uiux.webp`}
-            srcset={`${imageBase}/capi-uiux.webp 753w, ${imageBase}/capi-uiux-294x300.webp 294w`}
-            sizes="(min-width: 1024px) 36vw, 0px"
-            width="753"
-            height="768"
-            alt=""
-            loading="lazy"
-            decoding="async"
-          />
-        </div>
+        {creativeImage && (
+          <div class="capability-detail__media" aria-hidden={creativeDetail?.imageAlt ? undefined : 'true'}>
+            <img
+              class="capability-detail__image"
+              src={creativeImage}
+              sizes="(min-width: 1024px) 36vw, 0px"
+              width="753"
+              height="768"
+              alt={creativeDetail?.imageAlt || ''}
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        )}
       </div>
     </section>
   </div>
@@ -226,6 +227,10 @@ const schema = {
     grid-template-columns: minmax(0, 1fr) minmax(24rem, 40%);
     align-items: center;
     gap: 7.5rem;
+  }
+
+  .capabilities-hero__inner--text-only {
+    grid-template-columns: minmax(0, 44rem);
   }
 
   .capabilities-hero__title,
@@ -283,7 +288,7 @@ const schema = {
     content: "";
     position: absolute;
     inset: 0;
-    background-image: url("https://foundsm.com/found2025/wp-content/uploads/2026/03/topography-light_sm.svg");
+    background-image: url("/images/pages/our-approach/topography-light.svg");
     background-position: center top;
     background-size: 130rem auto;
     opacity: 0.75;
@@ -329,6 +334,11 @@ const schema = {
     gap: 5.625rem;
   }
 
+  .outcomes-section__inner--text-only {
+    grid-template-columns: minmax(0, 52rem);
+    justify-content: center;
+  }
+
   .outcomes-section__image {
     width: 100%;
     max-width: 32.75rem;
@@ -353,6 +363,10 @@ const schema = {
     grid-template-columns: minmax(0, 1fr) minmax(20rem, 38%);
     align-items: center;
     gap: 3rem;
+  }
+
+  .workflow-section__inner--text-only {
+    grid-template-columns: minmax(0, 54rem);
   }
 
   .workflow-section__copy {
@@ -394,6 +408,11 @@ const schema = {
 
   .capability-detail__inner--reverse {
     grid-template-columns: minmax(20rem, 1fr) minmax(0, 1fr);
+  }
+
+  .capability-detail__inner--text-only,
+  .capability-detail__inner--reverse.capability-detail__inner--text-only {
+    grid-template-columns: minmax(0, 54rem);
   }
 
   .capability-detail__title {

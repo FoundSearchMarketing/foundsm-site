@@ -2,16 +2,17 @@
 interface Leader {
   name: string;
   role: string;
-  image: string;
+  image?: string;
 }
 
 interface Props {
   title: string;
   intro: string | string[];
+  introHtml?: string;
   leaders: Leader[];
 }
 
-const { title, intro, leaders } = Astro.props;
+const { title, intro, introHtml, leaders } = Astro.props;
 const paragraphs = Array.isArray(intro) ? intro : [intro];
 ---
 
@@ -19,15 +20,19 @@ const paragraphs = Array.isArray(intro) ? intro : [intro];
   <div class="leadership-section__inner">
     <div class="leadership-section__header">
       <h2 id="leadership-heading">{title}</h2>
-      <div>
-        {paragraphs.map((paragraph) => <p>{paragraph}</p>)}
-      </div>
+      {introHtml ? (
+        <div set:html={introHtml} />
+      ) : (
+        <div>
+          {paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+        </div>
+      )}
     </div>
 
     <div class="leadership-grid">
       {leaders.map((leader) => (
         <article class="leader-card">
-          <img src={leader.image} alt={`${leader.name}, ${leader.role}`} loading="lazy" decoding="async" />
+          {leader.image && <img src={leader.image} alt={`${leader.name}, ${leader.role}`} loading="lazy" decoding="async" />}
           <div class="leader-card__overlay">
             <h3>{leader.name}</h3>
             <p>{leader.role}</p>

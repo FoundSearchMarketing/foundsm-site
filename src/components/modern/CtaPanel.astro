@@ -2,12 +2,13 @@
 interface Props {
   title?: string;
   body?: string | string[];
+  bodyHtml?: string;
   ctaLabel?: string;
   ctaHref?: string;
   theme?: 'dark' | 'green' | 'light';
 }
 
-const { title, body, ctaLabel, ctaHref, theme = 'dark' } = Astro.props;
+const { title, body, bodyHtml, ctaLabel, ctaHref, theme = 'dark' } = Astro.props;
 const paragraphs = Array.isArray(body) ? body : body ? [body] : [];
 ---
 
@@ -15,7 +16,9 @@ const paragraphs = Array.isArray(body) ? body : body ? [body] : [];
   <div class="modern-cta__inner">
     <div class="modern-cta__copy">
       {title && <h2>{title}</h2>}
-      {paragraphs.length > 0 && (
+      {bodyHtml ? (
+        <div class="modern-cta__body" set:html={bodyHtml} />
+      ) : paragraphs.length > 0 && (
         <div class="modern-cta__body">
           {paragraphs.map((paragraph) => <p>{paragraph}</p>)}
         </div>

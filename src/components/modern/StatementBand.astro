@@ -2,19 +2,24 @@
 interface Props {
   lead: string;
   body: string | string[];
+  bodyHtml?: string;
   theme?: 'dark' | 'muted' | 'light';
 }
 
-const { lead, body, theme = 'dark' } = Astro.props;
+const { lead, body, bodyHtml, theme = 'dark' } = Astro.props;
 const paragraphs = Array.isArray(body) ? body : [body];
 ---
 
 <section class={`statement-band statement-band--${theme}`}>
   <div class="statement-band__inner">
     <p class="statement-band__lead">{lead}</p>
+    {bodyHtml ? (
+      <div class="statement-band__body" set:html={bodyHtml} />
+    ) : (
     <div class="statement-band__body">
       {paragraphs.map((paragraph) => <p>{paragraph}</p>)}
     </div>
+    )}
   </div>
 </section>
 

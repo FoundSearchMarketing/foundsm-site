@@ -57,10 +57,53 @@ function renderRichText(blocks?: PortableTextBlock[]): string {
 
 const showCta = (item?: { ctaText?: string; ctaUrl?: string }) => Boolean(item?.ctaText && item?.ctaUrl);
 const metricValue = (metric: { value?: number }) => String(metric.value ?? '');
-const clientLogos = homepage.clientLogos.logos.filter((logo) => logo.src);
-const partnerLogos = homepage.partners.logos.filter((logo) => logo.src);
-const firstPrompt = homepage.hero.searchPrompts[0] || '';
 const testimonialRole = [homepage.metrics.testimonial.authorTitle, homepage.metrics.testimonial.authorCompany].filter(Boolean).join(' - ');
+const normalizeLogoLabel = (value?: string) => (value || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+const clientLogoReferences = [
+  { match: 'bar keepers', src: '/images/imported/home/2a087a77-bar_keepers.png', alt: 'Bar Keepers Friend', width: 500, height: 500 },
+  { match: 'accu chek', src: '/images/imported/home/88358477-accuchek.png', alt: 'Accu-Chek', width: 500, height: 500 },
+  { match: 'adt', src: '/images/imported/home/cafb5d20-adt.png', alt: 'ADT', width: 500, height: 500 },
+  { match: 'bastian', src: '/images/imported/home/0c70e49c-bastian.png', alt: 'Bastian Solutions', width: 500, height: 500 },
+  { match: 'indiana wesleyan', src: '/images/imported/home/d36a26d8-iwu.png', alt: 'Indiana Wesleyan University', width: 500, height: 500 },
+  { match: 'hendricks', src: '/images/imported/home/fd0291b8-hendricks.png', alt: 'Hendricks', width: 500, height: 500 },
+  { match: 'kelley', src: '/images/imported/home/5a0956fc-iu_kelley.png', alt: 'Indiana University Kelley School of Business', width: 500, height: 500 },
+  { match: 'lawn pride', src: '/images/imported/home/5aae5834-lawnpride.png', alt: 'Lawn Pride', width: 500, height: 500 },
+  { match: 'indy ignite', src: '/images/imported/home/10d58402-indy_ignite.png', alt: 'Indy Ignite', width: 500, height: 500 },
+  { match: 'farm bureau', src: '/images/imported/home/ad0b0ba1-farm_bureau.png', alt: 'Farm Bureau Insurance', width: 500, height: 500 },
+  { match: 'roche', src: '/images/imported/home/770765aa-roche.png', alt: 'Roche', width: 500, height: 500 },
+  { match: 'duke', src: '/images/imported/home/b5c7c5a9-duke_ce.png', alt: 'Duke Corporate Education', width: 500, height: 500 },
+  { match: 'cook medical', src: '/images/imported/home/e4e77d11-cook_medical.png', alt: 'Cook Medical', width: 500, height: 500 },
+  { match: 'mr quik', src: '/images/imported/home/e859e2ec-mrquik.png', alt: 'Mr. Quik', width: 500, height: 500 },
+  { match: 'bne', src: '/images/imported/home/d725b053-bne.png', alt: 'BNE', width: 500, height: 500 },
+  { match: 'client logo', src: '/images/imported/home/0e58afb7-artboard-1.png', alt: 'Client logo', width: 515, height: 316 },
+];
+const clientLogos = homepage.clientLogos.logos
+  .map((logo, index) => {
+    const label = normalizeLogoLabel(logo.alt);
+    const reference = clientLogoReferences.find((item) => label.includes(item.match)) || clientLogoReferences[index];
+    return {
+      ...logo,
+      src: logo.src || reference?.src,
+      alt: logo.alt || reference?.alt,
+      width: reference?.width || 500,
+      height: reference?.height || 500,
+    };
+  })
+  .filter((logo) => logo.src);
+const partnerLogoReferences = [
+  { match: 'google cloud partner', src: '/images/imported/home/0a6625da-google-cloud-partner.png', alt: 'Google Cloud Partner', width: 226, height: 87 },
+  { match: 'google marketing platform', src: '/images/imported/home/e9c9d115-google-marketing-platform.png', alt: 'Google Marketing Platform', width: 323, height: 90 },
+  { match: 'google partner', src: '/images/imported/home/6a51d0e6-google-partner-150x150.png', alt: 'Google Partner', width: 150, height: 150 },
+  { match: 'microsoft', src: '/images/imported/home/0c547c0b-microsoft_premier_elite_2026_sm-rka1b7x3sf6wfj0z2pn1fa5lbo4pr7vwx2ixsiyuf4.png', alt: 'Microsoft Advertising Premier Elite Partner 2026', width: 184, height: 64 },
+  { match: 'meta', src: '/images/imported/home/719d1ceb-meta.png', alt: 'Meta Business Partner', width: 184, height: 76 },
+];
+const partnerLogos = homepage.partners.logos
+  .map((logo) => {
+    const label = normalizeLogoLabel(logo.alt);
+    const reference = partnerLogoReferences.find((item) => label.includes(item.match));
+    return reference ? { ...logo, ...reference, alt: logo.alt || reference.alt } : logo;
+  })
+  .filter((logo) => logo.src);
 ---
 
 <div class="homepage" data-homepage>
@@ -72,9 +115,15 @@ const testimonialRole = [homepage.metrics.testimonial.authorTitle, homepage.metr
       {homepage.hero.subheadline && <p class="home-splash__content">{homepage.hero.subheadline}</p>}
 
       <div class="home-search" aria-label="Search prompt examples">
-        <span class="home-search__brand" aria-hidden="true">Search</span>
+        <img class="home-search__logo" src="/images/imported/home/3f96aea6-search.svg" alt="Search" width="125" height="38" loading="eager" />
         <div class="home-search__input">
-          <span class="home-search__text" data-home-search-text>{firstPrompt}</span>
+          <span class="home-search__text" data-home-search-text></span>
+          <div class="home-search__icons" aria-hidden="true">
+            <img class="home-search__icon home-search__icon--close" src="/images/imported/home/32e62db2-searchx.svg" alt="" width="25" height="24" loading="eager" data-home-search-close />
+            <div class="home-search__divider"></div>
+            <img class="home-search__icon" src="/images/imported/home/6113ac47-microphone.svg" alt="" width="27" height="27" loading="eager" />
+            <img class="home-search__icon" src="/images/imported/home/6e36db57-searchglass.svg" alt="" width="25" height="25" loading="eager" />
+          </div>
         </div>
         <div class="home-search__prompts" data-home-search-prompts hidden>
           {homepage.hero.searchPrompts.map((prompt) => <span>{prompt}</span>)}
@@ -111,7 +160,13 @@ const testimonialRole = [homepage.metrics.testimonial.authorTitle, homepage.metr
         <div class="home-logo-marquee__track">
           {[...clientLogos, ...clientLogos].map((logo, index) => (
             <figure class="home-logo-marquee__item" aria-hidden={index >= clientLogos.length ? 'true' : undefined}>
-              <img src={logo.src} alt={index >= clientLogos.length ? '' : logo.alt || ''} width="500" height="500" loading="lazy" />
+              <img
+                src={logo.src}
+                alt={index >= clientLogos.length ? '' : logo.alt || ''}
+                width={logo.width}
+                height={logo.height}
+                loading="lazy"
+              />
             </figure>
           ))}
         </div>
@@ -221,12 +276,12 @@ const testimonialRole = [homepage.metrics.testimonial.authorTitle, homepage.metr
         <div class="home-partners__logos" aria-label="Partner logos">
           {partnerLogos.map((logo) => (
             <figure>
-              <img src={logo.src} alt={logo.alt || ''} width="184" height="80" loading="eager" />
+              <img src={logo.src} alt={logo.alt || ''} width={logo.width || 184} height={logo.height || 80} loading="eager" />
             </figure>
           ))}
         </div>
       )}
-      {showCta(homepage.partners) && <a class="home-button home-button--dark" href={homepage.partners.ctaUrl}>{homepage.partners.ctaText}</a>}
+      {showCta(homepage.partners) && <a class="home-button" href={homepage.partners.ctaUrl}>{homepage.partners.ctaText}</a>}
     </div>
   </section>
 
@@ -259,6 +314,41 @@ const testimonialRole = [homepage.metrics.testimonial.authorTitle, homepage.metr
                 {tab.icon ? <img src={tab.icon} alt="" width="50" height="50" loading="eager" /> : <span aria-hidden="true"></span>}
                 <span>{tab.title}</span>
               </button>
+            ))}
+          </div>
+          <div class="home-tabs__mobile-list" aria-label="Performance lead generation ecosystem">
+            {homepage.ecosystem.tabs.map((tab, index) => (
+              <div class="home-tabs__mobile-item">
+                <button
+                  class={`home-tabs__button home-tabs__mobile-button ${index === 0 ? 'is-active' : ''}`}
+                  type="button"
+                  id={`home-mobile-tab-${tab.id}`}
+                  aria-expanded={index === 0 ? 'true' : 'false'}
+                  aria-controls={`home-mobile-panel-${tab.id}`}
+                  data-home-tab={tab.id}
+                >
+                  <span class="home-tabs__button-bar" aria-hidden="true"></span>
+                  {tab.icon ? <img src={tab.icon} alt="" width="50" height="50" loading="eager" /> : <span aria-hidden="true"></span>}
+                  <span>{tab.title}</span>
+                </button>
+                <article
+                  class={`home-tabs__mobile-panel ${index === 0 ? 'is-active' : ''}`}
+                  id={`home-mobile-panel-${tab.id}`}
+                  aria-labelledby={`home-mobile-tab-${tab.id}`}
+                  data-home-mobile-panel={tab.id}
+                  hidden={index !== 0}
+                >
+                  {tab.image && (
+                    <figure class="home-tabs__mobile-media">
+                      <img src={tab.image} alt={tab.imageAlt || tab.title || ''} width="413" height="535" loading="eager" />
+                    </figure>
+                  )}
+                  <div class="home-tabs__mobile-copy">
+                    <Fragment set:html={renderRichText(tab.body)} />
+                    {showCta(tab) && <a class="home-button home-button--dark" href={tab.ctaUrl}>{tab.ctaText}</a>}
+                  </div>
+                </article>
+              </div>
             ))}
           </div>
         </div>
@@ -297,18 +387,72 @@ const testimonialRole = [homepage.metrics.testimonial.authorTitle, homepage.metr
       root.dataset.initialized = 'true';
 
       const searchText = root.querySelector('[data-home-search-text]');
-      const promptItems = Array.from(root.querySelectorAll('[data-home-search-prompts] span')).map((item) => item.textContent || '');
+      const promptItems = Array.from(root.querySelectorAll('[data-home-search-prompts] span'))
+        .map((item) => item.textContent?.trim() || '')
+        .filter(Boolean);
       if (searchText && promptItems.length > 0) {
-        let index = 0;
-        window.setInterval(() => {
-          index = (index + 1) % promptItems.length;
-          searchText.textContent = promptItems[index];
-        }, 2600);
+        const closeIcon = searchText.closest('.home-search__input')?.querySelector('[data-home-search-close]');
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let isWaiting = false;
+        const typeSpeed = 50;
+        const deleteSpeed = 30;
+        const waitTime = 2000;
+
+        searchText.classList.add('visible');
+
+        const typeText = () => {
+          if (!root.isConnected || isWaiting) return;
+
+          const currentPhrase = promptItems[phraseIndex];
+
+          if (isDeleting) {
+            searchText.textContent = currentPhrase.substring(0, charIndex - 1);
+            charIndex -= 1;
+
+            if (closeIcon instanceof HTMLElement && charIndex === 0) {
+              closeIcon.style.opacity = '0';
+            }
+
+            if (charIndex === 0) {
+              isDeleting = false;
+              phraseIndex = (phraseIndex + 1) % promptItems.length;
+              window.setTimeout(typeText, 500);
+              return;
+            }
+
+            window.setTimeout(typeText, deleteSpeed);
+            return;
+          }
+
+          searchText.textContent = currentPhrase.substring(0, charIndex + 1);
+          charIndex += 1;
+
+          if (closeIcon instanceof HTMLElement && charIndex === 1) {
+            closeIcon.style.opacity = '1';
+          }
+
+          if (charIndex === currentPhrase.length) {
+            isWaiting = true;
+            window.setTimeout(() => {
+              isWaiting = false;
+              isDeleting = true;
+              typeText();
+            }, waitTime);
+            return;
+          }
+
+          window.setTimeout(typeText, typeSpeed);
+        };
+
+        window.setTimeout(typeText, 1000);
       }
 
       root.querySelectorAll('[data-home-tabs]').forEach((tabs) => {
         const buttons = Array.from(tabs.querySelectorAll('[data-home-tab]'));
         const panels = Array.from(tabs.querySelectorAll('[data-home-panel]'));
+        const mobilePanels = Array.from(tabs.querySelectorAll('[data-home-mobile-panel]'));
 
         buttons.forEach((button) => {
           button.addEventListener('click', () => {
@@ -316,14 +460,27 @@ const testimonialRole = [homepage.metrics.testimonial.authorTitle, homepage.metr
             const id = button.dataset.homeTab;
 
             buttons.forEach((candidate) => {
-              const isActive = candidate === button;
+              if (!(candidate instanceof HTMLElement)) return;
+              const isActive = candidate.dataset.homeTab === id;
               candidate.classList.toggle('is-active', isActive);
-              candidate.setAttribute('aria-selected', String(isActive));
+              if (candidate.getAttribute('role') === 'tab') {
+                candidate.setAttribute('aria-selected', String(isActive));
+              }
+              if (candidate.hasAttribute('aria-expanded')) {
+                candidate.setAttribute('aria-expanded', String(isActive));
+              }
             });
 
             panels.forEach((panel) => {
               if (!(panel instanceof HTMLElement)) return;
               const isActive = panel.dataset.homePanel === id;
+              panel.classList.toggle('is-active', isActive);
+              panel.hidden = !isActive;
+            });
+
+            mobilePanels.forEach((panel) => {
+              if (!(panel instanceof HTMLElement)) return;
+              const isActive = panel.dataset.homeMobilePanel === id;
               panel.classList.toggle('is-active', isActive);
               panel.hidden = !isActive;
             });

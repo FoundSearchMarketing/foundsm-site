@@ -81,6 +81,7 @@ const logoArrayField = (name: string, title: string) =>
             title: 'Image',
             type: 'image',
             options: { hotspot: false },
+            validation: (Rule) => Rule.required(),
           }),
           defineField({
             name: 'alt',

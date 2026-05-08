@@ -100,7 +100,10 @@ body.home-page {
 .home-search__logo {
   flex: 0 0 auto;
   width: 125px;
-  height: auto;
+  color: var(--home-black);
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 38px;
 }
 
 .home-search__input {
@@ -148,6 +151,14 @@ body.home-page {
 
 .home-search__icon {
   flex: 0 0 auto;
+  width: 27px;
+  height: 27px;
+  color: var(--home-black);
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.4;
 }
 
 .home-search__icon--close {

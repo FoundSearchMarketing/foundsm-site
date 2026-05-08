@@ -9,6 +9,7 @@ import { defaultContactPageData, defaultNewsletterPageData } from '../src/lib/mo
 const projectId = 'vzneqxsx';
 const singletonTypes = new Set([
   'homePage',
+  'insightsPage',
   'aboutPage',
   'capabilitiesPage',
   'capabilityDetailPage',
@@ -83,6 +84,10 @@ const structure = (S: any) =>
         .title('Home Page')
         .id('homePage')
         .child(S.document().schemaType('homePage').documentId('homePage').title('Home Page')),
+      S.listItem()
+        .title('Insights Page')
+        .id('insightsPage')
+        .child(S.document().schemaType('insightsPage').documentId('insightsPage').title('Insights Page')),
       S.listItem()
         .title('About Page')
         .id('aboutPage')

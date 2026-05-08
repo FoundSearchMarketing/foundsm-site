@@ -3,6 +3,7 @@ import blogCategory from './blogCategory';
 import author from './author';
 import teamMember from './teamMember';
 import homePage from './homePage';
+import insightsPage from './insightsPage';
 import landingPage from './landingPage';
 import legacyPage from './legacyPage';
 import { aboutPage, capabilitiesPage, capabilityDetailPage } from './fixedPages';
@@ -24,6 +25,7 @@ export const schemaTypes = [
   author,
   teamMember,
   homePage,
+  insightsPage,
   aboutPage,
   capabilitiesPage,
   capabilityDetailPage,

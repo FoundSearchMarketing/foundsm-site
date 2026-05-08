@@ -168,6 +168,8 @@ export const privacyPolicyPageQuery = `*[_id == "privacyPolicyPage"][0]`;
 
 export const eventLandingPageQuery = `*[_id == "eventLandingPage"][0]`;
 
+export const insightsPageQuery = `*[_id == "insightsPage"][0]`;
+
 export const legacyPagesByPathsQuery = `*[_type == "legacyPage" && path in $paths] {
   _id,
   title,

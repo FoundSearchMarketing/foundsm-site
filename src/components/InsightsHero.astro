@@ -1,35 +1,38 @@
 ---
-import { Image } from 'astro:assets';
-import bulb from '../assets/insights_bulb-1.webp';
-
 interface Props {
   headline?: string;
   body?: string;
+  imageSrc?: string;
   imageAlt?: string;
 }
 
 const {
   headline = 'Where Bold Ideas Are Found.',
   body = 'Great performance begins by staying sharp. Tap into fresh insights, news, and forward-thinking strategies from our team and beyond.',
+  imageSrc,
   imageAlt = '',
 } = Astro.props;
 ---
 
 <section class="insights-hero" aria-label={headline}>
-  <div class="insights-hero__inner">
+  <div class:list={['insights-hero__inner', { 'insights-hero__inner--text-only': !imageSrc }]}>
     <div class="insights-hero__copy">
       <h1 class="insights-hero__headline">{headline}</h1>
       <p class="insights-hero__body">{body}</p>
     </div>
-    <figure class="insights-hero__figure" aria-hidden="true">
-      <Image
-        src={bulb}
-        alt={imageAlt}
-        widths={[300, 434, 600, 800]}
-        sizes="(max-width: 767px) 60vw, 32rem"
-        loading="eager"
-      />
-    </figure>
+    {imageSrc && (
+      <figure class="insights-hero__figure" aria-hidden={imageAlt ? undefined : 'true'}>
+        <img
+          src={imageSrc}
+          alt={imageAlt}
+          width="434"
+          height="609"
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+        />
+      </figure>
+    )}
   </div>
 </section>
 
@@ -55,6 +58,10 @@ const {
     min-block-size: calc(609px + var(--header-height, 5.3125rem));
     margin-inline: auto;
     padding-block-start: var(--header-height, 5.3125rem);
+  }
+
+  .insights-hero__inner--text-only {
+    grid-template-columns: minmax(0, 52rem);
   }
 
   .insights-hero__copy {

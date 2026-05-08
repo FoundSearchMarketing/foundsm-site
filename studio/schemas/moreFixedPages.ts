@@ -76,6 +76,11 @@ const imageFields = [
   defineField({ name: 'imageAlt', title: 'Image Alt Text', type: 'string' }),
 ];
 
+const requiredImageFields = [
+  defineField({ name: 'image', title: 'Image', type: 'image', options: { hotspot: true }, validation: (Rule) => Rule.required() }),
+  defineField({ name: 'imageAlt', title: 'Image Alt Text', type: 'string' }),
+];
+
 const richSectionFields = [
   defineField({ name: 'heading', title: 'Heading', type: 'string' }),
   richTextField('body', 'Body'),
@@ -160,8 +165,8 @@ export const approachPage = defineType({
   groups,
   fields: [
     ...seoFields,
-    defineField({ name: 'hero', title: 'Hero', type: 'object', group: 'content', fields: [...richSectionFields, ...imageFields] }),
-    defineField({ name: 'intro', title: 'Intro', type: 'object', group: 'content', fields: [defineField({ name: 'eyebrow', title: 'Eyebrow', type: 'string' }), ...richSectionFields, ...imageFields] }),
+    defineField({ name: 'hero', title: 'Hero', type: 'object', group: 'content', fields: [...richSectionFields, ...requiredImageFields] }),
+    defineField({ name: 'intro', title: 'Intro', type: 'object', group: 'content', fields: [defineField({ name: 'eyebrow', title: 'Eyebrow', type: 'string' }), ...richSectionFields, ...requiredImageFields] }),
     defineField({ name: 'callout', title: 'CTA Strip', type: 'object', group: 'content', fields: [defineField({ name: 'heading', title: 'Heading', type: 'text', rows: 3 }), defineField({ name: 'cta', title: 'CTA', type: 'object', fields: ctaFields })] }),
     defineField({
       name: 'advantages',
@@ -184,7 +189,7 @@ export const approachPage = defineType({
         defineField({ name: 'eyebrow', title: 'Eyebrow', type: 'string' }),
         defineField({ name: 'headingLines', title: 'Heading Lines', type: 'array', of: [defineArrayMember({ type: 'string' })] }),
         richTextField('body', 'Body'),
-        defineField({ name: 'tabs', title: 'Tabs', type: 'array', of: [defineArrayMember({ type: 'object', fields: [defineField({ name: 'label', title: 'Tab Label', type: 'string' }), ...richSectionFields, ...imageFields], preview: { select: { title: 'label', media: 'image' } } })] }),
+        defineField({ name: 'tabs', title: 'Tabs', type: 'array', of: [defineArrayMember({ type: 'object', fields: [defineField({ name: 'label', title: 'Tab Label', type: 'string' }), ...richSectionFields, ...requiredImageFields], preview: { select: { title: 'label', media: 'image' } } })] }),
         defineField({ name: 'ctaHeadingLines', title: 'CTA Heading Lines', type: 'array', of: [defineArrayMember({ type: 'string' })] }),
         defineField({ name: 'cta', title: 'CTA', type: 'object', fields: ctaFields }),
       ],

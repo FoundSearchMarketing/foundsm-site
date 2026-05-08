@@ -11,8 +11,8 @@ const page = mergeApproachPageData(sanityPage);
 const title = page.seoTitle || defaultApproachPageData.seoTitle;
 const description = page.seoDescription || defaultApproachPageData.seoDescription;
 const canonical = page.canonicalUrl || defaultApproachPageData.canonicalUrl;
-const heroImage = srcFor(page.hero.image) || `${assetPath}/hero-approach-matt.webp`;
-const introImage = srcFor(page.intro.image) || `${assetPath}/approach.webp`;
+const heroImage = srcFor(page.hero.image);
+const introImage = srcFor(page.intro.image);
 const defaultAdvantageIcons = [
   'icon-difference-1.svg',
   'icon-difference-2.svg',
@@ -31,16 +31,9 @@ const advantageColumns = [
   advantages.slice(0, 4),
   advantages.slice(4),
 ];
-const defaultPartnershipImages = [
-  'google-marketing-platform-badge.svg',
-  'microsoft-badge-2026.svg',
-  'google-partner-badge.svg',
-  'meta-badge.svg',
-  'onetrust-privacy-professional.png',
-];
-const partnershipTabs = page.partnerships.tabs.map((tab, index) => ({
+const partnershipTabs = page.partnerships.tabs.map((tab) => ({
   ...tab,
-  imageSrc: srcFor(tab.image) || `${assetPath}/${defaultPartnershipImages[index]}`,
+  imageSrc: srcFor(tab.image),
 }));
 const linesFor = (value?: string, fallback: string[] = []) => value?.split('\n').filter(Boolean) || fallback;
 const heroHeadingLines = linesFor(page.hero.heading);
@@ -70,7 +63,7 @@ const schema = {
 >
   <div class="approach-page">
     <section class="approach-hero" aria-labelledby="approach-hero-title">
-      <div class="approach-shell approach-hero__grid">
+      <div class:list={['approach-shell', 'approach-hero__grid', !heroImage && 'approach-hero__grid--without-media']}>
         <div class="approach-hero__copy">
           <h1 id="approach-hero-title">
             {heroHeadingLines.map((line, index) => (
@@ -80,16 +73,18 @@ const schema = {
           <div class="approach-hero__intro" set:html={richHtml(page.hero.body)} />
         </div>
 
-        <figure class="approach-hero__media" aria-hidden={page.hero.imageAlt ? undefined : 'true'}>
-          <img
-            src={heroImage}
-            alt={page.hero.imageAlt || ''}
-            width="692"
-            height="722"
-            loading="eager"
-            decoding="async"
-          />
-        </figure>
+        {heroImage && (
+          <figure class="approach-hero__media" aria-hidden={page.hero.imageAlt ? undefined : 'true'}>
+            <img
+              src={heroImage}
+              alt={page.hero.imageAlt || ''}
+              width="692"
+              height="722"
+              loading="eager"
+              decoding="async"
+            />
+          </figure>
+        )}
       </div>
     </section>
 
@@ -102,19 +97,21 @@ const schema = {
           ))}
         </h2>
 
-        <div class="approach-intro__grid">
+        <div class:list={['approach-intro__grid', !introImage && 'approach-intro__grid--without-media']}>
           <div class="approach-intro__copy" set:html={richHtml(page.intro.body)} />
 
-          <figure class="approach-intro__media" aria-hidden={page.intro.imageAlt ? undefined : 'true'}>
-            <img
-              src={introImage}
-              alt={page.intro.imageAlt || ''}
-              width="424"
-              height="401"
-              loading="lazy"
-              decoding="async"
-            />
-          </figure>
+          {introImage && (
+            <figure class="approach-intro__media" aria-hidden={page.intro.imageAlt ? undefined : 'true'}>
+              <img
+                src={introImage}
+                alt={page.intro.imageAlt || ''}
+                width="424"
+                height="401"
+                loading="lazy"
+                decoding="async"
+              />
+            </figure>
+          )}
         </div>
       </div>
     </section>
@@ -227,10 +224,11 @@ const schema = {
 
               return (
                 <section
-                  class="approach-partnerships__panel"
+                  class:list={['approach-partnerships__panel', !tab.imageSrc && 'approach-partnerships__panel--without-badge', isSelected && 'is-active']}
                   id={`approach-partnership-panel-${index + 1}`}
                   role="tabpanel"
                   aria-labelledby={`approach-partnership-tab-${index + 1}`}
+                  aria-hidden={!isSelected ? 'true' : undefined}
                   hidden={!isSelected}
                   data-partnership-panel
                 >
@@ -238,14 +236,16 @@ const schema = {
                     <h3>{tab.heading || tab.label}</h3>
                     <div set:html={richHtml(tab.body)} />
                   </div>
-                  <div class="approach-partnerships__badge">
-                    <img
-                      src={tab.imageSrc}
-                      alt={tab.imageAlt || tab.label || ''}
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </div>
+                  {tab.imageSrc && (
+                    <div class="approach-partnerships__badge">
+                      <img
+                        src={tab.imageSrc}
+                        alt={tab.imageAlt || tab.label || ''}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                  )}
                 </section>
               );
             })}
@@ -270,9 +270,73 @@ const schema = {
       const root = document.querySelector('.approach-page');
       if (!root) return;
 
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
       const accordion = root.querySelector('[data-approach-accordion]');
       if (accordion) {
         const triggers = Array.from(accordion.querySelectorAll('[data-advantage-trigger]'));
+        const panels = Array.from(accordion.querySelectorAll('.approach-advantages__panel'));
+        let resizeFrame = 0;
+
+        const syncAdvantagePanelHeight = () => {
+          const openTrigger = triggers.find((trigger) => trigger.getAttribute('aria-expanded') === 'true');
+          const openPanelId = openTrigger?.getAttribute('aria-controls') || panels[0]?.id;
+
+          panels.forEach((panel) => {
+            panel.hidden = false;
+            panel.style.removeProperty('height');
+            panel.style.removeProperty('overflow');
+            panel.style.removeProperty('opacity');
+          });
+
+          const maxHeight = Math.max(...panels.map((panel) => panel.scrollHeight));
+          if (Number.isFinite(maxHeight) && maxHeight > 0) {
+            accordion.style.setProperty('--approach-advantages-panel-height', `${Math.ceil(maxHeight)}px`);
+          }
+
+          panels.forEach((panel) => {
+            panel.hidden = panel.id !== openPanelId;
+          });
+        };
+
+        const queueAdvantagePanelSync = () => {
+          if (resizeFrame) window.cancelAnimationFrame(resizeFrame);
+          resizeFrame = window.requestAnimationFrame(() => {
+            resizeFrame = 0;
+            syncAdvantagePanelHeight();
+          });
+        };
+
+        const finishPanelTransition = (panel) => {
+          panel.style.removeProperty('opacity');
+        };
+
+        const animatePanel = (panel, shouldOpen) => {
+          if (prefersReducedMotion) {
+            panel.hidden = !shouldOpen;
+            finishPanelTransition(panel);
+            return;
+          }
+
+          if (shouldOpen) {
+            panel.hidden = false;
+            panel.style.opacity = '0';
+            panel.offsetHeight;
+            panel.style.opacity = '1';
+
+            const onOpenEnd = (event) => {
+              if (event.target !== panel || event.propertyName !== 'opacity') return;
+              panel.removeEventListener('transitionend', onOpenEnd);
+              finishPanelTransition(panel);
+            };
+
+            panel.addEventListener('transitionend', onOpenEnd);
+            return;
+          }
+
+          panel.hidden = true;
+          finishPanelTransition(panel);
+        };
 
         const setAdvantageOpen = (trigger, shouldOpen) => {
           const item = trigger.closest('.approach-advantages__item');
@@ -280,10 +344,11 @@ const schema = {
           const panel = panelId ? document.getElementById(panelId) : null;
 
           if (!item || !panel) return;
+          if (trigger.getAttribute('aria-expanded') === String(shouldOpen)) return;
 
           item.classList.toggle('is-open', shouldOpen);
           trigger.setAttribute('aria-expanded', String(shouldOpen));
-          panel.hidden = !shouldOpen;
+          animatePanel(panel, shouldOpen);
         };
 
         triggers.forEach((trigger) => {
@@ -293,6 +358,10 @@ const schema = {
             });
           });
         });
+
+        syncAdvantagePanelHeight();
+        document.fonts?.ready?.then(syncAdvantagePanelHeight);
+        window.addEventListener('resize', queueAdvantagePanelSync, { passive: true });
       }
 
       const tabsRoot = root.querySelector('[data-approach-tabs]');
@@ -302,6 +371,10 @@ const schema = {
 
         const activateTab = (tab) => {
           const panelId = tab.getAttribute('aria-controls');
+          const activePanel = panels.find((panel) => panel.classList.contains('is-active'));
+          const nextPanel = panels.find((panel) => panel.id === panelId);
+
+          if (!nextPanel || activePanel === nextPanel) return;
 
           tabs.forEach((candidate) => {
             const isSelected = candidate === tab;
@@ -309,9 +382,23 @@ const schema = {
             candidate.setAttribute('tabindex', isSelected ? '0' : '-1');
           });
 
-          panels.forEach((panel) => {
-            panel.hidden = panel.id !== panelId;
-          });
+          if (activePanel) {
+            activePanel.classList.remove('is-active');
+            activePanel.setAttribute('aria-hidden', 'true');
+
+            if (prefersReducedMotion) {
+              activePanel.hidden = true;
+            } else {
+              window.setTimeout(() => {
+                if (!activePanel.classList.contains('is-active')) activePanel.hidden = true;
+              }, 320);
+            }
+          }
+
+          nextPanel.hidden = false;
+          nextPanel.removeAttribute('aria-hidden');
+          nextPanel.offsetHeight;
+          nextPanel.classList.add('is-active');
         };
 
         tabs.forEach((tab, index) => {
@@ -377,7 +464,7 @@ const schema = {
     }
 
     .approach-eyebrow {
-      margin: 0 0 1rem;
+      margin: 0 0 1.25rem;
       color: var(--approach-color-text);
       font-size: var(--approach-eyebrow-size);
       font-weight: 300;
@@ -424,6 +511,10 @@ const schema = {
       grid-template-columns: minmax(0, 1.25fr) minmax(22rem, 0.75fr);
       align-items: center;
       gap: 3.4375rem;
+    }
+
+    .approach-hero__grid--without-media {
+      grid-template-columns: minmax(0, 1fr);
     }
 
     .approach-hero__copy {
@@ -515,6 +606,10 @@ const schema = {
       gap: 3.125rem;
       margin-block-start: 3.75rem;
       padding-inline: 0.625rem;
+    }
+
+    .approach-intro__grid--without-media {
+      grid-template-columns: minmax(0, 1fr);
     }
 
     .approach-intro__copy p {
@@ -697,7 +792,11 @@ const schema = {
       grid-template-columns: 3.125rem minmax(0, 1fr);
       align-items: start;
       gap: 1.25rem;
+      block-size: var(--approach-advantages-panel-height, auto);
       padding-block-start: 1.875rem;
+      overflow: hidden;
+      opacity: 1;
+      transition: opacity 0.25s ease-in-out;
     }
 
     .approach-advantages__panel[hidden] {
@@ -734,7 +833,7 @@ const schema = {
       position: relative;
       isolation: isolate;
       display: grid;
-      grid-template-columns: minmax(17rem, 1fr) minmax(0, 2fr);
+      grid-template-columns: minmax(17rem, calc(100% / 3 - 5rem)) minmax(0, calc((100% / 3) * 2 + 1.875rem));
       gap: 3.125rem;
       margin-block-start: 3.75rem;
       padding: 5rem 3.125rem;
@@ -811,14 +910,28 @@ const schema = {
     }
 
     .approach-partnerships__panels {
+      display: grid;
       min-inline-size: 0;
     }
 
     .approach-partnerships__panel {
+      grid-area: 1 / 1;
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(12rem, 0.9fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       align-items: start;
       gap: 3.4375rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease-in-out;
+    }
+
+    .approach-partnerships__panel.is-active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .approach-partnerships__panel--without-badge {
+      grid-template-columns: minmax(0, 1fr);
     }
 
     .approach-partnerships__panel[hidden] {

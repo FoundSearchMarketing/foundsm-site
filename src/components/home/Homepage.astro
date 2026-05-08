@@ -101,7 +101,15 @@ const partnerLogos = homepage.partners.logos
   .map((logo) => {
     const label = normalizeLogoLabel(logo.alt);
     const reference = partnerLogoReferences.find((item) => label.includes(item.match));
-    return reference ? { ...logo, ...reference, alt: logo.alt || reference.alt } : logo;
+    return reference
+      ? {
+          ...logo,
+          src: logo.src || reference.src,
+          alt: logo.alt || reference.alt,
+          width: reference.width,
+          height: reference.height,
+        }
+      : logo;
   })
   .filter((logo) => logo.src);
 ---

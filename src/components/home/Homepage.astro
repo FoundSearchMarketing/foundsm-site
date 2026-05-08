@@ -123,14 +123,23 @@ const partnerLogos = homepage.partners.logos
       {homepage.hero.subheadline && <p class="home-splash__content">{homepage.hero.subheadline}</p>}
 
       <div class="home-search" aria-label="Search prompt examples">
-        <img class="home-search__logo" src="/images/imported/home/3f96aea6-search.svg" alt="Search" width="125" height="38" loading="eager" />
+        <span class="home-search__logo" aria-hidden="true">Search</span>
         <div class="home-search__input">
           <span class="home-search__text" data-home-search-text></span>
           <div class="home-search__icons" aria-hidden="true">
-            <img class="home-search__icon home-search__icon--close" src="/images/imported/home/32e62db2-searchx.svg" alt="" width="25" height="24" loading="eager" data-home-search-close />
+            <svg class="home-search__icon home-search__icon--close" viewBox="0 0 24 24" focusable="false" data-home-search-close>
+              <path d="m5 5 14 14M19 5 5 19" />
+            </svg>
             <div class="home-search__divider"></div>
-            <img class="home-search__icon" src="/images/imported/home/6113ac47-microphone.svg" alt="" width="27" height="27" loading="eager" />
-            <img class="home-search__icon" src="/images/imported/home/6e36db57-searchglass.svg" alt="" width="25" height="25" loading="eager" />
+            <svg class="home-search__icon" viewBox="0 0 24 24" focusable="false">
+              <path d="M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3Z" />
+              <path d="M5 11v1a7 7 0 0 0 14 0v-1" />
+              <path d="M12 19v3" />
+            </svg>
+            <svg class="home-search__icon" viewBox="0 0 24 24" focusable="false">
+              <circle cx="11" cy="11" r="7" />
+              <path d="m16.5 16.5 4.5 4.5" />
+            </svg>
           </div>
         </div>
         <div class="home-search__prompts" data-home-search-prompts hidden>
@@ -419,7 +428,7 @@ const partnerLogos = homepage.partners.logos
             searchText.textContent = currentPhrase.substring(0, charIndex - 1);
             charIndex -= 1;
 
-            if (closeIcon instanceof HTMLElement && charIndex === 0) {
+            if ((closeIcon instanceof HTMLElement || closeIcon instanceof SVGElement) && charIndex === 0) {
               closeIcon.style.opacity = '0';
             }
 
@@ -437,7 +446,7 @@ const partnerLogos = homepage.partners.logos
           searchText.textContent = currentPhrase.substring(0, charIndex + 1);
           charIndex += 1;
 
-          if (closeIcon instanceof HTMLElement && charIndex === 1) {
+          if ((closeIcon instanceof HTMLElement || closeIcon instanceof SVGElement) && charIndex === 1) {
             closeIcon.style.opacity = '1';
           }
 

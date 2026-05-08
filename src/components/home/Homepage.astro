@@ -59,31 +59,30 @@ const showCta = (item?: { ctaText?: string; ctaUrl?: string }) => Boolean(item?.
 const metricValue = (metric: { value?: number }) => String(metric.value ?? '');
 const testimonialRole = [homepage.metrics.testimonial.authorTitle, homepage.metrics.testimonial.authorCompany].filter(Boolean).join(' - ');
 const normalizeLogoLabel = (value?: string) => (value || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
-const clientLogoReferences = [
-  { match: 'bar keepers', src: '/images/imported/home/2a087a77-bar_keepers.png', alt: 'Bar Keepers Friend', width: 500, height: 500 },
-  { match: 'accu chek', src: '/images/imported/home/88358477-accuchek.png', alt: 'Accu-Chek', width: 500, height: 500 },
-  { match: 'adt', src: '/images/imported/home/cafb5d20-adt.png', alt: 'ADT', width: 500, height: 500 },
-  { match: 'bastian', src: '/images/imported/home/0c70e49c-bastian.png', alt: 'Bastian Solutions', width: 500, height: 500 },
-  { match: 'indiana wesleyan', src: '/images/imported/home/d36a26d8-iwu.png', alt: 'Indiana Wesleyan University', width: 500, height: 500 },
-  { match: 'hendricks', src: '/images/imported/home/fd0291b8-hendricks.png', alt: 'Hendricks', width: 500, height: 500 },
-  { match: 'kelley', src: '/images/imported/home/5a0956fc-iu_kelley.png', alt: 'Indiana University Kelley School of Business', width: 500, height: 500 },
-  { match: 'lawn pride', src: '/images/imported/home/5aae5834-lawnpride.png', alt: 'Lawn Pride', width: 500, height: 500 },
-  { match: 'indy ignite', src: '/images/imported/home/10d58402-indy_ignite.png', alt: 'Indy Ignite', width: 500, height: 500 },
-  { match: 'farm bureau', src: '/images/imported/home/ad0b0ba1-farm_bureau.png', alt: 'Farm Bureau Insurance', width: 500, height: 500 },
-  { match: 'roche', src: '/images/imported/home/770765aa-roche.png', alt: 'Roche', width: 500, height: 500 },
-  { match: 'duke', src: '/images/imported/home/b5c7c5a9-duke_ce.png', alt: 'Duke Corporate Education', width: 500, height: 500 },
-  { match: 'cook medical', src: '/images/imported/home/e4e77d11-cook_medical.png', alt: 'Cook Medical', width: 500, height: 500 },
-  { match: 'mr quik', src: '/images/imported/home/e859e2ec-mrquik.png', alt: 'Mr. Quik', width: 500, height: 500 },
-  { match: 'bne', src: '/images/imported/home/d725b053-bne.png', alt: 'BNE', width: 500, height: 500 },
-  { match: 'client logo', src: '/images/imported/home/0e58afb7-artboard-1.png', alt: 'Client logo', width: 515, height: 316 },
+const clientLogoMetadata = [
+  { match: 'bar keepers', alt: 'Bar Keepers Friend', width: 500, height: 500 },
+  { match: 'accu chek', alt: 'Accu-Chek', width: 500, height: 500 },
+  { match: 'adt', alt: 'ADT', width: 500, height: 500 },
+  { match: 'bastian', alt: 'Bastian Solutions', width: 500, height: 500 },
+  { match: 'indiana wesleyan', alt: 'Indiana Wesleyan University', width: 500, height: 500 },
+  { match: 'hendricks', alt: 'Hendricks', width: 500, height: 500 },
+  { match: 'kelley', alt: 'Indiana University Kelley School of Business', width: 500, height: 500 },
+  { match: 'lawn pride', alt: 'Lawn Pride', width: 500, height: 500 },
+  { match: 'indy ignite', alt: 'Indy Ignite', width: 500, height: 500 },
+  { match: 'farm bureau', alt: 'Farm Bureau Insurance', width: 500, height: 500 },
+  { match: 'roche', alt: 'Roche', width: 500, height: 500 },
+  { match: 'duke', alt: 'Duke Corporate Education', width: 500, height: 500 },
+  { match: 'cook medical', alt: 'Cook Medical', width: 500, height: 500 },
+  { match: 'mr quik', alt: 'Mr. Quik', width: 500, height: 500 },
+  { match: 'bne', alt: 'BNE', width: 500, height: 500 },
+  { match: 'client logo', alt: 'Client logo', width: 515, height: 316 },
 ];
 const clientLogos = homepage.clientLogos.logos
   .map((logo, index) => {
     const label = normalizeLogoLabel(logo.alt);
-    const reference = clientLogoReferences.find((item) => label.includes(item.match)) || clientLogoReferences[index];
+    const reference = clientLogoMetadata.find((item) => label.includes(item.match)) || clientLogoMetadata[index];
     return {
       ...logo,
-      src: logo.src || reference?.src,
       alt: logo.alt || reference?.alt,
       width: reference?.width || 500,
       height: reference?.height || 500,

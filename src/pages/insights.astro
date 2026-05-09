@@ -6,12 +6,16 @@ import InsightsArticlesTabs from '../components/InsightsArticlesTabs.astro';
 import InsightsArticleCards from '../components/InsightsArticleCards.astro';
 import InsightsPagination from '../components/InsightsPagination.astro';
 import { getAllBlogCategories, getAllBlogPosts, getLatestBlogPosts, toInsightsArticleCards, toLatestPostCards } from '../lib/blogPosts';
+import { defaultInsightsPageData, mergeInsightsPageData } from '../lib/insightsPageData';
+import { insightsPageQuery, sanityClient, urlFor } from '../lib/sanity';
 
-const [posts, categories, latestBlogPosts] = await Promise.all([
+const [sanityPage, posts, categories, latestBlogPosts] = await Promise.all([
+  sanityClient.fetch(insightsPageQuery).catch(() => null),
   getAllBlogPosts(),
   getAllBlogCategories(),
   getLatestBlogPosts(2),
 ]);
+const page = mergeInsightsPageData(sanityPage);
 const latestPosts = toLatestPostCards(latestBlogPosts);
 const articleCards = toInsightsArticleCards(posts);
 const articleTabs = [
@@ -20,6 +24,18 @@ const articleTabs = [
 ];
 const postsPerPage = 6;
 const totalPages = Math.ceil(posts.length / postsPerPage);
+const pageTitle = page.seoTitle || defaultInsightsPageData.seoTitle;
+const pageDescription = page.seoDescription || defaultInsightsPageData.seoDescription;
+const canonical = page.canonicalUrl || defaultInsightsPageData.canonicalUrl;
+const heroImage = (() => {
+  if (!page.hero.image) return undefined;
+
+  try {
+    return urlFor(page.hero.image).width(868).height(1218).fit('crop').auto('format').url();
+  } catch {
+    return undefined;
+  }
+})();
 
 const schema = {
   "@context": "https://schema.org",
@@ -32,9 +48,9 @@ const schema = {
     },
     {
       "@type": "WebPage",
-      "name": "Insights | Found Search Marketing",
-      "url": "https://www.foundsm.com/insights",
-      "description": "Perspectives on paid media, data strategy, and digital marketing from the Found Search Marketing team.",
+      "name": pageTitle,
+      "url": canonical,
+      "description": pageDescription,
       "publisher": {
         "@type": "Organization",
         "name": "Found Search Marketing"
@@ -45,10 +61,10 @@ const schema = {
 ---
 
 <BaseLayout
-  title="Insights | Found Search Marketing"
-  description="Perspectives on paid media, data strategy, and digital marketing from the Found Search Marketing team. Explore insights on AI, analytics, and enterprise advertising."
-  canonical="https://www.foundsm.com/insights"
-  robots="index, follow"
+  title={pageTitle}
+  description={pageDescription}
+  canonical={canonical}
+  robots={page.robots}
   schema={schema}
   bodyClass="page--dark-hero"
 >
@@ -56,7 +72,7 @@ const schema = {
     <!-- ============================================
          HERO SECTION
          ============================================ -->
-    <InsightsHero />
+    <InsightsHero headline={page.hero.headline} body={page.hero.body} imageSrc={heroImage} imageAlt={page.hero.imageAlt} />
 
     <LatestPostsSection posts={latestPosts} />
 

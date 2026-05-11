@@ -10,15 +10,29 @@ const title = page.seoTitle || defaultCapabilitiesPageData.seoTitle;
 const description = page.seoDescription || defaultCapabilitiesPageData.seoDescription;
 const canonical = page.canonicalUrl || defaultCapabilitiesPageData.canonicalUrl;
 const robots = page.robots || defaultCapabilitiesPageData.robots;
-const heroImage = srcFor(page.hero.image);
-const outcomesImage = srcFor(page.outcomes.image);
-const workflowImage = srcFor(page.workflow.image);
 const dataDetail = page.details[0];
 const paidDetail = page.details[1];
 const creativeDetail = page.details[2];
-const dataImage = srcFor(dataDetail?.image);
-const paidImage = srcFor(paidDetail?.image);
-const creativeImage = srcFor(creativeDetail?.image);
+const missingImage = (width: number, height: number) => `https://placehold.co/${width}x${height}?text=Missing+Sanity+image`;
+const requiredImage = (source: unknown, width: number, height: number) => srcFor(source) || missingImage(width, height);
+const isMissingImage = (src: string | undefined) => Boolean(src?.startsWith('https://placehold.co/'));
+const imageLoading = (src: string | undefined, loading: 'eager' | 'lazy' = 'lazy') =>
+  isMissingImage(src) ? 'eager' : loading;
+const imageAlt = (src: string | undefined, alt: string | undefined, label: string) =>
+  isMissingImage(src) ? `Missing Sanity image: ${label}` : alt || '';
+
+const heroImage = requiredImage(page.hero.image, 800, 800);
+const outcomesImage = requiredImage(page.outcomes.image, 524, 725);
+const workflowImage = requiredImage(page.workflow.image, 500, 500);
+const dataImage = dataDetail ? requiredImage(dataDetail.image, 1024, 983) : undefined;
+const paidImage = paidDetail ? requiredImage(paidDetail.image, 753, 768) : undefined;
+const creativeImage = creativeDetail ? requiredImage(creativeDetail.image, 753, 768) : undefined;
+const heroImageAlt = imageAlt(heroImage, page.hero.imageAlt, 'Capabilities hero eye image');
+const outcomesImageAlt = imageAlt(outcomesImage, page.outcomes.imageAlt, 'Outcomes collaboration image');
+const workflowImageAlt = imageAlt(workflowImage, page.workflow.imageAlt, 'Found Performance Media Ecosystem image');
+const dataImageAlt = imageAlt(dataImage, dataDetail?.imageAlt, 'Data, Reporting and Analytics image');
+const paidImageAlt = imageAlt(paidImage, paidDetail?.imageAlt, 'Paid Media image');
+const creativeImageAlt = imageAlt(creativeImage, creativeDetail?.imageAlt, 'Performance Creative and CRO image');
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'WebPage',
@@ -44,14 +58,14 @@ const schema = {
         </div>
 
         {heroImage && (
-          <div class="capabilities-hero__media" aria-hidden={page.hero.imageAlt ? undefined : 'true'}>
+          <div class="capabilities-hero__media" aria-hidden={heroImageAlt ? undefined : 'true'}>
             <img
               class="capabilities-hero__image"
               src={heroImage}
               sizes="(min-width: 1024px) 40vw, 0px"
               width="800"
               height="800"
-              alt={page.hero.imageAlt || ''}
+              alt={heroImageAlt}
               loading="eager"
               fetchpriority="high"
               decoding="async"
@@ -69,15 +83,15 @@ const schema = {
 
       <div class:list={['outcomes-section__inner', { 'outcomes-section__inner--text-only': !outcomesImage }]}>
         {outcomesImage && (
-          <div class="outcomes-section__media" aria-hidden={page.outcomes.imageAlt ? undefined : 'true'}>
+          <div class="outcomes-section__media" aria-hidden={outcomesImageAlt ? undefined : 'true'}>
             <img
               class="outcomes-section__image"
               src={outcomesImage}
               sizes="(min-width: 1024px) 36vw, 0px"
               width="524"
               height="725"
-              alt={page.outcomes.imageAlt || ''}
-              loading="lazy"
+              alt={outcomesImageAlt}
+              loading={imageLoading(outcomesImage)}
               decoding="async"
             />
           </div>
@@ -102,8 +116,8 @@ const schema = {
               src={workflowImage}
               width="500"
               height="500"
-              alt={page.workflow.imageAlt || ''}
-              loading="lazy"
+              alt={workflowImageAlt}
+              loading={imageLoading(workflowImage)}
               decoding="async"
             />
           </div>
@@ -122,15 +136,15 @@ const schema = {
         </div>
 
         {dataImage && (
-          <div class="capability-detail__media" aria-hidden={dataDetail?.imageAlt ? undefined : 'true'}>
+          <div class="capability-detail__media" aria-hidden={dataImageAlt ? undefined : 'true'}>
             <img
               class="capability-detail__image"
               src={dataImage}
               sizes="(min-width: 1024px) 44vw, 0px"
               width="1024"
               height="983"
-              alt={dataDetail?.imageAlt || ''}
-              loading="lazy"
+              alt={dataImageAlt}
+              loading={imageLoading(dataImage)}
               decoding="async"
             />
           </div>
@@ -141,15 +155,15 @@ const schema = {
     <section class="capability-detail capability-detail--paid" id="capabilities-paid-media" aria-labelledby="capability-paid-title">
       <div class:list={['capability-detail__inner capability-detail__inner--reverse', { 'capability-detail__inner--text-only': !paidImage }]}>
         {paidImage && (
-          <div class="capability-detail__media" aria-hidden={paidDetail?.imageAlt ? undefined : 'true'}>
+          <div class="capability-detail__media" aria-hidden={paidImageAlt ? undefined : 'true'}>
             <img
               class="capability-detail__image"
               src={paidImage}
               sizes="(min-width: 1024px) 36vw, 0px"
               width="753"
               height="768"
-              alt={paidDetail?.imageAlt || ''}
-              loading="lazy"
+              alt={paidImageAlt}
+              loading={imageLoading(paidImage)}
               decoding="async"
             />
           </div>
@@ -176,15 +190,15 @@ const schema = {
         </div>
 
         {creativeImage && (
-          <div class="capability-detail__media" aria-hidden={creativeDetail?.imageAlt ? undefined : 'true'}>
+          <div class="capability-detail__media" aria-hidden={creativeImageAlt ? undefined : 'true'}>
             <img
               class="capability-detail__image"
               src={creativeImage}
               sizes="(min-width: 1024px) 36vw, 0px"
               width="753"
               height="768"
-              alt={creativeDetail?.imageAlt || ''}
-              loading="lazy"
+              alt={creativeImageAlt}
+              loading={imageLoading(creativeImage)}
               decoding="async"
             />
           </div>
@@ -549,6 +563,11 @@ const schema = {
 
     .workflow-section {
       min-height: 0;
+    }
+
+    .workflow-section__inner {
+      display: flex;
+      flex-direction: column-reverse;
     }
 
     .workflow-section__copy {

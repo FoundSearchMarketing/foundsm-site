@@ -1,9 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import ModernHero from '../../components/modern/ModernHero.astro';
-import SplitFeature from '../../components/modern/SplitFeature.astro';
-import FeatureTabs from '../../components/modern/FeatureTabs.astro';
-import CardGrid from '../../components/modern/CardGrid.astro';
+import PerformanceCreativePage from '../../components/modern/PerformanceCreativePage.astro';
 import { capabilityDetailPageQuery, sanityClient } from '../../lib/sanity';
 import { defaultCapabilityDetailPages, mergeCapabilityDetailPageData } from '../../lib/fixedPageData';
 import { cardsFor, imageProps, richHtml, richText, tabsFor } from '../../lib/fixedPageRender';
@@ -30,32 +27,27 @@ const proofCards = cardsFor(page.primaryCards?.cards);
 ---
 
 <BaseLayout title={title} description={description} canonical={canonical} robots={page.robots} schema={schema}>
-  <ModernHero
-    tone="soft"
-    titleScale="display"
-    title={page.hero.heading || ''}
-    intro={richText(page.hero.body)}
-    introHtml={richHtml(page.hero.body)}
-    image={imageProps(page.hero, 'eager')}
+  <PerformanceCreativePage
+    idPrefix={page.featureTabs?.idPrefix || 'performance-creative-methods'}
+    hero={{
+      title: page.hero.heading || '',
+      body: richText(page.hero.body),
+      bodyHtml: richHtml(page.hero.body),
+      image: imageProps(page.hero, 'eager'),
+    }}
+    split={{
+      title: page.split?.heading || '',
+      body: richText(page.split?.body),
+      bodyHtml: richHtml(page.split?.body),
+      image: imageProps(page.split),
+    }}
+    tabs={creativeTabs}
+    secondary={{
+      title: page.secondarySplit?.heading || '',
+      body: richText(page.secondarySplit?.body),
+      bodyHtml: richHtml(page.secondarySplit?.body),
+      image: imageProps(page.secondarySplit),
+    }}
+    cards={proofCards}
   />
-
-  <SplitFeature
-    title={page.split?.heading || ''}
-    body={richText(page.split?.body)}
-    bodyHtml={richHtml(page.split?.body)}
-    image={imageProps(page.split)}
-  />
-
-  {creativeTabs.length > 0 && <FeatureTabs idPrefix={page.featureTabs?.idPrefix || 'performance-creative-methods'} tabs={creativeTabs} />}
-
-  <SplitFeature
-    theme="muted"
-    imagePosition="right"
-    title={page.secondarySplit?.heading || ''}
-    body={richText(page.secondarySplit?.body)}
-    bodyHtml={richHtml(page.secondarySplit?.body)}
-    image={imageProps(page.secondarySplit)}
-  />
-
-  <CardGrid cards={proofCards} columns={3} />
 </BaseLayout>

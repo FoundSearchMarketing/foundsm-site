@@ -1,4 +1,10 @@
 ---
+const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isExactPath = (href: string) => currentPath === (href.replace(/\/$/, '') || '/');
+const isPathSection = (href: string) => {
+  const normalizedHref = href.replace(/\/$/, '') || '/';
+  return currentPath === normalizedHref || currentPath.startsWith(`${normalizedHref}/`);
+};
 ---
 
 <header class="site-header">
@@ -28,7 +34,7 @@
           <a class="site-header__link" href="/insights/">Insights</a>
         </li>
         <li class="site-header__item site-header__item--has-submenu">
-          <a class="site-header__link" href="/capabilities/">Capabilities</a>
+          <a class="site-header__link" href="/capabilities/" aria-current={isPathSection('/capabilities/') ? 'page' : undefined}>Capabilities</a>
           <button
             class="site-header__submenu-toggle"
             type="button"
@@ -52,7 +58,7 @@
           </ul>
         </li>
         <li class="site-header__item site-header__item--has-submenu">
-          <a class="site-header__link" href="/about-us/">About Us</a>
+          <a class="site-header__link" href="/about-us/" aria-current={isExactPath('/about-us/') ? 'page' : undefined}>About Us</a>
           <button
             class="site-header__submenu-toggle"
             type="button"

@@ -18,7 +18,8 @@ const {
   robots = "index, follow",
   schema,
 } = Astro.props;
-const enableProductionScripts = import.meta.env.PROD;
+
+const enableThirdPartyScripts = import.meta.env.PROD;
 ---
 
 <meta charset="UTF-8" />
@@ -58,17 +59,15 @@ const enableProductionScripts = import.meta.env.PROD;
 
 <!-- OneTrust Cookie Consent placeholder -->
 
-{enableProductionScripts && (
-  <>
-    <!-- Google Tag Manager -->
-    <script is:inline>
+<!-- Google Tag Manager -->
+{enableThirdPartyScripts && (
+<script is:inline>
 (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://sst.foundsm.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-PG7TGGG');
-    </script>
-  </>
+</script>
 )}
 
 {schema && (

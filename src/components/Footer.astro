@@ -1,5 +1,5 @@
 ---
-const enableProductionScripts = import.meta.env.PROD;
+const enableThirdPartyScripts = import.meta.env.PROD;
 ---
 
 <footer class="site-footer">
@@ -8,10 +8,16 @@ const enableProductionScripts = import.meta.env.PROD;
       <div class="site-footer__columns">
         <section class="site-footer__column" aria-labelledby="footer-brand-title">
           <h2 class="site-footer__sr-only" id="footer-brand-title">Found Search Marketing</h2>
-          <a class="site-footer__brand" href="/" aria-label="Found Search Marketing - Home">
-            <img class="site-footer__logo" src="/images/logo.svg" alt="Found Search Marketing" width="250" height="52" loading="lazy" />
+          <a class="site-footer__brand" href="/" aria-label="Found Search Marketing home">
+            <img
+              class="site-footer__logo"
+              src="/images/logo.svg"
+              alt="Found Search Marketing"
+              width="209"
+              height="43"
+              loading="lazy"
+            />
           </a>
-
           <ul class="site-footer__socials" role="list" aria-label="Social links">
             <li>
               <a class="site-footer__social-link" href="https://www.facebook.com/foundsm/" target="_blank" rel="noreferrer" aria-label="Facebook">
@@ -55,7 +61,7 @@ const enableProductionScripts = import.meta.env.PROD;
         <section class="site-footer__column" aria-labelledby="footer-newsletter-title">
           <h2 class="site-footer__heading" id="footer-newsletter-title">Sign Up for Our Newsletter</h2>
           <div class="site-footer__newsletter-embed">
-            {enableProductionScripts && <script src="https://js.hsforms.net/forms/embed/5045186.js" defer></script>}
+            {enableThirdPartyScripts && <script src="https://js.hsforms.net/forms/embed/5045186.js" defer></script>}
             <div
               class="hs-form-frame"
               data-region="na1"
@@ -70,7 +76,7 @@ const enableProductionScripts = import.meta.env.PROD;
 
   <div class="site-footer__lower">
     <div class="site-footer__inner site-footer__lower-inner">
-      <p class="site-footer__copyright">&copy; 2006&ndash;2026, Found Search Marketing. All rights reserved.</p>
+      <p class="site-footer__copyright">&copy; 2006-2026, Found Search Marketing. All rights reserved.</p>
 
       <nav aria-label="Footer legal">
         <ul class="site-footer__legal" role="list">

@@ -18,7 +18,7 @@ interface Props {
 }
 
 const { title, description, canonical, ogImage, ogType, robots, schema, hideNavigation = false, hideFooter = false, bodyClass } = Astro.props;
-const enableProductionScripts = import.meta.env.PROD;
+const enableThirdPartyScripts = import.meta.env.PROD;
 ---
 
 <!DOCTYPE html>
@@ -55,11 +55,9 @@ const enableProductionScripts = import.meta.env.PROD;
   </script>
 </head>
 <body class={bodyClass}>
-  {enableProductionScripts && (
-    <>
-      <!-- Google Tag Manager (noscript) -->
-      <noscript><iframe src="https://sst.foundsm.com/ns.html?id=GTM-PG7TGGG" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    </>
+  <!-- Google Tag Manager (noscript) -->
+  {enableThirdPartyScripts && (
+    <noscript><iframe src="https://sst.foundsm.com/ns.html?id=GTM-PG7TGGG" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   )}
 
   {!hideNavigation && <Header />}
@@ -70,11 +68,9 @@ const enableProductionScripts = import.meta.env.PROD;
 
   <script is:inline src="/scripts/main.js"></script>
 
-  {enableProductionScripts && (
-    <>
-      <!-- HubSpot Tracking Code -->
-      <script is:inline type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/5045186.js"></script>
-    </>
+  <!-- HubSpot Tracking Code -->
+  {enableThirdPartyScripts && (
+    <script is:inline type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/5045186.js"></script>
   )}
 </body>
 </html>

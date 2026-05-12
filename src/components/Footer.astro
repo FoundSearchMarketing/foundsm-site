@@ -1,4 +1,5 @@
 ---
+const enableProductionScripts = import.meta.env.PROD;
 ---
 
 <footer class="site-footer">
@@ -53,21 +54,14 @@
 
         <section class="site-footer__column" aria-labelledby="footer-newsletter-title">
           <h2 class="site-footer__heading" id="footer-newsletter-title">Sign Up for Our Newsletter</h2>
-          <div class="site-footer__newsletter-card">
-            <form class="site-footer__newsletter-form" action="#">
-              <label class="site-footer__label" for="footer-newsletter-email">Email address</label>
-              <div class="site-footer__field-row">
-                <input
-                  class="site-footer__input"
-                  id="footer-newsletter-email"
-                  name="email"
-                  type="email"
-                  placeholder="name@company.com"
-                  autocomplete="email"
-                />
-                <button class="site-footer__newsletter-button" type="button">Join the List</button>
-              </div>
-            </form>
+          <div class="site-footer__newsletter-embed">
+            {enableProductionScripts && <script src="https://js.hsforms.net/forms/embed/5045186.js" defer></script>}
+            <div
+              class="hs-form-frame"
+              data-region="na1"
+              data-form-id="36bfcb11-1834-4066-8dca-b8d3ae24eda0"
+              data-portal-id="5045186"
+            ></div>
           </div>
         </section>
       </div>

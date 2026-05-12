@@ -1,0 +1,750 @@
+---
+interface ImageProps {
+  src: string;
+  alt?: string;
+  width?: number;
+  height?: number;
+  loading?: 'eager' | 'lazy';
+}
+
+interface TabItem {
+  title: string;
+  body: string;
+  bodyHtml?: string;
+  icon?: string;
+  image?: string;
+  imageAlt?: string;
+}
+
+interface CardItem {
+  title: string;
+  body: string;
+  bodyHtml?: string;
+}
+
+interface Props {
+  hero: {
+    title: string;
+    body: string;
+    bodyHtml?: string;
+    image?: ImageProps;
+  };
+  split: {
+    title: string;
+    body: string;
+    bodyHtml?: string;
+    image?: ImageProps;
+  };
+  tabs: TabItem[];
+  secondary: {
+    title: string;
+    body: string;
+    bodyHtml?: string;
+    image?: ImageProps;
+  };
+  cards: CardItem[];
+  idPrefix: string;
+}
+
+const { hero, split, tabs, secondary, cards, idPrefix } = Astro.props;
+
+const heroParagraphs = hero.body ? hero.body.split(/\n{2,}/).filter(Boolean) : [];
+const splitParagraphs = split.body ? split.body.split(/\n{2,}/).filter(Boolean) : [];
+const secondaryParagraphs = secondary.body ? secondary.body.split(/\n{2,}/).filter(Boolean) : [];
+
+const cardTitle = (value: string) => value.endsWith(':') ? value : `${value}:`;
+const stripOuterParagraph = (value: string) => value.replace(/^<p>/, '').replace(/<\/p>$/, '');
+---
+
+<section class="pc-hero" aria-labelledby={`${idPrefix}-hero-heading`}>
+  <div class="pc-hero__inner">
+    <div class="pc-hero__copy">
+      <h1 id={`${idPrefix}-hero-heading`}>{hero.title}</h1>
+      {hero.bodyHtml ? (
+        <div class="pc-copy pc-hero__intro" set:html={hero.bodyHtml} />
+      ) : (
+        <div class="pc-copy pc-hero__intro">
+          {heroParagraphs.map((paragraph) => <p>{paragraph}</p>)}
+        </div>
+      )}
+    </div>
+
+    {hero.image && (
+      <figure class="pc-hero__media">
+        <img
+          src={hero.image.src}
+          alt={hero.image.alt ?? ''}
+          width={hero.image.width}
+          height={hero.image.height}
+          loading={hero.image.loading ?? 'eager'}
+          decoding="async"
+        />
+      </figure>
+    )}
+  </div>
+</section>
+
+<section class="pc-work" aria-labelledby={`${idPrefix}-work-heading`}>
+  <div class="pc-work__inner">
+    {split.image && (
+      <figure class="pc-work__media">
+        <img src={split.image.src} alt={split.image.alt ?? ''} width={split.image.width} height={split.image.height} loading="lazy" decoding="async" />
+      </figure>
+    )}
+
+    <div class="pc-work__copy">
+      <h2 id={`${idPrefix}-work-heading`}>{split.title}</h2>
+      {split.bodyHtml ? (
+        <div class="pc-copy" set:html={split.bodyHtml} />
+      ) : (
+        <div class="pc-copy">
+          {splitParagraphs.map((paragraph) => <p>{paragraph}</p>)}
+        </div>
+      )}
+    </div>
+  </div>
+</section>
+
+{tabs.length > 0 && (
+  <section class="pc-tabs" aria-label="Performance creative methods">
+    <div class="pc-tabs__inner" data-pc-tabs>
+      <div class="pc-tabs__nav" role="tablist" aria-label="Performance creative methods">
+        {tabs.map((tab, index) => {
+          const tabId = `${idPrefix}-tab-${index + 1}`;
+          const panelId = `${idPrefix}-panel-${index + 1}`;
+          const selected = index === 0;
+          return (
+            <button
+              class:list={['pc-tabs__tab', { 'is-active': selected }]}
+              id={tabId}
+              type="button"
+              role="tab"
+              aria-selected={String(selected)}
+              aria-controls={panelId}
+              tabindex={selected ? '0' : '-1'}
+            >
+              <span class="pc-tabs__rail" aria-hidden="true"><span></span></span>
+              {tab.icon && <img class="pc-tabs__icon" src={tab.icon} alt="" loading="lazy" decoding="async" />}
+              <span>{tab.title}</span>
+            </button>
+          );
+        })}
+      </div>
+
+      <div class="pc-tabs__panels">
+        {tabs.map((tab, index) => {
+          const tabId = `${idPrefix}-tab-${index + 1}`;
+          const panelId = `${idPrefix}-panel-${index + 1}`;
+          const selected = index === 0;
+          const bodyParagraphs = tab.body ? tab.body.split(/\n{2,}/).filter(Boolean) : [];
+          return (
+            <article
+              class:list={['pc-tabs__panel', { 'is-active': selected }]}
+              id={panelId}
+              role="tabpanel"
+              aria-labelledby={tabId}
+              hidden={!selected}
+            >
+              <div class="pc-tabs__panel-copy">
+                {tab.bodyHtml ? <div set:html={tab.bodyHtml} /> : bodyParagraphs.map((paragraph) => <p>{paragraph}</p>)}
+              </div>
+              {tab.image && (
+                <figure class="pc-tabs__panel-media">
+                  <img src={tab.image} alt={tab.imageAlt ?? tab.title} loading="lazy" decoding="async" />
+                </figure>
+              )}
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+)}
+
+<section class="pc-experience" aria-labelledby={`${idPrefix}-experience-heading`}>
+  <div class="pc-experience__inner">
+    <h2 id={`${idPrefix}-experience-heading`}>{secondary.title}</h2>
+
+    <div class="pc-experience__grid">
+      {secondary.image && (
+        <figure class="pc-experience__media">
+          <img src={secondary.image.src} alt={secondary.image.alt ?? ''} width={secondary.image.width} height={secondary.image.height} loading="lazy" decoding="async" />
+        </figure>
+      )}
+
+      <div class="pc-experience__copy">
+        {secondary.bodyHtml ? (
+          <div class="pc-copy pc-copy--light" set:html={secondary.bodyHtml} />
+        ) : (
+          <div class="pc-copy pc-copy--light">
+            {secondaryParagraphs.map((paragraph) => <p>{paragraph}</p>)}
+          </div>
+        )}
+
+        <div class="pc-experience__proof-list">
+          {cards.map((card) => (
+            <article class="pc-experience__proof">
+              {card.bodyHtml ? (
+                <p><strong>{cardTitle(card.title)}</strong> <span set:html={stripOuterParagraph(card.bodyHtml)} /></p>
+              ) : (
+                <p><strong>{cardTitle(card.title)}</strong> {card.body}</p>
+              )}
+            </article>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const initPerformanceCreativeTabs = () => {
+    document.querySelectorAll<HTMLElement>('[data-pc-tabs]').forEach((container) => {
+      if (container.dataset.initialized === 'true') return;
+      container.dataset.initialized = 'true';
+
+      const tabs = Array.from(container.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
+      const panels = Array.from(container.querySelectorAll<HTMLElement>('[role="tabpanel"]'));
+
+      const activate = (tab: HTMLButtonElement) => {
+        const panelId = tab.getAttribute('aria-controls');
+
+        tabs.forEach((item) => {
+          const active = item === tab;
+          item.classList.toggle('is-active', active);
+          item.setAttribute('aria-selected', String(active));
+          item.tabIndex = active ? 0 : -1;
+        });
+
+        panels.forEach((panel) => {
+          const active = panel.id === panelId;
+          panel.classList.toggle('is-active', active);
+          panel.hidden = !active;
+        });
+      };
+
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => activate(tab));
+        tab.addEventListener('keydown', (event) => {
+          const current = tabs.indexOf(tab);
+          const nextIndex = event.key === 'ArrowDown' || event.key === 'ArrowRight'
+            ? (current + 1) % tabs.length
+            : event.key === 'ArrowUp' || event.key === 'ArrowLeft'
+              ? (current - 1 + tabs.length) % tabs.length
+              : -1;
+
+          if (nextIndex >= 0) {
+            event.preventDefault();
+            tabs[nextIndex].focus();
+            activate(tabs[nextIndex]);
+          }
+        });
+      });
+    });
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPerformanceCreativeTabs);
+  } else {
+    initPerformanceCreativeTabs();
+  }
+</script>
+
+<style>
+  .pc-copy {
+    color: #231f20;
+    font-size: 1.25rem;
+    line-height: 1.8;
+  }
+
+  .pc-copy :global(p + p) {
+    margin-block-start: 1.25rem;
+  }
+
+  .pc-copy--light {
+    color: #ffffff;
+  }
+
+  .pc-hero {
+    overflow: hidden;
+    padding: 6.25rem 1.5625rem 0;
+    background: #ffffff;
+  }
+
+  .pc-hero__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 37.1875rem);
+    align-items: center;
+    gap: 6.25rem;
+    min-block-size: 37.5rem;
+    inline-size: min(100%, 86.875rem);
+    margin-inline: auto;
+  }
+
+  .pc-hero__copy {
+    display: grid;
+    align-content: start;
+    gap: 1.25rem;
+    min-block-size: 37.5rem;
+  }
+
+  .pc-hero h1,
+  .pc-work h2,
+  .pc-experience h2 {
+    margin: 0;
+    color: #231f20;
+    font-family: var(--font-heading);
+    font-weight: 900;
+    letter-spacing: 0;
+  }
+
+  .pc-hero h1 {
+    max-inline-size: 43.5rem;
+    font-size: 4.375rem;
+    line-height: 1.071;
+  }
+
+  .pc-hero__intro {
+    max-inline-size: 43rem;
+  }
+
+  .pc-hero__media {
+    overflow: hidden;
+    border-radius: 2.5rem;
+    aspect-ratio: 1;
+    background: #e8ebe6;
+  }
+
+  .pc-hero__media img {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+
+  .pc-work {
+    padding: 1.875rem;
+    background: #ffffff;
+  }
+
+  .pc-work__inner {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: center;
+    min-block-size: 29.375rem;
+    inline-size: min(100%, 86.25rem);
+    margin-inline: auto;
+  }
+
+  .pc-work__media {
+    display: grid;
+    place-items: center;
+  }
+
+  .pc-work__media img {
+    inline-size: min(100%, 31.25rem);
+    block-size: auto;
+  }
+
+  .pc-work__copy {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .pc-work h2,
+  .pc-experience h2 {
+    font-size: 3.75rem;
+    line-height: 1.083;
+  }
+
+  .pc-tabs {
+    padding: 0 1.25rem 6.25rem;
+    background: #ffffff;
+  }
+
+  .pc-tabs__inner {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.625rem 2.1875rem;
+    overflow: hidden;
+    inline-size: min(100%, 87.5rem);
+    margin-inline: auto;
+    padding: 3.75rem 2.1875rem;
+    border-radius: 2.5rem;
+    background: #f2f3f2;
+  }
+
+  .pc-tabs__inner::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: url("/images/pages/paid-media/topography-light.svg") center / cover no-repeat;
+  }
+
+  .pc-tabs__inner > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .pc-tabs__nav {
+    display: flex;
+    flex: 0 0 calc(33.333% - 5rem);
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .pc-tabs__tab {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    min-block-size: 4.6875rem;
+    padding: 0 0.9375rem 0 1.25rem;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: #231f20;
+    text-align: left;
+    white-space: normal;
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.6;
+  }
+
+  .pc-tabs__tab:hover,
+  .pc-tabs__tab:focus-visible {
+    color: #231f20;
+    background: transparent;
+  }
+
+  .pc-tabs__rail {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    overflow: hidden;
+    inline-size: 0.375rem;
+    border-radius: 0.1875rem;
+    background: rgba(35, 31, 32, 0.15);
+  }
+
+  .pc-tabs__rail span {
+    position: absolute;
+    inset-block: auto 0;
+    inset-inline: 0;
+    block-size: 0;
+    border-radius: inherit;
+    background: #231f20;
+    transition: block-size 180ms ease;
+  }
+
+  .pc-tabs__tab.is-active .pc-tabs__rail span,
+  .pc-tabs__tab:hover .pc-tabs__rail span {
+    block-size: 100%;
+  }
+
+  .pc-tabs__icon {
+    inline-size: 3.125rem;
+    block-size: 3.125rem;
+    object-fit: contain;
+    opacity: 0.15;
+    transition: opacity 180ms ease;
+  }
+
+  .pc-tabs__tab.is-active .pc-tabs__icon,
+  .pc-tabs__tab:hover .pc-tabs__icon {
+    opacity: 1;
+  }
+
+  .pc-tabs__panels {
+    flex: 1 1 calc(66.667% + 1.875rem);
+    min-inline-size: 0;
+    position: relative;
+  }
+
+  .pc-tabs__panel {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 1.875rem;
+    inline-size: 100%;
+  }
+
+  .pc-tabs__panel[hidden] {
+    display: none;
+  }
+
+  .pc-tabs__panel-copy,
+  .pc-tabs__panel-media {
+    flex-basis: 50%;
+    min-inline-size: 0;
+  }
+
+  .pc-tabs__panel-copy {
+    color: #231f20;
+    font-size: 1.25rem;
+    line-height: 1.8;
+  }
+
+  .pc-tabs__panel-media {
+    overflow: hidden;
+    border-radius: 2.5rem;
+  }
+
+  .pc-tabs__panel-media img {
+    inline-size: 100%;
+    block-size: auto;
+    border-radius: 2.5rem;
+  }
+
+  .pc-experience {
+    position: relative;
+    padding: 3.125rem 1.25rem;
+    overflow: hidden;
+    background: #231f20;
+    color: #ffffff;
+  }
+
+  .pc-experience::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url("/images/pages/performance-creative/map.png") center / cover no-repeat;
+    opacity: 0.08;
+    pointer-events: none;
+  }
+
+  .pc-experience__inner {
+    position: relative;
+    z-index: 1;
+    inline-size: min(100%, 87.5rem);
+    margin-inline: auto;
+  }
+
+  .pc-experience h2 {
+    max-inline-size: 55rem;
+    margin-inline: auto;
+    color: #ffffff;
+    text-align: center;
+  }
+
+  .pc-experience__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem;
+    margin-block-start: 1.875rem;
+  }
+
+  .pc-experience__media {
+    display: grid;
+    justify-items: center;
+  }
+
+  .pc-experience__media img {
+    inline-size: min(100%, 33.4375rem);
+    block-size: auto;
+    border-radius: 1.875rem;
+  }
+
+  .pc-experience__copy {
+    display: grid;
+    align-content: start;
+    gap: 4.75rem;
+    padding-block-start: 1.5rem;
+  }
+
+  .pc-experience__proof-list {
+    display: grid;
+    gap: 4.75rem;
+  }
+
+  .pc-experience__proof {
+    margin-inline-start: 1.875rem;
+    padding-inline-start: 1.25rem;
+    border-inline-start: 0.3125rem solid rgba(255, 255, 255, 0.35);
+    color: #ffffff;
+    font-size: 1.25rem;
+    line-height: 1.8;
+  }
+
+  .pc-experience__proof:nth-child(2) {
+    padding-block: 1.25rem;
+  }
+
+  .pc-experience__proof strong {
+    font-weight: 700;
+  }
+
+  @media (max-width: 1024px) {
+    .pc-copy,
+    .pc-tabs__panel-copy,
+    .pc-experience__proof {
+      font-size: 1.125rem;
+      line-height: 1.7;
+    }
+
+    .pc-hero {
+      padding: 1.25rem 1.25rem 0;
+    }
+
+    .pc-hero__inner,
+    .pc-work__inner,
+    .pc-experience__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .pc-hero__inner {
+      gap: 2rem;
+      min-block-size: auto;
+    }
+
+    .pc-hero__copy {
+      min-block-size: auto;
+    }
+
+    .pc-hero h1 {
+      font-size: 2.8125rem;
+      line-height: 1.111;
+    }
+
+    .pc-hero__media {
+      inline-size: min(100%, 37.1875rem);
+      margin-inline: auto;
+    }
+
+    .pc-work {
+      padding: 3.25rem 1.25rem 2.5rem;
+    }
+
+    .pc-work__inner {
+      gap: 2rem;
+      min-block-size: auto;
+    }
+
+    .pc-work__media {
+      order: 1;
+    }
+
+    .pc-work__copy {
+      order: 2;
+    }
+
+    .pc-work h2,
+    .pc-experience h2 {
+      font-size: 2.375rem;
+      line-height: 1.105;
+    }
+
+    .pc-tabs {
+      padding: 0 0 4.375rem;
+    }
+
+    .pc-tabs__inner {
+      flex-direction: column;
+      padding: 2.1875rem 1.5625rem;
+    }
+
+    .pc-tabs__nav,
+    .pc-tabs__panels {
+      flex-basis: 100%;
+    }
+
+    .pc-tabs__panel {
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .pc-tabs__panel-copy,
+    .pc-tabs__panel-media {
+      flex-basis: auto;
+      inline-size: 100%;
+    }
+
+    .pc-tabs__panel-media {
+      order: 1;
+    }
+
+    .pc-tabs__panel-copy {
+      order: 2;
+    }
+
+    .pc-tabs__panel-media,
+    .pc-tabs__panel-media img {
+      border-radius: 0.9375rem;
+    }
+
+    .pc-experience {
+      padding: 4.375rem 1.25rem;
+    }
+
+    .pc-experience__copy {
+      gap: 3rem;
+      padding-block-start: 0;
+    }
+
+    .pc-experience__proof-list {
+      gap: 3rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .pc-work {
+      padding-block-start: 15rem;
+    }
+
+    .pc-work__inner {
+      inline-size: min(100%, 19.375rem);
+    }
+
+    .pc-hero__media {
+      border-radius: 2.5rem;
+    }
+
+    .pc-tabs__icon {
+      inline-size: 2.5rem;
+      block-size: 2.5rem;
+    }
+
+    .pc-tabs__tab {
+      gap: 1rem;
+      padding-inline-start: 2.75rem;
+      font-size: 1.25rem;
+      line-height: 1.28;
+    }
+
+    .pc-tabs__panel-copy {
+      order: 1;
+      max-inline-size: 11.25rem;
+      margin-inline: auto;
+    }
+
+    .pc-tabs__panel-media {
+      order: 2;
+      display: block;
+      inline-size: min(100%, 12.5rem);
+      margin-inline: auto;
+    }
+
+    .pc-experience {
+      padding-inline: 0;
+    }
+
+    .pc-experience__inner {
+      padding-inline: 1.25rem;
+    }
+
+    .pc-experience__grid {
+      gap: 3rem;
+    }
+
+    .pc-experience h2 {
+      max-inline-size: 20rem;
+    }
+
+    .pc-experience__proof {
+      margin-inline-start: 1.875rem;
+      font-size: 1.125rem;
+      line-height: 1.75;
+    }
+  }
+</style>

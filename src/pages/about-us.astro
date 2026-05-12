@@ -27,6 +27,7 @@ const whoImage = srcFor(page.who.image);
 const approachImage = srcFor(page.approach.image);
 const teamImage = srcFor(page.team.image);
 const missionHeadingLines = page.mission.headingLines.length > 0 ? page.mission.headingLines : defaultAboutPageData.mission.headingLines;
+const aboutRichHtml = (blocks: Parameters<typeof richHtml>[0]) => richHtml(blocks).replace(/ - /g, '—');
 
 const schema = {
   '@context': 'https://schema.org',
@@ -86,7 +87,7 @@ const schema = {
       <div class:list={['about-shell about-hero__grid', { 'about-hero__grid--text-only': !heroImage }]}>
         <div class="about-hero__copy fade-in-up">
           <h1 id="about-hero-heading">{page.hero.heading}</h1>
-          <div class="about-hero__text" set:html={richHtml(page.hero.body)} />
+          <div class="about-hero__text" set:html={aboutRichHtml(page.hero.body)} />
         </div>
 
         {heroImage && (
@@ -113,7 +114,7 @@ const schema = {
 
       <div class:list={['about-shell about-who__grid', { 'about-who__grid--text-only': !whoImage }]}>
         <div class="about-who__copy fade-in-up">
-          <div set:html={richHtml(page.who.body)} />
+          <div set:html={aboutRichHtml(page.who.body)} />
 
           {page.who.subheading && <h3>{page.who.subheading}</h3>}
           <div class="credential-grid">
@@ -169,7 +170,7 @@ const schema = {
             <article class="mission-card fade-in-up">
               {card.iconSrc && <img src={card.iconSrc} alt="" width="50" height="50" loading="lazy" />}
               <h3>{card.title}</h3>
-              <div set:html={richHtml(card.body)} />
+              <div set:html={aboutRichHtml(card.body)} />
             </article>
           ))}
         </div>
@@ -213,7 +214,7 @@ const schema = {
               >
                 <div class="values-tabs__panel-copy">
                   <h3>{value.title}</h3>
-                  <div set:html={richHtml(value.body)} />
+                  <div set:html={aboutRichHtml(value.body)} />
                   <a class="about-link" href="/contact-us/">Let's Talk</a>
                 </div>
                 {value.imageSrc && (
@@ -250,7 +251,7 @@ const schema = {
         )}
         <div class="about-split__copy fade-in-up">
           <h2 id="about-approach-heading">{page.approach.heading}</h2>
-          <div set:html={richHtml(page.approach.body)} />
+          <div set:html={aboutRichHtml(page.approach.body)} />
           {page.approach.cta?.label && page.approach.cta?.href && (
             <a class="about-button" href={page.approach.cta.href}>{page.approach.cta.label}</a>
           )}
@@ -278,7 +279,7 @@ const schema = {
 
     <section class="about-team-cta" aria-label="About the Found team">
       <div class="about-shell about-team-cta__grid fade-in-up">
-        <div class="about-team-cta__copy" set:html={richHtml(page.teamCta.body)} />
+        <div class="about-team-cta__copy" set:html={aboutRichHtml(page.teamCta.body)} />
         {page.teamCta.cta?.label && page.teamCta.cta?.href && (
           <a class="about-button about-button--dark" href={page.teamCta.cta.href}>{page.teamCta.cta.label}</a>
         )}
@@ -409,24 +410,25 @@ const schema = {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 3rem;
-      border-radius: 8px;
-      font-size: 0.95rem;
-      font-weight: 700;
+      min-height: 3.75rem;
+      border-radius: 999px;
+      font-size: 1.25rem;
+      font-weight: 500;
       line-height: 1.2;
       text-align: center;
       transition: background-color var(--duration) var(--ease), color var(--duration) var(--ease), border-color var(--duration) var(--ease), transform var(--duration) var(--ease);
     }
 
     .about-button {
-      padding: 0.9rem 1.35rem;
-      background: var(--about-green);
+      justify-self: start;
+      padding: 0.95rem 2rem;
+      background: var(--about-ink);
       color: #ffffff;
     }
 
     .about-button:hover,
     .about-button:focus-visible {
-      background: var(--about-green-dark);
+      background: #414042;
       color: #ffffff;
       transform: translateY(-1px);
     }
@@ -438,33 +440,33 @@ const schema = {
 
     .about-button--dark:hover,
     .about-button--dark:focus-visible {
-      background: #343434;
+      background: #414042;
     }
 
     .about-link {
-      padding: 0.2rem 0;
-      color: var(--about-green);
-      min-height: 0;
+      justify-self: start;
+      padding: 0.95rem 2.9rem;
+      background: var(--about-green);
+      color: var(--about-ink);
     }
 
     .about-link:hover,
     .about-link:focus-visible {
-      color: #ffffff;
+      background: var(--about-green-dark);
+      color: var(--about-ink);
     }
 
     .about-hero {
-      min-height: 38rem;
       display: grid;
       align-items: center;
-      padding: 5.25rem 0 4.5rem;
-      background:
-        linear-gradient(90deg, #ffffff 0%, #ffffff 54%, var(--about-surface) 54%, var(--about-surface) 100%);
+      padding: 6.25rem 0 3.75rem;
+      background: #ffffff;
     }
 
     .about-hero__grid {
       display: grid;
       gap: 2.5rem;
-      align-items: center;
+      align-items: start;
     }
 
     .about-hero__copy {
@@ -481,19 +483,21 @@ const schema = {
     }
 
     .about-hero__media img {
-      width: min(42vw, 42.625rem);
+      width: min(37.7vw, 42.625rem);
       aspect-ratio: 682 / 660;
-      object-fit: contain;
-      filter: drop-shadow(0 2rem 2.5rem rgba(26, 26, 26, 0.16));
+      object-fit: cover;
+      border-radius: 2.5rem;
     }
 
     .about-who {
       position: relative;
-      padding: 4.5rem 0;
+      margin-top: 3.125rem;
+      margin-bottom: 12.5rem;
+      padding: 5rem 0 5.5rem;
       background-color: var(--about-surface);
       background-image: url("/images/pages/our-approach/topography-light.svg");
-      background-size: 34rem;
-      overflow: hidden;
+      background-size: cover;
+      overflow: visible;
     }
 
     .about-who::before {
@@ -509,55 +513,50 @@ const schema = {
     }
 
     .about-who__intro {
-      margin-bottom: 2.25rem;
+      margin-bottom: 2.625rem;
+      text-align: center;
     }
 
     .about-who__grid {
       display: grid;
-      gap: 2.5rem;
-      align-items: center;
+      gap: 3.125rem;
+      align-items: start;
     }
 
     .about-who__copy {
-      max-width: 43rem;
+      max-width: 52rem;
     }
 
     .about-who__copy h3 {
-      margin-top: 2rem;
+      margin-top: 1.4rem;
       text-transform: none;
     }
 
     .credential-grid {
       display: grid;
-      gap: 0.85rem;
-      margin-top: 1rem;
+      gap: 2.6rem 3rem;
+      margin-top: 1.4rem;
     }
 
     .credential-card {
       display: grid;
-      grid-template-columns: 4.5rem minmax(0, 1fr);
-      gap: 1rem;
+      grid-template-columns: 8.375rem minmax(0, 1fr);
+      gap: 1.5625rem;
       align-items: center;
-      min-height: 6rem;
-      padding: 0.95rem;
-      border: 1px solid var(--about-border);
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.72);
-      backdrop-filter: blur(4px);
+      min-height: 8.375rem;
+      padding: 0;
     }
 
     .credential-card__media {
       display: grid;
       place-items: center;
-      width: 4.5rem;
-      height: 4.5rem;
-      border-radius: 8px;
-      background: #ffffff;
+      width: 8.375rem;
+      height: 8.375rem;
     }
 
     .credential-card img {
-      max-width: 3.5rem;
-      max-height: 3.5rem;
+      max-width: 100%;
+      max-height: 100%;
       object-fit: contain;
     }
 
@@ -570,7 +569,8 @@ const schema = {
 
     .about-who__media {
       justify-self: center;
-      max-width: 22rem;
+      max-width: 26rem;
+      margin-bottom: -16.125rem;
     }
 
     .about-who__media img {
@@ -582,12 +582,12 @@ const schema = {
     }
 
     .about-mission {
-      padding: 4.5rem 0;
+      padding: 0 0 2.5rem;
       background: #ffffff;
     }
 
     .about-section-heading {
-      margin-bottom: 2rem;
+      margin-bottom: 5.5rem;
     }
 
     .about-section-heading--center {
@@ -596,24 +596,25 @@ const schema = {
 
     .mission-grid {
       display: grid;
-      gap: 1.5rem;
+      gap: 3.125rem;
     }
 
     .mission-card {
       display: grid;
       align-content: start;
-      gap: 0.85rem;
-      min-height: 16rem;
-      padding: 1.4rem;
-      border: 1px solid var(--about-border);
-      border-radius: 8px;
-      background: var(--about-surface);
+      gap: 1rem;
+      min-height: 0;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
     }
 
     .mission-card img {
       width: 3.125rem;
       height: 3.125rem;
       object-fit: contain;
+      margin-bottom: 0.4rem;
     }
 
     .mission-card p {
@@ -623,7 +624,7 @@ const schema = {
     }
 
     .about-values {
-      padding: 4.5rem 0;
+      padding: 0;
       background: #ffffff;
       color: var(--about-ink);
     }
@@ -632,7 +633,7 @@ const schema = {
       position: relative;
       display: grid;
       gap: 2rem;
-      min-height: 34rem;
+      min-height: 45.3125rem;
       padding: 2.1875rem 1.5625rem;
       border-radius: 2.5rem;
       background: var(--about-ink);
@@ -741,7 +742,7 @@ const schema = {
       display: grid;
       gap: 1.5rem;
       height: 100%;
-      min-height: 27rem;
+      min-height: 33rem;
       padding: 0;
     }
 
@@ -753,6 +754,7 @@ const schema = {
       display: grid;
       align-content: center;
       gap: 1rem;
+      justify-items: start;
     }
 
     .values-tabs__panel h3 {
@@ -786,7 +788,8 @@ const schema = {
     }
 
     .about-approach {
-      padding: 4.5rem 0;
+      margin-top: 5rem;
+      padding: 6.25rem 0;
       background: #ffffff;
     }
 
@@ -815,8 +818,8 @@ const schema = {
     }
 
     .about-team {
-      padding: 4.5rem 0 2rem;
-      background: var(--about-surface);
+      padding: 0 0 0.625rem;
+      background: #ffffff;
       text-align: center;
     }
 
@@ -834,18 +837,19 @@ const schema = {
     }
 
     .about-team-cta {
-      padding: 2rem 0 4.5rem;
-      background: var(--about-surface);
+      margin-bottom: 3.125rem;
+      padding: 0.625rem 0 8.5rem;
+      background: #ffffff;
     }
 
     .about-team-cta__grid {
       display: grid;
       gap: 1.5rem;
       align-items: center;
-      padding: 1.35rem;
-      border-radius: 8px;
-      background: #ffffff;
-      box-shadow: 0 1rem 3rem rgba(26, 26, 26, 0.08);
+      padding: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
     }
 
     .about-team-cta__copy {
@@ -863,8 +867,18 @@ const schema = {
     }
 
     @media (min-width: 1025px) {
+      .about-approach {
+        margin-bottom: 5rem;
+        padding: 0 0 2.5rem;
+      }
+
       .about-hero__grid {
-        grid-template-columns: minmax(0, 1fr) minmax(20rem, 0.85fr);
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 5rem;
+      }
+
+      .about-hero__copy {
+        margin-top: 1.75rem;
       }
 
       .about-hero__grid--text-only {
@@ -873,10 +887,11 @@ const schema = {
 
       .about-hero__media {
         display: block;
+        margin-top: 0.625rem;
       }
 
       .about-who__grid {
-        grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.62fr);
+        grid-template-columns: minmax(0, 1fr) minmax(18rem, 26rem);
       }
 
       .about-who__grid--text-only {
@@ -895,13 +910,13 @@ const schema = {
       }
 
       .values-tabs__panel {
-        grid-template-columns: minmax(0, 1fr) minmax(15rem, 0.55fr);
+        grid-template-columns: minmax(0, 1fr) 27.6875rem;
         gap: 3.4375rem;
-        min-height: 29.625rem;
+        min-height: 34rem;
       }
 
       .about-split {
-        grid-template-columns: minmax(18rem, 0.8fr) minmax(0, 1fr);
+        grid-template-columns: minmax(18rem, 0.98fr) minmax(0, 1fr);
       }
 
       .about-split--text-only {
@@ -911,6 +926,10 @@ const schema = {
       .about-team-cta__grid {
         grid-template-columns: minmax(0, 1fr) auto;
         padding: 2rem;
+      }
+
+      .about-team-cta {
+        margin-bottom: 5rem;
       }
     }
 
@@ -968,29 +987,149 @@ const schema = {
     }
 
     @media (max-width: 767px) {
+      .about-modern h1 {
+        font-size: 2rem;
+        line-height: 1.08;
+      }
+
+      .about-modern h2 {
+        font-size: 2rem;
+        line-height: 1.08;
+      }
+
+      .about-modern p {
+        font-size: 1rem;
+        line-height: 1.55;
+      }
+
+      .about-modern .about-eyebrow {
+        font-size: 1rem;
+        letter-spacing: 0.18em;
+      }
+
       .about-hero {
         min-height: auto;
-        padding-top: 4rem;
+        margin-bottom: 2.875rem;
+        padding: 1rem 0 15.375rem;
         background: #ffffff;
       }
 
+      .about-hero__text {
+        margin-top: 1.35rem;
+      }
+
+      .about-who {
+        margin-top: 0;
+        margin-bottom: 3.125rem;
+        padding: 2.5rem 0 15.75rem;
+        overflow: hidden;
+      }
+
+      .about-who__intro {
+        margin-bottom: 1.75rem;
+      }
+
+      .about-who__grid {
+        gap: 2rem;
+      }
+
+      .about-who__media {
+        order: -1;
+        max-width: min(100%, 21.25rem);
+        margin-bottom: 0;
+      }
+
+      .about-who__copy h3 {
+        margin-top: 1.5rem;
+      }
+
+      .credential-grid {
+        gap: 1.3rem;
+      }
+
+      .credential-card {
+        grid-template-columns: 5rem minmax(0, 1fr);
+        gap: 1.45rem;
+        min-height: 5rem;
+      }
+
+      .credential-card__media {
+        width: 5rem;
+        height: 5rem;
+      }
+
+      .credential-card p,
+      .mission-card p {
+        font-size: 1rem;
+        line-height: 1.55;
+      }
+
+      .about-mission {
+        padding-bottom: 4rem;
+      }
+
+      .about-section-heading {
+        margin-bottom: 3.25rem;
+      }
+
       .about-section-heading--center {
-        text-align: left;
+        text-align: center;
       }
 
       .about-section-heading--center br {
-        display: none;
+        display: initial;
+      }
+
+      .mission-grid {
+        gap: 3.75rem;
+      }
+
+      .about-values {
+        padding-bottom: 4.5rem;
+      }
+
+      .values-tabs {
+        min-height: 75rem;
+        border-radius: 2rem;
+      }
+
+      .values-tabs__panel {
+        min-height: 38rem;
+      }
+
+      .values-tabs__panel-media {
+        justify-self: center;
+        width: min(100%, 10rem);
+        border-radius: 1.5rem;
+      }
+
+      .about-approach {
+        margin-top: 3.125rem;
+        padding: 3.125rem 0 4.25rem;
+      }
+
+      .about-split__media {
+        border-radius: 2rem;
+      }
+
+      .about-team {
+        margin-top: 3.125rem;
+        padding-top: 1rem;
+      }
+
+      .about-team-cta__grid {
+        gap: 1.5rem;
       }
     }
 
     @media (max-width: 480px) {
       .credential-card {
-        grid-template-columns: 4rem minmax(0, 1fr);
+        grid-template-columns: 5rem minmax(0, 1fr);
       }
 
       .credential-card__media {
-        width: 4rem;
-        height: 4rem;
+        width: 5rem;
+        height: 5rem;
       }
     }
   </style>

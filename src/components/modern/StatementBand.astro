@@ -4,13 +4,21 @@ interface Props {
   body: string | string[];
   bodyHtml?: string;
   theme?: 'dark' | 'muted' | 'light';
+  pattern?: boolean;
+  width?: 'default' | 'narrow';
 }
 
-const { lead, body, bodyHtml, theme = 'dark' } = Astro.props;
+const { lead, body, bodyHtml, theme = 'dark', pattern = false, width = 'default' } = Astro.props;
 const paragraphs = Array.isArray(body) ? body : [body];
+const classes = [
+  'statement-band',
+  `statement-band--${theme}`,
+  pattern ? 'statement-band--pattern' : '',
+  width === 'narrow' ? 'statement-band--narrow' : '',
+].filter(Boolean).join(' ');
 ---
 
-<section class={`statement-band statement-band--${theme}`}>
+<section class={classes}>
   <div class="statement-band__inner">
     <p class="statement-band__lead">{lead}</p>
     {bodyHtml ? (
@@ -25,12 +33,21 @@ const paragraphs = Array.isArray(body) ? body : [body];
 
 <style>
   .statement-band {
+    position: relative;
+    overflow: hidden;
     padding: 4rem var(--gutter);
   }
 
   .statement-band--dark {
     background: #1a1a1a;
     color: #ffffff;
+  }
+
+  .statement-band--pattern {
+    background-color: #231f20;
+    background-image: url('/images/pages/our-approach/contact-bg-fc.svg');
+    background-position: center;
+    background-size: cover;
   }
 
   .statement-band--muted {
@@ -43,6 +60,10 @@ const paragraphs = Array.isArray(body) ? body : [body];
     gap: 3rem;
     inline-size: min(100%, var(--content-max-width));
     margin-inline: auto;
+  }
+
+  .statement-band--narrow .statement-band__inner {
+    inline-size: min(100%, 70rem);
   }
 
   .statement-band__lead {
@@ -65,6 +86,10 @@ const paragraphs = Array.isArray(body) ? body : [body];
     .statement-band__inner {
       grid-template-columns: 1fr;
       gap: 1.5rem;
+    }
+
+    .statement-band--narrow {
+      text-align: center;
     }
 
     .statement-band__lead {

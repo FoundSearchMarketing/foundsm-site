@@ -1,13 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import ModernHero from '../../components/modern/ModernHero.astro';
-import SplitFeature from '../../components/modern/SplitFeature.astro';
-import CardGrid from '../../components/modern/CardGrid.astro';
-import LogoMarquee from '../../components/modern/LogoMarquee.astro';
-import CtaPanel from '../../components/modern/CtaPanel.astro';
+import DataIntelligencePage from '../../components/DataIntelligencePage.astro';
 import { capabilityDetailPageQuery, sanityClient } from '../../lib/sanity';
 import { defaultCapabilityDetailPages, mergeCapabilityDetailPageData } from '../../lib/fixedPageData';
-import { cardsFor, imageProps, logosFor, richHtml, richText } from '../../lib/fixedPageRender';
 
 const sanityPage = await sanityClient.fetch(capabilityDetailPageQuery, { id: 'capabilityDataIntelligencePage' }).catch(() => null);
 const page = mergeCapabilityDetailPageData(defaultCapabilityDetailPages.dataIntelligence, sanityPage);
@@ -25,57 +20,15 @@ const schema = {
     name: 'Found Search Marketing',
   },
 };
-
-const capabilityCards = cardsFor(page.primaryCards?.cards);
-const analyticsCards = cardsFor(page.secondaryCards?.cards);
-const toolLogos = logosFor(page.logoMarquee?.logos);
 ---
 
-<BaseLayout title={title} description={description} canonical={canonical} robots={page.robots} schema={schema}>
-  <ModernHero
-    tone="soft"
-    titleScale="display"
-    title={page.hero.heading || ''}
-    intro={richText(page.hero.body)}
-    introHtml={richHtml(page.hero.body)}
-    image={imageProps(page.hero, 'eager')}
-    imageFit="contain"
-    imageMaxWidth="72%"
-  />
-
-  <SplitFeature
-    title={page.split?.heading || ''}
-    body={richText(page.split?.body)}
-    bodyHtml={richHtml(page.split?.body)}
-    image={imageProps(page.split)}
-  />
-
-  <CardGrid
-    theme="muted"
-    title={page.primaryCards?.title}
-    subtitle={page.primaryCards?.subtitle}
-    cards={capabilityCards}
-    columns={3}
-  />
-
-  {toolLogos.length > 0 && <LogoMarquee logos={toolLogos} />}
-
-  <SplitFeature
-    theme="muted"
-    imagePosition="right"
-    title={page.secondarySplit?.heading || ''}
-    body={richText(page.secondarySplit?.body)}
-    bodyHtml={richHtml(page.secondarySplit?.body)}
-    image={imageProps(page.secondarySplit)}
-  />
-
-  <CardGrid cards={analyticsCards} columns={4} />
-
-  <CtaPanel
-    title={page.cta?.title}
-    body={richText(page.cta?.body)}
-    bodyHtml={richHtml(page.cta?.body)}
-    ctaLabel={page.cta?.cta?.label}
-    ctaHref={page.cta?.cta?.href}
-  />
+<BaseLayout
+  title={title}
+  description={description}
+  canonical={canonical}
+  robots={page.robots}
+  schema={schema}
+  bodyClass="data-intelligence-page"
+>
+  <DataIntelligencePage page={page} />
 </BaseLayout>

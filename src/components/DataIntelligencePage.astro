@@ -1,0 +1,689 @@
+---
+import type { CapabilityDetailPageData } from '../lib/fixedPageData';
+import { cardsFor, imageProps, logosFor, richHtml, richText } from '../lib/fixedPageRender';
+
+interface Props {
+  page: CapabilityDetailPageData;
+}
+
+const { page } = Astro.props;
+
+const heroImage = imageProps(page.hero, 'eager');
+const splitImage = imageProps(page.split);
+const analyticsImage = imageProps(page.secondarySplit);
+const primaryCards = cardsFor(page.primaryCards?.cards);
+const analyticsCards = cardsFor(page.secondaryCards?.cards);
+const logos = logosFor(page.logoMarquee?.logos);
+const logoTrack = [...logos, ...logos];
+
+const cardStyles = [
+  { color: '#8dc63f' },
+  { color: '#ff5a68' },
+  { color: '#ff9f1c' },
+  { color: '#12b6ea' },
+  { color: '#ffffff' },
+  { color: '#bde38f' },
+];
+
+const stripDuplicateTitle = (title: string, body: string) => {
+  const normalizedTitle = title.replace(/[,.]$/, '').trim().toLowerCase();
+  const normalizedBody = body.trim().toLowerCase();
+  if (!normalizedTitle || !normalizedBody.startsWith(normalizedTitle)) return body;
+
+  return body
+    .slice(title.replace(/[,.]$/, '').trim().length)
+    .replace(/^[\s,.-]+/, '')
+    .trim();
+};
+
+const ctaBody = richText(page.cta?.body);
+const ctaText = [page.cta?.title, ctaBody].filter(Boolean).join(' ');
+---
+
+<div class="di-page">
+  <section class="di-hero" aria-labelledby="di-hero-heading">
+    <div class="di-hero__inner">
+      <div class="di-hero__copy">
+        <h1 id="di-hero-heading">{page.hero.heading}</h1>
+        <div class="di-hero__body" set:html={richHtml(page.hero.body)} />
+      </div>
+
+      {heroImage && (
+        <div class="di-hero__media" aria-hidden="true">
+          <img
+            src={heroImage.src}
+            alt={heroImage.alt ?? ''}
+            width={heroImage.width}
+            height={heroImage.height}
+            loading="eager"
+            decoding="async"
+          />
+        </div>
+      )}
+    </div>
+  </section>
+
+  <section class="di-work" aria-labelledby="di-work-heading">
+    <div class="di-work__inner">
+      {splitImage && (
+        <div class="di-work__media">
+          <img
+            src={splitImage.src}
+            alt={splitImage.alt ?? ''}
+            width={splitImage.width}
+            height={splitImage.height}
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+      )}
+
+      <div class="di-work__copy">
+        <h2 id="di-work-heading">{page.split?.heading}</h2>
+        <div class="di-work__body" set:html={richHtml(page.split?.body)} />
+      </div>
+    </div>
+  </section>
+
+  <section class="di-intelligence" aria-labelledby="di-intelligence-heading">
+    <div class="di-intelligence__inner">
+      <div class="di-intelligence__header">
+        <h2 id="di-intelligence-heading">{page.primaryCards?.title}</h2>
+        {page.primaryCards?.subtitle && <p>{page.primaryCards.subtitle}</p>}
+      </div>
+
+      <div class="di-intelligence__grid">
+        {primaryCards.map((card, index) => (
+          <article class="di-intelligence-card" style={`--card-accent: ${cardStyles[index]?.color ?? '#8dc63f'}`}>
+            <div class="di-intelligence-card__tile">
+              {card.icon && <img src={card.icon} alt="" loading="lazy" decoding="async" />}
+              <h3>{card.title}</h3>
+            </div>
+            <div class="di-intelligence-card__body" set:html={card.bodyHtml} />
+          </article>
+        ))}
+      </div>
+
+      {logoTrack.length > 0 && (
+        <div class="di-logo-marquee" aria-label={page.logoMarquee?.title || 'Data intelligence partner logos'}>
+          <div class="di-logo-marquee__track">
+            {logoTrack.map((logo, index) => (
+              <figure class="di-logo-marquee__item" aria-hidden={index >= logos.length ? 'true' : undefined}>
+                <img src={logo.src} alt={index >= logos.length ? '' : logo.alt} loading="lazy" decoding="async" />
+              </figure>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <section class="di-analytics" aria-labelledby="di-analytics-heading">
+    <div class="di-analytics__inner">
+      <h2 id="di-analytics-heading">{page.secondarySplit?.heading}</h2>
+
+      <div class="di-analytics__content">
+        <div class="di-analytics__copy">
+          <div class="di-analytics__intro" set:html={richHtml(page.secondarySplit?.body)} />
+          <div class="di-analytics__list">
+            {analyticsCards.map((card) => {
+              const continuation = stripDuplicateTitle(card.title, card.body);
+              return (
+                <p>
+                  <strong>{card.title}</strong>{continuation ? ` ${continuation}` : ''}
+                </p>
+              );
+            })}
+          </div>
+        </div>
+
+        {analyticsImage && (
+          <div class="di-analytics__media">
+            <img
+              src={analyticsImage.src}
+              alt={analyticsImage.alt ?? ''}
+              width={analyticsImage.width}
+              height={analyticsImage.height}
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <section class="di-cta" aria-label={page.cta?.cta?.label || 'Contact Found Search Marketing'}>
+    <div class="di-cta__inner">
+      {ctaText && <h2>{ctaText}</h2>}
+      {page.cta?.cta?.label && page.cta?.cta?.href && (
+        <a class="di-cta__button" href={page.cta.cta.href}>{page.cta.cta.label}</a>
+      )}
+    </div>
+  </section>
+</div>
+
+<style>
+  .di-page {
+    background: #ffffff;
+  }
+
+  :global(body.data-intelligence-page .site-header) {
+    position: static;
+  }
+
+  .di-page h1,
+  .di-page h2 {
+    color: #231f20;
+    font-family: var(--font-heading);
+    font-weight: 900;
+    letter-spacing: 0;
+  }
+
+  .di-hero__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 42.1875rem) minmax(0, 35.9375rem);
+    justify-content: space-between;
+    align-items: start;
+    gap: 6.25rem;
+    width: min(100%, 87.5rem);
+    margin-inline: auto;
+    padding: 7.1875rem 1.5625rem 0;
+  }
+
+  .di-hero__copy {
+    display: grid;
+    gap: 1.875rem;
+    min-height: 37.5rem;
+    align-content: start;
+  }
+
+  .di-hero h1 {
+    max-width: 42.5rem;
+    margin: 0;
+    font-size: 4.375rem;
+    line-height: 1.071;
+  }
+
+  .di-hero__body,
+  .di-work__body,
+  .di-analytics__intro {
+    color: #231f20;
+    font-size: 1.25rem;
+    line-height: 1.8;
+  }
+
+  .di-hero__body :global(p),
+  .di-work__body :global(p),
+  .di-analytics__intro :global(p) {
+    margin: 0;
+  }
+
+  .di-hero__media {
+    overflow: hidden;
+    justify-self: end;
+    width: 100%;
+    border-radius: 2.5rem;
+  }
+
+  .di-hero__media img {
+    width: 100%;
+    height: auto;
+    border-radius: 2.5rem;
+  }
+
+  .di-work {
+    background: #ffffff;
+  }
+
+  .di-work__inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    width: min(100%, 87.5rem);
+    min-height: 31.25rem;
+    margin-inline: auto;
+    padding-inline: 1.875rem;
+  }
+
+  .di-work__media {
+    display: grid;
+    place-items: center;
+  }
+
+  .di-work__media img {
+    width: min(100%, 31.25rem);
+  }
+
+  .di-work__copy {
+    display: grid;
+    gap: 1.875rem;
+  }
+
+  .di-work h2,
+  .di-analytics h2 {
+    margin: 0;
+    font-size: 3.75rem;
+    line-height: 1.083;
+  }
+
+  .di-intelligence {
+    background: #231f20 url('/images/pages/data-intelligence/contour.png') center / cover;
+    color: #ffffff;
+    padding: 3.125rem 0;
+  }
+
+  .di-intelligence__inner {
+    width: min(100%, 90rem);
+    margin-inline: auto;
+  }
+
+  .di-intelligence__header {
+    display: grid;
+    justify-items: center;
+    gap: 1.05rem;
+    padding-block: 1.25rem 0;
+    text-align: center;
+  }
+
+  .di-intelligence__header h2 {
+    margin: 0;
+    color: #ffffff;
+    font-family: var(--font-body);
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  .di-intelligence__header p {
+    margin: 0;
+    color: #ffffff;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  .di-intelligence__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 1.875rem;
+    padding: 3.125rem 1.875rem 1.25rem;
+  }
+
+  .di-intelligence-card {
+    display: grid;
+    grid-template-columns: minmax(13.75rem, 0.6fr) minmax(0, 1fr);
+    align-items: start;
+    gap: 1.25rem;
+    min-height: 18.75rem;
+  }
+
+  .di-intelligence-card__tile {
+    display: grid;
+    place-items: center;
+    align-content: center;
+    gap: 1.125rem;
+    min-height: 14.6875rem;
+    padding: 1.25rem;
+    border: 4px solid var(--card-accent);
+    border-radius: 2.5rem;
+    background: rgba(255, 255, 255, 0.08);
+    text-align: center;
+  }
+
+  .di-intelligence-card__tile img {
+    width: 4.5rem;
+    height: 4.5rem;
+    object-fit: contain;
+  }
+
+  .di-intelligence-card__tile h3 {
+    max-width: 13rem;
+    margin: 0;
+    color: #ffffff;
+    font-size: 1.375rem;
+    font-weight: 700;
+    line-height: 1.364;
+  }
+
+  .di-intelligence-card__body {
+    color: #ffffff;
+    font-size: 1.125rem;
+    line-height: 1.778;
+  }
+
+  .di-intelligence-card__body :global(p) {
+    margin: 0;
+  }
+
+  .di-logo-marquee {
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    min-height: 12.5rem;
+    margin: 0 1.25rem;
+    border-radius: 4.375rem;
+    background: #ffffff;
+  }
+
+  .di-logo-marquee__track {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    width: max-content;
+    animation: di-marquee 26s linear infinite;
+  }
+
+  .di-logo-marquee:hover .di-logo-marquee__track {
+    animation-play-state: paused;
+  }
+
+  .di-logo-marquee__item {
+    display: grid;
+    place-items: center;
+    min-width: 9.25rem;
+    margin: 0;
+  }
+
+  .di-logo-marquee__item img {
+    max-width: 13.75rem;
+    max-height: 4.9375rem;
+    object-fit: contain;
+  }
+
+  .di-analytics {
+    background: #ffffff;
+    padding: 5.625rem 2.5rem 6.875rem;
+  }
+
+  .di-analytics__inner {
+    width: min(100%, 84.375rem);
+    margin-inline: auto;
+  }
+
+  .di-analytics h2 {
+    max-width: 49.25rem;
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .di-analytics__content {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(25rem, 0.84fr);
+    align-items: start;
+    gap: 5rem;
+    margin-top: 3.75rem;
+  }
+
+  .di-analytics__intro {
+    margin-bottom: 2.5rem;
+  }
+
+  .di-analytics__list {
+    display: grid;
+    gap: 1.25rem;
+    margin-left: 3.75rem;
+  }
+
+  .di-analytics__list p {
+    margin: 0;
+    padding-left: 1.625rem;
+    border-left: 6px solid #d9d9d9;
+    color: #231f20;
+    font-size: 1.25rem;
+    line-height: 1.8;
+  }
+
+  .di-analytics__list strong {
+    font-weight: 700;
+  }
+
+  .di-analytics__media {
+    overflow: hidden;
+    border-radius: 2.5rem;
+  }
+
+  .di-analytics__media img {
+    width: 100%;
+    border-radius: 2.5rem;
+  }
+
+  .di-cta {
+    background: #231f20;
+    padding: 3.125rem 1.5625rem;
+  }
+
+  .di-cta__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(17.5rem, 0.5fr);
+    align-items: center;
+    gap: 3.125rem;
+    width: min(100%, 86.875rem);
+    min-height: 9.875rem;
+    margin-inline: auto;
+  }
+
+  .di-cta h2 {
+    max-width: 40.625rem;
+    margin: 0;
+    color: #ffffff;
+    font-family: var(--font-body);
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.333;
+  }
+
+  .di-cta__button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    justify-self: start;
+    min-height: 3.75rem;
+    padding: 1.125rem 1.875rem;
+    border-radius: 2.1875rem;
+    background: var(--color-primary);
+    color: #231f20;
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 1.2;
+    transition: background-color var(--transition-fast);
+  }
+
+  .di-cta__button:hover,
+  .di-cta__button:focus-visible {
+    background: #b9dc89;
+  }
+
+  @keyframes di-marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .di-hero__inner,
+    .di-work__inner {
+      grid-template-columns: 1fr;
+    }
+
+    .di-hero__copy {
+      min-height: 16.4375rem;
+    }
+
+    .di-hero__media {
+      display: none;
+    }
+
+    .di-intelligence__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .di-hero__inner {
+      padding: 1.25rem 1.25rem 0;
+    }
+
+    .di-hero__copy {
+      gap: 1.25rem;
+      min-height: 0;
+    }
+
+    .di-hero h1 {
+      font-size: 2.8125rem;
+      line-height: 1.111;
+    }
+
+    .di-hero__body,
+    .di-work__body,
+    .di-analytics__intro {
+      font-size: 1.125rem;
+      line-height: 1.667;
+    }
+
+    .di-work__inner {
+      min-height: 0;
+      padding-inline: 0;
+    }
+
+    .di-work__media {
+      padding: 1.25rem 0;
+    }
+
+    .di-work__media img {
+      width: calc(100vw - 1.25rem);
+    }
+
+    .di-work__copy {
+      gap: 1.25rem;
+      padding: 0 0.625rem 1.875rem;
+    }
+
+    .di-work h2,
+    .di-analytics h2 {
+      font-size: 2.375rem;
+      line-height: 1.105;
+    }
+
+    .di-intelligence {
+      background-image: none;
+      padding-block: 3.125rem;
+    }
+
+    .di-intelligence__header {
+      padding: 0 1.25rem;
+    }
+
+    .di-intelligence__header h2 {
+      font-size: 2.125rem;
+      line-height: 1.235;
+    }
+
+    .di-intelligence__grid {
+      gap: 0;
+      padding: 3.125rem 1.875rem 0;
+    }
+
+    .di-intelligence-card {
+      display: block;
+      min-height: 0;
+      margin-bottom: 3.75rem;
+    }
+
+    .di-intelligence-card__tile {
+      min-height: 14.6875rem;
+      margin-bottom: 1.625rem;
+    }
+
+    .di-intelligence-card__tile h3 {
+      max-width: 17rem;
+      font-size: 1.5rem;
+      line-height: 1.25;
+    }
+
+    .di-intelligence-card__body {
+      font-size: 1.125rem;
+      line-height: 1.667;
+    }
+
+    .di-logo-marquee {
+      min-height: 11.6875rem;
+      margin-inline: 0;
+      border-radius: 4.375rem;
+    }
+
+    .di-logo-marquee__track {
+      gap: 1.75rem;
+    }
+
+    .di-logo-marquee__item {
+      min-width: 6.25rem;
+    }
+
+    .di-logo-marquee__item img {
+      max-width: 8.75rem;
+      max-height: 3.5rem;
+    }
+
+    .di-analytics {
+      padding: 5.625rem 1.25rem 5rem;
+    }
+
+    .di-analytics__content {
+      grid-template-columns: 1fr;
+      gap: 3.125rem;
+      margin-top: 4.0625rem;
+    }
+
+    .di-analytics__intro {
+      margin-bottom: 2.5rem;
+    }
+
+    .di-analytics__list {
+      gap: 1.25rem;
+      margin-left: 2.5rem;
+    }
+
+    .di-analytics__list p {
+      padding-left: 1.25rem;
+      font-size: 1.125rem;
+      line-height: 1.667;
+    }
+
+    .di-analytics__media img {
+      width: 100%;
+    }
+
+    .di-cta {
+      padding: 3.125rem 1.5625rem;
+    }
+
+    .di-cta__inner {
+      grid-template-columns: 1fr;
+      gap: 1.875rem;
+      min-height: 0;
+    }
+
+    .di-cta h2 {
+      font-size: 1.25rem;
+      line-height: 1.3;
+    }
+
+    .di-cta__button {
+      width: 100%;
+      min-height: 3.125rem;
+      padding: 0.9375rem 1.375rem;
+      font-size: 1rem;
+      line-height: 1.25;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .di-logo-marquee__track {
+      animation: none;
+      flex-wrap: wrap;
+      justify-content: center;
+      width: 100%;
+      padding-inline: 1.25rem;
+    }
+  }
+</style>

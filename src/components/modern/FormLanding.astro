@@ -50,8 +50,6 @@ const introParagraphs = Array.isArray(intro) ? intro : [intro];
   </section>
 )}
 
-<script is:inline src="https://js.hsforms.net/forms/embed/5045186.js" defer></script>
-
 <style>
   .form-landing {
     position: relative;
@@ -62,6 +60,7 @@ const introParagraphs = Array.isArray(intro) ? intro : [intro];
 
   .form-landing--contact {
     min-block-size: 56.25rem;
+    padding: 3.125rem 1.5625rem 0;
     background-color: #231f20;
     background-image: url("/images/pages/our-approach/contact-bg-fc.svg");
     background-repeat: no-repeat;
@@ -87,6 +86,11 @@ const introParagraphs = Array.isArray(intro) ? intro : [intro];
     gap: 3rem;
     inline-size: min(100%, var(--content-max-width));
     margin-inline: auto;
+  }
+
+  .form-landing--contact .form-landing__inner {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
   }
 
   .form-landing__copy {
@@ -124,6 +128,10 @@ const introParagraphs = Array.isArray(intro) ? intro : [intro];
     color: #ffffff;
   }
 
+  .form-landing--contact .form-landing__copy {
+    padding-block-start: 0;
+  }
+
   .form-landing__copy > p,
   .form-landing__intro {
     max-inline-size: 40rem;
@@ -144,7 +152,7 @@ const introParagraphs = Array.isArray(intro) ? intro : [intro];
   .form-landing--contact .form-landing__intro,
   .form-landing--dataconnect .form-landing__copy > p,
   .form-landing--dataconnect .form-landing__intro {
-    color: rgba(255, 255, 255, 0.82);
+    color: #ffffff;
   }
 
   .form-landing--newsletter .form-landing__eyebrow {
@@ -165,8 +173,21 @@ const introParagraphs = Array.isArray(intro) ? intro : [intro];
     box-shadow: 0 18px 42px rgba(26, 26, 26, 0.08);
   }
 
+  .form-landing--contact .form-landing__form-card {
+    min-block-size: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
   .form-landing__frame {
     min-block-size: 25rem;
+  }
+
+  .form-landing--contact .form-landing__frame {
+    min-block-size: 0;
   }
 
   .form-landing-summary {
@@ -175,13 +196,20 @@ const introParagraphs = Array.isArray(intro) ? intro : [intro];
     color: #ffffff;
   }
 
+  .form-landing--contact + .form-landing-summary {
+    padding: 7.5rem 1.5625rem 0;
+    margin-block-end: 6.25rem;
+    background: #ffffff;
+    color: #231f20;
+  }
+
   .form-landing-summary__inner {
     inline-size: min(100%, 64rem);
     margin-inline: auto;
     text-align: center;
   }
 
-  .form-landing-summary p {
+  :global(.form-landing-summary p) {
     font-size: 1.25rem;
     line-height: 1.8;
   }
@@ -190,8 +218,28 @@ const introParagraphs = Array.isArray(intro) ? intro : [intro];
     inline-size: 100%;
   }
 
+  @media (min-width: 901px) {
+    .form-landing--contact .form-landing__copy {
+      gap: 2.5rem;
+      padding: 0.625rem;
+    }
+
+    .form-landing--contact .form-landing__intro {
+      max-inline-size: none;
+      padding-block: 0.625rem;
+    }
+
+    .form-landing--contact .form-landing__form-card {
+      padding: 0.625rem;
+    }
+  }
+
   @media (max-width: 900px) {
     .form-landing__inner {
+      grid-template-columns: 1fr;
+    }
+
+    .form-landing--contact .form-landing__inner {
       grid-template-columns: 1fr;
     }
 
@@ -214,9 +262,24 @@ const introParagraphs = Array.isArray(intro) ? intro : [intro];
       padding-block: 3rem;
     }
 
+    .form-landing--contact {
+      min-block-size: 85.625rem;
+      padding: 1.25rem 1.25rem 0;
+    }
+
     .form-landing h1 {
       font-size: 2.375rem;
       line-height: 1.105;
+    }
+
+    .form-landing--contact h1 {
+      font-size: 2.8125rem;
+      line-height: 1.111;
+    }
+
+    .form-landing--contact .form-landing__intro {
+      font-size: 1.125rem;
+      line-height: 1.666;
     }
 
     .form-landing--newsletter .form-landing__eyebrow {
@@ -226,6 +289,21 @@ const introParagraphs = Array.isArray(intro) ? intro : [intro];
     .form-landing__form-card {
       padding: 1rem;
       border-radius: 1.875rem;
+    }
+
+    .form-landing--contact .form-landing__form-card {
+      padding: 0;
+      border-radius: 0;
+    }
+
+    .form-landing--contact + .form-landing-summary {
+      padding: 3.75rem 1.5625rem;
+      margin-block: 2.5rem;
+    }
+
+    :global(.form-landing--contact + .form-landing-summary p) {
+      font-size: 1.125rem;
+      line-height: 1.666;
     }
   }
 </style>

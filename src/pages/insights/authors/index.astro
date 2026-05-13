@@ -406,7 +406,7 @@ const latestPosts = latestBlogPosts.map((post, index) => {
   .authors-latest__grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    align-items: start;
+    grid-auto-rows: 1fr;
     gap: 35px 30px;
     margin-inline: 20px;
   }
@@ -424,6 +424,7 @@ const latestPosts = latestBlogPosts.map((post, index) => {
   .authors-latest-card__image {
     position: relative;
     display: block;
+    aspect-ratio: 768 / 513;
     overflow: hidden;
     background: #f5f5f5;
   }
@@ -431,8 +432,8 @@ const latestPosts = latestBlogPosts.map((post, index) => {
   .authors-latest-card__image img {
     display: block;
     inline-size: 100%;
-    block-size: auto;
-    object-fit: fill;
+    block-size: 100%;
+    object-fit: cover;
   }
 
   .authors-latest-card__body {
@@ -449,6 +450,7 @@ const latestPosts = latestBlogPosts.map((post, index) => {
     font-weight: 600;
     line-height: 27px;
     letter-spacing: -0.3px;
+    min-block-size: 54px;
   }
 
   .authors-latest-card p {
@@ -590,6 +592,7 @@ const latestPosts = latestBlogPosts.map((post, index) => {
       font-weight: 600;
       line-height: 30px;
       letter-spacing: -0.3px;
+      min-block-size: 150px;
     }
 
     .authors-latest-card p {

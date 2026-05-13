@@ -191,6 +191,9 @@ export const allAuthorsPageQuery = `*[_type == "author"] | order(name asc) {
   name,
   "slug": slug.current,
   title,
+  team,
+  foundStartDate,
+  expertise,
   bio,
   linkedin,
   "image": image.asset->url

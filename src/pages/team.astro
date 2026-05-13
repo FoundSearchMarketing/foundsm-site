@@ -29,12 +29,17 @@ const schema = {
   },
 };
 
-const leaders = ((sanityLeaders?.length ? sanityLeaders : page.leaders) || [])
-  .map((leader) => ({
-    name: leader.name || '',
-    role: leader.role || '',
-    image: srcFor(leader.image),
-  }))
+const defaultLeadersByName = new Map((page.leaders || []).filter((leader) => leader.name).map((leader) => [leader.name, leader]));
+const leaderSource = (sanityLeaders?.length ? sanityLeaders : page.leaders) || [];
+const leaders = leaderSource
+  .map((leader, index) => {
+    const fallback = (leader.name && defaultLeadersByName.get(leader.name)) || page.leaders[index] || {};
+    return {
+      name: leader.name || fallback.name || '',
+      role: leader.role || fallback.role || '',
+      image: srcFor(leader.image) || srcFor(fallback.image),
+    };
+  })
   .filter((leader) => leader.name);
 ---
 
@@ -46,15 +51,21 @@ const leaders = ((sanityLeaders?.length ? sanityLeaders : page.leaders) || [])
     introHtml={richHtml(page.hero.body)}
     cta={page.hero.cta?.label && page.hero.cta?.href ? { label: page.hero.cta.label, href: page.hero.cta.href } : undefined}
     image={imageProps(page.hero, 'eager')}
+    imageShape="rounded"
+    mediaHeight="33rem"
+    className="team-hero"
   />
 
   <StatementBand
     lead={page.statement.lead || ''}
     body={richText(page.statement.body)}
     bodyHtml={richHtml(page.statement.body)}
+    pattern
+    width="narrow"
   />
 
   <LeadershipGrid
+    layout="centered"
     title={page.leadership.heading || ''}
     intro={richText(page.leadership.body)}
     introHtml={richHtml(page.leadership.body)}
@@ -62,7 +73,8 @@ const leaders = ((sanityLeaders?.length ? sanityLeaders : page.leaders) || [])
   />
 
   <CtaPanel
-    theme="green"
+    theme="white"
+    align="centered"
     title={page.cta.heading}
     body={richText(page.cta.body)}
     bodyHtml={richHtml(page.cta.body)}
@@ -70,3 +82,29 @@ const leaders = ((sanityLeaders?.length ? sanityLeaders : page.leaders) || [])
     ctaHref={page.cta.cta?.href}
   />
 </BaseLayout>
+
+<style>
+  :global(.team-hero) {
+    padding-block: 6.25rem 4.5rem;
+    padding-inline: 1.5625rem;
+  }
+
+  :global(.team-hero .modern-hero__inner) {
+    align-items: start;
+    gap: 6.25rem;
+  }
+
+  :global(.team-hero .modern-hero__intro) {
+    max-inline-size: 43rem;
+  }
+
+  @media (max-width: 1024px) {
+    :global(.team-hero) {
+      padding: 1.25rem 1.25rem 3rem;
+    }
+
+    :global(.team-hero .modern-hero__media) {
+      display: none;
+    }
+  }
+</style>

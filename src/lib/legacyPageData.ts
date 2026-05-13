@@ -13,6 +13,12 @@ export interface LegacyPageDefinition {
 export interface LegacyAuthorDefinition {
   slug: string;
   name: string;
+  title?: string;
+  team?: string;
+  foundStartDate?: string;
+  expertise?: string;
+  bio?: string;
+  image?: string;
 }
 
 export interface LegacyCta {
@@ -62,6 +68,9 @@ export interface LegacyAuthorData {
   slug: string;
   name: string;
   title?: string;
+  team?: string;
+  foundStartDate?: string;
+  expertise?: string;
   bio?: string;
   linkedin?: string;
   image?: string;
@@ -197,17 +206,116 @@ export const legacyPageDefinitions: LegacyPageDefinition[] = [
 ];
 
 export const legacyAuthorDefinitions: LegacyAuthorDefinition[] = [
-  { slug: 'adam', name: 'Adam' },
-  { slug: 'caroline', name: 'Caroline' },
-  { slug: 'emily', name: 'Emily' },
-  { slug: 'julie', name: 'Julie' },
-  { slug: 'kelley', name: 'Kelley' },
-  { slug: 'kelsey', name: 'Kelsey' },
-  { slug: 'kylie', name: 'Kylie' },
-  { slug: 'maria', name: 'Maria' },
-  { slug: 'matt', name: 'Matt' },
-  { slug: 'nicholas', name: 'Nicholas' },
-  { slug: 'ryan', name: 'Ryan' },
+  {
+    slug: 'julie',
+    name: 'Julie Warnecke',
+    title: 'CEO',
+    team: 'Executive Leadership',
+    foundStartDate: '2006',
+    expertise: 'Measurement Strategy, Operational Excellence, Strategic Growth',
+    bio: 'Julie Warnecke is the Founder and CEO of Found Search Marketing, a Midwest firm managing over $200M in annual media spend. An early Google employee instrumental in launching AdWords, she established Found in 2006. Today, she leads a team of 50+ that serves as a seamless extension of client teams.',
+    image: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Julie_W_1800-1.webp?ver=1773664202',
+  },
+  {
+    slug: 'kelley',
+    name: 'Kelley Swart',
+    title: 'VP, Strategy & Growth',
+    team: 'Executive Leadership',
+    foundStartDate: '2014',
+    expertise: 'Client Alignment, Growth Architecture, Scalable Systems',
+    bio: "Kelley, Found's VP of Strategy & Growth, brings 25+ years of experience, starting at Google Ads. She has led strategic planning for Fortune 1000 clients like Home Depot and Staples across CPG, Retail, and Higher Ed. Her focus is on strategic oversight and building strong relationships that exceed client goals.",
+    image: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Julie_W_1800-1-6.webp?ver=1773663606',
+  },
+  {
+    slug: 'nicholas',
+    name: 'Nicholas Hoium',
+    title: 'Head of Data Engineering',
+    team: 'Innovation',
+    foundStartDate: '2010',
+    expertise: 'Google Cloud Certified Data Engineer',
+    bio: 'With over 15 years of experience, Head of Data Engineering Nicholas Hoium builds advanced pipelines and web analytics solutions. The IU Bloomington graduate and Google Cloud Certified Engineer transforms raw information into accessible intelligence. Off the clock, Nicholas enjoys indie games, traveling, and watching soccer.',
+    image: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/Nicholas-FoundSM.webp',
+  },
+  {
+    slug: 'ryan',
+    name: 'Ryan Eme',
+    title: 'Head of Data Intelligence',
+    team: 'Innovation',
+    foundStartDate: '2014',
+    expertise: 'Audience Intelligence, Data Strategy, Attribution Modeling',
+    bio: 'Ryan Eme is the Head of Data Intelligence at Found, bringing 20 years of experience in data-driven marketing. A Certified Google Cloud Data Engineer, he helps clients in higher ed and healthcare unlock business growth. Known for his innovative problem-solving, Ryan is so effective that clients frequently ask to clone him.',
+    image: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Julie_W_1800-1-12.webp?ver=1773664036',
+  },
+  {
+    slug: 'adam',
+    name: 'Adam Persinger',
+    title: 'Head of Strategic Media',
+    team: 'Innovation',
+    foundStartDate: '2016',
+    expertise: 'Strategic Media, Performance Forecasting, Channel Strategy',
+    bio: 'Adam joined Found Search Marketing in 2016, leveraging his media strategy background to drive client results through research and testing. A Brown University graduate in Cognitive Neuroscience and Economics, he began his career with the Indianapolis Colts. Outside the office, Adam stays active through CrossFit, backpacking, and various team sports.',
+    image: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/Adam-P-main.webp',
+  },
+  {
+    slug: 'caroline',
+    name: 'Caroline Stoner',
+    title: 'Head of User Experience',
+    team: 'Innovation',
+    foundStartDate: '2017',
+    expertise: 'User Experience & Strategy, CRO, Unbounce Expert',
+    bio: 'As one of only 10 Unbounce Experts worldwide, Caroline specializes in creating high-performing landing pages and optimizing conversion rates. Her background spans CRO, web design, and SEO, with a focus on higher education. When not driving client results, Caroline enjoys gardening, cozy video games, and exploring the city with her family.',
+    image: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Julie_W_1800-1-4.webp?ver=1773663451',
+  },
+  {
+    slug: 'kylie',
+    name: 'Kylie Colquitt',
+    title: 'Group Account Director',
+    team: 'Client Partnership',
+    foundStartDate: '2017',
+    expertise: 'Client Services',
+    bio: 'As Group Account Director, Kylie leverages 15+ years of experience to orchestrate cross-channel strategies that drive client growth. Having supported brands like General Motors at top Chicago agencies, she brings calm, collaborative leadership to her team. Outside work, Kylie enjoys life with her daughter and dog.',
+    image: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/Kylie-FoundSM.webp',
+  },
+  {
+    slug: 'matt',
+    name: 'Matt Dragoo',
+    title: 'Senior Data Analyst',
+    team: 'Client Partnership',
+    foundStartDate: '2019',
+    expertise: 'Reporting, Analysis, Paid Media Management',
+    bio: 'Since joining Found in 2019, Purdue graduate Matt crafts data-driven paid media strategies. Certified across multiple platforms, he leverages his expertise in B2B and Higher Education to maximize client ROI. Known for predicting problems, Matt spends his free time gaming, cooking, and exploring Indianapolis.',
+    image: 'https://foundsm.com/found2025/wp-content/uploads/2026/02/Matt_author_profile.webp',
+  },
+  {
+    slug: 'emily',
+    name: 'Emily Williams-Hempstead',
+    title: 'Strategist',
+    team: 'Client Partnership',
+    foundStartDate: '2020',
+    expertise: 'Communication, collaboration & problem solving',
+    bio: 'Strategist Emily Williams-Hempstead untangles complex challenges by applying her Indiana State Psychology and Marketing background to understand human behavior. Her knack for organizing chaos drives clear results for many clients at Found. Away from the agency, she enjoys traveling, hosting game nights, and relaxing with her two dogs.',
+    image: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/Emily_author_profile.webp',
+  },
+  {
+    slug: 'maria',
+    name: 'Maria Escobedo',
+    title: 'Associate Data Analyst',
+    team: 'Client Partnership',
+    foundStartDate: '2022',
+    expertise: 'Data Analysis',
+    bio: 'Maria leverages her Purdue MS in Business Analytics to transform complex datasets into actionable, strategic insights. With over three years at Found, this Google-certified expert effectively bridges technical analysis with business goals. Outside work, Maria enjoys teaching spin classes, cooking, and reading.',
+    image: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/Maria-FoundSM.webp',
+  },
+  {
+    slug: 'kelsey',
+    name: 'Kelsey Connor',
+    title: 'Director, Marketing & Brand Strategy',
+    team: 'Agency Operations',
+    foundStartDate: '2025',
+    expertise: 'Marketing, Brand & Positioning',
+    bio: 'Kelsey brings nearly 20 years of expertise as Director of Agency Marketing and Brand Strategy. She fosters seamless client-agency collaboration to drive results through authentic leadership. A proud Hoosier with an MBA, Kelsey serves the community as REV Committee Chair and enjoys flipping houses and cheering on her family.',
+    image: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Julie_W_1800-1-7.webp?ver=1773663677',
+  },
 ];
 
 export const legacyPagePathOptions = legacyPageDefinitions.map((page) => ({
@@ -272,16 +380,12 @@ export function mergeLegacyAuthors(incoming: LegacyAuthorData[] = []): LegacyAut
     bySlug.set(author.slug, author);
   }
 
-  const knownAuthors = legacyAuthorDefinitions.map((definition) => ({
-    slug: definition.slug,
-    name: bySlug.get(definition.slug)?.name || definition.name,
-    ...bySlug.get(definition.slug),
-  }));
+  const knownAuthors = legacyAuthorDefinitions.map((definition) => mergeLegacyAuthor(definition, bySlug.get(definition.slug)));
 
   const knownSlugs = new Set(legacyAuthorDefinitions.map((definition) => definition.slug));
   const extraAuthors = incoming.filter((author) => author.slug && !knownSlugs.has(author.slug));
 
-  return [...knownAuthors, ...extraAuthors].sort((a, b) => a.name.localeCompare(b.name));
+  return [...knownAuthors, ...extraAuthors.sort((a, b) => a.name.localeCompare(b.name))];
 }
 
 export function slugifyAuthorName(name: string): string {
@@ -293,6 +397,28 @@ export function slugifyAuthorName(name: string): string {
 }
 
 function buildDefaultLegacyPageData(definition: LegacyPageDefinition): LegacyPageData {
+  if (definition.id === 'legacy-dataconnect') {
+    const summary = "We're ready to learn more about your business goals and talk about all the ways we can work together to find solutions that drive impact and lead to profitable revenue. Whether it's smarter paid media strategy, creative that converts, or finding clarity in your data, we're ready to sit on the same side of the table and get to work.";
+
+    return {
+      title: definition.title,
+      path: definition.path,
+      seoTitle: 'Data Connect - Found Search Marketing',
+      seoDescription: summary,
+      canonicalUrl: 'https://foundsm.com/dataconnect/',
+      robots: 'index, follow',
+      hero: {
+        eyebrow: 'Ready to stop guessing and start scaling?',
+        heading: 'Activating First-Party Data for Revenue.',
+        subheading: "Let's talk about bringing your first-party data directly to the ad platforms where growth happens.",
+      },
+      body: [block(summary)],
+      form: {
+        hubspotFormId: '77ee07f7-2567-46d2-9255-ff9e410fdf6a',
+      },
+    };
+  }
+
   const canonicalPath = definition.path === '/' ? '' : definition.path.replace(/\/$/, '');
 
   return {
@@ -331,4 +457,19 @@ function hasBlocks(blocks: unknown): blocks is SimplePortableTextBlock[] {
 function mergeObject<T extends object>(fallback: T | undefined, incoming: T | undefined): T | undefined {
   if (!fallback && !incoming) return undefined;
   return { ...(fallback || {}), ...(incoming || {}) } as T;
+}
+
+function mergeLegacyAuthor(definition: LegacyAuthorDefinition, incoming?: LegacyAuthorData): LegacyAuthorData {
+  return {
+    _id: incoming?._id,
+    slug: definition.slug,
+    name: definition.name || incoming?.name || definition.slug,
+    title: definition.title || incoming?.title,
+    team: definition.team || incoming?.team,
+    foundStartDate: definition.foundStartDate || incoming?.foundStartDate,
+    expertise: definition.expertise || incoming?.expertise,
+    bio: definition.bio || incoming?.bio,
+    linkedin: incoming?.linkedin,
+    image: definition.image || incoming?.image,
+  };
 }

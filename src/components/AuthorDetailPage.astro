@@ -123,7 +123,7 @@ const normalizePost = (post: LegacyAuthorLatestPost) => ({
                     alt={normalizedPost.imageAlt}
                     width={normalizedPost.imageWidth}
                     height={normalizedPost.imageHeight}
-                    loading="lazy"
+                    loading="eager"
                     decoding="async"
                   />
                 </a>
@@ -335,7 +335,6 @@ const normalizePost = (post: LegacyAuthorLatestPost) => ({
 
   .author-latest-card {
     display: flex;
-    min-block-size: 859px;
     flex-direction: column;
     overflow: hidden;
     border-radius: 20px;
@@ -357,10 +356,7 @@ const normalizePost = (post: LegacyAuthorLatestPost) => ({
   }
 
   .author-latest-card__body {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    justify-content: flex-end;
+    display: block;
     padding: 30px 30px 34px;
   }
 
@@ -530,18 +526,16 @@ const normalizePost = (post: LegacyAuthorLatestPost) => ({
     }
 
     .author-latest-card__image {
-      min-block-size: 264px;
+      min-block-size: 0;
     }
 
     .author-latest-card__image img {
       inline-size: 100%;
-      block-size: 264px;
-      opacity: 0;
+      block-size: auto;
     }
 
     .author-latest-card__body {
-      display: block;
-      padding: 211px 30px 33px;
+      padding: 30px 30px 33px;
     }
 
     .author-latest-card h3 {

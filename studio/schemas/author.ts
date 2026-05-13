@@ -24,6 +24,21 @@ export default defineType({
       type: 'string',
     }),
     defineField({
+      name: 'team',
+      title: 'Team',
+      type: 'string',
+    }),
+    defineField({
+      name: 'foundStartDate',
+      title: 'Found Start Date',
+      type: 'string',
+    }),
+    defineField({
+      name: 'expertise',
+      title: 'Expertise',
+      type: 'string',
+    }),
+    defineField({
       name: 'image',
       title: 'Photo',
       type: 'image',

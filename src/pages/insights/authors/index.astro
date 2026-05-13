@@ -1,101 +1,560 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
-import LegacyPageRenderer from '../../../components/legacy/LegacyPageRenderer.astro';
+import { getLatestBlogPosts } from '../../../lib/blogPosts';
 import { loadAuthors, loadLegacyPage } from '../../../lib/legacyPageFetch';
 import { getLegacyPageDefinitionByPath } from '../../../lib/legacyPageData';
 
 const authorIndexDefinition = getLegacyPageDefinitionByPath('/insights/authors/');
 if (!authorIndexDefinition) throw new Error('Missing legacy page definition for /insights/authors/.');
 
-const [page, authors] = await Promise.all([
+const [page, authors, latestBlogPosts] = await Promise.all([
   loadLegacyPage(authorIndexDefinition),
   loadAuthors(),
+  getLatestBlogPosts(4),
 ]);
+
+const title = page.seoTitle || 'Authors | Found Search Marketing';
+const description = 'Found Search Marketing brings deep channel expertise, custom analytics, and agile strategy together to maximize performance across your entire media ecosystem.';
+const canonical = 'https://foundsm.com/insights/authors/';
+const heroImage = 'https://foundsm.com/found2025/wp-content/uploads/2026/02/adam_side-profile.webp';
+const heroHeading = ['From Google Roots', 'to Agile Results'];
+const heroBody = 'Meet Found Search Marketing: an agency where decades of expertise meet agile execution. With leadership grounded in foundational roles at Google and a team energized by complex problem-solving, we break down silos to offer fully integrated strategies.';
+const introBody = 'Dive into the articles below to see how our hands-on, results-obsessed experts apply this deep technical knowledge to transform business challenges into breakthroughs.';
+
+const latestPosts = latestBlogPosts.map((post) => ({
+  title: post.title.replace(/^\[TEST\]\s*/, ''),
+  href: `/insights/${post.slug}/`,
+  imageSrc: post.heroImage,
+  imageAlt: (post.heroImageAlt || post.title).replace(/^\[TEST\]\s*/, ''),
+  date: post.publishedLabel,
+}));
 ---
 
 <BaseLayout
-  title={page.seoTitle}
-  description={page.seoDescription}
-  canonical={page.canonicalUrl}
+  title={title}
+  description={description}
+  canonical={canonical}
   ogImage={page.ogImage}
   robots={page.robots}
-  bodyClass="legacy-page"
+  bodyClass="authors-page"
 >
-  <LegacyPageRenderer page={page}>
-    <section class="author-directory" aria-label="Authors">
-      <div class="author-directory__grid">
-        {authors.map((author) => (
-          <article class="author-card">
-            <a href={`/insights/authors/${author.slug}/`} class="author-card__image" aria-label={author.name}>
-              {author.image ? (
-                <img src={author.image} alt={author.name} loading="lazy" width="240" height="240" />
-              ) : (
-                <span>{author.name.slice(0, 1)}</span>
+  <section class="authors-hero" aria-label="Found authors">
+    <div class="authors-hero__inner">
+      <div class="authors-hero__copy">
+        <h1>{heroHeading[0]}<br />{heroHeading[1]}</h1>
+        <p>{heroBody}</p>
+      </div>
+      <figure class="authors-hero__figure" aria-hidden="true">
+        <img src={heroImage} alt="" width="595" height="400" loading="eager" fetchpriority="high" decoding="async" />
+      </figure>
+    </div>
+  </section>
+
+  <section class="authors-contributors" aria-labelledby="authors-contributors-heading">
+    <div class="authors-contributors__inner">
+      <header class="authors-contributors__intro">
+        <h2 id="authors-contributors-heading">Blog Contributors</h2>
+        <p>{introBody}</p>
+      </header>
+
+      <div class="authors-contributors__list">
+        {authors.map((author, index) => {
+          const href = `/insights/authors/${author.slug}/`;
+          const authorImage = author.image || `https://placehold.co/640x600?text=${encodeURIComponent(author.name)}`;
+
+          return (
+            <article class="author-profile">
+              <a class="author-profile__media" href={href} aria-label={`Read more about ${author.name}`}>
+                <img src={authorImage} alt="" width="640" height="600" loading={index < 2 ? 'eager' : 'lazy'} decoding="async" />
+                <span class="author-profile__label">
+                  <span class="author-profile__name">{author.name}</span>
+                  {author.title && <span class="author-profile__title">{author.title}</span>}
+                </span>
+              </a>
+
+              <div class="author-profile__content">
+                <dl class="author-profile__meta">
+                  {author.team && (
+                    <div>
+                      <dt>Team:</dt>
+                      <dd>{author.team}</dd>
+                    </div>
+                  )}
+                  {author.foundStartDate && (
+                    <div>
+                      <dt>Found Start Date:</dt>
+                      <dd>{author.foundStartDate}</dd>
+                    </div>
+                  )}
+                  {author.expertise && (
+                    <div>
+                      <dt>Expertise:</dt>
+                      <dd>{author.expertise}</dd>
+                    </div>
+                  )}
+                </dl>
+
+                {author.bio && <p class="author-profile__bio">{author.bio}</p>}
+
+                <a class="author-profile__button" href={href}>
+                  <span>Read More</span>
+                  <svg aria-hidden="true" viewBox="0 0 192 512" focusable="false">
+                    <path d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z"></path>
+                  </svg>
+                </a>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <section class="authors-latest" aria-labelledby="authors-latest-heading">
+    <div class="authors-latest__inner">
+      <div class="authors-latest__heading" id="authors-latest-heading">LATEST POSTS</div>
+      <div class="authors-latest__grid" role="list">
+        {latestPosts.map((post) => (
+          <article class="authors-latest-card" role="listitem">
+            <a class="authors-latest-card__image" href={post.href} aria-label={post.title}>
+              {post.imageSrc && (
+                <img
+                  src={post.imageSrc}
+                  alt={post.imageAlt}
+                  width="768"
+                  height="513"
+                  loading="lazy"
+                  decoding="async"
+                />
               )}
             </a>
-            <div>
-              <h2><a href={`/insights/authors/${author.slug}/`}>{author.name}</a></h2>
-              {author.title && <p class="author-card__role">{author.title}</p>}
-              {author.bio && <p class="author-card__bio">{author.bio}</p>}
+            <div class="authors-latest-card__body">
+              <h3><a href={post.href}>{post.title}</a></h3>
+              {post.date && <p>{post.date}</p>}
+              <a class="authors-latest-card__link" href={post.href}>READ MORE &raquo;</a>
             </div>
           </article>
         ))}
       </div>
-    </section>
-  </LegacyPageRenderer>
+    </div>
+  </section>
 </BaseLayout>
 
 <style>
-  .author-directory {
-    margin-top: var(--space-xl);
+  .authors-page :global(main) {
+    background: #ffffff;
   }
 
-  .author-directory__grid {
+  .authors-hero {
+    color: #231f20;
+    background: #ffffff;
+  }
+
+  .authors-hero__inner {
     display: grid;
-    gap: var(--space-lg);
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+    grid-template-columns: minmax(0, 50%) minmax(0, calc(50% - 100px));
+    column-gap: 100px;
+    inline-size: min(calc(100% - 50px), var(--content-max-width));
+    min-block-size: 505px;
+    margin-inline: auto;
+    padding-block-start: 100px;
   }
 
-  .author-card {
-    background: var(--color-surface-muted);
-    border: 1px solid var(--color-border-subtle);
-    border-radius: var(--radius);
-    display: grid;
-    gap: var(--space-md);
-    padding: var(--space-lg);
+  .authors-hero__copy {
+    min-inline-size: 0;
   }
 
-  .author-card__image {
-    align-items: center;
-    aspect-ratio: 1;
-    background: var(--color-dark);
-    border-radius: var(--radius);
-    color: var(--color-primary);
-    display: flex;
+  .authors-hero h1,
+  .authors-contributors h2 {
+    margin: 0 0 20px;
+    color: #231f20;
     font-family: var(--font-heading);
-    font-size: 3rem;
-    justify-content: center;
-    overflow: hidden;
-    width: 6rem;
+    font-size: 60px;
+    font-weight: 900;
+    line-height: 65px;
+    letter-spacing: 0;
   }
 
-  .author-card__image img {
-    height: 100%;
+  .authors-hero p {
+    max-width: 43.5rem;
+    margin: 0 0 20px;
+    color: #231f20;
+    font-size: 24px;
+    line-height: 43px;
+  }
+
+  .authors-hero__figure {
+    min-inline-size: 0;
+    margin: 0;
+  }
+
+  .authors-hero__figure img {
+    inline-size: 100%;
+    block-size: 400px;
+    border-radius: 40px;
     object-fit: cover;
-    width: 100%;
+    object-position: left center;
   }
 
-  .author-card h2 {
-    font-size: 1.35rem;
+  .authors-contributors {
+    position: relative;
+    margin-block-start: 100px;
+    padding-inline: 50px;
+    overflow: hidden;
+    background-color: #f2f3f2;
+    background-image: url('/images/pages/our-approach/topography-light.svg');
+    background-position: center top;
+    background-repeat: repeat;
+    color: #231f20;
   }
 
-  .author-card h2 a:hover {
+  .authors-contributors__inner {
+    inline-size: 100%;
+    max-inline-size: var(--content-max-width);
+    margin-inline: auto;
+    padding-block: 75px 50px;
+  }
+
+  .authors-contributors__intro {
+    margin-block-end: 20px;
+    text-align: center;
+  }
+
+  .authors-contributors__intro p {
+    max-width: 77.5rem;
+    margin: 0 auto 20px;
+    color: #231f20;
+    font-size: 23px;
+    font-weight: 600;
+    line-height: 33px;
+  }
+
+  .authors-contributors__list {
+    display: grid;
+    gap: 0;
+  }
+
+  .author-profile {
+    display: grid;
+    grid-template-columns: minmax(20rem, 32%) minmax(0, 1fr);
+    align-items: start;
+    padding: 20px;
+  }
+
+  .author-profile__media {
+    position: relative;
+    display: block;
+    min-block-size: 400px;
+    overflow: hidden;
+    border-radius: 30px 0 0 30px;
+    color: #ffffff;
+    background: transparent;
+  }
+
+  .author-profile__media img {
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    object-position: center center;
+  }
+
+  .author-profile__label {
+    position: absolute;
+    inset-inline-start: 0;
+    inset-block-start: 70%;
+    display: grid;
+    min-inline-size: 85%;
+    max-inline-size: calc(100% - 44px);
+    min-block-size: 73px;
+    align-content: center;
+    border-radius: 0 50px 50px 0;
+    background: #231f20;
+    padding: 10px 16px;
+  }
+
+  .author-profile__name {
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.15;
+  }
+
+  .author-profile__title {
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.25;
+  }
+
+  .author-profile__content {
+    display: flex;
+    min-block-size: 428px;
+    flex-direction: column;
+    gap: 20px;
+    border-radius: 0 30px 30px 0;
+    background: rgba(255, 255, 255, 0.7);
+    padding: 40px 20px 50px 40px;
+    color: #231f20;
+  }
+
+  .author-profile__meta {
+    display: grid;
+    gap: 0;
+    margin: 0;
+    color: #231f20;
+    font-size: 20px;
+    line-height: 30px;
+  }
+
+  .author-profile__meta div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25em;
+  }
+
+  .author-profile__meta dt {
+    font-weight: 700;
+  }
+
+  .author-profile__meta dd {
+    margin: 0;
+  }
+
+  .author-profile__bio {
+    margin: 0;
+    color: #231f20;
+    font-size: 17px;
+    line-height: 24px;
+  }
+
+  .author-profile__button {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    border: 2px solid #231f20;
+    border-radius: 50px;
+    padding: 5px 18px;
+    color: #231f20;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+  }
+
+  .author-profile__button svg {
+    inline-size: 0.42rem;
+    block-size: 0.88rem;
+    fill: currentColor;
+  }
+
+  .authors-latest {
+    background-image: linear-gradient(139deg, #231f20 0%, #414042 100%);
+    color: #f2f3f2;
+  }
+
+  .authors-latest__inner {
+    inline-size: min(calc(100% - 40px), var(--content-max-width));
+    margin-inline: auto;
+    padding-block: 50px 75px;
+  }
+
+  .authors-latest__heading {
+    margin: 0 0 20px;
+    color: #f2f3f2;
+    font-size: 20px;
+    font-weight: 300;
+    letter-spacing: 3px;
+    line-height: 28px;
+  }
+
+  .authors-latest__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 35px 30px;
+  }
+
+  .authors-latest-card {
+    display: flex;
+    min-block-size: min(74vw, 1065px);
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 20px;
+    background: #f5f5f5;
+    color: #231f20;
+  }
+
+  .authors-latest-card__image {
+    display: block;
+    flex: 1 1 auto;
+    min-block-size: 34rem;
+    background: #f5f5f5;
+  }
+
+  .authors-latest-card__image img {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+
+  .authors-latest-card__body {
+    display: grid;
+    gap: 10px;
+    padding: 0 30px 40px;
+  }
+
+  .authors-latest-card h3 {
+    margin: 0;
+    color: #231f20;
+    font-family: var(--font-body);
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 25px;
+    letter-spacing: 0;
+  }
+
+  .authors-latest-card p {
+    margin: 0;
+    color: rgba(35, 31, 32, 0.38);
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  .authors-latest-card__link {
+    justify-self: start;
     color: var(--color-primary);
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 30px;
   }
 
-  .author-card__role,
-  .author-card__bio {
-    color: var(--color-mid);
-    margin-top: var(--space-xs);
+  @media (max-width: 1024px) {
+    .authors-hero__inner {
+      grid-template-columns: 1fr;
+      gap: 20px;
+      inline-size: min(calc(100% - 40px), var(--content-max-width));
+      min-block-size: 0;
+      padding-block: 20px 0;
+    }
+
+    .authors-hero h1,
+    .authors-contributors h2 {
+      font-size: 38px;
+      line-height: 42px;
+    }
+
+    .authors-hero p {
+      font-size: 16px;
+      line-height: 27.2px;
+    }
+
+    .authors-hero__figure img {
+      block-size: 400px;
+      object-position: left center;
+    }
+
+    .authors-contributors {
+      margin-block-start: 100px;
+      padding-inline: 50px;
+    }
+
+    .authors-contributors__intro p {
+      font-size: 18px;
+      line-height: 32px;
+    }
+
+    .author-profile {
+      grid-template-columns: 1fr;
+      padding: 20px 0;
+    }
+
+    .author-profile__media,
+    .author-profile__content {
+      inline-size: calc(100% - 20px);
+    }
+
+    .author-profile__media {
+      margin-inline-start: 20px;
+    }
+
+    .author-profile__content {
+      min-block-size: 0;
+      padding: 40px 20px 50px 40px;
+    }
+
+    .author-profile__meta {
+      font-size: 18px;
+      line-height: 30px;
+    }
+
+    .author-profile__bio {
+      font-size: 16px;
+      line-height: 26px;
+    }
+
+    .authors-latest__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .authors-latest-card {
+      min-block-size: 704px;
+    }
+
+    .authors-latest-card__image {
+      min-block-size: 25rem;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .authors-contributors {
+      padding-inline: 50px;
+    }
+
+    .authors-contributors__inner {
+      padding-block-start: 75px;
+    }
+
+    .authors-contributors__intro {
+      margin-inline: -10px;
+    }
+
+    .author-profile__name {
+      font-size: 13px;
+    }
+
+    .author-profile__title {
+      font-size: 9px;
+    }
+
+    .author-profile__button {
+      padding: 3px 14px;
+      font-size: 12px;
+      line-height: 20px;
+    }
+
+    .authors-latest__inner {
+      inline-size: 100%;
+      padding: 50px 20px 75px;
+    }
+
+    .authors-latest__heading {
+      font-size: 24px;
+      line-height: 30px;
+    }
+
+    .authors-latest-card__body {
+      padding: 0 20px 30px;
+    }
+
+    .authors-latest-card h3 {
+      font-size: 16px;
+      line-height: 22px;
+    }
+
+    .authors-latest-card__link {
+      font-size: 13px;
+      line-height: 24px;
+    }
   }
 </style>

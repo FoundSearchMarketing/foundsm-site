@@ -13,7 +13,7 @@ type ImageField = { image?: EditableImage; imageAlt?: string };
 type RichSection = { heading?: string; body?: SimplePortableTextBlock[] };
 
 export type FormPageData = SeoFields & {
-  variant?: 'contact' | 'newsletter';
+  variant?: 'contact' | 'newsletter' | 'dataconnect';
   eyebrow?: string;
   heading?: string;
   intro?: SimplePortableTextBlock[];

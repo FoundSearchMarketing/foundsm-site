@@ -10,6 +10,8 @@ interface Props {
   summary?: string;
   summaryHtml?: string;
   variant?: 'contact' | 'newsletter' | 'dataconnect';
+  loadFormScript?: boolean;
+  showFormCard?: boolean;
 }
 
 const {
@@ -23,6 +25,8 @@ const {
   summary,
   summaryHtml,
   variant = 'contact',
+  loadFormScript = true,
+  showFormCard = true,
 } = Astro.props;
 const introParagraphs = Array.isArray(intro) ? intro : [intro];
 ---
@@ -36,21 +40,21 @@ const introParagraphs = Array.isArray(intro) ? intro : [intro];
       {introHtml ? <div class="form-landing__intro" set:html={introHtml} /> : introParagraphs.map((item) => <p>{item}</p>)}
     </div>
 
-    <div class="form-landing__form-card">
+    <div class:list={['form-landing__form-card', { 'form-landing__form-card--bare': !showFormCard }]}>
       <div class="hs-form-frame form-landing__frame" data-region="na1" data-form-id={formId} data-portal-id={portalId}></div>
     </div>
   </div>
 </section>
 
 {(summary || summaryHtml) && (
-  <section class="form-landing-summary">
+  <section class={`form-landing-summary form-landing-summary--${variant}`}>
     <div class="form-landing-summary__inner">
       {summaryHtml ? <div set:html={summaryHtml} /> : <p>{summary}</p>}
     </div>
   </section>
 )}
 
-<script is:inline src="https://js.hsforms.net/forms/embed/5045186.js" defer></script>
+{loadFormScript && <script is:inline src="https://js.hsforms.net/forms/embed/5045186.js" defer></script>}
 
 <style>
   .form-landing {
@@ -70,9 +74,12 @@ const introParagraphs = Array.isArray(intro) ? intro : [intro];
   }
 
   .form-landing--dataconnect {
-    min-block-size: 43rem;
+    min-block-size: 30.1875rem;
+    padding: 0 1.5625rem;
     background-color: #231f20;
-    background-image: url("/images/pages/our-approach/contact-bg-fc.svg");
+    background-image:
+      linear-gradient(rgba(35, 31, 32, 0.9), rgba(35, 31, 32, 0.9)),
+      url("/images/pages/performance-creative/map.png");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -93,6 +100,19 @@ const introParagraphs = Array.isArray(intro) ? intro : [intro];
     display: grid;
     gap: 1rem;
     padding-block-start: 2rem;
+  }
+
+  .form-landing--dataconnect .form-landing__inner {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: flex-start;
+    gap: 1.25rem;
+    inline-size: min(100%, 87.5rem);
+    padding-block-start: 3.125rem;
+  }
+
+  .form-landing--dataconnect .form-landing__copy {
+    gap: 1.25rem;
+    padding: 0.625rem;
   }
 
   .form-landing__eyebrow {
@@ -124,6 +144,14 @@ const introParagraphs = Array.isArray(intro) ? intro : [intro];
     color: #ffffff;
   }
 
+  .form-landing--dataconnect h1 {
+    max-inline-size: none;
+    font-size: 4.375rem;
+    font-weight: 900;
+    line-height: 1.071;
+    margin-block-end: 1.25rem;
+  }
+
   .form-landing__copy > p,
   .form-landing__intro {
     max-inline-size: 40rem;
@@ -140,11 +168,26 @@ const introParagraphs = Array.isArray(intro) ? intro : [intro];
     margin-block-end: -0.25rem;
   }
 
+  .form-landing--dataconnect .form-landing__lead {
+    margin: 0;
+    color: #ffffff;
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.8;
+  }
+
   .form-landing--contact .form-landing__copy > p,
   .form-landing--contact .form-landing__intro,
   .form-landing--dataconnect .form-landing__copy > p,
   .form-landing--dataconnect .form-landing__intro {
     color: rgba(255, 255, 255, 0.82);
+  }
+
+  .form-landing--dataconnect .form-landing__copy > p,
+  .form-landing--dataconnect .form-landing__intro {
+    max-inline-size: none;
+    font-size: 1.25rem;
+    line-height: 1.8;
   }
 
   .form-landing--newsletter .form-landing__eyebrow {
@@ -165,8 +208,21 @@ const introParagraphs = Array.isArray(intro) ? intro : [intro];
     box-shadow: 0 18px 42px rgba(26, 26, 26, 0.08);
   }
 
+  .form-landing__form-card--bare {
+    min-block-size: 0;
+    padding: 0.625rem;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
   .form-landing__frame {
     min-block-size: 25rem;
+  }
+
+  .form-landing__form-card--bare .form-landing__frame {
+    min-block-size: 0;
   }
 
   .form-landing-summary {
@@ -175,15 +231,33 @@ const introParagraphs = Array.isArray(intro) ? intro : [intro];
     color: #ffffff;
   }
 
+  .form-landing-summary--dataconnect {
+    margin-block-end: 6.25rem;
+    padding-block: 6.25rem 1.25rem;
+    background: #ffffff;
+    color: #231f20;
+  }
+
   .form-landing-summary__inner {
     inline-size: min(100%, 64rem);
     margin-inline: auto;
     text-align: center;
   }
 
-  .form-landing-summary p {
+  .form-landing-summary :global(p) {
     font-size: 1.25rem;
     line-height: 1.8;
+  }
+
+  .form-landing-summary--dataconnect .form-landing-summary__inner {
+    inline-size: min(100%, 62.5rem);
+  }
+
+  .form-landing-summary--dataconnect :global(p) {
+    margin: 0;
+    font-size: 1.25rem;
+    line-height: 1.8;
+    text-align: center;
   }
 
   :global(.form-landing__frame iframe) {
@@ -195,6 +269,23 @@ const introParagraphs = Array.isArray(intro) ? intro : [intro];
       grid-template-columns: 1fr;
     }
 
+    .form-landing--dataconnect {
+      min-block-size: 26.875rem;
+      padding-inline: 1.25rem;
+    }
+
+    .form-landing--dataconnect .form-landing__inner {
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+      padding-block-start: 1.25rem;
+    }
+
+    .form-landing--dataconnect .form-landing__copy {
+      gap: 0;
+      margin-block-end: -1.25rem;
+      padding: 0.625rem;
+    }
+
     .form-landing__copy {
       padding-block-start: 0;
     }
@@ -202,6 +293,21 @@ const introParagraphs = Array.isArray(intro) ? intro : [intro];
     .form-landing h1 {
       font-size: 2.8125rem;
       line-height: 1.111;
+    }
+
+    .form-landing--dataconnect h1 {
+      font-size: 2.8125rem;
+      line-height: 1.111;
+    }
+
+    .form-landing-summary--dataconnect {
+      margin-block: 2.5rem;
+      padding: 3.125rem 1.5625rem 4.125rem;
+    }
+
+    .form-landing-summary--dataconnect :global(p) {
+      font-size: 1.125rem;
+      line-height: 1.667;
     }
 
     .form-landing--newsletter .form-landing__eyebrow {
@@ -214,9 +320,27 @@ const introParagraphs = Array.isArray(intro) ? intro : [intro];
       padding-block: 3rem;
     }
 
+    .form-landing--dataconnect {
+      block-size: 26.875rem;
+      min-block-size: 0;
+      padding-block: 0;
+    }
+
     .form-landing h1 {
       font-size: 2.375rem;
       line-height: 1.105;
+    }
+
+    .form-landing--dataconnect h1 {
+      font-size: 2.8125rem;
+      line-height: 1.111;
+      margin-block-end: 0;
+    }
+
+    .form-landing--dataconnect .form-landing__lead,
+    .form-landing--dataconnect .form-landing__copy > p {
+      font-size: 1.125rem;
+      line-height: 1.667;
     }
 
     .form-landing--newsletter .form-landing__eyebrow {

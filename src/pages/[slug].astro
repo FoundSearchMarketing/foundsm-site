@@ -1,8 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import FormLanding from '../components/modern/FormLanding.astro';
 import LegacyPageRenderer from '../components/legacy/LegacyPageRenderer.astro';
 import { loadLegacyPages } from '../lib/legacyPageFetch';
 import { getLegacyPageDefinitionsByGroup, pathToSingleSlug, type LegacyPageData } from '../lib/legacyPageData';
+import { richHtml, richText } from '../lib/fixedPageRender';
 
 export async function getStaticPaths() {
   const rootDefinitions = getLegacyPageDefinitionsByGroup('root');
@@ -19,6 +21,7 @@ interface Props {
 }
 
 const { page } = Astro.props;
+const isDataConnectPage = page.path === '/dataconnect/';
 ---
 
 <BaseLayout
@@ -27,7 +30,21 @@ const { page } = Astro.props;
   canonical={page.canonicalUrl}
   ogImage={page.ogImage}
   robots={page.robots}
-  bodyClass="legacy-page"
+  bodyClass={isDataConnectPage ? 'dataconnect-page' : 'legacy-page'}
 >
-  <LegacyPageRenderer page={page} />
+  {isDataConnectPage ? (
+    <FormLanding
+      variant="dataconnect"
+      title={page.hero.heading}
+      lead={page.hero.eyebrow}
+      intro={page.hero.subheading || ''}
+      formId={page.form?.hubspotFormId || ''}
+      summary={richText(page.body)}
+      summaryHtml={richHtml(page.body)}
+      loadFormScript={false}
+      showFormCard={false}
+    />
+  ) : (
+    <LegacyPageRenderer page={page} />
+  )}
 </BaseLayout>

@@ -20,14 +20,47 @@ const heroImage = 'https://foundsm.com/found2025/wp-content/uploads/2026/02/adam
 const heroHeading = ['From Google Roots', 'to Agile Results'];
 const heroBody = 'Meet Found Search Marketing: an agency where decades of expertise meet agile execution. With leadership grounded in foundational roles at Google and a team energized by complex problem-solving, we break down silos to offer fully integrated strategies.';
 const introBody = 'Dive into the articles below to see how our hands-on, results-obsessed experts apply this deep technical knowledge to transform business challenges into breakthroughs.';
+const liveLatestPostImages: Record<string, { src: string; alt: string; width: number; height: number }> = {
+  'dirty-signals-bot-traffic-junk-leads': {
+    src: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/bot-traffic-sm-768x513.webp',
+    alt: '',
+    width: 768,
+    height: 513,
+  },
+  'customer-match-uploads-disabled-in-google-ads-api': {
+    src: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/GA-API-update-hero-768x513.webp',
+    alt: '',
+    width: 768,
+    height: 513,
+  },
+  'signal-loss-costs-real-revenue': {
+    src: 'https://foundsm.com/found2025/wp-content/uploads/2026/02/Untitled-1200-x-801-px-768x513.webp',
+    alt: 'ROAS vs. Profit',
+    width: 768,
+    height: 513,
+  },
+  'googles-vision-for-2026-building-a-revenue-engine-powered-by-data': {
+    src: 'https://foundsm.com/found2025/wp-content/uploads/2026/02/dataengine-768x432.webp',
+    alt: '',
+    width: 768,
+    height: 432,
+  },
+};
 
-const latestPosts = latestBlogPosts.map((post) => ({
-  title: post.title.replace(/^\[TEST\]\s*/, ''),
-  href: `/insights/${post.slug}/`,
-  imageSrc: post.heroImage,
-  imageAlt: (post.heroImageAlt || post.title).replace(/^\[TEST\]\s*/, ''),
-  date: post.publishedLabel,
-}));
+const latestPosts = latestBlogPosts.map((post, index) => {
+  const liveImage = liveLatestPostImages[post.slug];
+  return {
+    title: post.title.replace(/^\[TEST\]\s*/, ''),
+    href: `/insights/${post.slug}/`,
+    imageSrc: liveImage?.src || post.heroImage,
+    imageAlt: liveImage?.alt ?? (post.heroImageAlt || post.title).replace(/^\[TEST\]\s*/, ''),
+    imageWidth: liveImage?.width || 768,
+    imageHeight: liveImage?.height || 513,
+    date: post.publishedLabel,
+    loading: index < 2 ? 'eager' : 'lazy',
+    fetchPriority: index === 0 ? 'high' : undefined,
+  };
+});
 ---
 
 <BaseLayout
@@ -121,9 +154,10 @@ const latestPosts = latestBlogPosts.map((post) => ({
                 <img
                   src={post.imageSrc}
                   alt={post.imageAlt}
-                  width="768"
-                  height="513"
-                  loading="lazy"
+                  width={post.imageWidth}
+                  height={post.imageHeight}
+                  loading={post.loading}
+                  fetchpriority={post.fetchPriority}
                   decoding="async"
                 />
               )}
@@ -131,7 +165,7 @@ const latestPosts = latestBlogPosts.map((post) => ({
             <div class="authors-latest-card__body">
               <h3><a href={post.href}>{post.title}</a></h3>
               {post.date && <p>{post.date}</p>}
-              <a class="authors-latest-card__link" href={post.href}>READ MORE &raquo;</a>
+              <a class="authors-latest-card__link" href={post.href}>Read More &raquo;</a>
             </div>
           </article>
         ))}
@@ -357,11 +391,11 @@ const latestPosts = latestBlogPosts.map((post) => ({
   .authors-latest__inner {
     inline-size: min(calc(100% - 40px), var(--content-max-width));
     margin-inline: auto;
-    padding-block: 50px 75px;
+    padding-block: 10px 75px;
   }
 
   .authors-latest__heading {
-    margin: 0 0 20px;
+    margin: 40px 0 20px 40px;
     color: #f2f3f2;
     font-size: 20px;
     font-weight: 300;
@@ -373,11 +407,12 @@ const latestPosts = latestBlogPosts.map((post) => ({
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 35px 30px;
+    margin-inline: 20px;
   }
 
   .authors-latest-card {
     display: flex;
-    min-block-size: min(74vw, 1065px);
+    min-block-size: 0;
     flex-direction: column;
     overflow: hidden;
     border-radius: 20px;
@@ -386,47 +421,54 @@ const latestPosts = latestBlogPosts.map((post) => ({
   }
 
   .authors-latest-card__image {
+    position: relative;
     display: block;
-    flex: 1 1 auto;
-    min-block-size: 34rem;
+    margin-block-end: 20px;
+    overflow: hidden;
     background: #f5f5f5;
+    padding-block-end: 62%;
   }
 
   .authors-latest-card__image img {
+    display: block;
     inline-size: 100%;
-    block-size: 100%;
-    object-fit: cover;
+    block-size: auto;
+    object-fit: fill;
   }
 
   .authors-latest-card__body {
-    display: grid;
-    gap: 10px;
-    padding: 0 30px 40px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 30px 38px;
   }
 
   .authors-latest-card h3 {
     margin: 0;
     color: #231f20;
     font-family: var(--font-body);
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 25px;
-    letter-spacing: 0;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 27px;
+    letter-spacing: -0.3px;
   }
 
   .authors-latest-card p {
-    margin: 0;
-    color: rgba(35, 31, 32, 0.38);
+    margin: 0 0 13px;
+    color: #adadad;
     font-size: 14px;
-    line-height: 22px;
+    line-height: 36px;
   }
 
   .authors-latest-card__link {
+    align-self: flex-start;
+    display: inline;
     justify-self: start;
     color: var(--color-primary);
-    font-size: 18px;
-    font-weight: 700;
-    line-height: 30px;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 28px;
+    letter-spacing: 0.1px;
+    text-transform: uppercase;
   }
 
   @media (max-width: 1024px) {
@@ -498,11 +540,7 @@ const latestPosts = latestBlogPosts.map((post) => ({
     }
 
     .authors-latest-card {
-      min-block-size: 704px;
-    }
-
-    .authors-latest-card__image {
-      min-block-size: 25rem;
+      min-block-size: 0;
     }
   }
 
@@ -535,26 +573,39 @@ const latestPosts = latestBlogPosts.map((post) => ({
 
     .authors-latest__inner {
       inline-size: 100%;
-      padding: 50px 20px 75px;
+      padding: 10px 0 75px;
     }
 
     .authors-latest__heading {
+      margin: 40px 0 20px 40px;
       font-size: 24px;
       line-height: 30px;
     }
 
+    .authors-latest-card__image {
+      padding-block-end: 50%;
+    }
+
     .authors-latest-card__body {
-      padding: 0 20px 30px;
+      padding: 20px 30px 38px;
     }
 
     .authors-latest-card h3 {
-      font-size: 16px;
-      line-height: 22px;
+      font-size: 24px;
+      font-weight: 600;
+      line-height: 30px;
+      letter-spacing: -0.3px;
+    }
+
+    .authors-latest-card p {
+      font-size: 18px;
+      line-height: 32px;
     }
 
     .authors-latest-card__link {
-      font-size: 13px;
-      line-height: 24px;
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 22px;
     }
   }
 </style>

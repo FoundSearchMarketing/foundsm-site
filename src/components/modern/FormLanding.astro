@@ -31,7 +31,7 @@ const {
 const introParagraphs = Array.isArray(intro) ? intro : [intro];
 ---
 
-<section class={`form-landing form-landing--${variant}`} aria-labelledby={`${variant}-form-heading`}>
+<section class:list={['form-landing', `form-landing--${variant}`, { 'form-landing--loads-form': loadFormScript }]} aria-labelledby={`${variant}-form-heading`}>
   <div class="form-landing__inner">
     <div class="form-landing__copy">
       {eyebrow && <p class="form-landing__eyebrow">{eyebrow}</p>}
@@ -326,6 +326,13 @@ const introParagraphs = Array.isArray(intro) ? intro : [intro];
       padding-block: 0;
     }
 
+    .form-landing--dataconnect.form-landing--loads-form {
+      block-size: auto;
+      min-block-size: 26.875rem;
+      overflow: visible;
+      padding-block-end: 2rem;
+    }
+
     .form-landing h1 {
       font-size: 2.375rem;
       line-height: 1.105;
@@ -350,6 +357,10 @@ const introParagraphs = Array.isArray(intro) ? intro : [intro];
     .form-landing__form-card {
       padding: 1rem;
       border-radius: 1.875rem;
+    }
+
+    .form-landing--dataconnect .form-landing__form-card--bare {
+      padding: 1.25rem 0 0;
     }
   }
 </style>

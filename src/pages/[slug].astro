@@ -41,7 +41,7 @@ const isDataConnectPage = page.path === '/dataconnect/';
       formId={page.form?.hubspotFormId || ''}
       summary={richText(page.body)}
       summaryHtml={richHtml(page.body)}
-      loadFormScript={false}
+      loadFormScript={true}
       showFormCard={false}
     />
   ) : (

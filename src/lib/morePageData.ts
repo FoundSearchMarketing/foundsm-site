@@ -125,6 +125,8 @@ export type EventLandingPageData = SeoFields & {
   footer: { copyright?: string; links: Cta[] };
 };
 
+const teamAssetPath = '/images/pages/team';
+
 const keepBlocks = (value: SimplePortableTextBlock[] | undefined | null, fallback: SimplePortableTextBlock[] | undefined) => value ?? fallback;
 
 const mergeObject = <T extends Record<string, any>>(fallback: T, value?: Partial<T> | null): T => ({
@@ -278,6 +280,7 @@ export const defaultTeamPageData: TeamPageData = {
   hero: {
     heading: 'Together, We Solve.',
     body: [block("In an industry that never stops evolving, Found Search Marketing stands out as an agency that knows exactly who we are. Grounded in a deep commitment to our clients, we combine precision with agility to thrive in a fast-moving world. We're proud cool nerds, energized by the pursuit of high-ceiling, complex problems that drive significant business impact.")],
+    image: `${teamAssetPath}/hero-tr-andy-ryan.webp`,
     imageAlt: 'Found Search Marketing team members collaborating',
     cta: { label: 'Join Our Team', href: '/about-us/' },
   },
@@ -293,21 +296,21 @@ export const defaultTeamPageData: TeamPageData = {
     ],
   },
   leaders: [
-    { name: 'Julie Warnecke', role: 'CEO' },
-    { name: 'Adam Persinger', role: 'Head of Strategic Media' },
-    { name: 'Brandon Cangany', role: 'Director, Finance' },
-    { name: 'Brian Walker', role: 'Group Account Director' },
-    { name: 'Caroline Stoner', role: 'Head of User Experience' },
-    { name: 'Kate Sadowski', role: 'Group Account Director' },
-    { name: 'Kelley Swart', role: 'VP, Strategy & Growth' },
-    { name: 'Kelsey Connor', role: 'Director, Marketing & Brand Strategy' },
-    { name: 'Kylie Colquitt', role: 'Group Account Director' },
-    { name: 'Megan Hackman', role: 'VP, Agency Operations' },
-    { name: 'Nicholas Hoium', role: 'Head of Data Engineering' },
-    { name: 'Rachel Puls', role: 'VP, Delivery' },
-    { name: 'Ryan Eme', role: 'Head of Data Intelligence' },
-    { name: 'Stephanie Van Deven', role: 'Director, Integrated Delivery Operations' },
-    { name: 'T.R. Scrivner', role: 'Director, Agency Creative' },
+    { name: 'Julie Warnecke', role: 'CEO', image: `${teamAssetPath}/julie-warnecke.webp` },
+    { name: 'Adam Persinger', role: 'Head of Strategic Media', image: `${teamAssetPath}/adam-persinger.webp` },
+    { name: 'Brandon Cangany', role: 'Director, Finance', image: `${teamAssetPath}/brandon-cangany.webp` },
+    { name: 'Brian Walker', role: 'Group Account Director', image: `${teamAssetPath}/brian-walker.webp` },
+    { name: 'Caroline Stoner', role: 'Head of User Experience', image: `${teamAssetPath}/caroline-stoner.webp` },
+    { name: 'Kate Sadowski', role: 'Group Account Director', image: `${teamAssetPath}/kate-sadowski.webp` },
+    { name: 'Kelley Swart', role: 'VP, Strategy & Growth', image: `${teamAssetPath}/kelley-swart.webp` },
+    { name: 'Kelsey Connor', role: 'Director, Marketing & Brand Strategy', image: `${teamAssetPath}/kelsey-connor.webp` },
+    { name: 'Kylie Colquitt', role: 'Group Account Director', image: `${teamAssetPath}/kylie-colquitt.webp` },
+    { name: 'Megan Hackman', role: 'VP, Agency Operations', image: `${teamAssetPath}/megan-hackman.webp` },
+    { name: 'Nicholas Hoium', role: 'Head of Data Engineering', image: `${teamAssetPath}/nicholas-hoium.webp` },
+    { name: 'Rachel Puls', role: 'VP, Delivery', image: `${teamAssetPath}/rachel-puls.webp` },
+    { name: 'Ryan Eme', role: 'Head of Data Intelligence', image: `${teamAssetPath}/ryan-eme.webp` },
+    { name: 'Stephanie Van Deven', role: 'Director, Integrated Delivery Operations', image: `${teamAssetPath}/stephanie-van-deven.webp` },
+    { name: 'T.R. Scrivner', role: 'Director, Agency Creative', image: `${teamAssetPath}/tr-scrivner.webp` },
   ],
   cta: {
     heading: 'Want to Join Our Team?',

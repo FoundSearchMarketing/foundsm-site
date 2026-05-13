@@ -10,13 +10,15 @@ interface Props {
   intro: string | string[];
   introHtml?: string;
   leaders: Leader[];
+  layout?: 'split' | 'centered';
 }
 
-const { title, intro, introHtml, leaders } = Astro.props;
+const { title, intro, introHtml, leaders, layout = 'split' } = Astro.props;
 const paragraphs = Array.isArray(intro) ? intro : [intro];
+const sectionClass = ['leadership-section', `leadership-section--${layout}`].join(' ');
 ---
 
-<section class="leadership-section" aria-labelledby="leadership-heading">
+<section class={sectionClass} aria-labelledby="leadership-heading">
   <div class="leadership-section__inner">
     <div class="leadership-section__header">
       <h2 id="leadership-heading">{title}</h2>
@@ -31,7 +33,7 @@ const paragraphs = Array.isArray(intro) ? intro : [intro];
 
     <div class="leadership-grid">
       {leaders.map((leader) => (
-        <article class="leader-card">
+        <article class={`leader-card ${leader.image ? '' : 'leader-card--no-image'}`}>
           {leader.image && <img src={leader.image} alt={`${leader.name}, ${leader.role}`} loading="lazy" decoding="async" />}
           <div class="leader-card__overlay">
             <h3>{leader.name}</h3>
@@ -49,6 +51,10 @@ const paragraphs = Array.isArray(intro) ? intro : [intro];
     background: #ffffff;
   }
 
+  .leadership-section--centered {
+    padding-block: 3.125rem 6.25rem;
+  }
+
   .leadership-section__inner {
     inline-size: min(100%, var(--content-max-width));
     margin-inline: auto;
@@ -61,11 +67,27 @@ const paragraphs = Array.isArray(intro) ? intro : [intro];
     margin-block-end: 2.5rem;
   }
 
+  .leadership-section--centered .leadership-section__header {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 2rem;
+    max-inline-size: 80rem;
+    margin-inline: auto;
+    margin-block-end: 5rem;
+    text-align: center;
+  }
+
   .leadership-section h2 {
     margin: 0;
     font-size: 2.8rem;
     line-height: 1.12;
     letter-spacing: 0;
+  }
+
+  .leadership-section--centered h2 {
+    font-size: 3.75rem;
+    font-weight: 900;
+    line-height: 1.083;
   }
 
   .leadership-section__header div {
@@ -74,6 +96,13 @@ const paragraphs = Array.isArray(intro) ? intro : [intro];
     color: rgba(26, 26, 26, 0.76);
     font-size: 1.05rem;
     line-height: 1.75;
+  }
+
+  .leadership-section--centered .leadership-section__header div {
+    max-inline-size: 80rem;
+    color: #231f20;
+    font-size: 1rem;
+    line-height: 1.875;
   }
 
   .leadership-grid {
@@ -88,6 +117,15 @@ const paragraphs = Array.isArray(intro) ? intro : [intro];
     min-block-size: 25rem;
     border-radius: 1.875rem;
     background: #e8ebe6;
+  }
+
+  .leader-card--no-image {
+    min-block-size: 4.375rem;
+    background: transparent;
+  }
+
+  .leader-card--no-image .leader-card__overlay {
+    position: static;
   }
 
   .leader-card img {
@@ -107,7 +145,7 @@ const paragraphs = Array.isArray(intro) ? intro : [intro];
     inset-inline-start: 0;
     display: grid;
     gap: 0.25rem;
-    inline-size: 80%;
+    inline-size: 85%;
     min-block-size: 4.375rem;
     padding: 0.75rem 1rem 0.75rem 0.9375rem;
     border-radius: 0 1.875rem 1.875rem 0;
@@ -132,6 +170,10 @@ const paragraphs = Array.isArray(intro) ? intro : [intro];
     .leadership-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
+
+    .leadership-section--centered .leadership-section__header {
+      margin-block-end: 4rem;
+    }
   }
 
   @media (max-width: 700px) {
@@ -142,6 +184,16 @@ const paragraphs = Array.isArray(intro) ? intro : [intro];
     .leadership-section__header,
     .leadership-grid {
       grid-template-columns: 1fr;
+    }
+
+    .leadership-section--centered .leadership-section__header {
+      gap: 1.6rem;
+      margin-block-end: 4.5rem;
+    }
+
+    .leadership-section--centered h2 {
+      font-size: 2.375rem;
+      line-height: 1.105;
     }
 
     .leader-card {

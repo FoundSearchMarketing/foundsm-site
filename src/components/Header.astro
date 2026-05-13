@@ -34,7 +34,7 @@ const isPathSection = (href: string) => {
           <a class="site-header__link" href="/insights/">Insights</a>
         </li>
         <li class="site-header__item site-header__item--has-submenu">
-          <a class="site-header__link" href="/capabilities/" aria-current={isPathSection('/capabilities/') ? 'page' : undefined}>Capabilities</a>
+          <a class="site-header__link" href="/capabilities/" aria-current={isExactPath('/capabilities/') ? 'page' : undefined}>Capabilities</a>
           <button
             class="site-header__submenu-toggle"
             type="button"
@@ -51,10 +51,10 @@ const isPathSection = (href: string) => {
             role="list"
             aria-hidden="true"
           >
-            <li><a class="site-header__submenu-link" href="/capabilities/paid-media/">Paid Media</a></li>
-            <li><a class="site-header__submenu-link" href="/capabilities/data-activation/">Data Activation</a></li>
-            <li><a class="site-header__submenu-link" href="/capabilities/data-intelligence/">Data Intelligence</a></li>
-            <li><a class="site-header__submenu-link" href="/capabilities/performance-creative/">Performance Creative</a></li>
+            <li><a class="site-header__submenu-link" href="/capabilities/paid-media/" aria-current={isExactPath('/capabilities/paid-media/') ? 'page' : undefined}>Paid Media</a></li>
+            <li><a class="site-header__submenu-link" href="/capabilities/data-activation/" aria-current={isExactPath('/capabilities/data-activation/') ? 'page' : undefined}>Data Activation</a></li>
+            <li><a class="site-header__submenu-link" href="/capabilities/data-intelligence/" aria-current={isExactPath('/capabilities/data-intelligence/') ? 'page' : undefined}>Data Intelligence</a></li>
+            <li><a class="site-header__submenu-link" href="/capabilities/performance-creative/" aria-current={isExactPath('/capabilities/performance-creative/') ? 'page' : undefined}>Performance Creative</a></li>
           </ul>
         </li>
         <li class="site-header__item site-header__item--has-submenu">

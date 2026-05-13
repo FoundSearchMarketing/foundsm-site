@@ -236,12 +236,13 @@ export const defaultCapabilityDetailPages: Record<string, CapabilityDetailPageDa
     seoTitle: 'Data Activation | Found Search Marketing',
     seoDescription: 'Found Search Marketing brings your first-party customer data directly to the ad platforms where growth happens, creating a continuous feedback loop that improves targeting, reduces wasted spend, and scales qualified lead generation.',
     canonicalUrl: 'https://www.foundsm.com/capabilities/data-activation',
-    hero: { heading: 'Activate Your Customer Data To Actually Drive Revenue', body: [block("In today's AI marketing landscape, data is your most valuable asset, yet many companies are not using it to its full potential. Found Search Marketing brings your first-party customer data directly to the ad platforms where growth happens, creating a continuous feedback loop that improves targeting, reduces wasted spend, and engineers revenue.")], imageAlt: 'Kitchen island used as a data activation visual metaphor' },
-    primaryCards: { title: "What We'll Do", cards: [
-      { title: 'Connect your first-party data to ad platforms', body: [block('Transform your fragmented customer data into a single, actionable source that powers every campaign.')] },
-      { title: 'Create always-on data automation', body: [block('Make your data work for you 24/7 - continually updating audiences, refining targeting, and improving performance behind the scenes.')] },
-      { title: 'Modernize your data foundation', body: [block('Modernize your data to take advantage of the ever-changing marketing world.')] },
-      { title: 'Fuel AI with real customer insight', body: [block('Build upon the AI systems already driving these platforms, ensuring the algorithms are learning from your real customer insights, not generic lookalike data.')] },
+    hero: { heading: 'Activate Your Customer Data To Actually Drive Revenue', body: [block("In today's AI marketing landscape, data is your most valuable asset yet many companies are not using it to its full potential. Found Search Marketing brings your first-party customer data directly to the ad platforms where growth happens, creating a continuous feedback loop that improves targeting, reduces wasted spend, and engineers revenue.")], image: '/images/pages/data-activation/kitchen-island_1250px.webp', imageAlt: 'Found Search Marketing team member in a meeting' },
+    primaryCards: { title: "What we’ll do", cards: [
+      { title: 'Connect your first party data to ad platforms' },
+      { title: 'Transform your fragmented customer data into a single, actionable source that powers every campaign' },
+      { title: 'Make your data work for you 24/7 – continually updating audiences, refining targeting, and improving performance behind the scenes' },
+      { title: 'Modernize your data to take advantage of the ever changing marketing world' },
+      { title: 'Build upon the AI systems already driving these platforms, ensuring the algorithms are learning from your real customer insights, not generic lookalike data' },
     ] },
     statement: { lead: "Why It's Needed", body: [
       block("In today's AI-driven marketing world, your product, data, and creative are what truly set you apart. We're moving away from a time when marketers could manually tweak campaigns, handpick audiences, and rely on human judgment to outperform the competition."),

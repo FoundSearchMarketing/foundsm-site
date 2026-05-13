@@ -1,12 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import ModernHero from '../../components/modern/ModernHero.astro';
-import CardGrid from '../../components/modern/CardGrid.astro';
-import StatementBand from '../../components/modern/StatementBand.astro';
-import CtaPanel from '../../components/modern/CtaPanel.astro';
+import DataActivationPage from '../../components/DataActivationPage.astro';
 import { capabilityDetailPageQuery, sanityClient } from '../../lib/sanity';
 import { defaultCapabilityDetailPages, mergeCapabilityDetailPageData } from '../../lib/fixedPageData';
-import { cardsFor, imageProps, richHtml, richText } from '../../lib/fixedPageRender';
 
 const sanityPage = await sanityClient.fetch(capabilityDetailPageQuery, { id: 'capabilityDataActivationPage' }).catch(() => null);
 const page = mergeCapabilityDetailPageData(defaultCapabilityDetailPages.dataActivation, sanityPage);
@@ -25,32 +21,8 @@ const schema = {
   },
 };
 
-const heroImage = imageProps(page.hero, 'eager');
-const taskCards = cardsFor(page.primaryCards?.cards);
 ---
 
 <BaseLayout title={title} description={description} canonical={canonical} robots={page.robots} schema={schema}>
-  <ModernHero
-    tone="soft"
-    title={page.hero.heading || ''}
-    intro={richText(page.hero.body)}
-    introHtml={richHtml(page.hero.body)}
-    image={heroImage}
-    mediaHeight="35.9375rem"
-    mediaHeightTablet="20rem"
-    mediaHeightMobile="12.5rem"
-  />
-
-  {page.primaryCards && <CardGrid title={page.primaryCards.title} cards={taskCards} columns={4} />}
-
-  {page.statement && <StatementBand lead={page.statement.lead || ''} body={richText(page.statement.body)} bodyHtml={richHtml(page.statement.body)} />}
-
-  {page.cta && <CtaPanel
-    theme="green"
-    title={page.cta.title}
-    body={richText(page.cta.body)}
-    bodyHtml={richHtml(page.cta.body)}
-    ctaLabel={page.cta.cta?.label}
-    ctaHref={page.cta.cta?.href}
-  />}
+  <DataActivationPage page={page} />
 </BaseLayout>

@@ -1,0 +1,383 @@
+---
+import type { CapabilityDetailPageData } from '../lib/fixedPageData';
+import { cardsFor, imageProps, richHtml } from '../lib/fixedPageRender';
+
+interface Props {
+  page: CapabilityDetailPageData;
+}
+
+const { page } = Astro.props;
+const heroImage = imageProps(page.hero, 'eager');
+const taskCards = cardsFor(page.primaryCards?.cards);
+
+const taskText = (value?: string) => (value || '').trim();
+const actionItems = taskCards.length === 4
+  ? [
+      taskText(taskCards[0]?.title),
+      taskText(taskCards[0]?.body),
+      taskText(taskCards[1]?.body || taskCards[1]?.title),
+      taskText(taskCards[2]?.body || taskCards[2]?.title),
+      taskText(taskCards[3]?.body || taskCards[3]?.title),
+    ].filter(Boolean)
+  : taskCards.map((card) => taskText(card.body || card.title)).filter(Boolean);
+
+const firstActionColumn = actionItems.slice(0, 3);
+const secondActionColumn = actionItems.slice(3);
+---
+
+<div class="data-activation-page">
+  <section class="da-hero" aria-labelledby="data-activation-hero-heading">
+    <div class="da-hero__inner">
+      <div class="da-hero__copy">
+        <h1 id="data-activation-hero-heading">{page.hero.heading}</h1>
+        <div class="da-hero__body" set:html={richHtml(page.hero.body)} />
+      </div>
+
+      {heroImage && (
+        <div class="da-hero__media">
+          <img
+            src={heroImage.src}
+            alt={heroImage.alt ?? ''}
+            width={heroImage.width}
+            height={heroImage.height}
+            loading="eager"
+            decoding="async"
+          />
+        </div>
+      )}
+    </div>
+  </section>
+
+  {actionItems.length > 0 && (
+    <section class="da-actions" aria-labelledby="data-activation-actions-heading">
+      <div class="da-actions__inner">
+        <h2 id="data-activation-actions-heading">{page.primaryCards?.title}</h2>
+        <div class="da-actions__grid">
+          <div class="da-actions__column">
+            {firstActionColumn.map((item) => <p>{item}</p>)}
+          </div>
+          <div class="da-actions__column">
+            {secondActionColumn.map((item) => <p>{item}</p>)}
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
+  {page.statement && (
+    <section class="da-why" aria-labelledby="data-activation-why-heading">
+      <div class="da-why__inner">
+        <h2 id="data-activation-why-heading">{page.statement.lead}</h2>
+        <div class="da-why__panel" set:html={richHtml(page.statement.body)} />
+      </div>
+    </section>
+  )}
+
+  {page.cta && (
+    <section class="da-cta" aria-label={page.cta.title || page.cta.cta?.label || 'Contact Found Search Marketing'}>
+      <div class="da-cta__inner">
+        {page.cta.title && <h2>{page.cta.title}</h2>}
+        {page.cta.cta?.label && page.cta.cta?.href && (
+          <a class="da-cta__button" href={page.cta.cta.href}>{page.cta.cta.label}</a>
+        )}
+        <div class="da-cta__body" set:html={richHtml(page.cta.body)} />
+      </div>
+    </section>
+  )}
+</div>
+
+<style>
+  .data-activation-page {
+    background: #ffffff;
+    color: #231f20;
+  }
+
+  .data-activation-page h1,
+  .data-activation-page h2 {
+    margin: 0;
+    color: #231f20;
+    font-family: var(--font-heading);
+    font-weight: 900;
+    letter-spacing: 0;
+  }
+
+  .da-hero__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
+    gap: 6.25rem;
+    inline-size: min(100%, var(--content-max-width));
+    margin-inline: auto;
+    padding: 6.25rem 1.5625rem 0;
+    overflow: hidden;
+  }
+
+  .da-hero__copy {
+    display: grid;
+    align-content: start;
+    gap: 1.875rem;
+    min-block-size: 27.4375rem;
+  }
+
+  .da-hero h1 {
+    max-inline-size: 41rem;
+    font-size: 4.375rem;
+    line-height: 1.06;
+  }
+
+  .da-hero__body {
+    max-inline-size: 41rem;
+    color: #231f20;
+    font-size: 1.25rem;
+    line-height: 1.75;
+  }
+
+  .da-hero__body :global(p),
+  .da-why__panel :global(p),
+  .da-cta__body :global(p) {
+    margin: 0;
+  }
+
+  .da-hero__media {
+    overflow: hidden;
+    min-block-size: 35.9375rem;
+    border-radius: 2.5rem;
+    background: #e8ebe6;
+  }
+
+  .da-hero__media img {
+    inline-size: 100%;
+    block-size: 35.9375rem;
+    object-fit: cover;
+  }
+
+  .da-actions {
+    background: #f2f3f2 url('/images/pages/data-activation/contour-2.png') center / cover no-repeat;
+    padding: 5.625rem 1.5625rem;
+  }
+
+  .da-actions__inner {
+    inline-size: min(100%, var(--content-max-width));
+    margin-inline: auto;
+  }
+
+  .da-actions h2,
+  .da-why h2 {
+    text-align: center;
+    font-size: 3.125rem;
+    line-height: 0.88;
+  }
+
+  .da-actions__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 5rem;
+    margin-block-start: 3.125rem;
+  }
+
+  .da-actions__column {
+    display: grid;
+    align-content: start;
+    gap: 0;
+  }
+
+  .da-actions__column p {
+    margin: 0;
+    padding: 0.3125rem 0.375rem 0.3125rem 1.25rem;
+    border-left: 0.375rem solid #d3d3d3;
+    color: #231f20;
+    font-size: 1.25rem;
+    line-height: 1.6;
+  }
+
+  .da-actions__column p + p {
+    margin-block-start: 1.25rem;
+  }
+
+  .da-why {
+    background: #231f20 url('/images/pages/data-activation/contour.png') center / cover no-repeat;
+    padding: 6.25rem 1.5625rem;
+  }
+
+  .da-why__inner {
+    inline-size: min(100%, var(--content-max-width));
+    margin-inline: auto;
+  }
+
+  .da-why h2 {
+    color: #ffffff;
+  }
+
+  .da-why__panel {
+    display: grid;
+    gap: 1.25rem;
+    inline-size: 70%;
+    min-block-size: 21.875rem;
+    margin: 2.1875rem auto 0;
+    padding: 2.5rem;
+    border-radius: 2.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    color: #ffffff;
+    font-size: 1.25rem;
+    line-height: 1.6;
+  }
+
+  .da-cta {
+    background: var(--color-primary);
+    color: #231f20;
+  }
+
+  .da-cta__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 1rem 2rem;
+    inline-size: min(100%, var(--content-max-width));
+    min-block-size: 12.5rem;
+    margin-inline: auto;
+    padding: 1.875rem 1.5625rem;
+  }
+
+  .da-cta h2 {
+    font-size: 3.125rem;
+    line-height: 0.88;
+  }
+
+  .da-cta__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-block-size: 3.9375rem;
+    padding: 1.25rem 3.125rem;
+    border-radius: 999px;
+    background: #231f20;
+    color: #ffffff;
+    font-size: 1.125rem;
+    font-weight: 700;
+    line-height: 1.2;
+    text-align: center;
+    transition: background-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+  }
+
+  .da-cta__button:hover,
+  .da-cta__button:focus-visible {
+    background: #b9dc89;
+    color: #231f20;
+    transform: translateY(-1px);
+  }
+
+  .da-cta__body {
+    grid-column: 1 / -1;
+    color: #231f20;
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.45;
+  }
+
+  @media (max-width: 1024px) {
+    .da-hero__inner {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      padding: 1.25rem 1.25rem 0;
+    }
+
+    .da-hero__copy {
+      min-block-size: 16.4375rem;
+      gap: 1rem;
+      order: 1;
+    }
+
+    .da-hero h1 {
+      font-size: 2.125rem;
+      line-height: 1.15;
+    }
+
+    .da-hero__body {
+      font-size: 0.9375rem;
+      line-height: 1.6;
+    }
+
+    .da-hero__media {
+      min-block-size: 20rem;
+      order: 2;
+    }
+
+    .da-hero__media img {
+      block-size: 20rem;
+    }
+
+    .da-actions {
+      padding-block: 3.125rem;
+    }
+
+    .da-actions h2,
+    .da-why h2,
+    .da-cta h2 {
+      font-size: 2.125rem;
+      line-height: 1.15;
+    }
+
+    .da-actions__grid {
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+      margin-block-start: 1.875rem;
+    }
+
+    .da-actions__column p {
+      font-size: 0.9375rem;
+      line-height: 1.55;
+    }
+
+    .da-actions__column p + p {
+      margin-block-start: 0.9375rem;
+    }
+
+    .da-why {
+      padding: 3.125rem 0;
+    }
+
+    .da-why__panel {
+      inline-size: min(90%, 42rem);
+      min-block-size: 10.625rem;
+      padding: 1.875rem 1.5625rem;
+      border-radius: 1.875rem;
+      font-size: 0.9375rem;
+      line-height: 1.55;
+    }
+
+    .da-cta__inner {
+      grid-template-columns: minmax(0, 1fr) auto;
+      min-block-size: 14rem;
+      padding-block: 1.875rem;
+    }
+
+    .da-cta__button {
+      inline-size: 5rem;
+      min-block-size: 4rem;
+      padding: 0.65rem 0.75rem;
+      font-size: 0.75rem;
+      white-space: normal;
+    }
+
+    .da-cta__body {
+      text-align: center;
+      font-size: 1rem;
+      line-height: 1.45;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .da-hero__media {
+      min-block-size: 12.5rem;
+      border-radius: 1.5rem;
+    }
+
+    .da-hero__media img {
+      block-size: 12.5rem;
+    }
+
+    .da-actions {
+      padding-inline: 1.25rem;
+    }
+  }
+</style>

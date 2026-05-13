@@ -1,11 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import FormLanding from '../components/modern/FormLanding.astro';
 import LegacyPageRenderer from '../components/legacy/LegacyPageRenderer.astro';
 import LegacyInsightsFilterResults from '../components/LegacyInsightsFilterResults.astro';
 import { getLatestBlogPosts } from '../lib/blogPosts';
 import { defaultInsightsPageData, mergeInsightsPageData } from '../lib/insightsPageData';
 import { loadLegacyPages } from '../lib/legacyPageFetch';
 import { getLegacyPageDefinitionsByGroup, pathToSingleSlug, type LegacyPageData } from '../lib/legacyPageData';
+import { richHtml, richText } from '../lib/fixedPageRender';
 import { insightsPageQuery, sanityClient, urlFor } from '../lib/sanity';
 
 export async function getStaticPaths() {
@@ -23,6 +25,7 @@ interface Props {
 }
 
 const { page } = Astro.props;
+const isDataConnectPage = page.path === '/dataconnect/';
 const isInsightsFilterResultsPage = page.path === '/insights-filter-results/';
 
 const filterResultsCanonical = 'https://foundsm.com/insights-filter-results/';
@@ -121,6 +124,11 @@ const layoutRobots = isInsightsFilterResultsPage
   ? 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
   : page.robots;
 const layoutOgImage = isInsightsFilterResultsPage ? filterResultsData?.hero.imageSrc : page.ogImage;
+const bodyClass = isDataConnectPage
+  ? 'dataconnect-page'
+  : isInsightsFilterResultsPage
+    ? 'insights-filter-results-page page--dark-hero'
+    : 'legacy-page';
 ---
 
 <BaseLayout
@@ -131,9 +139,21 @@ const layoutOgImage = isInsightsFilterResultsPage ? filterResultsData?.hero.imag
   ogType={isInsightsFilterResultsPage ? 'article' : undefined}
   robots={layoutRobots}
   schema={filterResultsData?.schema}
-  bodyClass={isInsightsFilterResultsPage ? 'insights-filter-results-page page--dark-hero' : 'legacy-page'}
+  bodyClass={bodyClass}
 >
-  {isInsightsFilterResultsPage && filterResultsData ? (
+  {isDataConnectPage ? (
+    <FormLanding
+      variant="dataconnect"
+      title={page.hero.heading}
+      lead={page.hero.eyebrow}
+      intro={page.hero.subheading || ''}
+      formId={page.form?.hubspotFormId || ''}
+      summary={richText(page.body)}
+      summaryHtml={richHtml(page.body)}
+      loadFormScript={true}
+      showFormCard={false}
+    />
+  ) : isInsightsFilterResultsPage && filterResultsData ? (
     <LegacyInsightsFilterResults
       hero={filterResultsData.hero}
       latestPosts={filterResultsData.latestPosts}

@@ -554,7 +554,7 @@ p + p {
   position: absolute;
   inset-block-start: calc(100% + 10px);
   inset-inline-start: 0;
-  display: block;
+  display: none;
   inline-size: min(12em, 78vw);
   padding: 0;
   margin: 0;
@@ -584,7 +584,8 @@ p + p {
   border-block-end: 1px solid rgba(26, 26, 26, 0.25);
 }
 
-.site-header__item--has-submenu.is-submenu-open > .site-header__submenu {
+.site-header__item--has-submenu:is(:hover, :focus-within, .is-submenu-open) > .site-header__submenu {
+  display: block;
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -820,6 +821,7 @@ p + p {
   }
 
   .site-header__submenu {
+    display: block;
     position: static;
     inline-size: 100%;
     margin-block: 0;

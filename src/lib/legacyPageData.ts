@@ -397,6 +397,28 @@ export function slugifyAuthorName(name: string): string {
 }
 
 function buildDefaultLegacyPageData(definition: LegacyPageDefinition): LegacyPageData {
+  if (definition.id === 'legacy-dataconnect') {
+    const summary = "We're ready to learn more about your business goals and talk about all the ways we can work together to find solutions that drive impact and lead to profitable revenue. Whether it's smarter paid media strategy, creative that converts, or finding clarity in your data, we're ready to sit on the same side of the table and get to work.";
+
+    return {
+      title: definition.title,
+      path: definition.path,
+      seoTitle: 'Data Connect - Found Search Marketing',
+      seoDescription: summary,
+      canonicalUrl: 'https://foundsm.com/dataconnect/',
+      robots: 'index, follow',
+      hero: {
+        eyebrow: 'Ready to stop guessing and start scaling?',
+        heading: 'Activating First-Party Data for Revenue.',
+        subheading: "Let's talk about bringing your first-party data directly to the ad platforms where growth happens.",
+      },
+      body: [block(summary)],
+      form: {
+        hubspotFormId: '77ee07f7-2567-46d2-9255-ff9e410fdf6a',
+      },
+    };
+  }
+
   const canonicalPath = definition.path === '/' ? '' : definition.path.replace(/\/$/, '');
 
   return {

@@ -1314,6 +1314,19 @@ p + p {
   line-height: 1.5;
 }
 
+.site-footer__newsletter-embed {
+  inline-size: min(100%, 24.5625rem);
+  margin: 1.125rem 0 -4.875rem -1.6875rem;
+}
+
+.site-footer__newsletter-embed .hs-form-frame {
+  min-block-size: 19.375rem;
+}
+
+.site-footer__newsletter-embed iframe {
+  inline-size: 100%;
+}
+
 .site-footer__lower {
   background: var(--color-dark);
 }
@@ -1466,6 +1479,11 @@ p + p {
 
   .site-footer__newsletter-button {
     inline-size: 100%;
+  }
+
+  .site-footer__newsletter-embed {
+    inline-size: min(21.875rem, calc(100vw - 2.5rem));
+    margin: 2.1875rem 0 -5.9375rem -2.25rem;
   }
 
   .site-footer__legal {

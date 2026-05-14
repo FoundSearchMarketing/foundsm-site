@@ -1,0 +1,152 @@
+---
+import type { BlogPost } from '../../lib/blogPosts';
+import { getLegacyArchivePostExcerpt, getLegacyArchivePostTitle } from '../../lib/legacyArchives';
+
+interface Props {
+  posts: BlogPost[];
+}
+
+const { posts } = Astro.props;
+---
+
+<section class="legacy-archive" aria-label="Archive posts">
+  <div class="legacy-archive__content">
+    {posts.map((post, index) => {
+      const href = `/insights/${post.slug}/`;
+      const title = getLegacyArchivePostTitle(post);
+      const excerpt = getLegacyArchivePostExcerpt(post);
+      const lazyClasses = [
+        index >= 4 ? 'post--lazy-desktop' : '',
+        index >= 5 ? 'post--lazy-mobile' : '',
+      ].filter(Boolean).join(' ');
+
+      return (
+        <article class={`post ${lazyClasses}`} data-wpr-lazyrender={index >= 4 ? '1' : undefined}>
+          <h2 class="entry-title">
+            <a href={href}>{title}</a>
+          </h2>
+
+          {post.archiveImage && (
+            <a href={href}>
+              <img
+                fetchpriority={index === 0 ? 'high' : undefined}
+                width={post.archiveImageWidth}
+                height={post.archiveImageHeight}
+                src={post.archiveImage}
+                class="attachment-large size-large wp-post-image"
+                alt={post.heroImageAlt || title}
+                decoding="async"
+              />
+            </a>
+          )}
+
+          {excerpt && <p>{excerpt}</p>}
+        </article>
+      );
+    })}
+  </div>
+</section>
+
+<style>
+  .legacy-archive {
+    background: #ffffff;
+    color: #231f20;
+    font-family: var(--font-body, 'Poppins', system-ui, sans-serif);
+    font-size: 20px;
+    line-height: 36px;
+  }
+
+  .legacy-archive__content,
+  .post {
+    margin: 0;
+    padding: 0;
+  }
+
+  .post {
+    color: #231f20;
+    font-size: 20px;
+    line-height: 36px;
+  }
+
+  .entry-title {
+    display: block;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    color: #231f20;
+    font-family: var(--font-heading, 'Fraunces', Georgia, serif);
+    font-size: 40px;
+    font-weight: 900;
+    letter-spacing: 0;
+    line-height: 44px;
+  }
+
+  .entry-title a {
+    color: #8dc63f;
+    text-decoration: none;
+  }
+
+  .post > a {
+    display: block;
+    color: #8dc63f;
+    text-decoration: none;
+  }
+
+  .post img {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .post p {
+    width: 100%;
+    max-width: none;
+    margin: 0 0 24px;
+    padding: 0;
+    color: #231f20;
+    font-family: var(--font-body, 'Poppins', system-ui, sans-serif);
+    font-size: 20px;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 36px;
+  }
+
+  @media (min-width: 768px) {
+    .post--lazy-desktop {
+      block-size: 0;
+      content-visibility: auto;
+      contain-intrinsic-size: auto none;
+      overflow: hidden;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .legacy-archive,
+    .post {
+      font-size: 18px;
+      line-height: 30px;
+    }
+
+    .entry-title {
+      font-size: 34px;
+      line-height: 39px;
+    }
+
+    .post p {
+      font-size: 18px;
+      line-height: 30px;
+    }
+
+    .post--lazy-mobile {
+      content-visibility: auto;
+      contain-intrinsic-size: auto none;
+    }
+  }
+</style>

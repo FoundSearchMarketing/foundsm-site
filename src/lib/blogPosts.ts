@@ -18,6 +18,9 @@ export interface BlogPost {
   authorUrl: string;
   heroImage: string;
   heroImageAlt: string;
+  archiveImage: string;
+  archiveImageWidth: number;
+  archiveImageHeight: number;
   contentHtml: string;
   categories: BlogPostCategory[];
 }
@@ -69,6 +72,19 @@ type SanityBlogPost = {
   seoDescription?: string;
   category?: SanityCategory | null;
   author?: SanityAuthor | null;
+};
+
+const legacyArchiveImageSpecs: Record<string, { width: number; height: number }> = {
+  'dirty-signals-bot-traffic-junk-leads': { width: 1024, height: 684 },
+  'customer-match-uploads-disabled-in-google-ads-api': { width: 1024, height: 684 },
+  'signal-loss-costs-real-revenue': { width: 1024, height: 684 },
+  'googles-vision-for-2026-building-a-revenue-engine-powered-by-data': { width: 1024, height: 576 },
+  'indiana-consumer-data-protection-act': { width: 1024, height: 684 },
+  'closing-the-loop-how-conversion-apis-and-value-based-bidding-transform-performance-marketing': { width: 1000, height: 1000 },
+  'wrapping-up-19-years-with-purpose-founds-year-end-tradition-of-giving-back': { width: 1024, height: 768 },
+  'a-3-minute-implementation-guide-to-segmenting-ai-traffic-in-ga4': { width: 1024, height: 683 },
+  'how-advantage-is-reshaping-student-recruitment-insights-from-a-meta-education-summit': { width: 1024, height: 771 },
+  'our-top-takeaways-from-search-marketing-expo-advanced-2025': { width: 800, height: 600 },
 };
 
 type RenderGroup =
@@ -198,6 +214,7 @@ function mapSanityPost(post: SanityBlogPost, slugs: Set<string>): BlogPost | und
     : undefined;
 
   const heroImage = imageUrl(post.featuredImage, 1200, 801);
+  const archiveImageSpec = legacyArchiveImageSpecs[slug] || { width: 1024, height: 684 };
 
   return {
     id: stableId(post._id || slug),
@@ -212,6 +229,9 @@ function mapSanityPost(post: SanityBlogPost, slugs: Set<string>): BlogPost | und
     authorUrl: '',
     heroImage,
     heroImageAlt: post.featuredImage?.alt || post.title,
+    archiveImage: imageUrl(post.featuredImage, archiveImageSpec.width, archiveImageSpec.height),
+    archiveImageWidth: archiveImageSpec.width,
+    archiveImageHeight: archiveImageSpec.height,
     contentHtml: renderContentHtml(post.body || [], slugs),
     categories: category ? [category] : [],
   };

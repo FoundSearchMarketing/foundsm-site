@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import LegacyArchivePostList from '../../../components/legacy/LegacyArchivePostList.astro';
+import { getAllBlogPosts } from '../../../lib/blogPosts';
+import {
+  getLegacyArchiveBodyClass,
+  getLegacyArchivePosts,
+  getLegacyArchives,
+  type LegacyArchiveDefinition,
+} from '../../../lib/legacyArchives';
+
+export function getStaticPaths() {
+  return getLegacyArchives('category').map((archive) => ({
+    params: { slug: archive.slug },
+    props: { archive },
+  }));
+}
+
+interface Props {
+  archive: LegacyArchiveDefinition;
+}
+
+const { archive } = Astro.props;
+const posts = getLegacyArchivePosts(await getAllBlogPosts(), archive);
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: archive.seoTitle,
+  url: archive.canonicalUrl,
+};
+---
+
+<BaseLayout
+  title={archive.seoTitle}
+  description={`${archive.title} archive from Found Search Marketing.`}
+  canonical={archive.canonicalUrl}
+  robots={archive.robots}
+  schema={schema}
+  bodyClass={getLegacyArchiveBodyClass(archive)}
+>
+  <LegacyArchivePostList posts={posts} />
+</BaseLayout>

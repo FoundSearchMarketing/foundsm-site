@@ -117,7 +117,16 @@ const webinarHeroBg = 'https://foundsm.com/found2025/wp-content/uploads/2026/02/
   <section class="video-page" aria-label={page.heading}>
     <div class="video-page__inner">
       <h1>{page.heading}</h1>
-      <div class="video-page__frame" data-youtube-id={page.youtubeId} aria-label="Video"></div>
+      <div class="video-page__frame">
+        <iframe
+          src={`https://www.youtube.com/embed/${page.youtubeId}`}
+          title={`${page.heading} video`}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen
+          loading="lazy"
+        ></iframe>
+      </div>
     </div>
   </section>
 )}
@@ -522,6 +531,14 @@ const webinarHeroBg = 'https://foundsm.com/found2025/wp-content/uploads/2026/02/
   .video-page__frame {
     inline-size: 100%;
     aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: #000;
+  }
+
+  .video-page__frame iframe {
+    inline-size: 100%;
+    block-size: 100%;
+    border: 0;
   }
 
   .thank-you-page {

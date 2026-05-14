@@ -1,8 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import WordPressMatchPage from '../components/wordpress/WordPressMatchPage.astro';
 import { privacyPolicyPageQuery, sanityClient } from '../lib/sanity';
 import { defaultPrivacyPolicyPageData, mergePrivacyPolicyPageData } from '../lib/morePageData';
-import { richHtml } from '../lib/fixedPageRender';
 
 const sanityPage = await sanityClient.fetch(privacyPolicyPageQuery).catch(() => null);
 const page = mergePrivacyPolicyPageData(sanityPage);
@@ -30,56 +30,5 @@ const schema = {
   robots={page.robots}
   schema={schema}
 >
-
-    <!-- ============================================
-         HERO - LIGHT STYLE
-         ============================================ -->
-    <section class="section--light" style="padding-top: calc(var(--header-height) + var(--space-2xl)); padding-bottom: var(--space-xl); text-align: center;">
-      <div class="container">
-        <h1 class="fade-in-up">{page.heading}</h1>
-        {page.lastUpdated && <p class="fade-in-up" style="margin-top: var(--space-sm); font-size: var(--text-caption); color: var(--color-mid);">Last updated: {page.lastUpdated}</p>}
-      </div>
-    </section>
-
-
-    <!-- ============================================
-         PRIVACY POLICY CONTENT
-         ============================================ -->
-    <section class="section" style="padding-top: var(--space-xl);">
-      <div class="container">
-        <div class="prose fade-in-up">
-
-          <div set:html={richHtml(page.intro)} />
-
-          {page.sections.map((section) => (
-            <section class="privacy-policy-section">
-              {section.heading && <h2>{section.heading}</h2>}
-              <div set:html={richHtml(section.body)} />
-
-              {section.items && section.items.length > 0 && (
-                <ul>
-                  {section.items.map((item) => (
-                    <li>
-                      {item.title && <strong>{item.title} </strong>}
-                      {item.body}
-                    </li>
-                  ))}
-                </ul>
-              )}
-
-              {section.contact && (
-                <p>
-                  {section.contact.organization && <Fragment><strong>{section.contact.organization}</strong><br /></Fragment>}
-                  {(section.contact.lines || []).map((line) => <Fragment>{line}<br /></Fragment>)}
-                  {section.contact.email && <Fragment>Email: <a href={`mailto:${section.contact.email}`}>{section.contact.email}</a><br /></Fragment>}
-                  {section.contact.phone && <Fragment>Phone: <a href={`tel:${section.contact.phone.replace(/[^0-9+]/g, '')}`}>{section.contact.phone}</a></Fragment>}
-                </p>
-              )}
-            </section>
-          ))}
-
-        </div>
-      </div>
-    </section>
-
+  <WordPressMatchPage variant="privacy" />
 </BaseLayout>

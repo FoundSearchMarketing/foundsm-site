@@ -1,9 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import FormLanding from '../components/modern/FormLanding.astro';
+import WordPressMatchPage from '../components/wordpress/WordPressMatchPage.astro';
 import { formPageQuery, sanityClient } from '../lib/sanity';
 import { defaultNewsletterPageData, mergeFormPageData } from '../lib/morePageData';
-import { richHtml, richText } from '../lib/fixedPageRender';
 
 const sanityPage = await sanityClient.fetch(formPageQuery, { id: 'newsletterPage' }).catch(() => null);
 const page = mergeFormPageData(defaultNewsletterPageData, sanityPage);
@@ -25,15 +24,5 @@ const schema = {
 ---
 
 <BaseLayout title={title} description={description} canonical={canonical} robots={page.robots} schema={schema}>
-  <FormLanding
-    variant="newsletter"
-    eyebrow={page.eyebrow}
-    title={page.heading || ''}
-    intro={richText(page.intro)}
-    introHtml={richHtml(page.intro)}
-    formId={page.formId || ''}
-    portalId={page.portalId}
-    summary={richText(page.summary)}
-    summaryHtml={richHtml(page.summary)}
-  />
+  <WordPressMatchPage variant="newsletter" />
 </BaseLayout>

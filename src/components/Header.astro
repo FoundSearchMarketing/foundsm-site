@@ -28,10 +28,10 @@ const isPathSection = (href: string) => {
     >
       <ul class="site-header__menu" role="list">
         <li class="site-header__item">
-          <a class="site-header__link" href="/our-approach/">Our Approach</a>
+          <a class="site-header__link" href="/our-approach/" aria-current={isExactPath('/our-approach/') ? 'page' : undefined}>Our Approach</a>
         </li>
         <li class="site-header__item">
-          <a class="site-header__link" href="/insights/">Insights</a>
+          <a class="site-header__link" href="/insights/" aria-current={isPathSection('/insights/') ? 'page' : undefined}>Insights</a>
         </li>
         <li class="site-header__item site-header__item--has-submenu">
           <a class="site-header__link" href="/capabilities/" aria-current={isExactPath('/capabilities/') ? 'page' : undefined}>Capabilities</a>

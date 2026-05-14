@@ -1,0 +1,885 @@
+---
+import type { InsightResourcePage } from '../../lib/insightResourceContent';
+
+interface Props {
+  page: InsightResourcePage;
+}
+
+const { page } = Astro.props;
+const contourImage = 'https://foundsm.com/found2025/wp-content/uploads/2025/11/contour-2.png';
+const webinarHeroBg = 'https://foundsm.com/found2025/wp-content/uploads/2026/02/infotrust-webinar-header.webp';
+---
+
+{page.kind === 'archive' && (
+  <>
+    <section class="resource-hero" aria-label={page.heroTitle}>
+      <div class="resource-hero__inner">
+        <div class="resource-hero__copy">
+          <h1>{page.heroTitle}</h1>
+          <p>{page.heroDescription}</p>
+        </div>
+        <img class="resource-hero__image" src={page.heroImage} alt="" width="434" height="609" loading="eager" fetchpriority="high" />
+      </div>
+    </section>
+
+    <nav class="resource-breadcrumb" aria-label="Breadcrumb">
+      <div class="resource-breadcrumb__inner">
+        <a href="/">Home</a>
+        <span aria-hidden="true">»</span>
+        <a href="/insights/">Insights</a>
+        <span aria-hidden="true">»</span>
+        <span>{page.breadcrumbLabel}</span>
+      </div>
+    </nav>
+
+    <section class="resource-listing" aria-labelledby="resource-listing-title">
+      <div class="resource-listing__inner">
+        <header class="resource-listing__header">
+          <h2 id="resource-listing-title">{page.sectionTitle}</h2>
+        </header>
+
+        <div class:list={['resource-card-grid', `resource-card-grid--${page.columns}`, { 'resource-card-grid--blog': page.breadcrumbLabel === 'Blog', 'resource-card-grid--single': page.cards.length === 1 }]}>
+          {page.cards.map((card, index) => (
+            <article class="resource-card">
+              <div class="resource-card__inner" style={`--resource-card-bg: url('${contourImage}')`}>
+                <p class="resource-card__label">{card.label}</p>
+                {card.categories?.length ? <p class="resource-card__categories">{card.categories.join(', ')}</p> : null}
+                <h3><a href={card.href}>{card.title}</a></h3>
+                <a class="resource-card__image-link" href={card.href} tabindex="-1" aria-hidden="true">
+                  <img
+                    src={card.image}
+                    alt={card.imageAlt || ''}
+                    width="850"
+                    height="500"
+                    loading={index < 3 ? 'eager' : 'lazy'}
+                    decoding="async"
+                  />
+                </a>
+                <p class="resource-card__date"><time datetime={card.datetime}>{card.dateLabel}</time></p>
+                <p class="resource-card__excerpt">{card.excerpt}</p>
+                <a class="resource-card__button" href={card.href}>Keep Reading →</a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  </>
+)}
+
+{page.kind === 'webinar' && (
+  <>
+    <section class="webinar-hero" style={`--webinar-hero-bg: url('${webinarHeroBg}')`} aria-label={page.heroTitle}>
+      <div class="webinar-hero__inner">
+        <div class="webinar-hero__copy">
+          <h1>{page.heroTitle}</h1>
+          {page.kicker && <p class="webinar-hero__kicker">{page.kicker}</p>}
+          {page.actionText && (
+            <>
+              <div class="webinar-hero__rule" aria-hidden="true"></div>
+              <p class="webinar-hero__action"><span aria-hidden="true">▶</span>{page.actionText}</p>
+            </>
+          )}
+        </div>
+        <aside class="webinar-form-card" aria-label={page.formHeading}>
+          <img src={page.heroImage} alt={page.heroImageAlt} width="1024" height="576" loading="eager" fetchpriority="high" />
+          <h2>{page.formHeading}</h2>
+          <div class="webinar-form-card__embed">
+            <div class="hs-form-frame" data-region="na1" data-form-id={page.formId} data-portal-id="5045186"></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="webinar-body" aria-label="Webinar details">
+      <div class="webinar-body__inner">
+        <div class="webinar-body__content">
+          <h2>{page.bodyHeading}</h2>
+          {page.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+
+          <h2>{page.takeawayHeading}</h2>
+          <p><strong>{page.takeawayIntro}</strong></p>
+          <ul>
+            {page.takeaways.map((item) => <li>{item}</li>)}
+          </ul>
+
+          <h2>{page.topicsHeading}</h2>
+          <ul class="webinar-body__topics">
+            {page.topics.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+      </div>
+    </section>
+  </>
+)}
+
+{page.kind === 'video' && (
+  <section class="video-page" aria-label={page.heading}>
+    <div class="video-page__inner">
+      <h1>{page.heading}</h1>
+      <div class="video-page__frame" data-youtube-id={page.youtubeId} aria-label="Video"></div>
+    </div>
+  </section>
+)}
+
+{page.kind === 'thank-you' && (
+  <section class="thank-you-page" aria-label={page.heading}>
+    <div class="thank-you-page__inner">
+      <div class="thank-you-page__icon" aria-hidden="true">
+        <svg viewBox="0 0 32 32">
+          <circle cx="16" cy="16" r="14"></circle>
+          <path d="m9 16 5 5 9-10"></path>
+        </svg>
+      </div>
+      <h1>{page.heading}</h1>
+      <p>Please use this <a href={page.linkHref}>link</a> if the video does not automatically pop up</p>
+    </div>
+  </section>
+)}
+
+<style>
+  .resource-hero {
+    background: #000;
+    color: #fff;
+    overflow: hidden;
+  }
+
+  .resource-hero__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 50%) minmax(0, calc(50% - 100px));
+    align-items: center;
+    column-gap: 100px;
+    inline-size: min(calc(100% - 50px), 1400px);
+    min-block-size: 609px;
+    margin-inline: auto;
+  }
+
+  .resource-hero__copy {
+    padding: 10px;
+  }
+
+  .resource-hero h1 {
+    max-inline-size: 675px;
+    margin: 0 0 20px;
+    color: #fff;
+    font-family: var(--font-heading);
+    font-size: 60px;
+    font-weight: 900;
+    line-height: 65px;
+    letter-spacing: 0;
+  }
+
+  .resource-hero p {
+    max-inline-size: 675px;
+    margin: 0;
+    color: #fff;
+    font-size: 20px;
+    line-height: 36px;
+  }
+
+  .resource-hero__image {
+    justify-self: center;
+    inline-size: min(100%, 434px);
+    block-size: auto;
+  }
+
+  .resource-breadcrumb {
+    background: #f2f3f2;
+    color: #868585;
+    font-size: 16px;
+    line-height: 30px;
+  }
+
+  .resource-breadcrumb__inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    inline-size: min(calc(100% - 20px), 1400px);
+    margin-inline: auto;
+    padding-block: 18px;
+  }
+
+  .resource-breadcrumb a {
+    color: #231f20;
+    text-decoration: none;
+  }
+
+  .resource-listing {
+    background: #fff;
+    padding-block: 40px 100px;
+  }
+
+  .resource-listing__inner {
+    inline-size: min(calc(100% - 20px), 1400px);
+    margin-inline: auto;
+  }
+
+  .resource-listing__header {
+    border-bottom: 1px solid #868585;
+    margin-bottom: 36px;
+  }
+
+  .resource-listing__header h2 {
+    margin: 0 0 13px;
+    color: #231f20;
+    font-family: var(--font-body);
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 36px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+  }
+
+  .resource-card-grid {
+    display: grid;
+    gap: 30px;
+    align-items: stretch;
+  }
+
+  .resource-card-grid--3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .resource-card-grid--2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .resource-card {
+    min-inline-size: 0;
+  }
+
+  .resource-card__inner {
+    display: flex;
+    flex-direction: column;
+    min-block-size: 100%;
+    padding: 25px 40px;
+    border-radius: 30px;
+    background-color: #f2f3f2;
+    background-image: var(--resource-card-bg);
+    background-size: cover;
+    background-position: center;
+    color: #231f20;
+  }
+
+  .resource-card__label {
+    align-self: flex-start;
+    margin: 0 0 16px;
+    padding: 1px 15px;
+    border-radius: 20px;
+    background: rgba(10, 173, 239, 0.3);
+    color: #231f20;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 25px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  .resource-card__categories {
+    min-block-size: 56px;
+    margin: 0 0 12px;
+    padding-inline-start: 10px;
+    border-left: 4px solid #8dc63f;
+    color: #231f20;
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 21px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  .resource-card h3 {
+    margin: 0 0 24px;
+    display: -webkit-box;
+    overflow: hidden;
+    color: #231f20;
+    font-family: var(--font-body);
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 38px;
+    letter-spacing: 0;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .resource-card h3 a {
+    color: inherit;
+  }
+
+  .resource-card__image-link {
+    display: block;
+    margin-bottom: 24px;
+  }
+
+  .resource-card img {
+    inline-size: 100%;
+    aspect-ratio: 850 / 500;
+    object-fit: cover;
+    border-radius: 30px;
+  }
+
+  .resource-card__date {
+    margin: 0 0 18px;
+    color: rgba(35, 31, 32, 0.6);
+    font-size: 14px;
+    line-height: 30px;
+  }
+
+  .resource-card__excerpt {
+    margin: 0 0 28px;
+    display: -webkit-box;
+    overflow: hidden;
+    color: #231f20;
+    font-size: 20px;
+    line-height: 29px;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+
+  .resource-card__button {
+    align-self: flex-start;
+    margin-top: auto;
+    padding: 18px 36px;
+    border-radius: 30px;
+    background: #231f20;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 24px;
+  }
+
+  .webinar-hero {
+    position: relative;
+    min-block-size: 550px;
+    background-color: #1f1b1c;
+    background-image: linear-gradient(91deg, rgba(35, 31, 32, 0.96) 30%, rgba(35, 31, 32, 0.06) 76%), var(--webinar-hero-bg);
+    background-position: bottom left;
+    background-size: cover;
+    color: #fff;
+  }
+
+  .webinar-hero__inner {
+    position: relative;
+    inline-size: min(calc(100% - 50px), 1400px);
+    min-block-size: 550px;
+    margin-inline: auto;
+    padding-block: 100px 50px;
+  }
+
+  .webinar-hero__copy {
+    max-inline-size: 675px;
+  }
+
+  .webinar-hero h1 {
+    margin: 0;
+    color: #f2f3f2;
+    font-family: var(--font-heading);
+    font-size: 67px;
+    font-weight: 700;
+    line-height: 75px;
+    letter-spacing: 0;
+  }
+
+  .webinar-hero__kicker {
+    margin: 20px 0 0;
+    color: #8cc540;
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 44px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .webinar-hero__rule {
+    inline-size: 63%;
+    border-top: 1.5px dotted rgba(242, 243, 242, 0.5);
+    margin-block: 31px;
+  }
+
+  .webinar-hero__action {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+    color: #f2f3f2;
+    font-size: 35px;
+    font-weight: 400;
+    line-height: 28px;
+    text-transform: uppercase;
+  }
+
+  .webinar-hero__action span {
+    color: #fff;
+    font-size: 28px;
+  }
+
+  .webinar-form-card {
+    position: absolute;
+    inset-block-start: 70px;
+    inset-inline-end: 0;
+    z-index: 2;
+    inline-size: 550px;
+    min-block-size: 680px;
+    overflow: hidden;
+    border: 5px solid #8bc53f;
+    border-radius: 25px;
+    background: #231f20;
+  }
+
+  .webinar-form-card img {
+    inline-size: 100%;
+    aspect-ratio: 1024 / 576;
+    object-fit: cover;
+    border-radius: 20px 20px 0 0;
+  }
+
+  .webinar-form-card h2 {
+    margin: 0;
+    padding: 17px 28px 18px 35px;
+    background: #8bc53f;
+    color: #fff;
+    font-family: var(--font-body);
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 44px;
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+
+  .webinar-form-card__embed {
+    min-block-size: 305px;
+    background: #231f20;
+  }
+
+  .webinar-body {
+    background: #fff;
+    padding-block: 50px 100px;
+  }
+
+  .webinar-body__inner {
+    inline-size: min(calc(100% - 20px), 1400px);
+    margin-inline: auto;
+  }
+
+  .webinar-body__content {
+    max-inline-size: 670px;
+  }
+
+  .webinar-body h2 {
+    margin: 0 0 24px;
+    color: #231f20;
+    font-family: var(--font-body);
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 44px;
+    letter-spacing: 0;
+  }
+
+  .webinar-body p {
+    margin: 0 0 24px;
+    color: #231f20;
+    font-size: 16px;
+    line-height: 30px;
+  }
+
+  .webinar-body ul {
+    margin: 0 0 56px 24px;
+    padding: 0;
+    list-style: disc;
+    color: #231f20;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .webinar-body li + li {
+    margin-top: 14px;
+  }
+
+  .webinar-body__topics {
+    font-weight: 700;
+  }
+
+  .video-page {
+    background: #fff;
+    padding: 100px 25px;
+  }
+
+  .video-page__inner {
+    inline-size: min(100%, 1400px);
+    margin-inline: auto;
+  }
+
+  .video-page h1 {
+    margin: 0 0 32px;
+    color: #231f20;
+    font-family: var(--font-heading);
+    font-size: 60px;
+    font-weight: 900;
+    line-height: 65px;
+    letter-spacing: 0;
+  }
+
+  .video-page__frame {
+    inline-size: 100%;
+    aspect-ratio: 16 / 9;
+  }
+
+  .thank-you-page {
+    background: #fff;
+    padding: 120px 20px 135px;
+    text-align: center;
+  }
+
+  .thank-you-page__inner {
+    inline-size: min(100%, 980px);
+    margin-inline: auto;
+  }
+
+  .thank-you-page__icon {
+    display: inline-flex;
+    inline-size: 70px;
+    block-size: 70px;
+    margin-bottom: 22px;
+    color: #8bc53f;
+  }
+
+  .thank-you-page__icon svg {
+    inline-size: 100%;
+    block-size: 100%;
+  }
+
+  .thank-you-page__icon circle,
+  .thank-you-page__icon path {
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2.8;
+  }
+
+  .thank-you-page h1 {
+    margin: 0 0 24px;
+    color: #231f20;
+    font-family: var(--font-heading);
+    font-size: 60px;
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: 0;
+  }
+
+  .thank-you-page p {
+    margin: 0;
+    color: #231f20;
+    font-size: 25px;
+    line-height: 38px;
+    text-transform: uppercase;
+  }
+
+  .thank-you-page a {
+    color: #8bc53f;
+    font-weight: 700;
+  }
+
+  @media (max-width: 1024px) {
+    .resource-hero__inner {
+      display: block;
+      min-block-size: 0;
+      padding-block: 55px;
+    }
+
+    .resource-hero h1 {
+      font-size: 38px;
+      line-height: 42px;
+    }
+
+    .resource-hero p {
+      font-size: 18px;
+      line-height: 30px;
+    }
+
+    .resource-hero__image {
+      display: none;
+    }
+
+    .resource-card-grid--3,
+    .resource-card-grid--2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .webinar-hero {
+      min-block-size: 0;
+    }
+
+    .webinar-hero__inner {
+      display: grid;
+      gap: 24px;
+      min-block-size: 0;
+      padding-block: 36px 24px;
+    }
+
+    .webinar-hero h1 {
+      font-size: 45px;
+      line-height: 56px;
+    }
+
+    .webinar-form-card {
+      position: static;
+      inline-size: min(100%, 550px);
+      min-block-size: 0;
+      justify-self: center;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .resource-hero__inner,
+    .resource-breadcrumb__inner,
+    .resource-listing__inner,
+    .webinar-hero__inner,
+    .webinar-body__inner {
+      inline-size: calc(100% - 24px);
+    }
+
+    .resource-hero {
+      margin-bottom: 0;
+    }
+
+    .resource-hero__inner {
+      padding-block: 16px 45px;
+    }
+
+    .resource-hero h1 {
+      font-size: 38px;
+      line-height: 42px;
+    }
+
+    .resource-hero p {
+      font-size: 18px;
+      line-height: 30px;
+    }
+
+    .resource-breadcrumb {
+      font-size: 16px;
+      line-height: 30px;
+    }
+
+    .resource-breadcrumb__inner {
+      padding-block: 17px;
+    }
+
+    .resource-listing {
+      padding-block: 34px 80px;
+    }
+
+    .resource-listing__header {
+      margin-bottom: 36px;
+    }
+
+    .resource-listing__header h2 {
+      font-size: 20px;
+      line-height: 36px;
+      letter-spacing: 5px;
+    }
+
+    .resource-card-grid--3,
+    .resource-card-grid--2 {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .resource-card__inner {
+      padding: 16px 24px;
+      border-radius: 18px;
+    }
+
+    .resource-card__label {
+      margin-bottom: 12px;
+      font-size: 12px;
+      line-height: 22px;
+      letter-spacing: 3px;
+    }
+
+    .resource-card__categories {
+      min-block-size: 0;
+      font-size: 10px;
+      line-height: 18px;
+      letter-spacing: 3px;
+    }
+
+    .resource-card h3 {
+      margin-bottom: 16px;
+      font-size: 20px;
+      line-height: 26px;
+      display: block;
+      -webkit-line-clamp: unset;
+    }
+
+    .resource-card img {
+      border-radius: 18px;
+    }
+
+    .resource-card__date {
+      margin-bottom: 12px;
+      font-size: 12px;
+      line-height: 22px;
+    }
+
+    .resource-card__excerpt {
+      display: block;
+      font-size: 15px;
+      line-height: 24px;
+      -webkit-line-clamp: unset;
+    }
+
+    .resource-card__button {
+      padding: 12px 22px;
+      font-size: 10px;
+      line-height: 18px;
+    }
+
+    .resource-card-grid--3 .resource-card__inner,
+    .resource-card-grid--single .resource-card__inner {
+      min-block-size: 760px;
+      padding: 25px 40px;
+      border-radius: 30px;
+    }
+
+    .resource-card-grid--single .resource-card__inner {
+      min-block-size: 670px;
+    }
+
+    .resource-card-grid--blog .resource-card__inner {
+      min-block-size: 1370px;
+    }
+
+    .resource-card-grid--3 .resource-card__label,
+    .resource-card-grid--single .resource-card__label {
+      margin-bottom: 16px;
+      padding: 1px 15px;
+      font-size: 14px;
+      line-height: 25px;
+    }
+
+    .resource-card-grid--3 .resource-card__categories,
+    .resource-card-grid--single .resource-card__categories {
+      min-block-size: 56px;
+      font-size: 12px;
+      line-height: 21px;
+    }
+
+    .resource-card-grid--3 .resource-card h3,
+    .resource-card-grid--single .resource-card h3 {
+      margin-bottom: 24px;
+      font-size: 25px;
+      line-height: 34px;
+    }
+
+    .resource-card-grid--3 .resource-card__image-link,
+    .resource-card-grid--single .resource-card__image-link {
+      margin-bottom: 24px;
+    }
+
+    .resource-card-grid--3 .resource-card img,
+    .resource-card-grid--single .resource-card img {
+      border-radius: 30px;
+    }
+
+    .resource-card-grid--3 .resource-card__date,
+    .resource-card-grid--single .resource-card__date {
+      margin-bottom: 18px;
+      font-size: 14px;
+      line-height: 30px;
+    }
+
+    .resource-card-grid--3 .resource-card__excerpt,
+    .resource-card-grid--single .resource-card__excerpt {
+      margin-bottom: 28px;
+      font-size: 20px;
+      line-height: 29px;
+    }
+
+    .resource-card-grid--3 .resource-card__button,
+    .resource-card-grid--single .resource-card__button {
+      padding: 18px 36px;
+      font-size: 15px;
+      line-height: 24px;
+    }
+
+    .webinar-hero__copy {
+      text-align: center;
+    }
+
+    .webinar-hero h1 {
+      font-size: 32px;
+      line-height: 38px;
+    }
+
+    .webinar-hero__kicker {
+      font-size: 29px;
+      line-height: 36px;
+      text-align: left;
+    }
+
+    .webinar-hero__rule {
+      inline-size: 100%;
+      margin-block: 26px;
+    }
+
+    .webinar-hero__action {
+      font-size: 13px;
+      line-height: 20px;
+      text-align: left;
+    }
+
+    .webinar-form-card h2 {
+      padding: 16px 22px;
+      font-size: 30px;
+      line-height: 36px;
+    }
+
+    .webinar-form-card__embed {
+      min-block-size: 240px;
+    }
+
+    .webinar-body {
+      padding-block: 36px 70px;
+    }
+
+    .webinar-body h2 {
+      font-size: 30px;
+      line-height: 34px;
+    }
+
+    .webinar-body p,
+    .webinar-body ul {
+      font-size: 13px;
+      line-height: 24px;
+    }
+
+    .video-page {
+      padding: 50px 12px;
+    }
+
+    .video-page h1 {
+      font-size: 45px;
+      line-height: 49px;
+    }
+
+    .thank-you-page {
+      padding: 60px 20px 82px;
+    }
+
+    .thank-you-page__icon {
+      inline-size: 54px;
+      block-size: 54px;
+    }
+
+    .thank-you-page h1 {
+      font-size: 38px;
+      line-height: 44px;
+    }
+
+    .thank-you-page p {
+      font-size: 18px;
+      line-height: 30px;
+    }
+  }
+</style>

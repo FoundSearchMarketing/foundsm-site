@@ -7,6 +7,9 @@ const SANITY_DATASET = process.env.SANITY_DATASET || 'staging';
 
 export default defineConfig({
   output: 'static',
+  devToolbar: {
+    enabled: false,
+  },
   adapter: vercel(),
   integrations: [
     sanity({

@@ -5,11 +5,9 @@ import LegacyPageRenderer from '../components/legacy/LegacyPageRenderer.astro';
 import LegacyInsightsFilterResults from '../components/LegacyInsightsFilterResults.astro';
 import WordPressMatchPage from '../components/wordpress/WordPressMatchPage.astro';
 import { getLatestBlogPosts } from '../lib/blogPosts';
-import { defaultInsightsPageData, mergeInsightsPageData } from '../lib/insightsPageData';
 import { loadLegacyPages } from '../lib/legacyPageFetch';
 import { getLegacyPageDefinitionsByGroup, pathToSingleSlug, type LegacyPageData } from '../lib/legacyPageData';
-import { richHtml, richText } from '../lib/fixedPageRender';
-import { insightsPageQuery, sanityClient, urlFor } from '../lib/sanity';
+import { richHtml, richText, srcFor } from '../lib/fixedPageRender';
 
 export async function getStaticPaths() {
   const rootDefinitions = getLegacyPageDefinitionsByGroup('root');
@@ -37,10 +35,6 @@ const wpMatchVariant = page.path === '/safelist/'
       : undefined;
 const isThankYouPage = wpMatchVariant === 'thank-you';
 
-const filterResultsCanonical = 'https://foundsm.com/insights-filter-results/';
-const filterResultsDescription = 'Great performance begins by staying sharp. Tap into fresh insights, news, and forward-thinking strategies from our team and beyond.';
-const filterResultsHeroImageFallback = '/images/migrated/insights-bulb-1.webp';
-
 let filterResultsData:
   | {
       hero: {
@@ -60,37 +54,32 @@ let filterResultsData:
         excerpt: string;
         href: string;
       }[];
+      latestHeading?: string;
+      directoryHeading?: string;
+      filterLabel?: string;
       schema: object;
     }
   | undefined;
 
 if (isInsightsFilterResultsPage) {
-  const [sanityInsightsPage, latestBlogPosts] = await Promise.all([
-    sanityClient.fetch(insightsPageQuery).catch(() => null),
-    getLatestBlogPosts(2),
-  ]);
-  const insightsPage = mergeInsightsPageData(sanityInsightsPage);
-
-  const heroImage = (() => {
-    if (!insightsPage.hero.image) return filterResultsHeroImageFallback;
-
-    try {
-      return urlFor(insightsPage.hero.image).width(868).height(1218).fit('crop').auto('format').url();
-    } catch {
-      return filterResultsHeroImageFallback;
-    }
-  })();
-
-  const headline = insightsPage.hero.headline || defaultInsightsPageData.hero.headline;
-  const body = insightsPage.hero.body || filterResultsDescription;
-  const filterCardExcerpt = [headline, body].filter(Boolean).join(' ');
+  const latestBlogPosts = await getLatestBlogPosts(2);
+  const headline = page.hero.heading;
+  const body = page.hero.subheading || page.seoDescription;
+  const heroImage = srcFor(page.hero.image);
+  const fallbackCards: NonNullable<LegacyPageData['cards']> = page.body.length
+    ? [{ title: page.title, body: page.body, cta: { href: page.path } }]
+    : [];
+  const filterCards = (page.cards?.length ? page.cards : fallbackCards).map((card) => ({
+    excerpt: richText(card.body) || card.title,
+    href: card.cta?.href || page.path,
+  }));
 
   filterResultsData = {
     hero: {
       headline,
       body,
       imageSrc: heroImage,
-      imageAlt: insightsPage.hero.imageAlt || '',
+      imageAlt: page.hero.imageAlt || '',
     },
     latestPosts: latestBlogPosts.map((post) => ({
       excerpt: post.excerpt,
@@ -99,24 +88,24 @@ if (isInsightsFilterResultsPage) {
       imageAlt: post.heroImageAlt,
       tag: 'Blog',
     })),
-    filterCards: Array.from({ length: 5 }, () => ({
-      excerpt: filterCardExcerpt,
-      href: '/insights-filter-results/',
-    })),
+    filterCards,
+    latestHeading: page.listing?.latestHeading,
+    directoryHeading: page.listing?.heading || richText(page.listing?.body) || richText(page.body),
+    filterLabel: page.listing?.filterLabel,
     schema: {
       '@context': 'https://schema.org',
       '@graph': [
         {
           '@type': 'WebPage',
-          '@id': `${filterResultsCanonical}#webpage`,
-          url: filterResultsCanonical,
-          name: 'Insights | Found Search Marketing | Enterprise Paid Media Agency',
-          description: filterResultsDescription,
+          '@id': `${page.canonicalUrl}#webpage`,
+          url: page.canonicalUrl,
+          name: page.seoTitle,
+          description: page.seoDescription,
           primaryImageOfPage: heroImage,
           publisher: {
             '@type': 'Organization',
             name: 'Found Search Marketing',
-            url: 'https://foundsm.com/',
+            url: 'https://www.foundsm.com/',
           },
         },
       ],
@@ -144,14 +133,10 @@ const wpMatchTitle = page.path === '/safelist/'
       ? 'Thank You'
       : undefined;
 
-const layoutTitle = isInsightsFilterResultsPage
-  ? 'Insights | Found Search Marketing | Enterprise Paid Media Agency'
-  : wpMatchTitle || page.seoTitle;
-const layoutDescription = isInsightsFilterResultsPage ? filterResultsDescription : page.seoDescription;
-const layoutCanonical = isInsightsFilterResultsPage ? filterResultsCanonical : page.canonicalUrl;
-const layoutRobots = isInsightsFilterResultsPage
-  ? 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
-  : page.robots;
+const layoutTitle = wpMatchTitle || page.seoTitle;
+const layoutDescription = page.seoDescription;
+const layoutCanonical = page.canonicalUrl;
+const layoutRobots = page.robots;
 const layoutOgImage = isInsightsFilterResultsPage ? filterResultsData?.hero.imageSrc : page.ogImage;
 const bodyClass = isDataConnectPage
   ? 'dataconnect-page'
@@ -189,6 +174,9 @@ const bodyClass = isDataConnectPage
       hero={filterResultsData.hero}
       latestPosts={filterResultsData.latestPosts}
       filterCards={filterResultsData.filterCards}
+      latestHeading={filterResultsData.latestHeading}
+      directoryHeading={filterResultsData.directoryHeading}
+      filterLabel={filterResultsData.filterLabel}
     />
   ) : wpMatchVariant ? (
     <WordPressMatchPage variant={wpMatchVariant} posts={thankYouPosts} />

@@ -1,5 +1,7 @@
 ---
+import InsightResourcePage from './InsightResourcePage.astro';
 import { renderSimplePortableText } from '../../lib/simplePortableText';
+import { getInsightResourcePage } from '../../lib/insightResourceContent';
 import type { LegacyPageData } from '../../lib/legacyPageData';
 
 interface Props {
@@ -7,84 +9,91 @@ interface Props {
 }
 
 const { page } = Astro.props;
+const insightResourcePage = getInsightResourcePage(page.path);
 const bodyHtml = renderSimplePortableText(page.body);
 const ctaBodyHtml = renderSimplePortableText(page.cta?.body);
 const formBodyHtml = renderSimplePortableText(page.form?.body);
 const formContainerId = page.form?.hubspotFormId ? `legacy-form-${page.form.hubspotFormId}` : undefined;
 ---
 
-<section class="legacy-hero" aria-label={page.hero.heading}>
-  <div class="container legacy-hero__inner">
-    {page.hero.eyebrow && <p class="legacy-hero__eyebrow">{page.hero.eyebrow}</p>}
-    <h1>{page.hero.heading}</h1>
-    {page.hero.subheading && <p class="legacy-hero__subheading">{page.hero.subheading}</p>}
-  </div>
-</section>
-
-<section class="section legacy-page__content" aria-label="Page content">
-  <div class="container legacy-page__grid">
-    <div class="legacy-page__body">
-      {bodyHtml && <div class="legacy-rich-text" set:html={bodyHtml} />}
-      <slot />
-    </div>
-
-    {(page.cards?.length || page.form?.hubspotFormId) && (
-      <aside class="legacy-page__aside">
-        {page.cards?.map((card) => {
-          const cardBodyHtml = renderSimplePortableText(card.body);
-          return (
-            <article class="legacy-card">
-              <h2>{card.title}</h2>
-              {cardBodyHtml && <div class="legacy-rich-text legacy-rich-text--small" set:html={cardBodyHtml} />}
-              {card.cta?.label && card.cta?.href && <a class="legacy-card__link" href={card.cta.href}>{card.cta.label}</a>}
-            </article>
-          );
-        })}
-
-        {page.form?.hubspotFormId && (
-          <div class="legacy-form">
-            {page.form.heading && <h2>{page.form.heading}</h2>}
-            {formBodyHtml && <div class="legacy-rich-text legacy-rich-text--small" set:html={formBodyHtml} />}
-            <div id={formContainerId} class="legacy-form__embed"></div>
-          </div>
-        )}
-      </aside>
-    )}
-  </div>
-</section>
-
-{page.cta?.label && page.cta?.href && (
-  <section class="cta-banner" aria-label="Call to action">
-    <div class="cta-banner__bg" aria-hidden="true"></div>
-    <div class="container cta-banner__inner fade-in-up">
-      {page.cta.heading && <h2 class="cta-banner__headline">{page.cta.heading}</h2>}
-      {ctaBodyHtml && <div class="cta-banner__text" set:html={ctaBodyHtml} />}
-      <div class="cta-banner__action">
-        <a href={page.cta.href} class="btn btn--green btn--lg">{page.cta.label}</a>
+{insightResourcePage ? (
+  <InsightResourcePage page={insightResourcePage} />
+) : (
+  <>
+    <section class="legacy-hero" aria-label={page.hero.heading}>
+      <div class="container legacy-hero__inner">
+        {page.hero.eyebrow && <p class="legacy-hero__eyebrow">{page.hero.eyebrow}</p>}
+        <h1>{page.hero.heading}</h1>
+        {page.hero.subheading && <p class="legacy-hero__subheading">{page.hero.subheading}</p>}
       </div>
-    </div>
-  </section>
-)}
+    </section>
 
-{page.form?.hubspotFormId && formContainerId && (
-  <script is:inline define:vars={{ hubspotFormId: page.form.hubspotFormId, formContainerId }}>
-    (function() {
-      function loadForm() {
-        if (window.hbspt) {
-          window.hbspt.forms.create({
-            region: "na1",
-            portalId: "5045186",
-            formId: hubspotFormId,
-            target: "#" + formContainerId
-          });
-        } else {
-          setTimeout(loadForm, 500);
-        }
-      }
-      if (document.readyState === "complete") loadForm();
-      else window.addEventListener("load", loadForm);
-    })();
-  </script>
+    <section class="section legacy-page__content" aria-label="Page content">
+      <div class="container legacy-page__grid">
+        <div class="legacy-page__body">
+          {bodyHtml && <div class="legacy-rich-text" set:html={bodyHtml} />}
+          <slot />
+        </div>
+
+        {(page.cards?.length || page.form?.hubspotFormId) && (
+          <aside class="legacy-page__aside">
+            {page.cards?.map((card) => {
+              const cardBodyHtml = renderSimplePortableText(card.body);
+              return (
+                <article class="legacy-card">
+                  <h2>{card.title}</h2>
+                  {cardBodyHtml && <div class="legacy-rich-text legacy-rich-text--small" set:html={cardBodyHtml} />}
+                  {card.cta?.label && card.cta?.href && <a class="legacy-card__link" href={card.cta.href}>{card.cta.label}</a>}
+                </article>
+              );
+            })}
+
+            {page.form?.hubspotFormId && (
+              <div class="legacy-form">
+                {page.form.heading && <h2>{page.form.heading}</h2>}
+                {formBodyHtml && <div class="legacy-rich-text legacy-rich-text--small" set:html={formBodyHtml} />}
+                <div id={formContainerId} class="legacy-form__embed"></div>
+              </div>
+            )}
+          </aside>
+        )}
+      </div>
+    </section>
+
+    {page.cta?.label && page.cta?.href && (
+      <section class="cta-banner" aria-label="Call to action">
+        <div class="cta-banner__bg" aria-hidden="true"></div>
+        <div class="container cta-banner__inner fade-in-up">
+          {page.cta.heading && <h2 class="cta-banner__headline">{page.cta.heading}</h2>}
+          {ctaBodyHtml && <div class="cta-banner__text" set:html={ctaBodyHtml} />}
+          <div class="cta-banner__action">
+            <a href={page.cta.href} class="btn btn--green btn--lg">{page.cta.label}</a>
+          </div>
+        </div>
+      </section>
+    )}
+
+    {page.form?.hubspotFormId && formContainerId && (
+      <script is:inline define:vars={{ hubspotFormId: page.form.hubspotFormId, formContainerId }}>
+        (function() {
+          function loadForm() {
+            if (window.hbspt) {
+              window.hbspt.forms.create({
+                region: "na1",
+                portalId: "5045186",
+                formId: hubspotFormId,
+                target: "#" + formContainerId
+              });
+            } else {
+              setTimeout(loadForm, 500);
+            }
+          }
+          if (document.readyState === "complete") loadForm();
+          else window.addEventListener("load", loadForm);
+        })();
+      </script>
+    )}
+  </>
 )}
 
 <style>

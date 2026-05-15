@@ -1,5 +1,5 @@
 ---
-import type { BlogPost, BlogPostNavigation } from '../lib/blogPosts';
+import { getWordPressPostInlineCss, type BlogPost, type BlogPostNavigation } from '../lib/blogPosts';
 import '../styles/blog-post.css';
 
 interface Props {
@@ -9,59 +9,67 @@ interface Props {
 
 const { post, navigation } = Astro.props;
 const authorLabel = [post.authorName, post.authorTitle].filter(Boolean).join(', ');
+const wordpressInlineCss = getWordPressPostInlineCss(post);
 ---
 
 <div class="blog-post" data-post-slug={post.slug}>
-  <article class="blog-post__article" aria-labelledby="post-title" itemscope itemtype="https://schema.org/BlogPosting">
-    <header class="blog-post__hero">
-      <div class="blog-post__hero-inner">
-        <div class="blog-post__hero-copy">
-          <a class="blog-post__back-link" href="/insights/">← All Articles</a>
-          <h1 class="blog-post__title" id="post-title" itemprop="headline">{post.title}</h1>
-          <div class="blog-post__meta" aria-label="Post metadata">
-            {authorLabel && (
-              <span class="blog-post__meta-item" itemprop="author" itemscope itemtype="https://schema.org/Person">
-                {post.authorUrl ? (
-                  <a class="blog-post__meta-link" href={post.authorUrl}>
+  {post.wordpressContentHtml ? (
+    <article class="blog-post__article blog-post__article--wordpress" aria-labelledby="post-title" itemscope itemtype="https://schema.org/BlogPosting">
+      {wordpressInlineCss && <style is:inline set:html={wordpressInlineCss} />}
+      <Fragment set:html={post.wordpressContentHtml} />
+    </article>
+  ) : (
+    <article class="blog-post__article" aria-labelledby="post-title" itemscope itemtype="https://schema.org/BlogPosting">
+      <header class="blog-post__hero">
+        <div class="blog-post__hero-inner">
+          <div class="blog-post__hero-copy">
+            <a class="blog-post__back-link" href="/insights/">← All Articles</a>
+            <h1 class="blog-post__title" id="post-title" itemprop="headline">{post.title}</h1>
+            <div class="blog-post__meta" aria-label="Post metadata">
+              {authorLabel && (
+                <span class="blog-post__meta-item" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                  {post.authorUrl ? (
+                    <a class="blog-post__meta-link" href={post.authorUrl}>
+                      <span itemprop="name">{authorLabel}</span>
+                    </a>
+                  ) : (
                     <span itemprop="name">{authorLabel}</span>
-                  </a>
-                ) : (
-                  <span itemprop="name">{authorLabel}</span>
-                )}
-              </span>
-            )}
-            <time class="blog-post__meta-item" datetime={post.publishedAt} itemprop="datePublished">
-              {post.publishedLabel}
-            </time>
+                  )}
+                </span>
+              )}
+              <time class="blog-post__meta-item" datetime={post.publishedAt} itemprop="datePublished">
+                {post.publishedLabel}
+              </time>
+            </div>
           </div>
+          {post.heroImage && (
+            <figure class="blog-post__hero-media" aria-hidden="true">
+              <img class="blog-post__hero-image" src={post.heroImage} alt={post.heroImageAlt} loading="eager" itemprop="image" />
+            </figure>
+          )}
         </div>
-        {post.heroImage && (
-          <figure class="blog-post__hero-media" aria-hidden="true">
-            <img class="blog-post__hero-image" src={post.heroImage} alt={post.heroImageAlt} loading="eager" itemprop="image" />
-          </figure>
+      </header>
+
+      <div class="blog-post__body">
+        <Fragment set:html={post.contentHtml} />
+
+        {(navigation.previous || navigation.next) && (
+          <nav class="blog-post__pagination" aria-label="Post navigation">
+            {navigation.previous && (
+              <a class="blog-post__pagination-link blog-post__pagination-link--prev" href={`/insights/${navigation.previous.slug}/`}>
+                <span class="blog-post__pagination-label">Previous</span>
+                <span class="blog-post__pagination-title">{navigation.previous.title}</span>
+              </a>
+            )}
+            {navigation.next && (
+              <a class="blog-post__pagination-link blog-post__pagination-link--next" href={`/insights/${navigation.next.slug}/`}>
+                <span class="blog-post__pagination-label">Next</span>
+                <span class="blog-post__pagination-title">{navigation.next.title}</span>
+              </a>
+            )}
+          </nav>
         )}
       </div>
-    </header>
-
-    <div class="blog-post__body">
-      <Fragment set:html={post.contentHtml} />
-
-      {(navigation.previous || navigation.next) && (
-        <nav class="blog-post__pagination" aria-label="Post navigation">
-          {navigation.previous && (
-            <a class="blog-post__pagination-link blog-post__pagination-link--prev" href={`/insights/${navigation.previous.slug}/`}>
-              <span class="blog-post__pagination-label">Previous</span>
-              <span class="blog-post__pagination-title">{navigation.previous.title}</span>
-            </a>
-          )}
-          {navigation.next && (
-            <a class="blog-post__pagination-link blog-post__pagination-link--next" href={`/insights/${navigation.next.slug}/`}>
-              <span class="blog-post__pagination-label">Next</span>
-              <span class="blog-post__pagination-title">{navigation.next.title}</span>
-            </a>
-          )}
-        </nav>
-      )}
-    </div>
-  </article>
+    </article>
+  )}
 </div>

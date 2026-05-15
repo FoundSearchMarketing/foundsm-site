@@ -1,0 +1,558 @@
+---
+import { renderSimplePortableText } from '../lib/simplePortableText';
+import type { LegacyAuthorData, LegacyAuthorLatestPost } from '../lib/legacyPageData';
+
+interface Props {
+  author: LegacyAuthorData;
+}
+
+const { author } = Astro.props;
+const profileHeading = author.profileHeading || [author.name, author.title].filter(Boolean).join(' | ');
+const [profileName, ...profileTitleParts] = profileHeading.split('|');
+const profileTitle = profileTitleParts.join('|').trim();
+const profileImage = author.profileImage || author.image || `https://placehold.co/300x375?text=${encodeURIComponent(author.name)}`;
+const profileImageAlt = author.profileImageAlt ?? '';
+const profileTeam = author.profileTeam || author.team;
+const profileFoundStartDate = author.profileFoundStartDate || author.foundStartDate;
+const profileExpertise = author.profileExpertise || author.expertise;
+const profileBodyHtml = renderSimplePortableText(author.profileBody) || (author.bio ? `<p>${author.bio}</p>` : '');
+const latestPosts = author.latestPosts || [];
+const decorativeImage = 'https://foundsm.com/found2025/wp-content/uploads/2026/02/glasstopen_sm.webp';
+
+const normalizePost = (post: LegacyAuthorLatestPost) => ({
+  ...post,
+  imageAlt: post.imageAlt ?? '',
+  imageWidth: post.imageWidth || 768,
+  imageHeight: post.imageHeight || 513,
+});
+---
+
+<section class="author-detail-hero" aria-labelledby="author-detail-heading">
+  <div class="author-detail-hero__inner">
+    <h2 id="author-detail-heading">About the Author</h2>
+    <img class="author-detail-hero__mark" src={decorativeImage} alt="" width="70" height="72" loading="eager" decoding="async" />
+  </div>
+</section>
+
+<section class="author-profile-detail" aria-labelledby="author-profile-heading">
+  <div class="author-profile-detail__inner">
+    <h3
+      id="author-profile-heading"
+      class:list={[
+        'author-profile-detail__heading',
+        author.slug === 'kelley' && 'author-profile-detail__heading--compact',
+      ]}
+    >
+      <span>{profileName.trim()}</span>
+      {profileTitle && (
+        <>
+          {' | '}
+          <span class="author-profile-detail__heading-title">{profileTitle}</span>
+        </>
+      )}
+    </h3>
+
+    <div class="author-profile-detail__content">
+      <img
+        class="author-profile-detail__image"
+        src={profileImage}
+        alt={profileImageAlt}
+        width="300"
+        height="375"
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+      />
+
+      <dl class="author-profile-detail__meta">
+        {profileTeam && (
+          <div>
+            <dt>Team:</dt>
+            <dd>{profileTeam}</dd>
+          </div>
+        )}
+        {profileFoundStartDate && (
+          <div>
+            <dt>Found Start Date:</dt>
+            <dd>{profileFoundStartDate}</dd>
+          </div>
+        )}
+        {profileExpertise && (
+          <div>
+            <dt>Expertise:</dt>
+            <dd>{profileExpertise}</dd>
+          </div>
+        )}
+      </dl>
+
+      {profileBodyHtml && <div class="author-profile-detail__body" set:html={profileBodyHtml} />}
+    </div>
+
+    {author.linkedin && (
+      <a
+        class:list={[
+          'author-profile-detail__linkedin',
+          author.slug === 'kelley' && 'author-profile-detail__linkedin--offset',
+        ]}
+        href={author.linkedin}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <svg aria-hidden="true" viewBox="0 0 448 512" focusable="false">
+          <path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3C448 46.5 433.6 32 416 32zM135.4 416H69V202.2h66.5V416h-.1zM102.2 173c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96s38.5 17.3 38.5 38.5S123.5 173 102.2 173zM384.3 416h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"></path>
+        </svg>
+        <span>Connect with {author.name.split(' ')[0]}</span>
+      </a>
+    )}
+  </div>
+</section>
+
+<section class="author-latest-posts" aria-labelledby="author-latest-posts-heading">
+  <div class="author-latest-posts__inner">
+    <div class="author-latest-posts__heading" id="author-latest-posts-heading">LATEST POSTS</div>
+    {latestPosts.length > 0 ? (
+      <div class="author-latest-posts__grid" role="list">
+        {latestPosts.map((post) => {
+          const normalizedPost = normalizePost(post);
+          return (
+            <article class="author-latest-card" role="listitem">
+              {normalizedPost.imageSrc && (
+                <a class="author-latest-card__image" href={normalizedPost.href} aria-label={normalizedPost.title} tabindex="-1">
+                  <img
+                    src={normalizedPost.imageSrc}
+                    alt={normalizedPost.imageAlt}
+                    width={normalizedPost.imageWidth}
+                    height={normalizedPost.imageHeight}
+                    loading="eager"
+                    decoding="async"
+                  />
+                </a>
+              )}
+              <div class="author-latest-card__body">
+                <h3><a href={normalizedPost.href}>{normalizedPost.title}</a></h3>
+                {normalizedPost.date && <p>{normalizedPost.date}</p>}
+                <a class="author-latest-card__link" href={normalizedPost.href} aria-label={`Read more about ${normalizedPost.title}`}>Read More &raquo;</a>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    ) : (
+      <p class="author-latest-posts__empty">No posts are published for this author yet.</p>
+    )}
+  </div>
+</section>
+
+<style>
+  :global(body.author-detail-page) {
+    background: #ffffff;
+  }
+
+  :global(body.author-detail-page main) {
+    background: #ffffff;
+  }
+
+  :global(body.author-detail-page .site-header) {
+    position: sticky;
+    border-bottom-color: transparent;
+  }
+
+  :global(body.author-detail-page .site-header__inner) {
+    align-items: start;
+    min-block-size: 143px;
+    padding-block: 29px 0;
+  }
+
+  :global(body.author-detail-page .site-footer__brand) {
+    display: none;
+  }
+
+  .author-detail-hero {
+    background: #231f20;
+    color: #f2f3f2;
+  }
+
+  .author-detail-hero__inner {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    inline-size: min(calc(100% - 50px), 1040px);
+    min-block-size: 145px;
+    margin-inline: auto;
+    padding-block-start: 35px;
+  }
+
+  .author-detail-hero h2 {
+    margin: 0 0 20px;
+    color: #f2f3f2;
+    font-family: var(--font-heading);
+    font-size: 60px;
+    font-weight: 900;
+    line-height: 65px;
+    letter-spacing: 0;
+  }
+
+  .author-detail-hero__mark {
+    inline-size: 70px;
+    block-size: 72px;
+    margin-block-start: 5px;
+    object-fit: contain;
+  }
+
+  .author-profile-detail {
+    background: #ffffff;
+    color: #231f20;
+  }
+
+  .author-profile-detail__inner {
+    inline-size: min(calc(100% - 50px), 1040px);
+    margin-inline: auto;
+    padding-block: 66px 65px;
+  }
+
+  .author-profile-detail__heading {
+    margin: 0 0 32px 12px;
+    color: #333333;
+    font-family: var(--font-body);
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 44px;
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+
+  .author-profile-detail__heading-title {
+    font-weight: 400;
+  }
+
+  .author-profile-detail__content {
+    color: #231f20;
+    font-size: 20px;
+    line-height: 36px;
+  }
+
+  .author-profile-detail__content::after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+
+  .author-profile-detail__image {
+    float: left;
+    inline-size: 300px;
+    block-size: 375px;
+    margin: 0 60px 20px 0;
+    border-radius: 25px;
+    object-fit: cover;
+  }
+
+  .author-profile-detail__meta {
+    display: block;
+    margin: 0 0 26px;
+    color: #231f20;
+    font-size: 20px;
+    line-height: 36px;
+  }
+
+  .author-profile-detail__meta div {
+    display: block;
+  }
+
+  .author-profile-detail__meta dt,
+  .author-profile-detail__meta dd {
+    display: inline;
+    margin: 0;
+  }
+
+  .author-profile-detail__meta dt {
+    font-weight: 700;
+  }
+
+  .author-profile-detail__body {
+    color: #231f20;
+    font-size: 20px;
+    line-height: 36px;
+  }
+
+  .author-profile-detail__body :global(p) {
+    margin: 0 0 32px;
+  }
+
+  .author-profile-detail__linkedin {
+    display: inline-flex;
+    align-items: center;
+    gap: 18px;
+    min-inline-size: 325px;
+    margin-block-start: 18px;
+    border-radius: 35px;
+    background: linear-gradient(110deg, #238ac8 0%, #17b8ed 100%);
+    padding: 15px 35px;
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 27px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .author-profile-detail__linkedin svg {
+    inline-size: 18px;
+    block-size: 18px;
+    flex: 0 0 auto;
+    fill: currentColor;
+  }
+
+  .author-latest-posts {
+    border-block-end: 20px solid #414042;
+    background-color: #f2f3f2;
+    background-image: url('/images/pages/our-approach/topography-light.svg');
+    background-position: center top;
+    background-repeat: repeat;
+    color: #231f20;
+  }
+
+  .author-latest-posts__inner {
+    inline-size: min(calc(100% - 50px), 1040px);
+    margin-inline: auto;
+    padding-block: 55px 75px;
+  }
+
+  .author-latest-posts__heading {
+    margin: 0 0 20px 12px;
+    color: #414042;
+    font-size: 20px;
+    font-weight: 300;
+    letter-spacing: 8px;
+    line-height: 28px;
+  }
+
+  .author-latest-posts__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 505px));
+    gap: 35px 30px;
+  }
+
+  .author-latest-card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 20px;
+    background: #ffffff;
+    color: #231f20;
+  }
+
+  .author-latest-card__image {
+    display: block;
+    overflow: hidden;
+    background: #ffffff;
+  }
+
+  .author-latest-card__image img {
+    display: block;
+    inline-size: 100%;
+    block-size: auto;
+    object-fit: cover;
+  }
+
+  .author-latest-card__body {
+    display: block;
+    padding: 30px 30px 34px;
+  }
+
+  .author-latest-card h3 {
+    margin: 0;
+    color: #231f20;
+    font-family: var(--font-body);
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 27px;
+    letter-spacing: 0;
+  }
+
+  .author-latest-card p {
+    margin: 13px 0 24px;
+    color: #adadad;
+    font-size: 14px;
+    line-height: 24px;
+  }
+
+  .author-latest-card__link {
+    align-self: flex-start;
+    color: var(--color-primary);
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 28px;
+    letter-spacing: 0.1px;
+    text-transform: uppercase;
+  }
+
+  .author-latest-posts__empty {
+    margin: 0;
+    color: #414042;
+    font-size: 20px;
+    line-height: 32px;
+  }
+
+  @media (max-width: 1024px) {
+    :global(body.author-detail-page .site-header__inner) {
+      inline-size: 100%;
+      min-block-size: 65px;
+      margin-inline: 0;
+      padding: 6px 0 0 25px;
+    }
+
+    :global(body.author-detail-page .site-header__logo) {
+      inline-size: 125px;
+      block-size: 30px;
+      margin-block-start: 12px;
+    }
+
+    :global(body.author-detail-page .site-header__menu-toggle) {
+      inline-size: 53px;
+      block-size: 53px;
+      transform: translateX(12px);
+    }
+
+    :global(body.author-detail-page .site-header__menu-icon) {
+      inline-size: 35px;
+      block-size: 35px;
+    }
+
+    .author-detail-hero {
+      margin-block-start: 50px;
+    }
+
+    .author-detail-hero__inner {
+      inline-size: 100%;
+      min-block-size: 132px;
+      padding: 25px 25px 0;
+    }
+
+    .author-detail-hero h2 {
+      font-size: 38px;
+      line-height: 42px;
+      letter-spacing: 0;
+    }
+
+    .author-detail-hero__mark {
+      display: none;
+    }
+
+    .author-profile-detail__inner {
+      inline-size: 100%;
+      padding: 10px 20px 58px;
+    }
+
+    .author-profile-detail__heading {
+      inline-size: min(345px, calc(100vw - 45px));
+      margin: 0 0 35px 10px;
+      font-size: 34px;
+      line-height: 42px;
+    }
+
+    .author-profile-detail__heading--compact {
+      inline-size: min(360px, calc(100vw - 30px));
+    }
+
+    .author-profile-detail__heading span:first-child {
+      display: inline;
+    }
+
+    .author-profile-detail__content,
+    .author-profile-detail__body,
+    .author-profile-detail__meta {
+      font-size: 18px;
+      line-height: 30px;
+    }
+
+    .author-profile-detail__image {
+      float: none;
+      inline-size: 300px;
+      block-size: 375px;
+      margin: 0 0 20px;
+      border-radius: 25px;
+    }
+
+    .author-profile-detail__meta {
+      margin-block-end: 20px;
+    }
+
+    .author-profile-detail__body :global(p) {
+      margin-block-end: 20px;
+    }
+
+    .author-profile-detail__linkedin {
+      justify-content: flex-start;
+      gap: 11px;
+      inline-size: auto;
+      min-inline-size: 0;
+      margin-block-start: 10px;
+      padding: 15px 35px;
+      font-size: 16px;
+      line-height: 20px;
+      letter-spacing: 1px;
+    }
+
+    .author-profile-detail__linkedin--offset {
+      margin-block-start: 49px;
+      margin-inline-start: 20px;
+    }
+
+    .author-latest-posts {
+      background-image: none;
+    }
+
+    .author-latest-posts__inner {
+      inline-size: 100%;
+      padding: 57px 20px 65px;
+    }
+
+    .author-latest-posts__heading {
+      margin: 0 0 20px 11px;
+      font-size: 24px;
+      letter-spacing: 10px;
+      line-height: 30px;
+    }
+
+    .author-latest-posts__grid {
+      grid-template-columns: 1fr;
+      gap: 35px;
+    }
+
+    .author-latest-card {
+      min-block-size: 0;
+      border-radius: 30px;
+    }
+
+    .author-latest-card__image {
+      min-block-size: 0;
+    }
+
+    .author-latest-card__image img {
+      inline-size: 100%;
+      block-size: auto;
+    }
+
+    .author-latest-card__body {
+      padding: 30px 30px 33px;
+    }
+
+    .author-latest-card h3 {
+      font-size: 24px;
+      line-height: 30px;
+      letter-spacing: 0;
+    }
+
+    .author-latest-card p {
+      margin: 3px 0 19px;
+      font-size: 18px;
+      line-height: 32px;
+    }
+
+    .author-latest-card__link {
+      font-size: 18px;
+      line-height: 22px;
+    }
+  }
+</style>

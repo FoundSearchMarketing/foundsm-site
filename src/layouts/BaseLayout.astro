@@ -12,12 +12,25 @@ interface Props {
   ogType?: string;
   robots?: string;
   schema?: object;
+  extraStylesheets?: string[];
   hideNavigation?: boolean;
   hideFooter?: boolean;
   bodyClass?: string;
 }
 
-const { title, description, canonical, ogImage, ogType, robots, schema, hideNavigation = false, hideFooter = false, bodyClass } = Astro.props;
+const {
+  title,
+  description,
+  canonical,
+  ogImage,
+  ogType,
+  robots,
+  schema,
+  extraStylesheets = [],
+  hideNavigation = false,
+  hideFooter = false,
+  bodyClass,
+} = Astro.props;
 const enableThirdPartyScripts = import.meta.env.PROD;
 ---
 
@@ -33,6 +46,7 @@ const enableThirdPartyScripts = import.meta.env.PROD;
     robots={robots}
     schema={schema}
   />
+  {extraStylesheets.map((href) => <link rel="stylesheet" href={href} />)}
   <!-- A/B Test: push variants to GTM dataLayer -->
   <script is:inline>
   (function() {

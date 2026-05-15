@@ -64,6 +64,11 @@ const ctaFields = [
   }),
 ];
 
+const imageFields = [
+  defineField({ name: 'image', title: 'Image', type: 'image', options: { hotspot: true } }),
+  defineField({ name: 'imageAlt', title: 'Image Alt Text', type: 'string' }),
+];
+
 export default defineType({
   name: 'legacyPage',
   title: 'Legacy Page',
@@ -93,9 +98,22 @@ export default defineType({
         defineField({ name: 'eyebrow', title: 'Eyebrow', type: 'string' }),
         defineField({ name: 'heading', title: 'Heading', type: 'string', validation: (Rule) => Rule.required() }),
         defineField({ name: 'subheading', title: 'Subheading', type: 'text', rows: 3 }),
+        ...imageFields,
       ],
     }),
     richTextField('body', 'Body'),
+    defineField({
+      name: 'listing',
+      title: 'Listing Content',
+      type: 'object',
+      group: 'content',
+      fields: [
+        defineField({ name: 'latestHeading', title: 'Latest Posts Heading', type: 'string' }),
+        defineField({ name: 'heading', title: 'Listing Heading', type: 'string' }),
+        richTextField('body', 'Listing Intro'),
+        defineField({ name: 'filterLabel', title: 'Filter Label', type: 'string' }),
+      ],
+    }),
     defineField({
       name: 'cards',
       title: 'Cards',

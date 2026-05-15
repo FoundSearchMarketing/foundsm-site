@@ -3,6 +3,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { getLatestBlogPosts } from '../../../lib/blogPosts';
 import { loadAuthors, loadLegacyPage } from '../../../lib/legacyPageFetch';
 import { getLegacyPageDefinitionByPath } from '../../../lib/legacyPageData';
+import { richHtml, srcFor } from '../../../lib/fixedPageRender';
 
 const authorIndexDefinition = getLegacyPageDefinitionByPath('/insights/authors/');
 if (!authorIndexDefinition) throw new Error('Missing legacy page definition for /insights/authors/.');
@@ -14,48 +15,20 @@ const [page, authors, latestBlogPosts] = await Promise.all([
 ]);
 
 const title = page.seoTitle || 'Authors | Found Search Marketing';
-const description = 'Found Search Marketing brings deep channel expertise, custom analytics, and agile strategy together to maximize performance across your entire media ecosystem.';
-const canonical = 'https://foundsm.com/insights/authors/';
-const heroImage = 'https://foundsm.com/found2025/wp-content/uploads/2026/02/adam_side-profile.webp';
-const heroHeading = ['From Google Roots', 'to Agile Results'];
-const heroBody = 'Meet Found Search Marketing: an agency where decades of expertise meet agile execution. With leadership grounded in foundational roles at Google and a team energized by complex problem-solving, we break down silos to offer fully integrated strategies.';
-const introBody = 'Dive into the articles below to see how our hands-on, results-obsessed experts apply this deep technical knowledge to transform business challenges into breakthroughs.';
-const liveLatestPostImages: Record<string, { src: string; alt: string; width: number; height: number }> = {
-  'dirty-signals-bot-traffic-junk-leads': {
-    src: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/bot-traffic-sm-768x513.webp',
-    alt: '',
-    width: 768,
-    height: 513,
-  },
-  'customer-match-uploads-disabled-in-google-ads-api': {
-    src: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/GA-API-update-hero-768x513.webp',
-    alt: '',
-    width: 768,
-    height: 513,
-  },
-  'signal-loss-costs-real-revenue': {
-    src: 'https://foundsm.com/found2025/wp-content/uploads/2026/02/Untitled-1200-x-801-px-768x513.webp',
-    alt: 'ROAS vs. Profit',
-    width: 768,
-    height: 513,
-  },
-  'googles-vision-for-2026-building-a-revenue-engine-powered-by-data': {
-    src: 'https://foundsm.com/found2025/wp-content/uploads/2026/02/dataengine-768x432.webp',
-    alt: '',
-    width: 768,
-    height: 432,
-  },
-};
+const description = page.seoDescription;
+const canonical = page.canonicalUrl;
+const heroHeading = (page.hero.heading || '').split('\n').filter(Boolean);
+const heroImage = srcFor(page.hero.image);
+const introBlocks = page.listing?.body || page.body;
 
 const latestPosts = latestBlogPosts.map((post, index) => {
-  const liveImage = liveLatestPostImages[post.slug];
   return {
-    title: post.title.replace(/^\[TEST\]\s*/, ''),
+    title: post.title,
     href: `/insights/${post.slug}/`,
-    imageSrc: liveImage?.src || post.heroImage,
-    imageAlt: liveImage?.alt ?? (post.heroImageAlt || post.title).replace(/^\[TEST\]\s*/, ''),
-    imageWidth: liveImage?.width || 768,
-    imageHeight: liveImage?.height || 513,
+    imageSrc: post.heroImage,
+    imageAlt: post.heroImageAlt || post.title,
+    imageWidth: 768,
+    imageHeight: 513,
     date: post.publishedLabel,
     loading: index < 2 ? 'eager' : 'lazy',
     fetchPriority: index === 0 ? 'high' : undefined,
@@ -72,22 +45,28 @@ const latestPosts = latestBlogPosts.map((post, index) => {
   bodyClass="authors-page"
 >
   <section class="authors-hero" aria-label="Found authors">
-    <div class="authors-hero__inner">
+    <div class:list={['authors-hero__inner', { 'authors-hero__inner--text-only': !heroImage }]}>
       <div class="authors-hero__copy">
-        <h1>{heroHeading[0]}<br />{heroHeading[1]}</h1>
-        <p>{heroBody}</p>
+        <h1>
+          {heroHeading.map((line, index) => (
+            <Fragment>{index > 0 && <br />}{line}</Fragment>
+          ))}
+        </h1>
+        {page.hero.subheading && <p>{page.hero.subheading}</p>}
       </div>
-      <figure class="authors-hero__figure" aria-hidden="true">
-        <img src={heroImage} alt="" width="595" height="400" loading="eager" fetchpriority="high" decoding="async" />
-      </figure>
+      {heroImage && (
+        <figure class="authors-hero__figure" aria-hidden={page.hero.imageAlt ? undefined : 'true'}>
+          <img src={heroImage} alt={page.hero.imageAlt || ''} width="595" height="400" loading="eager" fetchpriority="high" decoding="async" />
+        </figure>
+      )}
     </div>
   </section>
 
   <section class="authors-contributors" aria-labelledby="authors-contributors-heading">
     <div class="authors-contributors__inner">
       <header class="authors-contributors__intro">
-        <h2 id="authors-contributors-heading">Blog Contributors</h2>
-        <p>{introBody}</p>
+        <h2 id="authors-contributors-heading">{page.listing?.heading || 'Blog Contributors'}</h2>
+        <div set:html={richHtml(introBlocks)} />
       </header>
 
       <div class="authors-contributors__list">
@@ -145,7 +124,7 @@ const latestPosts = latestBlogPosts.map((post, index) => {
 
   <section class="authors-latest" aria-labelledby="authors-latest-heading">
     <div class="authors-latest__inner">
-      <div class="authors-latest__heading" id="authors-latest-heading">LATEST POSTS</div>
+      <div class="authors-latest__heading" id="authors-latest-heading">{page.listing?.latestHeading || 'LATEST POSTS'}</div>
       <div class="authors-latest__grid" role="list">
         {latestPosts.map((post) => (
           <article class="authors-latest-card" role="listitem">
@@ -192,6 +171,10 @@ const latestPosts = latestBlogPosts.map((post, index) => {
     min-block-size: 505px;
     margin-inline: auto;
     padding-block-start: 100px;
+  }
+
+  .authors-hero__inner--text-only {
+    grid-template-columns: minmax(0, 50rem);
   }
 
   .authors-hero__copy {

@@ -51,9 +51,17 @@ export interface LegacyPageData {
     eyebrow?: string;
     heading: string;
     subheading?: string;
+    image?: unknown;
+    imageAlt?: string;
   };
   body: SimplePortableTextBlock[];
   cards?: LegacyPageCard[];
+  listing?: {
+    latestHeading?: string;
+    heading?: string;
+    body?: SimplePortableTextBlock[];
+    filterLabel?: string;
+  };
   cta?: {
     heading?: string;
     body?: SimplePortableTextBlock[];
@@ -214,7 +222,7 @@ export const legacyAuthorDefinitions: LegacyAuthorDefinition[] = [
     foundStartDate: '2006',
     expertise: 'Measurement Strategy, Operational Excellence, Strategic Growth',
     bio: 'Julie Warnecke is the Founder and CEO of Found Search Marketing, a Midwest firm managing over $200M in annual media spend. An early Google employee instrumental in launching AdWords, she established Found in 2006. Today, she leads a team of 50+ that serves as a seamless extension of client teams.',
-    image: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Julie_W_1800-1.webp?ver=1773664202',
+    image: '/images/pages/team/julie-warnecke.webp',
   },
   {
     slug: 'kelley',
@@ -224,7 +232,7 @@ export const legacyAuthorDefinitions: LegacyAuthorDefinition[] = [
     foundStartDate: '2014',
     expertise: 'Client Alignment, Growth Architecture, Scalable Systems',
     bio: "Kelley, Found's VP of Strategy & Growth, brings 25+ years of experience, starting at Google Ads. She has led strategic planning for Fortune 1000 clients like Home Depot and Staples across CPG, Retail, and Higher Ed. Her focus is on strategic oversight and building strong relationships that exceed client goals.",
-    image: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Julie_W_1800-1-6.webp?ver=1773663606',
+    image: '/images/pages/team/kelley-swart.webp',
   },
   {
     slug: 'nicholas',
@@ -234,7 +242,7 @@ export const legacyAuthorDefinitions: LegacyAuthorDefinition[] = [
     foundStartDate: '2010',
     expertise: 'Google Cloud Certified Data Engineer',
     bio: 'With over 15 years of experience, Head of Data Engineering Nicholas Hoium builds advanced pipelines and web analytics solutions. The IU Bloomington graduate and Google Cloud Certified Engineer transforms raw information into accessible intelligence. Off the clock, Nicholas enjoys indie games, traveling, and watching soccer.',
-    image: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/Nicholas-FoundSM.webp',
+    image: '/images/pages/team/nicholas-hoium.webp',
   },
   {
     slug: 'ryan',
@@ -244,7 +252,7 @@ export const legacyAuthorDefinitions: LegacyAuthorDefinition[] = [
     foundStartDate: '2014',
     expertise: 'Audience Intelligence, Data Strategy, Attribution Modeling',
     bio: 'Ryan Eme is the Head of Data Intelligence at Found, bringing 20 years of experience in data-driven marketing. A Certified Google Cloud Data Engineer, he helps clients in higher ed and healthcare unlock business growth. Known for his innovative problem-solving, Ryan is so effective that clients frequently ask to clone him.',
-    image: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Julie_W_1800-1-12.webp?ver=1773664036',
+    image: '/images/pages/team/ryan-eme.webp',
   },
   {
     slug: 'adam',
@@ -254,7 +262,7 @@ export const legacyAuthorDefinitions: LegacyAuthorDefinition[] = [
     foundStartDate: '2016',
     expertise: 'Strategic Media, Performance Forecasting, Channel Strategy',
     bio: 'Adam joined Found Search Marketing in 2016, leveraging his media strategy background to drive client results through research and testing. A Brown University graduate in Cognitive Neuroscience and Economics, he began his career with the Indianapolis Colts. Outside the office, Adam stays active through CrossFit, backpacking, and various team sports.',
-    image: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/Adam-P-main.webp',
+    image: '/images/pages/team/adam-persinger.webp',
   },
   {
     slug: 'caroline',
@@ -264,7 +272,7 @@ export const legacyAuthorDefinitions: LegacyAuthorDefinition[] = [
     foundStartDate: '2017',
     expertise: 'User Experience & Strategy, CRO, Unbounce Expert',
     bio: 'As one of only 10 Unbounce Experts worldwide, Caroline specializes in creating high-performing landing pages and optimizing conversion rates. Her background spans CRO, web design, and SEO, with a focus on higher education. When not driving client results, Caroline enjoys gardening, cozy video games, and exploring the city with her family.',
-    image: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Julie_W_1800-1-4.webp?ver=1773663451',
+    image: '/images/pages/team/caroline-stoner.webp',
   },
   {
     slug: 'kylie',
@@ -274,7 +282,7 @@ export const legacyAuthorDefinitions: LegacyAuthorDefinition[] = [
     foundStartDate: '2017',
     expertise: 'Client Services',
     bio: 'As Group Account Director, Kylie leverages 15+ years of experience to orchestrate cross-channel strategies that drive client growth. Having supported brands like General Motors at top Chicago agencies, she brings calm, collaborative leadership to her team. Outside work, Kylie enjoys life with her daughter and dog.',
-    image: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/Kylie-FoundSM.webp',
+    image: '/images/pages/team/kylie-colquitt.webp',
   },
   {
     slug: 'matt',
@@ -284,7 +292,6 @@ export const legacyAuthorDefinitions: LegacyAuthorDefinition[] = [
     foundStartDate: '2019',
     expertise: 'Reporting, Analysis, Paid Media Management',
     bio: 'Since joining Found in 2019, Purdue graduate Matt crafts data-driven paid media strategies. Certified across multiple platforms, he leverages his expertise in B2B and Higher Education to maximize client ROI. Known for predicting problems, Matt spends his free time gaming, cooking, and exploring Indianapolis.',
-    image: 'https://foundsm.com/found2025/wp-content/uploads/2026/02/Matt_author_profile.webp',
   },
   {
     slug: 'emily',
@@ -294,7 +301,6 @@ export const legacyAuthorDefinitions: LegacyAuthorDefinition[] = [
     foundStartDate: '2020',
     expertise: 'Communication, collaboration & problem solving',
     bio: 'Strategist Emily Williams-Hempstead untangles complex challenges by applying her Indiana State Psychology and Marketing background to understand human behavior. Her knack for organizing chaos drives clear results for many clients at Found. Away from the agency, she enjoys traveling, hosting game nights, and relaxing with her two dogs.',
-    image: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/Emily_author_profile.webp',
   },
   {
     slug: 'maria',
@@ -304,7 +310,6 @@ export const legacyAuthorDefinitions: LegacyAuthorDefinition[] = [
     foundStartDate: '2022',
     expertise: 'Data Analysis',
     bio: 'Maria leverages her Purdue MS in Business Analytics to transform complex datasets into actionable, strategic insights. With over three years at Found, this Google-certified expert effectively bridges technical analysis with business goals. Outside work, Maria enjoys teaching spin classes, cooking, and reading.',
-    image: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/Maria-FoundSM.webp',
   },
   {
     slug: 'kelsey',
@@ -314,7 +319,7 @@ export const legacyAuthorDefinitions: LegacyAuthorDefinition[] = [
     foundStartDate: '2025',
     expertise: 'Marketing, Brand & Positioning',
     bio: 'Kelsey brings nearly 20 years of expertise as Director of Agency Marketing and Brand Strategy. She fosters seamless client-agency collaboration to drive results through authentic leadership. A proud Hoosier with an MBA, Kelsey serves the community as REV Committee Chair and enjoys flipping houses and cheering on her family.',
-    image: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/Julie_W_1800-1-7.webp?ver=1773663677',
+    image: '/images/pages/team/kelsey-connor.webp',
   },
 ];
 
@@ -350,6 +355,7 @@ export function normalizeLegacyPath(path: string): string {
 export function mergeLegacyPageData(definition: LegacyPageDefinition, incoming?: Partial<LegacyPageData> | null): LegacyPageData {
   const fallback = buildDefaultLegacyPageData(definition);
   if (!incoming) return fallback;
+  const listing = mergeObject(fallback.listing, incoming.listing);
 
   return {
     ...fallback,
@@ -367,6 +373,12 @@ export function mergeLegacyPageData(definition: LegacyPageDefinition, incoming?:
     },
     body: hasBlocks(incoming.body) ? incoming.body as SimplePortableTextBlock[] : fallback.body,
     cards: incoming.cards || fallback.cards,
+    listing: listing
+      ? {
+          ...listing,
+          body: hasBlocks(incoming.listing?.body) ? incoming.listing?.body as SimplePortableTextBlock[] : fallback.listing?.body,
+        }
+      : undefined,
     cta: mergeObject(fallback.cta, incoming.cta),
     form: mergeObject(fallback.form, incoming.form),
   };
@@ -419,6 +431,65 @@ function buildDefaultLegacyPageData(definition: LegacyPageDefinition): LegacyPag
     };
   }
 
+  if (definition.id === 'legacy-insights-filter-results') {
+    const heroBody = 'Great performance begins by staying sharp. Tap into fresh insights, news, and forward-thinking strategies from our team and beyond.';
+    const directoryHeading = 'Find inspiration and insights from the experts at Found.';
+
+    return {
+      title: definition.title,
+      path: definition.path,
+      seoTitle: 'Insights | Found Search Marketing | Enterprise Paid Media Agency',
+      seoDescription: heroBody,
+      canonicalUrl: 'https://foundsm.com/insights-filter-results/',
+      robots: 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
+      hero: {
+        eyebrow: 'Insights',
+        heading: 'Where Bold Ideas Are Found.',
+        subheading: heroBody,
+        image: '/images/migrated/insights-bulb-1.webp',
+        imageAlt: '',
+      },
+      body: [block(directoryHeading)],
+      listing: {
+        latestHeading: 'LATEST POSTS',
+        heading: directoryHeading,
+        filterLabel: 'Blog',
+      },
+      cards: Array.from({ length: 5 }, () => ({
+        title: 'Insight result',
+        body: [block('Where Bold Ideas Are Found. Great performance begins by staying sharp. Tap into fresh insights, news, and forward-thinking strategies from our team and beyond.')],
+        cta: { href: '/insights-filter-results/' },
+      })),
+    };
+  }
+
+  if (definition.id === 'legacy-insights-authors') {
+    const heroBody = 'Meet Found Search Marketing: an agency where decades of expertise meet agile execution. With leadership grounded in foundational roles at Google and a team energized by complex problem-solving, we break down silos to offer fully integrated strategies.';
+    const introBody = 'Dive into the articles below to see how our hands-on, results-obsessed experts apply this deep technical knowledge to transform business challenges into breakthroughs.';
+
+    return {
+      title: definition.title,
+      path: definition.path,
+      seoTitle: 'Authors | Found Search Marketing',
+      seoDescription: definition.description,
+      canonicalUrl: 'https://foundsm.com/insights/authors/',
+      robots: 'index, follow',
+      hero: {
+        eyebrow: 'Authors',
+        heading: 'From Google Roots\nto Agile Results',
+        subheading: heroBody,
+        image: '/images/pages/team/adam-persinger.webp',
+        imageAlt: 'Found Search Marketing team member',
+      },
+      body: [block(introBody)],
+      listing: {
+        latestHeading: 'LATEST POSTS',
+        heading: 'Blog Contributors',
+        body: [block(introBody)],
+      },
+    };
+  }
+
   const canonicalPath = definition.path === '/' ? '' : definition.path.replace(/\/$/, '');
 
   return {
@@ -462,14 +533,14 @@ function mergeObject<T extends object>(fallback: T | undefined, incoming: T | un
 function mergeLegacyAuthor(definition: LegacyAuthorDefinition, incoming?: LegacyAuthorData): LegacyAuthorData {
   return {
     _id: incoming?._id,
-    slug: definition.slug,
-    name: definition.name || incoming?.name || definition.slug,
-    title: definition.title || incoming?.title,
-    team: definition.team || incoming?.team,
-    foundStartDate: definition.foundStartDate || incoming?.foundStartDate,
-    expertise: definition.expertise || incoming?.expertise,
-    bio: definition.bio || incoming?.bio,
+    slug: incoming?.slug || definition.slug,
+    name: incoming?.name || definition.name || definition.slug,
+    title: incoming?.title || definition.title,
+    team: incoming?.team || definition.team,
+    foundStartDate: incoming?.foundStartDate || definition.foundStartDate,
+    expertise: incoming?.expertise || definition.expertise,
+    bio: incoming?.bio || definition.bio,
     linkedin: incoming?.linkedin,
-    image: definition.image || incoming?.image,
+    image: incoming?.image || definition.image,
   };
 }

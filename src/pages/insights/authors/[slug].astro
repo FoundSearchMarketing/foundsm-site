@@ -1,11 +1,8 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
-import LegacyPageRenderer from '../../../components/legacy/LegacyPageRenderer.astro';
-import LegacyPostList from '../../../components/legacy/LegacyPostList.astro';
-import { getAllBlogPosts } from '../../../lib/blogPosts';
+import AuthorDetailPage from '../../../components/AuthorDetailPage.astro';
 import { loadAuthors } from '../../../lib/legacyPageFetch';
-import { mergeLegacyPageData, slugifyAuthorName, type LegacyAuthorData } from '../../../lib/legacyPageData';
-import { block } from '../../../lib/simplePortableText';
+import type { LegacyAuthorData } from '../../../lib/legacyPageData';
 
 export async function getStaticPaths() {
   const authors = await loadAuthors();
@@ -21,53 +18,9 @@ interface Props {
 }
 
 const { author } = Astro.props;
-const posts = (await getAllBlogPosts()).filter((post) => {
-  const postAuthorSlug = slugifyAuthorName(post.authorName);
-  const authorName = author.name.toLowerCase();
-  const postAuthorName = post.authorName.toLowerCase();
-  return postAuthorSlug === author.slug || postAuthorSlug.startsWith(`${author.slug}-`) || postAuthorName.startsWith(authorName);
-});
 const canonical = author.canonicalUrl || `https://foundsm.com/insights/authors/${author.slug}/`;
 const description = author.seoDescription || author.bio || `Insights by ${author.name} from Found Search Marketing.`;
-const page = mergeLegacyPageData(
-  {
-    id: `legacy-author-${author.slug}`,
-    path: `/insights/authors/${author.slug}/`,
-    title: author.name,
-    description,
-    group: 'authorIndex',
-  },
-  {
-    title: author.name,
-    seoTitle: author.seoTitle || `${author.name} | Found Search Marketing`,
-    seoDescription: description,
-    canonicalUrl: canonical,
-    robots: author.robots,
-    ogTitle: author.ogTitle,
-    ogDescription: author.ogDescription,
-    ogImage: author.ogImage,
-    twitterCard: author.twitterCard,
-    twitterTitle: author.twitterTitle,
-    twitterDescription: author.twitterDescription,
-    twitterImage: author.twitterImage,
-    schemaJson: author.schemaJson,
-    hero: {
-      eyebrow: 'Author',
-      heading: author.name,
-      subheading: author.title || description,
-    },
-    body: [block(description)],
-    cards: author.linkedin
-      ? [
-          {
-            title: `Connect with ${author.name}`,
-            body: author.title ? [block(author.title)] : undefined,
-            cta: { label: 'View LinkedIn', href: author.linkedin },
-          },
-        ]
-      : undefined,
-  },
-);
+const firstName = author.name.split(' ')[0] || author.name;
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'ProfilePage',
@@ -77,29 +30,27 @@ const schema = {
     '@type': 'Person',
     name: author.name,
     jobTitle: author.title,
-    image: author.image,
+    image: author.profileImage || author.image,
     sameAs: author.linkedin ? [author.linkedin] : undefined,
   },
 };
 ---
 
 <BaseLayout
-  title={page.seoTitle}
-  description={page.seoDescription}
-  canonical={page.canonicalUrl}
-  ogTitle={page.ogTitle}
-  ogDescription={page.ogDescription}
-  ogImage={page.ogImage}
-  robots={page.robots}
-  twitterCard={page.twitterCard}
-  twitterTitle={page.twitterTitle}
-  twitterDescription={page.twitterDescription}
-  twitterImage={page.twitterImage}
+  title={author.seoTitle || `About the Author | ${firstName} | Found Search Marketing`}
+  description={description}
+  canonical={canonical}
+  ogTitle={author.ogTitle}
+  ogDescription={author.ogDescription}
+  ogImage={author.ogImage}
+  robots={author.robots || 'index, follow'}
+  twitterCard={author.twitterCard}
+  twitterTitle={author.twitterTitle}
+  twitterDescription={author.twitterDescription}
+  twitterImage={author.twitterImage}
   schema={schema}
-  schemaJson={page.schemaJson}
-  bodyClass="legacy-page"
+  schemaJson={author.schemaJson}
+  bodyClass="author-detail-page"
 >
-  <LegacyPageRenderer page={page}>
-    <LegacyPostList posts={posts} heading={`Insights by ${author.name}`} emptyText="No posts are published for this author yet." />
-  </LegacyPageRenderer>
+  <AuthorDetailPage author={author} />
 </BaseLayout>

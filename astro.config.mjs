@@ -9,6 +9,9 @@ export default defineConfig({
   site: 'https://foundsm.com',
   output: 'static',
   trailingSlash: 'always',
+  devToolbar: {
+    enabled: false,
+  },
   adapter: vercel(),
   integrations: [
     sanity({

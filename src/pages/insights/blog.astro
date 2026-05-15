@@ -1,169 +1,28 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getAllBlogCategories, getAllBlogPosts } from '../../lib/blogPosts';
+import InsightResourcePage from '../../components/legacy/InsightResourcePage.astro';
+import { blogArchivePage } from '../../lib/insightResourceContent';
 
-const posts = await getAllBlogPosts();
-const categories = await getAllBlogCategories();
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: blogArchivePage.title,
+  url: blogArchivePage.canonicalUrl,
+  description: blogArchivePage.seoDescription,
+  publisher: {
+    '@type': 'Organization',
+    name: 'Found Search Marketing',
+  },
+};
 ---
 
 <BaseLayout
-  title="Blog | Found Search Marketing | Enterprise Paid Media Agency"
-  description="Dive into our latest paid media strategies, industry trends, and data-driven insights to fuel your marketing performance."
-  canonical="https://foundsm.com/insights/blog/"
+  title={blogArchivePage.seoTitle}
+  description={blogArchivePage.seoDescription}
+  canonical={blogArchivePage.canonicalUrl}
+  ogImage={blogArchivePage.ogImage}
   robots="index, nofollow, max-image-preview:none, max-snippet:-1, max-video-preview:-1, noimageindex"
+  schema={schema}
 >
-
-  <nav class="breadcrumb" aria-label="Breadcrumb" style="padding-top: calc(var(--header-height) + var(--space-md)); padding-bottom: var(--space-md); background: var(--color-light);">
-    <div class="container">
-      <ol class="breadcrumb__list" style="display: flex; gap: 0.5rem; font-size: var(--text-caption); color: var(--color-mid); list-style: none; flex-wrap: wrap;">
-        <li><a href="/" style="color: var(--color-primary);">Home</a></li>
-        <li aria-hidden="true">/</li>
-        <li><a href="/insights" style="color: var(--color-primary);">Insights</a></li>
-        <li aria-hidden="true">/</li>
-        <li aria-current="page">Blog</li>
-      </ol>
-    </div>
-  </nav>
-
-  <section class="section" style="padding-top: var(--space-lg);">
-    <div class="container">
-      <header style="margin-bottom: var(--space-xl);">
-        <h1>Performance Marketing Insights</h1>
-        <p style="font-size: 1.125rem; color: var(--color-mid); max-width: 60ch;">
-          Paid media strategy, data intelligence, and industry analysis from the Found team.
-        </p>
-      </header>
-
-      <div class="insights-layout">
-        <div class="insights-list">
-          {posts.map((post) => {
-            const thumb = post.heroImage || null;
-            return (
-              <article class="insight-card">
-                {thumb && (
-                  <a href={`/insights/${post.slug}/`} class="insight-card__image">
-                    <img src={thumb} alt={post.heroImageAlt || post.title} loading="lazy" width="800" height="450" />
-                  </a>
-                )}
-                <div class="insight-card__body">
-                  <p class="insight-card__meta">
-                    <time datetime={post.publishedAt}>{post.publishedLabel}</time>
-                    {post.categories.length > 0 && (
-                      <>
-                        <span aria-hidden="true">&middot;</span>
-                        <span>{post.categories.map((category) => category.label).join(', ')}</span>
-                      </>
-                    )}
-                  </p>
-                  <h2 class="insight-card__title">
-                    <a href={`/insights/${post.slug}/`}>{post.title}</a>
-                  </h2>
-                  {post.excerpt && <p class="insight-card__excerpt">{post.excerpt}</p>}
-                  <a href={`/insights/${post.slug}/`} class="insight-card__link">Keep Reading &rarr;</a>
-                </div>
-              </article>
-            );
-          })}
-        </div>
-
-        <aside class="insights-sidebar">
-          <h3>Categories</h3>
-          <ul>
-            {categories.map((category) => (
-              <li><a href="/insights/blog">{category.label}</a></li>
-            ))}
-          </ul>
-        </aside>
-      </div>
-    </div>
-  </section>
-
-  <section class="cta-banner" aria-label="Call to action">
-    <div class="cta-banner__bg" aria-hidden="true"></div>
-    <div class="container cta-banner__inner fade-in-up">
-      <h2 class="cta-banner__headline">Let's Find A Solution</h2>
-      <a href="/contact-us" class="btn btn--green btn--lg">Start the Conversation</a>
-    </div>
-  </section>
-
+  <InsightResourcePage page={blogArchivePage} />
 </BaseLayout>
-
-<style>
-  .insights-layout {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 240px;
-    gap: var(--space-xl, 3rem);
-  }
-  @media (max-width: 768px) {
-    .insights-layout { grid-template-columns: 1fr; }
-  }
-  .insights-list {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-xl, 3rem);
-  }
-  .insight-card {
-    display: grid;
-    grid-template-columns: 240px minmax(0, 1fr);
-    gap: var(--space-lg, 2rem);
-    padding-bottom: var(--space-lg, 2rem);
-    border-bottom: 1px solid var(--color-border, #e5e7eb);
-  }
-  @media (max-width: 640px) {
-    .insight-card { grid-template-columns: 1fr; }
-  }
-  .insight-card__image img {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 16 / 9;
-    object-fit: cover;
-    border-radius: var(--radius-md, 8px);
-    background: var(--color-light, #f6f7f9);
-  }
-  .insight-card__meta {
-    font-size: 0.875rem;
-    color: var(--color-mid, #666);
-    display: flex;
-    gap: 0.5rem;
-    margin-bottom: 0.5rem;
-  }
-  .insight-card__title {
-    font-size: 1.5rem;
-    line-height: 1.3;
-    margin: 0 0 0.5rem;
-  }
-  .insight-card__title a {
-    color: var(--color-dark, #1f2124);
-    text-decoration: none;
-  }
-  .insight-card__title a:hover { color: var(--color-primary, #0AADEF); }
-  .insight-card__excerpt {
-    color: var(--color-mid, #444);
-    line-height: 1.6;
-    margin: 0 0 0.75rem;
-  }
-  .insight-card__link {
-    color: var(--color-primary, #0AADEF);
-    font-weight: 600;
-    text-decoration: none;
-  }
-  .insights-sidebar h3 {
-    font-size: 1rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 0.75rem;
-  }
-  .insights-sidebar ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  .insights-sidebar a {
-    color: var(--color-dark, #1f2124);
-    text-decoration: none;
-  }
-  .insights-sidebar a:hover { color: var(--color-primary, #0AADEF); }
-</style>

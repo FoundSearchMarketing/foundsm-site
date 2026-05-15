@@ -26,6 +26,7 @@ interface Props {
   modifiedAt?: string;
   schema?: JsonLd;
   schemaJson?: string;
+  extraStylesheets?: string[];
   hideNavigation?: boolean;
   hideFooter?: boolean;
   bodyClass?: string;
@@ -35,6 +36,7 @@ const {
   hideNavigation = false,
   hideFooter = false,
   bodyClass,
+  extraStylesheets = [],
   ...seoProps
 } = Astro.props;
 const seo = resolveSeo(Astro.url.pathname, seoProps);
@@ -64,6 +66,7 @@ const enableThirdPartyScripts = import.meta.env.PROD;
     modifiedAt={seo.modifiedAt}
     schema={seo.schema}
   />
+  {extraStylesheets.map((href) => <link rel="stylesheet" href={href} />)}
   <!-- A/B Test: push variants to GTM dataLayer -->
   <script is:inline>
   (function() {

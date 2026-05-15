@@ -2,9 +2,10 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BlogPostTemplate from '../../components/BlogPostTemplate.astro';
 import LegacyPageRenderer from '../../components/legacy/LegacyPageRenderer.astro';
-import { getAllBlogPosts, getBlogPostNavigation, type BlogPost } from '../../lib/blogPosts';
+import { getAllBlogPosts, getBlogPostNavigation, getWordPressPostStylesheets, type BlogPost } from '../../lib/blogPosts';
 import { loadLegacyPages } from '../../lib/legacyPageFetch';
 import { getLegacyPageDefinitionsByGroup, pathToSingleSlug, type LegacyPageData } from '../../lib/legacyPageData';
+import { getInsightResourceMeta } from '../../lib/insightResourceContent';
 
 export async function getStaticPaths() {
   const legacyInsightDefinitions = getLegacyPageDefinitionsByGroup('insights');
@@ -32,9 +33,15 @@ interface Props {
 
 const { post, page } = Astro.props;
 const navigation = post ? await getBlogPostNavigation(post.slug) : {};
-const canonical = page?.canonicalUrl || post?.canonicalUrl || (post ? `https://foundsm.com/insights/${post.slug}/` : 'https://foundsm.com/insights/');
-const description = page?.seoDescription || post?.seoDescription || post?.excerpt || '';
+const resourceMeta = getInsightResourceMeta(page?.path);
+const canonical = resourceMeta?.canonicalUrl || page?.canonicalUrl || post?.canonicalUrl || (post ? `https://foundsm.com/insights/${post.slug}/` : 'https://foundsm.com/insights/');
+const description = resourceMeta?.seoDescription || page?.seoDescription || post?.seoDescription || post?.excerpt || '';
 const author = post ? [post.authorName, post.authorTitle].filter(Boolean).join(', ') : '';
+const bodyClass = post?.wordpressContentHtml
+  ? `blog-post-page wordpress-post-page elementor-default elementor-kit-5 elementor-page elementor-page-${post.wpId || ''}`
+  : post
+    ? 'blog-post-page'
+    : 'legacy-page';
 const schema = page
   ? {
       '@context': 'https://schema.org',
@@ -74,12 +81,12 @@ const schema = page
 ---
 
 <BaseLayout
-  title={page?.seoTitle || post?.seoTitle || 'Insights | Found Search Marketing'}
+  title={resourceMeta?.seoTitle || page?.seoTitle || post?.seoTitle || 'Insights | Found Search Marketing'}
   description={description}
   canonical={canonical}
   ogTitle={post?.ogTitle}
   ogDescription={post?.ogDescription}
-  ogImage={page?.ogImage || post?.ogImage || post?.heroImage || undefined}
+  ogImage={resourceMeta?.ogImage || page?.ogImage || post?.ogImage || post?.heroImage || undefined}
   ogType={post ? 'article' : undefined}
   robots={page?.robots || post?.robots || 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'}
   twitterCard={post?.twitterCard}
@@ -89,8 +96,9 @@ const schema = page
   publishedAt={post?.publishedAt}
   modifiedAt={post?.modifiedAt}
   schema={schema}
-  schemaJson={post?.schemaJson}
-  bodyClass={post ? 'blog-post-page' : 'legacy-page'}
+  schemaJson={page?.schemaJson || post?.schemaJson}
+  extraStylesheets={getWordPressPostStylesheets(post)}
+  bodyClass={bodyClass}
 >
   {page ? <LegacyPageRenderer page={page} /> : post && <BlogPostTemplate post={post} navigation={navigation} />}
 </BaseLayout>

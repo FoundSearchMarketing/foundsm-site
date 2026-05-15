@@ -11,9 +11,10 @@ interface Props {
   introHtml?: string;
   leaders: Leader[];
   layout?: 'split' | 'centered';
+  showImages?: boolean;
 }
 
-const { title, intro, introHtml, leaders, layout = 'split' } = Astro.props;
+const { title, intro, introHtml, leaders, layout = 'split', showImages = true } = Astro.props;
 const paragraphs = Array.isArray(intro) ? intro : [intro];
 const sectionClass = ['leadership-section', `leadership-section--${layout}`].join(' ');
 ---
@@ -32,15 +33,24 @@ const sectionClass = ['leadership-section', `leadership-section--${layout}`].joi
     </div>
 
     <div class="leadership-grid">
-      {leaders.map((leader) => (
-        <article class={`leader-card ${leader.image ? '' : 'leader-card--no-image'}`}>
-          {leader.image && <img src={leader.image} alt={`${leader.name}, ${leader.role}`} loading="lazy" decoding="async" />}
-          <div class="leader-card__overlay">
-            <h3>{leader.name}</h3>
-            <p>{leader.role}</p>
-          </div>
-        </article>
-      ))}
+      {leaders.map((leader) => {
+        const hasImage = showImages && Boolean(leader.image);
+        const cardClass = hasImage
+          ? 'leader-card'
+          : showImages
+            ? 'leader-card leader-card--no-image'
+            : 'leader-card leader-card--text-only';
+
+        return (
+          <article class={cardClass}>
+            {hasImage && <img src={leader.image} alt={`${leader.name}, ${leader.role}`} loading="lazy" decoding="async" />}
+            <div class="leader-card__overlay">
+              <h3>{leader.name}</h3>
+              <p>{leader.role}</p>
+            </div>
+          </article>
+        );
+      })}
     </div>
   </div>
 </section>
@@ -126,6 +136,10 @@ const sectionClass = ['leadership-section', `leadership-section--${layout}`].joi
 
   .leader-card--no-image .leader-card__overlay {
     position: static;
+  }
+
+  .leader-card--text-only {
+    background: transparent;
   }
 
   .leader-card img {

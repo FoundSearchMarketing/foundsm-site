@@ -18,9 +18,19 @@ interface Props {
   };
   latestPosts: LoopCard[];
   filterCards: LoopCard[];
+  latestHeading?: string;
+  directoryHeading?: string;
+  filterLabel?: string;
 }
 
-const { hero, latestPosts, filterCards } = Astro.props;
+const {
+  hero,
+  latestPosts,
+  filterCards,
+  latestHeading = 'LATEST POSTS',
+  directoryHeading = 'Find inspiration and insights from the experts at Found.',
+  filterLabel = 'Blog',
+} = Astro.props;
 ---
 
 <InsightsHero
@@ -32,7 +42,7 @@ const { hero, latestPosts, filterCards } = Astro.props;
 
 <section class="filter-results-latest" aria-labelledby="filter-results-latest-heading">
   <div class="filter-results__inner filter-results__heading-wrap">
-    <h2 class="filter-results__eyebrow" id="filter-results-latest-heading">LATEST POSTS</h2>
+    <h2 class="filter-results__eyebrow" id="filter-results-latest-heading">{latestHeading}</h2>
   </div>
 
   <div class="filter-results__inner">
@@ -66,11 +76,11 @@ const { hero, latestPosts, filterCards } = Astro.props;
 <section class="filter-results-directory" aria-labelledby="filter-results-directory-heading">
   <div class="filter-results__inner">
     <h2 class="filter-results-directory__heading" id="filter-results-directory-heading">
-      Find inspiration and insights from the experts at Found.
+      {directoryHeading}
     </h2>
 
     <search class="filter-results-directory__filter" role="search" data-base-url="/insights-filter-results/" data-page-num="1">
-      <button type="button" class="filter-results-directory__filter-item" data-filter="blog" aria-pressed="false">Blog</button>
+      <button type="button" class="filter-results-directory__filter-item" data-filter="blog" aria-pressed="false">{filterLabel}</button>
     </search>
 
     <div class="filter-results-directory__grid" role="list">

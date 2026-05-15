@@ -9,6 +9,7 @@ const page = mergeNotFoundPageData(sanityPage);
 const title = page.seoTitle || defaultNotFoundPageData.seoTitle;
 const description = page.seoDescription || defaultNotFoundPageData.seoDescription;
 const canonical = page.canonicalUrl || defaultNotFoundPageData.canonicalUrl;
+Astro.response.status = 404;
 const schema = {
   "@context": "https://schema.org",
   "@type": "WebPage",
@@ -30,25 +31,340 @@ const schema = {
   robots={page.robots}
   schema={schema}
 >
+  <section class="not-found-hero" aria-labelledby="not-found-heading">
+    <div class="not-found-hero__inner">
+      <div class="not-found-hero__copy">
+        <p class="not-found-hero__eyebrow">Error {page.code}</p>
+        <h1 id="not-found-heading">{page.heading}</h1>
+        <div class="not-found-hero__body" set:html={richHtml(page.body)} />
 
-    <!-- ============================================
-         404 CONTENT
-         ============================================ -->
-    <section style="display: flex; align-items: center; justify-content: center; min-height: calc(100vh - var(--header-height) - 200px); padding-top: var(--header-height); text-align: center;">
-      <div class="container">
-
-        <p class="fade-in-up" style="font-family: var(--font-heading); font-size: clamp(6rem, 15vw, 12rem); font-weight: 700; line-height: 1; color: var(--color-primary); letter-spacing: -0.03em;">{page.code}</p>
-
-        <h1 class="fade-in-up" style="margin-top: var(--space-sm); font-size: var(--text-h2);">{page.heading}</h1>
-
-        <div class="fade-in-up" style="margin-top: var(--space-sm); font-size: var(--text-body); color: var(--color-mid); max-width: 28rem; margin-inline: auto; line-height: 1.7;" set:html={richHtml(page.body)} />
-
-        <div class="fade-in-up" style="display: flex; flex-direction: column; align-items: center; gap: var(--space-md); margin-top: var(--space-xl);">
-          {page.primaryCta?.label && page.primaryCta?.href && <a href={page.primaryCta.href} class="btn btn--green btn--lg">{page.primaryCta.label}</a>}
-          {page.secondaryCta?.label && page.secondaryCta?.href && <a href={page.secondaryCta.href} class="cta-link" style="font-size: var(--text-body);">{page.secondaryCta.label}</a>}
+        <div class="not-found-hero__actions" aria-label="404 page actions">
+          {page.primaryCta?.label && page.primaryCta?.href && (
+            <a href={page.primaryCta.href} class="not-found-hero__button not-found-hero__button--primary">
+              {page.primaryCta.label}
+            </a>
+          )}
+          {page.secondaryCta?.label && page.secondaryCta?.href && (
+            <a href={page.secondaryCta.href} class="not-found-hero__button not-found-hero__button--secondary">
+              {page.secondaryCta.label}
+            </a>
+          )}
         </div>
 
+        <nav class="not-found-hero__links" aria-label="Helpful links">
+          <a href="/capabilities/">Capabilities</a>
+          <a href="/our-approach/">Our Approach</a>
+          <a href="/contact-us/">Contact Us</a>
+        </nav>
       </div>
-    </section>
+
+      <div class="not-found-hero__visual" aria-hidden="true">
+        <div class="not-found-hero__visual-inner">
+          <span class="not-found-hero__code">{page.code}</span>
+          <div class="not-found-hero__route">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <p>Signal rerouting</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .not-found-hero {
+      position: relative;
+      display: grid;
+      align-items: center;
+      min-block-size: calc(100svh - var(--header-height));
+      overflow: hidden;
+      padding: clamp(3.5rem, 8vw, 7rem) var(--gutter);
+      background-color: #f2f3f2;
+      background-image: url("/images/pages/our-approach/topography-light.svg");
+      background-position: center;
+      background-size: cover;
+    }
+
+    .not-found-hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.72);
+      pointer-events: none;
+    }
+
+    .not-found-hero__inner {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 0.94fr) minmax(18rem, 0.76fr);
+      align-items: center;
+      gap: clamp(2rem, 6vw, 5rem);
+      inline-size: min(100%, var(--content-max-width));
+      margin-inline: auto;
+    }
+
+    .not-found-hero__copy {
+      display: grid;
+      gap: clamp(1rem, 2vw, 1.35rem);
+      max-inline-size: 46rem;
+    }
+
+    .not-found-hero__eyebrow {
+      color: #5f8f27;
+      font-size: 0.875rem;
+      font-weight: 800;
+      letter-spacing: 0;
+      line-height: 1.2;
+      text-transform: uppercase;
+    }
+
+    .not-found-hero h1 {
+      max-inline-size: 13ch;
+      margin: 0;
+      font-size: clamp(3rem, 6.7vw, 5.75rem);
+      line-height: 1.02;
+      letter-spacing: 0;
+    }
+
+    .not-found-hero__body {
+      max-inline-size: 38rem;
+      color: rgba(26, 26, 26, 0.76);
+      font-size: clamp(1.05rem, 1.4vw, 1.25rem);
+      line-height: 1.76;
+    }
+
+    .not-found-hero__body :global(p + p) {
+      margin-block-start: 0.85rem;
+    }
+
+    .not-found-hero__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+      align-items: center;
+      margin-block-start: clamp(0.7rem, 2vw, 1.25rem);
+    }
+
+    .not-found-hero__button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-block-size: 3.35rem;
+      padding: 0.95rem 1.6rem;
+      border-radius: var(--radius-pill);
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1.2;
+      text-align: center;
+      transition:
+        background-color var(--transition-fast),
+        border-color var(--transition-fast),
+        color var(--transition-fast),
+        transform var(--transition-fast);
+    }
+
+    .not-found-hero__button:hover,
+    .not-found-hero__button:focus-visible {
+      transform: translateY(-1px);
+    }
+
+    .not-found-hero__button--primary {
+      background: var(--color-primary);
+      color: var(--color-dark);
+    }
+
+    .not-found-hero__button--primary:hover,
+    .not-found-hero__button--primary:focus-visible {
+      background: #b9dc89;
+    }
+
+    .not-found-hero__button--secondary {
+      border: 1px solid rgba(26, 26, 26, 0.2);
+      background: rgba(255, 255, 255, 0.64);
+      color: var(--color-dark);
+    }
+
+    .not-found-hero__button--secondary:hover,
+    .not-found-hero__button--secondary:focus-visible {
+      border-color: rgba(26, 26, 26, 0.44);
+      background: #ffffff;
+    }
+
+    .not-found-hero__links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem 1.1rem;
+      margin-block-start: clamp(0.25rem, 1vw, 0.75rem);
+      color: rgba(26, 26, 26, 0.68);
+      font-size: 0.94rem;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+
+    .not-found-hero__links a {
+      text-decoration: underline;
+      text-decoration-color: rgba(26, 26, 26, 0.24);
+      text-underline-offset: 0.28em;
+      transition: color var(--transition-fast), text-decoration-color var(--transition-fast);
+    }
+
+    .not-found-hero__links a:hover,
+    .not-found-hero__links a:focus-visible {
+      color: #1a1a1a;
+      text-decoration-color: var(--color-primary);
+    }
+
+    .not-found-hero__visual {
+      justify-self: stretch;
+      min-block-size: clamp(21rem, 42vw, 33rem);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background:
+        linear-gradient(135deg, rgba(139, 197, 63, 0.9) 0%, rgba(139, 197, 63, 0.78) 34%, rgba(35, 31, 32, 0.96) 34.2%, rgba(35, 31, 32, 0.96) 100%),
+        #231f20;
+      box-shadow: 0 1.5rem 3.5rem rgba(26, 26, 26, 0.16);
+    }
+
+    .not-found-hero__visual-inner {
+      position: relative;
+      display: grid;
+      align-content: end;
+      min-block-size: inherit;
+      padding: clamp(1.5rem, 4vw, 2.5rem);
+      color: #ffffff;
+    }
+
+    .not-found-hero__visual-inner::before,
+    .not-found-hero__visual-inner::after {
+      content: "";
+      position: absolute;
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .not-found-hero__visual-inner::before {
+      inline-size: clamp(10rem, 24vw, 18rem);
+      block-size: clamp(10rem, 24vw, 18rem);
+      inset-block-start: 9%;
+      inset-inline-end: 10%;
+    }
+
+    .not-found-hero__visual-inner::after {
+      inline-size: clamp(5rem, 12vw, 9rem);
+      block-size: clamp(5rem, 12vw, 9rem);
+      inset-block-start: 22%;
+      inset-inline-end: 27%;
+      border-color: rgba(139, 197, 63, 0.48);
+    }
+
+    .not-found-hero__code {
+      position: relative;
+      z-index: 1;
+      font-family: var(--font-heading);
+      font-size: clamp(6rem, 15vw, 11.25rem);
+      font-weight: 900;
+      line-height: 0.82;
+      letter-spacing: 0;
+    }
+
+    .not-found-hero__route {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 0.55rem;
+      inline-size: min(100%, 18rem);
+      margin-block-start: clamp(1.4rem, 3vw, 2.2rem);
+    }
+
+    .not-found-hero__route span {
+      display: block;
+      block-size: 0.45rem;
+      border-radius: var(--radius-pill);
+      background: rgba(255, 255, 255, 0.8);
+    }
+
+    .not-found-hero__route span:nth-child(2) {
+      inline-size: 74%;
+      background: var(--color-primary);
+    }
+
+    .not-found-hero__route span:nth-child(3) {
+      inline-size: 48%;
+    }
+
+    .not-found-hero__visual p {
+      position: relative;
+      z-index: 1;
+      margin-block-start: 1.1rem;
+      color: rgba(255, 255, 255, 0.76);
+      font-size: 0.92rem;
+      font-weight: 700;
+      line-height: 1.2;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 900px) {
+      .not-found-hero {
+        min-block-size: auto;
+        padding-block: clamp(3rem, 9vw, 5rem);
+      }
+
+      .not-found-hero__inner {
+        grid-template-columns: 1fr;
+      }
+
+      .not-found-hero__copy {
+        max-inline-size: 42rem;
+      }
+
+      .not-found-hero h1 {
+        max-inline-size: 12ch;
+      }
+
+      .not-found-hero__visual {
+        min-block-size: clamp(17rem, 54vw, 25rem);
+      }
+    }
+
+    @media (max-width: 520px) {
+      .not-found-hero {
+        padding-inline: var(--gutter);
+      }
+
+      .not-found-hero h1 {
+        font-size: clamp(2.55rem, 16vw, 3.35rem);
+      }
+
+      .not-found-hero__actions {
+        display: grid;
+        align-items: stretch;
+      }
+
+      .not-found-hero__button {
+        inline-size: 100%;
+        min-block-size: 3.15rem;
+        padding-inline: 1.15rem;
+      }
+
+      .not-found-hero__links {
+        gap: 0.65rem 0.9rem;
+        font-size: 0.9rem;
+      }
+
+      .not-found-hero__visual {
+        min-block-size: 15.5rem;
+      }
+
+      .not-found-hero__visual-inner {
+        padding: 1.25rem;
+      }
+
+      .not-found-hero__code {
+        font-size: clamp(5rem, 30vw, 7rem);
+      }
+    }
+  </style>
 
 </BaseLayout>

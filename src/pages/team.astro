@@ -3,7 +3,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import ModernHero from '../components/modern/ModernHero.astro';
 import StatementBand from '../components/modern/StatementBand.astro';
 import LeadershipGrid from '../components/modern/LeadershipGrid.astro';
-import CtaPanel from '../components/modern/CtaPanel.astro';
 import { allTeamMembersQuery, sanityClient, teamPageQuery } from '../lib/sanity';
 import { defaultTeamPageData, mergeTeamPageData } from '../lib/morePageData';
 import { imageProps, richHtml, richText, srcFor } from '../lib/fixedPageRender';
@@ -70,17 +69,9 @@ const leaders = leaderSource
     intro={richText(page.leadership.body)}
     introHtml={richHtml(page.leadership.body)}
     leaders={leaders}
+    showImages
   />
 
-  <CtaPanel
-    theme="white"
-    align="centered"
-    title={page.cta.heading}
-    body={richText(page.cta.body)}
-    bodyHtml={richHtml(page.cta.body)}
-    ctaLabel={page.cta.cta?.label}
-    ctaHref={page.cta.cta?.href}
-  />
 </BaseLayout>
 
 <style>

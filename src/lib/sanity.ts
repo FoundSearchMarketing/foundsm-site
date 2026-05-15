@@ -246,7 +246,24 @@ export const allAuthorsPageQuery = `*[_type == "author"] | order(name asc) {
   twitterTitle,
   twitterDescription,
   "twitterImage": twitterImage.asset->url,
-  schemaJson
+  schemaJson,
+  wpId,
+  profileHeading,
+  profileImage,
+  profileImageAlt,
+  profileTeam,
+  profileFoundStartDate,
+  profileExpertise,
+  profileBody,
+  latestPosts[] {
+    title,
+    href,
+    imageSrc,
+    imageAlt,
+    imageWidth,
+    imageHeight,
+    date
+  }
 }`;
 
 export const landingPageBySlugQuery = `*[_type == "landingPage" && slug.current == $slug][0] {

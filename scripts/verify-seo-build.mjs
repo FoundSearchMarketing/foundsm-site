@@ -50,7 +50,7 @@ if (!existsSync(sitemapFile)) {
   const sitemap = readFileSync(sitemapFile, 'utf8');
   if (sitemap.includes('https://www.foundsm.com/')) failures.push('sitemap contains www canonicals');
   const sitemapUrls = [...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map((match) => match[1]);
-  const redirectSources = new Set((manifest.redirects || []).map((redirect) => normalizePath(redirect.source)));
+  const redirectSources = new Set((manifest.redirects || []).filter(isUnconditionalRedirect).map((redirect) => normalizePath(redirect.source)));
   for (const url of sitemapUrls) {
     const route = normalizePath(new URL(url).pathname);
     const seo = manifest.routes[route];
@@ -87,6 +87,10 @@ function normalizePath(path) {
   let pathname = path.startsWith('/') ? path : `/${path}`;
   if (pathname !== '/' && !/\.[a-z0-9]{2,8}$/i.test(pathname.split('/').pop() || '') && !pathname.endsWith('/')) pathname += '/';
   return pathname;
+}
+
+function isUnconditionalRedirect(redirect) {
+  return !redirect.has?.length && !redirect.missing?.length;
 }
 
 function decodeEntities(value) {

@@ -1,6 +1,6 @@
 # SEO Migration Diff Report
 
-Generated: 2026-05-15T13:49:01.615Z
+Generated: 2026-05-15T14:54:42.257Z
 Archive: /Users/theoden/Documents/test/foundsm.wpress
 Database entry: updraft/backup_2026-03-30-1931_Found_Search_Marketing_e971b95c05cc-db.gz
 
@@ -8,7 +8,7 @@ Database entry: updraft/backup_2026-03-30-1931_Found_Search_Marketing_e971b95c05
 
 - Manifest routes: 72
 - Cached rendered HTML routes checked: 71
-- Yoast redirects extracted: 961
+- Yoast redirects extracted: 960
 - Noindex routes: 15
 - Parsed taxonomy tables: {"terms":32,"termTaxonomy":32,"termRelationships":144}
 

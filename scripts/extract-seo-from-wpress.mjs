@@ -523,11 +523,13 @@ function parseYoastRedirects(options) {
 
   for (const [origin, target] of Object.entries(plain)) {
     if (!target || typeof target !== 'object') continue;
-    const source = normalizeRedirectSource(origin);
+    const sourceMatch = normalizeRedirectSourceMatch(origin);
     const destination = normalizeRedirectDestination(target.url);
-    if (!source || !destination || source === destination) continue;
+    const source = sourceMatch.source;
+    if (!source || !destination || (source === destination && !sourceMatch.has?.length)) continue;
     redirects.push({
       source,
+      ...('has' in sourceMatch ? { has: sourceMatch.has } : {}),
       destination,
       permanent: Number(target.type) !== 302 && Number(target.type) !== 307,
     });
@@ -543,9 +545,13 @@ function mergeVercelRedirects(vercelPath, generated) {
 }
 
 function normalizeExistingRedirect(redirect) {
+  const sourceMatch = normalizeRedirectSourceMatch(redirect.source);
+  const queryConditions = sourceMatch.has || [];
+  const existingConditions = Array.isArray(redirect.has) ? redirect.has : [];
   return {
     ...redirect,
-    source: normalizeRedirectSource(redirect.source),
+    source: sourceMatch.source,
+    ...((queryConditions.length > 0 || existingConditions.length > 0) ? { has: [...queryConditions, ...existingConditions] } : {}),
     destination: normalizeRedirectDestination(redirect.destination),
     permanent: redirect.permanent !== false,
   };
@@ -555,7 +561,7 @@ function uniqueRedirects(redirects) {
   const seen = new Set();
   const out = [];
   for (const redirect of redirects) {
-    const key = redirect.source;
+    const key = redirectKey(redirect);
     if (!redirect.source || !redirect.destination || seen.has(key)) continue;
     seen.add(key);
     out.push(redirect);
@@ -563,12 +569,58 @@ function uniqueRedirects(redirects) {
   return out;
 }
 
+function redirectKey(redirect) {
+  return JSON.stringify({
+    source: redirect.source,
+    has: redirect.has || [],
+    missing: redirect.missing || [],
+  });
+}
+
 function normalizeRedirectSource(source) {
-  if (!source) return '';
+  return normalizeRedirectSourceMatch(source).source;
+}
+
+function normalizeRedirectSourceMatch(source) {
+  if (!source) return { source: '' };
   let value = String(source).trim();
-  if (/^https?:\/\//i.test(value)) value = new URL(value).pathname;
-  value = `/${value.replace(/^\/+|\/+$/g, '')}`;
-  return value === '/' ? '/' : value;
+  let pathname = value;
+  let search = '';
+
+  try {
+    const url = new URL(value, SITE_URL);
+    pathname = url.pathname;
+    search = url.search;
+  } catch {
+    const [pathPart, queryPart = ''] = value.split('?');
+    pathname = pathPart;
+    search = queryPart ? `?${queryPart.split('#')[0]}` : '';
+  }
+
+  const has = queryHasConditions(search);
+  const normalizedPath = normalizeRedirectSourcePath(pathname, has.length > 0);
+  return cleanObject({
+    source: normalizedPath,
+    has: has.length > 0 ? has : undefined,
+  });
+}
+
+function normalizeRedirectSourcePath(pathname, preserveTrailingSlash = false) {
+  let value = String(pathname || '/').trim();
+  value = `/${value.replace(/^\/+/, '')}`;
+  value = value.replace(/\/{2,}/g, '/');
+  if (!preserveTrailingSlash) value = value.replace(/\/+$/g, '');
+  return value === '' ? '/' : value;
+}
+
+function queryHasConditions(search) {
+  if (!search) return [];
+  const params = new URLSearchParams(search.startsWith('?') ? search.slice(1) : search);
+  return [...params.entries()].filter(([key]) => key).map(([key, value]) => {
+    const condition = { type: 'query', key };
+    if (value !== '') condition.value = { eq: value };
+    return condition;
+  });
 }
 
 function normalizeRedirectDestination(destination) {

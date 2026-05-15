@@ -10,6 +10,12 @@ type ManifestRoute = {
   modifiedAt?: string;
 };
 
+type ManifestRedirect = {
+  source: string;
+  has?: unknown[];
+  missing?: unknown[];
+};
+
 const staticRoutes = [
   '/',
   '/about-us/',
@@ -32,7 +38,7 @@ const staticRoutes = [
 
 export async function GET() {
   const localRoutes = await getLocalRoutes();
-  const redirectSources = new Set((seoManifest.redirects || []).map((redirect: { source: string }) => normalizePath(redirect.source)));
+  const redirectSources = new Set((seoManifest.redirects || []).filter(isUnconditionalRedirect).map((redirect) => normalizePath(redirect.source)));
   const manifestRoutes = seoManifest.routes as Record<string, ManifestRoute>;
   const urls = [...localRoutes]
     .map((route) => normalizePath(route))
@@ -62,6 +68,10 @@ export async function GET() {
       'Content-Type': 'application/xml; charset=utf-8',
     },
   });
+}
+
+function isUnconditionalRedirect(redirect: ManifestRedirect) {
+  return !redirect.has?.length && !redirect.missing?.length;
 }
 
 async function getLocalRoutes(): Promise<Set<string>> {

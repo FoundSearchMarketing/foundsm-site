@@ -30,6 +30,18 @@ test('Yoast redirects are merged under Vercel static redirect limits', () => {
   assert.ok(vercel.redirects.some((redirect) => redirect.source === '/capabilities-paid-media' && redirect.destination === '/capabilities/paid-media/'));
 });
 
+test('query-string redirects use Vercel query matchers instead of source query strings', () => {
+  assert.ok(vercel.redirects.every((redirect) => !redirect.source.includes('?')));
+  assert.ok(manifest.redirects.every((redirect) => !redirect.source.includes('?')));
+
+  const wpPostRedirect = vercel.redirects.find((redirect) => (
+    redirect.source === '/'
+    && redirect.destination === '/'
+    && redirect.has?.some((condition) => condition.type === 'query' && condition.key === 'p' && condition.value?.eq === '82548')
+  ));
+  assert.ok(wpPostRedirect);
+});
+
 test('noindex routes stay out of indexable expectations', () => {
   const noindexRoutes = Object.entries(manifest.routes).filter(([, route]) => String(route.robots).includes('noindex'));
   assert.ok(noindexRoutes.length > 0);

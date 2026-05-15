@@ -19,7 +19,7 @@ export type InsightsPageData = SeoFields & {
 export const defaultInsightsPageData: InsightsPageData = {
   seoTitle: 'Insights | Found Search Marketing',
   seoDescription: 'Perspectives on paid media, data strategy, and digital marketing from the Found Search Marketing team.',
-  canonicalUrl: 'https://www.foundsm.com/insights',
+  canonicalUrl: 'https://foundsm.com/insights',
   robots: 'index, follow',
   hero: {
     headline: 'Where Bold Ideas Are Found.',

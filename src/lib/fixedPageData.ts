@@ -12,6 +12,14 @@ export type SeoFields = {
   seoDescription?: string;
   canonicalUrl?: string;
   robots?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImage?: EditableImage;
+  twitterCard?: string;
+  twitterTitle?: string;
+  twitterDescription?: string;
+  twitterImage?: EditableImage;
+  schemaJson?: string;
 };
 
 export type AboutPageData = SeoFields & {
@@ -135,7 +143,7 @@ export function mergeCapabilityDetailPageData(
 export const defaultAboutPageData: AboutPageData = {
   seoTitle: 'About Found Search Marketing | An Enterprise Paid Media Agency',
   seoDescription: 'Founded in 2006, Found Search Marketing helps enterprise brands achieve consistent, measurable growth through trusted partnerships and precision media execution.',
-  canonicalUrl: 'https://www.foundsm.com/about-us',
+  canonicalUrl: 'https://foundsm.com/about-us',
   hero: {
     heading: 'Built for Paid Media Performance',
     body: [
@@ -202,7 +210,7 @@ export const defaultAboutPageData: AboutPageData = {
 export const defaultCapabilitiesPageData: CapabilitiesPageData = {
   seoTitle: 'Capabilities | Found Search Marketing | Enterprise Paid Media Agency',
   seoDescription: 'Found Search Marketing brings deep channel expertise, custom analytics, and agile strategy together to maximize performance across your entire media ecosystem.',
-  canonicalUrl: 'https://www.foundsm.com/capabilities/',
+  canonicalUrl: 'https://foundsm.com/capabilities/',
   robots: 'index, follow',
   hero: {
     heading: 'Smart Data. Smarter Media. Scalable Growth.',
@@ -235,7 +243,7 @@ export const defaultCapabilityDetailPages: Record<string, CapabilityDetailPageDa
   dataActivation: {
     seoTitle: 'Data Activation | Found Search Marketing',
     seoDescription: 'Found Search Marketing brings your first-party customer data directly to the ad platforms where growth happens, creating a continuous feedback loop that improves targeting, reduces wasted spend, and scales qualified lead generation.',
-    canonicalUrl: 'https://www.foundsm.com/capabilities/data-activation',
+    canonicalUrl: 'https://foundsm.com/capabilities/data-activation',
     hero: { heading: 'Activate Your Customer Data To Actually Drive Revenue', body: [block("In today's AI marketing landscape, data is your most valuable asset yet many companies are not using it to its full potential. Found Search Marketing brings your first-party customer data directly to the ad platforms where growth happens, creating a continuous feedback loop that improves targeting, reduces wasted spend, and engineers revenue.")], image: '/images/pages/data-activation/kitchen-island_1250px.webp', imageAlt: 'Found Search Marketing team member in a meeting' },
     primaryCards: { title: "What we’ll do", cards: [
       { title: 'Connect your first party data to ad platforms' },
@@ -255,7 +263,7 @@ export const defaultCapabilityDetailPages: Record<string, CapabilityDetailPageDa
   dataIntelligence: {
     seoTitle: 'Data Intelligence | Found Search Marketing',
     seoDescription: "Data sits at the core of our operations. From powering your CRM, to feeding downstream systems, it\u2019s used to inform channel mixes, create audience models and more. Your data lives everywhere. We bring it together: cross-platform, API-driven, and unified into a single view.",
-    canonicalUrl: 'https://www.foundsm.com/capabilities/data-intelligence',
+    canonicalUrl: 'https://foundsm.com/capabilities/data-intelligence',
     hero: { heading: 'Transform Complex Data Into Growth', body: [block("Data sits at the core of our operations. From powering your CRM, to feeding downstream systems, it\u2019s used to inform channel mixes, create audience models and more. Your data lives everywhere. We bring it together: cross-platform, API-driven, and unified into a single view.")], image: '/images/pages/data-intelligence/capi-cactus.webp', imageAlt: '' },
     split: { heading: 'How We Work', body: [block("Our Data Intelligence team serves as a catalyst to paid media and creative solutions, ensuring campaigns are built on accuracy, agility, and insight. Certified in Google Analytics and Google Cloud, our DI specialists integrate seamlessly with client systems, whether it\u2019s IT, compliance, or sales, to ensure data integrity and alignment on what matters most. Our platform-agnostic approach allows us to easily adapt to your tools and workflows to create clarity, speed, and confidence in every move.")], image: '/images/pages/data-intelligence/ecosystem.webp', imageAlt: 'image-12-sm' },
     primaryCards: { title: 'Your Data + Our Intelligence', subtitle: 'Let Found unlock the potential of your data.', cards: [
@@ -291,7 +299,7 @@ export const defaultCapabilityDetailPages: Record<string, CapabilityDetailPageDa
   paidMedia: {
     seoTitle: 'Paid Media | Found Search Marketing',
     seoDescription: 'Found Search Marketing brings deep channel expertise, custom analytics, and agile strategy together to maximize performance across your entire media ecosystem.',
-    canonicalUrl: 'https://www.foundsm.com/capabilities/paid-media',
+    canonicalUrl: 'https://foundsm.com/capabilities/paid-media',
     hero: { heading: 'Achieve the Perfect Mix of Paid Media', body: [block('Like a great cup of coffee, creating the ideal blend of paid media strategy requires true expertise. Our ability to engineer paid media solutions that convert higher-quality leads, eliminate waste, and drive consistent revenue growth is unmatched.'), block('Blending your data with our comprehensive understanding of the most effective paid media strategy delivers efficiency and continually improves your business outcomes.')], image: '/images/pages/paid-media/coffee-blend.webp', imageAlt: 'Coffee beans blended with Found Search Marketing paid media visuals' },
     split: { heading: 'How We Work', body: [block("At Found Search Marketing, Paid Media is far more than campaign management. It's the strategic core of an integrated system that works in lockstep with Data Intelligence, Landing Pages, and Performance Creative. Together, this ecosystem informs bid strategies, engineers audience models, drives creative and landing page testing, and refines channel mix to optimize marketing spend and drive profitable growth.")], image: '/images/pages/paid-media/paid-media-ecosystem.webp', imageAlt: 'Found Search Marketing paid media ecosystem diagram' },
     featureTabs: { idPrefix: 'paid-media-capabilities', tabs: [
@@ -326,7 +334,7 @@ export const defaultCapabilityDetailPages: Record<string, CapabilityDetailPageDa
   performanceCreative: {
     seoTitle: 'Performance Creative | Found Search Marketing',
     seoDescription: 'Found Search Marketing brings deep channel expertise, custom analytics, and agile strategy together to maximize performance across your entire media ecosystem.',
-    canonicalUrl: 'https://www.foundsm.com/capabilities/performance-creative',
+    canonicalUrl: 'https://foundsm.com/capabilities/performance-creative',
     hero: { heading: 'Make Every Interaction Count.', body: [block('Our Performance Creative and CRO teams have one goal: transform prospects into customers. We understand the impact creative can have on CPL and your bottom line.'), block("It's not just about looking good. It's about making data-based decisions that optimize your investment. Creative and landing pages are powerful levers to improve performance, drive efficiencies, and control costs.")], image: '/images/pages/performance-creative/hero-tr-sketch.webp', imageAlt: '' },
     split: { heading: 'How We Work', body: [block('At Found, Performance Creative is where strategy meets storytelling. Our Creative and CRO teams collaborate closely with Paid Media and Data Intelligence to ensure every concept, variation, and landing page is informed by real-time data and optimized for measurable results. You have a significant investment in paid media, and we optimize each touch point to reduce CPL and improve CVR. We built our team to fast-track creative and landing page production specifically for paid media campaigns.')], image: '/images/pages/performance-creative/performance-creative-ecosystem.png', imageAlt: 'Performance media ecosystem diagram' },
     featureTabs: { idPrefix: 'performance-creative-methods', tabs: [

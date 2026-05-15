@@ -47,6 +47,13 @@ export interface LegacyPageData {
   canonicalUrl: string;
   robots: string;
   ogImage?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  twitterCard?: string;
+  twitterTitle?: string;
+  twitterDescription?: string;
+  twitterImage?: string;
+  schemaJson?: string;
   hero: {
     eyebrow?: string;
     heading: string;
@@ -74,6 +81,18 @@ export interface LegacyAuthorData {
   bio?: string;
   linkedin?: string;
   image?: string;
+  seoTitle?: string;
+  seoDescription?: string;
+  canonicalUrl?: string;
+  robots?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImage?: string;
+  twitterCard?: string;
+  twitterTitle?: string;
+  twitterDescription?: string;
+  twitterImage?: string;
+  schemaJson?: string;
 }
 
 export const legacyPageDefinitions: LegacyPageDefinition[] = [
@@ -360,6 +379,14 @@ export function mergeLegacyPageData(definition: LegacyPageDefinition, incoming?:
     seoDescription: incoming.seoDescription || fallback.seoDescription,
     canonicalUrl: incoming.canonicalUrl || fallback.canonicalUrl,
     robots: incoming.robots || fallback.robots,
+    ogTitle: incoming.ogTitle || fallback.ogTitle,
+    ogDescription: incoming.ogDescription || fallback.ogDescription,
+    ogImage: incoming.ogImage || fallback.ogImage,
+    twitterCard: incoming.twitterCard || fallback.twitterCard,
+    twitterTitle: incoming.twitterTitle || fallback.twitterTitle,
+    twitterDescription: incoming.twitterDescription || fallback.twitterDescription,
+    twitterImage: incoming.twitterImage || fallback.twitterImage,
+    schemaJson: incoming.schemaJson || fallback.schemaJson,
     hero: {
       ...fallback.hero,
       ...(incoming.hero || {}),
@@ -419,14 +446,14 @@ function buildDefaultLegacyPageData(definition: LegacyPageDefinition): LegacyPag
     };
   }
 
-  const canonicalPath = definition.path === '/' ? '' : definition.path.replace(/\/$/, '');
+  const canonicalPath = definition.path === '/' ? '/' : definition.path;
 
   return {
     title: definition.title,
     path: definition.path,
     seoTitle: `${definition.title} | Found Search Marketing`,
     seoDescription: definition.description,
-    canonicalUrl: `https://www.foundsm.com${canonicalPath}`,
+    canonicalUrl: `https://foundsm.com${canonicalPath === '/' ? '/' : canonicalPath}`,
     robots: 'index, follow',
     hero: {
       eyebrow: eyebrowForGroup(definition.group),
@@ -471,5 +498,17 @@ function mergeLegacyAuthor(definition: LegacyAuthorDefinition, incoming?: Legacy
     bio: definition.bio || incoming?.bio,
     linkedin: incoming?.linkedin,
     image: definition.image || incoming?.image,
+    seoTitle: incoming?.seoTitle,
+    seoDescription: incoming?.seoDescription,
+    canonicalUrl: incoming?.canonicalUrl,
+    robots: incoming?.robots,
+    ogTitle: incoming?.ogTitle,
+    ogDescription: incoming?.ogDescription,
+    ogImage: incoming?.ogImage,
+    twitterCard: incoming?.twitterCard,
+    twitterTitle: incoming?.twitterTitle,
+    twitterDescription: incoming?.twitterDescription,
+    twitterImage: incoming?.twitterImage,
+    schemaJson: incoming?.schemaJson,
   };
 }

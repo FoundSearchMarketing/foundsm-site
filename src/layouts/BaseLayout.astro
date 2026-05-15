@@ -2,22 +2,42 @@
 import SEOHead from '../components/SEOHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { resolveSeo, type JsonLd } from '../lib/seo';
 import '../styles/global.css';
 
 interface Props {
-  title: string;
-  description: string;
-  canonical: string;
+  title?: string;
+  description?: string;
+  canonical?: string;
+  canonicalUrl?: string;
+  ogTitle?: string;
+  ogDescription?: string;
   ogImage?: string;
+  ogImageWidth?: number;
+  ogImageHeight?: number;
   ogType?: string;
   robots?: string;
-  schema?: object;
+  twitterCard?: string;
+  twitterSite?: string;
+  twitterTitle?: string;
+  twitterDescription?: string;
+  twitterImage?: string;
+  publishedAt?: string;
+  modifiedAt?: string;
+  schema?: JsonLd;
+  schemaJson?: string;
   hideNavigation?: boolean;
   hideFooter?: boolean;
   bodyClass?: string;
 }
 
-const { title, description, canonical, ogImage, ogType, robots, schema, hideNavigation = false, hideFooter = false, bodyClass } = Astro.props;
+const {
+  hideNavigation = false,
+  hideFooter = false,
+  bodyClass,
+  ...seoProps
+} = Astro.props;
+const seo = resolveSeo(Astro.url.pathname, seoProps);
 const enableThirdPartyScripts = import.meta.env.PROD;
 ---
 
@@ -25,13 +45,24 @@ const enableThirdPartyScripts = import.meta.env.PROD;
 <html lang="en">
 <head>
   <SEOHead
-    title={title}
-    description={description}
-    canonical={canonical}
-    ogImage={ogImage}
-    ogType={ogType}
-    robots={robots}
-    schema={schema}
+    title={seo.title}
+    description={seo.description}
+    canonical={seo.canonical}
+    ogTitle={seo.ogTitle}
+    ogDescription={seo.ogDescription}
+    ogImage={seo.ogImage}
+    ogImageWidth={seo.ogImageWidth}
+    ogImageHeight={seo.ogImageHeight}
+    ogType={seo.ogType}
+    robots={seo.robots}
+    twitterCard={seo.twitterCard}
+    twitterSite={seo.twitterSite}
+    twitterTitle={seo.twitterTitle}
+    twitterDescription={seo.twitterDescription}
+    twitterImage={seo.twitterImage}
+    publishedAt={seo.publishedAt}
+    modifiedAt={seo.modifiedAt}
+    schema={seo.schema}
   />
   <!-- A/B Test: push variants to GTM dataLayer -->
   <script is:inline>

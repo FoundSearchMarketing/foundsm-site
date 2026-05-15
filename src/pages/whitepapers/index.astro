@@ -14,8 +14,15 @@ const page = await loadLegacyPage(definition);
   title={page.seoTitle}
   description={page.seoDescription}
   canonical={page.canonicalUrl}
+  ogTitle={page.ogTitle}
+  ogDescription={page.ogDescription}
   ogImage={page.ogImage}
   robots={page.robots}
+  twitterCard={page.twitterCard}
+  twitterTitle={page.twitterTitle}
+  twitterDescription={page.twitterDescription}
+  twitterImage={page.twitterImage}
+  schemaJson={page.schemaJson}
   bodyClass="legacy-page"
 >
   <LegacyPageRenderer page={page} />

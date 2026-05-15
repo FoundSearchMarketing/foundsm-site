@@ -135,10 +135,17 @@ const bodyClass = isDataConnectPage
   title={layoutTitle}
   description={layoutDescription}
   canonical={layoutCanonical}
+  ogTitle={isInsightsFilterResultsPage ? undefined : page.ogTitle}
+  ogDescription={isInsightsFilterResultsPage ? undefined : page.ogDescription}
   ogImage={layoutOgImage}
   ogType={isInsightsFilterResultsPage ? 'article' : undefined}
   robots={layoutRobots}
+  twitterCard={page.twitterCard}
+  twitterTitle={page.twitterTitle}
+  twitterDescription={page.twitterDescription}
+  twitterImage={page.twitterImage}
   schema={filterResultsData?.schema}
+  schemaJson={page.schemaJson}
   bodyClass={bodyClass}
 >
   {isDataConnectPage ? (

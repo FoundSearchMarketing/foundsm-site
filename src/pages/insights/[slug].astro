@@ -32,8 +32,8 @@ interface Props {
 
 const { post, page } = Astro.props;
 const navigation = post ? await getBlogPostNavigation(post.slug) : {};
-const canonical = page?.canonicalUrl || (post ? `https://www.foundsm.com/insights/${post.slug}/` : 'https://www.foundsm.com/insights');
-const description = page?.seoDescription || post?.excerpt || '';
+const canonical = page?.canonicalUrl || post?.canonicalUrl || (post ? `https://foundsm.com/insights/${post.slug}/` : 'https://foundsm.com/insights/');
+const description = page?.seoDescription || post?.seoDescription || post?.excerpt || '';
 const author = post ? [post.authorName, post.authorTitle].filter(Boolean).join(', ') : '';
 const schema = page
   ? {
@@ -66,7 +66,7 @@ const schema = page
       publisher: {
         '@type': 'Organization',
         name: 'Found Search Marketing',
-        logo: { '@type': 'ImageObject', url: 'https://www.foundsm.com/images/logo.svg' },
+        logo: { '@type': 'ImageObject', url: 'https://foundsm.com/images/logo.svg' },
       },
       mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
       ...(post && post.categories.length > 0 ? { articleSection: post.categories.map((category) => category.label) } : {}),
@@ -77,10 +77,19 @@ const schema = page
   title={page?.seoTitle || post?.seoTitle || 'Insights | Found Search Marketing'}
   description={description}
   canonical={canonical}
-  ogImage={page?.ogImage || post?.heroImage || undefined}
+  ogTitle={post?.ogTitle}
+  ogDescription={post?.ogDescription}
+  ogImage={page?.ogImage || post?.ogImage || post?.heroImage || undefined}
   ogType={post ? 'article' : undefined}
-  robots={page?.robots || 'index, follow'}
+  robots={page?.robots || post?.robots || 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'}
+  twitterCard={post?.twitterCard}
+  twitterTitle={post?.twitterTitle}
+  twitterDescription={post?.twitterDescription}
+  twitterImage={post?.twitterImage}
+  publishedAt={post?.publishedAt}
+  modifiedAt={post?.modifiedAt}
   schema={schema}
+  schemaJson={post?.schemaJson}
   bodyClass={post ? 'blog-post-page' : 'legacy-page'}
 >
   {page ? <LegacyPageRenderer page={page} /> : post && <BlogPostTemplate post={post} navigation={navigation} />}

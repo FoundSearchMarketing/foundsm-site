@@ -1,29 +1,4900 @@
 {
-  "trailingSlash": false,
-
+  "trailingSlash": true,
   "git": {
     "deploymentEnabled": {
       "main": true
     }
   },
-
   "redirects": [
-    { "source": "/index.html", "destination": "/", "permanent": true },
-    { "source": "/our-approach.html", "destination": "/our-approach", "permanent": true },
-    { "source": "/capabilities.html", "destination": "/capabilities", "permanent": true },
-    { "source": "/paid-media.html", "destination": "/capabilities/paid-media", "permanent": true },
-    { "source": "/data-activation.html", "destination": "/capabilities/data-activation", "permanent": true },
-    { "source": "/data-intelligence.html", "destination": "/capabilities/data-intelligence", "permanent": true },
-    { "source": "/performance-creative.html", "destination": "/capabilities/performance-creative", "permanent": true },
-    { "source": "/about-us.html", "destination": "/about-us", "permanent": true },
-    { "source": "/team.html", "destination": "/team", "permanent": true },
-    { "source": "/insights.html", "destination": "/insights", "permanent": true },
-    { "source": "/contact-us.html", "destination": "/contact-us", "permanent": true },
-    { "source": "/newsletter.html", "destination": "/newsletter", "permanent": true },
-    { "source": "/privacy-policy.html", "destination": "/privacy-policy", "permanent": true },
-    { "source": "/join-us", "destination": "/about-us", "permanent": true },
-    { "source": "/lp/:slug/", "destination": "/lp/:slug", "permanent": true },
-    { "source": "/events/lunch-and-learn/", "destination": "/events/lunch-and-learn", "permanent": true },
-    { "source": "/lunch-and-learn", "destination": "/events/lunch-and-learn", "permanent": false }
+    {
+      "source": "/index.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/our-approach.html",
+      "destination": "/our-approach/",
+      "permanent": true
+    },
+    {
+      "source": "/capabilities.html",
+      "destination": "/capabilities/",
+      "permanent": true
+    },
+    {
+      "source": "/paid-media.html",
+      "destination": "/capabilities/paid-media/",
+      "permanent": true
+    },
+    {
+      "source": "/data-activation.html",
+      "destination": "/capabilities/data-activation/",
+      "permanent": true
+    },
+    {
+      "source": "/data-intelligence.html",
+      "destination": "/capabilities/data-intelligence/",
+      "permanent": true
+    },
+    {
+      "source": "/performance-creative.html",
+      "destination": "/capabilities/performance-creative/",
+      "permanent": true
+    },
+    {
+      "source": "/about-us.html",
+      "destination": "/about-us/",
+      "permanent": true
+    },
+    {
+      "source": "/team.html",
+      "destination": "/team/",
+      "permanent": true
+    },
+    {
+      "source": "/insights.html",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/contact-us.html",
+      "destination": "/contact-us/",
+      "permanent": true
+    },
+    {
+      "source": "/newsletter.html",
+      "destination": "/newsletter/",
+      "permanent": true
+    },
+    {
+      "source": "/privacy-policy.html",
+      "destination": "/privacy-policy/",
+      "permanent": true
+    },
+    {
+      "source": "/join-us",
+      "destination": "/about-us/",
+      "permanent": true
+    },
+    {
+      "source": "/lp/:slug",
+      "destination": "/lp/:slug/",
+      "permanent": true
+    },
+    {
+      "source": "/events/lunch-and-learn",
+      "destination": "/events/lunch-and-learn/",
+      "permanent": true
+    },
+    {
+      "source": "/lunch-and-learn",
+      "destination": "/events/lunch-and-learn/",
+      "permanent": false
+    },
+    {
+      "source": "/_hcms/forms",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/?p=82548",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/?p=84593",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/?p=84736",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/?p=84865",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/a-3-minute-implementation-guide-to-segmenting-ai-traffic-in-ga4",
+      "destination": "/insights/a-3-minute-implementation-guide-to-segmenting-ai-traffic-in-ga4/",
+      "permanent": true
+    },
+    {
+      "source": "/about",
+      "destination": "/about-us/",
+      "permanent": true
+    },
+    {
+      "source": "/about?bzid=3ac1cd76e479",
+      "destination": "/about-us/",
+      "permanent": true
+    },
+    {
+      "source": "/about?hsLang=en",
+      "destination": "/about-us/",
+      "permanent": true
+    },
+    {
+      "source": "/about/careers",
+      "destination": "/about-us/",
+      "permanent": true
+    },
+    {
+      "source": "/about/careers-and-culture",
+      "destination": "/about-us/",
+      "permanent": true
+    },
+    {
+      "source": "/about/careers-and-culture?hsLang=en",
+      "destination": "/about-us/",
+      "permanent": true
+    },
+    {
+      "source": "/about/careers?hsLang=en",
+      "destination": "/about-us/",
+      "permanent": true
+    },
+    {
+      "source": "/about/careers?trk=public_post_comment-text",
+      "destination": "/about-us/",
+      "permanent": true
+    },
+    {
+      "source": "/about/careers/?bzid=0dfa7acd31e8",
+      "destination": "/about-us/",
+      "permanent": true
+    },
+    {
+      "source": "/about/careers/?bzid=21e63d5d70f2",
+      "destination": "/about-us/",
+      "permanent": true
+    },
+    {
+      "source": "/about/careers/?bzid=25c8df193743",
+      "destination": "/about-us/",
+      "permanent": true
+    },
+    {
+      "source": "/about/careers/?bzid=6991a4a47c24",
+      "destination": "/about-us/",
+      "permanent": true
+    },
+    {
+      "source": "/about/careers/?bzid=6ac14055d94a",
+      "destination": "/about-us/",
+      "permanent": true
+    },
+    {
+      "source": "/about/careers/?bzid=78b5528ef078",
+      "destination": "/about-us/",
+      "permanent": true
+    },
+    {
+      "source": "/about/careers/?bzid=91446e708c1a",
+      "destination": "/about-us/",
+      "permanent": true
+    },
+    {
+      "source": "/about/careers/?trk=public_post_comment-text",
+      "destination": "/about-us/",
+      "permanent": true
+    },
+    {
+      "source": "/about/certifications",
+      "destination": "/about-us/",
+      "permanent": true
+    },
+    {
+      "source": "/about/certifications-badges",
+      "destination": "/about-us/",
+      "permanent": true
+    },
+    {
+      "source": "/about/google-background",
+      "destination": "/about-us/",
+      "permanent": true
+    },
+    {
+      "source": "/about/google-background?hsLang=en",
+      "destination": "/about-us/",
+      "permanent": true
+    },
+    {
+      "source": "/about/how-we-work",
+      "destination": "/our-approach/",
+      "permanent": true
+    },
+    {
+      "source": "/about/our-team",
+      "destination": "/team/",
+      "permanent": true
+    },
+    {
+      "source": "/adam_p",
+      "destination": "/[new%20author%20page%20for%20adam]/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/2023-01-01",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/2023-01-04",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/2023-03-17",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/2023-03-25",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/2023-04-14",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/2023-04-25",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/2023-07-27",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/2023-07-30",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/2023-09-08",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/2023-09-17",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/2024-01-20",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/2024-08-07",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/2024-08-08",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/2024-09-02",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/2024-09-06",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/2024-10-02",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/2024-10-09",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/2024-10-25",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/2024-10-30",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/2024-11-06",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/2024-11-25",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/2024-12-04",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/2024-12-07",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/2024-12-10",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/2024-12-11",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/2024-12-13",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/2024-12-14",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/2024-12-17",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/2024-12-18",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/2024-12-19",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/2024-12-20",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/2024-12-22",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/2024-12-23",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/2024-12-23/?ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/2024-12-31",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/2025-01-01/?ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/2025-01-05",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/2025-01-15",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/2025-01-31",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/2024-01",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/2024-06",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/2024-09",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/day/2024-01-11",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/day/2024-01-17",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/day/2024-03-01",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/day/2024-03-02",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/day/2024-07-01",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/day/2024-08-10",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/day/2024-09-02",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/day/2024-10-01",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/day/2024-10-07",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/day/2024-10-10",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/day/2024-10-11",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/list",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/list/?tribe-bar-date=2024-01-01",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/list/?tribe-bar-date=2024-01-15",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/list/?tribe-bar-date=2024-02-14",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/list/?tribe-bar-date=2024-02-14&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/list/?tribe-bar-date=2024-02-18&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/list/?tribe-bar-date=2024-02-24",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/list/?tribe-bar-date=2024-03-02",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/list/?tribe-bar-date=2024-03-03",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/list/?tribe-bar-date=2024-10-14&ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/list/?tribe-bar-date=2024-10-16",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/list/?tribe-bar-date=2024-10-19",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/list/?tribe-bar-date=2024-10-21",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/map/?tribe-bar-date=2023-12-01",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/map/?tribe-bar-date=2024-01-04",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/map/?tribe-bar-date=2024-01-13&ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/map/?tribe-bar-date=2024-03-09",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/map/?tribe-bar-date=2024-09-29",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/map/?tribe-bar-date=2024-10-02",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/map/?tribe-bar-date=2024-10-03",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/map/?tribe-bar-date=2024-10-14",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/map/?tribe-bar-date=2024-10-20",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/map/page/2/?tribe-bar-date=2024-01-12",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/map/page/2/?tribe-bar-date=2024-01-14&ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/map/page/2/?tribe-bar-date=2024-01-17",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/map/page/2/?tribe-bar-date=2024-01-21&ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/map/page/2/?tribe-bar-date=2024-01-30&ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/map/page/2/?tribe-bar-date=2024-10-18",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/page/2",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/page/2/?tribe-bar-date=2024-01-01&ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/page/2/?tribe-bar-date=2024-01-01&outlook-ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/page/2/?tribe-bar-date=2024-01-02",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/page/2/?tribe-bar-date=2024-01-04&ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/page/2/?tribe-bar-date=2024-01-04&outlook-ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/page/2/?tribe-bar-date=2024-01-06",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/page/2/?tribe-bar-date=2024-01-11&ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/page/2/?tribe-bar-date=2024-01-12&outlook-ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/page/2/?tribe-bar-date=2024-01-13&outlook-ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/page/2/?tribe-bar-date=2024-01-14&ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/page/2/?tribe-bar-date=2024-01-14&outlook-ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/page/2/?tribe-bar-date=2024-01-17&ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/page/2/?tribe-bar-date=2024-01-17&outlook-ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/page/2/?tribe-bar-date=2024-01-19&ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/page/2/?tribe-bar-date=2024-01-20&outlook-ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/page/2/?tribe-bar-date=2024-01-22&ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/page/2/?tribe-bar-date=2024-01-22&outlook-ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/page/2/?tribe-bar-date=2024-01-23&ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/page/2/?tribe-bar-date=2024-01-28&outlook-ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/page/2/?tribe-bar-date=2024-01-30&outlook-ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/page/2/?tribe-bar-date=2024-02-03",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/page/2/?tribe-bar-date=2024-02-03&outlook-ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/page/2/?tribe-bar-date=2024-02-18",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/page/2/?tribe-bar-date=2024-02-22",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/page/2/?tribe-bar-date=2024-08-16&ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/page/2/?tribe-bar-date=2024-08-16&outlook-ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/page/2/?tribe-bar-date=2024-09-10&outlook-ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/page/2/?tribe-bar-date=2024-09-20&outlook-ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/photo",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/summary/?tribe-bar-date=2023-12-01",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/summary/?tribe-bar-date=2024-01-05",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/summary/?tribe-bar-date=2024-03-02",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/summary/?tribe-bar-date=2024-03-03",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/summary/?tribe-bar-date=2024-09-26",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/summary/?tribe-bar-date=2024-10-16",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/summary/page/2/?tribe-bar-date=2024-01-17",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/summary/page/2/?tribe-bar-date=2024-02-19",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/summary/page/2/?tribe-bar-date=2024-08-16",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/summary/page/2/?tribe-bar-date=2024-09-17&ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/week/2024-01-03",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/week/2024-01-04",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/week/2024-01-06",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/week/2024-01-08",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/week/2024-01-17",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/week/2024-01-21",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/week/2024-01-22",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/week/2024-02-24",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/week/2024-02-29",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/week/2024-03-09",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/week/2024-04-01",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/week/2024-08-17",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/week/2024-09-01",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/week/2024-09-30",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/week/2024-10-01",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/week/2024-10-03",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/week/2024-10-07",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/week/2024-10-16",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/week/2024-10-24",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/week/2024-10-25",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/category/agency-meetings/week/2024-10-27",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/employee-recognition-committee-meeting-2",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/foundry-committee-meeting-2",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/inclusion-committee-meeting-2",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/leadership-town-hall-3",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/leadership-town-hall-4",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/?tribe-bar-date=2023-01-04&outlook-ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/?tribe-bar-date=2024-01-20",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/?tribe-bar-date=2024-05-14",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/?tribe-bar-date=2024-11-01",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/?tribe-bar-date=2024-11-02",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/?tribe-bar-date=2024-11-04",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/?tribe-bar-date=2024-11-05",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/?tribe-bar-date=2024-11-06",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/?tribe-bar-date=2024-11-07",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/?tribe-bar-date=2024-11-08",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/?tribe-bar-date=2024-11-09",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/?tribe-bar-date=2024-11-15",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/?tribe-bar-date=2024-11-21",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/?tribe-bar-date=2024-12-17&outlook-ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/?tribe-bar-date=2024-12-23",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/?tribe-bar-date=2024-12-26&outlook-ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/?tribe-bar-date=2025-02-01",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/?tribe-bar-date=2025-02-02",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/?tribe-bar-date=2025-02-04",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/?tribe-bar-date=2025-02-05",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/?tribe-bar-date=2025-02-06",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/?tribe-bar-date=2025-02-07",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/?tribe-bar-date=2025-02-08",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/?tribe-bar-date=2025-02-09",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/?tribe-bar-date=2025-02-10",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/?tribe-bar-date=2025-02-12",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/?tribe-bar-date=2025-02-13",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/?tribe-bar-date=2025-02-15",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/?tribe-bar-date=2025-02-16",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/?tribe-bar-date=2025-02-17",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/?tribe-bar-date=2025-02-18",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/?tribe-bar-date=2025-02-19",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/?tribe-bar-date=2025-02-20",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2023-01-06&ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2023-01-06&outlook-ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2023-01-10&ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2023-01-10&outlook-ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2023-01-12&ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2023-01-13&outlook-ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2023-01-14",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2023-01-15&ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2023-01-15&outlook-ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2023-01-16&ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2023-01-17",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2023-01-19&ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2023-01-19&outlook-ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2023-04-26",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2023-04-26&ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2023-04-26&outlook-ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2023-07-03&ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2023-07-03&outlook-ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2023-09-16",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2024-09-24&ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2024-09-24&outlook-ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2024-10-04",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2024-10-06",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2024-10-07",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2024-10-09",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2024-10-10",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2024-10-13",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2024-10-15",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2024-10-17",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2024-10-18",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2024-10-19",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2024-10-22",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2024-10-27",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2024-10-28",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2024-11-20",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2024-11-21",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2024-11-25",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2024-11-25&ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2024-11-25&outlook-ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2024-11-26",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2024-11-29",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2024-11-30",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2024-11-30&ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2024-11-30&outlook-ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2024-12-04",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2024-12-07&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2024-12-09&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2024-12-14&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2024-12-14&outlook-ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2024-12-16&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2024-12-17&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2024-12-28&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2025-01-08&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2025-01-08&outlook-ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2025-01-11&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2025-01-14&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2025-01-24&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2025-01-27&eventDisplay=past&ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/2/?tribe-bar-date=2025-02-01&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/3/?tribe-bar-date=2023-01-05",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/3/?tribe-bar-date=2023-01-05&outlook-ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/3/?tribe-bar-date=2023-01-13",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/3/?tribe-bar-date=2023-01-14",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/3/?tribe-bar-date=2023-01-15&ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/3/?tribe-bar-date=2023-01-17",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/3/?tribe-bar-date=2023-01-18",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/3/?tribe-bar-date=2023-01-20",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/3/?tribe-bar-date=2023-01-21",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/3/?tribe-bar-date=2023-03-15",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/3/?tribe-bar-date=2023-03-24",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/3/?tribe-bar-date=2023-03-24&outlook-ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/3/?tribe-bar-date=2023-07-03",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/3/?tribe-bar-date=2023-07-29",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/3/?tribe-bar-date=2023-08-27",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/3/?tribe-bar-date=2023-09-16",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/3/?tribe-bar-date=2024-07-12",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/3/?tribe-bar-date=2024-07-12&outlook-ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/3/?tribe-bar-date=2024-07-17",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/3/?tribe-bar-date=2024-08-30&ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/3/?tribe-bar-date=2024-10-02",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/3/?tribe-bar-date=2024-10-03",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/3/?tribe-bar-date=2024-10-04",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/3/?tribe-bar-date=2024-10-10",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/3/?tribe-bar-date=2024-10-12&ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/3/?tribe-bar-date=2024-10-12&outlook-ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/3/?tribe-bar-date=2024-10-14",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/3/?tribe-bar-date=2024-10-15",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/3/?tribe-bar-date=2024-10-23",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/3/?tribe-bar-date=2024-10-28",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/3/?tribe-bar-date=2024-11-01",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/3/?tribe-bar-date=2024-11-03",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/3/?tribe-bar-date=2024-11-04",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/3/?tribe-bar-date=2024-11-05",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/3/?tribe-bar-date=2025-01-06&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/3/?tribe-bar-date=2025-01-08&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/3/?tribe-bar-date=2025-01-08&outlook-ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/3/?tribe-bar-date=2025-01-09&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/3/?tribe-bar-date=2025-01-12&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/3/?tribe-bar-date=2025-01-12&eventDisplay=past&ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/3/?tribe-bar-date=2025-01-12&outlook-ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/3/?tribe-bar-date=2025-01-13&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/3/?tribe-bar-date=2025-01-14&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/3/?tribe-bar-date=2025-01-15&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/3/?tribe-bar-date=2025-01-16&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/3/?tribe-bar-date=2025-01-17&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/3/?tribe-bar-date=2025-01-18&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/3/?tribe-bar-date=2025-01-21&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/3/?tribe-bar-date=2025-01-22&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/3/?tribe-bar-date=2025-01-23&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/3/?tribe-bar-date=2025-01-24&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/3/?tribe-bar-date=2025-01-25&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/list/page/4/?tribe-bar-date=2023-08-10",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/map/?tribe-bar-date=2023-01-04&ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/map/?tribe-bar-date=2023-01-05",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/map/?tribe-bar-date=2023-01-06",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/map/?tribe-bar-date=2023-01-15",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/map/?tribe-bar-date=2023-03-02",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/map/?tribe-bar-date=2023-10-08",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/map/?tribe-bar-date=2024-01-20",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/map/?tribe-bar-date=2024-07-15",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/map/?tribe-bar-date=2024-10-02",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/map/?tribe-bar-date=2024-11-18&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/map/?tribe-bar-date=2024-12-07&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/map/?tribe-bar-date=2024-12-15",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/map/?tribe-bar-date=2024-12-16&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/map/?tribe-bar-date=2024-12-19&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/map/?tribe-bar-date=2024-12-23",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/map/?tribe-bar-date=2024-12-26&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/map/?tribe-bar-date=2025-01-01",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/map/?tribe-bar-date=2025-01-09&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/map/?tribe-bar-date=2025-01-13&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/map/?tribe-bar-date=2025-01-23",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/map/?tribe-bar-date=2025-01-23&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/map/?tribe-bar-date=2025-01-25",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/map/?tribe-bar-date=2025-01-30",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/map/?tribe-bar-date=2025-02-01",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/map/?tribe-bar-date=2025-02-02&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/map/?tribe-bar-date=2025-02-03&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/map/?tribe-bar-date=2025-02-06&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/map/?tribe-bar-date=2025-02-07",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/map/?tribe-bar-date=2025-02-08",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/map/?tribe-bar-date=2025-02-10",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/map/?tribe-bar-date=2025-02-11",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/map/?tribe-bar-date=2025-02-13",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/map/?tribe-bar-date=2025-02-15",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/map/?tribe-bar-date=2025-02-20&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/map/page/2/?tribe-bar-date=2024-10-24",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/map/page/2/?tribe-bar-date=2024-12-09",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/map/page/3/?tribe-bar-date=2023-07-29",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/map/page/3/?tribe-bar-date=2024-07-17",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/map/page/3/?tribe-bar-date=2024-10-31",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/month/2022-12",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/month/2023-01",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/month/2023-03",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/month/2023-07",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/month/2023-08",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/month/2024-01",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/month/2024-07",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/month/2024-09",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/month/2024-10",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/month/2024-11",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/month/2025-01",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2023-01-05/page/2",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2023-01-05/page/3",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2023-01-06/page/3",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2023-01-11/page/2",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2023-01-15/page/2",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2023-01-15/page/2/?ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2023-01-15/page/2/?outlook-ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2023-02-04",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2023-02-04/page/3",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2023-02-05",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2023-02-05/page/3",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2023-02-06",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2023-02-13",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2023-02-26/page/3",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2023-03-27",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2023-04-24",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2023-05-17/page/3",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2023-05-20/page/3",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2023-05-28/page/3",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2023-05-29/page/4",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2023-05-31",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2023-06-13",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2023-06-14",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2023-06-17",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2023-06-23/page/3",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2023-07-03/page/3",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2023-07-04",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2023-07-26",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2023-07-28/page/2",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2023-07-29/page/2",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2023-07-29/page/3/?ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2023-07-29/page/3/?outlook-ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2023-08-09/page/2",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2023-08-23/page/2",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2023-09-07",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2023-10-24",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-01-20",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-02-08",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-02-14",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-04-09",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-05-05",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-07-10",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-07-10/page/2",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-07-14",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-07-17/page/3/?ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-07-17/page/3/?outlook-ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-07-17/page/4",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-07-31/page/2",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-08-03",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-08-08",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-08-10",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-08-29/page/3/?ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-08-29/page/3/?outlook-ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-08-30/page/3",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-09-01",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-09-24",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-09-24/page/2",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-10-03/page/2/?ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-10-04/page/3",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-10-05/page/3",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-10-08/page/3",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-10-12/page/4",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-10-13/page/2",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-10-13/page/3",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-10-13/page/3/?ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-10-13/page/3/?outlook-ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-10-13/page/4",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-10-14/page/2",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-10-17/page/3",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-10-24/page/2/?outlook-ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-10-24/page/3",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-10-28",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-10-29/page/2",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-10-29/page/2/?ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-10-31/page/2",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-10-31/page/3/?outlook-ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-11-01/page/3",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-11-03",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-11-04/page/3/?ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-11-05/page/2",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-11-08/page/2",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-11-17/page/2",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-11-17/page/2/?outlook-ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-11-20/page/2",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-12-03",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-12-04",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-12-09",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-12-10",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-12-11",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-12-13/page/2",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-12-17",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-12-18",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-12-20",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2024-12-26/page/2",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2025-01-01",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2025-01-12/page/2",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2025-01-14/page/2",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/photo/2025-02-16/page/2",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2023-01-18",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2023-04-19",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2023-04-25",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2023-04-28",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2023-04-30",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2023-05-01",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2023-05-09",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2023-05-13",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2023-05-23",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2023-06-08",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2023-06-11",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2023-06-12",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2023-07-05",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2023-07-06",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2023-07-09",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2023-07-11",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2023-07-23",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2023-07-25",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2023-07-29",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2023-07-31",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2023-08-04",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2023-08-06",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2023-08-09",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2023-08-11",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2023-08-15",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2023-08-18",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2023-08-21",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2023-09-12",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2023-09-19",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2023-10-01",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2023-10-03",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2023-10-04",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2023-11-01",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2023-11-03",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2023-11-05",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2023-12-07",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-01-20",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-01-29",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-02-19",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-02-26",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-03-15",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-03-18",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-03-22",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-03-24",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-03-27",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-04-16",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-04-18",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-04-19",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-04-23",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-04-24",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-04-28",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-04-30",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-05-01",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-06-03",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-07-10",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-08-15",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-09-20",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-10-08",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-10-29",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-10-30",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-10-31",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-11-01&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-11-02",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-11-03",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-11-07",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-11-11&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-11-15&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-11-18",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-11-20",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-11-21",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-11-26",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-11-26&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-11-30",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-12-04",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-12-05",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-12-06",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-12-07",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-12-07&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-12-09",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-12-11",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-12-12",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-12-14",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-12-16",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-12-18&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-12-19&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-12-21",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-12-22",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-12-23",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-12-27",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2024-12-30&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2025-01-05&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2025-01-06&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2025-01-07&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2025-01-08",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2025-01-10&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2025-01-11&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2025-01-12&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2025-01-13",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2025-01-15",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2025-01-15&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2025-01-16",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2025-01-16&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2025-01-18",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2025-01-19&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2025-01-20",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2025-01-21&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2025-01-22",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2025-01-23",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2025-01-23&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2025-01-25",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2025-01-28&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2025-01-29",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2025-01-30",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2025-02-02",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2025-02-03",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2025-02-05",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2025-02-05&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2025-02-06&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2025-02-07",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2025-02-09",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2025-02-11&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2025-02-12",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2025-02-13",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2025-02-13&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2025-02-14",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2025-02-16",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2025-02-17",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2025-02-17&eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/?tribe-bar-date=2025-02-21",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/page/2",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/page/2/?tribe-bar-date=2023-01-08",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/page/2/?tribe-bar-date=2023-01-11",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/page/2/?tribe-bar-date=2023-01-14",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/page/2/?tribe-bar-date=2024-10-12",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/page/2/?tribe-bar-date=2024-10-13",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/page/2/?tribe-bar-date=2024-10-14&ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/page/2/?tribe-bar-date=2024-10-15",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/page/2/?tribe-bar-date=2024-10-16",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/page/2/?tribe-bar-date=2024-10-24",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/page/3/?tribe-bar-date=2023-07-29",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/page/3/?tribe-bar-date=2023-08-10",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/page/3/?tribe-bar-date=2024-07-17",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/page/3/?tribe-bar-date=2024-10-31",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/summary/page/3/?tribe-bar-date=2024-11-05",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/volunteer-committee-meeting",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-01-05",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-01-17",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-01-19",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-01-20",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-01-21",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-01-22",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-01-24",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-01-26",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-01-28",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-01-29",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-01-31",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-02-02",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-02-03",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-02-04/?ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-02-05/?ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-02-05/?outlook-ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-02-06",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-02-21",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-02-24",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-02-27",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-03-02",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-03-05",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-03-13",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-03-21",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-04-03",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-04-05",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-04-12",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-04-14",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-04-16",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-04-25",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-04-26",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-04-29",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-05-01",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-05-04",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-05-05",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-05-06",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-05-09",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-05-10",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-05-11",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-05-12",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-05-13",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-05-14",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-05-15",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-05-16",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-05-17",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-05-18",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-05-19",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-05-20",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-05-21",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-05-26",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-05-27",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-06-18",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-07-03",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-07-05",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-07-08",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-07-25",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-07-27",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-07-28",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-07-29",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-07-30",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-08-01",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-08-21",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-08-22",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-08-24",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-09-05",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-09-09",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-09-10",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-10-02",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2023-10-07",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-01-02",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-01-07",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-01-08",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-01-09",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-01-11",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-01-14",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-01-17",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-01-18",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-01-20/?ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-01-20/?outlook-ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-01-22",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-01-26/?ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-02-01",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-02-04",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-02-05",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-02-09",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-02-10",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-02-15",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-02-16",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-02-17",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-02-19",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-02-20",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-02-21",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-02-23",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-02-25",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-03-07",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-03-11",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-04-15",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-04-30",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-05-01",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-05-03",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-05-04",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-05-05",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-05-07",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-05-16",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-07-11",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-07-22",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-07-26",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-07-28",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-07-28/?ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-07-28/?outlook-ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-08-08",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-08-08/?ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-08-08/?outlook-ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-08-25",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-08-26",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-08-31",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-10-03",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-10-15",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-11-05",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-11-07",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-12-01",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-12-10",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-12-11",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-12-14",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-12-19",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-12-20",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-12-21",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2024-12-30",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2025-01-01",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2025-01-31",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2025-01-31/?ical=1",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2025-02-01",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2025-02-02",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2025-02-03",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2025-02-06",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2025-02-09",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2025-02-14",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2025-02-15",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2025-02-17",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/agency-calendar/week/2025-02-20",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/approach",
+      "destination": "/our-approach/",
+      "permanent": true
+    },
+    {
+      "source": "/author/bmcculloh",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/author/kate",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/ben_r",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog?hsLang=en",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/_hcms/perf",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/a-guide-to-using-paid-search-for-top-of-funnel-marketing",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/a-guide-to-using-paid-search-for-top-of-funnel-marketing//1000",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/a-marketers-guide-to-paid-media-ad-types",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/all",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/author/becca-reagle",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/author/found-search-marketing",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/author/fsm",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/author/fsm_andrew",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/author/fsm_tom",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/author/kelsey-connor",
+      "destination": "/insights/authors/kelsey/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/author/logan-hartman-becca-reagle",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/author/nicholas-hoium",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/author/rachel-keen",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/author/ryan-eme-nicholas-hoium",
+      "destination": "/insights/authors/ryan/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/best-places-to-work-2016",
+      "destination": "/about-us/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/bing-select-partner",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/bing-select-partner?hs_amp=true",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/category/analytics",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/category/digital",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/category/marketing",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/category/paid-search",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/category/paid-social",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/ccpa",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/ccpa?hs_amp=true",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/ccpa/?hs_amp=true",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/ccpa/feed",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/entrepreneurship-show",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/entrepreneurship-show?hs_amp=true",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/entrepreneurship-show/feed",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/facebook-ad-creative",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/facebook-ad-creative?hs_amp=true",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/facebook-ad-creative/?hs_amp=true",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/facebook-ad-creative/feed",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/found-sm-website?hs_amp=true",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/found-sm-website/feed",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/foundsm-named-a-great-employer-to-work-for-in-2022",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/foundsm-named-a-great-employer-to-work-for-in-2022?hs_amp=true",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/ga4-and-paid-media-whats-changing",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/gtm-javascript-utility-variables",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/gtm-javascript-utility-variables?hs_amp=true",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/gtm-javascript-utility-variables/?hs_amp=true",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/gtm-video-elements",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/gtm-video-elements/feed",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/how-to-remarket-on-social-media-for-lead-generation",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/how-to-remarket-on-social-media-for-lead-generation?hs_amp=true",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/increase-search-rankings",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/inside-indiana-business-tech-town-hall",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/inside-indiana-business-tech-town-hall?hs_amp=true",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/intro-to-responsive-search-ads-rsas",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/leveling-up-social-media-lead-generation-strategies",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/linkedin-conversation-ads",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/linkedin-conversation-ads/1000",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/our-top-takeaways-from-search-marketing-expo-advanced-2025",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/page/1",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/page/3",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/page/5",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/paid-social/emojis-facebook",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/paid-social/emojis-facebook?hs_amp=true",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/rank-higher-on-google-maps",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/rank-higher-on-google-maps/?hs_amp=true",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/rank-higher-on-google-maps/feed",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/social-media-success-pt-1",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/social-media-success-pt-1?hs_amp=true",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/social-media-success-pt-3",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/social-media-success-pt-3?hs_amp=true",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/tag/analytics",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/tag/checklists",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/tag/copywriting",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/tag/headlines",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/tag/landing-pages",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/tag/paid-media",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/tag/seo",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/tag/tutorials",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/three-ways-to-get-ahead-of-googles-expanded-text-ad-eta-sunset",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/three-ways-to-get-ahead-of-googles-expanded-text-ad-eta-sunset?hs_amp=true",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/three-ways-to-get-ahead-of-googles-expanded-text-ad-eta-sunset//1000",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/three-ways-to-get-ahead-of-googles-expanded-text-ad-eta-sunset/1000",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/tiktok-marketing-is-it-right-for-your-business?hs_amp=true",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/topic/paid-media",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/capabilities-data-activation",
+      "destination": "/capabilities/data-activation/",
+      "permanent": true
+    },
+    {
+      "source": "/capabilities-data-intelligence",
+      "destination": "/capabilities/data-intelligence/",
+      "permanent": true
+    },
+    {
+      "source": "/capabilities-data-Intelligence",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/capabilities-paid-media",
+      "destination": "/capabilities/paid-media/",
+      "permanent": true
+    },
+    {
+      "source": "/capabilities-performance-creative",
+      "destination": "/capabilities/performance-creative/",
+      "permanent": true
+    },
+    {
+      "source": "/careers",
+      "destination": "/about-us/",
+      "permanent": true
+    },
+    {
+      "source": "/careers.html",
+      "destination": "/about-us/",
+      "permanent": true
+    },
+    {
+      "source": "/carmel-search-engine-optimization",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/category/industry-insights",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/category/marketing-analytics-tracking",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/category/paid-media-strategy",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/category/uncategorized",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/certifications.html",
+      "destination": "/about-us/",
+      "permanent": true
+    },
+    {
+      "source": "/clients",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/clients/case-study",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/comments/feed",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/contact",
+      "destination": "/contact-us/",
+      "permanent": true
+    },
+    {
+      "source": "/contact-us?hsLang=en",
+      "destination": "/contact-us/",
+      "permanent": true
+    },
+    {
+      "source": "/contact.html",
+      "destination": "/contact-us/",
+      "permanent": true
+    },
+    {
+      "source": "/data-management",
+      "destination": "/capabilities/data-intelligence/",
+      "permanent": true
+    },
+    {
+      "source": "/data-management/ad-hoc-reporting",
+      "destination": "/capabilities/data-intelligence/",
+      "permanent": true
+    },
+    {
+      "source": "/data-management/data-visualization-dashboarding",
+      "destination": "/capabilities/data-intelligence/",
+      "permanent": true
+    },
+    {
+      "source": "/data-management/regulatory-compliance",
+      "destination": "/capabilities/data-intelligence/",
+      "permanent": true
+    },
+    {
+      "source": "/data-management/regulatory-compliance?hsLang=en",
+      "destination": "/capabilities/data-intelligence/",
+      "permanent": true
+    },
+    {
+      "source": "/data-management/regulatory-compliance/?hsLang=en",
+      "destination": "/capabilities/data-intelligence/",
+      "permanent": true
+    },
+    {
+      "source": "/data-management/report-automation",
+      "destination": "/capabilities/data-intelligence/",
+      "permanent": true
+    },
+    {
+      "source": "/feedbackloop",
+      "destination": "/whitepapers/first-party-data/",
+      "permanent": true
+    },
+    {
+      "source": "/found2025/wp-content/uploads/2026/01/Foundsm_Data_Activation_whitepaper_2026.pdf",
+      "destination": "/found2025/wp-content/uploads/2026/01/foundsm_data_activation_whitepaper_2026.pdf",
+      "permanent": true
+    },
+    {
+      "source": "/google-analytics-consulting/audits",
+      "destination": "/capabilities/data-intelligence/",
+      "permanent": true
+    },
+    {
+      "source": "/google-analytics-consulting/downstream-data-integration",
+      "destination": "/capabilities/data-intelligence/",
+      "permanent": true
+    },
+    {
+      "source": "/google-analytics-consulting/kpi-discovery-measurement-plans",
+      "destination": "/capabilities/data-intelligence/",
+      "permanent": true
+    },
+    {
+      "source": "/hello-world",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/how-advantage-is-reshaping-student-recruitment-insights-from-a-meta-education-summit",
+      "destination": "/insights/how-advantage-is-reshaping-student-recruitment-insights-from-a-meta-education-summit/",
+      "permanent": true
+    },
+    {
+      "source": "/how-to-get-started-with-facebooks-campaign-budget-optimization-cbo",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/i-swear-this-is-my-year-to-really-blog",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/industries/education",
+      "destination": "/capabilities/",
+      "permanent": true
+    },
+    {
+      "source": "/insights/adam",
+      "destination": "/insights/authors/adam/",
+      "permanent": true
+    },
+    {
+      "source": "/insights/author",
+      "destination": "/insights/authors/",
+      "permanent": true
+    },
+    {
+      "source": "/insights/author/adam",
+      "destination": "/insights/adam/",
+      "permanent": true
+    },
+    {
+      "source": "/insights/julie",
+      "destination": "/insights/authors/julie/",
+      "permanent": true
+    },
+    {
+      "source": "/jill_r",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/linked-in-conversion-ads-what-you-need-to-know",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/marketing-analytics",
+      "destination": "/capabilities/data-intelligence/",
+      "permanent": true
+    },
+    {
+      "source": "/marketing-analytics?hsLang=en",
+      "destination": "/capabilities/data-intelligence/",
+      "permanent": true
+    },
+    {
+      "source": "/marketing-analytics/?hsLang=en",
+      "destination": "/capabilities/data-intelligence/",
+      "permanent": true
+    },
+    {
+      "source": "/marketing-with-tiktok-is-it-right-for-your-business",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/marketing-with-tiktok-is-it-right-for-your-business/feed",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/media-category/employee/page/2",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/organizer/logan-hartman",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/organizer/logan-hartman/?eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/organizer/matt-dragoo/?eventDisplay=past",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/organizer/rachel-p",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/our-top-takeaways-from-search-marketing-expo-advanced-2025",
+      "destination": "/insights/our-top-takeaways-from-search-marketing-expo-advanced-2025/",
+      "permanent": true
+    },
+    {
+      "source": "/our-work",
+      "destination": "/capabilities/",
+      "permanent": true
+    },
+    {
+      "source": "/our-work/b2b-marketing-strategy-analytics",
+      "destination": "/our-approach/",
+      "permanent": true
+    },
+    {
+      "source": "/our-work/b2b-marketing-strategy-analytics?hsLang=en",
+      "destination": "/our-approach/",
+      "permanent": true
+    },
+    {
+      "source": "/our-work/education",
+      "destination": "/our-approach/",
+      "permanent": true
+    },
+    {
+      "source": "/our-work/healthcare",
+      "destination": "/our-approach/",
+      "permanent": true
+    },
+    {
+      "source": "/page/2/?post_type=tribe_events&eventDisplay=day&tribe_events_cat=agency-meetings&eventDate=2024-10-28",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/page/4/?post_type=tribe_events&eventDisplay=day&eventDate=2023-02-19",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/paid-media",
+      "destination": "/capabilities/paid-media/",
+      "permanent": true
+    },
+    {
+      "source": "/paid-media/?hsLang=en",
+      "destination": "/capabilities/paid-media/",
+      "permanent": true
+    },
+    {
+      "source": "/paid-media/campaign-infrastructure",
+      "destination": "/capabilities/paid-media/",
+      "permanent": true
+    },
+    {
+      "source": "/paid-media/campaign-infrastructure/landing-pages",
+      "destination": "/capabilities/paid-media/",
+      "permanent": true
+    },
+    {
+      "source": "/paid-media/lead-buying",
+      "destination": "/capabilities/paid-media/",
+      "permanent": true
+    },
+    {
+      "source": "/paid-media/search",
+      "destination": "/capabilities/paid-media/",
+      "permanent": true
+    },
+    {
+      "source": "/paid-media/social",
+      "destination": "/capabilities/paid-media/",
+      "permanent": true
+    },
+    {
+      "source": "/paid-media/social/facebook-ads-agency",
+      "destination": "/capabilities/paid-media/",
+      "permanent": true
+    },
+    {
+      "source": "/people",
+      "destination": "/team/",
+      "permanent": true
+    },
+    {
+      "source": "/performance_creative",
+      "destination": "/capabilities/performance-creative/",
+      "permanent": true
+    },
+    {
+      "source": "/performance-creative-ux",
+      "destination": "/capabilities/performance-creative/",
+      "permanent": true
+    },
+    {
+      "source": "/performance-creative-ux?hsLang=en",
+      "destination": "/capabilities/performance-creative/",
+      "permanent": true
+    },
+    {
+      "source": "/performance-creative-ux/conversion-rate-optimization",
+      "destination": "/capabilities/performance-creative/",
+      "permanent": true
+    },
+    {
+      "source": "/performance-creative-ux/motion-graphic-video-production",
+      "destination": "/capabilities/performance-creative/",
+      "permanent": true
+    },
+    {
+      "source": "/performance-creative-ux/motion-graphic-video-production/?utm_source=LinkedIn&utm_medium=Social&utm_campaign=Motion_Graphic_Video_Production",
+      "destination": "/capabilities/performance-creative/",
+      "permanent": true
+    },
+    {
+      "source": "/privacy",
+      "destination": "/privacy-policy/",
+      "permanent": true
+    },
+    {
+      "source": "/qing_z",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/resources",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/resources/8-reasons-why-you-should-conduct-annual-google-analytics-audits",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/resources/8-reasons-why-you-should-conduct-annual-google-analytics-audits?hsLang=en",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/resources/seo-strategy-to-drive-more-leads",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/resources/seo-strategy-to-drive-more-leads/?hsLang=en",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/resources/six-key-ingredients-paid-media-strategy-that-excels",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/resources/six-key-ingredients-paid-media-strategy-that-excels?hsLang=en",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/resources/six-key-ingredients-paid-media-strategy-that-excels/?trk=organization_guest_main-feed-card_feed-article-content",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/ryan_e",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/sem-training-workshops/seo",
+      "destination": "/capabilities/",
+      "permanent": true
+    },
+    {
+      "source": "/services.html",
+      "destination": "/capabilities/",
+      "permanent": true
+    },
+    {
+      "source": "/services/brand-strategy",
+      "destination": "/capabilities/",
+      "permanent": true
+    },
+    {
+      "source": "/services/marketing-analytics",
+      "destination": "/capabilities/data-intelligence/",
+      "permanent": true
+    },
+    {
+      "source": "/services/marketing-analytics/google-analytics-app-web",
+      "destination": "/capabilities/data-intelligence/",
+      "permanent": true
+    },
+    {
+      "source": "/services/marketing-analytics/google-tag-manager",
+      "destination": "/capabilities/data-intelligence/",
+      "permanent": true
+    },
+    {
+      "source": "/services/marketing-analytics/google-tag-manager-implementation",
+      "destination": "/capabilities/data-intelligence/",
+      "permanent": true
+    },
+    {
+      "source": "/services/marketing-analytics/kpi-discovery-measurement-plans",
+      "destination": "/capabilities/data-intelligence/",
+      "permanent": true
+    },
+    {
+      "source": "/services/paid-media-management",
+      "destination": "/capabilities/paid-media/",
+      "permanent": true
+    },
+    {
+      "source": "/services/search-engine-optimization",
+      "destination": "/capabilities/",
+      "permanent": true
+    },
+    {
+      "source": "/services/ux-conversion-rate-optimization",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/services/web-analytics",
+      "destination": "/capabilities/data-intelligence/",
+      "permanent": true
+    },
+    {
+      "source": "/testimonials.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/tracking-html-video-elements",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/web-analytics-seo",
+      "destination": "/capabilities/data-intelligence/",
+      "permanent": true
+    },
+    {
+      "source": "/web-analytics-seo/app-web-implementation",
+      "destination": "/capabilities/data-intelligence/",
+      "permanent": true
+    },
+    {
+      "source": "/web-analytics-seo/campaign-tracking",
+      "destination": "/capabilities/data-intelligence/",
+      "permanent": true
+    },
+    {
+      "source": "/web-analytics-seo/campaign-tracking?hsLang=en",
+      "destination": "/capabilities/data-intelligence/",
+      "permanent": true
+    },
+    {
+      "source": "/web-analytics-seo/campaign-tracking/?hsLang=en",
+      "destination": "/capabilities/data-intelligence/",
+      "permanent": true
+    },
+    {
+      "source": "/web-analytics-seo/downstream-data-integration",
+      "destination": "/capabilities/data-intelligence/",
+      "permanent": true
+    },
+    {
+      "source": "/web-analytics-seo/enterprise-seo",
+      "destination": "/capabilities/data-intelligence/",
+      "permanent": true
+    },
+    {
+      "source": "/web-analytics-seo/google-analytics-360",
+      "destination": "/capabilities/data-intelligence/",
+      "permanent": true
+    },
+    {
+      "source": "/web-analytics-seo/google-analytics-360?hsLang=en",
+      "destination": "/capabilities/data-intelligence/",
+      "permanent": true
+    },
+    {
+      "source": "/web-analytics-seo/google-analytics-360/?hsLang=en",
+      "destination": "/capabilities/data-intelligence/",
+      "permanent": true
+    },
+    {
+      "source": "/web-analytics-seo/google-analytics-4",
+      "destination": "/capabilities/data-intelligence/",
+      "permanent": true
+    },
+    {
+      "source": "/web-analytics-seo/google-analytics-audits",
+      "destination": "/capabilities/data-intelligence/",
+      "permanent": true
+    },
+    {
+      "source": "/web-analytics-seo/google-tag-manager",
+      "destination": "/capabilities/data-intelligence/",
+      "permanent": true
+    },
+    {
+      "source": "/web-analytics-seo/kpi-discovery-measurement-plans",
+      "destination": "/capabilities/data-intelligence/",
+      "permanent": true
+    },
+    {
+      "source": "/web-analytics-seo/offline-event-tracking",
+      "destination": "/capabilities/data-intelligence/",
+      "permanent": true
+    },
+    {
+      "source": "/who-we-are",
+      "destination": "/about-us/",
+      "permanent": true
+    },
+    {
+      "source": "/who-we-are/our-certifications",
+      "destination": "/about-us/",
+      "permanent": true
+    },
+    {
+      "source": "/who-we-are/our-people-jr",
+      "destination": "/team/",
+      "permanent": true
+    }
   ]
 }

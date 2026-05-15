@@ -7,6 +7,14 @@ export type SeoFields = {
   seoDescription?: string;
   canonicalUrl?: string;
   robots?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImage?: EditableImage;
+  twitterCard?: string;
+  twitterTitle?: string;
+  twitterDescription?: string;
+  twitterImage?: EditableImage;
+  schemaJson?: string;
 };
 
 type ImageField = { image?: EditableImage; imageAlt?: string };
@@ -80,7 +88,7 @@ export type PrivacyPolicyPageData = SeoFields & {
 };
 
 export type EventLandingPageData = SeoFields & {
-  ogImage?: string;
+  ogImage?: string | EditableImage;
   event: {
     name?: string;
     description?: string;
@@ -252,7 +260,7 @@ export const defaultContactPageData: FormPageData = {
   variant: 'contact',
   seoTitle: 'Contact Us - Found Search Marketing',
   seoDescription: "Bring us your biggest challenge. We don't want to be your agency of record. We want to be your agency of results. Let's see what we can achieve together.",
-  canonicalUrl: 'https://www.foundsm.com/contact-us',
+  canonicalUrl: 'https://foundsm.com/contact-us',
   heading: 'Bring Us Your Biggest Challenge.',
   intro: [block("We don't want to be your agency of record. We want to be your agency of results. Let's see what we can achieve together.")],
   formId: '4f48ec0c-d036-4c2f-b461-4b5f4c03c3fc',
@@ -264,7 +272,7 @@ export const defaultNewsletterPageData: FormPageData = {
   variant: 'newsletter',
   seoTitle: "Sign Up For Found's Newsletter",
   seoDescription: 'Found Search Marketing brings deep channel expertise, custom analytics, and agile strategy together to maximize performance across your entire media ecosystem.',
-  canonicalUrl: 'https://www.foundsm.com/newsletter',
+  canonicalUrl: 'https://foundsm.com/newsletter',
   eyebrow: 'Get Found in Your Inbox',
   heading: 'Sign Up for Our Newsletter',
   intro: [block('Get monthly insights, real-world strategies, and expert takes from the Found team.')],
@@ -276,7 +284,7 @@ export const defaultNewsletterPageData: FormPageData = {
 export const defaultTeamPageData: TeamPageData = {
   seoTitle: 'Our Team | Found Search Marketing',
   seoDescription: 'Found Search Marketing brings deep channel expertise, custom analytics, and agile strategy together to maximize performance across your entire media ecosystem.',
-  canonicalUrl: 'https://www.foundsm.com/team',
+  canonicalUrl: 'https://foundsm.com/team',
   hero: {
     heading: 'Together, We Solve.',
     body: [block("In an industry that never stops evolving, Found Search Marketing stands out as an agency that knows exactly who we are. Grounded in a deep commitment to our clients, we combine precision with agility to thrive in a fast-moving world. We're proud cool nerds, energized by the pursuit of high-ceiling, complex problems that drive significant business impact.")],
@@ -322,7 +330,7 @@ export const defaultTeamPageData: TeamPageData = {
 export const defaultNotFoundPageData: NotFoundPageData = {
   seoTitle: 'Page Not Found | Found Search Marketing',
   seoDescription: "The page you're looking for doesn't exist or has been moved. Return to Found Search Marketing's homepage or explore our latest insights.",
-  canonicalUrl: 'https://www.foundsm.com/404',
+  canonicalUrl: 'https://foundsm.com/404',
   robots: 'noindex, follow',
   code: '404',
   heading: 'Page Not Found',
@@ -334,7 +342,7 @@ export const defaultNotFoundPageData: NotFoundPageData = {
 export const defaultApproachPageData: ApproachPageData = {
   seoTitle: 'Our Proven Paid Media Approach | Found Search Marketing',
   seoDescription: 'At Found Search Marketing, our proven paid media approach transforms complex data into actionable insights that fuel smarter strategy and measurable results.',
-  canonicalUrl: 'https://www.foundsm.com/our-approach',
+  canonicalUrl: 'https://foundsm.com/our-approach',
   hero: {
     heading: "It's Not What We Do.\nIt's How We Do It.",
     body: [
@@ -387,7 +395,7 @@ export const defaultApproachPageData: ApproachPageData = {
 export const defaultPrivacyPolicyPageData: PrivacyPolicyPageData = {
   seoTitle: 'Privacy Policy | Found Search Marketing',
   seoDescription: "Found Search Marketing's privacy policy describes how we collect, use, and protect your personal information when you visit our website or engage with our services.",
-  canonicalUrl: 'https://www.foundsm.com/privacy-policy',
+  canonicalUrl: 'https://foundsm.com/privacy-policy',
   robots: 'index, follow',
   heading: 'Privacy Policy',
   lastUpdated: 'March 2026',
@@ -484,16 +492,16 @@ export const defaultPrivacyPolicyPageData: PrivacyPolicyPageData = {
 export const defaultEventLandingPageData: EventLandingPageData = {
   seoTitle: 'Lunch & Learn: Scale Smarter with AI-Powered Paid Media | Found Search Marketing',
   seoDescription: 'Join Found Search Marketing for a free 60-minute virtual session on AI-powered paid media strategy. April 15, 2026 at 12:00 PM ET.',
-  canonicalUrl: 'https://www.foundsm.com/events/lunch-and-learn',
+  canonicalUrl: 'https://foundsm.com/events/lunch-and-learn',
   robots: 'index, follow',
-  ogImage: 'https://www.foundsm.com/images/og-lunch-and-learn.jpg',
+  ogImage: 'https://foundsm.com/images/og-lunch-and-learn.jpg',
   event: {
     name: 'Scale Smarter with AI-Powered Paid Media',
     description: 'An interactive session exploring how AI and automation are reshaping lead generation strategy across education, healthcare, and B2B verticals.',
     startDate: '2026-04-15T12:00:00-04:00',
     endDate: '2026-04-15T13:00:00-04:00',
     locationLabel: 'Virtual (Zoom)',
-    locationUrl: 'https://www.foundsm.com/events/lunch-and-learn',
+    locationUrl: 'https://foundsm.com/events/lunch-and-learn',
   },
   nav: { topicsLabel: 'Topics', benefitsLabel: 'Why Attend', ctaLabel: 'Register Now' },
   hero: {

@@ -12,6 +12,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "test": "node --test",
+    "verify:seo": "node scripts/verify-seo-build.mjs",
     "wp:convert": "node scripts/wp-convert.mjs"
   },
   "dependencies": {

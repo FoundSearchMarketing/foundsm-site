@@ -27,8 +27,8 @@ const posts = (await getAllBlogPosts()).filter((post) => {
   const postAuthorName = post.authorName.toLowerCase();
   return postAuthorSlug === author.slug || postAuthorSlug.startsWith(`${author.slug}-`) || postAuthorName.startsWith(authorName);
 });
-const canonical = `https://www.foundsm.com/insights/authors/${author.slug}`;
-const description = author.bio || `Insights by ${author.name} from Found Search Marketing.`;
+const canonical = author.canonicalUrl || `https://foundsm.com/insights/authors/${author.slug}/`;
+const description = author.seoDescription || author.bio || `Insights by ${author.name} from Found Search Marketing.`;
 const page = mergeLegacyPageData(
   {
     id: `legacy-author-${author.slug}`,
@@ -39,9 +39,18 @@ const page = mergeLegacyPageData(
   },
   {
     title: author.name,
-    seoTitle: `${author.name} | Found Search Marketing`,
+    seoTitle: author.seoTitle || `${author.name} | Found Search Marketing`,
     seoDescription: description,
     canonicalUrl: canonical,
+    robots: author.robots,
+    ogTitle: author.ogTitle,
+    ogDescription: author.ogDescription,
+    ogImage: author.ogImage,
+    twitterCard: author.twitterCard,
+    twitterTitle: author.twitterTitle,
+    twitterDescription: author.twitterDescription,
+    twitterImage: author.twitterImage,
+    schemaJson: author.schemaJson,
     hero: {
       eyebrow: 'Author',
       heading: author.name,
@@ -78,8 +87,16 @@ const schema = {
   title={page.seoTitle}
   description={page.seoDescription}
   canonical={page.canonicalUrl}
+  ogTitle={page.ogTitle}
+  ogDescription={page.ogDescription}
+  ogImage={page.ogImage}
   robots={page.robots}
+  twitterCard={page.twitterCard}
+  twitterTitle={page.twitterTitle}
+  twitterDescription={page.twitterDescription}
+  twitterImage={page.twitterImage}
   schema={schema}
+  schemaJson={page.schemaJson}
   bodyClass="legacy-page"
 >
   <LegacyPageRenderer page={page}>

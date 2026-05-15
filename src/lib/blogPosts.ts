@@ -10,8 +10,20 @@ export interface BlogPost {
   slug: string;
   title: string;
   seoTitle: string;
+  seoDescription: string;
+  canonicalUrl: string;
+  robots: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImage?: string;
+  twitterCard?: string;
+  twitterTitle?: string;
+  twitterDescription?: string;
+  twitterImage?: string;
+  schemaJson?: string;
   excerpt: string;
   publishedAt: string;
+  modifiedAt?: string;
   publishedLabel: string;
   authorName: string;
   authorTitle: string;
@@ -67,6 +79,16 @@ type SanityBlogPost = {
   featuredImage?: SanityBlock;
   seoTitle?: string;
   seoDescription?: string;
+  canonicalUrl?: string;
+  robots?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImage?: SanityBlock;
+  twitterCard?: string;
+  twitterTitle?: string;
+  twitterDescription?: string;
+  twitterImage?: SanityBlock;
+  schemaJson?: string;
   category?: SanityCategory | null;
   author?: SanityAuthor | null;
 };
@@ -87,6 +109,16 @@ const sanityBlogPostsQuery = `*[_type == "blogPost"] | order(publishedAt desc) {
   featuredImage,
   seoTitle,
   seoDescription,
+  canonicalUrl,
+  robots,
+  ogTitle,
+  ogDescription,
+  ogImage,
+  twitterCard,
+  twitterTitle,
+  twitterDescription,
+  twitterImage,
+  schemaJson,
   "category": category->{ title, slug },
   "author": author->{ name, title, linkedin }
 }`;
@@ -198,14 +230,27 @@ function mapSanityPost(post: SanityBlogPost, slugs: Set<string>): BlogPost | und
     : undefined;
 
   const heroImage = imageUrl(post.featuredImage, 1200, 801);
+  const canonicalUrl = post.canonicalUrl || `https://foundsm.com/insights/${slug}/`;
 
   return {
     id: stableId(post._id || slug),
     slug,
     title: post.title,
     seoTitle: post.seoTitle || `${post.title} | Found Search Marketing`,
+    seoDescription: post.seoDescription || post.excerpt || '',
+    canonicalUrl,
+    robots: post.robots || 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
+    ogTitle: post.ogTitle,
+    ogDescription: post.ogDescription,
+    ogImage: imageUrl(post.ogImage, 1200, 630),
+    twitterCard: post.twitterCard,
+    twitterTitle: post.twitterTitle,
+    twitterDescription: post.twitterDescription,
+    twitterImage: imageUrl(post.twitterImage, 1200, 630),
+    schemaJson: post.schemaJson,
     excerpt: post.excerpt || post.seoDescription || '',
     publishedAt,
+    modifiedAt: publishedAt,
     publishedLabel: formatDateLabel(post.publishedAt || publishedAt),
     authorName: post.author?.name || '',
     authorTitle: post.author?.title || '',
@@ -331,7 +376,7 @@ function isTableOfContentsList(group: Extract<RenderGroup, { type: 'list' }>): b
 
 function rewriteHref(href: string, slugs: Set<string>): string {
   try {
-    const url = new URL(href, 'https://www.foundsm.com');
+    const url = new URL(href, 'https://foundsm.com');
     const isFoundDomain = url.hostname === 'foundsm.com' || url.hostname === 'www.foundsm.com';
     const match = url.pathname.match(/^\/insights\/([^/]+)\/?$/);
 

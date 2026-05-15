@@ -35,6 +35,13 @@ export type HomePageData = {
   canonicalUrl?: string;
   ogImage?: string;
   robots?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  twitterCard?: string;
+  twitterTitle?: string;
+  twitterDescription?: string;
+  twitterImage?: string;
+  schemaJson?: string;
   hero: {
     headlineLines: string[];
     subheadline?: string;

@@ -1,4 +1,5 @@
 import { defineType, defineField } from 'sanity';
+import { createSeoFields } from './seoFields';
 
 export default defineType({
   name: 'blogPost',
@@ -71,17 +72,7 @@ export default defineType({
         },
       ],
     }),
-    defineField({
-      name: 'seoTitle',
-      title: 'SEO Title',
-      type: 'string',
-    }),
-    defineField({
-      name: 'seoDescription',
-      title: 'SEO Description',
-      type: 'text',
-      rows: 2,
-    }),
+    ...createSeoFields({ group: false, descriptionMax: 180 }),
   ],
   preview: {
     select: {

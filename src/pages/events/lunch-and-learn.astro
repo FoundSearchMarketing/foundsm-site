@@ -1,14 +1,16 @@
 ---
 // No layout - self-contained page with its own dark theme
+import SEOHead from '../../components/SEOHead.astro';
 import { eventLandingPageQuery, sanityClient } from '../../lib/sanity';
 import { defaultEventLandingPageData, mergeEventLandingPageData } from '../../lib/morePageData';
+import { srcFor } from '../../lib/fixedPageRender';
 
 const sanityPage = await sanityClient.fetch(eventLandingPageQuery).catch(() => null);
 const page = mergeEventLandingPageData(sanityPage);
 const title = page.seoTitle || defaultEventLandingPageData.seoTitle;
 const description = page.seoDescription || defaultEventLandingPageData.seoDescription;
 const canonical = page.canonicalUrl || defaultEventLandingPageData.canonicalUrl;
-const ogImage = page.ogImage || defaultEventLandingPageData.ogImage;
+const ogImage = srcFor(page.ogImage) || defaultEventLandingPageData.ogImage;
 const firstRowFields = page.registration.fields.slice(0, 2);
 const remainingFields = page.registration.fields.slice(2);
 const eventSchema = {
@@ -27,7 +29,7 @@ const eventSchema = {
   organizer: {
     '@type': 'Organization',
     name: 'Found Search Marketing',
-    url: 'https://www.foundsm.com',
+    url: 'https://foundsm.com/',
   },
   offers: {
     '@type': 'Offer',
@@ -39,53 +41,23 @@ const eventSchema = {
   image: ogImage,
   isAccessibleForFree: true,
 };
+const enableThirdPartyScripts = import.meta.env.PROD;
 ---
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="color-scheme" content="dark" />
-
-  <title>{title}</title>
-  <meta name="description" content={description} />
-  <meta name="robots" content={page.robots || 'index, follow'} />
-
-  <link rel="canonical" href={canonical} />
-
-  <!-- Open Graph -->
-  <meta property="og:title" content={title} />
-  <meta property="og:description" content={description} />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content={canonical} />
-  <meta property="og:image" content={ogImage} />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta property="og:site_name" content="Found Search Marketing" />
-
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content={title} />
-  <meta name="twitter:description" content={description} />
-  <meta name="twitter:image" content={ogImage} />
-
-  <!-- Google Fonts (same as source) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,800&family=Poppins:wght@300;400;500;600;700;900&display=swap" rel="stylesheet" />
-
-  <!-- Google Tag Manager -->
-  <script is:inline>
-  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-  'https://sst.foundsm.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','GTM-PG7TGGG');
-  </script>
-
-  <!-- Event Schema -->
-  <script type="application/ld+json" set:html={JSON.stringify(eventSchema)} />
+  <SEOHead
+    title={title}
+    description={description}
+    canonical={canonical}
+    ogImage={ogImage}
+    ogType="website"
+    robots={page.robots}
+    schema={eventSchema}
+    colorScheme="dark"
+    fontHref="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,800&family=Poppins:wght@300;400;500;600;700;900&display=swap"
+  />
 
   <style>
   :root {
@@ -832,7 +804,9 @@ const eventSchema = {
 </head>
 <body>
   <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://sst.foundsm.com/ns.html?id=GTM-PG7TGGG" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  {enableThirdPartyScripts && (
+    <noscript><iframe src="https://sst.foundsm.com/ns.html?id=GTM-PG7TGGG" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  )}
 
   <div class="topo-bg"></div>
 
@@ -1032,6 +1006,8 @@ const eventSchema = {
   </footer>
 
   <!-- HubSpot Tracking Code -->
-  <script is:inline type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/5045186.js"></script>
+  {enableThirdPartyScripts && (
+    <script is:inline type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/5045186.js"></script>
+  )}
 </body>
 </html>

@@ -1,5 +1,6 @@
 import { defineArrayMember, defineField, defineType } from 'sanity';
 import { defaultHomePageData } from '../../src/lib/homePageData';
+import { createSeoFields } from './seoFields';
 
 const linkAnnotation = defineArrayMember({
   name: 'link',
@@ -180,46 +181,7 @@ export default defineType({
     { name: 'content', title: 'Content', default: true },
   ],
   fields: [
-    defineField({
-      name: 'seoTitle',
-      title: 'SEO Title',
-      type: 'string',
-      group: 'seo',
-    }),
-    defineField({
-      name: 'seoDescription',
-      title: 'Meta Description',
-      type: 'text',
-      rows: 3,
-      group: 'seo',
-      validation: (Rule) => Rule.max(160),
-    }),
-    defineField({
-      name: 'canonicalUrl',
-      title: 'Canonical URL',
-      type: 'url',
-      group: 'seo',
-    }),
-    defineField({
-      name: 'ogImage',
-      title: 'Social Share Image',
-      type: 'image',
-      group: 'seo',
-      description: '1200x630 recommended',
-    }),
-    defineField({
-      name: 'robots',
-      title: 'Robots',
-      type: 'string',
-      group: 'seo',
-      options: {
-        list: [
-          { title: 'Index, follow', value: 'index, follow' },
-          { title: 'Noindex, follow', value: 'noindex, follow' },
-          { title: 'Noindex, nofollow', value: 'noindex, nofollow' },
-        ],
-      },
-    }),
+    ...createSeoFields({ descriptionMax: 180 }),
     defineField({
       name: 'hero',
       title: 'Hero/Search',

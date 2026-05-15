@@ -18,8 +18,8 @@ interface Props {
 }
 
 const { author } = Astro.props;
-const canonical = `https://foundsm.com/insights/authors/${author.slug}/`;
-const description = author.bio || `Insights by ${author.name} from Found Search Marketing.`;
+const canonical = author.canonicalUrl || `https://foundsm.com/insights/authors/${author.slug}/`;
+const description = author.seoDescription || author.bio || `Insights by ${author.name} from Found Search Marketing.`;
 const firstName = author.name.split(' ')[0] || author.name;
 const schema = {
   '@context': 'https://schema.org',
@@ -37,11 +37,19 @@ const schema = {
 ---
 
 <BaseLayout
-  title={`About the Author | ${firstName} | Found Search Marketing`}
+  title={author.seoTitle || `About the Author | ${firstName} | Found Search Marketing`}
   description={description}
   canonical={canonical}
-  robots="index, follow"
+  ogTitle={author.ogTitle}
+  ogDescription={author.ogDescription}
+  ogImage={author.ogImage}
+  robots={author.robots || 'index, follow'}
+  twitterCard={author.twitterCard}
+  twitterTitle={author.twitterTitle}
+  twitterDescription={author.twitterDescription}
+  twitterImage={author.twitterImage}
   schema={schema}
+  schemaJson={author.schemaJson}
   bodyClass="author-detail-page"
 >
   <AuthorDetailPage author={author} />

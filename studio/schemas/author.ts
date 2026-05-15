@@ -1,4 +1,5 @@
 import { defineType, defineField } from 'sanity';
+import { createSeoFields } from './seoFields';
 
 export default defineType({
   name: 'author',
@@ -55,6 +56,7 @@ export default defineType({
       title: 'LinkedIn URL',
       type: 'url',
     }),
+    ...createSeoFields({ group: false, descriptionMax: 180 }),
     defineField({
       name: 'wpId',
       title: 'WordPress ID',

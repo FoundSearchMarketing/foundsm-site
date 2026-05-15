@@ -6,7 +6,9 @@ const SANITY_PROJECT_ID = process.env.SANITY_PROJECT_ID || 'vzneqxsx';
 const SANITY_DATASET = process.env.SANITY_DATASET || 'staging';
 
 export default defineConfig({
+  site: 'https://foundsm.com',
   output: 'static',
+  trailingSlash: 'always',
   devToolbar: {
     enabled: false,
   },

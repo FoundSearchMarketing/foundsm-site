@@ -16,8 +16,8 @@ const schema = {
     {
       "@type": "Organization",
       "name": "Found Search Marketing",
-      "url": "https://www.foundsm.com",
-      "logo": "https://www.foundsm.com/images/logo.svg",
+      "url": "https://foundsm.com",
+      "logo": "https://foundsm.com/images/logo.svg",
       "description": "An enterprise paid media agency that drives measurable growth.",
       "address": {
         "@type": "PostalAddress",
@@ -58,9 +58,16 @@ const schema = {
   title={title}
   description={description}
   canonical={canonical}
+  ogTitle={homePage.ogTitle}
+  ogDescription={homePage.ogDescription}
   ogImage={homePage.ogImage}
   robots={homePage.robots}
+  twitterCard={homePage.twitterCard}
+  twitterTitle={homePage.twitterTitle}
+  twitterDescription={homePage.twitterDescription}
+  twitterImage={homePage.twitterImage}
   schema={schema}
+  schemaJson={homePage.schemaJson}
   bodyClass="home-page"
 >
   <Homepage data={homePage} />

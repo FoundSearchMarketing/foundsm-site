@@ -22,9 +22,18 @@ const seoDescription = page.seoDescription || '';
 ---
 
 <BaseLayout
-  title={`${seoTitle} | Found Search Marketing`}
+  title={seoTitle}
   description={seoDescription}
-  canonical={`https://www.foundsm.com/lp/${slug}`}
+  canonical={page.canonicalUrl || `https://foundsm.com/lp/${slug}/`}
+  ogTitle={page.ogTitle}
+  ogDescription={page.ogDescription}
+  ogImage={page.ogImage}
+  robots={page.robots}
+  twitterCard={page.twitterCard}
+  twitterTitle={page.twitterTitle}
+  twitterDescription={page.twitterDescription}
+  twitterImage={page.twitterImage}
+  schemaJson={page.schemaJson}
   hideNavigation={page.hideNavigation}
   hideFooter={page.hideFooter}
 >

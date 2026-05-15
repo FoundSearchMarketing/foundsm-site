@@ -1,5 +1,6 @@
 import { defineArrayMember, defineField, defineType } from 'sanity';
 import { defaultLegacyPageTemplates, legacyPagePathOptions } from '../../src/lib/legacyPageData';
+import { createSeoFields } from './seoFields';
 
 const linkAnnotation = defineArrayMember({
   name: 'link',
@@ -29,25 +30,7 @@ const richTextField = (name: string, title: string) =>
     ],
   });
 
-const seoFields = [
-  defineField({ name: 'seoTitle', title: 'SEO Title', type: 'string', group: 'seo' }),
-  defineField({ name: 'seoDescription', title: 'Meta Description', type: 'text', rows: 3, group: 'seo', validation: (Rule) => Rule.max(180) }),
-  defineField({ name: 'canonicalUrl', title: 'Canonical URL', type: 'url', group: 'seo' }),
-  defineField({ name: 'ogImage', title: 'Open Graph Image', type: 'image', group: 'seo' }),
-  defineField({
-    name: 'robots',
-    title: 'Robots',
-    type: 'string',
-    group: 'seo',
-    options: {
-      list: [
-        { title: 'Index, follow', value: 'index, follow' },
-        { title: 'Noindex, follow', value: 'noindex, follow' },
-        { title: 'Noindex, nofollow', value: 'noindex, nofollow' },
-      ],
-    },
-  }),
-];
+const seoFields = createSeoFields();
 
 const ctaFields = [
   defineField({ name: 'label', title: 'Label', type: 'string' }),

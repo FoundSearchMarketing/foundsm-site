@@ -30,8 +30,15 @@ const firstPartyOgImage = 'https://foundsm.com/found2025/wp-content/uploads/2026
   title={isFirstPartyData ? firstPartyTitle : page.seoTitle}
   description={isFirstPartyData ? firstPartyDescription : page.seoDescription}
   canonical={page.canonicalUrl}
+  ogTitle={page.ogTitle}
+  ogDescription={page.ogDescription}
   ogImage={isFirstPartyData ? firstPartyOgImage : page.ogImage}
   robots={page.robots}
+  twitterCard={page.twitterCard}
+  twitterTitle={page.twitterTitle}
+  twitterDescription={page.twitterDescription}
+  twitterImage={page.twitterImage}
+  schemaJson={page.schemaJson}
   bodyClass={isFirstPartyData ? 'wordpress-match-page' : 'legacy-page'}
 >
   {isFirstPartyData ? <WordPressMatchPage variant="first-party-data" /> : <LegacyPageRenderer page={page} />}

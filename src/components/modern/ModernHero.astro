@@ -1,0 +1,302 @@
+---
+interface HeroImage {
+  src: string;
+  alt?: string;
+  width?: number;
+  height?: number;
+  loading?: 'eager' | 'lazy';
+}
+
+interface CtaLink {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  intro?: string | string[];
+  introHtml?: string;
+  cta?: CtaLink;
+  image?: HeroImage;
+  tone?: 'light' | 'soft' | 'dark';
+  imageShape?: 'rounded' | 'circle' | 'plain';
+  titleScale?: 'default' | 'display';
+  imageFit?: 'cover' | 'contain';
+  mediaHeight?: string;
+  mediaHeightTablet?: string;
+  mediaHeightMobile?: string;
+  imageMaxWidth?: string;
+  className?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  intro,
+  introHtml,
+  cta,
+  image,
+  tone = 'light',
+  imageShape = 'rounded',
+  titleScale = 'default',
+  imageFit = 'cover',
+  mediaHeight,
+  mediaHeightTablet,
+  mediaHeightMobile,
+  imageMaxWidth,
+  className,
+} = Astro.props;
+
+const paragraphs = Array.isArray(intro) ? intro : intro ? [intro] : [];
+const heroClass = [
+  'modern-hero',
+  `modern-hero--${tone}`,
+  `modern-hero--title-${titleScale}`,
+  image ? 'modern-hero--split' : 'modern-hero--text-only',
+  className,
+].filter(Boolean).join(' ');
+
+const mediaStyle = [
+  mediaHeight ? `--modern-hero-media-height: ${mediaHeight}` : '',
+  mediaHeightTablet ? `--modern-hero-media-height-tablet: ${mediaHeightTablet}` : '',
+  mediaHeightMobile ? `--modern-hero-media-height-mobile: ${mediaHeightMobile}` : '',
+  imageMaxWidth ? `--modern-hero-image-max-width: ${imageMaxWidth}` : '',
+].filter(Boolean).join('; ');
+---
+
+<section class={heroClass} aria-labelledby={`${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-hero-heading`}>
+  <div class="modern-hero__inner">
+    <div class="modern-hero__copy">
+      {eyebrow && <p class="modern-hero__eyebrow">{eyebrow}</p>}
+      <h1 id={`${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-hero-heading`}>{title}</h1>
+      {introHtml ? (
+        <div class="modern-hero__intro" set:html={introHtml} />
+      ) : paragraphs.length > 0 && (
+        <div class="modern-hero__intro">
+          {paragraphs.map((item) => <p>{item}</p>)}
+        </div>
+      )}
+      {cta && (
+        <a class="modern-hero__button" href={cta.href}>{cta.label}</a>
+      )}
+    </div>
+
+    {image && (
+      <div
+        class={`modern-hero__media modern-hero__media--${imageShape} modern-hero__media--fit-${imageFit}`}
+        style={mediaStyle || undefined}
+      >
+        <img
+          src={image.src}
+          alt={image.alt ?? ''}
+          width={image.width}
+          height={image.height}
+          loading={image.loading ?? 'eager'}
+          decoding="async"
+        />
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .modern-hero {
+    position: relative;
+    overflow: hidden;
+    padding: 5rem var(--gutter);
+  }
+
+  .modern-hero--soft {
+    background: #f2f3f2;
+  }
+
+  .modern-hero--light {
+    background: #ffffff;
+  }
+
+  .modern-hero--dark {
+    background: #1a1a1a;
+    color: #ffffff;
+  }
+
+  .modern-hero__inner {
+    display: grid;
+    align-items: center;
+    gap: 3rem;
+    inline-size: min(100%, var(--content-max-width));
+    margin-inline: auto;
+  }
+
+  .modern-hero--split .modern-hero__inner {
+    grid-template-columns: minmax(0, 1.03fr) minmax(18rem, 0.97fr);
+  }
+
+  .modern-hero--text-only .modern-hero__inner {
+    max-inline-size: 62rem;
+  }
+
+  .modern-hero__copy {
+    display: grid;
+    gap: 1.35rem;
+  }
+
+  .modern-hero__eyebrow {
+    color: var(--color-primary);
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  .modern-hero h1 {
+    max-inline-size: 50rem;
+    margin: 0;
+    font-size: 3.75rem;
+    line-height: 1.083;
+    letter-spacing: 0;
+  }
+
+  .modern-hero--title-display h1 {
+    font-size: 4.375rem;
+    line-height: 1.071;
+  }
+
+  .modern-hero--dark h1 {
+    color: #ffffff;
+  }
+
+  .modern-hero__intro {
+    display: grid;
+    gap: 0.9rem;
+    max-inline-size: 47rem;
+    color: rgba(26, 26, 26, 0.82);
+    font-size: 1.25rem;
+    line-height: 1.8;
+  }
+
+  .modern-hero--dark .modern-hero__intro {
+    color: rgba(255, 255, 255, 0.82);
+  }
+
+  .modern-hero__button {
+    display: inline-flex;
+    justify-content: center;
+    justify-self: start;
+    min-block-size: 3.75rem;
+    padding: 1.125rem 2.75rem;
+    border-radius: 999px;
+    background: var(--color-primary);
+    color: var(--color-dark);
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 1.2;
+    transition: background-color var(--transition-fast), transform var(--transition-fast);
+  }
+
+  .modern-hero__button:hover,
+  .modern-hero__button:focus-visible {
+    background: #b9dc89;
+    transform: translateY(-1px);
+  }
+
+  .modern-hero__media {
+    position: relative;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    min-block-size: var(--modern-hero-media-height, 33rem);
+    block-size: var(--modern-hero-media-height, 33rem);
+    background: #e8ebe6;
+  }
+
+  .modern-hero__media--rounded {
+    border-radius: 2.5rem;
+  }
+
+  .modern-hero__media--circle {
+    border-radius: 50%;
+    aspect-ratio: 1;
+  }
+
+  .modern-hero__media--plain {
+    border-radius: 0;
+    background: transparent;
+  }
+
+  .modern-hero__media img {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+
+  .modern-hero__media--fit-contain img,
+  .modern-hero__media--plain img {
+    max-inline-size: var(--modern-hero-image-max-width, 100%);
+    max-block-size: 100%;
+    object-fit: contain;
+  }
+
+  @media (max-width: 1024px) {
+    .modern-hero {
+      padding-block: 4rem;
+    }
+
+    .modern-hero--split .modern-hero__inner {
+      grid-template-columns: 1fr;
+    }
+
+    .modern-hero h1 {
+      font-size: 2.375rem;
+      line-height: 1.105;
+    }
+
+    .modern-hero--title-display h1 {
+      font-size: 2.8125rem;
+      line-height: 1.111;
+    }
+
+    .modern-hero__intro {
+      font-size: 1.125rem;
+      line-height: 1.667;
+    }
+
+    .modern-hero__media {
+      min-block-size: var(--modern-hero-media-height-tablet, 20rem);
+      block-size: var(--modern-hero-media-height-tablet, 20rem);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .modern-hero {
+      padding-block: 3rem;
+    }
+
+    .modern-hero h1 {
+      font-size: 2.375rem;
+      line-height: 1.105;
+    }
+
+    .modern-hero--title-display h1 {
+      font-size: 2.8125rem;
+      line-height: 1.111;
+    }
+
+    .modern-hero__intro {
+      font-size: 1rem;
+      line-height: 1.65;
+    }
+
+    .modern-hero__media {
+      min-block-size: var(--modern-hero-media-height-mobile, 17.1875rem);
+      block-size: var(--modern-hero-media-height-mobile, 17.1875rem);
+    }
+
+    .modern-hero__button {
+      min-block-size: 3.25rem;
+      padding: 0.9rem 1.75rem;
+      font-size: 1rem;
+    }
+  }
+</style>

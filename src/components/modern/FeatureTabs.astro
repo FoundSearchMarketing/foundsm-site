@@ -1,0 +1,310 @@
+---
+interface TabItem {
+  title: string;
+  body: string;
+  bodyHtml?: string;
+  icon?: string;
+  image?: string;
+  imageAlt?: string;
+}
+
+interface Props {
+  title?: string;
+  subtitle?: string;
+  tabs: TabItem[];
+  idPrefix: string;
+  theme?: 'light' | 'muted';
+}
+
+const { title, subtitle, tabs, idPrefix, theme = 'muted' } = Astro.props;
+---
+
+<section class={`feature-tabs feature-tabs--${theme}`} aria-labelledby={title ? `${idPrefix}-heading` : undefined}>
+  <div class="feature-tabs__outer">
+    {(title || subtitle) && (
+      <div class="feature-tabs__header">
+        {title && <h2 id={`${idPrefix}-heading`}>{title}</h2>}
+        {subtitle && <p>{subtitle}</p>}
+      </div>
+    )}
+
+    <div class="feature-tabs__inner" data-feature-tabs>
+      <div class="feature-tabs__nav" role="tablist" aria-label={title ?? 'Feature tabs'}>
+        {tabs.map((tab, index) => {
+          const tabId = `${idPrefix}-tab-${index + 1}`;
+          const panelId = `${idPrefix}-panel-${index + 1}`;
+          const selected = index === 0;
+          return (
+            <button
+              class:list={['feature-tabs__tab', { 'is-active': selected }]}
+              id={tabId}
+              type="button"
+              role="tab"
+              aria-selected={String(selected)}
+              aria-controls={panelId}
+              tabindex={selected ? '0' : '-1'}
+            >
+              <span class="feature-tabs__rail" aria-hidden="true"></span>
+              {tab.icon && <img class="feature-tabs__icon" src={tab.icon} alt="" loading="lazy" decoding="async" />}
+              <span>{tab.title}</span>
+            </button>
+          );
+        })}
+      </div>
+
+      <div class="feature-tabs__panels">
+        {tabs.map((tab, index) => {
+          const tabId = `${idPrefix}-tab-${index + 1}`;
+          const panelId = `${idPrefix}-panel-${index + 1}`;
+          const selected = index === 0;
+          return (
+            <article
+              class:list={['feature-tabs__panel', { 'is-active': selected }]}
+              id={panelId}
+              role="tabpanel"
+              aria-labelledby={tabId}
+              hidden={!selected}
+            >
+              <div class="feature-tabs__panel-copy">
+                <h3>{tab.title}</h3>
+                {tab.bodyHtml ? <div set:html={tab.bodyHtml} /> : <p>{tab.body}</p>}
+              </div>
+              {tab.image && (
+                <div class="feature-tabs__panel-media">
+                  <img src={tab.image} alt={tab.imageAlt ?? tab.title} loading="lazy" decoding="async" />
+                </div>
+              )}
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const initModernFeatureTabs = () => {
+    document.querySelectorAll<HTMLElement>('[data-feature-tabs]').forEach((container) => {
+      if (container.dataset.initialized === 'true') return;
+      container.dataset.initialized = 'true';
+
+      const tabs = Array.from(container.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
+      const panels = Array.from(container.querySelectorAll<HTMLElement>('[role="tabpanel"]'));
+
+      const activate = (tab: HTMLButtonElement) => {
+        const panelId = tab.getAttribute('aria-controls');
+
+        tabs.forEach((item) => {
+          const active = item === tab;
+          item.classList.toggle('is-active', active);
+          item.setAttribute('aria-selected', String(active));
+          item.tabIndex = active ? 0 : -1;
+        });
+
+        panels.forEach((panel) => {
+          const active = panel.id === panelId;
+          panel.classList.toggle('is-active', active);
+          panel.hidden = !active;
+        });
+      };
+
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => activate(tab));
+        tab.addEventListener('keydown', (event) => {
+          const current = tabs.indexOf(tab);
+          const nextIndex = event.key === 'ArrowDown' || event.key === 'ArrowRight'
+            ? (current + 1) % tabs.length
+            : event.key === 'ArrowUp' || event.key === 'ArrowLeft'
+              ? (current - 1 + tabs.length) % tabs.length
+              : -1;
+
+          if (nextIndex >= 0) {
+            event.preventDefault();
+            tabs[nextIndex].focus();
+            activate(tabs[nextIndex]);
+          }
+        });
+      });
+    });
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initModernFeatureTabs);
+  } else {
+    initModernFeatureTabs();
+  }
+</script>
+
+<style>
+  .feature-tabs {
+    padding: 5rem var(--gutter);
+  }
+
+  .feature-tabs--muted {
+    background: #ffffff;
+  }
+
+  .feature-tabs__outer {
+    inline-size: min(100%, var(--content-max-width));
+    margin-inline: auto;
+  }
+
+  .feature-tabs__header {
+    max-inline-size: 44rem;
+    margin-block-end: 2rem;
+  }
+
+  .feature-tabs__header h2 {
+    margin: 0;
+    font-size: 2.6rem;
+    line-height: 1.12;
+    letter-spacing: 0;
+  }
+
+  .feature-tabs__header p {
+    margin-block-start: 0.75rem;
+    color: rgba(26, 26, 26, 0.72);
+    font-size: 1.05rem;
+    line-height: 1.7;
+  }
+
+  .feature-tabs__inner {
+    display: grid;
+    grid-template-columns: minmax(16rem, 0.42fr) minmax(0, 1fr);
+    gap: 3.125rem;
+    padding: 5rem 3.125rem;
+    border-radius: 2.5rem;
+    background: #f2f3f2;
+  }
+
+  .feature-tabs__nav {
+    display: grid;
+    align-content: start;
+    gap: 0.85rem;
+  }
+
+  .feature-tabs__tab {
+    position: relative;
+    display: grid;
+    grid-template-columns: 0.4rem 3.125rem minmax(0, 1fr);
+    align-items: center;
+    gap: 1.25rem;
+    min-block-size: 4.6875rem;
+    padding: 0 1.25rem 0 1.5625rem;
+    border-radius: 0.4rem;
+    color: rgba(26, 26, 26, 0.68);
+    text-align: left;
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.6;
+    transition: color var(--transition-fast), background-color var(--transition-fast);
+  }
+
+  .feature-tabs__tab:hover,
+  .feature-tabs__tab:focus-visible,
+  .feature-tabs__tab.is-active {
+    color: #1a1a1a;
+    background: rgba(255, 255, 255, 0.62);
+  }
+
+  .feature-tabs__rail {
+    align-self: stretch;
+    inline-size: 0.38rem;
+    border-radius: 999px;
+    background: rgba(26, 26, 26, 0.16);
+  }
+
+  .feature-tabs__tab.is-active .feature-tabs__rail {
+    background: #1a1a1a;
+  }
+
+  .feature-tabs__icon {
+    inline-size: 3.125rem;
+    block-size: 3.125rem;
+    object-fit: contain;
+    opacity: 0.45;
+  }
+
+  .feature-tabs__tab.is-active .feature-tabs__icon,
+  .feature-tabs__tab:hover .feature-tabs__icon {
+    opacity: 1;
+  }
+
+  .feature-tabs__panel {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(14rem, 1fr);
+    align-items: center;
+    gap: 2.5rem;
+  }
+
+  .feature-tabs__panel[hidden] {
+    display: none;
+  }
+
+  .feature-tabs__panel-copy {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .feature-tabs__panel-copy h3 {
+    margin: 0;
+    font-size: 1.6rem;
+    line-height: 1.25;
+  }
+
+  .feature-tabs__panel-copy p {
+    color: rgba(26, 26, 26, 0.74);
+    font-size: 1.05rem;
+    line-height: 1.75;
+  }
+
+  .feature-tabs__panel-media {
+    overflow: hidden;
+    border-radius: 2.5rem;
+    background: #e2e5df;
+  }
+
+  .feature-tabs__panel-media img {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+
+  @media (max-width: 1024px) {
+    .feature-tabs__inner {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      padding: 2.1875rem 1.5625rem;
+    }
+
+    .feature-tabs__nav {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .feature-tabs__panel {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .feature-tabs {
+      padding-block: 3.5rem;
+    }
+
+    .feature-tabs__inner {
+      border-radius: 2.5rem;
+    }
+
+    .feature-tabs__nav {
+      grid-template-columns: 1fr;
+    }
+
+    .feature-tabs__header h2 {
+      font-size: 2.1rem;
+    }
+
+    .feature-tabs__panel-media {
+      border-radius: 0.9375rem;
+    }
+  }
+</style>

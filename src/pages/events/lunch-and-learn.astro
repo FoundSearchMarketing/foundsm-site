@@ -1,81 +1,63 @@
 ---
 // No layout - self-contained page with its own dark theme
+import SEOHead from '../../components/SEOHead.astro';
+import { eventLandingPageQuery, sanityClient } from '../../lib/sanity';
+import { defaultEventLandingPageData, mergeEventLandingPageData } from '../../lib/morePageData';
+import { srcFor } from '../../lib/fixedPageRender';
+
+const sanityPage = await sanityClient.fetch(eventLandingPageQuery).catch(() => null);
+const page = mergeEventLandingPageData(sanityPage);
+const title = page.seoTitle || defaultEventLandingPageData.seoTitle;
+const description = page.seoDescription || defaultEventLandingPageData.seoDescription;
+const canonical = page.canonicalUrl || defaultEventLandingPageData.canonicalUrl;
+const ogImage = srcFor(page.ogImage) || defaultEventLandingPageData.ogImage;
+const firstRowFields = page.registration.fields.slice(0, 2);
+const remainingFields = page.registration.fields.slice(2);
+const eventSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'EducationEvent',
+  name: page.event.name,
+  description: page.event.description,
+  startDate: page.event.startDate,
+  endDate: page.event.endDate,
+  eventAttendanceMode: 'https://schema.org/OnlineEventAttendanceMode',
+  eventStatus: 'https://schema.org/EventScheduled',
+  location: {
+    '@type': 'VirtualLocation',
+    url: page.event.locationUrl || canonical,
+  },
+  organizer: {
+    '@type': 'Organization',
+    name: 'Found Search Marketing',
+    url: 'https://foundsm.com/',
+  },
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'USD',
+    availability: 'https://schema.org/InStock',
+    url: canonical,
+  },
+  image: ogImage,
+  isAccessibleForFree: true,
+};
+const enableThirdPartyScripts = import.meta.env.PROD;
 ---
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="color-scheme" content="dark" />
-
-  <title>Lunch & Learn: Scale Smarter with AI-Powered Paid Media | Found Search Marketing</title>
-  <meta name="description" content="Join Found Search Marketing for a free 60-minute virtual session on AI-powered paid media strategy. April 15, 2026 at 12:00 PM ET." />
-  <meta name="robots" content="index, follow" />
-
-  <link rel="canonical" href="https://www.foundsm.com/events/lunch-and-learn" />
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="Lunch & Learn: Scale Smarter with AI-Powered Paid Media | Found Search Marketing" />
-  <meta property="og:description" content="Join Found Search Marketing for a free 60-minute virtual session on AI-powered paid media strategy. April 15, 2026 at 12:00 PM ET." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://www.foundsm.com/events/lunch-and-learn" />
-  <meta property="og:image" content="https://www.foundsm.com/images/og-lunch-and-learn.jpg" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta property="og:site_name" content="Found Search Marketing" />
-
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Lunch & Learn: Scale Smarter with AI-Powered Paid Media | Found Search Marketing" />
-  <meta name="twitter:description" content="Join Found Search Marketing for a free 60-minute virtual session on AI-powered paid media strategy. April 15, 2026 at 12:00 PM ET." />
-  <meta name="twitter:image" content="https://www.foundsm.com/images/og-lunch-and-learn.jpg" />
-
-  <!-- Google Fonts (same as source) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,800&family=Poppins:wght@300;400;500;600;700;900&display=swap" rel="stylesheet" />
-
-  <!-- Google Tag Manager -->
-  <script is:inline>
-  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-  'https://sst.foundsm.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','GTM-PG7TGGG');
-  </script>
-
-  <!-- Event Schema -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "EducationEvent",
-    "name": "Scale Smarter with AI-Powered Paid Media",
-    "description": "An interactive session exploring how AI and automation are reshaping lead generation strategy across education, healthcare, and B2B verticals.",
-    "startDate": "2026-04-15T12:00:00-04:00",
-    "endDate": "2026-04-15T13:00:00-04:00",
-    "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",
-    "eventStatus": "https://schema.org/EventScheduled",
-    "location": {
-      "@type": "VirtualLocation",
-      "url": "https://www.foundsm.com/events/lunch-and-learn"
-    },
-    "organizer": {
-      "@type": "Organization",
-      "name": "Found Search Marketing",
-      "url": "https://www.foundsm.com"
-    },
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD",
-      "availability": "https://schema.org/InStock",
-      "url": "https://www.foundsm.com/events/lunch-and-learn"
-    },
-    "image": "https://www.foundsm.com/images/og-lunch-and-learn.jpg",
-    "isAccessibleForFree": true
-  }
-  </script>
+  <SEOHead
+    title={title}
+    description={description}
+    canonical={canonical}
+    ogImage={ogImage}
+    ogType="website"
+    robots={page.robots}
+    schema={eventSchema}
+    colorScheme="dark"
+    fontHref="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,800&family=Poppins:wght@300;400;500;600;700;900&display=swap"
+  />
 
   <style>
   :root {
@@ -238,6 +220,12 @@
     align-items: center;
   }
 
+  .hero-grid > *,
+  .registration > *,
+  .footer-inner > * {
+    min-width: 0;
+  }
+
   .hero-eyebrow {
     display: inline-flex;
     align-items: center;
@@ -318,6 +306,7 @@
 
   .hero-actions {
     display: flex;
+    flex-wrap: wrap;
     gap: 14px;
     animation: fadeInUp 0.6s ease 0.3s both;
   }
@@ -768,6 +757,7 @@
 
   .footer-links {
     display: flex;
+    flex-wrap: wrap;
     gap: 24px;
   }
 
@@ -802,15 +792,21 @@
   @media (max-width: 600px) {
     .topics-grid { grid-template-columns: 1fr; }
     .hero h1 { font-size: 32px; }
+    .hero-actions { flex-direction: column; align-items: flex-start; }
+    .hero-card { padding: 28px 20px; }
     .section-title { font-size: 28px; }
     .form-row { grid-template-columns: 1fr; }
     .registration { padding: 32px 24px; }
+    .footer-inner { align-items: flex-start; flex-direction: column; gap: 20px; }
+    .grecaptcha-badge { display: none !important; }
   }
   </style>
 </head>
 <body>
   <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://sst.foundsm.com/ns.html?id=GTM-PG7TGGG" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  {enableThirdPartyScripts && (
+    <noscript><iframe src="https://sst.foundsm.com/ns.html?id=GTM-PG7TGGG" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  )}
 
   <div class="topo-bg"></div>
 
@@ -833,9 +829,9 @@
         <div class="logo-event-tag">Lunch &amp;<br>Learn</div>
       </a>
       <nav>
-        <a href="#topics">Topics</a>
-        <a href="#benefits">Why Attend</a>
-        <a href="#register" class="btn-capsule btn-green" style="padding:9px 22px;font-size:13px;">Register Now</a>
+        <a href="#topics">{page.nav.topicsLabel}</a>
+        <a href="#benefits">{page.nav.benefitsLabel}</a>
+        <a href="#register" class="btn-capsule btn-green" style="padding:9px 22px;font-size:13px;">{page.nav.ctaLabel}</a>
       </nav>
     </div>
   </header>
@@ -847,62 +843,43 @@
         <div>
           <div class="hero-eyebrow">
             <span class="hero-eyebrow-dot"></span>
-            Upcoming Event
+            {page.hero.eyebrow}
           </div>
-          <h1>Scale Smarter with<br><span class="accent">AI-Powered</span><br>Paid Media</h1>
-          <p class="hero-desc">Join Found Search Marketing for an interactive session exploring how AI and automation are reshaping lead generation strategy across education, healthcare, and B2B verticals.</p>
+          <h1>
+            {page.hero.titleLines?.[0]}<br>
+            {page.hero.accentLine && <Fragment><span class="accent">{page.hero.accentLine}</span><br /></Fragment>}
+            {page.hero.titleLines?.slice(1).map((line) => <Fragment>{line}<br /></Fragment>)}
+          </h1>
+          <p class="hero-desc">{page.hero.description}</p>
           <div class="hero-meta">
-            <div class="hero-meta-item">
-              <div class="hero-meta-icon">📅</div>
-              <div>
-                <div class="hero-meta-label">Date</div>
-                <div class="hero-meta-value">April 15, 2026</div>
+            {page.hero.meta.map((item) => (
+              <div class="hero-meta-item">
+                <div class="hero-meta-icon">{item.icon}</div>
+                <div>
+                  <div class="hero-meta-label">{item.label}</div>
+                  <div class="hero-meta-value">{item.value}</div>
+                </div>
               </div>
-            </div>
-            <div class="hero-meta-item">
-              <div class="hero-meta-icon">🕐</div>
-              <div>
-                <div class="hero-meta-label">Time</div>
-                <div class="hero-meta-value">12:00 – 1:00 PM ET</div>
-              </div>
-            </div>
-            <div class="hero-meta-item">
-              <div class="hero-meta-icon">📍</div>
-              <div>
-                <div class="hero-meta-label">Location</div>
-                <div class="hero-meta-value">Virtual (Zoom)</div>
-              </div>
-            </div>
+            ))}
           </div>
           <div class="hero-actions">
-            <a href="#register" class="btn-capsule btn-green">Reserve Your Spot <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-            <a href="#topics" class="btn-capsule btn-outline">View Agenda</a>
+            {page.hero.primaryCta?.label && page.hero.primaryCta?.href && <a href={page.hero.primaryCta.href} class="btn-capsule btn-green">{page.hero.primaryCta.label} <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>}
+            {page.hero.secondaryCta?.label && page.hero.secondaryCta?.href && <a href={page.hero.secondaryCta.href} class="btn-capsule btn-outline">{page.hero.secondaryCta.label}</a>}
           </div>
         </div>
         <div class="hero-visual">
           <div class="hero-card">
-            <div class="hero-card-title">What You'll Walk Away With</div>
+            <div class="hero-card-title">{page.hero.cardTitle}</div>
             <div class="hero-card-stat">
-              <div class="stat-block">
-                <div class="stat-number">6</div>
-                <div class="stat-label">Topics</div>
-              </div>
-              <div class="stat-block">
-                <div class="stat-number">60</div>
-                <div class="stat-label">Minutes</div>
-              </div>
-              <div class="stat-block">
-                <div class="stat-number">3+</div>
-                <div class="stat-label">Frameworks</div>
-              </div>
+              {page.hero.stats.map((stat) => (
+                <div class="stat-block">
+                  <div class="stat-number">{stat.value}</div>
+                  <div class="stat-label">{stat.label}</div>
+                </div>
+              ))}
             </div>
             <div class="hero-card-topics">
-              <span class="topic-chip">AI Strategy</span>
-              <span class="topic-chip">Lead Gen</span>
-              <span class="topic-chip">Automation</span>
-              <span class="topic-chip">Data Engineering</span>
-              <span class="topic-chip">Bid Optimization</span>
-              <span class="topic-chip">Creative Testing</span>
+              {page.hero.chips.map((chip) => <span class="topic-chip">{chip}</span>)}
             </div>
           </div>
         </div>
@@ -915,46 +892,18 @@
   <!-- ══ TOPICS ══ -->
   <section id="topics">
     <div class="container">
-      <div class="section-eyebrow">Session Agenda</div>
-      <h2 class="section-title">What We'll Cover</h2>
-      <p class="section-desc">A curated deep-dive into the strategies, tools, and frameworks driving measurable impact for performance-focused teams.</p>
+      <div class="section-eyebrow">{page.topics.eyebrow}</div>
+      <h2 class="section-title">{page.topics.heading}</h2>
+      <p class="section-desc">{page.topics.description}</p>
       <div class="topics-grid">
-        <div class="topic-card">
-          <div class="topic-icon">🤖</div>
-          <div class="topic-card-title">AI-Native Campaign Management</div>
-          <div class="topic-card-desc">How agentic workflows using LangGraph and n8n are automating bid management, budget allocation, and negative keyword discovery.</div>
-          <div class="topic-card-time">⏱ 12 min</div>
-        </div>
-        <div class="topic-card">
-          <div class="topic-icon">🎯</div>
-          <div class="topic-card-title">First-Party Data Activation</div>
-          <div class="topic-card-desc">Leveraging CRM-integrated bidding and audience models to improve lead quality and reduce wasted spend.</div>
-          <div class="topic-card-time">⏱ 10 min</div>
-        </div>
-        <div class="topic-card">
-          <div class="topic-icon">📊</div>
-          <div class="topic-card-title">Cross-Client Intelligence</div>
-          <div class="topic-card-desc">How vertical specialization creates an unfair advantage — pattern matching across education, insurance, healthcare, and B2B.</div>
-          <div class="topic-card-time">⏱ 10 min</div>
-        </div>
-        <div class="topic-card">
-          <div class="topic-icon">🧪</div>
-          <div class="topic-card-title">Performance Creative & CRO</div>
-          <div class="topic-card-desc">Multivariate testing frameworks and UI/UX-focused landing page optimization that converts clicks into customers.</div>
-          <div class="topic-card-time">⏱ 8 min</div>
-        </div>
-        <div class="topic-card">
-          <div class="topic-icon">🔗</div>
-          <div class="topic-card-title">Attribution in a Privacy-First World</div>
-          <div class="topic-card-desc">Navigating long attribution windows and regulatory complexity with custom playbooks and privacy-compliant measurement.</div>
-          <div class="topic-card-time">⏱ 10 min</div>
-        </div>
-        <div class="topic-card">
-          <div class="topic-icon">💬</div>
-          <div class="topic-card-title">Live Q&A</div>
-          <div class="topic-card-desc">Open floor to bring your toughest paid media challenges. Our team of former Googlers and data engineers will be on hand.</div>
-          <div class="topic-card-time">⏱ 10 min</div>
-        </div>
+        {page.topics.items.map((item) => (
+          <div class="topic-card">
+            <div class="topic-icon">{item.icon}</div>
+            <div class="topic-card-title">{item.title}</div>
+            <div class="topic-card-desc">{item.description}</div>
+            {item.time && <div class="topic-card-time">{item.time}</div>}
+          </div>
+        ))}
       </div>
     </div>
   </section>
@@ -964,38 +913,19 @@
   <!-- ══ BENEFITS ══ -->
   <section id="benefits">
     <div class="container">
-      <div class="section-eyebrow">Why Attend</div>
-      <h2 class="section-title">Built for Performance-Minded Teams</h2>
-      <p class="section-desc">Whether you're leading marketing at a national brand or managing campaigns in a specialized vertical, this session is designed to give you actionable frameworks.</p>
+      <div class="section-eyebrow">{page.benefits.eyebrow}</div>
+      <h2 class="section-title">{page.benefits.heading}</h2>
+      <p class="section-desc">{page.benefits.description}</p>
       <div class="benefits-grid">
-        <div class="benefit-card">
-          <div class="benefit-num">01</div>
-          <div>
-            <div class="benefit-title">Proven Frameworks, Not Theory</div>
-            <div class="benefit-desc">Every strategy shared has been tested across millions in annual media spend — with results tracked from click to enrolled student, bound policy, or signed contract.</div>
+        {page.benefits.items.map((item) => (
+          <div class="benefit-card">
+            <div class="benefit-num">{item.number}</div>
+            <div>
+              <div class="benefit-title">{item.title}</div>
+              <div class="benefit-desc">{item.description}</div>
+            </div>
           </div>
-        </div>
-        <div class="benefit-card">
-          <div class="benefit-num">02</div>
-          <div>
-            <div class="benefit-title">Vertical-Specific Insights</div>
-            <div class="benefit-desc">Benchmarks and playbooks tailored to education, healthcare, insurance, and B2B facility services — not generic cross-industry advice.</div>
-          </div>
-        </div>
-        <div class="benefit-card">
-          <div class="benefit-num">03</div>
-          <div>
-            <div class="benefit-title">AI That Actually Moves the Needle</div>
-            <div class="benefit-desc">See how AI goes beyond chatbots — from predictive budget reallocation to automated quality score monitoring and anomaly detection.</div>
-          </div>
-        </div>
-        <div class="benefit-card">
-          <div class="benefit-num">04</div>
-          <div>
-            <div class="benefit-title">Direct Access to Former Googlers</div>
-            <div class="benefit-desc">Our team includes three former Google Ads employees, including our founder who was the fourth hire on the AdWords team. Ask anything.</div>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   </section>
@@ -1007,71 +937,45 @@
     <div class="container">
       <div class="registration">
         <div>
-          <div class="section-eyebrow">Reserve Your Spot</div>
-          <div class="reg-title">Get Found.<br>Get Smarter.</div>
-          <p class="reg-desc">Space is limited to keep the session interactive. Register now to secure your seat at the table.</p>
+          <div class="section-eyebrow">{page.registration.eyebrow}</div>
+          <div class="reg-title">
+            {(page.registration.headingLines || []).map((line, index) => (
+              <Fragment>{index > 0 && <br />}{line}</Fragment>
+            ))}
+          </div>
+          <p class="reg-desc">{page.registration.description}</p>
           <div class="reg-perks">
-            <div class="reg-perk">
-              <div class="reg-perk-check"><svg><path d="M4 8l4 4 8-8"/></svg></div>
-              Free 60-minute session
-            </div>
-            <div class="reg-perk">
-              <div class="reg-perk-check"><svg><path d="M4 8l4 4 8-8"/></svg></div>
-              Recording sent to all registrants
-            </div>
-            <div class="reg-perk">
-              <div class="reg-perk-check"><svg><path d="M4 8l4 4 8-8"/></svg></div>
-              Downloadable playbook included
-            </div>
-            <div class="reg-perk">
-              <div class="reg-perk-check"><svg><path d="M4 8l4 4 8-8"/></svg></div>
-              Live Q&A with Found leadership
-            </div>
+            {page.registration.perks.map((perk) => (
+              <div class="reg-perk">
+                <div class="reg-perk-check"><svg><path d="M4 8l4 4 8-8"/></svg></div>
+                {perk}
+              </div>
+            ))}
           </div>
         </div>
         <div class="reg-form">
           <div class="form-row">
+            {firstRowFields.map((field) => (
+              <div class="form-group">
+                <label class="form-label">{field.label}</label>
+                <input type={field.type || 'text'} class="form-input" placeholder={field.placeholder}>
+              </div>
+            ))}
+          </div>
+          {remainingFields.map((field) => (
             <div class="form-group">
-              <label class="form-label">First Name</label>
-              <input type="text" class="form-input" placeholder="Julie">
+              <label class="form-label">{field.label}</label>
+              {field.type === 'select' ? (
+                <select class="form-select">
+                  <option disabled selected>{field.placeholder}</option>
+                  {(field.options || []).map((option) => <option>{option}</option>)}
+                </select>
+              ) : (
+                <input type={field.type || 'text'} class="form-input" placeholder={field.placeholder}>
+              )}
             </div>
-            <div class="form-group">
-              <label class="form-label">Last Name</label>
-              <input type="text" class="form-input" placeholder="Warnecke">
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Work Email</label>
-            <input type="email" class="form-input" placeholder="you@company.com">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Company</label>
-            <input type="text" class="form-input" placeholder="Your organization">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Your Role</label>
-            <select class="form-select">
-              <option disabled selected>Select your role</option>
-              <option>CMO / VP Marketing</option>
-              <option>Director of Marketing</option>
-              <option>Digital Marketing Manager</option>
-              <option>Media Buyer / Strategist</option>
-              <option>Agency Partner</option>
-              <option>Other</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Primary Vertical</label>
-            <select class="form-select">
-              <option disabled selected>Select your vertical</option>
-              <option>Education</option>
-              <option>Healthcare</option>
-              <option>Insurance</option>
-              <option>B2B / Facility Services</option>
-              <option>Other</option>
-            </select>
-          </div>
-          <a href="#" class="btn-capsule btn-green btn-submit">Register Now <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+          ))}
+          <a href="#" class="btn-capsule btn-green btn-submit">{page.registration.buttonLabel} <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
         </div>
       </div>
     </div>
@@ -1090,18 +994,20 @@
             <text x="170" y="24" fill="#ffffff40" font-family="Poppins, sans-serif" font-weight="400" font-size="9" letter-spacing="0.3">SEARCH</text>
             <text x="170" y="36" fill="#ffffff40" font-family="Poppins, sans-serif" font-weight="400" font-size="9" letter-spacing="0.3">MARKETING</text>
           </svg>
-          <span class="footer-copy">&copy; 2026 Found Search Marketing. All rights reserved.</span>
+          <span class="footer-copy">{page.footer.copyright}</span>
         </div>
         <div class="footer-links">
-          <a href="/">foundsm.com</a>
-          <a href="/contact-us">Contact Us</a>
-          <a href="/newsletter">Newsletter</a>
+          {page.footer.links.map((link) => (
+            link.label && link.href && <a href={link.href}>{link.label}</a>
+          ))}
         </div>
       </div>
     </div>
   </footer>
 
   <!-- HubSpot Tracking Code -->
-  <script is:inline type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/5045186.js"></script>
+  {enableThirdPartyScripts && (
+    <script is:inline type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/5045186.js"></script>
+  )}
 </body>
 </html>

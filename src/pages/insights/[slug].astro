@@ -1,138 +1,104 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import PortableText from '../../components/PortableText.astro';
-import { sanityClient, allPostsQuery, postBySlugQuery, urlFor } from '../../lib/sanity';
+import BlogPostTemplate from '../../components/BlogPostTemplate.astro';
+import LegacyPageRenderer from '../../components/legacy/LegacyPageRenderer.astro';
+import { getAllBlogPosts, getBlogPostNavigation, getWordPressPostStylesheets, type BlogPost } from '../../lib/blogPosts';
+import { loadLegacyPages } from '../../lib/legacyPageFetch';
+import { getLegacyPageDefinitionsByGroup, pathToSingleSlug, type LegacyPageData } from '../../lib/legacyPageData';
+import { getInsightResourceMeta } from '../../lib/insightResourceContent';
 
 export async function getStaticPaths() {
-  const posts = await sanityClient.fetch(allPostsQuery);
-  return posts.map((p: any) => ({ params: { slug: p.slug.current } }));
+  const legacyInsightDefinitions = getLegacyPageDefinitionsByGroup('insights');
+  const [posts, legacyPages] = await Promise.all([
+    getAllBlogPosts(),
+    loadLegacyPages(legacyInsightDefinitions),
+  ]);
+
+  return [
+    ...posts.map((post) => ({
+      params: { slug: post.slug },
+      props: { post },
+    })),
+    ...legacyInsightDefinitions.map((definition) => ({
+      params: { slug: pathToSingleSlug(definition.path) },
+      props: { page: legacyPages.get(definition.path) },
+    })),
+  ];
 }
 
-const { slug } = Astro.params;
-const post = await sanityClient.fetch(postBySlugQuery, { slug });
-
-if (!post) {
-  return Astro.redirect('/insights');
+interface Props {
+  post?: BlogPost;
+  page?: LegacyPageData;
 }
 
-const publishedDate = post.publishedAt ? new Date(post.publishedAt) : null;
-const publishedIso = publishedDate?.toISOString().split('T')[0];
-const publishedLabel = publishedDate?.toLocaleDateString('en-US', {
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric',
-});
-
-const featuredImageUrl = post.featuredImage?.asset
-  ? urlFor(post.featuredImage).width(1200).height(630).fit('crop').auto('format').url()
-  : null;
-
-const canonical = `https://www.foundsm.com/insights/${post.slug.current}`;
-const seoTitle = post.seoTitle || `${post.title} | Found Search Marketing`;
-const seoDescription = post.seoDescription || post.excerpt || '';
-
-const schema = {
-  '@context': 'https://schema.org',
-  '@type': 'BlogPosting',
-  headline: post.title,
-  description: seoDescription,
-  ...(featuredImageUrl ? { image: featuredImageUrl } : {}),
-  ...(publishedDate ? { datePublished: post.publishedAt, dateModified: post.publishedAt } : {}),
-  ...(post.author
-    ? {
-        author: {
-          '@type': 'Person',
-          name: post.author.name,
-          ...(post.author.title ? { jobTitle: post.author.title } : {}),
-        },
-      }
-    : {}),
-  publisher: {
-    '@type': 'Organization',
-    name: 'Found Search Marketing',
-    logo: { '@type': 'ImageObject', url: 'https://www.foundsm.com/images/logo.svg' },
-  },
-  mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
-  ...(post.category?.title ? { articleSection: post.category.title } : {}),
-};
+const { post, page } = Astro.props;
+const navigation = post ? await getBlogPostNavigation(post.slug) : {};
+const resourceMeta = getInsightResourceMeta(page?.path);
+const canonical = resourceMeta?.canonicalUrl || page?.canonicalUrl || post?.canonicalUrl || (post ? `https://foundsm.com/insights/${post.slug}/` : 'https://foundsm.com/insights/');
+const description = resourceMeta?.seoDescription || page?.seoDescription || post?.seoDescription || post?.excerpt || '';
+const author = post ? [post.authorName, post.authorTitle].filter(Boolean).join(', ') : '';
+const bodyClass = post?.wordpressContentHtml
+  ? `blog-post-page wordpress-post-page elementor-default elementor-kit-5 elementor-page elementor-page-${post.wpId || ''}`
+  : post
+    ? 'blog-post-page'
+    : 'legacy-page';
+const schema = page
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      name: page.title,
+      url: canonical,
+      description,
+      publisher: {
+        '@type': 'Organization',
+        name: 'Found Search Marketing',
+      },
+    }
+  : {
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      headline: post?.title,
+      description,
+      image: post?.heroImage,
+      datePublished: post?.publishedAt,
+      dateModified: post?.publishedAt,
+      ...(author
+        ? {
+            author: {
+              '@type': 'Person',
+              name: author,
+            },
+          }
+        : {}),
+      publisher: {
+        '@type': 'Organization',
+        name: 'Found Search Marketing',
+        logo: { '@type': 'ImageObject', url: 'https://foundsm.com/images/logo.svg' },
+      },
+      mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
+      ...(post && post.categories.length > 0 ? { articleSection: post.categories.map((category) => category.label) } : {}),
+    };
 ---
 
 <BaseLayout
-  title={seoTitle}
-  description={seoDescription}
+  title={resourceMeta?.seoTitle || page?.seoTitle || post?.seoTitle || 'Insights | Found Search Marketing'}
+  description={description}
   canonical={canonical}
-  ogImage={featuredImageUrl || undefined}
-  robots="index, follow"
+  ogTitle={post?.ogTitle}
+  ogDescription={post?.ogDescription}
+  ogImage={resourceMeta?.ogImage || page?.ogImage || post?.ogImage || post?.heroImage || undefined}
+  ogType={post ? 'article' : undefined}
+  robots={page?.robots || post?.robots || 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'}
+  twitterCard={post?.twitterCard}
+  twitterTitle={post?.twitterTitle}
+  twitterDescription={post?.twitterDescription}
+  twitterImage={post?.twitterImage}
+  publishedAt={post?.publishedAt}
+  modifiedAt={post?.modifiedAt}
   schema={schema}
+  schemaJson={page?.schemaJson || post?.schemaJson}
+  extraStylesheets={getWordPressPostStylesheets(post)}
+  bodyClass={bodyClass}
 >
-
-  <nav class="breadcrumb" aria-label="Breadcrumb" style="padding-top: calc(var(--header-height) + var(--space-md)); padding-bottom: var(--space-md); background: var(--color-light);">
-    <div class="container">
-      <ol class="breadcrumb__list" style="display: flex; gap: 0.5rem; font-size: var(--text-caption); color: var(--color-mid); list-style: none; flex-wrap: wrap;">
-        <li class="breadcrumb__item"><a href="/" style="color: var(--color-primary);">Home</a></li>
-        <li class="breadcrumb__separator" aria-hidden="true">/</li>
-        <li class="breadcrumb__item"><a href="/insights/blog" style="color: var(--color-primary);">Insights</a></li>
-        <li class="breadcrumb__separator" aria-hidden="true">/</li>
-        <li class="breadcrumb__item" aria-current="page">{post.title}</li>
-      </ol>
-    </div>
-  </nav>
-
-  <section class="section" style="padding-top: var(--space-xl);">
-    <div class="container">
-      <article class="prose" itemscope itemtype="https://schema.org/BlogPosting">
-
-        {post.category?.title && (
-          <span class="card__tag" style="position: static; display: inline-block; margin-bottom: var(--space-md);">
-            {post.category.title}
-          </span>
-        )}
-
-        <h1 class="fade-in-up" itemprop="headline">{post.title}</h1>
-
-        <div class="fade-in-up" style="display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-sm); margin-top: var(--space-md); font-size: var(--text-caption); color: var(--color-mid);">
-          {post.author && (
-            <span itemprop="author" itemscope itemtype="https://schema.org/Person">
-              By <span itemprop="name" style="font-weight: 600; color: var(--color-dark);">{post.author.name}</span>
-              {post.author.title && <span>, {post.author.title}</span>}
-            </span>
-          )}
-          {publishedLabel && (
-            <>
-              {post.author && <span aria-hidden="true">&middot;</span>}
-              <time datetime={publishedIso} itemprop="datePublished">{publishedLabel}</time>
-            </>
-          )}
-        </div>
-
-        {featuredImageUrl && (
-          <figure class="fade-in-up" style="margin-top: var(--space-lg); margin-bottom: var(--space-xl);">
-            <img
-              src={featuredImageUrl}
-              alt={post.featuredImage?.alt || post.title}
-              loading="lazy"
-              width="1200"
-              height="630"
-              style="width: 100%; height: auto; border-radius: var(--radius-lg); aspect-ratio: 1200/630; object-fit: cover; background: var(--color-light);"
-              itemprop="image"
-            />
-          </figure>
-        )}
-
-        <div class="fade-in-up" itemprop="articleBody">
-          <PortableText value={post.body} />
-        </div>
-
-      </article>
-    </div>
-  </section>
-
-  <section class="cta-banner" aria-label="Call to action">
-    <div class="cta-banner__bg" aria-hidden="true"></div>
-    <div class="container cta-banner__inner fade-in-up">
-      <h2 class="cta-banner__headline">Let's Find A Solution</h2>
-      <a href="/contact-us" class="btn btn--green btn--lg">Start the Conversation</a>
-    </div>
-  </section>
-
+  {page ? <LegacyPageRenderer page={page} /> : post && <BlogPostTemplate post={post} navigation={navigation} />}
 </BaseLayout>

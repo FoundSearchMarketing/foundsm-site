@@ -1,0 +1,516 @@
+---
+import '../../styles/homepage.css';
+import {
+  mergeHomePageData,
+  type HomePageData,
+  type PortableTextBlock,
+} from '../../lib/homePageData';
+
+interface Props {
+  data?: Partial<HomePageData> | null;
+}
+
+const { data = null } = Astro.props;
+const homepage = mergeHomePageData(data);
+
+type MarkDef = { _key: string; _type: string; href?: string };
+type Span = { text?: string; marks?: string[] };
+
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function renderSpan(span: Span, markDefs: MarkDef[]): string {
+  let text = escapeHtml(span.text || '').replace(/\n/g, '<br>');
+
+  for (const mark of span.marks || []) {
+    if (mark === 'strong') text = `<strong>${text}</strong>`;
+    else if (mark === 'em') text = `<em>${text}</em>`;
+    else {
+      const def = markDefs.find((candidate) => candidate._key === mark);
+      if (def?._type === 'link' && def.href) {
+        const href = escapeHtml(def.href);
+        const external = /^https?:\/\//i.test(def.href);
+        const rel = external ? ' rel="noopener noreferrer" target="_blank"' : '';
+        text = `<a href="${href}"${rel}>${text}</a>`;
+      }
+    }
+  }
+
+  return text;
+}
+
+function renderRichText(blocks?: PortableTextBlock[]): string {
+  return (blocks || [])
+    .filter((block) => block?._type === 'block')
+    .map((block) => {
+      const markDefs = (block.markDefs || []) as MarkDef[];
+      const inner = (block.children || []).map((child) => renderSpan(child, markDefs)).join('');
+      return inner ? `<p>${inner}</p>` : '';
+    })
+    .join('');
+}
+
+const showCta = (item?: { ctaText?: string; ctaUrl?: string }) => Boolean(item?.ctaText && item?.ctaUrl);
+const metricValue = (metric: { value?: number }) => String(metric.value ?? '');
+const testimonialRole = [homepage.metrics.testimonial.authorTitle, homepage.metrics.testimonial.authorCompany].filter(Boolean).join(' - ');
+const normalizeLogoLabel = (value?: string) => (value || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+const clientLogoMetadata = [
+  { match: 'bar keepers', alt: 'Bar Keepers Friend', width: 500, height: 500 },
+  { match: 'accu chek', alt: 'Accu-Chek', width: 500, height: 500 },
+  { match: 'adt', alt: 'ADT', width: 500, height: 500 },
+  { match: 'bastian', alt: 'Bastian Solutions', width: 500, height: 500 },
+  { match: 'indiana wesleyan', alt: 'Indiana Wesleyan University', width: 500, height: 500 },
+  { match: 'hendricks', alt: 'Hendricks', width: 500, height: 500 },
+  { match: 'kelley', alt: 'Indiana University Kelley School of Business', width: 500, height: 500 },
+  { match: 'lawn pride', alt: 'Lawn Pride', width: 500, height: 500 },
+  { match: 'indy ignite', alt: 'Indy Ignite', width: 500, height: 500 },
+  { match: 'farm bureau', alt: 'Farm Bureau Insurance', width: 500, height: 500 },
+  { match: 'roche', alt: 'Roche', width: 500, height: 500 },
+  { match: 'duke', alt: 'Duke Corporate Education', width: 500, height: 500 },
+  { match: 'cook medical', alt: 'Cook Medical', width: 500, height: 500 },
+  { match: 'mr quik', alt: 'Mr. Quik', width: 500, height: 500 },
+  { match: 'bne', alt: 'BNE', width: 500, height: 500 },
+  { match: 'client logo', alt: 'Client logo', width: 515, height: 316 },
+];
+const clientLogos = homepage.clientLogos.logos
+  .map((logo, index) => {
+    const label = normalizeLogoLabel(logo.alt);
+    const reference = clientLogoMetadata.find((item) => label.includes(item.match)) || clientLogoMetadata[index];
+    return {
+      ...logo,
+      alt: logo.alt || reference?.alt,
+      width: reference?.width || 500,
+      height: reference?.height || 500,
+    };
+  })
+  .filter((logo) => logo.src);
+const partnerLogoReferences = [
+  { match: 'google cloud partner', src: '/images/imported/home/0a6625da-google-cloud-partner.png', alt: 'Google Cloud Partner', width: 226, height: 87 },
+  { match: 'google marketing platform', src: '/images/imported/home/e9c9d115-google-marketing-platform.png', alt: 'Google Marketing Platform', width: 323, height: 90 },
+  { match: 'google partner', src: '/images/imported/home/6a51d0e6-google-partner-150x150.png', alt: 'Google Partner', width: 150, height: 150 },
+  { match: 'microsoft', src: '/images/imported/home/0c547c0b-microsoft_premier_elite_2026_sm-rka1b7x3sf6wfj0z2pn1fa5lbo4pr7vwx2ixsiyuf4.png', alt: 'Microsoft Advertising Premier Elite Partner 2026', width: 184, height: 64 },
+  { match: 'meta', src: '/images/imported/home/719d1ceb-meta.png', alt: 'Meta Business Partner', width: 184, height: 76 },
+];
+const partnerLogos = homepage.partners.logos
+  .map((logo) => {
+    const label = normalizeLogoLabel(logo.alt);
+    const reference = partnerLogoReferences.find((item) => label.includes(item.match));
+    return reference
+      ? {
+          ...logo,
+          src: logo.src || reference.src,
+          alt: logo.alt || reference.alt,
+          width: reference.width,
+          height: reference.height,
+        }
+      : logo;
+  })
+  .filter((logo) => logo.src);
+---
+
+<div class="homepage" data-homepage>
+  <section class="home-splash" aria-labelledby="home-splash-title">
+    <div class="home-shell home-splash__inner">
+      <h1 class="home-splash__headline display" id="home-splash-title">
+        {homepage.hero.headlineLines.map((line) => <span>{line}</span>)}
+      </h1>
+      {homepage.hero.subheadline && <p class="home-splash__content">{homepage.hero.subheadline}</p>}
+
+      <div class="home-search" aria-label="Search prompt examples">
+        <span class="home-search__logo" aria-hidden="true">Search</span>
+        <div class="home-search__input">
+          <span class="home-search__text" data-home-search-text></span>
+          <div class="home-search__icons" aria-hidden="true">
+            <svg class="home-search__icon home-search__icon--close" viewBox="0 0 24 24" focusable="false" data-home-search-close>
+              <path d="m5 5 14 14M19 5 5 19" />
+            </svg>
+            <div class="home-search__divider"></div>
+            <svg class="home-search__icon" viewBox="0 0 24 24" focusable="false">
+              <path d="M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3Z" />
+              <path d="M5 11v1a7 7 0 0 0 14 0v-1" />
+              <path d="M12 19v3" />
+            </svg>
+            <svg class="home-search__icon" viewBox="0 0 24 24" focusable="false">
+              <circle cx="11" cy="11" r="7" />
+              <path d="m16.5 16.5 4.5 4.5" />
+            </svg>
+          </div>
+        </div>
+        <div class="home-search__prompts" data-home-search-prompts hidden>
+          {homepage.hero.searchPrompts.map((prompt) => <span>{prompt}</span>)}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-intro" aria-labelledby="home-intro-title">
+    <div class="home-shell home-intro__grid">
+      <div class="home-intro__copy">
+        <h2 id="home-intro-title">{homepage.intro.heading}</h2>
+        <Fragment set:html={renderRichText(homepage.intro.body)} />
+      </div>
+      {homepage.intro.image && (
+        <figure class="home-intro__media">
+          <img src={homepage.intro.image} alt={homepage.intro.imageAlt || ''} width="742" height="739" loading="eager" />
+        </figure>
+      )}
+    </div>
+  </section>
+
+  <section class="home-cta-strip" aria-label="Contact Found Search Marketing">
+    <div class="home-shell home-cta-strip__inner">
+      <h2>{homepage.ctaStrip.headline}</h2>
+      {showCta(homepage.ctaStrip) && <a class="home-button" href={homepage.ctaStrip.ctaUrl}>{homepage.ctaStrip.ctaText}</a>}
+    </div>
+  </section>
+
+  {clientLogos.length > 0 && (
+    <section class="home-logo-marquee" aria-labelledby="home-logo-title">
+      <h2 id="home-logo-title">{homepage.clientLogos.heading}</h2>
+      <div class="home-logo-marquee__frame" aria-label="Client logos">
+        <div class="home-logo-marquee__track">
+          {[...clientLogos, ...clientLogos].map((logo, index) => (
+            <figure class="home-logo-marquee__item" aria-hidden={index >= clientLogos.length ? 'true' : undefined}>
+              <img
+                src={logo.src}
+                alt={index >= clientLogos.length ? '' : logo.alt || ''}
+                width={logo.width}
+                height={logo.height}
+                loading="lazy"
+              />
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="home-outcomes" aria-labelledby="home-outcomes-title">
+    <div class="home-shell home-outcomes__grid">
+      {homepage.outcomes.image && (
+        <figure class="home-outcomes__media">
+          <img src={homepage.outcomes.image} alt={homepage.outcomes.imageAlt || ''} width="950" height="794" loading="lazy" />
+        </figure>
+      )}
+      <div class="home-outcomes__copy">
+        <h2 id="home-outcomes-title">{homepage.outcomes.heading}</h2>
+        <Fragment set:html={renderRichText(homepage.outcomes.body)} />
+        {showCta(homepage.outcomes) && <a class="home-button home-button--dark" href={homepage.outcomes.ctaUrl}>{homepage.outcomes.ctaText}</a>}
+      </div>
+    </div>
+  </section>
+
+  <section class="home-metrics" aria-label="Found Search Marketing metrics">
+    <div class="home-shell home-metrics__grid">
+      <article class="home-metric-card home-metric-card--spend">
+        {homepage.metrics.spend.eyebrow && <p class="home-metric-card__eyebrow">{homepage.metrics.spend.eyebrow}</p>}
+        <p class="home-metric-card__value">
+          {homepage.metrics.spend.prefix && <span>{homepage.metrics.spend.prefix}</span>}
+          <span data-count-to={metricValue(homepage.metrics.spend)}>{metricValue(homepage.metrics.spend)}</span>
+          {homepage.metrics.spend.suffix && <span>{homepage.metrics.spend.suffix}</span>}
+        </p>
+        {homepage.metrics.spend.label && <p class="home-metric-card__label">{homepage.metrics.spend.label}</p>}
+      </article>
+
+      <article class="home-metric-card home-metric-card--leads home-metric-card--green">
+        {homepage.metrics.leads.eyebrow && <p class="home-metric-card__eyebrow">{homepage.metrics.leads.eyebrow}</p>}
+        <p class="home-metric-card__value">
+          {homepage.metrics.leads.prefix && <span>{homepage.metrics.leads.prefix}</span>}
+          <span data-count-to={metricValue(homepage.metrics.leads)}>{metricValue(homepage.metrics.leads)}</span>
+          {homepage.metrics.leads.suffix && <span>{homepage.metrics.leads.suffix}</span>}
+        </p>
+        {homepage.metrics.leads.label && <p class="home-metric-card__label">{homepage.metrics.leads.label}</p>}
+      </article>
+
+      <div class="home-metric-flourish home-metric-flourish--narrow" aria-hidden="true"><span></span></div>
+      <div class="home-metric-flourish home-metric-flourish--wide" aria-hidden="true"><span></span></div>
+
+      <article class="home-metric-card home-metric-card--wide home-metric-card--quote">
+        <blockquote class="home-metric-card__quote">
+          {homepage.metrics.testimonial.quote && <p>&ldquo;{homepage.metrics.testimonial.quote}&rdquo;</p>}
+          <footer>
+            {homepage.metrics.testimonial.authorImage && (
+              <img
+                src={homepage.metrics.testimonial.authorImage}
+                alt={homepage.metrics.testimonial.authorImageAlt || ''}
+                width="21"
+                height="21"
+                loading="lazy"
+              />
+            )}
+            <span>
+              {homepage.metrics.testimonial.authorName && <strong>{homepage.metrics.testimonial.authorName}</strong>}
+              {testimonialRole && <span>{testimonialRole}</span>}
+            </span>
+          </footer>
+        </blockquote>
+        <div class="home-metric-card__experience">
+          <p class="home-metric-card__value">
+            {homepage.metrics.experience.prefix && <span>{homepage.metrics.experience.prefix}</span>}
+            <span data-count-to={metricValue(homepage.metrics.experience)}>{metricValue(homepage.metrics.experience)}</span>
+            {homepage.metrics.experience.suffix && <span>{homepage.metrics.experience.suffix}</span>}
+          </p>
+          {homepage.metrics.experience.label && <p class="home-metric-card__label">{homepage.metrics.experience.label}</p>}
+        </div>
+      </article>
+
+      <article class="home-metric-card home-metric-card--dark">
+        <h2>{homepage.metrics.ownershipCard.heading}</h2>
+        <div>
+          <p class="home-metric-card__value">
+            {homepage.metrics.employees.prefix && <span>{homepage.metrics.employees.prefix}</span>}
+            <span data-count-to={metricValue(homepage.metrics.employees)}>{metricValue(homepage.metrics.employees)}</span>
+            {homepage.metrics.employees.suffix && <span>{homepage.metrics.employees.suffix}</span>}
+          </p>
+          {homepage.metrics.employees.label && <p class="home-metric-card__label">{homepage.metrics.employees.label}</p>}
+        </div>
+        {showCta(homepage.metrics.ownershipCard) && (
+          <a class="home-button" href={homepage.metrics.ownershipCard.ctaUrl}>{homepage.metrics.ownershipCard.ctaText}</a>
+        )}
+      </article>
+
+      <div class="home-metric-flourish home-metric-flourish--medium" aria-hidden="true"><span></span></div>
+
+      {homepage.metrics.image && (
+        <figure class="home-metric-card home-metric-card--image">
+          <img src={homepage.metrics.image} alt={homepage.metrics.imageAlt || ''} width="337" height="276" loading="eager" />
+        </figure>
+      )}
+    </div>
+  </section>
+
+  <section class="home-partners" aria-labelledby="home-partners-title">
+    <div class="home-shell">
+      <h2 id="home-partners-title">{homepage.partners.heading}</h2>
+      <Fragment set:html={renderRichText(homepage.partners.body)} />
+      {partnerLogos.length > 0 && (
+        <div class="home-partners__logos" aria-label="Partner logos">
+          {partnerLogos.map((logo) => (
+            <figure>
+              <img src={logo.src} alt={logo.alt || ''} width={logo.width || 184} height={logo.height || 80} loading="eager" />
+            </figure>
+          ))}
+        </div>
+      )}
+      {showCta(homepage.partners) && <a class="home-button" href={homepage.partners.ctaUrl}>{homepage.partners.ctaText}</a>}
+    </div>
+  </section>
+
+  <section class="home-system" aria-labelledby="home-system-title">
+    <div class="home-shell">
+      <div class="home-system__intro">
+        <h2 id="home-system-title">
+          {homepage.ecosystem.headingLines.map((line, index) => (
+            <Fragment>{line}{index < homepage.ecosystem.headingLines.length - 1 && <br />}</Fragment>
+          ))}
+        </h2>
+        <Fragment set:html={renderRichText(homepage.ecosystem.introBody)} />
+      </div>
+
+      <div class="home-tabs" data-home-tabs>
+        <div class="home-tabs__nav">
+          {homepage.ecosystem.tabListHeading && <h3>{homepage.ecosystem.tabListHeading}</h3>}
+          <div class="home-tabs__buttons" role="tablist" aria-label="Performance lead generation ecosystem">
+            {homepage.ecosystem.tabs.map((tab, index) => (
+              <button
+                class={`home-tabs__button ${index === 0 ? 'is-active' : ''}`}
+                type="button"
+                role="tab"
+                id={`home-tab-${tab.id}`}
+                aria-selected={index === 0 ? 'true' : 'false'}
+                aria-controls={`home-panel-${tab.id}`}
+                data-home-tab={tab.id}
+              >
+                <span class="home-tabs__button-bar" aria-hidden="true"></span>
+                {tab.icon ? <img src={tab.icon} alt="" width="50" height="50" loading="eager" /> : <span aria-hidden="true"></span>}
+                <span>{tab.title}</span>
+              </button>
+            ))}
+          </div>
+          <div class="home-tabs__mobile-list" aria-label="Performance lead generation ecosystem">
+            {homepage.ecosystem.tabs.map((tab, index) => (
+              <div class="home-tabs__mobile-item">
+                <button
+                  class={`home-tabs__button home-tabs__mobile-button ${index === 0 ? 'is-active' : ''}`}
+                  type="button"
+                  id={`home-mobile-tab-${tab.id}`}
+                  aria-expanded={index === 0 ? 'true' : 'false'}
+                  aria-controls={`home-mobile-panel-${tab.id}`}
+                  data-home-tab={tab.id}
+                >
+                  <span class="home-tabs__button-bar" aria-hidden="true"></span>
+                  {tab.icon ? <img src={tab.icon} alt="" width="50" height="50" loading="eager" /> : <span aria-hidden="true"></span>}
+                  <span>{tab.title}</span>
+                </button>
+                <article
+                  class={`home-tabs__mobile-panel ${index === 0 ? 'is-active' : ''}`}
+                  id={`home-mobile-panel-${tab.id}`}
+                  aria-labelledby={`home-mobile-tab-${tab.id}`}
+                  data-home-mobile-panel={tab.id}
+                  hidden={index !== 0}
+                >
+                  {tab.image && (
+                    <figure class="home-tabs__mobile-media">
+                      <img src={tab.image} alt={tab.imageAlt || tab.title || ''} width="413" height="535" loading="eager" />
+                    </figure>
+                  )}
+                  <div class="home-tabs__mobile-copy">
+                    <Fragment set:html={renderRichText(tab.body)} />
+                    {showCta(tab) && <a class="home-button home-button--dark" href={tab.ctaUrl}>{tab.ctaText}</a>}
+                  </div>
+                </article>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div class="home-tabs__panels">
+          {homepage.ecosystem.tabs.map((tab, index) => (
+            <article
+              class={`home-tabs__panel ${index === 0 ? 'is-active' : ''}`}
+              id={`home-panel-${tab.id}`}
+              role="tabpanel"
+              aria-labelledby={`home-tab-${tab.id}`}
+              data-home-panel={tab.id}
+              hidden={index !== 0}
+            >
+              <div class="home-tabs__panel-copy">
+                <Fragment set:html={renderRichText(tab.body)} />
+                {showCta(tab) && <a class="home-button home-button--dark" href={tab.ctaUrl}>{tab.ctaText}</a>}
+              </div>
+              {tab.image && (
+                <figure class="home-tabs__panel-media">
+                  <img src={tab.image} alt={tab.imageAlt || tab.title || ''} width="413" height="535" loading="eager" />
+                </figure>
+              )}
+            </article>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+  const initHomepage = () => {
+    document.querySelectorAll('[data-homepage]').forEach((root) => {
+      if (!(root instanceof HTMLElement) || root.dataset.initialized === 'true') return;
+      root.dataset.initialized = 'true';
+
+      const searchText = root.querySelector('[data-home-search-text]');
+      const promptItems = Array.from(root.querySelectorAll('[data-home-search-prompts] span'))
+        .map((item) => item.textContent?.trim() || '')
+        .filter(Boolean);
+      if (searchText && promptItems.length > 0) {
+        const closeIcon = searchText.closest('.home-search__input')?.querySelector('[data-home-search-close]');
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let isWaiting = false;
+        const typeSpeed = 50;
+        const deleteSpeed = 30;
+        const waitTime = 2000;
+
+        searchText.classList.add('visible');
+
+        const typeText = () => {
+          if (!root.isConnected || isWaiting) return;
+
+          const currentPhrase = promptItems[phraseIndex];
+
+          if (isDeleting) {
+            searchText.textContent = currentPhrase.substring(0, charIndex - 1);
+            charIndex -= 1;
+
+            if ((closeIcon instanceof HTMLElement || closeIcon instanceof SVGElement) && charIndex === 0) {
+              closeIcon.style.opacity = '0';
+            }
+
+            if (charIndex === 0) {
+              isDeleting = false;
+              phraseIndex = (phraseIndex + 1) % promptItems.length;
+              window.setTimeout(typeText, 500);
+              return;
+            }
+
+            window.setTimeout(typeText, deleteSpeed);
+            return;
+          }
+
+          searchText.textContent = currentPhrase.substring(0, charIndex + 1);
+          charIndex += 1;
+
+          if ((closeIcon instanceof HTMLElement || closeIcon instanceof SVGElement) && charIndex === 1) {
+            closeIcon.style.opacity = '1';
+          }
+
+          if (charIndex === currentPhrase.length) {
+            isWaiting = true;
+            window.setTimeout(() => {
+              isWaiting = false;
+              isDeleting = true;
+              typeText();
+            }, waitTime);
+            return;
+          }
+
+          window.setTimeout(typeText, typeSpeed);
+        };
+
+        window.setTimeout(typeText, 1000);
+      }
+
+      root.querySelectorAll('[data-home-tabs]').forEach((tabs) => {
+        const buttons = Array.from(tabs.querySelectorAll('[data-home-tab]'));
+        const panels = Array.from(tabs.querySelectorAll('[data-home-panel]'));
+        const mobilePanels = Array.from(tabs.querySelectorAll('[data-home-mobile-panel]'));
+
+        buttons.forEach((button) => {
+          button.addEventListener('click', () => {
+            if (!(button instanceof HTMLElement)) return;
+            const id = button.dataset.homeTab;
+
+            buttons.forEach((candidate) => {
+              if (!(candidate instanceof HTMLElement)) return;
+              const isActive = candidate.dataset.homeTab === id;
+              candidate.classList.toggle('is-active', isActive);
+              if (candidate.getAttribute('role') === 'tab') {
+                candidate.setAttribute('aria-selected', String(isActive));
+              }
+              if (candidate.hasAttribute('aria-expanded')) {
+                candidate.setAttribute('aria-expanded', String(isActive));
+              }
+            });
+
+            panels.forEach((panel) => {
+              if (!(panel instanceof HTMLElement)) return;
+              const isActive = panel.dataset.homePanel === id;
+              panel.classList.toggle('is-active', isActive);
+              panel.hidden = !isActive;
+            });
+
+            mobilePanels.forEach((panel) => {
+              if (!(panel instanceof HTMLElement)) return;
+              const isActive = panel.dataset.homeMobilePanel === id;
+              panel.classList.toggle('is-active', isActive);
+              panel.hidden = !isActive;
+            });
+          });
+        });
+      });
+    });
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initHomepage, { once: true });
+  } else {
+    initHomepage();
+  }
+
+  document.addEventListener('astro:page-load', initHomepage);
+</script>

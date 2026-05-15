@@ -1,0 +1,100 @@
+---
+interface Props {
+  lead: string;
+  body: string | string[];
+  bodyHtml?: string;
+  theme?: 'dark' | 'muted' | 'light';
+  pattern?: boolean;
+  width?: 'default' | 'narrow';
+}
+
+const { lead, body, bodyHtml, theme = 'dark', pattern = false, width = 'default' } = Astro.props;
+const paragraphs = Array.isArray(body) ? body : [body];
+const classes = [
+  'statement-band',
+  `statement-band--${theme}`,
+  pattern ? 'statement-band--pattern' : '',
+  width === 'narrow' ? 'statement-band--narrow' : '',
+].filter(Boolean).join(' ');
+---
+
+<section class={classes}>
+  <div class="statement-band__inner">
+    <p class="statement-band__lead">{lead}</p>
+    {bodyHtml ? (
+      <div class="statement-band__body" set:html={bodyHtml} />
+    ) : (
+    <div class="statement-band__body">
+      {paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+    </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .statement-band {
+    position: relative;
+    overflow: hidden;
+    padding: 4rem var(--gutter);
+  }
+
+  .statement-band--dark {
+    background: #1a1a1a;
+    color: #ffffff;
+  }
+
+  .statement-band--pattern {
+    background-color: #231f20;
+    background-image: url('/images/pages/our-approach/contact-bg-fc.svg');
+    background-position: center;
+    background-size: cover;
+  }
+
+  .statement-band--muted {
+    background: #f2f3f2;
+  }
+
+  .statement-band__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: 3rem;
+    inline-size: min(100%, var(--content-max-width));
+    margin-inline: auto;
+  }
+
+  .statement-band--narrow .statement-band__inner {
+    inline-size: min(100%, 70rem);
+  }
+
+  .statement-band__lead {
+    font-family: var(--font-body);
+    font-size: 1.75rem;
+    font-weight: 700;
+    line-height: 1.286;
+  }
+
+  .statement-band__body {
+    display: grid;
+    gap: 0.8rem;
+    color: currentColor;
+    font-size: 1rem;
+    line-height: 1.875;
+    opacity: 0.82;
+  }
+
+  @media (max-width: 800px) {
+    .statement-band__inner {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .statement-band--narrow {
+      text-align: center;
+    }
+
+    .statement-band__lead {
+      font-size: 1.125rem;
+      line-height: 1.778;
+    }
+  }
+</style>

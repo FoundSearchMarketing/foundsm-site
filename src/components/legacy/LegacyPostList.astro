@@ -1,0 +1,98 @@
+---
+import type { BlogPost } from '../../lib/blogPosts';
+
+interface Props {
+  posts: BlogPost[];
+  heading?: string;
+  emptyText?: string;
+}
+
+const { posts, heading = 'Latest insights', emptyText = 'No posts are published for this page yet.' } = Astro.props;
+---
+
+<section class="legacy-posts" aria-label={heading}>
+  <h2>{heading}</h2>
+  {posts.length > 0 ? (
+    <div class="legacy-posts__list">
+      {posts.map((post) => (
+        <article class="legacy-post">
+          {post.heroImage && (
+            <a href={`/insights/${post.slug}/`} class="legacy-post__image" aria-label={post.title}>
+              <img src={post.heroImage} alt={post.heroImageAlt || post.title} loading="lazy" width="360" height="220" />
+            </a>
+          )}
+          <div class="legacy-post__body">
+            <p class="legacy-post__meta">
+              {post.publishedLabel && <time datetime={post.publishedAt}>{post.publishedLabel}</time>}
+              {post.categories.length > 0 && <span>{post.categories.map((category) => category.label).join(', ')}</span>}
+            </p>
+            <h3><a href={`/insights/${post.slug}/`}>{post.title}</a></h3>
+            {post.excerpt && <p class="legacy-post__excerpt">{post.excerpt}</p>}
+          </div>
+        </article>
+      ))}
+    </div>
+  ) : (
+    <p class="legacy-posts__empty">{emptyText}</p>
+  )}
+</section>
+
+<style>
+  .legacy-posts {
+    margin-top: var(--space-xl);
+  }
+
+  .legacy-posts h2 {
+    margin-bottom: var(--space-lg);
+  }
+
+  .legacy-posts__list {
+    display: grid;
+    gap: var(--space-lg);
+  }
+
+  .legacy-post {
+    border-bottom: 1px solid var(--color-border);
+    display: grid;
+    gap: var(--space-md);
+    grid-template-columns: minmax(0, 1fr);
+    padding-bottom: var(--space-lg);
+  }
+
+  .legacy-post__image img {
+    aspect-ratio: 16 / 10;
+    background: var(--color-surface-muted);
+    border-radius: var(--radius);
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .legacy-post__meta {
+    color: var(--color-mid);
+    display: flex;
+    flex-wrap: wrap;
+    font-size: var(--text-caption);
+    gap: var(--space-xs);
+    margin-bottom: var(--space-xs);
+  }
+
+  .legacy-post h3 {
+    font-size: 1.25rem;
+  }
+
+  .legacy-post h3 a:hover {
+    color: var(--color-primary);
+  }
+
+  .legacy-post__excerpt,
+  .legacy-posts__empty {
+    color: var(--color-mid);
+    margin-top: var(--space-xs);
+  }
+
+  @media (min-width: 700px) {
+    .legacy-post {
+      grid-template-columns: 13rem minmax(0, 1fr);
+    }
+  }
+</style>

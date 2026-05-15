@@ -1,4 +1,10 @@
 ---
+const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isExactPath = (href: string) => currentPath === (href.replace(/\/$/, '') || '/');
+const isPathSection = (href: string) => {
+  const normalizedHref = href.replace(/\/$/, '') || '/';
+  return currentPath === normalizedHref || currentPath.startsWith(`${normalizedHref}/`);
+};
 ---
 
 <header class="site-header">
@@ -22,13 +28,13 @@
     >
       <ul class="site-header__menu" role="list">
         <li class="site-header__item">
-          <a class="site-header__link" href="/our-approach/">Our Approach</a>
+          <a class="site-header__link" href="/our-approach/" aria-current={isExactPath('/our-approach/') ? 'page' : undefined}>Our Approach</a>
         </li>
         <li class="site-header__item">
-          <a class="site-header__link" href="/insights/">Insights</a>
+          <a class="site-header__link" href="/insights/" aria-current={isPathSection('/insights/') ? 'page' : undefined}>Insights</a>
         </li>
         <li class="site-header__item site-header__item--has-submenu">
-          <a class="site-header__link" href="/capabilities/">Capabilities</a>
+          <a class="site-header__link" href="/capabilities/" aria-current={isExactPath('/capabilities/') ? 'page' : undefined}>Capabilities</a>
           <button
             class="site-header__submenu-toggle"
             type="button"
@@ -45,14 +51,14 @@
             role="list"
             aria-hidden="true"
           >
-            <li><a class="site-header__submenu-link" href="/capabilities/paid-media/">Paid Media</a></li>
-            <li><a class="site-header__submenu-link" href="/capabilities/data-activation/">Data Activation</a></li>
-            <li><a class="site-header__submenu-link" href="/capabilities/data-intelligence/">Data Intelligence</a></li>
-            <li><a class="site-header__submenu-link" href="/capabilities/performance-creative/">Performance Creative</a></li>
+            <li><a class="site-header__submenu-link" href="/capabilities/paid-media/" aria-current={isExactPath('/capabilities/paid-media/') ? 'page' : undefined}>Paid Media</a></li>
+            <li><a class="site-header__submenu-link" href="/capabilities/data-activation/" aria-current={isExactPath('/capabilities/data-activation/') ? 'page' : undefined}>Data Activation</a></li>
+            <li><a class="site-header__submenu-link" href="/capabilities/data-intelligence/" aria-current={isExactPath('/capabilities/data-intelligence/') ? 'page' : undefined}>Data Intelligence</a></li>
+            <li><a class="site-header__submenu-link" href="/capabilities/performance-creative/" aria-current={isExactPath('/capabilities/performance-creative/') ? 'page' : undefined}>Performance Creative</a></li>
           </ul>
         </li>
         <li class="site-header__item site-header__item--has-submenu">
-          <a class="site-header__link" href="/about-us/">About Us</a>
+          <a class="site-header__link" href="/about-us/" aria-current={isExactPath('/about-us/') ? 'page' : undefined}>About Us</a>
           <button
             class="site-header__submenu-toggle"
             type="button"

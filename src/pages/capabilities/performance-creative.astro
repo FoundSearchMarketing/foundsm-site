@@ -1,132 +1,53 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PerformanceCreativePage from '../../components/modern/PerformanceCreativePage.astro';
+import { capabilityDetailPageQuery, sanityClient } from '../../lib/sanity';
+import { defaultCapabilityDetailPages, mergeCapabilityDetailPageData } from '../../lib/fixedPageData';
+import { cardsFor, imageProps, richHtml, richText, tabsFor } from '../../lib/fixedPageRender';
 
-const title = "Performance Creative | Found Search Marketing";
-const description = "Found Search Marketing's Performance Creative services include ad creative development, landing page design, A/B testing, creative analytics, and UX/CRO optimization.";
-const canonical = "https://www.foundsm.com/capabilities/performance-creative";
-const robots = "index, follow";
+const sanityPage = await sanityClient.fetch(capabilityDetailPageQuery, { id: 'capabilityPerformanceCreativePage' }).catch(() => null);
+const page = mergeCapabilityDetailPageData(defaultCapabilityDetailPages.performanceCreative, sanityPage);
+const title = page.seoTitle || defaultCapabilityDetailPages.performanceCreative.seoTitle;
+const description = page.seoDescription || defaultCapabilityDetailPages.performanceCreative.seoDescription;
+const canonical = page.canonicalUrl || defaultCapabilityDetailPages.performanceCreative.canonicalUrl;
 const schema = {
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "name": "Performance Creative | Found Search Marketing",
-  "url": "https://www.foundsm.com/capabilities/performance-creative",
-  "description": "Found Search Marketing's Performance Creative services include ad creative development, landing page design, A/B testing, creative analytics, and UX/CRO optimization.",
-  "publisher": {
-    "@type": "Organization",
-    "name": "Found Search Marketing"
-  }
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: title,
+  url: canonical,
+  description,
+  publisher: {
+    '@type': 'Organization',
+    name: 'Found Search Marketing',
+  },
 };
+
+const creativeTabs = tabsFor(page.featureTabs?.tabs);
+const proofCards = cardsFor(page.primaryCards?.cards);
 ---
 
-<BaseLayout title={title} description={description} canonical={canonical} robots={robots} schema={schema}>
-
-    <!-- ============================================
-         HERO SECTION
-         ============================================ -->
-    <section class="hero hero--dark" aria-label="Performance Creative hero">
-      <div class="hero__overlay" aria-hidden="true"></div>
-      <div class="hero__bg-image" aria-hidden="true">
-        <img src="/images/performance-creative-hero-bg.jpg" alt="" loading="lazy" width="1920" height="900">
-      </div>
-
-      <div class="container hero__content">
-        <div class="hero-stagger">
-          <p class="hero__breadcrumb"><a href="/capabilities">Capabilities</a> / Performance Creative</p>
-        </div>
-        <div class="hero-stagger">
-          <h1 class="hero__headline">Performance Creative</h1>
-        </div>
-        <div class="hero-stagger">
-          <p class="hero__subtitle">Data-informed creative that converts. We combine design expertise with analytics to produce ads, landing pages, and experiences that continuously improve performance.</p>
-        </div>
-      </div>
-    </section>
-
-
-    <!-- ============================================
-         CREATIVE PILLARS
-         ============================================ -->
-    <section class="pillars" aria-label="Performance creative pillars">
-      <div class="container">
-        <h2 class="pillars__heading fade-in-up">Our Creative Pillars</h2>
-        <p class="pillars__subheading fade-in-up">Four disciplines that connect creative excellence with measurable performance.</p>
-
-        <div class="pillars__grid fade-in-up">
-
-          <!-- Pillar 1: Ad Creative Development -->
-          <div class="pillar-card">
-            <div class="pillar-card__icon" aria-hidden="true">
-              <svg width="48" height="48" viewBox="0 0 48 48"><rect x="6" y="6" width="36" height="36" rx="4" stroke="currentColor" stroke-width="2.5" fill="none"/><circle cx="18" cy="18" r="5" stroke="currentColor" stroke-width="2" fill="none"/><path d="M6 34L16 24L24 32L34 22L42 30" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
-            <h3 class="pillar-card__title">Ad Creative Development</h3>
-            <p class="pillar-card__description">From static display banners to dynamic video ads, we develop creative assets designed for performance. Every concept is rooted in audience insights and platform best practices to maximize engagement and conversion rates.</p>
-          </div>
-
-          <!-- Pillar 2: Landing Page Design -->
-          <div class="pillar-card">
-            <div class="pillar-card__icon" aria-hidden="true">
-              <svg width="48" height="48" viewBox="0 0 48 48"><rect x="6" y="4" width="36" height="40" rx="4" stroke="currentColor" stroke-width="2.5" fill="none"/><path d="M6 12H42" stroke="currentColor" stroke-width="2"/><rect x="10" y="16" width="28" height="10" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/><rect x="10" y="30" width="12" height="4" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/><rect x="26" y="30" width="12" height="4" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M16 38H32" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-            </div>
-            <h3 class="pillar-card__title">Landing Page Design</h3>
-            <p class="pillar-card__description">Purpose-built landing pages engineered for conversion. We design and develop experiences that align with your campaign messaging, reduce friction, and guide visitors toward the actions that matter most to your business.</p>
-          </div>
-
-          <!-- Pillar 3: A/B Testing & Optimization -->
-          <div class="pillar-card">
-            <div class="pillar-card__icon" aria-hidden="true">
-              <svg width="48" height="48" viewBox="0 0 48 48"><rect x="4" y="10" width="18" height="28" rx="3" stroke="currentColor" stroke-width="2.5" fill="none"/><rect x="26" y="10" width="18" height="28" rx="3" stroke="currentColor" stroke-width="2.5" fill="none"/><text x="13" y="28" text-anchor="middle" font-size="14" font-weight="600" fill="currentColor">A</text><text x="35" y="28" text-anchor="middle" font-size="14" font-weight="600" fill="currentColor">B</text></svg>
-            </div>
-            <h3 class="pillar-card__title">A/B Testing &amp; Optimization</h3>
-            <p class="pillar-card__description">Systematic testing of headlines, imagery, CTAs, layouts, and messaging to continuously improve creative performance. We use statistical significance to validate winners and build a library of insights that compound over time.</p>
-          </div>
-
-          <!-- Pillar 4: Creative Analytics -->
-          <div class="pillar-card">
-            <div class="pillar-card__icon" aria-hidden="true">
-              <svg width="48" height="48" viewBox="0 0 48 48"><circle cx="24" cy="24" r="18" stroke="currentColor" stroke-width="2.5" fill="none"/><path d="M24 12V24L34 30" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="24" cy="24" r="3" fill="currentColor"/></svg>
-            </div>
-            <h3 class="pillar-card__title">Creative Analytics</h3>
-            <p class="pillar-card__description">Deep analysis of creative performance across channels to understand what resonates with your audience. We track creative fatigue, identify top-performing elements, and use data to inform future creative direction.</p>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-
-    <!-- ============================================
-         UX / CRO SECTION
-         ============================================ -->
-    <section class="ux-cro" aria-label="User experience and conversion rate optimization">
-      <div class="container">
-        <div class="ux-cro__grid fade-in-up">
-
-          <div class="ux-cro__image">
-            <img src="/images/ux-cro-illustration.jpg" alt="User experience and conversion rate optimization workflow" loading="lazy" width="600" height="450">
-          </div>
-
-          <div class="ux-cro__content">
-            <h2 class="ux-cro__heading">User Experience &amp; Conversion Rate Optimization</h2>
-            <p class="ux-cro__description">Great creative does not stop at the ad. We take a holistic approach to the post-click experience, ensuring that every touchpoint from ad impression to conversion is optimized for your audience.</p>
-            <p class="ux-cro__description">Our UX and CRO practice combines heatmap analysis, user session recordings, form analytics, and behavioral data to identify exactly where visitors drop off and why. We then design and test targeted interventions that remove friction, build trust, and increase conversion rates.</p>
-            <p class="ux-cro__description">Whether it is simplifying a multi-step form, redesigning a product page, or optimizing the mobile checkout experience, our team bridges the gap between media performance and on-site conversion to ensure your paid media investment delivers maximum returns.</p>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-
-    <!-- ============================================
-         CTA BANNER
-         ============================================ -->
-    <section class="cta-banner" aria-label="Call to action">
-      <div class="cta-banner__bg" aria-hidden="true"></div>
-      <div class="container cta-banner__inner fade-in-up">
-        <h2 class="cta-banner__headline">Elevate Your Creative Performance</h2>
-        <p class="cta-banner__text">Let our team build creative that is as data-driven as your media strategy.</p>
-        <a href="/contact-us" class="btn btn--green btn--lg">Start the Conversation</a>
-      </div>
-    </section>
-
+<BaseLayout title={title} description={description} canonical={canonical} robots={page.robots} schema={schema}>
+  <PerformanceCreativePage
+    idPrefix={page.featureTabs?.idPrefix || 'performance-creative-methods'}
+    hero={{
+      title: page.hero.heading || '',
+      body: richText(page.hero.body),
+      bodyHtml: richHtml(page.hero.body),
+      image: imageProps(page.hero, 'eager'),
+    }}
+    split={{
+      title: page.split?.heading || '',
+      body: richText(page.split?.body),
+      bodyHtml: richHtml(page.split?.body),
+      image: imageProps(page.split),
+    }}
+    tabs={creativeTabs}
+    secondary={{
+      title: page.secondarySplit?.heading || '',
+      body: richText(page.secondarySplit?.body),
+      bodyHtml: richHtml(page.secondarySplit?.body),
+      image: imageProps(page.secondarySplit),
+    }}
+    cards={proofCards}
+  />
 </BaseLayout>

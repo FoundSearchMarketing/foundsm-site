@@ -1,144 +1,931 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { capabilityDetailPageQuery, sanityClient } from '../../lib/sanity';
+import { defaultCapabilityDetailPages, mergeCapabilityDetailPageData } from '../../lib/fixedPageData';
+import { richHtml, richText, srcFor } from '../../lib/fixedPageRender';
 
-const title = "Paid Media | Found Search Marketing";
-const description = "Found Search Marketing's Paid Media services span search, shopping, social, programmatic, display, video, and connected TV advertising for enterprise brands.";
-const canonical = "https://www.foundsm.com/capabilities/paid-media";
-const robots = "index, follow";
+const defaults = defaultCapabilityDetailPages.paidMedia;
+const sanityPage = await sanityClient.fetch(capabilityDetailPageQuery, { id: 'capabilityPaidMediaPage' }).catch(() => null);
+const page = mergeCapabilityDetailPageData(defaults, sanityPage);
+const title = page.seoTitle || defaults.seoTitle;
+const description = page.seoDescription || defaults.seoDescription;
+const canonical = page.canonicalUrl || defaults.canonicalUrl;
 const schema = {
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "name": "Paid Media | Found Search Marketing",
-  "url": "https://www.foundsm.com/capabilities/paid-media",
-  "description": "Found Search Marketing's Paid Media services span search, shopping, social, programmatic, display, video, and connected TV advertising for enterprise brands.",
-  "publisher": {
-    "@type": "Organization",
-    "name": "Found Search Marketing"
-  }
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: title,
+  url: canonical,
+  description,
+  publisher: {
+    '@type': 'Organization',
+    name: 'Found Search Marketing',
+  },
 };
+
+const mergeIndexed = <T extends Record<string, any>>(items: T[] = [], fallbacks: T[] = []) =>
+  Array.from({ length: Math.max(items.length, fallbacks.length) }, (_, index) => ({
+    ...(fallbacks[index] || {}),
+    ...(items[index] || {}),
+  }));
+
+const placeholder = (label: string) => `Missing ${label}`;
+const placeholderHtml = (label: string) => `<p class="paid-media-placeholder">Missing ${label}</p>`;
+const sectionHtml = (blocks: any, label: string) => richHtml(blocks) || placeholderHtml(label);
+const sectionText = (blocks: any, label: string) => richText(blocks) || placeholder(label);
+const imageSrc = (item: { image?: unknown } = {}, fallback: { image?: unknown } = {}) =>
+  srcFor(item.image) || srcFor(fallback.image);
+const imageAlt = (item: { imageAlt?: string; alt?: string; title?: string } = {}, fallback: { imageAlt?: string; alt?: string; title?: string } = {}) =>
+  item.imageAlt || item.alt || fallback.imageAlt || fallback.alt || item.title || fallback.title || '';
+
+const heroImage = imageSrc(page.hero, defaults.hero);
+const splitImage = imageSrc(page.split, defaults.split);
+const tabs = mergeIndexed(page.featureTabs?.tabs, defaults.featureTabs?.tabs).map((tab, index) => {
+  const fallback = defaults.featureTabs?.tabs[index] || {};
+  return {
+    ...tab,
+    title: tab.title || placeholder(`tab ${index + 1} title`),
+    bodyHtml: sectionHtml(tab.body, `${tab.title || `tab ${index + 1}`} copy`),
+    iconSrc: srcFor(tab.icon) || srcFor(fallback.icon),
+    imageSrc: imageSrc(tab, fallback),
+    imageAlt: imageAlt(tab, fallback),
+  };
+});
+const channelCards = mergeIndexed(page.primaryCards?.cards, defaults.primaryCards?.cards).map((card, index) => {
+  const fallback = defaults.primaryCards?.cards[index] || {};
+  return {
+    ...card,
+    title: card.title || placeholder(`journey card ${index + 1} title`),
+    lead: card.lead || placeholder(`${card.title || `journey card ${index + 1}`} lead`),
+    bodyText: sectionText(card.body, `${card.title || `journey card ${index + 1}`} details`),
+    iconSrc: srcFor(card.icon) || srcFor(fallback.icon),
+  };
+});
+const analyticsCards = mergeIndexed(page.secondaryCards?.cards, defaults.secondaryCards?.cards).map((card, index) => {
+  const fallback = defaults.secondaryCards?.cards[index] || {};
+  return {
+    ...card,
+    title: card.title || placeholder(`analytics card ${index + 1} title`),
+    bodyHtml: sectionHtml(card.body, `${card.title || `analytics card ${index + 1}`} copy`),
+    iconSrc: srcFor(card.icon) || srcFor(fallback.icon),
+  };
+});
+const logos = mergeIndexed(page.logoMarquee?.logos, defaults.logoMarquee?.logos).map((logo, index) => ({
+  src: srcFor(logo.image) || srcFor(defaults.logoMarquee?.logos[index]?.image),
+  alt: logo.alt || defaults.logoMarquee?.logos[index]?.alt || placeholder(`logo ${index + 1} alt`),
+}));
+const logoTracks = [...logos, ...logos];
+const journeyTones = ['green', 'red', 'orange', 'blue'];
 ---
 
-<BaseLayout title={title} description={description} canonical={canonical} robots={robots} schema={schema}>
-
-    <!-- ============================================
-         HERO SECTION
-         ============================================ -->
-    <section class="hero hero--dark" aria-label="Paid Media hero">
-      <div class="hero__overlay" aria-hidden="true"></div>
-      <div class="hero__bg-image" aria-hidden="true">
-        <img src="/images/paid-media-hero-bg.jpg" alt="" loading="lazy" width="1920" height="900">
-      </div>
-
-      <div class="container hero__content">
-        <div class="hero-stagger">
-          <p class="hero__breadcrumb"><a href="/capabilities">Capabilities</a> / Paid Media</p>
+<BaseLayout title={title} description={description} canonical={canonical} robots={page.robots} schema={schema}>
+  <div class="paid-media-page">
+    <section class="paid-media-hero" aria-labelledby="paid-media-hero-heading">
+      <div class="paid-media-hero__inner">
+        <div class="paid-media-hero__copy">
+          <h1 id="paid-media-hero-heading">{page.hero.heading || placeholder('hero heading')}</h1>
+          <div class="paid-media-rich-text" set:html={sectionHtml(page.hero.body, 'hero copy')} />
         </div>
-        <div class="hero-stagger">
-          <h1 class="hero__headline">Paid Media</h1>
-        </div>
-        <div class="hero-stagger">
-          <p class="hero__subtitle">Strategic media buying across every major platform, optimized by data and driven by performance to maximize your return on ad spend.</p>
+        <div class="paid-media-hero__media">
+          {heroImage ? (
+            <img src={heroImage} alt={imageAlt(page.hero, defaults.hero)} width="800" height="800" loading="eager" decoding="async" />
+          ) : (
+            <div class="paid-media-placeholder paid-media-placeholder--media">Missing hero image</div>
+          )}
         </div>
       </div>
     </section>
 
-
-    <!-- ============================================
-         WORK PILLARS
-         ============================================ -->
-    <section class="pillars" aria-label="Paid media work pillars">
-      <div class="container">
-        <h2 class="pillars__heading fade-in-up">Our Work Pillars</h2>
-        <p class="pillars__subheading fade-in-up">Four core disciplines that form the foundation of our paid media practice.</p>
-
-        <div class="pillars__grid fade-in-up">
-
-          <!-- Pillar 1: Search & Shopping -->
-          <div class="pillar-card">
-            <div class="pillar-card__icon" aria-hidden="true">
-              <svg width="48" height="48" viewBox="0 0 48 48"><circle cx="20" cy="20" r="14" stroke="currentColor" stroke-width="2.5" fill="none"/><line x1="30" y1="30" x2="42" y2="42" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
-            </div>
-            <h3 class="pillar-card__title">Search &amp; Shopping</h3>
-            <p class="pillar-card__description">Expert management of Google Ads, Microsoft Advertising, and shopping campaigns that capture high-intent audiences at the moment they are searching for your products and services.</p>
-          </div>
-
-          <!-- Pillar 2: Social Media Advertising -->
-          <div class="pillar-card">
-            <div class="pillar-card__icon" aria-hidden="true">
-              <svg width="48" height="48" viewBox="0 0 48 48"><circle cx="24" cy="14" r="8" stroke="currentColor" stroke-width="2.5" fill="none"/><circle cx="12" cy="34" r="6" stroke="currentColor" stroke-width="2.5" fill="none"/><circle cx="36" cy="34" r="6" stroke="currentColor" stroke-width="2.5" fill="none"/><line x1="19" y1="20" x2="14" y2="29" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="29" y1="20" x2="34" y2="29" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-            </div>
-            <h3 class="pillar-card__title">Social Media Advertising</h3>
-            <p class="pillar-card__description">Full-funnel campaigns across Facebook, Instagram, LinkedIn, and TikTok that build brand awareness, drive engagement, and generate qualified leads with precision targeting.</p>
-          </div>
-
-          <!-- Pillar 3: Programmatic & Display -->
-          <div class="pillar-card">
-            <div class="pillar-card__icon" aria-hidden="true">
-              <svg width="48" height="48" viewBox="0 0 48 48"><rect x="4" y="8" width="40" height="28" rx="4" stroke="currentColor" stroke-width="2.5" fill="none"/><path d="M4 16H44" stroke="currentColor" stroke-width="2"/><path d="M20 40H28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M24 36V40" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
-            </div>
-            <h3 class="pillar-card__title">Programmatic &amp; Display</h3>
-            <p class="pillar-card__description">Programmatic media buying and retargeting strategies that place your brand in front of the right audiences across premium publisher networks at scale.</p>
-          </div>
-
-          <!-- Pillar 4: Video & Connected TV -->
-          <div class="pillar-card">
-            <div class="pillar-card__icon" aria-hidden="true">
-              <svg width="48" height="48" viewBox="0 0 48 48"><rect x="6" y="10" width="36" height="24" rx="4" stroke="currentColor" stroke-width="2.5" fill="none"/><polygon points="20,16 20,30 32,23" stroke="currentColor" stroke-width="2" fill="none" stroke-linejoin="round"/><path d="M16 40H32" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
-            </div>
-            <h3 class="pillar-card__title">Video &amp; Connected TV</h3>
-            <p class="pillar-card__description">YouTube, CTV, and OTT advertising strategies that combine the storytelling power of video with the precision targeting capabilities of digital media.</p>
-          </div>
-
+    <section class="paid-media-work" aria-labelledby="paid-media-work-heading">
+      <div class="paid-media-work__inner">
+        <div class="paid-media-work__media">
+          {splitImage ? (
+            <img src={splitImage} alt={imageAlt(page.split, defaults.split)} width="500" height="382" loading="lazy" decoding="async" />
+          ) : (
+            <div class="paid-media-placeholder paid-media-placeholder--media">Missing How We Work image</div>
+          )}
+        </div>
+        <div class="paid-media-work__copy">
+          <h2 id="paid-media-work-heading">{page.split?.heading || placeholder('How We Work heading')}</h2>
+          <div class="paid-media-rich-text" set:html={sectionHtml(page.split?.body, 'How We Work copy')} />
         </div>
       </div>
     </section>
 
-
-    <!-- ============================================
-         CHANNEL TYPES
-         ============================================ -->
-    <section class="channel-types" aria-label="Channel types">
-      <div class="container">
-        <h2 class="channel-types__heading fade-in-up">Channel Expertise</h2>
-        <p class="channel-types__subheading fade-in-up">Deep expertise across every paid media channel your enterprise needs.</p>
-
-        <div class="channel-types__grid fade-in-up">
-
-          <div class="channel-card">
-            <h3 class="channel-card__title">Search Advertising</h3>
-            <p class="channel-card__description">Keyword strategy, bid management, ad copy optimization, and quality score improvement across Google and Microsoft search networks to drive cost-efficient conversions.</p>
+    {tabs.length > 0 ? (
+      <section class="paid-media-tabs" data-paid-media-tabs aria-label="Paid media capabilities">
+        <div class="paid-media-tabs__inner">
+          <div class="paid-media-tabs__nav" role="tablist" aria-label="Paid media capabilities">
+            {tabs.map((tab, index) => {
+              const tabId = `paid-media-tab-${index + 1}`;
+              const panelId = `paid-media-panel-${index + 1}`;
+              const selected = index === 0;
+              return (
+                <button
+                  class:list={['paid-media-tabs__tab', { 'is-active': selected }]}
+                  id={tabId}
+                  type="button"
+                  role="tab"
+                  aria-selected={String(selected)}
+                  aria-controls={panelId}
+                  tabindex={selected ? '0' : '-1'}
+                  data-paid-media-tab
+                >
+                  <span class="paid-media-tabs__rail" aria-hidden="true"></span>
+                  {tab.iconSrc ? (
+                    <img class="paid-media-tabs__icon" src={tab.iconSrc} alt="" loading="lazy" decoding="async" />
+                  ) : (
+                    <span class="paid-media-placeholder paid-media-placeholder--icon">Missing tab icon</span>
+                  )}
+                  <span>{tab.title}</span>
+                </button>
+              );
+            })}
           </div>
 
-          <div class="channel-card">
-            <h3 class="channel-card__title">Social Advertising</h3>
-            <p class="channel-card__description">Audience development, creative testing, and campaign optimization across Meta, LinkedIn, TikTok, and emerging platforms to engage users throughout the customer journey.</p>
+          <div class="paid-media-tabs__panels">
+            {tabs.map((tab, index) => {
+              const tabId = `paid-media-tab-${index + 1}`;
+              const panelId = `paid-media-panel-${index + 1}`;
+              const selected = index === 0;
+              return (
+                <article
+                  class:list={['paid-media-tabs__panel', { 'is-active': selected }]}
+                  id={panelId}
+                  role="tabpanel"
+                  aria-labelledby={tabId}
+                  hidden={!selected}
+                  data-paid-media-panel
+                >
+                  <div class="paid-media-tabs__panel-copy" set:html={tab.bodyHtml} />
+                  <div class="paid-media-tabs__panel-media">
+                    {tab.imageSrc ? (
+                      <img src={tab.imageSrc} alt={tab.imageAlt} loading="eager" decoding="async" />
+                    ) : (
+                      <div class="paid-media-placeholder paid-media-placeholder--media">Missing tab image: {tab.title}</div>
+                    )}
+                  </div>
+                </article>
+              );
+            })}
           </div>
+        </div>
+      </section>
+    ) : (
+      <section class="paid-media-tabs"><p class="paid-media-placeholder">Missing paid media tabs</p></section>
+    )}
 
-          <div class="channel-card">
-            <h3 class="channel-card__title">Display &amp; Programmatic</h3>
-            <p class="channel-card__description">Real-time bidding, audience targeting, contextual placements, and dynamic creative optimization that maximize reach while maintaining cost efficiency.</p>
-          </div>
-
-          <div class="channel-card">
-            <h3 class="channel-card__title">Video &amp; Streaming</h3>
-            <p class="channel-card__description">Pre-roll, mid-roll, and connected TV campaigns that deliver measurable brand lift and drive performance outcomes through premium video inventory.</p>
-          </div>
-
+    <section class="paid-media-journey" aria-labelledby="paid-media-journey-heading">
+      <div class="paid-media-journey__inner">
+        <div class="paid-media-section-heading paid-media-section-heading--center paid-media-section-heading--dark">
+          <h2 id="paid-media-journey-heading">{page.primaryCards?.title || placeholder('journey heading')}</h2>
+          <p>{page.primaryCards?.subtitle || placeholder('journey subtitle')}</p>
+        </div>
+        <div class="paid-media-journey__grid">
+          {channelCards.map((card, index) => (
+            <article class={`paid-media-journey-card paid-media-journey-card--${journeyTones[index] || 'green'}`}>
+              {card.iconSrc ? (
+                <img class="paid-media-journey-card__icon" src={card.iconSrc} alt="" loading="lazy" decoding="async" />
+              ) : (
+                <span class="paid-media-placeholder paid-media-placeholder--icon">Missing card icon</span>
+              )}
+              <div class="paid-media-journey-card__copy">
+                <h3>{card.title}</h3>
+                <p>{card.lead}</p>
+                <span class="paid-media-visually-hidden">{card.bodyText}</span>
+              </div>
+            </article>
+          ))}
         </div>
       </div>
     </section>
 
-
-    <!-- ============================================
-         CTA BANNER
-         ============================================ -->
-    <section class="cta-banner" aria-label="Call to action">
-      <div class="cta-banner__bg" aria-hidden="true"></div>
-      <div class="container cta-banner__inner fade-in-up">
-        <h2 class="cta-banner__headline">Ready to Amplify Your Paid Media?</h2>
-        <p class="cta-banner__text">Let our team build a data-driven paid media strategy tailored to your enterprise goals.</p>
-        <a href="/contact-us" class="btn btn--green btn--lg">Start the Conversation</a>
+    <section class="paid-media-analytics" aria-labelledby="paid-media-analytics-heading">
+      <div class="paid-media-analytics__inner">
+        <div class="paid-media-section-heading paid-media-section-heading--center">
+          <h2 id="paid-media-analytics-heading">{page.secondaryCards?.title || placeholder('analytics heading')}</h2>
+          <p>{page.secondaryCards?.subtitle || placeholder('analytics subtitle')}</p>
+        </div>
+        <div class="paid-media-analytics__grid">
+          {analyticsCards.map((card) => (
+            <article class="paid-media-analytics-card">
+              {card.iconSrc ? (
+                <img class="paid-media-analytics-card__icon" src={card.iconSrc} alt="" loading="lazy" decoding="async" />
+              ) : (
+                <span class="paid-media-placeholder paid-media-placeholder--icon">Missing analytics icon</span>
+              )}
+              <h3>{card.title}</h3>
+              <div class="paid-media-rich-text" set:html={card.bodyHtml} />
+            </article>
+          ))}
+        </div>
       </div>
     </section>
 
+    <section class="paid-media-cta" aria-label={page.cta?.cta?.label || 'Paid media call to action'}>
+      <div class="paid-media-cta__inner">
+        <div class="paid-media-rich-text" set:html={sectionHtml(page.cta?.body, 'CTA copy')} />
+        {page.cta?.cta?.label && page.cta?.cta?.href ? (
+          <a class="paid-media-cta__button" href={page.cta.cta.href}>{page.cta.cta.label}</a>
+        ) : (
+          <span class="paid-media-placeholder">Missing CTA link</span>
+        )}
+      </div>
+    </section>
+
+    {logos.some((logo) => logo.src) ? (
+      <section class="paid-media-logos" aria-label={page.logoMarquee?.title || 'Google Ads logos'}>
+        <div class="paid-media-logos__track">
+          {logoTracks.map((logo, index) => (
+            <figure class="paid-media-logos__item" aria-hidden={index >= logos.length ? 'true' : undefined}>
+              {logo.src ? (
+                <img src={logo.src} alt={index >= logos.length ? '' : logo.alt} loading="eager" decoding="async" />
+              ) : (
+                <span class="paid-media-placeholder paid-media-placeholder--logo">Missing logo image</span>
+              )}
+            </figure>
+          ))}
+        </div>
+      </section>
+    ) : (
+      <section class="paid-media-logos"><p class="paid-media-placeholder">Missing logo marquee images</p></section>
+    )}
+  </div>
 </BaseLayout>
+
+<script>
+  const initPaidMediaTabs = () => {
+    document.querySelectorAll<HTMLElement>('[data-paid-media-tabs]').forEach((container) => {
+      if (container.dataset.initialized === 'true') return;
+      container.dataset.initialized = 'true';
+
+      const tabs = Array.from(container.querySelectorAll<HTMLButtonElement>('[data-paid-media-tab]'));
+      const panels = Array.from(container.querySelectorAll<HTMLElement>('[data-paid-media-panel]'));
+
+      const activate = (tab: HTMLButtonElement) => {
+        const panelId = tab.getAttribute('aria-controls');
+
+        tabs.forEach((item) => {
+          const active = item === tab;
+          item.classList.toggle('is-active', active);
+          item.setAttribute('aria-selected', String(active));
+          item.tabIndex = active ? 0 : -1;
+        });
+
+        panels.forEach((panel) => {
+          const active = panel.id === panelId;
+          panel.classList.toggle('is-active', active);
+          panel.hidden = !active;
+        });
+      };
+
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => activate(tab));
+        tab.addEventListener('keydown', (event) => {
+          const current = tabs.indexOf(tab);
+          const nextIndex = event.key === 'ArrowDown' || event.key === 'ArrowRight'
+            ? (current + 1) % tabs.length
+            : event.key === 'ArrowUp' || event.key === 'ArrowLeft'
+              ? (current - 1 + tabs.length) % tabs.length
+              : -1;
+
+          if (nextIndex >= 0) {
+            event.preventDefault();
+            tabs[nextIndex].focus();
+            activate(tabs[nextIndex]);
+          }
+        });
+      });
+    });
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPaidMediaTabs);
+  } else {
+    initPaidMediaTabs();
+  }
+</script>
+
+<style>
+  .paid-media-page {
+    --paid-media-dark: #231f20;
+    --paid-media-green: #8bc53f;
+    --paid-media-red: #f15a62;
+    --paid-media-orange: #ff9f1c;
+    --paid-media-blue: #28aee4;
+    overflow: hidden;
+    background: #ffffff;
+  }
+
+  .paid-media-hero,
+  .paid-media-work,
+  .paid-media-tabs,
+  .paid-media-analytics,
+  .paid-media-logos {
+    background: #ffffff;
+  }
+
+  .paid-media-hero {
+    padding: clamp(4.5rem, 7vw, 7.25rem) var(--gutter) clamp(3rem, 5vw, 5rem);
+  }
+
+  .paid-media-hero__inner,
+  .paid-media-work__inner,
+  .paid-media-tabs__inner,
+  .paid-media-journey__inner,
+  .paid-media-analytics__inner,
+  .paid-media-cta__inner {
+    inline-size: min(100%, var(--content-max-width));
+    margin-inline: auto;
+  }
+
+  .paid-media-hero__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(26rem, 0.95fr);
+    align-items: center;
+    gap: clamp(3rem, 7vw, 7rem);
+  }
+
+  .paid-media-hero h1 {
+    max-inline-size: 47rem;
+    margin: 0 0 2.25rem;
+    font-size: clamp(4.35rem, 5vw, 5.65rem);
+    line-height: 0.99;
+    letter-spacing: 0;
+  }
+
+  .paid-media-rich-text {
+    display: grid;
+    gap: 1.45rem;
+    color: #1a1a1a;
+    font-size: 1.45rem;
+    line-height: 1.65;
+  }
+
+  .paid-media-rich-text :global(p) {
+    margin: 0;
+  }
+
+  .paid-media-hero__media {
+    overflow: hidden;
+    border-radius: 1.75rem;
+  }
+
+  .paid-media-hero__media img {
+    inline-size: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+  }
+
+  .paid-media-work {
+    padding: 0 var(--gutter) clamp(3rem, 5vw, 5rem);
+  }
+
+  .paid-media-work__inner {
+    display: grid;
+    grid-template-columns: minmax(20rem, 0.9fr) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(3rem, 6vw, 6.5rem);
+  }
+
+  .paid-media-work__media img {
+    inline-size: min(100%, 38rem);
+    margin-inline: auto;
+  }
+
+  .paid-media-work h2,
+  .paid-media-section-heading h2 {
+    margin: 0;
+    font-size: clamp(3rem, 4.6vw, 4.8rem);
+    line-height: 1.02;
+    letter-spacing: 0;
+  }
+
+  .paid-media-work h2 {
+    margin-block-end: 1.5rem;
+  }
+
+  .paid-media-tabs {
+    padding: 0 var(--gutter) clamp(4.25rem, 6vw, 6rem);
+  }
+
+  .paid-media-tabs__inner {
+    display: grid;
+    grid-template-columns: minmax(16rem, 0.42fr) minmax(0, 1fr);
+    gap: clamp(2rem, 4vw, 4rem);
+    min-block-size: 32rem;
+    padding: clamp(3rem, 5vw, 5rem);
+    border-radius: 1.75rem;
+    background-color: #eef0ed;
+    background-image: url('/images/pages/paid-media/topography-light.svg');
+    background-position: center;
+    background-size: cover;
+  }
+
+  .paid-media-tabs__nav {
+    display: grid;
+    align-content: start;
+  }
+
+  .paid-media-tabs__tab {
+    position: relative;
+    display: grid;
+    grid-template-columns: 0.35rem 3rem minmax(0, 1fr);
+    align-items: center;
+    gap: 1rem;
+    min-block-size: 5.55rem;
+    padding: 0;
+    color: rgba(26, 26, 26, 0.56);
+    text-align: left;
+    font-size: 1.13rem;
+    font-weight: 800;
+    line-height: 1.35;
+    transition: color var(--transition-fast);
+  }
+
+  .paid-media-tabs__tab.is-active {
+    color: #1a1a1a;
+  }
+
+  .paid-media-tabs__rail {
+    align-self: stretch;
+    inline-size: 0.35rem;
+    border-radius: 999px;
+    background: rgba(26, 26, 26, 0.18);
+  }
+
+  .paid-media-tabs__tab.is-active .paid-media-tabs__rail {
+    background: #1a1a1a;
+  }
+
+  .paid-media-tabs__icon {
+    inline-size: 3rem;
+    block-size: 3rem;
+    object-fit: contain;
+    opacity: 0.42;
+  }
+
+  .paid-media-tabs__tab.is-active .paid-media-tabs__icon {
+    opacity: 1;
+  }
+
+  .paid-media-tabs__panel {
+    display: grid;
+    grid-template-columns: minmax(0, 0.82fr) minmax(18rem, 1fr);
+    align-items: center;
+    gap: clamp(2rem, 4vw, 4rem);
+  }
+
+  .paid-media-tabs__panel[hidden] {
+    display: none;
+  }
+
+  .paid-media-tabs__panel-copy {
+    color: #1a1a1a;
+    font-size: 1.32rem;
+    line-height: 1.72;
+  }
+
+  .paid-media-tabs__panel-copy :global(p) {
+    margin: 0;
+  }
+
+  .paid-media-tabs__panel-media img {
+    inline-size: min(100%, 31rem);
+    max-block-size: 26rem;
+    object-fit: contain;
+  }
+
+  .paid-media-journey {
+    padding: clamp(4rem, 5vw, 5rem) var(--gutter) clamp(4rem, 5vw, 5.5rem);
+    background: var(--paid-media-dark);
+    color: #ffffff;
+  }
+
+  .paid-media-section-heading {
+    max-inline-size: 72rem;
+    margin-block-end: 2.5rem;
+  }
+
+  .paid-media-section-heading--center {
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .paid-media-section-heading--dark h2 {
+    color: #ffffff;
+    font-size: clamp(2.85rem, 3.2vw, 3.6rem);
+  }
+
+  .paid-media-section-heading p {
+    margin-block-start: 1rem;
+    color: rgba(26, 26, 26, 0.74);
+    font-size: 1.02rem;
+    line-height: 1.6;
+  }
+
+  .paid-media-section-heading--dark p {
+    color: rgba(255, 255, 255, 0.84);
+  }
+
+  .paid-media-journey__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.75rem 2rem;
+  }
+
+  .paid-media-journey-card {
+    display: grid;
+    grid-template-columns: 9rem minmax(0, 1fr);
+    align-items: center;
+    gap: 2rem;
+    min-block-size: 12.4rem;
+    padding: 1.35rem 3rem 1.35rem 2rem;
+    border: 4px solid var(--card-tone);
+    border-radius: 999px;
+    background: #9e9e9f;
+    color: var(--paid-media-dark);
+  }
+
+  .paid-media-journey-card--green { --card-tone: var(--paid-media-green); }
+  .paid-media-journey-card--red { --card-tone: var(--paid-media-red); }
+  .paid-media-journey-card--orange { --card-tone: var(--paid-media-orange); }
+  .paid-media-journey-card--blue { --card-tone: var(--paid-media-blue); }
+
+  .paid-media-journey-card__icon {
+    inline-size: 8rem;
+    block-size: 8rem;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+  }
+
+  .paid-media-journey-card h3 {
+    margin: 0 0 0.6rem;
+    color: inherit;
+    font-size: 1.75rem;
+    font-weight: 800;
+    line-height: 1.15;
+  }
+
+  .paid-media-journey-card p {
+    margin: 0;
+    color: inherit;
+    font-size: 1.05rem;
+    font-weight: 800;
+    line-height: 1.55;
+  }
+
+  .paid-media-analytics {
+    padding: clamp(4rem, 6vw, 6rem) var(--gutter) clamp(4rem, 6vw, 6rem);
+  }
+
+  .paid-media-analytics__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(3rem, 8vw, 8rem);
+  }
+
+  .paid-media-analytics-card {
+    display: grid;
+    align-content: start;
+    gap: 1rem;
+  }
+
+  .paid-media-analytics-card__icon {
+    inline-size: 3rem;
+    block-size: 3rem;
+    object-fit: contain;
+  }
+
+  .paid-media-analytics-card h3 {
+    max-inline-size: 18rem;
+    margin: 0;
+    color: var(--paid-media-dark);
+    font-size: 1.72rem;
+    font-weight: 800;
+    line-height: 1.12;
+  }
+
+  .paid-media-analytics-card .paid-media-rich-text {
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+
+  .paid-media-cta {
+    padding: clamp(3.5rem, 5vw, 4.75rem) var(--gutter);
+    background: var(--paid-media-dark);
+    color: #ffffff;
+  }
+
+  .paid-media-cta__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 0.72fr) auto;
+    align-items: center;
+    gap: 3rem;
+  }
+
+  .paid-media-cta .paid-media-rich-text {
+    max-inline-size: 42rem;
+    color: #ffffff;
+    font-size: 1.25rem;
+    font-weight: 800;
+    line-height: 1.55;
+  }
+
+  .paid-media-cta__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-block-size: 3.75rem;
+    padding: 1rem 2.2rem;
+    border-radius: 999px;
+    background: var(--paid-media-green);
+    color: #1a1a1a;
+    font-size: 1.05rem;
+    font-weight: 800;
+    line-height: 1.2;
+    transition: transform var(--transition-fast), background-color var(--transition-fast);
+  }
+
+  .paid-media-cta__button:hover,
+  .paid-media-cta__button:focus-visible {
+    background: #b9dc89;
+    transform: translateY(-1px);
+  }
+
+  .paid-media-logos {
+    overflow: hidden;
+    padding: 2.5rem 0;
+  }
+
+  .paid-media-logos__track {
+    display: flex;
+    align-items: center;
+    gap: clamp(2.5rem, 5vw, 5rem);
+    inline-size: max-content;
+    animation: paid-media-marquee 32s linear infinite;
+  }
+
+  .paid-media-logos__track:hover {
+    animation-play-state: paused;
+  }
+
+  .paid-media-logos__item {
+    display: grid;
+    place-items: center;
+    min-inline-size: 10rem;
+    block-size: 6rem;
+    margin: 0;
+    padding-inline: 1rem;
+  }
+
+  .paid-media-logos__item img {
+    max-inline-size: 14rem;
+    max-block-size: 4.5rem;
+    object-fit: contain;
+  }
+
+  .paid-media-placeholder {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-block-size: 2rem;
+    padding: 0.45rem 0.75rem;
+    border: 2px dashed #c94c27;
+    border-radius: 0.35rem;
+    background: #fff8f2;
+    color: #7a2f16;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .paid-media-placeholder--media {
+    min-block-size: 14rem;
+    inline-size: 100%;
+  }
+
+  .paid-media-placeholder--icon {
+    min-block-size: 3rem;
+    inline-size: 3rem;
+    padding: 0.25rem;
+    font-size: 0.65rem;
+    text-align: center;
+  }
+
+  .paid-media-visually-hidden {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  @keyframes paid-media-marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .paid-media-logos__track {
+      inline-size: 100%;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: none;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .paid-media-hero__inner,
+    .paid-media-work__inner,
+    .paid-media-tabs__inner,
+    .paid-media-cta__inner {
+      grid-template-columns: 1fr;
+    }
+
+    .paid-media-hero h1 {
+      font-size: clamp(3.6rem, 11vw, 5.2rem);
+    }
+
+    .paid-media-tabs__inner {
+      min-block-size: 0;
+    }
+
+    .paid-media-tabs__panel {
+      grid-template-columns: 1fr;
+    }
+
+    .paid-media-journey__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .paid-media-analytics__grid {
+      grid-template-columns: 1fr;
+      gap: 2.25rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .paid-media-hero {
+      padding-block: 3rem 2.25rem;
+    }
+
+    .paid-media-hero__inner,
+    .paid-media-work__inner {
+      gap: 2rem;
+    }
+
+    .paid-media-hero h1 {
+      margin-block-end: 1.65rem;
+      font-size: 3.18rem;
+      line-height: 1.06;
+    }
+
+    .paid-media-rich-text {
+      font-size: 1.13rem;
+      line-height: 1.7;
+    }
+
+    .paid-media-hero__media {
+      border-radius: 1.5rem;
+    }
+
+    .paid-media-work {
+      padding-block-end: 2.5rem;
+    }
+
+    .paid-media-work__media {
+      order: 1;
+    }
+
+    .paid-media-work__copy {
+      order: 2;
+    }
+
+    .paid-media-work h2,
+    .paid-media-section-heading h2 {
+      font-size: 2rem;
+      line-height: 1.08;
+    }
+
+    .paid-media-tabs {
+      padding-block-end: 3rem;
+    }
+
+    .paid-media-tabs__inner {
+      gap: 1.5rem;
+      padding: 1.25rem;
+      border-radius: 1.25rem;
+    }
+
+    .paid-media-tabs__tab {
+      grid-template-columns: 0.28rem 2.25rem minmax(0, 1fr);
+      gap: 0.65rem;
+      min-block-size: 4.2rem;
+      font-size: 0.8rem;
+      line-height: 1.2;
+    }
+
+    .paid-media-tabs__icon {
+      inline-size: 2.25rem;
+      block-size: 2.25rem;
+    }
+
+    .paid-media-tabs__panel {
+      gap: 1rem;
+    }
+
+    .paid-media-tabs__panel-copy {
+      font-size: 0.95rem;
+      line-height: 1.58;
+    }
+
+    .paid-media-tabs__panel-media img {
+      max-block-size: 16rem;
+      margin-inline: auto;
+    }
+
+    .paid-media-journey {
+      padding-block: 3rem;
+    }
+
+    .paid-media-section-heading {
+      margin-block-end: 1.75rem;
+    }
+
+    .paid-media-section-heading p {
+      font-size: 0.75rem;
+    }
+
+    .paid-media-journey-card {
+      grid-template-columns: 1fr;
+      justify-items: center;
+      gap: 0.75rem;
+      min-block-size: 14.5rem;
+      padding: 1.5rem 2rem;
+      border-radius: 5rem;
+      text-align: center;
+    }
+
+    .paid-media-journey-card__icon {
+      inline-size: 5.75rem;
+      block-size: 5.75rem;
+    }
+
+    .paid-media-journey-card h3 {
+      font-size: 1rem;
+    }
+
+    .paid-media-journey-card p {
+      font-size: 0.72rem;
+      line-height: 1.4;
+    }
+
+    .paid-media-analytics {
+      padding-block: 3rem;
+    }
+
+    .paid-media-analytics-card {
+      gap: 0.75rem;
+    }
+
+    .paid-media-analytics-card h3 {
+      font-size: 1.15rem;
+    }
+
+    .paid-media-analytics-card .paid-media-rich-text {
+      font-size: 0.8rem;
+    }
+
+    .paid-media-cta {
+      padding-block: 2.5rem;
+    }
+
+    .paid-media-cta .paid-media-rich-text {
+      font-size: 0.8rem;
+      text-align: center;
+    }
+
+    .paid-media-cta__button {
+      justify-self: center;
+      min-block-size: 2.8rem;
+      padding: 0.75rem 1.4rem;
+      font-size: 0.8rem;
+    }
+
+    .paid-media-logos__item {
+      min-inline-size: 7rem;
+      block-size: 4.5rem;
+    }
+
+    .paid-media-logos__item img {
+      max-inline-size: 9rem;
+      max-block-size: 3.25rem;
+    }
+  }
+</style>

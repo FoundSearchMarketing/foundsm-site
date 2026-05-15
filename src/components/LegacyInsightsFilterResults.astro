@@ -1,0 +1,407 @@
+---
+import InsightsHero from './InsightsHero.astro';
+
+interface LoopCard {
+  excerpt: string;
+  href: string;
+  imageSrc?: string;
+  imageAlt?: string;
+  tag?: string;
+}
+
+interface Props {
+  hero: {
+    headline?: string;
+    body?: string;
+    imageSrc?: string;
+    imageAlt?: string;
+  };
+  latestPosts: LoopCard[];
+  filterCards: LoopCard[];
+  latestHeading?: string;
+  directoryHeading?: string;
+  filterLabel?: string;
+}
+
+const {
+  hero,
+  latestPosts,
+  filterCards,
+  latestHeading = 'LATEST POSTS',
+  directoryHeading = 'Find inspiration and insights from the experts at Found.',
+  filterLabel = 'Blog',
+} = Astro.props;
+---
+
+<InsightsHero
+  headline={hero.headline}
+  body={hero.body}
+  imageSrc={hero.imageSrc}
+  imageAlt={hero.imageAlt}
+/>
+
+<section class="filter-results-latest" aria-labelledby="filter-results-latest-heading">
+  <div class="filter-results__inner filter-results__heading-wrap">
+    <h2 class="filter-results__eyebrow" id="filter-results-latest-heading">{latestHeading}</h2>
+  </div>
+
+  <div class="filter-results__inner">
+    <div class="filter-results-latest__grid" role="list">
+      {
+        latestPosts.map((post) => (
+          <article class="filter-loop-card" role="listitem">
+            <a class="filter-loop-card__link" href={post.href}>
+              <span class="filter-loop-card__summary">
+                <span class="filter-loop-card__excerpt">{post.excerpt}</span>
+                <span class="filter-loop-card__chevron">
+                  <svg aria-hidden="true" viewBox="0 0 320 512" focusable="false">
+                    <path d="M285.476 272.971 91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z" />
+                  </svg>
+                </span>
+              </span>
+              {post.imageSrc && (
+                <span class="filter-loop-card__image-wrap">
+                  <img src={post.imageSrc} alt={post.imageAlt ?? ''} loading="lazy" decoding="async" />
+                  <span class="filter-loop-card__tag">{post.tag ?? 'Blog'}</span>
+                </span>
+              )}
+            </a>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<section class="filter-results-directory" aria-labelledby="filter-results-directory-heading">
+  <div class="filter-results__inner">
+    <h2 class="filter-results-directory__heading" id="filter-results-directory-heading">
+      {directoryHeading}
+    </h2>
+
+    <search class="filter-results-directory__filter" role="search" data-base-url="/insights-filter-results/" data-page-num="1">
+      <button type="button" class="filter-results-directory__filter-item" data-filter="blog" aria-pressed="false">{filterLabel}</button>
+    </search>
+
+    <div class="filter-results-directory__grid" role="list">
+      {
+        filterCards.map((card) => (
+          <article class="filter-loop-card filter-loop-card--compact" role="listitem">
+            <a class="filter-loop-card__link" href={card.href}>
+              <span class="filter-loop-card__summary">
+                <span class="filter-loop-card__excerpt">{card.excerpt}</span>
+                <span class="filter-loop-card__chevron">
+                  <svg aria-hidden="true" viewBox="0 0 320 512" focusable="false">
+                    <path d="M285.476 272.971 91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z" />
+                  </svg>
+                </span>
+              </span>
+            </a>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .filter-results-latest,
+  .filter-results-directory {
+    --filter-results-text: #231f20;
+    --filter-results-card: #231f20;
+    --filter-results-accent: #8dc63f;
+    --filter-results-blue: #0aadef;
+    --filter-results-light: #f2f3f2;
+
+    position: relative;
+    overflow: hidden;
+    background: #ffffff;
+    color: var(--filter-results-text);
+    font-family: var(--font-body, 'Poppins', system-ui, sans-serif);
+  }
+
+  .filter-results-latest::before,
+  .filter-results-directory::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('/images/pages/our-approach/topography-light.svg');
+    background-position: center top;
+    background-repeat: repeat;
+    opacity: 0.75;
+    pointer-events: none;
+  }
+
+  .filter-results__inner {
+    position: relative;
+    z-index: 1;
+    inline-size: min(calc(100% - (2 * var(--page-gutter))), var(--content-max-width));
+    margin-inline: auto;
+  }
+
+  .filter-results-latest {
+    margin-block: 0 100px;
+    padding-block-start: 50px;
+  }
+
+  .filter-results__heading-wrap {
+    padding-block: 10px;
+  }
+
+  .filter-results__eyebrow {
+    margin: 0;
+    color: var(--filter-results-text);
+    font-family: var(--font-body, 'Poppins', system-ui, sans-serif);
+    font-size: 20px;
+    font-weight: 300;
+    letter-spacing: 3px;
+    line-height: 28px;
+    text-transform: uppercase;
+  }
+
+  .filter-results-latest__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 30px;
+    padding-block: 10px 0;
+  }
+
+  .filter-loop-card {
+    min-width: 0;
+  }
+
+  .filter-loop-card__link {
+    display: flex;
+    min-height: 100%;
+    overflow: hidden;
+    flex-direction: column;
+    border: 1px solid var(--filter-results-card);
+    border-radius: 7px;
+    background: var(--filter-results-card);
+    color: #ffffff;
+    text-decoration: none;
+  }
+
+  .filter-loop-card__summary {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-height: 58px;
+    padding: 8px 18px 8px 30px;
+  }
+
+  .filter-loop-card__excerpt {
+    display: -webkit-box;
+    overflow: hidden;
+    flex: 1 1 auto;
+    color: var(--filter-results-light);
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: 26px;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .filter-loop-card__chevron {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    inline-size: 25px;
+    color: var(--filter-results-blue);
+  }
+
+  .filter-loop-card__chevron svg {
+    inline-size: 16px;
+    block-size: 26px;
+    fill: currentColor;
+  }
+
+  .filter-loop-card__image-wrap {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    margin-top: auto;
+  }
+
+  .filter-loop-card__image-wrap img {
+    display: block;
+    inline-size: 100%;
+    aspect-ratio: 850 / 500;
+    block-size: auto;
+    object-fit: cover;
+    object-position: bottom center;
+  }
+
+  .filter-loop-card__tag {
+    position: absolute;
+    inset-block-end: 0;
+    inset-inline-start: 20px;
+    border-radius: 0 20px 20px 0;
+    background: var(--filter-results-accent);
+    color: var(--filter-results-card);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    line-height: 25px;
+    padding-inline: 15px 10px;
+    text-transform: uppercase;
+  }
+
+  .filter-results-directory {
+    margin-block: 100px;
+    padding-block: 50px 100px;
+  }
+
+  .filter-results-directory__heading {
+    max-width: none;
+    margin: 0 auto 52px;
+    color: var(--filter-results-text);
+    font-family: var(--font-heading, 'Fraunces', Georgia, serif);
+    font-size: 40px;
+    font-weight: 900;
+    letter-spacing: 0;
+    line-height: 44px;
+    text-align: center;
+  }
+
+  .filter-results-directory__filter {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+  }
+
+  .filter-results-directory__filter-item {
+    padding: 0 0 4px;
+    color: var(--filter-results-text);
+    cursor: default;
+    font-family: var(--font-body, 'Poppins', system-ui, sans-serif);
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: 3px;
+    line-height: 28px;
+    text-transform: uppercase;
+  }
+
+  .filter-results-directory__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 60px 30px;
+    margin-top: 14px;
+  }
+
+  .filter-loop-card--compact .filter-loop-card__summary {
+    min-height: 126px;
+    padding: 22px 18px 22px 30px;
+  }
+
+  .filter-loop-card--compact .filter-loop-card__excerpt {
+    -webkit-line-clamp: 4;
+  }
+
+  @media (max-width: 1024px) {
+    .filter-results-latest {
+      margin-block: 0 50px;
+      padding-block-start: 40px;
+    }
+
+    .filter-results__eyebrow {
+      font-size: 18px;
+      line-height: 22px;
+    }
+
+    .filter-results-latest__grid,
+    .filter-results-directory__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .filter-loop-card__excerpt {
+      font-size: 20px;
+      line-height: 26px;
+      -webkit-line-clamp: 3;
+    }
+
+    .filter-results-directory {
+      margin-block: 50px;
+      padding-block: 40px;
+    }
+
+    .filter-results-directory__heading {
+      font-size: 34px;
+      line-height: 39px;
+    }
+
+    .filter-results-directory__filter-item {
+      font-size: 10px;
+      line-height: 22px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    :global(.insights-filter-results-page .insights-hero__inner) {
+      padding-block-start: calc(var(--header-height, 4.0625rem) + 16px);
+    }
+
+    .filter-results-latest {
+      margin-block-end: 70px;
+    }
+
+    .filter-results__inner {
+      inline-size: min(calc(100% - 20px), var(--content-max-width));
+    }
+
+    .filter-results-latest__grid,
+    .filter-results-directory__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .filter-loop-card__summary {
+      min-height: 0;
+      padding: 0 10px 0 30px;
+    }
+
+    .filter-loop-card__excerpt {
+      line-height: 25px;
+      -webkit-line-clamp: 4;
+    }
+
+    .filter-loop-card__chevron {
+      display: none;
+    }
+
+    .filter-loop-card--compact .filter-loop-card__excerpt {
+      -webkit-line-clamp: 5;
+    }
+
+    .filter-results-directory {
+      margin-block: 0;
+      padding-block: 0 50px;
+    }
+
+    .filter-results-directory__heading {
+      margin-bottom: 34px;
+      font-size: 30px;
+      line-height: 34px;
+    }
+
+    .filter-results-directory__filter {
+      padding-block: 10px 20px;
+    }
+
+    .filter-results-directory__filter-item {
+      font-size: 13px;
+      line-height: 24px;
+    }
+
+    .filter-results-directory__grid {
+      inline-size: calc(100% + 18px);
+      margin-inline-start: -8px;
+    }
+
+    .filter-loop-card--compact .filter-loop-card__summary {
+      min-height: 0;
+      padding: 12px 18px 13px 30px;
+    }
+  }
+</style>

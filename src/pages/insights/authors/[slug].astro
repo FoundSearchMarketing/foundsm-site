@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import AuthorDetailPage from '../../../components/AuthorDetailPage.astro';
+import { loadAuthors } from '../../../lib/legacyPageFetch';
+import type { LegacyAuthorData } from '../../../lib/legacyPageData';
+
+export async function getStaticPaths() {
+  const authors = await loadAuthors();
+
+  return authors.map((author) => ({
+    params: { slug: author.slug },
+    props: { author },
+  }));
+}
+
+interface Props {
+  author: LegacyAuthorData;
+}
+
+const { author } = Astro.props;
+const canonical = author.canonicalUrl || `https://foundsm.com/insights/authors/${author.slug}/`;
+const description = author.seoDescription || author.bio || `Insights by ${author.name} from Found Search Marketing.`;
+const firstName = author.name.split(' ')[0] || author.name;
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfilePage',
+  name: author.name,
+  url: canonical,
+  mainEntity: {
+    '@type': 'Person',
+    name: author.name,
+    jobTitle: author.title,
+    image: author.profileImage || author.image,
+    sameAs: author.linkedin ? [author.linkedin] : undefined,
+  },
+};
+---
+
+<BaseLayout
+  title={author.seoTitle || `About the Author | ${firstName} | Found Search Marketing`}
+  description={description}
+  canonical={canonical}
+  ogTitle={author.ogTitle}
+  ogDescription={author.ogDescription}
+  ogImage={author.ogImage}
+  robots={author.robots || 'index, follow'}
+  twitterCard={author.twitterCard}
+  twitterTitle={author.twitterTitle}
+  twitterDescription={author.twitterDescription}
+  twitterImage={author.twitterImage}
+  schema={schema}
+  schemaJson={author.schemaJson}
+  bodyClass="author-detail-page"
+>
+  <AuthorDetailPage author={author} />
+</BaseLayout>

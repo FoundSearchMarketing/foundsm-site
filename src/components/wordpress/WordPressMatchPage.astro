@@ -1,0 +1,931 @@
+---
+interface InsightPost {
+  title: string;
+  href: string;
+  imageSrc?: string;
+  imageAlt?: string;
+  categories?: { label: string }[];
+  publishedLabel?: string;
+  excerpt?: string;
+}
+
+interface Props {
+  variant:
+    | 'newsletter'
+    | 'privacy'
+    | 'signal-quiz'
+    | 'safelist'
+    | 'thank-you'
+    | 'whitepapers-index'
+    | 'first-party-data';
+  posts?: InsightPost[];
+}
+
+const { variant, posts = [] } = Astro.props;
+
+const safelistColumns = [
+  {
+    title: 'Gmail',
+    steps: [
+      'Open Gmail and go to Settings > See all settings.',
+      'Click the Filters and Blocked Addresses tab and select Create a new filter.',
+      'Add our email (marketing@foundsm.com) in the From field and click Create filter.',
+      'Check Never send it to Spam, then hit Create filter again.',
+    ],
+  },
+  {
+    title: 'Outlook',
+    steps: [
+      'Open Outlook and go to Settings > View all Outlook settings.',
+      'Navigate to Mail > Junk email.',
+      'Under Safe senders and domains, click Add and enter our email (marketing@foundsm.com) or domain (foundsm.com).',
+      'Hit Save to confirm.',
+    ],
+  },
+  {
+    title: 'Yahoo',
+    steps: [
+      'Go to Settings > More Settings > Filters.',
+      'Click Add new filters and name it (e.g., "Newsletter").',
+      'Add our email (marketing@foundsm.com) under the From field and set it to send to your Inbox.',
+      'Click Save.',
+    ],
+  },
+];
+
+const fallbackPosts: InsightPost[] = [
+  {
+    title: 'Bot Traffic and Bad Lookalikes: How Dirty Signals Can Wreck Your Funnel and Your Targeting',
+    href: '/insights/bot-traffic-and-bad-lookalikes-how-dirty-signals-can-wreck-your-funnel-and-your-targeting/',
+    imageSrc: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/bot-traffic-sm-768x513.webp',
+    imageAlt: '',
+    categories: [{ label: 'Marketing Analytics & Tracking' }, { label: 'Paid Media Strategy' }],
+    publishedLabel: 'March 20, 2026',
+    excerpt: 'Leads are up. Pipeline quality is down. Dirty signals can poison optimization and steer budget to the wrong audiences.',
+  },
+  {
+    title: 'Google Ads API Update: A Critical Change for Customer Match',
+    href: '/insights/google-ads-api-update-a-critical-change-for-customer-match/',
+    imageSrc: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/GA-API-update-hero-768x513.webp',
+    imageAlt: '',
+    categories: [{ label: 'Industry Insights' }, { label: 'Marketing Analytics & Tracking' }],
+    publishedLabel: 'March 11, 2026',
+    excerpt: 'Google Ads API Update could disrupt your Customer Match workflows starting April 2026. Here is how to prepare.',
+  },
+  {
+    title: "When Marketing Metrics and Financial Results Don't Align: Understanding Signal Loss",
+    href: '/insights/when-marketing-metrics-and-financial-results-dont-align-understanding-signal-loss/',
+    imageSrc: 'https://foundsm.com/found2025/wp-content/uploads/2026/02/Untitled-1200-x-801-px-768x513.webp',
+    imageAlt: '',
+    categories: [{ label: 'Industry Insights' }, { label: 'Marketing Analytics & Tracking' }],
+    publishedLabel: 'March 6, 2026',
+    excerpt: "Marketing says ROAS is 3.5:1. Finance disagrees. The gap isn't a reporting error, it's signal loss.",
+  },
+  {
+    title: "Google's Vision for 2026: Building a Revenue Engine Powered by Data",
+    href: '/insights/googles-vision-for-2026-building-a-revenue-engine-powered-by-data/',
+    imageSrc: 'https://foundsm.com/found2025/wp-content/uploads/2026/02/dataengine-768x432.webp',
+    imageAlt: '',
+    categories: [{ label: 'Industry Insights' }, { label: 'Marketing Analytics & Tracking' }, { label: 'Paid Media Strategy' }],
+    publishedLabel: 'February 18, 2026',
+    excerpt: "Explore Google's 2026 vision for building a scalable revenue engine powered by data, AI, and smarter monetization strategies.",
+  },
+  {
+    title: "ICDPA Isn't Just Compliance. It's the Foundation of Smarter Data Strategy.",
+    href: '/insights/icdpa-isnt-just-compliance-its-the-foundation-of-smarter-data-strategy/',
+    categories: [{ label: 'Industry Insights' }, { label: 'Marketing Analytics & Tracking' }],
+    publishedLabel: 'February 2, 2026',
+    excerpt: "Indiana's ICDPA reshapes how businesses collect, consent to, and optimize first-party data for growth.",
+  },
+  {
+    title: 'Closing the Loop: How Conversion APIs and Value-Based Bidding Transform Performance Marketing',
+    href: '/insights/closing-the-loop-how-conversion-apis-and-value-based-bidding-transform-performance-marketing/',
+    imageSrc: 'https://foundsm.com/found2025/wp-content/uploads/2026/01/closing-the-loop-main-768x768.webp',
+    imageAlt: '',
+    categories: [{ label: 'AI' }, { label: 'Paid Media Strategy' }],
+    publishedLabel: 'January 23, 2026',
+    excerpt: 'Unlock the next evolution in performance marketing by moving beyond basic pixel tracking and embracing Conversion APIs.',
+  },
+];
+
+const insightPosts = posts.length ? posts.slice(0, 6) : fallbackPosts;
+
+const firstPartyBullets = [
+  {
+    lead: 'Why browser-side tracking is collapsing',
+    body: ' and how to build a signal-resilient infrastructure that survives ITP, ETP, and cookie loss.',
+  },
+  {
+    lead: 'How to design a first-party data capture layer',
+    body: ' that collects the identifiers AI algorithms need to optimize correctly.',
+  },
+  {
+    lead: 'How to unify marketing and sales data',
+    body: ' so that revenue (not form fills) becomes the core training signal for your ad platforms.',
+  },
+  {
+    lead: 'How server-to-server APIs transform campaign performance',
+    body: ', attribution accuracy, and bidding efficiency.',
+  },
+  {
+    lead: 'How to implement value-based and propensity-based bidding',
+    body: ', enabling algorithms to prioritize high-value customers over low-intent noise.',
+  },
+  {
+    lead: 'A full technical readiness audit',
+    body: ' to assess whether your organization is structurally prepared for AI-era advertising.',
+  },
+];
+---
+
+{variant === 'newsletter' && (
+  <>
+    <section class="wp-newsletter-hero" aria-labelledby="newsletter-title">
+      <div class="wp-shell wp-newsletter-hero__grid">
+        <div class="wp-newsletter-copy">
+          <p class="wp-newsletter-kicker">Get Found<br />in Your<br />Inbox</p>
+          <h1 id="newsletter-title">Sign Up for Our<br class="desktop-break" /> Newsletter</h1>
+        </div>
+        <aside class="wp-newsletter-form" aria-label="Newsletter signup form">
+          <div class="hs-form-frame" data-region="na1" data-form-id="f757bd34-b8c5-4f2a-a1ef-19c3a364683b" data-portal-id="5045186"></div>
+        </aside>
+      </div>
+    </section>
+    <section class="wp-dark-strip wp-newsletter-summary">
+      <p>Get monthly insights, real-world strategies, and expert takes from the Found team — plus the latest on upcoming events and recaps on any you missed.</p>
+    </section>
+  </>
+)}
+
+{variant === 'privacy' && (
+  <section class="wp-title-page wp-privacy-page" aria-labelledby="privacy-title">
+    <div class="wp-shell">
+      <h1 id="privacy-title">Privacy Policy</h1>
+      <div class="wp-privacy-notice">
+        <div class="ot-privacy-notice-language-dropdown-container"></div>
+        <div id="otnotice-d5d58139-f0ee-4386-8325-1f3dec8dc14f" class="otnotice"></div>
+      </div>
+    </div>
+  </section>
+)}
+
+{variant === 'signal-quiz' && (
+  <section class="wp-dark-hero wp-signal-hero" aria-labelledby="signal-title">
+    <div class="wp-shell wp-centered">
+      <h1 id="signal-title">Curious where your organization<br class="desktop-break" /> stands?</h1>
+      <p>Take the quiz to find out.</p>
+      <div class="wp-signal-embed involveme_embed" data-project="quiz" data-title="Revenue Engineering Assessment - Embedded">
+        <script is:inline src="https://datasignals.foundsm.com/embed" defer></script>
+      </div>
+    </div>
+  </section>
+)}
+
+{variant === 'whitepapers-index' && (
+  <section class="wp-dark-hero wp-whitepaper-index" aria-labelledby="whitepapers-title">
+    <div class="wp-shell wp-centered">
+      <h1 id="whitepapers-title">You've built something great.<br />Now let data fuel your growth.</h1>
+      <p>Found turns your data into a growth engine for smarter targeting and faster ROI.</p>
+      <a class="wp-green-pill" href="/contact-us/">Let's Chat Data — Grab a Spot on Our Calendar →</a>
+    </div>
+  </section>
+)}
+
+{variant === 'safelist' && (
+  <>
+    <section class="wp-safelist-hero" aria-labelledby="safelist-title">
+      <div class="wp-shell wp-centered">
+        <span class="wp-check" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M20.3 6.3 9.5 17.1l-5.1-5.1 2.1-2.1 3 3L18.2 4.2l2.1 2.1Z"/></svg>
+        </span>
+        <h1 id="safelist-title">Thank You for Signing Up!</h1>
+        <p>So glad you've found your way to us—welcome aboard! To make sure our emails land straight in your inbox and not your spam or junk folder, follow these quick steps to safelist us:</p>
+      </div>
+    </section>
+    <section class="wp-dark-strip wp-safelist-steps" aria-labelledby="safelist-steps-title">
+      <div class="wp-shell">
+        <h2 id="safelist-steps-title">How to Safelist Our Emails</h2>
+        <div class="wp-safelist-columns">
+          {safelistColumns.map((column) => (
+            <article>
+              <h3>{column.title}</h3>
+              <ol>
+                {column.steps.map((step) => <li>{step}</li>)}
+              </ol>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+    <section class="wp-safelist-outro">
+      <div class="wp-shell wp-centered">
+        <p>That's it! You're all set to stay updated with our latest news, tips, and exclusive content. If you don't see our emails, check your spam folder just in case.</p>
+        <h2>Happy reading!</h2>
+      </div>
+    </section>
+  </>
+)}
+
+{variant === 'thank-you' && (
+  <>
+    <section class="wp-thanks-hero" aria-labelledby="thanks-title">
+      <div class="wp-shell wp-centered">
+        <span class="wp-check" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M20.3 6.3 9.5 17.1l-5.1-5.1 2.1-2.1 3 3L18.2 4.2l2.1 2.1Z"/></svg>
+        </span>
+        <h1 id="thanks-title">You've Just Made a Smart Move.</h1>
+        <p>Thanks for connecting with Found!</p>
+        <p>Someone from our team will reach out within 1–2 business days to talk about how we can help you grow faster, smarter, and with data on your side.</p>
+      </div>
+    </section>
+    <section class="wp-insights" aria-labelledby="thanks-insights-title">
+      <div class="wp-shell">
+        <h2 id="thanks-insights-title">Curious? Dive Into Our Latest Insights Below.</h2>
+        <div class="wp-insights-grid">
+          {insightPosts.map((post) => (
+            <article class="wp-insight-card">
+              {post.imageSrc && <img src={post.imageSrc} alt={post.imageAlt || ''} loading="lazy" decoding="async" />}
+              <p class="wp-insight-card__meta">{(post.categories || []).map((category) => category.label).join(', ')}</p>
+              <h3><a href={post.href}>{post.title}</a></h3>
+              {post.publishedLabel && <time>{post.publishedLabel}</time>}
+              {post.excerpt && <p class="wp-insight-card__excerpt">{post.excerpt}</p>}
+              <a class="wp-dark-pill" href={post.href}>Read Article →</a>
+            </article>
+          ))}
+        </div>
+        <div class="wp-load-more"><a class="wp-green-pill" href="/insights/">Load More</a></div>
+      </div>
+    </section>
+  </>
+)}
+
+{variant === 'first-party-data' && (
+  <>
+    <section class="wp-first-party-hero" aria-labelledby="first-party-title">
+      <div class="wp-first-party-hero__bg" aria-hidden="true"></div>
+      <div class="wp-first-party-hero__inner">
+        <h1 id="first-party-title">Why First-Party Data Is<br />Your Most Valuable<br />Profit Lever</h1>
+        <aside class="wp-download-card" aria-labelledby="download-title">
+          <h2 id="download-title">Download Now</h2>
+          <div class="hs-form-frame" data-region="na1" data-form-id="2c65e995-aba0-4239-955c-9beb15b0791d" data-portal-id="5045186"></div>
+        </aside>
+      </div>
+    </section>
+    <section class="wp-first-party-body">
+      <div class="wp-first-party-copy">
+        <h2>Unlock the Profit Potential of Your<br />First-Party Data</h2>
+        <a class="wp-green-pill" href="/contact-us/">Schedule a Call with our Team</a>
+        <p>AI has permanently rewritten the rules of digital advertising. With Google, Meta, and other major ad platforms shifting to black-box, machine-learning systems, marketers can no longer rely on manual optimization, pixel-based tracking, or surface-level conversion events. The brands that win in this new landscape will be the ones that control and activate their own first-party data.</p>
+        <p><strong><em>This white paper is your blueprint for doing exactly that.</em></strong><br />In this comprehensive technical guide, you'll learn how to architect a closed-loop data system that feeds real revenue intelligence (not noisy browser signals) back into your ad platforms. You'll discover how to capture durable identifiers, store them in a resilient first-party framework, and push enriched, truth-based events directly into Google, Meta, LinkedIn, and beyond.</p>
+        <h2>What You'll Gain</h2>
+        <p>Marketers, revenue leaders, and technical operators will walk away with a deep understanding of:</p>
+        <ul>
+          {firstPartyBullets.map((item) => <li><strong>{item.lead}</strong>{item.body}</li>)}
+        </ul>
+        <h2>Who This Is For</h2>
+        <p>This resource is designed for <strong>Revenue Operations, Marketing Operations, Data Engineering, and Paid Media leaders</strong> who need more than conceptual advice and recognize the need for a detailed architectural plan.</p>
+        <p>If you're responsible for scaling revenue, improving measurement, or modernizing your marketing infrastructure, this white paper will give you the strategic clarity and technical depth required to build an AI-ready organization.</p>
+        <p><strong>Download the white paper to learn how first-party data becomes your most powerful profit lever and how to engineer the closed-loop system that drives sustainable, measurable growth.</strong></p>
+      </div>
+    </section>
+  </>
+)}
+
+{(variant === 'newsletter' || variant === 'first-party-data') && (
+  <script is:inline src="https://js.hsforms.net/forms/embed/5045186.js" defer></script>
+)}
+
+{variant === 'privacy' && (
+  <>
+    <script
+      is:inline
+      id="otprivacy-notice-script"
+      type="text/javascript"
+      src="https://privacyportal-cdn.onetrust.com/privacy-notice-scripts/otnotice-1.0.min.js"
+      charset="UTF-8"
+      defer
+    >
+      settings="eyJjYWxsYmFja1VybCI6Imh0dHBzOi8vZnNtLXByaXZhY3kubXkub25ldHJ1c3QuY29tL3JlcXVlc3QvdjEvcHJpdmFjeU5vdGljZXMvc3RhdHMvdmlld3MiLCJjb250ZW50QXBpVXJsIjoiaHR0cHM6Ly9mc20tcHJpdmFjeS5teS5vbmV0cnVzdC5jb20vcmVxdWVzdC92MS9lbnRlcnByaXNlcG9saWN5L2RpZ2l0YWxwb2xpY3kvY29udGVudCIsIm1ldGFkYXRhQXBpVXJsIjoiaHR0cHM6Ly9mc20tcHJpdmFjeS5teS5vbmV0cnVzdC5jb20vcmVxdWVzdC92MS9lbnRlcnByaXNlcG9saWN5L2RpZ2l0YWxwb2xpY3kvbWV0YS1kYXRhIn0="
+    </script>
+    <script is:inline>
+      (() => {
+        const noticeUrl = 'https://privacyportal-cdn.onetrust.com/storage-container/39f3b408-e620-42ee-94e1-d0ee54b3c108/privacy-notices/d5d58139-f0ee-4386-8325-1f3dec8dc14f/published/privacynotice.json';
+        let attempts = 0;
+        const loadNotice = () => {
+          const api = window.OneTrust && window.OneTrust.NoticeApi;
+          if (api && api.Initialized && typeof api.Initialized.then === 'function') {
+            api.Initialized.then(() => api.LoadNotices([noticeUrl]));
+            return;
+          }
+          attempts += 1;
+          if (attempts < 40) {
+            window.setTimeout(loadNotice, 250);
+          }
+        };
+        loadNotice();
+      })();
+    </script>
+  </>
+)}
+
+<style>
+  .wp-shell {
+    inline-size: min(calc(100% - (2 * var(--page-gutter))), var(--content-max-width));
+    margin-inline: auto;
+  }
+
+  .wp-centered {
+    text-align: center;
+  }
+
+  .desktop-break {
+    display: block;
+  }
+
+  .wp-newsletter-hero {
+    padding-block: 6.1rem 6rem;
+    background: #fff;
+  }
+
+  .wp-newsletter-hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(24rem, 0.65fr);
+    align-items: start;
+    gap: 4rem;
+  }
+
+  .wp-newsletter-copy {
+    min-inline-size: 0;
+  }
+
+  .wp-newsletter-kicker {
+    max-inline-size: 40rem;
+    margin: 0 0 2.5rem;
+    color: #231f20;
+    font-family: var(--font-heading);
+    font-size: clamp(4.5rem, 8.8vw, 8rem);
+    font-weight: 700;
+    line-height: 0.9;
+  }
+
+  .wp-newsletter-hero h1 {
+    margin: 0;
+    color: var(--color-primary);
+    font-family: var(--font-body);
+    font-size: clamp(2.5rem, 4vw, 4rem);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: 0;
+  }
+
+  .wp-newsletter-form {
+    min-block-size: 34rem;
+    padding-block-start: 1rem;
+  }
+
+  .wp-newsletter-form .hs-form-frame {
+    inline-size: 100%;
+    min-block-size: 34rem;
+  }
+
+  .wp-dark-strip {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background: #231f20;
+    color: #fff;
+  }
+
+  .wp-dark-strip::before,
+  .wp-dark-hero::before {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: url('/images/pages/our-approach/contact-bg-fc.svg') center / cover no-repeat;
+    content: '';
+    opacity: 0.7;
+  }
+
+  .wp-newsletter-summary {
+    padding: 5rem var(--gutter);
+    text-align: center;
+  }
+
+  .wp-newsletter-summary p {
+    max-inline-size: 62rem;
+    margin: 0 auto;
+    font-size: 1.25rem;
+    line-height: 1.8;
+  }
+
+  .wp-title-page {
+    min-block-size: 7.75rem;
+    padding: 2.6rem 0 2.4rem;
+    background: #fff;
+  }
+
+  .wp-title-page .wp-shell {
+    inline-size: min(calc(100% - 40px), var(--content-max-width));
+  }
+
+  .wp-title-page h1 {
+    margin: 0;
+    font-size: clamp(2rem, 3vw, 2.75rem);
+    line-height: 1.1;
+    letter-spacing: 0;
+  }
+
+  .wp-privacy-page {
+    padding-block-end: 5rem;
+  }
+
+  .wp-privacy-notice {
+    margin-block-start: 2.5rem;
+    color: #231f20;
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  .wp-dark-hero {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background: #231f20;
+    color: #fff;
+  }
+
+  .wp-signal-hero {
+    padding-block: 13.8rem 10.7rem;
+  }
+
+  .wp-dark-hero h1 {
+    margin: 0;
+    color: #fff;
+    font-size: clamp(2.8rem, 5vw, 3.85rem);
+    line-height: 1.1;
+    letter-spacing: 0;
+  }
+
+  .wp-dark-hero p {
+    margin: 2rem auto 0;
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: 800;
+    line-height: 1.3;
+  }
+
+  .wp-signal-embed {
+    inline-size: min(100%, 63rem);
+    min-block-size: 32rem;
+    margin: 2rem auto 0;
+    border-radius: 0.75rem;
+    background: #fff;
+    color: #231f20;
+    overflow: hidden;
+  }
+
+  :global(.wp-signal-embed iframe) {
+    inline-size: 100%;
+    min-block-size: 32rem;
+    border: 0;
+  }
+
+  .wp-whitepaper-index {
+    padding-block: 7.1rem 6.25rem;
+  }
+
+  .wp-whitepaper-index p {
+    font-weight: 400;
+  }
+
+  .wp-green-pill,
+  .wp-dark-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-block-size: 3.75rem;
+    padding: 1rem 2rem;
+    border-radius: 999px;
+    font-weight: 700;
+    line-height: 1.2;
+    text-align: center;
+  }
+
+  .wp-green-pill {
+    margin-block-start: 2.75rem;
+    background: var(--color-primary);
+    color: #1a1a1a;
+  }
+
+  .wp-dark-pill {
+    background: #231f20;
+    color: #fff;
+  }
+
+  .wp-safelist-hero,
+  .wp-thanks-hero {
+    padding: 7rem var(--gutter) 7.5rem;
+    background: #fff;
+  }
+
+  .wp-check {
+    display: inline-grid;
+    place-items: center;
+    inline-size: 3.125rem;
+    block-size: 3.125rem;
+    margin-block-end: 1.5rem;
+    border: 4px solid var(--color-primary);
+    border-radius: 50%;
+  }
+
+  .wp-check svg {
+    inline-size: 1.75rem;
+    fill: var(--color-primary);
+  }
+
+  .wp-safelist-hero h1,
+  .wp-thanks-hero h1 {
+    margin: 0;
+    font-size: clamp(3rem, 5.5vw, 4rem);
+    line-height: 1.08;
+    letter-spacing: 0;
+  }
+
+  .wp-safelist-hero p,
+  .wp-thanks-hero p {
+    max-inline-size: 86rem;
+    margin: 1.75rem auto 0;
+    font-size: 0.925rem;
+    line-height: 1.7;
+  }
+
+  .wp-safelist-steps {
+    padding: 3.75rem var(--gutter) 7rem;
+  }
+
+  .wp-safelist-steps h2 {
+    color: #fff;
+    font-family: var(--font-body);
+    font-size: clamp(2rem, 3vw, 3rem);
+    font-weight: 900;
+    line-height: 1.15;
+    text-align: center;
+  }
+
+  .wp-safelist-columns {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 4rem;
+    margin-block-start: 4rem;
+  }
+
+  .wp-safelist-columns h3 {
+    margin: 0 0 4rem;
+    color: var(--color-primary);
+    font-size: 2rem;
+    font-weight: 900;
+    line-height: 1.1;
+  }
+
+  .wp-safelist-columns ol {
+    display: grid;
+    gap: 2.2rem;
+    list-style: none;
+    counter-reset: safelist;
+  }
+
+  .wp-safelist-columns li {
+    position: relative;
+    min-block-size: 2rem;
+    padding-inline-start: 3rem;
+    color: #fff;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    counter-increment: safelist;
+  }
+
+  .wp-safelist-columns li::before {
+    position: absolute;
+    inset-block-start: 0.1rem;
+    inset-inline-start: 0;
+    display: grid;
+    place-items: center;
+    inline-size: 1.9rem;
+    block-size: 1.9rem;
+    border-radius: 50%;
+    background: #c6e89d;
+    color: #231f20;
+    content: counter(safelist);
+    font-weight: 900;
+  }
+
+  .wp-safelist-outro {
+    padding: 6.25rem var(--gutter);
+    text-align: center;
+  }
+
+  .wp-safelist-outro p {
+    max-inline-size: 74rem;
+    margin: 0 auto;
+    font-size: 1.35rem;
+    line-height: 1.6;
+  }
+
+  .wp-safelist-outro h2 {
+    margin-block-start: 1.75rem;
+    font-size: 3rem;
+    line-height: 1.1;
+  }
+
+  .wp-thanks-hero {
+    padding-block: 13rem 7rem;
+  }
+
+  .wp-insights {
+    padding: 3rem var(--gutter) 10rem;
+    background: #fff;
+  }
+
+  .wp-insights h2 {
+    margin: 0 0 6rem;
+    font-size: 2rem;
+    line-height: 1.2;
+    text-align: center;
+  }
+
+  .wp-insights-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 5rem 3.125rem;
+  }
+
+  .wp-insight-card {
+    display: grid;
+    align-content: start;
+    gap: 1.25rem;
+  }
+
+  .wp-insight-card img {
+    inline-size: 100%;
+    aspect-ratio: 1.5;
+    border-radius: 1rem;
+    object-fit: cover;
+  }
+
+  .wp-insight-card__meta {
+    margin: 0;
+    padding-inline-start: 0.85rem;
+    border-inline-start: 4px solid var(--color-primary);
+    color: #4d4d4d;
+    font-size: 0.75rem;
+    letter-spacing: 0.22em;
+    line-height: 1.6;
+    text-transform: uppercase;
+  }
+
+  .wp-insight-card h3 {
+    margin: 0;
+    font-size: clamp(1.5rem, 2vw, 2rem);
+    font-weight: 900;
+    line-height: 1.18;
+  }
+
+  .wp-insight-card h3 a {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+
+  .wp-insight-card time {
+    color: #8a8a8a;
+    font-size: 0.95rem;
+  }
+
+  .wp-insight-card__excerpt {
+    display: -webkit-box;
+    overflow: hidden;
+    margin: 0;
+    font-size: 1.125rem;
+    line-height: 1.55;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+  }
+
+  .wp-insight-card .wp-dark-pill {
+    justify-self: start;
+    min-block-size: 3.5rem;
+    margin-block-start: 0.25rem;
+  }
+
+  .wp-load-more {
+    margin-block-start: 5.5rem;
+    text-align: center;
+  }
+
+  .wp-first-party-hero {
+    position: relative;
+    z-index: 1;
+    overflow: visible;
+    background: #fff;
+  }
+
+  .wp-first-party-hero__bg {
+    position: absolute;
+    inset: 0;
+    min-block-size: 32rem;
+    background:
+      linear-gradient(90deg, rgba(35, 31, 32, 0.72), rgba(35, 31, 32, 0.38)),
+      url('https://foundsm.com/found2025/wp-content/uploads/2026/03/first-party-whitepaper-feature.webp') center / cover no-repeat;
+  }
+
+  .wp-first-party-hero__inner {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 42rem) minmax(25rem, 34rem);
+    gap: 2.5rem;
+    inline-size: min(calc(100% - (2 * var(--page-gutter))), var(--content-max-width));
+    block-size: 34.4rem;
+    margin-inline: auto;
+    padding-block: 3.75rem 0;
+    overflow: visible;
+  }
+
+  .wp-first-party-hero h1 {
+    align-self: start;
+    margin: 0;
+    margin-block-start: 7.6rem;
+    color: #fff;
+    font-size: clamp(3rem, 4vw, 3.55rem);
+    line-height: 1.16;
+    letter-spacing: 0;
+  }
+
+  .wp-download-card {
+    position: relative;
+    z-index: 1;
+    min-block-size: 42.5rem;
+    margin-block-start: 0.55rem;
+    padding: 2rem;
+    background: #231f20;
+    color: #fff;
+  }
+
+  .wp-download-card h2 {
+    margin: 0;
+    color: var(--color-primary);
+    font-family: var(--font-body);
+    font-size: 2.5rem;
+    font-weight: 900;
+    line-height: 1.1;
+    text-align: center;
+  }
+
+  .wp-first-party-body {
+    position: relative;
+    z-index: 0;
+    padding: 4.25rem var(--gutter) 10rem;
+    background: #fff;
+  }
+
+  .wp-first-party-copy {
+    max-inline-size: 45rem;
+  }
+
+  .wp-first-party-copy h2 {
+    margin: 0 0 2rem;
+    font-family: var(--font-body);
+    font-size: clamp(2rem, 3vw, 2.5rem);
+    font-weight: 900;
+    line-height: 1.16;
+  }
+
+  .wp-first-party-copy h2:not(:first-child) {
+    margin-block-start: 2.5rem;
+  }
+
+  .wp-first-party-copy p,
+  .wp-first-party-copy li {
+    font-size: 1.05rem;
+    line-height: 1.75;
+  }
+
+  .wp-first-party-copy p {
+    margin: 2rem 0 0;
+  }
+
+  .wp-first-party-copy ul {
+    display: grid;
+    gap: 1rem;
+    margin: 0.75rem 0 0;
+    padding-inline-start: 1.3rem;
+    list-style: disc;
+  }
+
+  @media (max-width: 900px) {
+    .desktop-break {
+      display: none;
+    }
+
+    .wp-newsletter-hero {
+      padding-block: 3.5rem 4rem;
+    }
+
+    .wp-newsletter-hero__grid {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+
+    .wp-newsletter-kicker {
+      max-inline-size: 22rem;
+      margin-inline: auto;
+      font-size: clamp(3.55rem, 14vw, 3.95rem);
+      text-align: center;
+    }
+
+    .wp-newsletter-hero h1 {
+      font-size: clamp(2.05rem, 9vw, 2.35rem);
+      text-align: center;
+    }
+
+    .wp-newsletter-form {
+      min-block-size: 36rem;
+      padding-block-start: 0;
+    }
+
+    .wp-safelist-hero,
+    .wp-thanks-hero {
+      padding-block: 4rem;
+    }
+
+    .wp-safelist-hero h1,
+    .wp-thanks-hero h1 {
+      font-size: clamp(2.25rem, 9vw, 2.65rem);
+    }
+
+    .wp-signal-hero {
+      padding-block: 19.5rem 10rem;
+    }
+
+    .wp-whitepaper-index {
+      padding-block: 6rem;
+    }
+
+    .wp-whitepaper-index h1 {
+      font-size: clamp(2.25rem, 9.75vw, 2.45rem);
+    }
+
+    .wp-safelist-columns,
+    .wp-insights-grid,
+    .wp-first-party-hero__inner {
+      grid-template-columns: 1fr;
+    }
+
+    .wp-safelist-columns {
+      gap: 3rem;
+    }
+
+    .wp-safelist-columns h3 {
+      margin-block-end: 1.75rem;
+    }
+
+    .wp-first-party-hero__inner {
+      block-size: auto;
+      padding-block: 0;
+    }
+
+    .wp-first-party-hero__bg {
+      inset: 0 0 auto;
+      block-size: 15.65rem;
+      min-block-size: 0;
+      background-position: center top;
+    }
+
+    .wp-first-party-hero h1 {
+      max-inline-size: 22rem;
+      margin: 4.5rem auto 0;
+      font-size: clamp(1.75rem, 7.5vw, 2rem);
+      line-height: 1.15;
+      text-align: center;
+    }
+
+    .wp-download-card {
+      inline-size: calc(100% - 2.5rem);
+      min-block-size: 42.5rem;
+      margin: 2.8rem auto 0;
+    }
+
+    .wp-download-card h2 {
+      font-size: clamp(2rem, 9vw, 2.5rem);
+      white-space: nowrap;
+    }
+
+    .wp-first-party-body {
+      padding-block-start: 3rem;
+    }
+
+    .wp-first-party-copy h2 {
+      font-size: clamp(2.2rem, 9vw, 2.65rem);
+    }
+  }
+</style>

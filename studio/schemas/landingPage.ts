@@ -1,4 +1,5 @@
 import { defineType, defineField, defineArrayMember } from 'sanity';
+import { createSeoFields } from './seoFields';
 
 export default defineType({
   name: 'landingPage',
@@ -44,28 +45,7 @@ export default defineType({
         defineArrayMember({ type: 'faqBlock' }),
       ],
     }),
-    defineField({
-      name: 'seoTitle',
-      title: 'SEO Title',
-      type: 'string',
-      group: 'seo',
-      description: 'Overrides the internal title for the <title> tag',
-    }),
-    defineField({
-      name: 'seoDescription',
-      title: 'Meta Description',
-      type: 'text',
-      rows: 3,
-      group: 'seo',
-      validation: (Rule) => Rule.max(160),
-    }),
-    defineField({
-      name: 'ogImage',
-      title: 'Social Share Image',
-      type: 'image',
-      group: 'seo',
-      description: '1200x630 recommended',
-    }),
+    ...createSeoFields({ descriptionMax: 180 }),
     defineField({
       name: 'hideNavigation',
       title: 'Hide Navigation',

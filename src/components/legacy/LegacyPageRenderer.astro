@@ -1,0 +1,198 @@
+---
+import InsightResourcePage from './InsightResourcePage.astro';
+import { renderSimplePortableText } from '../../lib/simplePortableText';
+import { getInsightResourcePage } from '../../lib/insightResourceContent';
+import type { LegacyPageData } from '../../lib/legacyPageData';
+
+interface Props {
+  page: LegacyPageData;
+}
+
+const { page } = Astro.props;
+const insightResourcePage = getInsightResourcePage(page.path);
+const bodyHtml = renderSimplePortableText(page.body);
+const ctaBodyHtml = renderSimplePortableText(page.cta?.body);
+const formBodyHtml = renderSimplePortableText(page.form?.body);
+const formContainerId = page.form?.hubspotFormId ? `legacy-form-${page.form.hubspotFormId}` : undefined;
+---
+
+{insightResourcePage ? (
+  <InsightResourcePage page={insightResourcePage} />
+) : (
+  <>
+    <section class="legacy-hero" aria-label={page.hero.heading}>
+      <div class="container legacy-hero__inner">
+        {page.hero.eyebrow && <p class="legacy-hero__eyebrow">{page.hero.eyebrow}</p>}
+        <h1>{page.hero.heading}</h1>
+        {page.hero.subheading && <p class="legacy-hero__subheading">{page.hero.subheading}</p>}
+      </div>
+    </section>
+
+    <section class="section legacy-page__content" aria-label="Page content">
+      <div class="container legacy-page__grid">
+        <div class="legacy-page__body">
+          {bodyHtml && <div class="legacy-rich-text" set:html={bodyHtml} />}
+          <slot />
+        </div>
+
+        {(page.cards?.length || page.form?.hubspotFormId) && (
+          <aside class="legacy-page__aside">
+            {page.cards?.map((card) => {
+              const cardBodyHtml = renderSimplePortableText(card.body);
+              return (
+                <article class="legacy-card">
+                  <h2>{card.title}</h2>
+                  {cardBodyHtml && <div class="legacy-rich-text legacy-rich-text--small" set:html={cardBodyHtml} />}
+                  {card.cta?.label && card.cta?.href && <a class="legacy-card__link" href={card.cta.href}>{card.cta.label}</a>}
+                </article>
+              );
+            })}
+
+            {page.form?.hubspotFormId && (
+              <div class="legacy-form">
+                {page.form.heading && <h2>{page.form.heading}</h2>}
+                {formBodyHtml && <div class="legacy-rich-text legacy-rich-text--small" set:html={formBodyHtml} />}
+                <div id={formContainerId} class="legacy-form__embed"></div>
+              </div>
+            )}
+          </aside>
+        )}
+      </div>
+    </section>
+
+    {page.cta?.label && page.cta?.href && (
+      <section class="cta-banner" aria-label="Call to action">
+        <div class="cta-banner__bg" aria-hidden="true"></div>
+        <div class="container cta-banner__inner fade-in-up">
+          {page.cta.heading && <h2 class="cta-banner__headline">{page.cta.heading}</h2>}
+          {ctaBodyHtml && <div class="cta-banner__text" set:html={ctaBodyHtml} />}
+          <div class="cta-banner__action">
+            <a href={page.cta.href} class="btn btn--green btn--lg">{page.cta.label}</a>
+          </div>
+        </div>
+      </section>
+    )}
+
+    {page.form?.hubspotFormId && formContainerId && (
+      <script is:inline define:vars={{ hubspotFormId: page.form.hubspotFormId, formContainerId }}>
+        (function() {
+          function loadForm() {
+            if (window.hbspt) {
+              window.hbspt.forms.create({
+                region: "na1",
+                portalId: "5045186",
+                formId: hubspotFormId,
+                target: "#" + formContainerId
+              });
+            } else {
+              setTimeout(loadForm, 500);
+            }
+          }
+          if (document.readyState === "complete") loadForm();
+          else window.addEventListener("load", loadForm);
+        })();
+      </script>
+    )}
+  </>
+)}
+
+<style>
+  .legacy-hero {
+    background: var(--color-dark);
+    color: var(--color-white);
+    padding-block: calc(var(--header-height) + var(--space-2xl)) var(--space-2xl);
+  }
+
+  .legacy-hero__inner {
+    max-width: 58rem;
+  }
+
+  .legacy-hero__eyebrow {
+    color: var(--color-primary);
+    font-size: var(--text-caption);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    margin-bottom: var(--space-sm);
+    text-transform: uppercase;
+  }
+
+  .legacy-hero h1 {
+    color: var(--color-white);
+  }
+
+  .legacy-hero__subheading {
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 1.125rem;
+    line-height: 1.7;
+    margin-top: var(--space-md);
+    max-width: 48rem;
+  }
+
+  .legacy-page__grid {
+    display: grid;
+    gap: var(--space-xl);
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .legacy-page__body {
+    min-width: 0;
+  }
+
+  .legacy-rich-text {
+    color: var(--color-mid);
+    line-height: 1.75;
+    max-width: 48rem;
+  }
+
+  .legacy-rich-text :global(p + p) {
+    margin-top: var(--space-sm);
+  }
+
+  .legacy-rich-text :global(a) {
+    color: var(--color-primary);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .legacy-rich-text--small {
+    font-size: 0.95rem;
+  }
+
+  .legacy-page__aside {
+    display: grid;
+    gap: var(--space-md);
+    min-width: 0;
+  }
+
+  .legacy-card,
+  .legacy-form {
+    background: var(--color-surface-muted);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius);
+    padding: var(--space-lg);
+  }
+
+  .legacy-card h2,
+  .legacy-form h2 {
+    font-size: 1.35rem;
+    margin-bottom: var(--space-sm);
+  }
+
+  .legacy-card__link {
+    color: var(--color-primary);
+    display: inline-flex;
+    font-weight: 700;
+    margin-top: var(--space-md);
+  }
+
+  .legacy-form__embed {
+    margin-top: var(--space-md);
+  }
+
+  @media (min-width: 900px) {
+    .legacy-page__grid {
+      grid-template-columns: minmax(0, 1fr) minmax(17rem, 22rem);
+    }
+  }
+</style>

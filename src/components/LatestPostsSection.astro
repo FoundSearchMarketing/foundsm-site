@@ -1,0 +1,310 @@
+---
+interface LatestPost {
+  type: string;
+  categories: string;
+  title: string;
+  href: string;
+  imageSrc: string;
+  imageAlt: string;
+  date: string;
+  excerpt: string;
+  ctaLabel?: string;
+}
+
+interface Props {
+  posts: LatestPost[];
+}
+
+const { posts } = Astro.props;
+---
+
+<section class="elementor-section latest-posts" aria-labelledby="latest-posts-heading">
+  <div class="e-con-inner latest-posts__heading-wrap">
+    <h2 class="latest-posts__heading" id="latest-posts-heading">LATEST POSTS</h2>
+  </div>
+
+  <div class="e-con-inner latest-posts__panel">
+    <div class="latest-posts__grid" role="list">
+      {
+        posts.map((post) => (
+          <a class="featured-card" href={post.href} role="listitem">
+            <div class="featured-card__inner">
+              <p class="tag-line">{post.type}</p>
+              <div class="category-line">{post.categories}</div>
+              <h3 class="featured-card__title">{post.title}</h3>
+              <span class="featured-card__image">
+                <img src={post.imageSrc} alt={post.imageAlt} loading="lazy" />
+              </span>
+              <p class="meta-line">{post.date}</p>
+              <p class="excerpt">{post.excerpt}</p>
+              <span class="button">{post.ctaLabel ?? 'Keep Reading'} <span aria-hidden="true">&rarr;</span></span>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .latest-posts {
+    --found-black: #231f20;
+    --found-black-alpha: rgba(35, 31, 32, 0.6);
+    --found-green: #8dc63f;
+    --found-tag-blue: rgba(10, 173, 239, 0.3);
+    --found-white: #ffffff;
+
+    position: relative;
+    margin-block: 0 100px;
+    padding-block-start: 50px;
+    background-color: var(--found-white);
+    color: var(--found-black);
+    font-family: var(--font-body);
+  }
+
+  .latest-posts::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("https://foundsm.com/found2025/wp-content/uploads/2025/09/topography-light.svg");
+    background-position: center top;
+    background-repeat: repeat;
+    background-size: auto;
+    opacity: 0.75;
+    pointer-events: none;
+  }
+
+  .e-con-inner {
+    position: relative;
+    z-index: 1;
+    inline-size: min(calc(100% - (2 * var(--page-gutter))), var(--content-max-width));
+    margin: 0 auto;
+  }
+
+  .latest-posts__heading-wrap {
+    z-index: 2;
+    margin-bottom: 0;
+    padding-block: 10px;
+  }
+
+  .latest-posts__heading {
+    margin: 0;
+    color: var(--found-black);
+    font-family: var(--font-body);
+    font-size: 20px;
+    font-weight: 300;
+    letter-spacing: 3px;
+    line-height: 28px;
+    text-transform: uppercase;
+  }
+
+  .latest-posts__panel {
+    z-index: 1;
+    background: transparent;
+    padding-block: 10px;
+  }
+
+  .latest-posts__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 30px;
+    padding-top: 0;
+  }
+
+  .featured-card {
+    display: block;
+    min-width: 0;
+    overflow: hidden;
+    border-radius: 30px;
+    background-color: #eef1ec;
+    background-image: url("https://foundsm.com/found2025/wp-content/uploads/2025/11/contour-2.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 25px 40px;
+    cursor: pointer;
+  }
+
+  .featured-card__inner {
+    display: flex;
+    min-height: 100%;
+    flex-direction: column;
+    gap: 20px 10px;
+  }
+
+  .tag-line,
+  .meta-line {
+    margin: 0;
+    color: var(--found-black);
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: 3px;
+    line-height: 30px;
+    text-transform: uppercase;
+  }
+
+  .tag-line {
+    align-self: flex-start;
+    border-left: 0;
+    border-radius: 20px;
+    background: var(--found-tag-blue);
+    padding: 1px 15px;
+    font-weight: 500;
+    line-height: 25px;
+  }
+
+  .category-line {
+    min-height: 25px;
+    border-left: 4px solid var(--found-green);
+    padding-left: 10px;
+    color: var(--found-black);
+    font-size: 12px;
+    font-weight: 300;
+    letter-spacing: 3px;
+    line-height: 28px;
+    text-transform: uppercase;
+  }
+
+  .featured-card__title {
+    display: -webkit-box;
+    overflow: hidden;
+    margin: 0;
+    color: var(--found-black);
+    font-family: var(--font-body);
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: 38px;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .featured-card__image {
+    overflow: hidden;
+    border: 0;
+    border-radius: 30px;
+  }
+
+  .featured-card__image img {
+    width: 100%;
+    aspect-ratio: 850 / 500;
+    object-fit: cover;
+    object-position: center center;
+    border-radius: 30px;
+    opacity: 1;
+    transition: none;
+  }
+
+  .featured-card:hover .featured-card__image img,
+  .featured-card__image:hover img {
+    opacity: 1;
+    filter: none;
+  }
+
+  .meta-line {
+    color: var(--found-black-alpha);
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .excerpt {
+    display: -webkit-box;
+    overflow: hidden;
+    margin: 0;
+    color: var(--found-black);
+    font-family: var(--font-body);
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 29px;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .button {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 30px;
+    background: var(--found-black);
+    color: var(--found-white);
+    padding: 18px 30px;
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    gap: 0.35em;
+    transition: background 0.25s ease, color 0.25s ease;
+  }
+
+  @media (max-width: 1024px) {
+    .latest-posts {
+      margin-block: 0 50px;
+      padding-block-start: 40px;
+    }
+
+    .latest-posts__heading {
+      font-size: 18px;
+      line-height: 22px;
+    }
+
+    .latest-posts__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .tag-line {
+      font-size: 18px;
+      line-height: 22px;
+    }
+
+    .featured-card__title {
+      font-size: 24px;
+      line-height: 32px;
+      letter-spacing: 0;
+      -webkit-line-clamp: 3;
+    }
+
+    .featured-card__image,
+    .featured-card__image img {
+      border-radius: 20px;
+    }
+
+    .excerpt {
+      font-size: 18px;
+      line-height: 30px;
+      -webkit-line-clamp: 3;
+    }
+
+    .button {
+      padding: 18px 25px;
+      line-height: 20px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .latest-posts {
+      margin-block: 0 50px;
+    }
+
+    .latest-posts__heading-wrap {
+      margin-bottom: 0;
+    }
+
+    .latest-posts__grid {
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+
+    .featured-card__title,
+    .excerpt {
+      display: block;
+      overflow: visible;
+      -webkit-line-clamp: unset;
+    }
+
+    .button {
+      padding: 15px 22px;
+    }
+  }
+</style>

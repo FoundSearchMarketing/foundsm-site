@@ -1,0 +1,328 @@
+---
+interface ArticleTab {
+  label: string;
+  filter: string;
+  active?: boolean;
+}
+
+interface Props {
+  title?: string;
+  subtitle?: string;
+  tabs: ArticleTab[];
+  filterScope?: string;
+}
+
+const {
+  title = 'Articles',
+  subtitle = 'Find inspiration and insights from the experts at Found.',
+  tabs,
+  filterScope = 'insights-articles',
+} = Astro.props;
+
+const hasActiveTab = tabs.some((tab) => tab.active);
+const normalizedTabs = tabs.map((tab, index) => ({
+  ...tab,
+  active: tab.active ?? (!hasActiveTab && index === 0),
+}));
+---
+
+<section
+  class="insights-articles-tabs"
+  aria-labelledby="insights-articles-tabs-heading"
+  data-filter-scope={filterScope}
+  data-source-section="dc3b546"
+>
+  <header class="insights-articles-tabs__intro" data-source-section="2816d29">
+    <div class="insights-articles-tabs__inner">
+      <h2
+        class="insights-articles-tabs__title"
+        id="insights-articles-tabs-heading"
+        data-source-widget="7e04a71"
+      >
+        {title}
+      </h2>
+      <p class="insights-articles-tabs__subtitle" data-source-widget="af1385f">
+        {subtitle}
+      </p>
+    </div>
+  </header>
+
+  <div class="insights-articles-tabs__tab-bar" data-source-section="23096be">
+    <div class="insights-articles-tabs__inner">
+      <nav
+        class="insights-articles-tabs__tab-list"
+        aria-label="Filter articles by category"
+        data-filter-tabs
+        data-filter-target="a93972f"
+        data-source-widget="dd2c96b"
+        data-page-num="1"
+      >
+        {
+          normalizedTabs.map((tab) => (
+            <button
+              type="button"
+              class="insights-articles-tabs__tab"
+              data-filter={tab.filter}
+              aria-pressed={tab.active ? 'true' : 'false'}
+              aria-controls="insights-article-cards-grid"
+            >
+              {tab.label}
+            </button>
+          ))
+        }
+      </nav>
+    </div>
+  </div>
+</section>
+
+<script>
+  const initInsightsArticleFilters = () => {
+    const tabLists = document.querySelectorAll('[data-filter-tabs]');
+
+    tabLists.forEach((tabList) => {
+      if (tabList instanceof HTMLElement && tabList.dataset.filterInitialized === 'true') {
+        return;
+      }
+
+      if (!(tabList instanceof HTMLElement)) {
+        return;
+      }
+
+      tabList.dataset.filterInitialized = 'true';
+
+      const tabsSection = tabList.closest<HTMLElement>('.insights-articles-tabs');
+      const filterScope = tabsSection?.dataset.filterScope ?? 'insights-articles';
+      const cardsSection = Array.from(document.querySelectorAll<HTMLElement>('.insights-article-cards')).find(
+        (section) => section.dataset.filterScope === filterScope,
+      );
+
+      if (!cardsSection) {
+        return;
+      }
+
+      const cards = Array.from(cardsSection.querySelectorAll<HTMLElement>('[data-filter-card]'));
+      const buttons = Array.from(tabList.querySelectorAll<HTMLButtonElement>('[data-filter]'));
+
+      const applyFilter = (activeFilter: string) => {
+        cards.forEach((card) => {
+          const categories = (card.dataset.category ?? '').split(/\s+/).filter(Boolean);
+          const isVisible = activeFilter === '__all' || categories.includes(activeFilter);
+
+          card.hidden = !isVisible;
+        });
+
+        buttons.forEach((button) => {
+          button.setAttribute('aria-pressed', String(button.dataset.filter === activeFilter));
+        });
+      };
+
+      buttons.forEach((button) => {
+        button.addEventListener('click', () => {
+          applyFilter(button.dataset.filter ?? '__all');
+        });
+      });
+
+      const activeButton = buttons.find((button) => button.getAttribute('aria-pressed') === 'true') ?? buttons[0];
+
+      if (activeButton) {
+        applyFilter(activeButton.dataset.filter ?? '__all');
+      }
+    });
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initInsightsArticleFilters, { once: true });
+  } else {
+    initInsightsArticleFilters();
+  }
+
+  document.addEventListener('astro:page-load', initInsightsArticleFilters);
+</script>
+
+<style>
+  .insights-articles-tabs {
+    --articles-tabs-text: #231f20;
+    --articles-tabs-accent: #8dc63f;
+    --articles-tabs-item-gap: 20px;
+    --articles-tabs-letter-spacing: 3px;
+
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin-block: 100px 0;
+    padding-block: 50px 0;
+    overflow: hidden;
+    background: #ffffff;
+    color: var(--articles-tabs-text);
+    font-family: var(--font-body, 'Poppins', system-ui, -apple-system, sans-serif);
+  }
+
+  .insights-articles-tabs,
+  .insights-articles-tabs * {
+    box-sizing: border-box;
+  }
+
+  .insights-articles-tabs__intro,
+  .insights-articles-tabs__tab-bar {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background: #ffffff;
+  }
+
+  .insights-articles-tabs__inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    inline-size: min(calc(100% - (2 * var(--page-gutter))), var(--content-max-width));
+    margin-inline: auto;
+  }
+
+  .insights-articles-tabs__intro {
+    margin-block-end: 40px;
+  }
+
+  .insights-articles-tabs__title {
+    margin: 0;
+    color: var(--articles-tabs-text);
+    font-family: var(--font-heading, 'Fraunces', Georgia, serif);
+    font-size: 40px;
+    font-weight: 900;
+    line-height: 44px;
+    letter-spacing: -1px;
+    text-align: center;
+  }
+
+  .insights-articles-tabs__subtitle {
+    margin: 16px 0 0;
+    color: var(--articles-tabs-text);
+    font-family: var(--font-body, 'Poppins', system-ui, -apple-system, sans-serif);
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 36px;
+    text-align: center;
+  }
+
+  .insights-articles-tabs__tab-list {
+    display: flex;
+    flex-shrink: 0;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--articles-tabs-item-gap);
+    width: 100%;
+    padding: 10px;
+    overflow-x: visible;
+    background: #ffffff;
+    border: solid transparent;
+    border-width: 0;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .insights-articles-tabs__tab-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .insights-articles-tabs__tab {
+    position: relative;
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    max-width: none;
+    min-width: 40px;
+    padding: 0 0 4px;
+    overflow: visible;
+    overflow-wrap: break-word;
+    border: solid transparent;
+    border-width: 0;
+    border-radius: 0;
+    background: transparent;
+    color: var(--articles-tabs-text);
+    cursor: pointer;
+    font-family: var(--font-body, 'Poppins', system-ui, -apple-system, sans-serif);
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: var(--articles-tabs-letter-spacing);
+    line-height: 28px;
+    text-align: center;
+    text-transform: uppercase;
+    white-space: nowrap;
+    appearance: none;
+  }
+
+  .insights-articles-tabs__tab::after {
+    content: '';
+    position: absolute;
+    inset-block-end: 0;
+    inset-inline-start: -3px;
+    inline-size: calc(100% - var(--articles-tabs-letter-spacing) + 6px);
+    block-size: 2px;
+    background: transparent;
+  }
+
+  .insights-articles-tabs__tab:hover:not([aria-pressed='true'])::after {
+    background: var(--articles-tabs-text);
+  }
+
+  .insights-articles-tabs__tab[aria-pressed='true'] {
+    color: var(--articles-tabs-accent);
+  }
+
+  .insights-articles-tabs__tab[aria-pressed='true']::after {
+    background: var(--articles-tabs-accent);
+  }
+
+  .insights-articles-tabs__tab:focus-visible {
+    outline: 2px solid var(--articles-tabs-accent);
+    outline-offset: 5px;
+  }
+
+  @media (max-width: 1024px) {
+    .insights-articles-tabs {
+      margin-block: 50px 0;
+      padding-block: 40px 0;
+    }
+
+    .insights-articles-tabs__title {
+      font-size: 34px;
+      line-height: 39px;
+    }
+
+    .insights-articles-tabs__subtitle {
+      font-size: 18px;
+      line-height: 30px;
+    }
+
+    .insights-articles-tabs__tab-bar {
+      margin-inline: 0;
+      padding: 0;
+    }
+
+    .insights-articles-tabs__tab {
+      font-size: 10px;
+      line-height: 22px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .insights-articles-tabs {
+      --articles-tabs-item-gap: 5px;
+
+      margin-block: 0;
+      padding-block: 0;
+    }
+
+    .insights-articles-tabs__subtitle {
+      margin-block-start: 12px;
+    }
+
+    .insights-articles-tabs__tab {
+      font-size: 13px;
+      line-height: 24px;
+    }
+  }
+</style>

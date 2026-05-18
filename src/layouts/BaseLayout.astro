@@ -3,6 +3,7 @@ import SEOHead from '../components/SEOHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { resolveSeo, type JsonLd } from '../lib/seo';
+import { enableThirdPartyScripts } from '../lib/thirdPartyScripts';
 import '../styles/global.css';
 
 interface Props {
@@ -40,7 +41,6 @@ const {
   ...seoProps
 } = Astro.props;
 const seo = resolveSeo(Astro.url.pathname, seoProps);
-const enableThirdPartyScripts = import.meta.env.PROD;
 ---
 
 <!DOCTYPE html>

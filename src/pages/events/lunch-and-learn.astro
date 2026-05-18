@@ -4,6 +4,7 @@ import SEOHead from '../../components/SEOHead.astro';
 import { eventLandingPageQuery, sanityClient } from '../../lib/sanity';
 import { defaultEventLandingPageData, mergeEventLandingPageData } from '../../lib/morePageData';
 import { srcFor } from '../../lib/fixedPageRender';
+import { enableThirdPartyScripts } from '../../lib/thirdPartyScripts';
 
 const sanityPage = await sanityClient.fetch(eventLandingPageQuery).catch(() => null);
 const page = mergeEventLandingPageData(sanityPage);
@@ -41,7 +42,6 @@ const eventSchema = {
   image: ogImage,
   isAccessibleForFree: true,
 };
-const enableThirdPartyScripts = import.meta.env.PROD;
 ---
 
 <!DOCTYPE html>

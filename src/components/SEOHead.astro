@@ -1,5 +1,6 @@
 ---
 import { resolveSeo, type JsonLd } from '../lib/seo';
+import { enableThirdPartyScripts } from '../lib/thirdPartyScripts';
 
 interface Props {
   title?: string;
@@ -31,8 +32,6 @@ const {
   colorScheme = 'light',
   fontHref = 'https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,900&family=Poppins:wght@400;500;600;700&display=swap',
 } = Astro.props;
-
-const enableThirdPartyScripts = import.meta.env.PROD;
 ---
 
 <meta charset="UTF-8" />

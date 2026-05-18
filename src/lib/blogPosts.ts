@@ -139,6 +139,7 @@ const sanityBlogPostsQuery = `*[_type == "blogPost"] | order(publishedAt desc) {
 
 const exactWordPressPostIds = new Set([3436, 4358, 6193, 5535, 4980, 2464, 4486, 2256, 5376, 3810]);
 const exactWordPressPostLocalStyleIds = new Set([4358, 6193, 5535, 4980, 5376]);
+const wordpressAssetBase = '/wordpress-assets/';
 const exactWordPressPostsBySlug = new Map(
   (wpExportPosts as ExportedWpPost[])
     .filter((post) => post.slug && exactWordPressPostIds.has(post.wp_id))
@@ -149,24 +150,24 @@ export function getWordPressPostStylesheets(post: BlogPost | undefined): string[
   if (!post?.wordpressContentHtml || !post.wpId) return [];
 
   return [
-    'https://foundsm.com/found2025/wp-content/cache/min/1/zwu6tef.css?ver=1778763378',
-    'https://foundsm.com/found2025/wp-content/uploads/elementor/css/custom-frontend.min.css?ver=1778763374',
-    'https://foundsm.com/found2025/wp-content/uploads/elementor/css/custom-apple-webkit.min.css?ver=1778763374',
-    'https://foundsm.com/found2025/wp-content/plugins/elementor/assets/css/widget-heading.min.css?ver=4.0.5',
-    'https://foundsm.com/found2025/wp-content/plugins/elementor/assets/css/widget-image.min.css?ver=4.0.5',
-    'https://foundsm.com/found2025/wp-content/plugins/elementor/assets/css/widget-video.min.css?ver=4.0.5',
-    'https://foundsm.com/found2025/wp-content/plugins/elementor-pro/assets/css/widget-post-info.min.css?ver=4.0.0',
-    'https://foundsm.com/found2025/wp-content/uploads/elementor/css/custom-widget-icon-list.min.css?ver=1778763374',
-    'https://foundsm.com/found2025/wp-content/plugins/elementor/assets/css/widget-divider.min.css?ver=4.0.5',
-    'https://foundsm.com/found2025/wp-content/plugins/elementor/assets/css/widget-spacer.min.css?ver=4.0.5',
-    'https://foundsm.com/found2025/wp-content/plugins/elementor-pro/assets/css/widget-post-navigation.min.css?ver=4.0.0',
-    'https://foundsm.com/found2025/wp-content/uploads/elementor/css/post-5.css?ver=1778763375',
-    `https://foundsm.com/found2025/wp-content/uploads/elementor/css/post-${post.wpId}.css`,
-    'https://foundsm.com/found2025/wp-content/uploads/elementor/css/base-desktop.css?ver=6a05c66fc915f',
+    wordpressAssetUrl('cache/min/1/zwu6tef.css'),
+    wordpressAssetUrl('uploads/elementor/css/custom-frontend.min.css'),
+    wordpressAssetUrl('uploads/elementor/css/custom-apple-webkit.min.css'),
+    wordpressAssetUrl('plugins/elementor/assets/css/widget-heading.min.css'),
+    wordpressAssetUrl('plugins/elementor/assets/css/widget-image.min.css'),
+    wordpressAssetUrl('plugins/elementor/assets/css/widget-video.min.css'),
+    wordpressAssetUrl('plugins/elementor-pro/assets/css/widget-post-info.min.css'),
+    wordpressAssetUrl('uploads/elementor/css/custom-widget-icon-list.min.css'),
+    wordpressAssetUrl('plugins/elementor/assets/css/widget-divider.min.css'),
+    wordpressAssetUrl('plugins/elementor/assets/css/widget-spacer.min.css'),
+    wordpressAssetUrl('plugins/elementor-pro/assets/css/widget-post-navigation.min.css'),
+    wordpressAssetUrl('uploads/elementor/css/post-5.css'),
+    wordpressAssetUrl(`uploads/elementor/css/post-${post.wpId}.css`),
+    wordpressAssetUrl('uploads/elementor/css/base-desktop.css'),
     ...(exactWordPressPostLocalStyleIds.has(post.wpId)
-      ? [`https://foundsm.com/found2025/wp-content/uploads/elementor/css/local-${post.wpId}-frontend-desktop.css`]
+      ? [wordpressAssetUrl(`uploads/elementor/css/local-${post.wpId}-frontend-desktop.css`)]
       : []),
-    'https://foundsm.com/found2025/wp-content/uploads/elementor/css/post-2143.css?ver=1778763385',
+    wordpressAssetUrl('uploads/elementor/css/post-2143.css'),
   ];
 }
 
@@ -493,18 +494,18 @@ function mapSanityPost(post: SanityBlogPost, slugs: Set<string>): BlogPost | und
     heroImageAlt: post.featuredImage?.alt || post.title,
     contentHtml: renderContentHtml(post.body || [], slugs),
     wordpressContentHtml: exactWordPressPost?.content_html ? normalizeWordPressContentHtml(exactWordPressPost.content_html) : undefined,
-    wordpressHeroImage: exactWordPressPost?.featuredImage?.url,
+    wordpressHeroImage: exactWordPressPost?.featuredImage?.url ? rewriteWordPressAssetUrls(exactWordPressPost.featuredImage.url) : undefined,
     wordpressHeroElementId: exactWordPressPost?.content_html ? findHeroBackgroundElementId(exactWordPressPost.content_html) : undefined,
     categories: category ? [category] : [],
   };
 }
 
 function normalizeWordPressContentHtml(html: string): string {
-  return injectWordPressVideoIframes(html)
+  return rewriteWordPressAssetUrls(injectWordPressVideoIframes(html)
     .replace(/href="https:\/\/foundsm\.com\/DataConnect\//gi, 'href="https://foundsm.com/dataconnect/')
-    .replace(/https:\/\/foundsm\.com\/found2025\/wp-content\/uploads\/elementor\/thumbs\/data_download_blog_cta-[^"]+\.webp/gi, 'https://foundsm.com/found2025/wp-content/uploads/2026/01/data_download_blog_cta.png')
+    .replace(/https:\/\/foundsm\.com\/found2025\/wp-content\/uploads\/elementor\/thumbs\/data_download_blog_cta-[^"]+\.(?:png|webp)/gi, 'https://foundsm.com/found2025/wp-content/uploads/2026/01/data_download_blog_cta.webp')
     .replace(/(<img\b(?![^>]*\bloading=))/gi, '$1 loading="lazy"')
-    .trim();
+    .trim());
 }
 
 function injectWordPressVideoIframes(html: string): string {
@@ -548,6 +549,14 @@ function findHeroBackgroundElementId(html: string): string | undefined {
 
 function escapeCssUrl(value: string): string {
   return value.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
+}
+
+function wordpressAssetUrl(path: string): string {
+  return `${wordpressAssetBase}${path.replace(/^\/+/, '')}`;
+}
+
+function rewriteWordPressAssetUrls(value: string): string {
+  return value.replace(/https?:\/\/(?:www\.)?foundsm\.com\/found2025\/wp-content\//gi, wordpressAssetBase);
 }
 
 function renderContentHtml(blocks: SanityBlock[], slugs: Set<string>): string {

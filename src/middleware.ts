@@ -4,6 +4,11 @@ export const onRequest = defineMiddleware(async (context, next) => {
   // A/B Test: Homepage Hero
   // Cookie name: ab-homepage-hero
   // Variants: 'control' | 'variant-a'
+  context.locals.abTests = {};
+
+  if (context.isPrerendered) {
+    return next();
+  }
 
   const testCookie = context.cookies.get('ab-homepage-hero');
   let variant = testCookie?.value;
@@ -21,9 +26,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
   }
 
   // Make variant available to pages via locals
-  context.locals.abTests = {
-    'homepage-hero': variant,
-  };
+  context.locals.abTests['homepage-hero'] = variant;
 
   const response = await next();
   return response;

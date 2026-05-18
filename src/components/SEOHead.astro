@@ -1,5 +1,6 @@
 ---
 import { resolveSeo, type JsonLd } from '../lib/seo';
+import { enableThirdPartyScripts } from '../lib/thirdPartyScripts';
 
 interface Props {
   title?: string;
@@ -31,13 +32,16 @@ const {
   colorScheme = 'light',
   fontHref = 'https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,900&family=Poppins:wght@400;500;600;700&display=swap',
 } = Astro.props;
-
-const enableThirdPartyScripts = import.meta.env.PROD;
 ---
 
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="color-scheme" content={colorScheme} />
+<link rel="icon" href="/favicon.ico" sizes="32x32" />
+<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32" />
+<link rel="icon" type="image/png" href="/android-chrome-192x192.png" sizes="192x192" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<meta name="msapplication-TileImage" content="/android-chrome-192x192.png" />
 
 <title>{seo.title}</title>
 

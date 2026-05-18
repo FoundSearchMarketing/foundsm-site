@@ -1,5 +1,6 @@
 # Generated/Build files
 node_modules/
+.bun-cache/
 .astro/
 dist/
 *.lock

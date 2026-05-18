@@ -217,6 +217,7 @@ const schema = {
     --capabilities-blue: #0aadef;
     --capabilities-orange: #fa9828;
     --capabilities-red: #f05660;
+    --capabilities-image-radius: 2.5rem;
     color: var(--capabilities-dark);
     background: #ffffff;
     font-family: var(--font-body);
@@ -281,12 +282,13 @@ const schema = {
 
   .capabilities-hero__media {
     overflow: hidden;
-    border-radius: 2.5rem;
+    border-radius: var(--capabilities-image-radius);
   }
 
   .capabilities-hero__image {
     width: 100%;
     aspect-ratio: 1;
+    border-radius: inherit;
     object-fit: cover;
   }
 
@@ -356,6 +358,7 @@ const schema = {
   .outcomes-section__image {
     width: 100%;
     max-width: 32.75rem;
+    border-radius: var(--capabilities-image-radius);
   }
 
   .outcomes-section__copy {
@@ -499,8 +502,8 @@ const schema = {
 
   .capability-detail__image {
     width: 100%;
-    max-height: 38rem;
-    object-fit: contain;
+    height: auto;
+    border-radius: var(--capabilities-image-radius);
   }
 
   @media (max-width: 1024px) {

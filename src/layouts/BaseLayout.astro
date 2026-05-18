@@ -3,6 +3,7 @@ import SEOHead from '../components/SEOHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { resolveSeo, type JsonLd } from '../lib/seo';
+import { enableThirdPartyScripts } from '../lib/thirdPartyScripts';
 import '../styles/global.css';
 
 interface Props {
@@ -26,7 +27,6 @@ interface Props {
   modifiedAt?: string;
   schema?: JsonLd;
   schemaJson?: string;
-  extraStylesheets?: string[];
   hideNavigation?: boolean;
   hideFooter?: boolean;
   bodyClass?: string;
@@ -36,11 +36,9 @@ const {
   hideNavigation = false,
   hideFooter = false,
   bodyClass,
-  extraStylesheets = [],
   ...seoProps
 } = Astro.props;
 const seo = resolveSeo(Astro.url.pathname, seoProps);
-const enableThirdPartyScripts = import.meta.env.PROD;
 ---
 
 <!DOCTYPE html>
@@ -66,7 +64,6 @@ const enableThirdPartyScripts = import.meta.env.PROD;
     modifiedAt={seo.modifiedAt}
     schema={seo.schema}
   />
-  {extraStylesheets.map((href) => <link rel="stylesheet" href={href} />)}
   <!-- A/B Test: push variants to GTM dataLayer -->
   <script is:inline>
   (function() {

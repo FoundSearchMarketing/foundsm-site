@@ -1,3 +1,7 @@
+---
+import { enableThirdPartyScripts } from '../lib/thirdPartyScripts';
+---
+
 <footer class="site-footer">
   <div class="site-footer__upper">
     <div class="site-footer__inner">
@@ -81,11 +85,29 @@
           <li class="site-footer__legal-item">
             <a class="site-footer__legal-link" href="/privacy-policy/">Privacy Policy</a>
           </li>
-          <li class="site-footer__legal-item">
-            <button class="site-footer__cookie" id="ot-sdk-btn" type="button">Cookie Settings</button>
-          </li>
+          {enableThirdPartyScripts && (
+            <li class="site-footer__legal-item">
+              <button class="site-footer__cookie" data-cookie-settings-trigger type="button">Cookie Settings</button>
+            </li>
+          )}
         </ul>
       </nav>
     </div>
   </div>
 </footer>
+
+<script is:inline>
+  (function() {
+    var embedSrc = 'https://js.hsforms.net/forms/embed/5045186.js';
+    var existingScript = document.querySelector('script[src="' + embedSrc + '"]');
+
+    if (existingScript) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.src = embedSrc;
+    script.defer = true;
+    document.body.appendChild(script);
+  })();
+</script>

@@ -362,7 +362,58 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // =========================================================
-  // 11. HERO TEXT STAGGER ANIMATION ON PAGE LOAD
+  // 11. COOKIE SETTINGS
+  // Open the OneTrust preference center from footer controls
+  // =========================================================
+  function initCookieSettings() {
+    const triggers = document.querySelectorAll('[data-cookie-settings-trigger]');
+    if (!triggers.length) return;
+
+    function getCookieSettingsApi() {
+      const candidates = [window.OneTrust, window.Optanon];
+      return candidates.find(api => api && typeof api.ToggleInfoDisplay === 'function');
+    }
+
+    function openCookieSettings() {
+      const api = getCookieSettingsApi();
+      if (!api) return false;
+
+      api.ToggleInfoDisplay();
+      return true;
+    }
+
+    triggers.forEach(trigger => {
+      let isOpening = false;
+
+      trigger.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (isOpening) return;
+
+        isOpening = true;
+        let attempts = 0;
+
+        function tryOpen() {
+          if (openCookieSettings()) {
+            isOpening = false;
+            return;
+          }
+
+          attempts += 1;
+          if (attempts < 20) {
+            window.setTimeout(tryOpen, 250);
+            return;
+          }
+
+          isOpening = false;
+        }
+
+        tryOpen();
+      });
+    });
+  }
+
+  // =========================================================
+  // 12. HERO TEXT STAGGER ANIMATION ON PAGE LOAD
   // Elements with .hero-stagger get delayed fade-in-up
   // =========================================================
   function initHeroStagger() {
@@ -395,6 +446,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // INITIALIZE ALL MODULES
   // =========================================================
   initSmoothScroll();
+  initCookieSettings();
   initHeroStagger();
   initTypewriter();
   initCountUp();

@@ -89,3 +89,19 @@
     </div>
   </div>
 </footer>
+
+<script is:inline>
+  (function() {
+    var embedSrc = 'https://js.hsforms.net/forms/embed/5045186.js';
+    var existingScript = document.querySelector('script[src="' + embedSrc + '"]');
+
+    if (existingScript) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.src = embedSrc;
+    script.defer = true;
+    document.body.appendChild(script);
+  })();
+</script>

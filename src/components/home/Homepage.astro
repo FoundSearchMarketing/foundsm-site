@@ -1,5 +1,6 @@
 ---
 import '../../styles/homepage.css';
+import MediaAsset from '../MediaAsset.astro';
 import {
   mergeHomePageData,
   type HomePageData,
@@ -56,6 +57,11 @@ function renderRichText(blocks?: PortableTextBlock[]): string {
 }
 
 const showCta = (item?: { ctaText?: string; ctaUrl?: string }) => Boolean(item?.ctaText && item?.ctaUrl);
+const mediaFor = (item?: { image?: string; imageAlt?: string; videoUrl?: string; videoPoster?: string }) => {
+  const videoSrc = item?.videoUrl?.trim();
+  const src = videoSrc || item?.image;
+  return src ? { src, alt: item?.imageAlt || '', poster: videoSrc ? item?.videoPoster || item?.image : undefined } : undefined;
+};
 const metricValue = (metric: { value?: number }) => String(metric.value ?? '');
 const testimonialRole = [homepage.metrics.testimonial.authorTitle, homepage.metrics.testimonial.authorCompany].filter(Boolean).join(' - ');
 const normalizeLogoLabel = (value?: string) => (value || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
@@ -111,6 +117,13 @@ const partnerLogos = homepage.partners.logos
       : logo;
   })
   .filter((logo) => logo.src);
+const introMedia = mediaFor(homepage.intro);
+const outcomesMedia = mediaFor(homepage.outcomes);
+const metricsMedia = mediaFor(homepage.metrics);
+const ecosystemTabs = homepage.ecosystem.tabs.map((tab) => ({
+  ...tab,
+  media: mediaFor(tab),
+}));
 ---
 
 <div class="homepage" data-homepage>
@@ -154,9 +167,9 @@ const partnerLogos = homepage.partners.logos
         <h2 id="home-intro-title">{homepage.intro.heading}</h2>
         <Fragment set:html={renderRichText(homepage.intro.body)} />
       </div>
-      {homepage.intro.image && (
+      {introMedia && (
         <figure class="home-intro__media">
-          <img src={homepage.intro.image} alt={homepage.intro.imageAlt || ''} width="742" height="739" loading="eager" />
+          <MediaAsset src={introMedia.src} alt={introMedia.alt} width="742" height="739" loading="eager" poster={introMedia.poster} />
         </figure>
       )}
     </div>
@@ -192,9 +205,9 @@ const partnerLogos = homepage.partners.logos
 
   <section class="home-outcomes" aria-labelledby="home-outcomes-title">
     <div class="home-shell home-outcomes__grid">
-      {homepage.outcomes.image && (
+      {outcomesMedia && (
         <figure class="home-outcomes__media">
-          <img src={homepage.outcomes.image} alt={homepage.outcomes.imageAlt || ''} width="950" height="794" loading="lazy" />
+          <MediaAsset src={outcomesMedia.src} alt={outcomesMedia.alt} width="950" height="794" loading="lazy" poster={outcomesMedia.poster} />
         </figure>
       )}
       <div class="home-outcomes__copy">
@@ -276,9 +289,9 @@ const partnerLogos = homepage.partners.logos
 
       <div class="home-metric-flourish home-metric-flourish--medium" aria-hidden="true"><span></span></div>
 
-      {homepage.metrics.image && (
+      {metricsMedia && (
         <figure class="home-metric-card home-metric-card--image">
-          <img src={homepage.metrics.image} alt={homepage.metrics.imageAlt || ''} width="337" height="276" loading="eager" />
+          <MediaAsset src={metricsMedia.src} alt={metricsMedia.alt} width="337" height="276" loading="eager" poster={metricsMedia.poster} />
         </figure>
       )}
     </div>
@@ -316,7 +329,7 @@ const partnerLogos = homepage.partners.logos
         <div class="home-tabs__nav">
           {homepage.ecosystem.tabListHeading && <h3>{homepage.ecosystem.tabListHeading}</h3>}
           <div class="home-tabs__buttons" role="tablist" aria-label="Performance lead generation ecosystem">
-            {homepage.ecosystem.tabs.map((tab, index) => (
+            {ecosystemTabs.map((tab, index) => (
               <button
                 class={`home-tabs__button ${index === 0 ? 'is-active' : ''}`}
                 type="button"
@@ -333,7 +346,7 @@ const partnerLogos = homepage.partners.logos
             ))}
           </div>
           <div class="home-tabs__mobile-list" aria-label="Performance lead generation ecosystem">
-            {homepage.ecosystem.tabs.map((tab, index) => (
+            {ecosystemTabs.map((tab, index) => (
               <div class="home-tabs__mobile-item">
                 <button
                   class={`home-tabs__button home-tabs__mobile-button ${index === 0 ? 'is-active' : ''}`}
@@ -354,9 +367,9 @@ const partnerLogos = homepage.partners.logos
                   data-home-mobile-panel={tab.id}
                   hidden={index !== 0}
                 >
-                  {tab.image && (
+                  {tab.media && (
                     <figure class="home-tabs__mobile-media">
-                      <img src={tab.image} alt={tab.imageAlt || tab.title || ''} width="413" height="535" loading="eager" />
+                      <MediaAsset src={tab.media.src} alt={tab.media.alt || tab.title || ''} width="413" height="535" loading="eager" poster={tab.media.poster} />
                     </figure>
                   )}
                   <div class="home-tabs__mobile-copy">
@@ -370,7 +383,7 @@ const partnerLogos = homepage.partners.logos
         </div>
 
         <div class="home-tabs__panels">
-          {homepage.ecosystem.tabs.map((tab, index) => (
+          {ecosystemTabs.map((tab, index) => (
             <article
               class={`home-tabs__panel ${index === 0 ? 'is-active' : ''}`}
               id={`home-panel-${tab.id}`}
@@ -383,9 +396,9 @@ const partnerLogos = homepage.partners.logos
                 <Fragment set:html={renderRichText(tab.body)} />
                 {showCta(tab) && <a class="home-button home-button--dark" href={tab.ctaUrl}>{tab.ctaText}</a>}
               </div>
-              {tab.image && (
+              {tab.media && (
                 <figure class="home-tabs__panel-media">
-                  <img src={tab.image} alt={tab.imageAlt || tab.title || ''} width="413" height="535" loading="eager" />
+                  <MediaAsset src={tab.media.src} alt={tab.media.alt || tab.title || ''} width="413" height="535" loading="eager" poster={tab.media.poster} />
                 </figure>
               )}
             </article>
@@ -397,6 +410,8 @@ const partnerLogos = homepage.partners.logos
 </div>
 
 <script>
+  import { setupAutoRotatingTabs } from '../../scripts/autoRotatingTabs';
+
   const initHomepage = () => {
     document.querySelectorAll('[data-homepage]').forEach((root) => {
       if (!(root instanceof HTMLElement) || root.dataset.initialized === 'true') return;
@@ -465,44 +480,109 @@ const partnerLogos = homepage.partners.logos
         window.setTimeout(typeText, 1000);
       }
 
-      root.querySelectorAll('[data-home-tabs]').forEach((tabs) => {
-        const buttons = Array.from(tabs.querySelectorAll('[data-home-tab]'));
-        const panels = Array.from(tabs.querySelectorAll('[data-home-panel]'));
-        const mobilePanels = Array.from(tabs.querySelectorAll('[data-home-mobile-panel]'));
+      root.querySelectorAll('[data-home-tabs]').forEach((tabsRoot) => {
+        const buttons = Array.from(tabsRoot.querySelectorAll('[data-home-tab]'));
+        const panels = Array.from(tabsRoot.querySelectorAll('[data-home-panel]'));
+        const mobilePanels = Array.from(tabsRoot.querySelectorAll('[data-home-mobile-panel]'));
+
+        const activateTab = (button) => {
+          if (!(button instanceof HTMLElement)) return;
+          const id = button.dataset.homeTab;
+
+          buttons.forEach((candidate) => {
+            if (!(candidate instanceof HTMLElement)) return;
+            const isActive = candidate.dataset.homeTab === id;
+            candidate.classList.toggle('is-active', isActive);
+            if (candidate.getAttribute('role') === 'tab') {
+              candidate.setAttribute('aria-selected', String(isActive));
+            }
+            if (candidate.hasAttribute('aria-expanded')) {
+              candidate.setAttribute('aria-expanded', String(isActive));
+            }
+          });
+
+          panels.forEach((panel) => {
+            if (!(panel instanceof HTMLElement)) return;
+            const isActive = panel.dataset.homePanel === id;
+            panel.classList.toggle('is-active', isActive);
+            panel.hidden = !isActive;
+          });
+
+          mobilePanels.forEach((panel) => {
+            if (!(panel instanceof HTMLElement)) return;
+            const isActive = panel.dataset.homeMobilePanel === id;
+            panel.classList.toggle('is-active', isActive);
+            panel.hidden = !isActive;
+          });
+        };
 
         buttons.forEach((button) => {
-          button.addEventListener('click', () => {
-            if (!(button instanceof HTMLElement)) return;
-            const id = button.dataset.homeTab;
+          button.addEventListener('click', () => activateTab(button));
+        });
 
-            buttons.forEach((candidate) => {
-              if (!(candidate instanceof HTMLElement)) return;
-              const isActive = candidate.dataset.homeTab === id;
-              candidate.classList.toggle('is-active', isActive);
-              if (candidate.getAttribute('role') === 'tab') {
-                candidate.setAttribute('aria-selected', String(isActive));
-              }
-              if (candidate.hasAttribute('aria-expanded')) {
-                candidate.setAttribute('aria-expanded', String(isActive));
-              }
-            });
-
-            panels.forEach((panel) => {
-              if (!(panel instanceof HTMLElement)) return;
-              const isActive = panel.dataset.homePanel === id;
-              panel.classList.toggle('is-active', isActive);
-              panel.hidden = !isActive;
-            });
-
-            mobilePanels.forEach((panel) => {
-              if (!(panel instanceof HTMLElement)) return;
-              const isActive = panel.dataset.homeMobilePanel === id;
-              panel.classList.toggle('is-active', isActive);
-              panel.hidden = !isActive;
-            });
-          });
+        setupAutoRotatingTabs({
+          root: tabsRoot,
+          tabs: buttons.filter((button) => button.getAttribute('role') === 'tab'),
+          activate: activateTab,
         });
       });
+
+      const countItems = Array.from(root.querySelectorAll('[data-count-to]')).filter(
+        (item): item is HTMLElement => item instanceof HTMLElement,
+      );
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const formatValue = (value: number) => new Intl.NumberFormat('en-US').format(Math.round(value));
+      const countTarget = (item: HTMLElement) => Number(item.dataset.countTo || item.textContent || 0);
+      const finishCount = (item: HTMLElement) => {
+        const target = countTarget(item);
+        if (Number.isFinite(target)) item.textContent = formatValue(target);
+        item.dataset.countComplete = 'true';
+      };
+      const animateCount = (item: HTMLElement) => {
+        if (item.dataset.countComplete === 'true') return;
+        const target = countTarget(item);
+        if (!Number.isFinite(target)) return;
+        if (reduceMotion || target === 0) {
+          finishCount(item);
+          return;
+        }
+
+        const duration = 1200;
+        const start = performance.now();
+        const tick = (now: number) => {
+          const progress = Math.min((now - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          item.textContent = formatValue(target * eased);
+          if (progress < 1) {
+            window.requestAnimationFrame(tick);
+            return;
+          }
+          finishCount(item);
+        };
+        window.requestAnimationFrame(tick);
+      };
+
+      if (countItems.length > 0) {
+        if (reduceMotion || !('IntersectionObserver' in window)) {
+          countItems.forEach(finishCount);
+        } else {
+          countItems.forEach((item) => {
+            const target = countTarget(item);
+            if (Number.isFinite(target) && target > 0) item.textContent = '0';
+          });
+          const observer = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (!entry.isIntersecting || !(entry.target instanceof HTMLElement)) return;
+                observer.unobserve(entry.target);
+                animateCount(entry.target);
+              });
+            },
+            { threshold: 0.35 },
+          );
+          countItems.forEach((item) => observer.observe(item));
+        }
+      }
     });
   };
 

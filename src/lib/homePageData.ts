@@ -29,6 +29,13 @@ type Cta = {
   ctaUrl?: string;
 };
 
+type MediaField = {
+  image?: string;
+  imageAlt?: string;
+  videoUrl?: string;
+  videoPoster?: string;
+};
+
 export type HomePageData = {
   seoTitle?: string;
   seoDescription?: string;
@@ -47,11 +54,9 @@ export type HomePageData = {
     subheadline?: string;
     searchPrompts: string[];
   };
-  intro: {
+  intro: MediaField & {
     heading?: string;
     body?: PortableTextBlock[];
-    image?: string;
-    imageAlt?: string;
   };
   ctaStrip: Cta & {
     headline?: string;
@@ -60,9 +65,7 @@ export type HomePageData = {
     heading?: string;
     logos: Logo[];
   };
-  outcomes: Cta & {
-    image?: string;
-    imageAlt?: string;
+  outcomes: Cta & MediaField & {
     heading?: string;
     body?: PortableTextBlock[];
   };
@@ -84,6 +87,8 @@ export type HomePageData = {
     };
     image?: string;
     imageAlt?: string;
+    videoUrl?: string;
+    videoPoster?: string;
   };
   partners: Cta & {
     heading?: string;
@@ -94,13 +99,11 @@ export type HomePageData = {
     headingLines: string[];
     introBody?: PortableTextBlock[];
     tabListHeading?: string;
-    tabs: Array<Cta & {
+    tabs: Array<Cta & MediaField & {
       id?: string;
       title?: string;
       icon?: string;
       body?: PortableTextBlock[];
-      image?: string;
-      imageAlt?: string;
     }>;
   };
 };
@@ -143,6 +146,7 @@ export const defaultHomePageData: HomePageData = {
         span(" We're experts at fitting into your internal workflows, bringing clarity, and optimizing your resources for stronger leads, better conversion rates, and smarter spend. Unlike traditional agencies, we are a data engineering firm that activates paid media strategies, not the other way around."),
       ]),
     ],
+    image: '/images/imported/home/0b4041b9-hero-home-sm.webp',
     imageAlt: 'Found Search Marketing team collaboration',
   },
   ctaStrip: {
@@ -153,25 +157,26 @@ export const defaultHomePageData: HomePageData = {
   clientLogos: {
     heading: 'Trusted by Leading Brands',
     logos: [
-      { alt: 'Bar Keepers Friend' },
-      { alt: 'Accu-Chek' },
-      { alt: 'ADT' },
-      { alt: 'Bastian Solutions' },
-      { alt: 'Indiana Wesleyan University' },
-      { alt: 'Hendricks' },
-      { alt: 'Indiana University Kelley School of Business' },
-      { alt: 'Lawn Pride' },
-      { alt: 'Indy Ignite' },
-      { alt: 'Farm Bureau Insurance' },
-      { alt: 'Roche' },
-      { alt: 'Duke Corporate Education' },
-      { alt: 'Cook Medical' },
-      { alt: 'Mr. Quik' },
-      { alt: 'BNE' },
+      { src: '/images/imported/home/2a087a77-bar_keepers.png', alt: 'Bar Keepers Friend' },
+      { src: '/images/imported/home/88358477-accuchek.png', alt: 'Accu-Chek' },
+      { src: '/images/imported/home/cafb5d20-adt.png', alt: 'ADT' },
+      { src: '/images/imported/home/0c70e49c-bastian.png', alt: 'Bastian Solutions' },
+      { src: '/images/imported/home/d36a26d8-iwu.png', alt: 'Indiana Wesleyan University' },
+      { src: '/images/imported/home/fd0291b8-hendricks.png', alt: 'Hendricks' },
+      { src: '/images/imported/home/5a0956fc-iu_kelley.png', alt: 'Indiana University Kelley School of Business' },
+      { src: '/images/imported/home/5aae5834-lawnpride.png', alt: 'Lawn Pride' },
+      { src: '/images/imported/home/10d58402-indy_ignite.png', alt: 'Indy Ignite' },
+      { src: '/images/imported/home/ad0b0ba1-farm_bureau.png', alt: 'Farm Bureau Insurance' },
+      { src: '/images/imported/home/770765aa-roche.png', alt: 'Roche' },
+      { src: '/images/imported/home/b5c7c5a9-duke_ce.png', alt: 'Duke Corporate Education' },
+      { src: '/images/imported/home/e4e77d11-cook_medical.png', alt: 'Cook Medical' },
+      { src: '/images/imported/home/e859e2ec-mrquik.png', alt: 'Mr. Quik' },
+      { src: '/images/imported/home/d725b053-bne.png', alt: 'BNE' },
       { alt: 'Client logo' },
     ],
   },
   outcomes: {
+    image: '/images/imported/home/b9cba76f-outcomes.webp',
     imageAlt: 'Performance marketing outcomes visualization',
     heading: 'Focused On Outcomes',
     body: [
@@ -210,6 +215,7 @@ export const defaultHomePageData: HomePageData = {
       authorName: 'Marcus Dennis',
       authorTitle: 'Sr. International Marketing Manager of Global Marketing',
       authorCompany: 'Roche',
+      authorImage: '/images/imported/home/a14648a9-marcus-dennis.png',
       authorImageAlt: 'Marcus Dennis',
     },
     ownershipCard: {
@@ -217,6 +223,7 @@ export const defaultHomePageData: HomePageData = {
       ctaText: 'About Us',
       ctaUrl: '/about-us/',
     },
+    image: '/images/imported/home/fdf4fce6-bullseye.webp',
     imageAlt: 'Target graphic',
   },
   partners: {
@@ -249,6 +256,8 @@ export const defaultHomePageData: HomePageData = {
         ],
         ctaText: 'See How We Leverage Data',
         ctaUrl: '/capabilities/data-intelligence/',
+        icon: '/images/imported/home/340807e8-icon-home-tab1.svg',
+        image: '/images/imported/home/edb69832-home-tab1.webp',
         imageAlt: 'Data, Reporting, & Analytics',
       },
       {
@@ -259,6 +268,8 @@ export const defaultHomePageData: HomePageData = {
         ],
         ctaText: 'Get Better Leads',
         ctaUrl: '/capabilities/paid-media/',
+        icon: '/images/imported/home/fe1a7f67-icon-home-tab2.svg',
+        image: '/images/imported/home/955e4828-home-tab2.webp',
         imageAlt: 'Paid Media',
       },
       {
@@ -269,6 +280,8 @@ export const defaultHomePageData: HomePageData = {
         ],
         ctaText: 'Explore Our Creativity',
         ctaUrl: '/capabilities/performance-creative/',
+        icon: '/images/imported/home/39346c62-icon-home-tab3.svg',
+        image: '/images/imported/home/b2111b82-home-tab3.webp',
         imageAlt: 'Performance Creative & CRO',
       },
     ],
@@ -276,6 +289,7 @@ export const defaultHomePageData: HomePageData = {
 };
 
 const keep = <T>(value: T | undefined | null, fallback: T): T => value ?? fallback;
+const isPlaceholderHeading = (value?: string | null) => !value || value.trim().toLowerCase() === 'test';
 
 const mergeObject = <T extends Record<string, any>>(fallback: T, value?: Partial<T> | null): T => ({
   ...fallback,
@@ -336,8 +350,10 @@ export function mergeHomePageData(value?: Partial<HomePageData> | null): HomePag
     partners: {
       ...defaults.partners,
       ...(page.partners || {}),
+      heading: isPlaceholderHeading(page.partners?.heading) ? defaults.partners.heading : page.partners?.heading,
       body: keep(page.partners?.body, defaults.partners.body),
       logos: mergeList(defaults.partners.logos, page.partners?.logos),
+      ctaUrl: defaults.partners.ctaUrl,
     },
     ecosystem: {
       ...defaults.ecosystem,

@@ -1,9 +1,9 @@
 import { block, type EditableImage, type SimplePortableTextBlock } from './simplePortableTextCore';
 
 type Cta = { label?: string; href?: string };
-type ImageField = { image?: EditableImage; imageAlt?: string };
+type ImageField = { image?: EditableImage; imageAlt?: string; videoUrl?: string; videoPoster?: EditableImage };
 type RichSection = { heading?: string; body?: SimplePortableTextBlock[] };
-type Card = { title?: string; lead?: string; body?: SimplePortableTextBlock[]; icon?: EditableImage; image?: EditableImage; imageAlt?: string };
+type Card = { title?: string; lead?: string; body?: SimplePortableTextBlock[]; icon?: EditableImage; image?: EditableImage; imageAlt?: string; videoUrl?: string; videoPoster?: EditableImage };
 type Logo = { image?: EditableImage; alt?: string };
 type FeatureTab = Card & { id?: string };
 
@@ -62,10 +62,13 @@ export type CapabilityDetailPageData = SeoFields & {
   cta?: { title?: string; body?: SimplePortableTextBlock[]; cta?: Cta };
 };
 
-const mergeObject = <T extends Record<string, any>>(fallback: T, value?: Partial<T> | null): T => ({
-  ...fallback,
-  ...(value || {}),
-});
+const mergeObject = <T extends Record<string, any>>(fallback: T, value?: Partial<T> | null): T => {
+  const definedEntries = Object.entries(value || {}).filter(([, item]) => item !== null && item !== undefined);
+  return {
+    ...fallback,
+    ...Object.fromEntries(definedEntries),
+  };
+};
 
 const mergeList = <T extends Record<string, any>>(fallback: T[], value?: Partial<T>[] | null): T[] => {
   if (!Array.isArray(value)) return fallback;
@@ -73,6 +76,12 @@ const mergeList = <T extends Record<string, any>>(fallback: T[], value?: Partial
 };
 
 const keepBlocks = (value: SimplePortableTextBlock[] | undefined | null, fallback: SimplePortableTextBlock[] | undefined) => value ?? fallback;
+const keepImageField = <T extends ImageField>(fallback: T, value?: Partial<T> | null): T => ({
+  ...fallback,
+  ...(value || {}),
+  image: value?.image ?? fallback.image,
+  imageAlt: value?.imageAlt ?? fallback.imageAlt,
+});
 
 export function mergeAboutPageData(value?: Partial<AboutPageData> | null): AboutPageData {
   const page = value || {};
@@ -80,10 +89,9 @@ export function mergeAboutPageData(value?: Partial<AboutPageData> | null): About
   return {
     ...defaults,
     ...page,
-    hero: { ...defaults.hero, ...(page.hero || {}), body: keepBlocks(page.hero?.body, defaults.hero.body) },
+    hero: { ...keepImageField(defaults.hero, page.hero), body: keepBlocks(page.hero?.body, defaults.hero.body) },
     who: {
-      ...defaults.who,
-      ...(page.who || {}),
+      ...keepImageField(defaults.who, page.who),
       body: keepBlocks(page.who?.body, defaults.who.body),
       credentials: mergeList(defaults.who.credentials, page.who?.credentials),
     },
@@ -98,8 +106,8 @@ export function mergeAboutPageData(value?: Partial<AboutPageData> | null): About
       ...(page.values || {}),
       tabs: mergeList(defaults.values.tabs, page.values?.tabs),
     },
-    approach: { ...defaults.approach, ...(page.approach || {}), body: keepBlocks(page.approach?.body, defaults.approach.body) },
-    team: mergeObject(defaults.team, page.team),
+    approach: { ...keepImageField(defaults.approach, page.approach), body: keepBlocks(page.approach?.body, defaults.approach.body) },
+    team: keepImageField(defaults.team, page.team),
     teamCta: { ...defaults.teamCta, ...(page.teamCta || {}), body: keepBlocks(page.teamCta?.body, defaults.teamCta.body) },
   };
 }
@@ -110,12 +118,14 @@ export function mergeCapabilitiesPageData(value?: Partial<CapabilitiesPageData> 
   return {
     ...defaults,
     ...page,
-    hero: { ...defaults.hero, ...(page.hero || {}), body: keepBlocks(page.hero?.body, defaults.hero.body) },
-    outcomes: { ...defaults.outcomes, ...(page.outcomes || {}), body: keepBlocks(page.outcomes?.body, defaults.outcomes.body) },
-    workflow: { ...defaults.workflow, ...(page.workflow || {}), body: keepBlocks(page.workflow?.body, defaults.workflow.body) },
+    hero: { ...keepImageField(defaults.hero, page.hero), body: keepBlocks(page.hero?.body, defaults.hero.body) },
+    outcomes: { ...keepImageField(defaults.outcomes, page.outcomes), body: keepBlocks(page.outcomes?.body, defaults.outcomes.body) },
+    workflow: { ...keepImageField(defaults.workflow, page.workflow), body: keepBlocks(page.workflow?.body, defaults.workflow.body) },
     details: mergeList(defaults.details, page.details).map((detail, index) => ({
       ...detail,
       body: keepBlocks(detail.body, defaults.details[index]?.body),
+      image: detail.image ?? defaults.details[index]?.image,
+      imageAlt: detail.imageAlt ?? defaults.details[index]?.imageAlt,
     })),
   };
 }
@@ -128,12 +138,12 @@ export function mergeCapabilityDetailPageData(
   return {
     ...fallback,
     ...page,
-    hero: { ...fallback.hero, ...(page.hero || {}), body: keepBlocks(page.hero?.body, fallback.hero.body) },
-    split: fallback.split || page.split ? { ...(fallback.split || {}), ...(page.split || {}), body: keepBlocks(page.split?.body, fallback.split?.body) } : undefined,
+    hero: { ...keepImageField(fallback.hero, page.hero), body: keepBlocks(page.hero?.body, fallback.hero.body) },
+    split: fallback.split || page.split ? { ...keepImageField((fallback.split || {}) as RichSection & ImageField, page.split), body: keepBlocks(page.split?.body, fallback.split?.body) } : undefined,
     statement: fallback.statement || page.statement ? { ...(fallback.statement || {}), ...(page.statement || {}), body: keepBlocks(page.statement?.body, fallback.statement?.body) } : undefined,
     featureTabs: fallback.featureTabs || page.featureTabs ? { ...(fallback.featureTabs || {}), ...(page.featureTabs || {}), tabs: mergeList(fallback.featureTabs?.tabs || [], page.featureTabs?.tabs) } : undefined,
     primaryCards: fallback.primaryCards || page.primaryCards ? { ...(fallback.primaryCards || {}), ...(page.primaryCards || {}), cards: mergeList(fallback.primaryCards?.cards || [], page.primaryCards?.cards) } : undefined,
-    secondarySplit: fallback.secondarySplit || page.secondarySplit ? { ...(fallback.secondarySplit || {}), ...(page.secondarySplit || {}), body: keepBlocks(page.secondarySplit?.body, fallback.secondarySplit?.body) } : undefined,
+    secondarySplit: fallback.secondarySplit || page.secondarySplit ? { ...keepImageField((fallback.secondarySplit || {}) as RichSection & ImageField, page.secondarySplit), body: keepBlocks(page.secondarySplit?.body, fallback.secondarySplit?.body) } : undefined,
     secondaryCards: fallback.secondaryCards || page.secondaryCards ? { ...(fallback.secondaryCards || {}), ...(page.secondaryCards || {}), cards: mergeList(fallback.secondaryCards?.cards || [], page.secondaryCards?.cards) } : undefined,
     logoMarquee: fallback.logoMarquee || page.logoMarquee ? { ...(fallback.logoMarquee || {}), ...(page.logoMarquee || {}), logos: mergeList(fallback.logoMarquee?.logos || [], page.logoMarquee?.logos) } : undefined,
     cta: fallback.cta || page.cta ? { ...(fallback.cta || {}), ...(page.cta || {}), body: keepBlocks(page.cta?.body, fallback.cta?.body) } : undefined,
@@ -150,7 +160,8 @@ export const defaultAboutPageData: AboutPageData = {
       block('Found Search Marketing is a full-service data engineering agency that leverages advanced analytics to drive smart, paid media strategies. By integrating data-driven insights, strategy and paid media execution under one roof, we deliver customized solutions that generate high-intent leads and measurable results.'),
       block("Our team values transparency, accountability, and innovative problem solving. That's why many of our clients have stuck with us for more than a decade."),
     ],
-    imageAlt: '',
+    image: '/images/pages/about-us/hero-about-1.webp',
+    imageAlt: 'Found Search Marketing team members',
   },
   who: {
     eyebrow: 'EST. 2006',
@@ -215,7 +226,8 @@ export const defaultCapabilitiesPageData: CapabilitiesPageData = {
   hero: {
     heading: 'Smart Data. Smarter Media. Scalable Growth.',
     body: [block('Found Search Marketing is structured to be both strategic and agile, combining deep media channel expertise with expert talent and leading-edge tools.')],
-    imageAlt: '',
+    image: '/images/pages/capabilities/capi-eye.webp',
+    imageAlt: 'Performance marketing strategy detail',
   },
   outcomes: {
     eyebrow: 'Our Capabilities',
@@ -224,18 +236,20 @@ export const defaultCapabilitiesPageData: CapabilitiesPageData = {
       block('We build smart, custom systems for performance marketing by combining first-party data with our proven approach. That starts with a custom playbook where we map solutions tied directly to business outcomes. This includes development of initial KPIs and is our foundation for planning. We also create different versions for launch, expansion, and efficiency - always taking into account factors like brand strength, demand, revenue, profitability, and opportunity cost.'),
       block('We handle every aspect of your performance lead generation ecosystem, making sure strategy and execution are always aligned.'),
     ],
-    imageAlt: '',
+    image: '/images/pages/capabilities/capibilities-mary-jake.webp',
+    imageAlt: 'Found Search Marketing team members collaborating',
   },
   workflow: {
     heading: 'How We Work',
     body: [block("There are no silos here. Our Paid Media, Data Intelligence, and Performance Creative teams are deeply integrated with each other, creating a connected ecosystem designed to drive smarter decisions and stronger results. This collaboration extends far beyond our walls, as we aim to be a true extension of our clients' teams, partnering across their functional teams, and integrating within existing systems and workflows to ensure alignment, agility, and shared success.")],
     prompt: 'Explore Our Capabilities Below',
+    image: '/images/pages/capabilities/performance-media-ecosystem.webp',
     imageAlt: 'Found Performance Media Ecosystem',
   },
   details: [
-    { id: 'data', heading: 'Data, Reporting & Analytics', body: [block('Do you have multiple data sources to connect? Or multiple CRMs? No problem.'), block("For us, analytics and reporting go beyond tracking paid media, and everything we build is uniquely customized to your business goals, data, and workflows. No templates or generic dashboards. From attribution models to automated scripts, we help your team understand what's happening, why, and what to do next.")], cta: { label: 'Connect Data to Outcomes', href: '/capabilities/data-intelligence/' }, imageAlt: '' },
-    { id: 'paid', heading: 'Paid Media', body: [block("We don't just manage campaigns. We engineer ecosystems.\nOur team brings 20+ years of performance experience and a clear view on how to structure, optimize, and scale lead gen across platforms, all while finding new channels for experimentation and growth. Whether you need to diversify your portfolio or double down on what's working, we'll help you reduce risk, maximize efficiency, and push performance further.")], cta: { label: "Let's Scale Smarter", href: '/capabilities/paid-media/' }, imageAlt: '' },
-    { id: 'creative', heading: 'Performance Creative & CRO', body: [block("Performance creative bridges the gap between storytelling and sales. We design motion graphics, ad creative, and landing pages that don't just look good - they drive traffic and conversions. Everything we do is tested and built with intention: messaging tailored to your audience, strategic rapid experimentation, visuals designed specifically for the platform, and performance that keeps improving.")], cta: { label: 'Creative Ads That Convert', href: '/capabilities/performance-creative/' }, imageAlt: '' },
+    { id: 'data', heading: 'Data, Reporting & Analytics', body: [block('Do you have multiple data sources to connect? Or multiple CRMs? No problem.'), block("For us, analytics and reporting go beyond tracking paid media, and everything we build is uniquely customized to your business goals, data, and workflows. No templates or generic dashboards. From attribution models to automated scripts, we help your team understand what's happening, why, and what to do next.")], cta: { label: 'Connect Data to Outcomes', href: '/capabilities/data-intelligence/' }, image: '/images/pages/capabilities/capi-cactus.webp', imageAlt: 'Cactus detail' },
+    { id: 'paid', heading: 'Paid Media', body: [block("We don't just manage campaigns. We engineer ecosystems.\nOur team brings 20+ years of performance experience and a clear view on how to structure, optimize, and scale lead gen across platforms, all while finding new channels for experimentation and growth. Whether you need to diversify your portfolio or double down on what's working, we'll help you reduce risk, maximize efficiency, and push performance further.")], cta: { label: "Let's Scale Smarter", href: '/capabilities/paid-media/' }, image: '/images/pages/capabilities/capi-typing.webp', imageAlt: 'Paid media work in progress' },
+    { id: 'creative', heading: 'Performance Creative & CRO', body: [block("Performance creative bridges the gap between storytelling and sales. We design motion graphics, ad creative, and landing pages that don't just look good - they drive traffic and conversions. Everything we do is tested and built with intention: messaging tailored to your audience, strategic rapid experimentation, visuals designed specifically for the platform, and performance that keeps improving.")], cta: { label: 'Creative Ads That Convert', href: '/capabilities/performance-creative/' }, image: '/images/pages/capabilities/capi-uiux.webp', imageAlt: 'UI and UX design work' },
   ],
 };
 

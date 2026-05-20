@@ -17,7 +17,7 @@ export type SeoFields = {
   schemaJson?: string;
 };
 
-type ImageField = { image?: EditableImage; imageAlt?: string };
+type ImageField = { image?: EditableImage; imageAlt?: string; videoUrl?: string; videoPoster?: EditableImage };
 type RichSection = { heading?: string; body?: SimplePortableTextBlock[] };
 
 export type FormPageData = SeoFields & {
@@ -34,6 +34,8 @@ export type TeamLeader = {
   name?: string;
   role?: string;
   image?: EditableImage;
+  videoUrl?: string;
+  videoPoster?: EditableImage;
 };
 
 export type TeamPageData = SeoFields & {
@@ -296,7 +298,7 @@ export const defaultTeamPageData: TeamPageData = {
     body: [block("In an industry that never stops evolving, Found Search Marketing stands out as an agency that knows exactly who we are. Grounded in a deep commitment to our clients, we combine precision with agility to thrive in a fast-moving world. We're proud cool nerds, energized by the pursuit of high-ceiling, complex problems that drive significant business impact.")],
     image: `${teamAssetPath}/hero-tr-andy-ryan.webp`,
     imageAlt: 'Found Search Marketing team members collaborating',
-    cta: { label: 'Join Our Team', href: '/about-us/' },
+    cta: { label: 'Join Our Team', href: '/about-us/#careers' },
   },
   statement: {
     lead: 'While many chase the next shiny idea, we stay focused, unapologetically ourselves.',

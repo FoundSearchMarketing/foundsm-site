@@ -1,9 +1,12 @@
 ---
+import MediaAsset from '../MediaAsset.astro';
+
 interface ImageProps {
   src: string;
   alt: string;
   width?: number;
   height?: number;
+  poster?: string;
 }
 
 interface CtaLink {
@@ -40,7 +43,7 @@ const paragraphs = Array.isArray(body) ? body : [body];
   <div class="split-feature__inner">
     {image && (
       <div class="split-feature__media">
-        <img src={image.src} alt={image.alt} width={image.width} height={image.height} loading="lazy" decoding="async" />
+        <MediaAsset src={image.src} alt={image.alt} width={image.width} height={image.height} loading="lazy" poster={image.poster} fill />
       </div>
     )}
 
@@ -94,12 +97,7 @@ const paragraphs = Array.isArray(body) ? body : [body];
     overflow: hidden;
     border-radius: 2.5rem;
     background: #e6e9e4;
-  }
-
-  .split-feature__media img {
-    inline-size: 100%;
-    block-size: 100%;
-    object-fit: cover;
+    --media-asset-fit: cover;
   }
 
   .split-feature__copy {

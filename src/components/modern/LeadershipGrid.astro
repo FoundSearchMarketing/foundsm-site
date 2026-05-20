@@ -1,8 +1,12 @@
 ---
+import MediaAsset from '../MediaAsset.astro';
+
 interface Leader {
   name: string;
   role: string;
   image?: string;
+  videoUrl?: string;
+  videoPoster?: string;
 }
 
 interface Props {
@@ -34,8 +38,9 @@ const sectionClass = ['leadership-section', `leadership-section--${layout}`].joi
 
     <div class="leadership-grid">
       {leaders.map((leader) => {
-        const hasImage = showImages && Boolean(leader.image);
-        const cardClass = hasImage
+        const mediaSrc = leader.videoUrl || leader.image;
+        const hasMedia = showImages && Boolean(mediaSrc);
+        const cardClass = hasMedia
           ? 'leader-card'
           : showImages
             ? 'leader-card leader-card--no-image'
@@ -43,7 +48,15 @@ const sectionClass = ['leadership-section', `leadership-section--${layout}`].joi
 
         return (
           <article class={cardClass}>
-            {hasImage && <img src={leader.image} alt={`${leader.name}, ${leader.role}`} loading="lazy" decoding="async" />}
+            {hasMedia && (
+              <MediaAsset
+                src={mediaSrc}
+                alt={`${leader.name}, ${leader.role}`}
+                loading="lazy"
+                poster={leader.videoPoster || leader.image}
+                fill
+              />
+            )}
             <div class="leader-card__overlay">
               <h3>{leader.name}</h3>
               <p>{leader.role}</p>
@@ -62,7 +75,7 @@ const sectionClass = ['leadership-section', `leadership-section--${layout}`].joi
   }
 
   .leadership-section--centered {
-    padding-block: 3.125rem 6.25rem;
+    padding-block: 3.125rem 5.5rem;
   }
 
   .leadership-section__inner {
@@ -95,7 +108,7 @@ const sectionClass = ['leadership-section', `leadership-section--${layout}`].joi
   }
 
   .leadership-section--centered h2 {
-    font-size: 3.75rem;
+    font-size: clamp(2.375rem, 4vw, 3.75rem);
     font-weight: 900;
     line-height: 1.083;
   }
@@ -117,20 +130,26 @@ const sectionClass = ['leadership-section', `leadership-section--${layout}`].joi
 
   .leadership-grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1.25rem;
+    grid-template-columns: repeat(3, minmax(0, 21rem));
+    justify-content: center;
+    gap: 1.5rem;
   }
 
   .leader-card {
     position: relative;
+    block-size: clamp(22.75rem, 26vw, 25rem);
+    min-block-size: 0;
     overflow: hidden;
-    min-block-size: 25rem;
     border-radius: 1.875rem;
     background: #e8ebe6;
+    --media-asset-fit: cover;
+    --media-asset-position: center;
   }
 
   .leader-card--no-image {
+    block-size: auto;
     min-block-size: 4.375rem;
+    overflow: visible;
     background: transparent;
   }
 
@@ -142,24 +161,21 @@ const sectionClass = ['leadership-section', `leadership-section--${layout}`].joi
     background: transparent;
   }
 
-  .leader-card img {
-    inline-size: 100%;
-    block-size: 100%;
-    object-fit: cover;
+  :global(.leader-card .media-asset) {
     transition: transform 360ms ease;
   }
 
-  .leader-card:hover img {
+  :global(.leader-card:hover .media-asset) {
     transform: scale(1.03);
   }
 
   .leader-card__overlay {
     position: absolute;
-    inset-block-start: 17.5rem;
+    inset-block-end: 1.5rem;
     inset-inline-start: 0;
     display: grid;
     gap: 0.25rem;
-    inline-size: 85%;
+    inline-size: min(85%, 22rem);
     min-block-size: 4.375rem;
     padding: 0.75rem 1rem 0.75rem 0.9375rem;
     border-radius: 0 1.875rem 1.875rem 0;
@@ -182,7 +198,7 @@ const sectionClass = ['leadership-section', `leadership-section--${layout}`].joi
 
   @media (max-width: 1024px) {
     .leadership-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 21rem));
     }
 
     .leadership-section--centered .leadership-section__header {
@@ -205,18 +221,14 @@ const sectionClass = ['leadership-section', `leadership-section--${layout}`].joi
       margin-block-end: 4.5rem;
     }
 
-    .leadership-section--centered h2 {
-      font-size: 2.375rem;
-      line-height: 1.105;
-    }
-
     .leader-card {
-      min-block-size: 23rem;
+      block-size: 23rem;
+      inline-size: min(100%, 21rem);
+      justify-self: center;
     }
 
     .leader-card__overlay {
-      inset-block-start: auto;
-      inset-block-end: 1.75rem;
+      inset-block-end: 1.5rem;
       inline-size: 85%;
     }
   }

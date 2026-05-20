@@ -50,6 +50,8 @@ const ctaFields = [
 const imageFields = [
   defineField({ name: 'image', title: 'Image', type: 'image', options: { hotspot: true } }),
   defineField({ name: 'imageAlt', title: 'Image Alt Text', type: 'string' }),
+  defineField({ name: 'videoUrl', title: 'Video URL', type: 'url', description: 'Optional MP4/WebM URL to render instead of the image.' }),
+  defineField({ name: 'videoPoster', title: 'Video Poster', type: 'image', options: { hotspot: true } }),
 ];
 
 const richSectionFields = [
@@ -66,6 +68,8 @@ const cardMember = defineArrayMember({
     defineField({ name: 'icon', title: 'Icon', type: 'image' }),
     defineField({ name: 'image', title: 'Image', type: 'image' }),
     defineField({ name: 'imageAlt', title: 'Image Alt Text', type: 'string' }),
+    defineField({ name: 'videoUrl', title: 'Video URL', type: 'url', description: 'Optional MP4/WebM URL to render instead of the image.' }),
+    defineField({ name: 'videoPoster', title: 'Video Poster', type: 'image', options: { hotspot: true } }),
   ],
   preview: {
     select: { title: 'title', media: 'image' },
@@ -115,6 +119,8 @@ const tabArrayField = defineField({
         defineField({ name: 'icon', title: 'Icon', type: 'image' }),
         defineField({ name: 'image', title: 'Image', type: 'image' }),
         defineField({ name: 'imageAlt', title: 'Image Alt Text', type: 'string' }),
+        defineField({ name: 'videoUrl', title: 'Video URL', type: 'url', description: 'Optional MP4/WebM URL to render instead of the image.' }),
+        defineField({ name: 'videoPoster', title: 'Video Poster', type: 'image', options: { hotspot: true } }),
       ],
       preview: {
         select: { title: 'title', media: 'image' },

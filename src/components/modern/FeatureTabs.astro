@@ -1,4 +1,6 @@
 ---
+import MediaAsset from '../MediaAsset.astro';
+
 interface TabItem {
   title: string;
   body: string;
@@ -6,6 +8,7 @@ interface TabItem {
   icon?: string;
   image?: string;
   imageAlt?: string;
+  imagePoster?: string;
 }
 
 interface Props {
@@ -71,7 +74,7 @@ const { title, subtitle, tabs, idPrefix, theme = 'muted' } = Astro.props;
               </div>
               {tab.image && (
                 <div class="feature-tabs__panel-media">
-                  <img src={tab.image} alt={tab.imageAlt ?? tab.title} loading="lazy" decoding="async" />
+                  <MediaAsset src={tab.image} alt={tab.imageAlt ?? tab.title} loading="lazy" poster={tab.imagePoster} fill />
                 </div>
               )}
             </article>
@@ -262,12 +265,7 @@ const { title, subtitle, tabs, idPrefix, theme = 'muted' } = Astro.props;
     overflow: hidden;
     border-radius: 2.5rem;
     background: #e2e5df;
-  }
-
-  .feature-tabs__panel-media img {
-    inline-size: 100%;
-    block-size: 100%;
-    object-fit: cover;
+    --media-asset-fit: cover;
   }
 
   @media (max-width: 1024px) {

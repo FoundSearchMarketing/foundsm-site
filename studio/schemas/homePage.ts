@@ -114,6 +114,18 @@ const imageWithAltFields = [
     type: 'string',
     validation: (Rule) => Rule.required(),
   }),
+  defineField({
+    name: 'videoUrl',
+    title: 'Video URL',
+    type: 'url',
+    description: 'Optional MP4/WebM URL to render instead of the image.',
+  }),
+  defineField({
+    name: 'videoPoster',
+    title: 'Video Poster',
+    type: 'image',
+    options: { hotspot: true },
+  }),
 ];
 
 const withoutImageValues = {

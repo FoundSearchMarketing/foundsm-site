@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import MediaAsset from '../../components/MediaAsset.astro';
 import { capabilityDetailPageQuery, sanityClient } from '../../lib/sanity';
 import { defaultCapabilityDetailPages, mergeCapabilityDetailPageData } from '../../lib/fixedPageData';
 import { richHtml, richText, srcFor } from '../../lib/fixedPageRender';
@@ -34,11 +35,15 @@ const sectionHtml = (blocks: any, label: string) => richHtml(blocks) || placehol
 const sectionText = (blocks: any, label: string) => richText(blocks) || placeholder(label);
 const imageSrc = (item: { image?: unknown } = {}, fallback: { image?: unknown } = {}) =>
   srcFor(item.image) || srcFor(fallback.image);
+const mediaSrc = (item: { image?: unknown; videoUrl?: string } = {}, fallback: { image?: unknown; videoUrl?: string } = {}) =>
+  item.videoUrl || fallback.videoUrl || imageSrc(item, fallback);
+const mediaPoster = (item: { image?: unknown; videoPoster?: unknown } = {}, fallback: { image?: unknown; videoPoster?: unknown } = {}) =>
+  srcFor(item.videoPoster) || srcFor(fallback.videoPoster) || imageSrc(item, fallback);
 const imageAlt = (item: { imageAlt?: string; alt?: string; title?: string } = {}, fallback: { imageAlt?: string; alt?: string; title?: string } = {}) =>
   item.imageAlt || item.alt || fallback.imageAlt || fallback.alt || item.title || fallback.title || '';
 
-const heroImage = imageSrc(page.hero, defaults.hero);
-const splitImage = imageSrc(page.split, defaults.split);
+const heroImage = mediaSrc(page.hero, defaults.hero);
+const splitImage = mediaSrc(page.split, defaults.split);
 const tabs = mergeIndexed(page.featureTabs?.tabs, defaults.featureTabs?.tabs).map((tab, index) => {
   const fallback = defaults.featureTabs?.tabs[index] || {};
   return {
@@ -46,8 +51,9 @@ const tabs = mergeIndexed(page.featureTabs?.tabs, defaults.featureTabs?.tabs).ma
     title: tab.title || placeholder(`tab ${index + 1} title`),
     bodyHtml: sectionHtml(tab.body, `${tab.title || `tab ${index + 1}`} copy`),
     iconSrc: srcFor(tab.icon) || srcFor(fallback.icon),
-    imageSrc: imageSrc(tab, fallback),
+    imageSrc: mediaSrc(tab, fallback),
     imageAlt: imageAlt(tab, fallback),
+    imagePoster: mediaPoster(tab, fallback),
   };
 });
 const channelCards = mergeIndexed(page.primaryCards?.cards, defaults.primaryCards?.cards).map((card, index) => {
@@ -87,7 +93,7 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
         </div>
         <div class="paid-media-hero__media">
           {heroImage ? (
-            <img src={heroImage} alt={imageAlt(page.hero, defaults.hero)} width="800" height="800" loading="eager" decoding="async" />
+            <MediaAsset src={heroImage} alt={imageAlt(page.hero, defaults.hero)} width="800" height="800" loading="eager" poster={mediaPoster(page.hero, defaults.hero)} fill />
           ) : (
             <div class="paid-media-placeholder paid-media-placeholder--media">Missing hero image</div>
           )}
@@ -99,7 +105,7 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
       <div class="paid-media-work__inner">
         <div class="paid-media-work__media">
           {splitImage ? (
-            <img src={splitImage} alt={imageAlt(page.split, defaults.split)} width="500" height="382" loading="lazy" decoding="async" />
+            <MediaAsset src={splitImage} alt={imageAlt(page.split, defaults.split)} width="500" height="382" loading="lazy" poster={mediaPoster(page.split, defaults.split)} />
           ) : (
             <div class="paid-media-placeholder paid-media-placeholder--media">Missing How We Work image</div>
           )}
@@ -159,7 +165,7 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
                   <div class="paid-media-tabs__panel-copy" set:html={tab.bodyHtml} />
                   <div class="paid-media-tabs__panel-media">
                     {tab.imageSrc ? (
-                      <img src={tab.imageSrc} alt={tab.imageAlt} loading="eager" decoding="async" />
+                      <MediaAsset src={tab.imageSrc} alt={tab.imageAlt} loading="eager" poster={tab.imagePoster} />
                     ) : (
                       <div class="paid-media-placeholder paid-media-placeholder--media">Missing tab image: {tab.title}</div>
                     )}
@@ -182,7 +188,7 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
         </div>
         <div class="paid-media-journey__grid">
           {channelCards.map((card, index) => (
-            <article class={`paid-media-journey-card paid-media-journey-card--${journeyTones[index] || 'green'}`}>
+            <article class={`paid-media-journey-card paid-media-journey-card--${journeyTones[index] || 'green'}`} tabindex="0">
               {card.iconSrc ? (
                 <img class="paid-media-journey-card__icon" src={card.iconSrc} alt="" loading="lazy" decoding="async" />
               ) : (
@@ -191,7 +197,7 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
               <div class="paid-media-journey-card__copy">
                 <h3>{card.title}</h3>
                 <p>{card.lead}</p>
-                <span class="paid-media-visually-hidden">{card.bodyText}</span>
+                <p class="paid-media-journey-card__detail">{card.bodyText}</p>
               </div>
             </article>
           ))}
@@ -253,6 +259,8 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
 </BaseLayout>
 
 <script>
+  import { setupAutoRotatingTabs } from '../../scripts/autoRotatingTabs';
+
   const initPaidMediaTabs = () => {
     document.querySelectorAll<HTMLElement>('[data-paid-media-tabs]').forEach((container) => {
       if (container.dataset.initialized === 'true') return;
@@ -294,6 +302,12 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
             activate(tabs[nextIndex]);
           }
         });
+      });
+
+      setupAutoRotatingTabs({
+        root: container,
+        tabs,
+        activate,
       });
     });
   };
@@ -353,6 +367,12 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
     letter-spacing: 0;
   }
 
+  .paid-media-page h1,
+  .paid-media-page h2 {
+    font-family: var(--font-heading);
+    font-weight: 900;
+  }
+
   .paid-media-rich-text {
     display: grid;
     gap: 1.45rem;
@@ -368,12 +388,7 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
   .paid-media-hero__media {
     overflow: hidden;
     border-radius: 1.75rem;
-  }
-
-  .paid-media-hero__media img {
-    inline-size: 100%;
-    aspect-ratio: 1;
-    object-fit: cover;
+    --media-asset-fit: cover;
   }
 
   .paid-media-work {
@@ -387,9 +402,10 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
     gap: clamp(3rem, 6vw, 6.5rem);
   }
 
-  .paid-media-work__media img {
-    inline-size: min(100%, 38rem);
-    margin-inline: auto;
+  .paid-media-work__media {
+    display: grid;
+    place-items: center;
+    --media-asset-inline-size: min(100%, 38rem);
   }
 
   .paid-media-work h2,
@@ -489,10 +505,10 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
     margin: 0;
   }
 
-  .paid-media-tabs__panel-media img {
-    inline-size: min(100%, 31rem);
-    max-block-size: 26rem;
-    object-fit: contain;
+  .paid-media-tabs__panel-media {
+    --media-asset-fit: contain;
+    --media-asset-max-inline-size: min(100%, 31rem);
+    --media-asset-max-block-size: 26rem;
   }
 
   .paid-media-journey {
@@ -544,6 +560,17 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
     border-radius: 999px;
     background: #9e9e9f;
     color: var(--paid-media-dark);
+    transition:
+      background-color var(--transition-fast),
+      transform var(--transition-fast);
+  }
+
+  .paid-media-journey-card:hover,
+  .paid-media-journey-card:focus,
+  .paid-media-journey-card:focus-visible,
+  .paid-media-journey-card:focus-within {
+    background: var(--card-tone);
+    transform: translateY(-2px);
   }
 
   .paid-media-journey-card--green { --card-tone: var(--paid-media-green); }
@@ -572,6 +599,29 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
     font-size: 1.05rem;
     font-weight: 800;
     line-height: 1.55;
+  }
+
+  .paid-media-journey-card__detail {
+    max-block-size: 0;
+    margin-block-start: 0;
+    overflow: hidden;
+    opacity: 0;
+    font-size: 0.95rem;
+    font-weight: 500;
+    line-height: 1.5;
+    transition:
+      max-block-size 220ms ease,
+      margin-block-start 220ms ease,
+      opacity 180ms ease;
+  }
+
+  .paid-media-journey-card:hover .paid-media-journey-card__detail,
+  .paid-media-journey-card:focus .paid-media-journey-card__detail,
+  .paid-media-journey-card:focus-visible .paid-media-journey-card__detail,
+  .paid-media-journey-card:focus-within .paid-media-journey-card__detail {
+    max-block-size: 18rem;
+    margin-block-start: 0.65rem;
+    opacity: 1;
   }
 
   .paid-media-analytics {
@@ -713,18 +763,6 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
     text-align: center;
   }
 
-  .paid-media-visually-hidden {
-    position: absolute;
-    inline-size: 1px;
-    block-size: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-  }
-
   @keyframes paid-media-marquee {
     to {
       transform: translateX(-50%);
@@ -845,7 +883,8 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
       line-height: 1.58;
     }
 
-    .paid-media-tabs__panel-media img {
+    .paid-media-tabs__panel-media {
+      --media-asset-max-block-size: 16rem;
       max-block-size: 16rem;
       margin-inline: auto;
     }
@@ -884,6 +923,13 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
     .paid-media-journey-card p {
       font-size: 0.72rem;
       line-height: 1.4;
+    }
+
+    .paid-media-journey-card__detail {
+      max-block-size: none;
+      margin-block-start: 0.55rem;
+      opacity: 1;
+      font-size: 0.72rem;
     }
 
     .paid-media-analytics {

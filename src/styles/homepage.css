@@ -11,7 +11,7 @@ body.home-page {
   --home-gray-light: #f2f3f2;
   --home-white: #fff;
   --home-line: rgba(35, 31, 32, 0.14);
-  --home-content: 1400px;
+  --home-content: 94rem;
   --home-font-body: var(--font-body);
   --home-font-heading: var(--font-heading);
 
@@ -226,16 +226,8 @@ body.home-page {
 
 .home-intro__media {
   justify-self: stretch;
-}
-
-.home-intro__media img,
-.home-outcomes__media img {
-  width: 100%;
-  height: auto;
-}
-
-.home-intro__media img {
-  border-radius: 40px;
+  --media-asset-inline-size: 100%;
+  --media-asset-radius: 40px;
 }
 
 .home-cta-strip {
@@ -345,9 +337,10 @@ body.home-page {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-.home-outcomes__media img,
-.home-tabs__panel-media img {
-  border-radius: 38px;
+.home-outcomes__media,
+.home-tabs__panel-media {
+  --media-asset-inline-size: 100%;
+  --media-asset-radius: 38px;
 }
 
 .home-outcomes__copy .home-button {
@@ -445,12 +438,8 @@ body.home-page {
   justify-content: center;
   background: transparent;
   padding: 0;
-}
-
-.home-metric-card--image img {
-  width: 100%;
-  height: auto;
-  border-radius: 40px;
+  --media-asset-inline-size: 100%;
+  --media-asset-radius: 40px;
 }
 
 .home-metric-flourish {
@@ -791,12 +780,8 @@ body.home-page {
 
 .home-tabs__mobile-media {
   margin: 0;
-}
-
-.home-tabs__mobile-media img {
-  display: block;
-  width: 100%;
-  border-radius: 15px;
+  --media-asset-inline-size: 100%;
+  --media-asset-radius: 15px;
 }
 
 .home-tabs__mobile-copy {

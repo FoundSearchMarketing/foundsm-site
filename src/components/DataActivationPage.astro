@@ -1,4 +1,5 @@
 ---
+import MediaAsset from './MediaAsset.astro';
 import type { CapabilityDetailPageData } from '../lib/fixedPageData';
 import { cardsFor, imageProps, richHtml } from '../lib/fixedPageRender';
 
@@ -35,13 +36,14 @@ const secondActionColumn = actionItems.slice(3);
 
       {heroImage && (
         <div class="da-hero__media">
-          <img
+          <MediaAsset
             src={heroImage.src}
             alt={heroImage.alt ?? ''}
             width={heroImage.width}
             height={heroImage.height}
             loading="eager"
-            decoding="async"
+            poster={heroImage.poster}
+            fill
           />
         </div>
       )}
@@ -140,15 +142,10 @@ const secondActionColumn = actionItems.slice(3);
 
   .da-hero__media {
     overflow: hidden;
-    min-block-size: 35.9375rem;
+    block-size: 35.9375rem;
     border-radius: 2.5rem;
     background: #e8ebe6;
-  }
-
-  .da-hero__media img {
-    inline-size: 100%;
-    block-size: 35.9375rem;
-    object-fit: cover;
+    --media-asset-fit: cover;
   }
 
   .da-actions {
@@ -299,12 +296,8 @@ const secondActionColumn = actionItems.slice(3);
     }
 
     .da-hero__media {
-      min-block-size: 20rem;
-      order: 2;
-    }
-
-    .da-hero__media img {
       block-size: 20rem;
+      order: 2;
     }
 
     .da-actions {
@@ -369,12 +362,8 @@ const secondActionColumn = actionItems.slice(3);
 
   @media (max-width: 640px) {
     .da-hero__media {
-      min-block-size: 12.5rem;
-      border-radius: 1.5rem;
-    }
-
-    .da-hero__media img {
       block-size: 12.5rem;
+      border-radius: 1.5rem;
     }
 
     .da-actions {

@@ -1,5 +1,6 @@
 ---
 import '../../styles/homepage.css';
+import MediaAsset from '../MediaAsset.astro';
 import {
   mergeHomePageData,
   type HomePageData,
@@ -56,6 +57,11 @@ function renderRichText(blocks?: PortableTextBlock[]): string {
 }
 
 const showCta = (item?: { ctaText?: string; ctaUrl?: string }) => Boolean(item?.ctaText && item?.ctaUrl);
+const mediaFor = (item?: { image?: string; imageAlt?: string; videoUrl?: string; videoPoster?: string }) => {
+  const videoSrc = item?.videoUrl?.trim();
+  const src = videoSrc || item?.image;
+  return src ? { src, alt: item?.imageAlt || '', poster: videoSrc ? item?.videoPoster || item?.image : undefined } : undefined;
+};
 const metricValue = (metric: { value?: number }) => String(metric.value ?? '');
 const testimonialRole = [homepage.metrics.testimonial.authorTitle, homepage.metrics.testimonial.authorCompany].filter(Boolean).join(' - ');
 const normalizeLogoLabel = (value?: string) => (value || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
@@ -111,6 +117,13 @@ const partnerLogos = homepage.partners.logos
       : logo;
   })
   .filter((logo) => logo.src);
+const introMedia = mediaFor(homepage.intro);
+const outcomesMedia = mediaFor(homepage.outcomes);
+const metricsMedia = mediaFor(homepage.metrics);
+const ecosystemTabs = homepage.ecosystem.tabs.map((tab) => ({
+  ...tab,
+  media: mediaFor(tab),
+}));
 ---
 
 <div class="homepage" data-homepage>
@@ -154,9 +167,9 @@ const partnerLogos = homepage.partners.logos
         <h2 id="home-intro-title">{homepage.intro.heading}</h2>
         <Fragment set:html={renderRichText(homepage.intro.body)} />
       </div>
-      {homepage.intro.image && (
+      {introMedia && (
         <figure class="home-intro__media">
-          <img src={homepage.intro.image} alt={homepage.intro.imageAlt || ''} width="742" height="739" loading="eager" />
+          <MediaAsset src={introMedia.src} alt={introMedia.alt} width="742" height="739" loading="eager" poster={introMedia.poster} />
         </figure>
       )}
     </div>
@@ -192,9 +205,9 @@ const partnerLogos = homepage.partners.logos
 
   <section class="home-outcomes" aria-labelledby="home-outcomes-title">
     <div class="home-shell home-outcomes__grid">
-      {homepage.outcomes.image && (
+      {outcomesMedia && (
         <figure class="home-outcomes__media">
-          <img src={homepage.outcomes.image} alt={homepage.outcomes.imageAlt || ''} width="950" height="794" loading="lazy" />
+          <MediaAsset src={outcomesMedia.src} alt={outcomesMedia.alt} width="950" height="794" loading="lazy" poster={outcomesMedia.poster} />
         </figure>
       )}
       <div class="home-outcomes__copy">
@@ -276,9 +289,9 @@ const partnerLogos = homepage.partners.logos
 
       <div class="home-metric-flourish home-metric-flourish--medium" aria-hidden="true"><span></span></div>
 
-      {homepage.metrics.image && (
+      {metricsMedia && (
         <figure class="home-metric-card home-metric-card--image">
-          <img src={homepage.metrics.image} alt={homepage.metrics.imageAlt || ''} width="337" height="276" loading="eager" />
+          <MediaAsset src={metricsMedia.src} alt={metricsMedia.alt} width="337" height="276" loading="eager" poster={metricsMedia.poster} />
         </figure>
       )}
     </div>
@@ -316,7 +329,7 @@ const partnerLogos = homepage.partners.logos
         <div class="home-tabs__nav">
           {homepage.ecosystem.tabListHeading && <h3>{homepage.ecosystem.tabListHeading}</h3>}
           <div class="home-tabs__buttons" role="tablist" aria-label="Performance lead generation ecosystem">
-            {homepage.ecosystem.tabs.map((tab, index) => (
+            {ecosystemTabs.map((tab, index) => (
               <button
                 class={`home-tabs__button ${index === 0 ? 'is-active' : ''}`}
                 type="button"
@@ -333,7 +346,7 @@ const partnerLogos = homepage.partners.logos
             ))}
           </div>
           <div class="home-tabs__mobile-list" aria-label="Performance lead generation ecosystem">
-            {homepage.ecosystem.tabs.map((tab, index) => (
+            {ecosystemTabs.map((tab, index) => (
               <div class="home-tabs__mobile-item">
                 <button
                   class={`home-tabs__button home-tabs__mobile-button ${index === 0 ? 'is-active' : ''}`}
@@ -354,9 +367,9 @@ const partnerLogos = homepage.partners.logos
                   data-home-mobile-panel={tab.id}
                   hidden={index !== 0}
                 >
-                  {tab.image && (
+                  {tab.media && (
                     <figure class="home-tabs__mobile-media">
-                      <img src={tab.image} alt={tab.imageAlt || tab.title || ''} width="413" height="535" loading="eager" />
+                      <MediaAsset src={tab.media.src} alt={tab.media.alt || tab.title || ''} width="413" height="535" loading="eager" poster={tab.media.poster} />
                     </figure>
                   )}
                   <div class="home-tabs__mobile-copy">
@@ -370,7 +383,7 @@ const partnerLogos = homepage.partners.logos
         </div>
 
         <div class="home-tabs__panels">
-          {homepage.ecosystem.tabs.map((tab, index) => (
+          {ecosystemTabs.map((tab, index) => (
             <article
               class={`home-tabs__panel ${index === 0 ? 'is-active' : ''}`}
               id={`home-panel-${tab.id}`}
@@ -383,9 +396,9 @@ const partnerLogos = homepage.partners.logos
                 <Fragment set:html={renderRichText(tab.body)} />
                 {showCta(tab) && <a class="home-button home-button--dark" href={tab.ctaUrl}>{tab.ctaText}</a>}
               </div>
-              {tab.image && (
+              {tab.media && (
                 <figure class="home-tabs__panel-media">
-                  <img src={tab.image} alt={tab.imageAlt || tab.title || ''} width="413" height="535" loading="eager" />
+                  <MediaAsset src={tab.media.src} alt={tab.media.alt || tab.title || ''} width="413" height="535" loading="eager" poster={tab.media.poster} />
                 </figure>
               )}
             </article>

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import MediaAsset from '../../components/MediaAsset.astro';
 import { capabilityDetailPageQuery, sanityClient } from '../../lib/sanity';
 import { defaultCapabilityDetailPages, mergeCapabilityDetailPageData } from '../../lib/fixedPageData';
 import { richHtml, richText, srcFor } from '../../lib/fixedPageRender';
@@ -34,11 +35,15 @@ const sectionHtml = (blocks: any, label: string) => richHtml(blocks) || placehol
 const sectionText = (blocks: any, label: string) => richText(blocks) || placeholder(label);
 const imageSrc = (item: { image?: unknown } = {}, fallback: { image?: unknown } = {}) =>
   srcFor(item.image) || srcFor(fallback.image);
+const mediaSrc = (item: { image?: unknown; videoUrl?: string } = {}, fallback: { image?: unknown; videoUrl?: string } = {}) =>
+  item.videoUrl || fallback.videoUrl || imageSrc(item, fallback);
+const mediaPoster = (item: { image?: unknown; videoPoster?: unknown } = {}, fallback: { image?: unknown; videoPoster?: unknown } = {}) =>
+  srcFor(item.videoPoster) || srcFor(fallback.videoPoster) || imageSrc(item, fallback);
 const imageAlt = (item: { imageAlt?: string; alt?: string; title?: string } = {}, fallback: { imageAlt?: string; alt?: string; title?: string } = {}) =>
   item.imageAlt || item.alt || fallback.imageAlt || fallback.alt || item.title || fallback.title || '';
 
-const heroImage = imageSrc(page.hero, defaults.hero);
-const splitImage = imageSrc(page.split, defaults.split);
+const heroImage = mediaSrc(page.hero, defaults.hero);
+const splitImage = mediaSrc(page.split, defaults.split);
 const tabs = mergeIndexed(page.featureTabs?.tabs, defaults.featureTabs?.tabs).map((tab, index) => {
   const fallback = defaults.featureTabs?.tabs[index] || {};
   return {
@@ -46,8 +51,9 @@ const tabs = mergeIndexed(page.featureTabs?.tabs, defaults.featureTabs?.tabs).ma
     title: tab.title || placeholder(`tab ${index + 1} title`),
     bodyHtml: sectionHtml(tab.body, `${tab.title || `tab ${index + 1}`} copy`),
     iconSrc: srcFor(tab.icon) || srcFor(fallback.icon),
-    imageSrc: imageSrc(tab, fallback),
+    imageSrc: mediaSrc(tab, fallback),
     imageAlt: imageAlt(tab, fallback),
+    imagePoster: mediaPoster(tab, fallback),
   };
 });
 const channelCards = mergeIndexed(page.primaryCards?.cards, defaults.primaryCards?.cards).map((card, index) => {
@@ -87,7 +93,7 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
         </div>
         <div class="paid-media-hero__media">
           {heroImage ? (
-            <img src={heroImage} alt={imageAlt(page.hero, defaults.hero)} width="800" height="800" loading="eager" decoding="async" />
+            <MediaAsset src={heroImage} alt={imageAlt(page.hero, defaults.hero)} width="800" height="800" loading="eager" poster={mediaPoster(page.hero, defaults.hero)} fill />
           ) : (
             <div class="paid-media-placeholder paid-media-placeholder--media">Missing hero image</div>
           )}
@@ -99,7 +105,7 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
       <div class="paid-media-work__inner">
         <div class="paid-media-work__media">
           {splitImage ? (
-            <img src={splitImage} alt={imageAlt(page.split, defaults.split)} width="500" height="382" loading="lazy" decoding="async" />
+            <MediaAsset src={splitImage} alt={imageAlt(page.split, defaults.split)} width="500" height="382" loading="lazy" poster={mediaPoster(page.split, defaults.split)} />
           ) : (
             <div class="paid-media-placeholder paid-media-placeholder--media">Missing How We Work image</div>
           )}
@@ -159,7 +165,7 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
                   <div class="paid-media-tabs__panel-copy" set:html={tab.bodyHtml} />
                   <div class="paid-media-tabs__panel-media">
                     {tab.imageSrc ? (
-                      <img src={tab.imageSrc} alt={tab.imageAlt} loading="eager" decoding="async" />
+                      <MediaAsset src={tab.imageSrc} alt={tab.imageAlt} loading="eager" poster={tab.imagePoster} />
                     ) : (
                       <div class="paid-media-placeholder paid-media-placeholder--media">Missing tab image: {tab.title}</div>
                     )}
@@ -368,12 +374,7 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
   .paid-media-hero__media {
     overflow: hidden;
     border-radius: 1.75rem;
-  }
-
-  .paid-media-hero__media img {
-    inline-size: 100%;
-    aspect-ratio: 1;
-    object-fit: cover;
+    --media-asset-fit: cover;
   }
 
   .paid-media-work {
@@ -387,9 +388,10 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
     gap: clamp(3rem, 6vw, 6.5rem);
   }
 
-  .paid-media-work__media img {
-    inline-size: min(100%, 38rem);
-    margin-inline: auto;
+  .paid-media-work__media {
+    display: grid;
+    place-items: center;
+    --media-asset-inline-size: min(100%, 38rem);
   }
 
   .paid-media-work h2,
@@ -489,10 +491,10 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
     margin: 0;
   }
 
-  .paid-media-tabs__panel-media img {
-    inline-size: min(100%, 31rem);
-    max-block-size: 26rem;
-    object-fit: contain;
+  .paid-media-tabs__panel-media {
+    --media-asset-fit: contain;
+    --media-asset-max-inline-size: min(100%, 31rem);
+    --media-asset-max-block-size: 26rem;
   }
 
   .paid-media-journey {
@@ -845,7 +847,8 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
       line-height: 1.58;
     }
 
-    .paid-media-tabs__panel-media img {
+    .paid-media-tabs__panel-media {
+      --media-asset-max-block-size: 16rem;
       max-block-size: 16rem;
       margin-inline: auto;
     }

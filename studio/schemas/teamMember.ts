@@ -29,6 +29,18 @@ export default defineType({
       options: { hotspot: true },
     }),
     defineField({
+      name: 'videoUrl',
+      title: 'Video URL',
+      type: 'url',
+      description: 'Optional MP4/WebM URL to render instead of the photo.',
+    }),
+    defineField({
+      name: 'videoPoster',
+      title: 'Video Poster',
+      type: 'image',
+      options: { hotspot: true },
+    }),
+    defineField({
       name: 'bio',
       title: 'Bio',
       type: 'text',

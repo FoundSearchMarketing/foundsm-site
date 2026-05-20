@@ -1,4 +1,5 @@
 ---
+import MediaAsset from './MediaAsset.astro';
 import type { CapabilityDetailPageData } from '../lib/fixedPageData';
 import { cardsFor, imageProps, logosFor, richHtml, richText } from '../lib/fixedPageRender';
 
@@ -50,13 +51,13 @@ const ctaText = [page.cta?.title, ctaBody].filter(Boolean).join(' ');
 
       {heroImage && (
         <div class="di-hero__media" aria-hidden="true">
-          <img
+          <MediaAsset
             src={heroImage.src}
             alt={heroImage.alt ?? ''}
             width={heroImage.width}
             height={heroImage.height}
             loading="eager"
-            decoding="async"
+            poster={heroImage.poster}
           />
         </div>
       )}
@@ -67,13 +68,13 @@ const ctaText = [page.cta?.title, ctaBody].filter(Boolean).join(' ');
     <div class="di-work__inner">
       {splitImage && (
         <div class="di-work__media">
-          <img
+          <MediaAsset
             src={splitImage.src}
             alt={splitImage.alt ?? ''}
             width={splitImage.width}
             height={splitImage.height}
             loading="lazy"
-            decoding="async"
+            poster={splitImage.poster}
           />
         </div>
       )}
@@ -139,13 +140,13 @@ const ctaText = [page.cta?.title, ctaBody].filter(Boolean).join(' ');
 
         {analyticsImage && (
           <div class="di-analytics__media">
-            <img
+            <MediaAsset
               src={analyticsImage.src}
               alt={analyticsImage.alt ?? ''}
               width={analyticsImage.width}
               height={analyticsImage.height}
               loading="lazy"
-              decoding="async"
+              poster={analyticsImage.poster}
             />
           </div>
         )}
@@ -224,12 +225,8 @@ const ctaText = [page.cta?.title, ctaBody].filter(Boolean).join(' ');
     justify-self: end;
     width: 100%;
     border-radius: 2.5rem;
-  }
-
-  .di-hero__media img {
-    width: 100%;
-    height: auto;
-    border-radius: 2.5rem;
+    --media-asset-inline-size: 100%;
+    --media-asset-radius: 2.5rem;
   }
 
   .di-work {
@@ -249,10 +246,7 @@ const ctaText = [page.cta?.title, ctaBody].filter(Boolean).join(' ');
   .di-work__media {
     display: grid;
     place-items: center;
-  }
-
-  .di-work__media img {
-    width: min(100%, 31.25rem);
+    --media-asset-inline-size: min(100%, 31.25rem);
   }
 
   .di-work__copy {
@@ -440,11 +434,8 @@ const ctaText = [page.cta?.title, ctaBody].filter(Boolean).join(' ');
   .di-analytics__media {
     overflow: hidden;
     border-radius: 2.5rem;
-  }
-
-  .di-analytics__media img {
-    width: 100%;
-    border-radius: 2.5rem;
+    --media-asset-inline-size: 100%;
+    --media-asset-radius: 2.5rem;
   }
 
   .di-cta {
@@ -547,10 +538,7 @@ const ctaText = [page.cta?.title, ctaBody].filter(Boolean).join(' ');
 
     .di-work__media {
       padding: 1.25rem 0;
-    }
-
-    .di-work__media img {
-      width: calc(100vw - 1.25rem);
+      --media-asset-inline-size: calc(100vw - 1.25rem);
     }
 
     .di-work__copy {
@@ -647,10 +635,6 @@ const ctaText = [page.cta?.title, ctaBody].filter(Boolean).join(' ');
       padding-left: 1.25rem;
       font-size: 1.125rem;
       line-height: 1.667;
-    }
-
-    .di-analytics__media img {
-      width: 100%;
     }
 
     .di-cta {

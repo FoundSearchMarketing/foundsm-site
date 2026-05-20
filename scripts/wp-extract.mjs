@@ -3,7 +3,7 @@
 /**
  * WordPress Content Extraction Script
  *
- * Extracts blog posts, categories, tags, pages, authors, and images
+ * Extracts blog posts, categories, tags, pages, authors, and media
  * from foundsm.com via the WP REST API. Outputs structured JSON
  * files ready for Sanity import.
  *
@@ -18,7 +18,7 @@ import path from 'node:path';
 const WP_BASE = 'https://foundsm.com/wp-json/wp/v2';
 const EXPORT_DIR = new URL('./wp-export/', import.meta.url).pathname;
 const IMAGES_DIR = path.join(EXPORT_DIR, 'images');
-const DELAY_MS = 200; // polite delay between image downloads
+const DELAY_MS = 200; // polite delay between media downloads
 
 // ── Helpers ──
 
@@ -55,11 +55,11 @@ async function wpFetch(endpoint, params = {}) {
   return items;
 }
 
-async function downloadImage(imageUrl, destPath) {
+async function downloadMedia(mediaUrl, destPath) {
   try {
-    const res = await fetch(imageUrl);
+    const res = await fetch(mediaUrl);
     if (!res.ok || !res.body) {
-      console.error(`  ✗ Image download failed: ${imageUrl} (${res.status})`);
+      console.error(`  ✗ Media download failed: ${mediaUrl} (${res.status})`);
       return false;
     }
     await mkdir(path.dirname(destPath), { recursive: true });
@@ -67,7 +67,7 @@ async function downloadImage(imageUrl, destPath) {
     await pipeline(res.body, fileStream);
     return true;
   } catch (err) {
-    console.error(`  ✗ Image download error: ${imageUrl} — ${err.message}`);
+    console.error(`  ✗ Media download error: ${mediaUrl} — ${err.message}`);
     return false;
   }
 }
@@ -76,16 +76,26 @@ function stripHtml(html) {
   return html.replace(/<[^>]*>/g, '').replace(/&[^;]+;/g, ' ').trim();
 }
 
-function extractInlineImageUrls(html) {
+function extractInlineMediaUrls(html) {
   const urls = [];
-  const regex = /<img[^>]+src="([^"]+)"/g;
+  const elementSrcRegex = /<(?:img|video|source)[^>]+src="([^"]+)"/g;
+  const mediaUrlRegex = /https?:\/\/[^"'<>\s)]+?\.(?:webp|jpe?g|png|gif|svg|mp4|webm|mov|m4v)(?:\?[^"'<>\s)]*)?/gi;
   let match;
-  while ((match = regex.exec(html)) !== null) {
+
+  while ((match = elementSrcRegex.exec(html)) !== null) {
     const url = match[1];
     if (url.includes('foundsm.com')) {
       urls.push(url);
     }
   }
+
+  while ((match = mediaUrlRegex.exec(html)) !== null) {
+    const url = match[0];
+    if (url.includes('foundsm.com')) {
+      urls.push(url);
+    }
+  }
+
   return [...new Set(urls)];
 }
 
@@ -95,6 +105,11 @@ function getFilename(url) {
   } catch {
     return 'image.jpg';
   }
+}
+
+function getMediaKind(url) {
+  const pathname = new URL(url).pathname.toLowerCase();
+  return /\.(mp4|webm|mov|m4v)$/.test(pathname) ? 'video' : 'image';
 }
 
 async function writeJson(filename, data) {
@@ -200,16 +215,17 @@ async function extractPosts(categoryMap, tagMap, authorMap) {
       }
     }
 
-    // Inline images from content HTML
+    // Inline media from content HTML
     const contentHtml = p.content?.rendered || '';
-    const inlineUrls = extractInlineImageUrls(contentHtml);
+    const inlineUrls = extractInlineMediaUrls(contentHtml);
     const inlineImages = [];
     for (let i = 0; i < inlineUrls.length; i++) {
       const url = inlineUrls[i];
       const filename = getFilename(url);
       const localPath = path.join('images', 'posts', slug, `inline-${i + 1}-${filename}`);
-      inlineImages.push({ url, localPath });
-      mediaManifest.push({ url, localPath });
+      const kind = getMediaKind(url);
+      inlineImages.push({ url, localPath, kind });
+      mediaManifest.push({ url, localPath, kind });
     }
 
     // Yoast SEO
@@ -273,16 +289,17 @@ async function extractPages() {
       }
     }
 
-    // Inline images
+    // Inline media
     const contentHtml = p.content?.rendered || '';
-    const inlineUrls = extractInlineImageUrls(contentHtml);
+    const inlineUrls = extractInlineMediaUrls(contentHtml);
     const inlineImages = [];
     for (let i = 0; i < inlineUrls.length; i++) {
       const url = inlineUrls[i];
       const filename = getFilename(url);
       const localPath = path.join('images', 'pages', slug, `inline-${i + 1}-${filename}`);
-      inlineImages.push({ url, localPath });
-      mediaManifest.push({ url, localPath });
+      const kind = getMediaKind(url);
+      inlineImages.push({ url, localPath, kind });
+      mediaManifest.push({ url, localPath, kind });
     }
 
     // Yoast SEO
@@ -315,14 +332,14 @@ async function extractPages() {
   return { pages, mediaManifest };
 }
 
-async function downloadAllImages(manifest) {
-  console.log(`\n🖼️  Downloading ${manifest.length} images...`);
+async function downloadAllMedia(manifest) {
+  console.log(`\n🖼️  Downloading ${manifest.length} media files...`);
   let success = 0;
   let failed = 0;
 
   for (const item of manifest) {
     const destPath = path.join(EXPORT_DIR, item.localPath);
-    const ok = await downloadImage(item.url, destPath);
+    const ok = await downloadMedia(item.url, destPath);
     if (ok) {
       success++;
       process.stdout.write(`  ✓ ${success}/${manifest.length}\r`);
@@ -362,8 +379,8 @@ async function main() {
   const fullManifest = [...postMedia, ...pageMedia];
   await writeJson('media-manifest.json', fullManifest);
 
-  // 4. Download all images
-  await downloadAllImages(fullManifest);
+  // 4. Download all media
+  await downloadAllMedia(fullManifest);
 
   // Summary
   console.log('\n═══════════════════════════════════════════');
@@ -374,7 +391,7 @@ async function main() {
   console.log(`  Categories: ${categories.length}`);
   console.log(`  Tags:       ${tags.length}`);
   console.log(`  Authors:    ${authors.length}`);
-  console.log(`  Images:     ${fullManifest.length}`);
+  console.log(`  Media:      ${fullManifest.length}`);
   console.log(`\n  Output dir: ${EXPORT_DIR}`);
 }
 

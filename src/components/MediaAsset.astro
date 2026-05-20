@@ -1,0 +1,87 @@
+---
+interface Props {
+  src: string;
+  alt?: string;
+  width?: number | string;
+  height?: number | string;
+  loading?: 'eager' | 'lazy';
+  poster?: string;
+  fill?: boolean;
+  fit?: 'cover' | 'contain';
+  class?: string;
+}
+
+const {
+  src,
+  alt = '',
+  width,
+  height,
+  loading = 'lazy',
+  poster,
+  fill = false,
+  fit,
+  class: className,
+} = Astro.props;
+
+const normalizedSrc = src.split(/[?#]/)[0] || '';
+const normalizedExtensionSrc = normalizedSrc.toLowerCase();
+const isVideo = /\.(mp4|webm|mov|m4v)$/i.test(normalizedSrc);
+const videoType = normalizedExtensionSrc.endsWith('.webm')
+  ? 'video/webm'
+  : normalizedExtensionSrc.endsWith('.mov') || normalizedExtensionSrc.endsWith('.m4v')
+    ? 'video/mp4'
+    : 'video/mp4';
+const mediaClass = ['media-asset', fill ? 'media-asset--fill' : '', className].filter(Boolean).join(' ');
+const mediaStyle = fit ? `--media-asset-fit: ${fit}` : undefined;
+---
+
+{isVideo ? (
+  <video
+    class={mediaClass}
+    style={mediaStyle}
+    autoplay
+    muted
+    loop
+    playsinline
+    preload={loading === 'eager' ? 'auto' : 'metadata'}
+    poster={poster}
+    aria-label={alt || undefined}
+    aria-hidden={alt ? undefined : 'true'}
+  >
+    <source src={src} type={videoType} />
+  </video>
+) : (
+  <img
+    class={mediaClass}
+    style={mediaStyle}
+    src={src}
+    alt={alt}
+    width={width}
+    height={height}
+    loading={loading}
+    decoding="async"
+  />
+)}
+
+<style>
+  .media-asset {
+    display: block;
+    inline-size: var(--media-asset-inline-size, auto);
+    block-size: var(--media-asset-block-size, auto);
+    min-inline-size: var(--media-asset-min-inline-size, 0);
+    min-block-size: var(--media-asset-min-block-size, 0);
+    max-inline-size: var(--media-asset-max-inline-size, 100%);
+    max-block-size: var(--media-asset-max-block-size, none);
+    margin-inline: var(--media-asset-margin-inline, 0);
+    aspect-ratio: var(--media-asset-aspect-ratio, auto);
+    border-radius: var(--media-asset-radius, 0);
+    object-fit: var(--media-asset-fit, initial);
+    object-position: var(--media-asset-position, center);
+  }
+
+  .media-asset--fill {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: var(--media-asset-fit, cover);
+  }
+</style>

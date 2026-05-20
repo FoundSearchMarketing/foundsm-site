@@ -1,10 +1,13 @@
 ---
+import MediaAsset from '../MediaAsset.astro';
+
 interface ImageProps {
   src: string;
   alt?: string;
   width?: number;
   height?: number;
   loading?: 'eager' | 'lazy';
+  poster?: string;
 }
 
 interface TabItem {
@@ -14,6 +17,7 @@ interface TabItem {
   icon?: string;
   image?: string;
   imageAlt?: string;
+  imagePoster?: string;
 }
 
 interface CardItem {
@@ -71,13 +75,14 @@ const stripOuterParagraph = (value: string) => value.replace(/^<p>/, '').replace
 
     {hero.image && (
       <figure class="pc-hero__media">
-        <img
+        <MediaAsset
           src={hero.image.src}
           alt={hero.image.alt ?? ''}
           width={hero.image.width}
           height={hero.image.height}
           loading={hero.image.loading ?? 'eager'}
-          decoding="async"
+          poster={hero.image.poster}
+          fill
         />
       </figure>
     )}
@@ -88,7 +93,7 @@ const stripOuterParagraph = (value: string) => value.replace(/^<p>/, '').replace
   <div class="pc-work__inner">
     {split.image && (
       <figure class="pc-work__media">
-        <img src={split.image.src} alt={split.image.alt ?? ''} width={split.image.width} height={split.image.height} loading="lazy" decoding="async" />
+        <MediaAsset src={split.image.src} alt={split.image.alt ?? ''} width={split.image.width} height={split.image.height} loading="lazy" poster={split.image.poster} />
       </figure>
     )}
 
@@ -150,7 +155,7 @@ const stripOuterParagraph = (value: string) => value.replace(/^<p>/, '').replace
               </div>
               {tab.image && (
                 <figure class="pc-tabs__panel-media">
-                  <img src={tab.image} alt={tab.imageAlt ?? tab.title} loading="lazy" decoding="async" />
+                  <MediaAsset src={tab.image} alt={tab.imageAlt ?? tab.title} loading="lazy" poster={tab.imagePoster} />
                 </figure>
               )}
             </article>
@@ -168,7 +173,7 @@ const stripOuterParagraph = (value: string) => value.replace(/^<p>/, '').replace
     <div class="pc-experience__grid">
       {secondary.image && (
         <figure class="pc-experience__media">
-          <img src={secondary.image.src} alt={secondary.image.alt ?? ''} width={secondary.image.width} height={secondary.image.height} loading="lazy" decoding="async" />
+          <MediaAsset src={secondary.image.src} alt={secondary.image.alt ?? ''} width={secondary.image.width} height={secondary.image.height} loading="lazy" poster={secondary.image.poster} />
         </figure>
       )}
 
@@ -313,12 +318,7 @@ const stripOuterParagraph = (value: string) => value.replace(/^<p>/, '').replace
     border-radius: 2.5rem;
     aspect-ratio: 1;
     background: #e8ebe6;
-  }
-
-  .pc-hero__media img {
-    inline-size: 100%;
-    block-size: 100%;
-    object-fit: cover;
+    --media-asset-fit: cover;
   }
 
   .pc-work {
@@ -338,11 +338,7 @@ const stripOuterParagraph = (value: string) => value.replace(/^<p>/, '').replace
   .pc-work__media {
     display: grid;
     place-items: center;
-  }
-
-  .pc-work__media img {
-    inline-size: min(100%, 31.25rem);
-    block-size: auto;
+    --media-asset-max-inline-size: min(100%, 31.25rem);
   }
 
   .pc-work__copy {
@@ -489,12 +485,8 @@ const stripOuterParagraph = (value: string) => value.replace(/^<p>/, '').replace
   .pc-tabs__panel-media {
     overflow: hidden;
     border-radius: 2.5rem;
-  }
-
-  .pc-tabs__panel-media img {
-    inline-size: 100%;
-    block-size: auto;
-    border-radius: 2.5rem;
+    --media-asset-radius: 2.5rem;
+    --media-asset-max-inline-size: 100%;
   }
 
   .pc-experience {
@@ -538,12 +530,8 @@ const stripOuterParagraph = (value: string) => value.replace(/^<p>/, '').replace
   .pc-experience__media {
     display: grid;
     justify-items: center;
-  }
-
-  .pc-experience__media img {
-    inline-size: min(100%, 33.4375rem);
-    block-size: auto;
-    border-radius: 1.875rem;
+    --media-asset-radius: 1.875rem;
+    --media-asset-max-inline-size: min(100%, 33.4375rem);
   }
 
   .pc-experience__copy {
@@ -669,8 +657,9 @@ const stripOuterParagraph = (value: string) => value.replace(/^<p>/, '').replace
     }
 
     .pc-tabs__panel-media,
-    .pc-tabs__panel-media img {
+    .pc-tabs__panel-media {
       border-radius: 0.9375rem;
+      --media-asset-radius: 0.9375rem;
     }
 
     .pc-experience {

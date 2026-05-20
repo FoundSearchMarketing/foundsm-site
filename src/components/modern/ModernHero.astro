@@ -1,10 +1,13 @@
 ---
+import MediaAsset from '../MediaAsset.astro';
+
 interface HeroImage {
   src: string;
   alt?: string;
   width?: number;
   height?: number;
   loading?: 'eager' | 'lazy';
+  poster?: string;
 }
 
 interface CtaLink {
@@ -87,13 +90,15 @@ const mediaStyle = [
         class={`modern-hero__media modern-hero__media--${imageShape} modern-hero__media--fit-${imageFit}`}
         style={mediaStyle || undefined}
       >
-        <img
+        <MediaAsset
           src={image.src}
           alt={image.alt ?? ''}
           width={image.width}
           height={image.height}
           loading={image.loading ?? 'eager'}
-          decoding="async"
+          poster={image.poster}
+          fill
+          fit={imageFit}
         />
       </div>
     )}
@@ -209,6 +214,7 @@ const mediaStyle = [
     min-block-size: var(--modern-hero-media-height, 33rem);
     block-size: var(--modern-hero-media-height, 33rem);
     background: #e8ebe6;
+    --media-asset-fit: cover;
   }
 
   .modern-hero__media--rounded {
@@ -225,17 +231,11 @@ const mediaStyle = [
     background: transparent;
   }
 
-  .modern-hero__media img {
-    inline-size: 100%;
-    block-size: 100%;
-    object-fit: cover;
-  }
-
-  .modern-hero__media--fit-contain img,
-  .modern-hero__media--plain img {
-    max-inline-size: var(--modern-hero-image-max-width, 100%);
-    max-block-size: 100%;
-    object-fit: contain;
+  .modern-hero__media--fit-contain,
+  .modern-hero__media--plain {
+    --media-asset-fit: contain;
+    --media-asset-max-inline-size: var(--modern-hero-image-max-width, 100%);
+    --media-asset-max-block-size: 100%;
   }
 
   @media (max-width: 1024px) {

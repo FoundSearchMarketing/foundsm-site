@@ -52,9 +52,10 @@ const sectionClass = ['leadership-section', `leadership-section--${layout}`].joi
               <MediaAsset
                 src={mediaSrc}
                 alt={`${leader.name}, ${leader.role}`}
+                width="450"
+                height="399"
                 loading="lazy"
                 poster={leader.videoPoster || leader.image}
-                fill
               />
             )}
             <div class="leader-card__overlay">
@@ -75,7 +76,7 @@ const sectionClass = ['leadership-section', `leadership-section--${layout}`].joi
   }
 
   .leadership-section--centered {
-    padding-block: 3.125rem 6.25rem;
+    padding-block: 3.125rem 5.5rem;
   }
 
   .leadership-section__inner {
@@ -108,7 +109,7 @@ const sectionClass = ['leadership-section', `leadership-section--${layout}`].joi
   }
 
   .leadership-section--centered h2 {
-    font-size: 3.75rem;
+    font-size: clamp(2.375rem, 4vw, 3.75rem);
     font-weight: 900;
     line-height: 1.083;
   }
@@ -130,28 +131,26 @@ const sectionClass = ['leadership-section', `leadership-section--${layout}`].joi
 
   .leadership-grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1.25rem;
+    grid-template-columns: repeat(3, minmax(0, 21rem));
+    justify-content: center;
+    gap: 1.5rem;
   }
 
   .leader-card {
-    position: relative;
-    overflow: hidden;
-    block-size: clamp(20rem, 25vw, 22.75rem);
+    display: grid;
+    grid-template-rows: auto auto;
     min-block-size: 0;
-    border-radius: 1.875rem;
-    background: #e8ebe6;
-    --media-asset-fit: cover;
-    --media-asset-position: center 38%;
-  }
-
-  .leader-card--no-image {
-    min-block-size: 4.375rem;
+    overflow: visible;
+    border-radius: 1.5rem;
     background: transparent;
   }
 
+  .leader-card--no-image {
+    display: block;
+  }
+
   .leader-card--no-image .leader-card__overlay {
-    position: static;
+    margin-block-start: 0;
   }
 
   .leader-card--text-only {
@@ -159,23 +158,23 @@ const sectionClass = ['leadership-section', `leadership-section--${layout}`].joi
   }
 
   :global(.leader-card .media-asset) {
-    transition: transform 360ms ease;
-  }
-
-  :global(.leader-card:hover .media-asset) {
-    transform: scale(1.03);
+    inline-size: 100%;
+    block-size: auto;
+    aspect-ratio: 450 / 399;
+    border-radius: 1.5rem;
+    background: #e8ebe6;
+    object-fit: cover;
+    object-position: center;
   }
 
   .leader-card__overlay {
-    position: absolute;
-    inset-block-end: 1.5rem;
-    inset-inline-start: 0;
     display: grid;
     gap: 0.25rem;
-    inline-size: min(85%, 22rem);
-    min-block-size: 4.375rem;
-    padding: 0.75rem 1rem 0.75rem 0.9375rem;
-    border-radius: 0 1.875rem 1.875rem 0;
+    inline-size: calc(100% - 1.5rem);
+    margin-block-start: -0.5rem;
+    min-block-size: 0;
+    padding: 0.85rem 1rem;
+    border-radius: 0 1.25rem 1.25rem 0;
     background: #f2f3f2;
     color: #1a1a1a;
   }
@@ -195,7 +194,7 @@ const sectionClass = ['leadership-section', `leadership-section--${layout}`].joi
 
   @media (max-width: 1024px) {
     .leadership-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 21rem));
     }
 
     .leadership-section--centered .leadership-section__header {
@@ -218,18 +217,13 @@ const sectionClass = ['leadership-section', `leadership-section--${layout}`].joi
       margin-block-end: 4.5rem;
     }
 
-    .leadership-section--centered h2 {
-      font-size: 2.375rem;
-      line-height: 1.105;
-    }
-
     .leader-card {
-      block-size: 23rem;
+      inline-size: min(100%, 21rem);
+      justify-self: center;
     }
 
     .leader-card__overlay {
-      inset-block-end: 1.75rem;
-      inline-size: 85%;
+      inline-size: calc(100% - 1rem);
     }
   }
 </style>

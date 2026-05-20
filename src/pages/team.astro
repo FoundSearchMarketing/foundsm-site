@@ -15,6 +15,10 @@ const page = mergeTeamPageData(sanityPage);
 const title = page.seoTitle || defaultTeamPageData.seoTitle;
 const description = page.seoDescription || defaultTeamPageData.seoDescription;
 const canonical = page.canonicalUrl || defaultTeamPageData.canonicalUrl;
+const careersHref = '/about-us/#careers';
+const heroCta = page.hero.cta?.label ? { label: page.hero.cta.label, href: careersHref } : undefined;
+const careersCta = page.cta.cta?.label ? { label: page.cta.cta.label, href: careersHref } : undefined;
+const careersBodyHtml = richHtml(page.cta.body);
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'WebPage',
@@ -50,7 +54,7 @@ const leaders = leaderSource
     title={page.hero.heading || ''}
     intro={richText(page.hero.body)}
     introHtml={richHtml(page.hero.body)}
-    cta={page.hero.cta?.label && page.hero.cta?.href ? { label: page.hero.cta.label, href: page.hero.cta.href } : undefined}
+    cta={heroCta}
     image={imageProps(page.hero, 'eager')}
     imageShape="rounded"
     mediaHeight="33rem"
@@ -74,6 +78,16 @@ const leaders = leaderSource
     showImages
   />
 
+  <section class="team-careers-cta" aria-labelledby="team-careers-heading">
+    <div class="team-careers-cta__inner">
+      <div class="team-careers-cta__copy">
+        <h2 id="team-careers-heading">{page.cta.heading}</h2>
+        {careersBodyHtml && <div set:html={careersBodyHtml} />}
+      </div>
+      {careersCta && <a class="team-careers-cta__button" href={careersCta.href}>{careersCta.label}</a>}
+    </div>
+  </section>
+
 </BaseLayout>
 
 <style>
@@ -91,6 +105,65 @@ const leaders = leaderSource
     max-inline-size: 43rem;
   }
 
+  .team-careers-cta {
+    padding: clamp(3.5rem, 6vw, 5rem) var(--gutter);
+    background: #231f20;
+    color: #ffffff;
+  }
+
+  .team-careers-cta__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 2rem;
+    inline-size: min(100%, var(--content-max-width));
+    margin-inline: auto;
+  }
+
+  .team-careers-cta__copy {
+    display: grid;
+    gap: 1rem;
+    max-inline-size: 52rem;
+  }
+
+  .team-careers-cta h2 {
+    margin: 0;
+    color: #ffffff;
+    font-size: clamp(2.35rem, 4vw, 4rem);
+    font-weight: 900;
+    line-height: 1.05;
+  }
+
+  .team-careers-cta__copy :global(p) {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.84);
+    font-size: 1.05rem;
+    line-height: 1.7;
+  }
+
+  .team-careers-cta__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-block-size: 3.5rem;
+    padding: 0.9rem 1.8rem;
+    border-radius: 999px;
+    background: #8bc53f;
+    color: #1a1a1a;
+    font-weight: 800;
+    line-height: 1.2;
+    text-align: center;
+    transition:
+      background-color var(--transition-fast),
+      transform var(--transition-fast);
+  }
+
+  .team-careers-cta__button:hover,
+  .team-careers-cta__button:focus-visible {
+    background: #a4d96a;
+    transform: translateY(-1px);
+  }
+
   @media (max-width: 1024px) {
     :global(.team-hero) {
       padding: 1.25rem 1.25rem 3rem;
@@ -98,6 +171,11 @@ const leaders = leaderSource
 
     :global(.team-hero .modern-hero__media) {
       display: none;
+    }
+
+    .team-careers-cta__inner {
+      grid-template-columns: 1fr;
+      justify-items: start;
     }
   }
 </style>

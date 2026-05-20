@@ -410,6 +410,8 @@ const ecosystemTabs = homepage.ecosystem.tabs.map((tab) => ({
 </div>
 
 <script>
+  import { setupAutoRotatingTabs } from '../../scripts/autoRotatingTabs';
+
   const initHomepage = () => {
     document.querySelectorAll('[data-homepage]').forEach((root) => {
       if (!(root instanceof HTMLElement) || root.dataset.initialized === 'true') return;
@@ -478,44 +480,109 @@ const ecosystemTabs = homepage.ecosystem.tabs.map((tab) => ({
         window.setTimeout(typeText, 1000);
       }
 
-      root.querySelectorAll('[data-home-tabs]').forEach((tabs) => {
-        const buttons = Array.from(tabs.querySelectorAll('[data-home-tab]'));
-        const panels = Array.from(tabs.querySelectorAll('[data-home-panel]'));
-        const mobilePanels = Array.from(tabs.querySelectorAll('[data-home-mobile-panel]'));
+      root.querySelectorAll('[data-home-tabs]').forEach((tabsRoot) => {
+        const buttons = Array.from(tabsRoot.querySelectorAll('[data-home-tab]'));
+        const panels = Array.from(tabsRoot.querySelectorAll('[data-home-panel]'));
+        const mobilePanels = Array.from(tabsRoot.querySelectorAll('[data-home-mobile-panel]'));
+
+        const activateTab = (button) => {
+          if (!(button instanceof HTMLElement)) return;
+          const id = button.dataset.homeTab;
+
+          buttons.forEach((candidate) => {
+            if (!(candidate instanceof HTMLElement)) return;
+            const isActive = candidate.dataset.homeTab === id;
+            candidate.classList.toggle('is-active', isActive);
+            if (candidate.getAttribute('role') === 'tab') {
+              candidate.setAttribute('aria-selected', String(isActive));
+            }
+            if (candidate.hasAttribute('aria-expanded')) {
+              candidate.setAttribute('aria-expanded', String(isActive));
+            }
+          });
+
+          panels.forEach((panel) => {
+            if (!(panel instanceof HTMLElement)) return;
+            const isActive = panel.dataset.homePanel === id;
+            panel.classList.toggle('is-active', isActive);
+            panel.hidden = !isActive;
+          });
+
+          mobilePanels.forEach((panel) => {
+            if (!(panel instanceof HTMLElement)) return;
+            const isActive = panel.dataset.homeMobilePanel === id;
+            panel.classList.toggle('is-active', isActive);
+            panel.hidden = !isActive;
+          });
+        };
 
         buttons.forEach((button) => {
-          button.addEventListener('click', () => {
-            if (!(button instanceof HTMLElement)) return;
-            const id = button.dataset.homeTab;
+          button.addEventListener('click', () => activateTab(button));
+        });
 
-            buttons.forEach((candidate) => {
-              if (!(candidate instanceof HTMLElement)) return;
-              const isActive = candidate.dataset.homeTab === id;
-              candidate.classList.toggle('is-active', isActive);
-              if (candidate.getAttribute('role') === 'tab') {
-                candidate.setAttribute('aria-selected', String(isActive));
-              }
-              if (candidate.hasAttribute('aria-expanded')) {
-                candidate.setAttribute('aria-expanded', String(isActive));
-              }
-            });
-
-            panels.forEach((panel) => {
-              if (!(panel instanceof HTMLElement)) return;
-              const isActive = panel.dataset.homePanel === id;
-              panel.classList.toggle('is-active', isActive);
-              panel.hidden = !isActive;
-            });
-
-            mobilePanels.forEach((panel) => {
-              if (!(panel instanceof HTMLElement)) return;
-              const isActive = panel.dataset.homeMobilePanel === id;
-              panel.classList.toggle('is-active', isActive);
-              panel.hidden = !isActive;
-            });
-          });
+        setupAutoRotatingTabs({
+          root: tabsRoot,
+          tabs: buttons.filter((button) => button.getAttribute('role') === 'tab'),
+          activate: activateTab,
         });
       });
+
+      const countItems = Array.from(root.querySelectorAll('[data-count-to]')).filter(
+        (item): item is HTMLElement => item instanceof HTMLElement,
+      );
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const formatValue = (value: number) => new Intl.NumberFormat('en-US').format(Math.round(value));
+      const countTarget = (item: HTMLElement) => Number(item.dataset.countTo || item.textContent || 0);
+      const finishCount = (item: HTMLElement) => {
+        const target = countTarget(item);
+        if (Number.isFinite(target)) item.textContent = formatValue(target);
+        item.dataset.countComplete = 'true';
+      };
+      const animateCount = (item: HTMLElement) => {
+        if (item.dataset.countComplete === 'true') return;
+        const target = countTarget(item);
+        if (!Number.isFinite(target)) return;
+        if (reduceMotion || target === 0) {
+          finishCount(item);
+          return;
+        }
+
+        const duration = 1200;
+        const start = performance.now();
+        const tick = (now: number) => {
+          const progress = Math.min((now - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          item.textContent = formatValue(target * eased);
+          if (progress < 1) {
+            window.requestAnimationFrame(tick);
+            return;
+          }
+          finishCount(item);
+        };
+        window.requestAnimationFrame(tick);
+      };
+
+      if (countItems.length > 0) {
+        if (reduceMotion || !('IntersectionObserver' in window)) {
+          countItems.forEach(finishCount);
+        } else {
+          countItems.forEach((item) => {
+            const target = countTarget(item);
+            if (Number.isFinite(target) && target > 0) item.textContent = '0';
+          });
+          const observer = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (!entry.isIntersecting || !(entry.target instanceof HTMLElement)) return;
+                observer.unobserve(entry.target);
+                animateCount(entry.target);
+              });
+            },
+            { threshold: 0.35 },
+          );
+          countItems.forEach((item) => observer.observe(item));
+        }
+      }
     });
   };
 

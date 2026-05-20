@@ -182,7 +182,7 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
         </div>
         <div class="paid-media-journey__grid">
           {channelCards.map((card, index) => (
-            <article class={`paid-media-journey-card paid-media-journey-card--${journeyTones[index] || 'green'}`}>
+            <article class={`paid-media-journey-card paid-media-journey-card--${journeyTones[index] || 'green'}`} tabindex="0">
               {card.iconSrc ? (
                 <img class="paid-media-journey-card__icon" src={card.iconSrc} alt="" loading="lazy" decoding="async" />
               ) : (
@@ -191,7 +191,7 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
               <div class="paid-media-journey-card__copy">
                 <h3>{card.title}</h3>
                 <p>{card.lead}</p>
-                <span class="paid-media-visually-hidden">{card.bodyText}</span>
+                <p class="paid-media-journey-card__detail">{card.bodyText}</p>
               </div>
             </article>
           ))}
@@ -351,6 +351,12 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
     font-size: clamp(4.35rem, 5vw, 5.65rem);
     line-height: 0.99;
     letter-spacing: 0;
+  }
+
+  .paid-media-page h1,
+  .paid-media-page h2 {
+    font-family: var(--font-heading);
+    font-weight: 900;
   }
 
   .paid-media-rich-text {
@@ -544,6 +550,17 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
     border-radius: 999px;
     background: #9e9e9f;
     color: var(--paid-media-dark);
+    transition:
+      background-color var(--transition-fast),
+      transform var(--transition-fast);
+  }
+
+  .paid-media-journey-card:hover,
+  .paid-media-journey-card:focus,
+  .paid-media-journey-card:focus-visible,
+  .paid-media-journey-card:focus-within {
+    background: var(--card-tone);
+    transform: translateY(-2px);
   }
 
   .paid-media-journey-card--green { --card-tone: var(--paid-media-green); }
@@ -572,6 +589,29 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
     font-size: 1.05rem;
     font-weight: 800;
     line-height: 1.55;
+  }
+
+  .paid-media-journey-card__detail {
+    max-block-size: 0;
+    margin-block-start: 0;
+    overflow: hidden;
+    opacity: 0;
+    font-size: 0.95rem;
+    font-weight: 500;
+    line-height: 1.5;
+    transition:
+      max-block-size 220ms ease,
+      margin-block-start 220ms ease,
+      opacity 180ms ease;
+  }
+
+  .paid-media-journey-card:hover .paid-media-journey-card__detail,
+  .paid-media-journey-card:focus .paid-media-journey-card__detail,
+  .paid-media-journey-card:focus-visible .paid-media-journey-card__detail,
+  .paid-media-journey-card:focus-within .paid-media-journey-card__detail {
+    max-block-size: 18rem;
+    margin-block-start: 0.65rem;
+    opacity: 1;
   }
 
   .paid-media-analytics {
@@ -711,18 +751,6 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
     padding: 0.25rem;
     font-size: 0.65rem;
     text-align: center;
-  }
-
-  .paid-media-visually-hidden {
-    position: absolute;
-    inline-size: 1px;
-    block-size: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
   }
 
   @keyframes paid-media-marquee {
@@ -884,6 +912,13 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
     .paid-media-journey-card p {
       font-size: 0.72rem;
       line-height: 1.4;
+    }
+
+    .paid-media-journey-card__detail {
+      max-block-size: none;
+      margin-block-start: 0.55rem;
+      opacity: 1;
+      font-size: 0.72rem;
     }
 
     .paid-media-analytics {

@@ -13,26 +13,20 @@ const robots = page.robots || defaultCapabilitiesPageData.robots;
 const dataDetail = page.details[0];
 const paidDetail = page.details[1];
 const creativeDetail = page.details[2];
-const missingImage = (width: number, height: number) => `https://placehold.co/${width}x${height}?text=Missing+Sanity+image`;
-const requiredImage = (source: unknown, width: number, height: number) => srcFor(source) || missingImage(width, height);
-const isMissingImage = (src: string | undefined) => Boolean(src?.startsWith('https://placehold.co/'));
-const imageLoading = (src: string | undefined, loading: 'eager' | 'lazy' = 'lazy') =>
-  isMissingImage(src) ? 'eager' : loading;
-const imageAlt = (src: string | undefined, alt: string | undefined, label: string) =>
-  isMissingImage(src) ? `Missing Sanity image: ${label}` : alt || '';
+const imageLoading = (loading: 'eager' | 'lazy' = 'lazy') => loading;
 
-const heroImage = requiredImage(page.hero.image, 800, 800);
-const outcomesImage = requiredImage(page.outcomes.image, 524, 725);
-const workflowImage = requiredImage(page.workflow.image, 500, 500);
-const dataImage = dataDetail ? requiredImage(dataDetail.image, 1024, 983) : undefined;
-const paidImage = paidDetail ? requiredImage(paidDetail.image, 753, 768) : undefined;
-const creativeImage = creativeDetail ? requiredImage(creativeDetail.image, 753, 768) : undefined;
-const heroImageAlt = imageAlt(heroImage, page.hero.imageAlt, 'Capabilities hero eye image');
-const outcomesImageAlt = imageAlt(outcomesImage, page.outcomes.imageAlt, 'Outcomes collaboration image');
-const workflowImageAlt = imageAlt(workflowImage, page.workflow.imageAlt, 'Found Performance Media Ecosystem image');
-const dataImageAlt = imageAlt(dataImage, dataDetail?.imageAlt, 'Data, Reporting and Analytics image');
-const paidImageAlt = imageAlt(paidImage, paidDetail?.imageAlt, 'Paid Media image');
-const creativeImageAlt = imageAlt(creativeImage, creativeDetail?.imageAlt, 'Performance Creative and CRO image');
+const heroImage = srcFor(page.hero.image);
+const outcomesImage = srcFor(page.outcomes.image);
+const workflowImage = srcFor(page.workflow.image);
+const dataImage = dataDetail ? srcFor(dataDetail.image) : undefined;
+const paidImage = paidDetail ? srcFor(paidDetail.image) : undefined;
+const creativeImage = creativeDetail ? srcFor(creativeDetail.image) : undefined;
+const heroImageAlt = page.hero.imageAlt || '';
+const outcomesImageAlt = page.outcomes.imageAlt || '';
+const workflowImageAlt = page.workflow.imageAlt || '';
+const dataImageAlt = dataDetail?.imageAlt || '';
+const paidImageAlt = paidDetail?.imageAlt || '';
+const creativeImageAlt = creativeDetail?.imageAlt || '';
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'WebPage',
@@ -91,7 +85,7 @@ const schema = {
               width="524"
               height="725"
               alt={outcomesImageAlt}
-              loading={imageLoading(outcomesImage)}
+              loading={imageLoading()}
               decoding="async"
             />
           </div>
@@ -117,7 +111,7 @@ const schema = {
               width="500"
               height="500"
               alt={workflowImageAlt}
-              loading={imageLoading(workflowImage)}
+              loading={imageLoading()}
               decoding="async"
             />
           </div>
@@ -144,7 +138,7 @@ const schema = {
               width="1024"
               height="983"
               alt={dataImageAlt}
-              loading={imageLoading(dataImage)}
+              loading={imageLoading()}
               decoding="async"
             />
           </div>
@@ -163,7 +157,7 @@ const schema = {
               width="753"
               height="768"
               alt={paidImageAlt}
-              loading={imageLoading(paidImage)}
+              loading={imageLoading()}
               decoding="async"
             />
           </div>
@@ -198,7 +192,7 @@ const schema = {
               width="753"
               height="768"
               alt={creativeImageAlt}
-              loading={imageLoading(creativeImage)}
+              loading={imageLoading()}
               decoding="async"
             />
           </div>

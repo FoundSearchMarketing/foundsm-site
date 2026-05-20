@@ -10,6 +10,13 @@ const page = mergeCapabilityDetailPageData(defaultCapabilityDetailPages.performa
 const title = page.seoTitle || defaultCapabilityDetailPages.performanceCreative.seoTitle;
 const description = page.seoDescription || defaultCapabilityDetailPages.performanceCreative.seoDescription;
 const canonical = page.canonicalUrl || defaultCapabilityDetailPages.performanceCreative.canonicalUrl;
+const ecosystemImage = {
+  src: '/images/pages/performance-creative/performance-creative-ecosystem.png',
+  alt: 'Performance creative ecosystem diagram',
+  width: 500,
+  height: 381,
+  loading: 'lazy' as const,
+};
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'WebPage',
@@ -39,7 +46,7 @@ const proofCards = cardsFor(page.primaryCards?.cards);
       title: page.split?.heading || '',
       body: richText(page.split?.body),
       bodyHtml: richHtml(page.split?.body),
-      image: imageProps(page.split),
+      image: ecosystemImage,
     }}
     tabs={creativeTabs}
     secondary={{

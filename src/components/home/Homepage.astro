@@ -513,6 +513,63 @@ const partnerLogos = homepage.partners.logos
           activate: activateTab,
         });
       });
+
+      const countItems = Array.from(root.querySelectorAll('[data-count-to]')).filter(
+        (item): item is HTMLElement => item instanceof HTMLElement,
+      );
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const formatValue = (value: number) => new Intl.NumberFormat('en-US').format(Math.round(value));
+      const countTarget = (item: HTMLElement) => Number(item.dataset.countTo || item.textContent || 0);
+      const finishCount = (item: HTMLElement) => {
+        const target = countTarget(item);
+        if (Number.isFinite(target)) item.textContent = formatValue(target);
+        item.dataset.countComplete = 'true';
+      };
+      const animateCount = (item: HTMLElement) => {
+        if (item.dataset.countComplete === 'true') return;
+        const target = countTarget(item);
+        if (!Number.isFinite(target)) return;
+        if (reduceMotion || target === 0) {
+          finishCount(item);
+          return;
+        }
+
+        const duration = 1200;
+        const start = performance.now();
+        const tick = (now: number) => {
+          const progress = Math.min((now - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          item.textContent = formatValue(target * eased);
+          if (progress < 1) {
+            window.requestAnimationFrame(tick);
+            return;
+          }
+          finishCount(item);
+        };
+        window.requestAnimationFrame(tick);
+      };
+
+      if (countItems.length > 0) {
+        if (reduceMotion || !('IntersectionObserver' in window)) {
+          countItems.forEach(finishCount);
+        } else {
+          countItems.forEach((item) => {
+            const target = countTarget(item);
+            if (Number.isFinite(target) && target > 0) item.textContent = '0';
+          });
+          const observer = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (!entry.isIntersecting || !(entry.target instanceof HTMLElement)) return;
+                observer.unobserve(entry.target);
+                animateCount(entry.target);
+              });
+            },
+            { threshold: 0.35 },
+          );
+          countItems.forEach((item) => observer.observe(item));
+        }
+      }
     });
   };
 

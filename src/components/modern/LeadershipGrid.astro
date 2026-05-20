@@ -52,10 +52,9 @@ const sectionClass = ['leadership-section', `leadership-section--${layout}`].joi
               <MediaAsset
                 src={mediaSrc}
                 alt={`${leader.name}, ${leader.role}`}
-                width="450"
-                height="399"
                 loading="lazy"
                 poster={leader.videoPoster || leader.image}
+                fill
               />
             )}
             <div class="leader-card__overlay">
@@ -137,20 +136,25 @@ const sectionClass = ['leadership-section', `leadership-section--${layout}`].joi
   }
 
   .leader-card {
-    display: grid;
-    grid-template-rows: auto auto;
+    position: relative;
+    block-size: clamp(22.75rem, 26vw, 25rem);
     min-block-size: 0;
-    overflow: visible;
-    border-radius: 1.5rem;
-    background: transparent;
+    overflow: hidden;
+    border-radius: 1.875rem;
+    background: #e8ebe6;
+    --media-asset-fit: cover;
+    --media-asset-position: center;
   }
 
   .leader-card--no-image {
-    display: block;
+    block-size: auto;
+    min-block-size: 4.375rem;
+    overflow: visible;
+    background: transparent;
   }
 
   .leader-card--no-image .leader-card__overlay {
-    margin-block-start: 0;
+    position: static;
   }
 
   .leader-card--text-only {
@@ -158,23 +162,23 @@ const sectionClass = ['leadership-section', `leadership-section--${layout}`].joi
   }
 
   :global(.leader-card .media-asset) {
-    inline-size: 100%;
-    block-size: auto;
-    aspect-ratio: 450 / 399;
-    border-radius: 1.5rem;
-    background: #e8ebe6;
-    object-fit: cover;
-    object-position: center;
+    transition: transform 360ms ease;
+  }
+
+  :global(.leader-card:hover .media-asset) {
+    transform: scale(1.03);
   }
 
   .leader-card__overlay {
+    position: absolute;
+    inset-block-end: 1.5rem;
+    inset-inline-start: 0;
     display: grid;
     gap: 0.25rem;
-    inline-size: calc(100% - 1.5rem);
-    margin-block-start: -0.5rem;
-    min-block-size: 0;
-    padding: 0.85rem 1rem;
-    border-radius: 0 1.25rem 1.25rem 0;
+    inline-size: min(85%, 22rem);
+    min-block-size: 4.375rem;
+    padding: 0.75rem 1rem 0.75rem 0.9375rem;
+    border-radius: 0 1.875rem 1.875rem 0;
     background: #f2f3f2;
     color: #1a1a1a;
   }
@@ -218,12 +222,14 @@ const sectionClass = ['leadership-section', `leadership-section--${layout}`].joi
     }
 
     .leader-card {
+      block-size: 23rem;
       inline-size: min(100%, 21rem);
       justify-self: center;
     }
 
     .leader-card__overlay {
-      inline-size: calc(100% - 1rem);
+      inset-block-end: 1.5rem;
+      inline-size: 85%;
     }
   }
 </style>

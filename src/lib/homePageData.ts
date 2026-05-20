@@ -32,6 +32,7 @@ type Cta = {
 type MediaField = {
   image?: string;
   imageAlt?: string;
+  videoFile?: unknown;
   videoUrl?: string;
   videoPoster?: string;
 };

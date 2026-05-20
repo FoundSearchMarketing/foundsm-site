@@ -13,6 +13,9 @@ export type InsightsPageData = SeoFields & {
     body?: string;
     image?: EditableImage;
     imageAlt?: string;
+    videoFile?: unknown;
+    videoUrl?: string;
+    videoPoster?: EditableImage;
   };
 };
 

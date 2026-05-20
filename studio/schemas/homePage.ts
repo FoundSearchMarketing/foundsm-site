@@ -115,6 +115,13 @@ const imageWithAltFields = [
     validation: (Rule) => Rule.required(),
   }),
   defineField({
+    name: 'videoFile',
+    title: 'Video File',
+    type: 'file',
+    options: { accept: 'video/mp4,video/webm,video/quicktime' },
+    description: 'Optional uploaded video asset. Takes precedence over Video URL.',
+  }),
+  defineField({
     name: 'videoUrl',
     title: 'Video URL',
     type: 'url',

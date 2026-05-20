@@ -10,9 +10,15 @@ export const richText = portableTextToPlainText;
 const toImageUrl = (source: unknown) => imageUrl(source as Parameters<typeof imageUrl>[0]);
 export const srcFor = toImageUrl;
 
-export function imageProps(item?: { image?: any; imageAlt?: string }, loading: 'eager' | 'lazy' = 'lazy') {
-  const src = toImageUrl(item?.image);
-  return src ? { src, alt: item?.imageAlt || '', loading } : undefined;
+export function imageProps(
+  item?: { image?: any; imageAlt?: string; videoUrl?: string; videoPoster?: any },
+  loading: 'eager' | 'lazy' = 'lazy',
+) {
+  const imageSrc = toImageUrl(item?.image);
+  const videoSrc = typeof item?.videoUrl === 'string' ? item.videoUrl.trim() : '';
+  const src = videoSrc || imageSrc;
+  const poster = videoSrc ? toImageUrl(item?.videoPoster) || imageSrc : undefined;
+  return src ? { src, alt: item?.imageAlt || '', loading, poster } : undefined;
 }
 
 export function cardsFor(cards: CardList = []) {
@@ -22,8 +28,11 @@ export function cardsFor(cards: CardList = []) {
     body: portableTextToPlainText(card.body),
     bodyHtml: renderSimplePortableText(card.body),
     icon: toImageUrl(card.icon),
-    image: toImageUrl(card.image),
+    image: typeof (card as any).videoUrl === 'string' && (card as any).videoUrl.trim()
+      ? (card as any).videoUrl.trim()
+      : toImageUrl(card.image),
     imageAlt: card.imageAlt,
+    imagePoster: typeof (card as any).videoUrl === 'string' ? toImageUrl((card as any).videoPoster) || toImageUrl(card.image) : undefined,
   }));
 }
 
@@ -33,8 +42,11 @@ export function tabsFor(tabs: TabList = []) {
     body: portableTextToPlainText(tab.body),
     bodyHtml: renderSimplePortableText(tab.body),
     icon: toImageUrl(tab.icon),
-    image: toImageUrl(tab.image),
+    image: typeof (tab as any).videoUrl === 'string' && (tab as any).videoUrl.trim()
+      ? (tab as any).videoUrl.trim()
+      : toImageUrl(tab.image),
     imageAlt: tab.imageAlt,
+    imagePoster: typeof (tab as any).videoUrl === 'string' ? toImageUrl((tab as any).videoPoster) || toImageUrl(tab.image) : undefined,
   }));
 }
 

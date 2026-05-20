@@ -76,6 +76,8 @@ export const allTeamMembersQuery = `*[_type == "teamMember"] | order(order asc) 
   slug,
   role,
   image,
+  videoUrl,
+  videoPoster,
   bio,
   linkedin
 }`;
@@ -119,7 +121,9 @@ export const homePageQuery = `*[_type == "homePage"][0] {
     heading,
     body,
     "image": image.asset->url,
-    imageAlt
+    imageAlt,
+    videoUrl,
+    "videoPoster": videoPoster.asset->url
   },
   ctaStrip,
   clientLogos {
@@ -132,6 +136,8 @@ export const homePageQuery = `*[_type == "homePage"][0] {
   outcomes {
     "image": image.asset->url,
     imageAlt,
+    videoUrl,
+    "videoPoster": videoPoster.asset->url,
     heading,
     body,
     ctaText,
@@ -152,7 +158,9 @@ export const homePageQuery = `*[_type == "homePage"][0] {
     },
     ownershipCard,
     "image": image.asset->url,
-    imageAlt
+    imageAlt,
+    videoUrl,
+    "videoPoster": videoPoster.asset->url
   },
   partners {
     heading,
@@ -176,7 +184,9 @@ export const homePageQuery = `*[_type == "homePage"][0] {
       ctaText,
       ctaUrl,
       "image": image.asset->url,
-      imageAlt
+      imageAlt,
+      videoUrl,
+      "videoPoster": videoPoster.asset->url
     }
   }
 }`;

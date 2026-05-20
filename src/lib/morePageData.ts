@@ -17,7 +17,7 @@ export type SeoFields = {
   schemaJson?: string;
 };
 
-type ImageField = { image?: EditableImage; imageAlt?: string };
+type ImageField = { image?: EditableImage; imageAlt?: string; videoUrl?: string; videoPoster?: EditableImage };
 type RichSection = { heading?: string; body?: SimplePortableTextBlock[] };
 
 export type FormPageData = SeoFields & {
@@ -34,6 +34,8 @@ export type TeamLeader = {
   name?: string;
   role?: string;
   image?: EditableImage;
+  videoUrl?: string;
+  videoPoster?: EditableImage;
 };
 
 export type TeamPageData = SeoFields & {

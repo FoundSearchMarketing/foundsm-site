@@ -29,6 +29,13 @@ type Cta = {
   ctaUrl?: string;
 };
 
+type MediaField = {
+  image?: string;
+  imageAlt?: string;
+  videoUrl?: string;
+  videoPoster?: string;
+};
+
 export type HomePageData = {
   seoTitle?: string;
   seoDescription?: string;
@@ -47,11 +54,9 @@ export type HomePageData = {
     subheadline?: string;
     searchPrompts: string[];
   };
-  intro: {
+  intro: MediaField & {
     heading?: string;
     body?: PortableTextBlock[];
-    image?: string;
-    imageAlt?: string;
   };
   ctaStrip: Cta & {
     headline?: string;
@@ -60,9 +65,7 @@ export type HomePageData = {
     heading?: string;
     logos: Logo[];
   };
-  outcomes: Cta & {
-    image?: string;
-    imageAlt?: string;
+  outcomes: Cta & MediaField & {
     heading?: string;
     body?: PortableTextBlock[];
   };
@@ -84,6 +87,8 @@ export type HomePageData = {
     };
     image?: string;
     imageAlt?: string;
+    videoUrl?: string;
+    videoPoster?: string;
   };
   partners: Cta & {
     heading?: string;
@@ -94,13 +99,11 @@ export type HomePageData = {
     headingLines: string[];
     introBody?: PortableTextBlock[];
     tabListHeading?: string;
-    tabs: Array<Cta & {
+    tabs: Array<Cta & MediaField & {
       id?: string;
       title?: string;
       icon?: string;
       body?: PortableTextBlock[];
-      image?: string;
-      imageAlt?: string;
     }>;
   };
 };

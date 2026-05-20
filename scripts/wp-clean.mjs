@@ -257,6 +257,7 @@ async function main() {
       inlineImages: (post.inlineImages || []).map((img) => ({
         localPath: img.localPath,
         url: img.url,
+        kind: img.kind || 'image',
       })),
       _wp_meta: {
         wp_id: post.wp_id,

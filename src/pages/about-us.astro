@@ -1,8 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import MediaAsset from '../components/MediaAsset.astro';
 import { aboutPageQuery, sanityClient } from '../lib/sanity';
 import { defaultAboutPageData, mergeAboutPageData } from '../lib/fixedPageData';
-import { richHtml, srcFor } from '../lib/fixedPageRender';
+import { imageProps, richHtml, srcFor } from '../lib/fixedPageRender';
 
 const sanityPage = await sanityClient.fetch(aboutPageQuery).catch(() => null);
 const page = mergeAboutPageData(sanityPage);
@@ -20,12 +21,15 @@ const missionCards = page.mission.cards.map((card) => ({
 const values = page.values.tabs.map((value) => ({
   ...value,
   iconSrc: srcFor(value.icon),
-  imageSrc: srcFor(value.image),
+  media: imageProps(value),
 }));
-const heroImage = srcFor(page.hero.image);
-const whoImage = srcFor(page.who.image);
-const approachImage = srcFor(page.approach.image);
-const teamImage = srcFor(page.team.image);
+const heroMedia = imageProps(page.hero, 'eager');
+const whoMedia = imageProps(page.who);
+const approachMedia = imageProps(page.approach);
+const teamMedia = imageProps(page.team);
+const heroImage = heroMedia?.src;
+const whoImage = whoMedia?.src;
+const approachImage = approachMedia?.src;
 const missionHeadingLines = page.mission.headingLines.length > 0 ? page.mission.headingLines : defaultAboutPageData.mission.headingLines;
 const aboutRichHtml = (blocks: Parameters<typeof richHtml>[0]) => richHtml(blocks).replace(/ - /g, '—');
 
@@ -90,16 +94,15 @@ const schema = {
           <div class="about-hero__text" set:html={aboutRichHtml(page.hero.body)} />
         </div>
 
-        {heroImage && (
+        {heroMedia && (
           <div class="about-hero__media fade-in-up" aria-hidden={page.hero.imageAlt ? undefined : 'true'}>
-            <img
-              src={heroImage}
-              sizes="(min-width: 1024px) 42vw, 100vw"
-              alt={page.hero.imageAlt || ''}
+            <MediaAsset
+              src={heroMedia.src}
+              alt={heroMedia.alt}
               width="682"
               height="660"
               loading="eager"
-              fetchpriority="high"
+              poster={heroMedia.poster}
             />
           </div>
         )}
@@ -136,15 +139,15 @@ const schema = {
           </div>
         </div>
 
-        {whoImage && (
+        {whoMedia && (
           <div class="about-who__media fade-in-up">
-            <img
-              src={whoImage}
-              sizes="(min-width: 1024px) 34vw, 82vw"
-              alt={page.who.imageAlt || ''}
+            <MediaAsset
+              src={whoMedia.src}
+              alt={whoMedia.alt}
               width="652"
               height="1266"
               loading="lazy"
+              poster={whoMedia.poster}
             />
           </div>
         )}
@@ -217,14 +220,15 @@ const schema = {
                   <div set:html={aboutRichHtml(value.body)} />
                   <a class="about-link" href="/contact-us/">Let's Talk</a>
                 </div>
-                {value.imageSrc && (
+                {value.media && (
                   <div class="values-tabs__panel-media">
-                    <img
-                      src={value.imageSrc}
-                      alt={value.imageAlt || value.title || ''}
+                    <MediaAsset
+                      src={value.media.src}
+                      alt={value.media.alt || value.title || ''}
                       width="368"
                       height="474"
                       loading={index === 0 ? 'eager' : 'lazy'}
+                      poster={value.media.poster}
                     />
                   </div>
                 )}
@@ -237,15 +241,15 @@ const schema = {
 
     <section class="about-approach" aria-labelledby="about-approach-heading">
       <div class:list={['about-shell about-split', { 'about-split--text-only': !approachImage }]}>
-        {approachImage && (
+        {approachMedia && (
           <div class="about-split__media fade-in-up">
-            <img
-              src={approachImage}
-              sizes="(min-width: 900px) 38vw, 90vw"
-              alt={page.approach.imageAlt || ''}
+            <MediaAsset
+              src={approachMedia.src}
+              alt={approachMedia.alt}
               width="604"
               height="604"
               loading="lazy"
+              poster={approachMedia.poster}
             />
           </div>
         )}
@@ -262,15 +266,15 @@ const schema = {
     <section class="about-team" aria-labelledby="about-team-heading">
       <div class="about-shell">
         <h2 id="about-team-heading" class="fade-in-up">{page.team.heading}</h2>
-        {teamImage && (
+        {teamMedia && (
           <div class="about-team__image fade-in-up">
-            <img
-              src={teamImage}
-              sizes="(min-width: 1200px) 86rem, 94vw"
-              alt={page.team.imageAlt || ''}
+            <MediaAsset
+              src={teamMedia.src}
+              alt={teamMedia.alt}
               width="1399"
               height="699"
               loading="lazy"
+              poster={teamMedia.poster}
             />
           </div>
         )}
@@ -496,13 +500,10 @@ const schema = {
 
     .about-hero__media {
       display: none;
-    }
-
-    .about-hero__media img {
-      width: min(37.7vw, 42.625rem);
-      aspect-ratio: 682 / 660;
-      object-fit: cover;
-      border-radius: 2.5rem;
+      --media-asset-inline-size: min(37.7vw, 42.625rem);
+      --media-asset-aspect-ratio: 682 / 660;
+      --media-asset-fit: cover;
+      --media-asset-radius: 2.5rem;
     }
 
     .about-who {
@@ -587,13 +588,11 @@ const schema = {
       justify-self: center;
       max-width: 26rem;
       margin-bottom: -16.125rem;
-    }
-
-    .about-who__media img {
-      width: 100%;
-      aspect-ratio: 652 / 1266;
-      object-fit: cover;
       border-radius: 2.5rem;
+      --media-asset-inline-size: 100%;
+      --media-asset-aspect-ratio: 652 / 1266;
+      --media-asset-fit: cover;
+      --media-asset-radius: 2.5rem;
       box-shadow: var(--about-shadow);
     }
 
@@ -793,14 +792,10 @@ const schema = {
       overflow: hidden;
       border-radius: 2.5rem;
       background: rgba(255, 255, 255, 0.07);
-    }
-
-    .values-tabs__panel-media img {
-      width: 100%;
-      height: 100%;
-      max-height: 28rem;
-      aspect-ratio: 368 / 474;
-      object-fit: cover;
+      --media-asset-inline-size: 100%;
+      --media-asset-max-block-size: 28rem;
+      --media-asset-aspect-ratio: 368 / 474;
+      --media-asset-fit: cover;
     }
 
     .about-approach {
@@ -819,12 +814,9 @@ const schema = {
       overflow: hidden;
       border-radius: 2.5rem;
       background: var(--about-surface);
-    }
-
-    .about-split__media img {
-      width: 100%;
-      aspect-ratio: 1;
-      object-fit: cover;
+      --media-asset-inline-size: 100%;
+      --media-asset-aspect-ratio: 1;
+      --media-asset-fit: cover;
     }
 
     .about-split__copy {
@@ -844,12 +836,9 @@ const schema = {
       overflow: hidden;
       border-radius: 2.5rem;
       box-shadow: var(--about-shadow);
-    }
-
-    .about-team__image img {
-      width: 100%;
-      aspect-ratio: 1399 / 699;
-      object-fit: cover;
+      --media-asset-inline-size: 100%;
+      --media-asset-aspect-ratio: 1399 / 699;
+      --media-asset-fit: cover;
     }
 
     .about-team-cta {

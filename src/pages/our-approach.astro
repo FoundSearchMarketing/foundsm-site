@@ -1,8 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import MediaAsset from '../components/MediaAsset.astro';
 import { approachPageQuery, sanityClient } from '../lib/sanity';
 import { defaultApproachPageData, mergeApproachPageData } from '../lib/morePageData';
-import { richHtml, srcFor } from '../lib/fixedPageRender';
+import { imageProps, richHtml, srcFor } from '../lib/fixedPageRender';
 
 const assetPath = '/images/pages/our-approach';
 
@@ -11,8 +12,10 @@ const page = mergeApproachPageData(sanityPage);
 const title = page.seoTitle || defaultApproachPageData.seoTitle;
 const description = page.seoDescription || defaultApproachPageData.seoDescription;
 const canonical = page.canonicalUrl || defaultApproachPageData.canonicalUrl;
-const heroImage = srcFor(page.hero.image);
-const introImage = srcFor(page.intro.image);
+const heroMedia = imageProps(page.hero, 'eager');
+const introMedia = imageProps(page.intro);
+const heroImage = heroMedia?.src;
+const introImage = introMedia?.src;
 const defaultAdvantageIcons = [
   'icon-difference-1.svg',
   'icon-difference-2.svg',
@@ -33,7 +36,7 @@ const advantageColumns = [
 ];
 const partnershipTabs = page.partnerships.tabs.map((tab) => ({
   ...tab,
-  imageSrc: srcFor(tab.image),
+  media: imageProps(tab),
 }));
 const linesFor = (value?: string, fallback: string[] = []) => value?.split('\n').filter(Boolean) || fallback;
 const heroHeadingLines = linesFor(page.hero.heading);
@@ -73,15 +76,16 @@ const schema = {
           <div class="approach-hero__intro" set:html={richHtml(page.hero.body)} />
         </div>
 
-        {heroImage && (
+        {heroMedia && (
           <figure class="approach-hero__media" aria-hidden={page.hero.imageAlt ? undefined : 'true'}>
-            <img
-              src={heroImage}
-              alt={page.hero.imageAlt || ''}
+            <MediaAsset
+              src={heroMedia.src}
+              alt={heroMedia.alt}
               width="692"
               height="722"
               loading="eager"
-              decoding="async"
+              poster={heroMedia.poster}
+              fill
             />
           </figure>
         )}
@@ -100,15 +104,15 @@ const schema = {
         <div class:list={['approach-intro__grid', !introImage && 'approach-intro__grid--without-media']}>
           <div class="approach-intro__copy" set:html={richHtml(page.intro.body)} />
 
-          {introImage && (
+          {introMedia && (
             <figure class="approach-intro__media" aria-hidden={page.intro.imageAlt ? undefined : 'true'}>
-              <img
-                src={introImage}
-                alt={page.intro.imageAlt || ''}
+              <MediaAsset
+                src={introMedia.src}
+                alt={introMedia.alt}
                 width="424"
                 height="401"
                 loading="lazy"
-                decoding="async"
+                poster={introMedia.poster}
               />
             </figure>
           )}
@@ -224,7 +228,7 @@ const schema = {
 
               return (
                 <section
-                  class:list={['approach-partnerships__panel', !tab.imageSrc && 'approach-partnerships__panel--without-badge', isSelected && 'is-active']}
+                  class:list={['approach-partnerships__panel', !tab.media && 'approach-partnerships__panel--without-badge', isSelected && 'is-active']}
                   id={`approach-partnership-panel-${index + 1}`}
                   role="tabpanel"
                   aria-labelledby={`approach-partnership-tab-${index + 1}`}
@@ -236,13 +240,13 @@ const schema = {
                     <h3>{tab.heading || tab.label}</h3>
                     <div set:html={richHtml(tab.body)} />
                   </div>
-                  {tab.imageSrc && (
+                  {tab.media && (
                     <div class="approach-partnerships__badge">
-                      <img
-                        src={tab.imageSrc}
-                        alt={tab.imageAlt || tab.label || ''}
+                      <MediaAsset
+                        src={tab.media.src}
+                        alt={tab.media.alt || tab.label || ''}
                         loading="lazy"
-                        decoding="async"
+                        poster={tab.media.poster}
                       />
                     </div>
                   )}
@@ -561,14 +565,9 @@ const schema = {
       overflow: hidden;
       border-radius: 2.5rem;
       background: var(--color-surface-muted);
-    }
-
-    .approach-hero__media img {
-      inline-size: 100%;
-      block-size: 100%;
-      min-block-size: 42vh;
-      object-fit: cover;
-      object-position: center;
+      --media-asset-fit: cover;
+      --media-asset-position: center;
+      --media-asset-min-block-size: 42vh;
     }
 
     .approach-intro {
@@ -632,13 +631,10 @@ const schema = {
       overflow: hidden;
       border-radius: 2.5rem;
       background: var(--color-white);
-    }
-
-    .approach-intro__media img {
-      inline-size: 100%;
-      block-size: 22.125rem;
-      object-fit: cover;
-      object-position: center;
+      --media-asset-inline-size: 100%;
+      --media-asset-block-size: 22.125rem;
+      --media-asset-fit: cover;
+      --media-asset-position: center;
     }
 
     .approach-callout {
@@ -967,13 +963,8 @@ const schema = {
     .approach-partnerships__badge {
       display: block;
       min-block-size: 0;
-    }
-
-    .approach-partnerships__badge img {
-      inline-size: 100%;
-      max-inline-size: 100%;
-      block-size: auto;
-      border-radius: 2.5rem;
+      --media-asset-inline-size: 100%;
+      --media-asset-radius: 2.5rem;
     }
 
     .approach-partnerships__cta {
@@ -1055,10 +1046,7 @@ const schema = {
       .approach-hero__media {
         order: 1;
         min-block-size: 37vh;
-      }
-
-      .approach-hero__media img {
-        min-block-size: 37vh;
+        --media-asset-min-block-size: 37vh;
       }
 
       .approach-intro {
@@ -1141,8 +1129,8 @@ const schema = {
         min-block-size: 0;
       }
 
-      .approach-partnerships__badge img {
-        border-radius: 1rem;
+      .approach-partnerships__badge {
+        --media-asset-radius: 1rem;
       }
     }
   </style>

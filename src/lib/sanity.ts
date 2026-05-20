@@ -17,6 +17,17 @@ export function urlFor(source: SanityImageSource) {
 
 // GROQ Queries
 
+const editableMediaProjection = `
+  ...,
+  "videoUrl": coalesce(videoFile.asset->url, videoUrl),
+  "videoPoster": videoPoster.asset->url
+`;
+
+const editableCardProjection = `
+  ${editableMediaProjection},
+  "icon": icon.asset->url
+`;
+
 export const allPostsQuery = `*[_type == "blogPost"] | order(publishedAt desc) {
   _id,
   title,
@@ -76,8 +87,8 @@ export const allTeamMembersQuery = `*[_type == "teamMember"] | order(order asc) 
   slug,
   role,
   image,
-  videoUrl,
-  videoPoster,
+  "videoUrl": coalesce(videoFile.asset->url, videoUrl),
+  "videoPoster": videoPoster.asset->url,
   bio,
   linkedin
 }`;
@@ -122,7 +133,7 @@ export const homePageQuery = `*[_type == "homePage"][0] {
     body,
     "image": image.asset->url,
     imageAlt,
-    videoUrl,
+    "videoUrl": coalesce(videoFile.asset->url, videoUrl),
     "videoPoster": videoPoster.asset->url
   },
   ctaStrip,
@@ -136,7 +147,7 @@ export const homePageQuery = `*[_type == "homePage"][0] {
   outcomes {
     "image": image.asset->url,
     imageAlt,
-    videoUrl,
+    "videoUrl": coalesce(videoFile.asset->url, videoUrl),
     "videoPoster": videoPoster.asset->url,
     heading,
     body,
@@ -159,7 +170,7 @@ export const homePageQuery = `*[_type == "homePage"][0] {
     ownershipCard,
     "image": image.asset->url,
     imageAlt,
-    videoUrl,
+    "videoUrl": coalesce(videoFile.asset->url, videoUrl),
     "videoPoster": videoPoster.asset->url
   },
   partners {
@@ -185,31 +196,86 @@ export const homePageQuery = `*[_type == "homePage"][0] {
       ctaUrl,
       "image": image.asset->url,
       imageAlt,
-      videoUrl,
+      "videoUrl": coalesce(videoFile.asset->url, videoUrl),
       "videoPoster": videoPoster.asset->url
     }
   }
 }`;
 
-export const aboutPageQuery = `*[_id == "aboutPage"][0]`;
+export const aboutPageQuery = `*[_id == "aboutPage"][0] {
+  ...,
+  hero { ${editableMediaProjection} },
+  who { ${editableMediaProjection} },
+  mission {
+    ...,
+    cards[] { ${editableCardProjection} }
+  },
+  values {
+    ...,
+    tabs[] { ${editableCardProjection} }
+  },
+  approach { ${editableMediaProjection} },
+  team { ${editableMediaProjection} }
+}`;
 
-export const capabilitiesPageQuery = `*[_id == "capabilitiesPage"][0]`;
+export const capabilitiesPageQuery = `*[_id == "capabilitiesPage"][0] {
+  ...,
+  hero { ${editableMediaProjection} },
+  outcomes { ${editableMediaProjection} },
+  workflow { ${editableMediaProjection} },
+  details[] { ${editableMediaProjection} }
+}`;
 
-export const capabilityDetailPageQuery = `*[_type == "capabilityDetailPage" && _id == $id][0]`;
+export const capabilityDetailPageQuery = `*[_type == "capabilityDetailPage" && _id == $id][0] {
+  ...,
+  hero { ${editableMediaProjection} },
+  split { ${editableMediaProjection} },
+  featureTabs {
+    ...,
+    tabs[] { ${editableCardProjection} }
+  },
+  primaryCards {
+    ...,
+    cards[] { ${editableCardProjection} }
+  },
+  secondarySplit { ${editableMediaProjection} },
+  secondaryCards {
+    ...,
+    cards[] { ${editableCardProjection} }
+  }
+}`;
 
 export const formPageQuery = `*[_type == "formPage" && _id == $id][0]`;
 
-export const teamPageQuery = `*[_id == "teamPage"][0]`;
+export const teamPageQuery = `*[_id == "teamPage"][0] {
+  ...,
+  hero { ${editableMediaProjection} }
+}`;
 
 export const notFoundPageQuery = `*[_id == "notFoundPage"][0]`;
 
-export const approachPageQuery = `*[_id == "approachPage"][0]`;
+export const approachPageQuery = `*[_id == "approachPage"][0] {
+  ...,
+  hero { ${editableMediaProjection} },
+  intro { ${editableMediaProjection} },
+  advantages {
+    ...,
+    items[] { ${editableCardProjection} }
+  },
+  partnerships {
+    ...,
+    tabs[] { ${editableMediaProjection} }
+  }
+}`;
 
 export const privacyPolicyPageQuery = `*[_id == "privacyPolicyPage"][0]`;
 
 export const eventLandingPageQuery = `*[_id == "eventLandingPage"][0]`;
 
-export const insightsPageQuery = `*[_id == "insightsPage"][0]`;
+export const insightsPageQuery = `*[_id == "insightsPage"][0] {
+  ...,
+  hero { ${editableMediaProjection} }
+}`;
 
 export const legacyPagesByPathsQuery = `*[_type == "legacyPage" && path in $paths] {
   _id,

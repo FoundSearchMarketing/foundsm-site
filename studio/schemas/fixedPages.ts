@@ -50,6 +50,7 @@ const ctaFields = [
 const imageFields = [
   defineField({ name: 'image', title: 'Image', type: 'image', options: { hotspot: true } }),
   defineField({ name: 'imageAlt', title: 'Image Alt Text', type: 'string' }),
+  defineField({ name: 'videoFile', title: 'Video File', type: 'file', options: { accept: 'video/mp4,video/webm,video/quicktime' }, description: 'Optional uploaded video asset. Takes precedence over Video URL.' }),
   defineField({ name: 'videoUrl', title: 'Video URL', type: 'url', description: 'Optional MP4/WebM URL to render instead of the image.' }),
   defineField({ name: 'videoPoster', title: 'Video Poster', type: 'image', options: { hotspot: true } }),
 ];
@@ -68,6 +69,7 @@ const cardMember = defineArrayMember({
     defineField({ name: 'icon', title: 'Icon', type: 'image' }),
     defineField({ name: 'image', title: 'Image', type: 'image' }),
     defineField({ name: 'imageAlt', title: 'Image Alt Text', type: 'string' }),
+    defineField({ name: 'videoFile', title: 'Video File', type: 'file', options: { accept: 'video/mp4,video/webm,video/quicktime' }, description: 'Optional uploaded video asset. Takes precedence over Video URL.' }),
     defineField({ name: 'videoUrl', title: 'Video URL', type: 'url', description: 'Optional MP4/WebM URL to render instead of the image.' }),
     defineField({ name: 'videoPoster', title: 'Video Poster', type: 'image', options: { hotspot: true } }),
   ],
@@ -119,6 +121,7 @@ const tabArrayField = defineField({
         defineField({ name: 'icon', title: 'Icon', type: 'image' }),
         defineField({ name: 'image', title: 'Image', type: 'image' }),
         defineField({ name: 'imageAlt', title: 'Image Alt Text', type: 'string' }),
+        defineField({ name: 'videoFile', title: 'Video File', type: 'file', options: { accept: 'video/mp4,video/webm,video/quicktime' }, description: 'Optional uploaded video asset. Takes precedence over Video URL.' }),
         defineField({ name: 'videoUrl', title: 'Video URL', type: 'url', description: 'Optional MP4/WebM URL to render instead of the image.' }),
         defineField({ name: 'videoPoster', title: 'Video Poster', type: 'image', options: { hotspot: true } }),
       ],

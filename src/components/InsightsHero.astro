@@ -1,9 +1,12 @@
 ---
+import MediaAsset from './MediaAsset.astro';
+
 interface Props {
   headline?: string;
   body?: string;
   imageSrc?: string;
   imageAlt?: string;
+  imagePoster?: string;
 }
 
 const {
@@ -11,6 +14,7 @@ const {
   body = 'Great performance begins by staying sharp. Tap into fresh insights, news, and forward-thinking strategies from our team and beyond.',
   imageSrc,
   imageAlt = '',
+  imagePoster,
 } = Astro.props;
 ---
 
@@ -22,14 +26,14 @@ const {
     </div>
     {imageSrc && (
       <figure class="insights-hero__figure" aria-hidden={imageAlt ? undefined : 'true'}>
-        <img
+        <MediaAsset
+          class="insights-hero__media"
           src={imageSrc}
           alt={imageAlt}
           width="434"
           height="609"
           loading="eager"
-          fetchpriority="high"
-          decoding="async"
+          poster={imagePoster}
         />
       </figure>
     )}
@@ -94,11 +98,13 @@ const {
     align-items: center;
   }
 
-  .insights-hero__figure :global(img) {
+  .insights-hero__figure :global(.insights-hero__media) {
     display: block;
     inline-size: 100%;
     max-inline-size: 434px;
+    aspect-ratio: 434 / 609;
     block-size: auto;
+    object-fit: cover;
   }
 
   @media (max-width: 1024px) {

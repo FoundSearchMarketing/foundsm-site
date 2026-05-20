@@ -266,6 +266,8 @@ const schema = {
   </div>
 
   <script>
+    import { setupAutoRotatingTabs } from '../scripts/autoRotatingTabs';
+
     (() => {
       const root = document.querySelector('.approach-page');
       if (!root) return;
@@ -426,6 +428,12 @@ const schema = {
             nextTab.focus();
             activateTab(nextTab);
           });
+        });
+
+        setupAutoRotatingTabs({
+          root: tabsRoot,
+          tabs,
+          activate: activateTab,
         });
       }
     })();

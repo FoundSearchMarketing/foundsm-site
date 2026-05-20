@@ -397,6 +397,8 @@ const partnerLogos = homepage.partners.logos
 </div>
 
 <script>
+  import { setupAutoRotatingTabs } from '../../scripts/autoRotatingTabs';
+
   const initHomepage = () => {
     document.querySelectorAll('[data-homepage]').forEach((root) => {
       if (!(root instanceof HTMLElement) || root.dataset.initialized === 'true') return;
@@ -465,42 +467,50 @@ const partnerLogos = homepage.partners.logos
         window.setTimeout(typeText, 1000);
       }
 
-      root.querySelectorAll('[data-home-tabs]').forEach((tabs) => {
-        const buttons = Array.from(tabs.querySelectorAll('[data-home-tab]'));
-        const panels = Array.from(tabs.querySelectorAll('[data-home-panel]'));
-        const mobilePanels = Array.from(tabs.querySelectorAll('[data-home-mobile-panel]'));
+      root.querySelectorAll('[data-home-tabs]').forEach((tabsRoot) => {
+        const buttons = Array.from(tabsRoot.querySelectorAll('[data-home-tab]'));
+        const panels = Array.from(tabsRoot.querySelectorAll('[data-home-panel]'));
+        const mobilePanels = Array.from(tabsRoot.querySelectorAll('[data-home-mobile-panel]'));
+
+        const activateTab = (button) => {
+          if (!(button instanceof HTMLElement)) return;
+          const id = button.dataset.homeTab;
+
+          buttons.forEach((candidate) => {
+            if (!(candidate instanceof HTMLElement)) return;
+            const isActive = candidate.dataset.homeTab === id;
+            candidate.classList.toggle('is-active', isActive);
+            if (candidate.getAttribute('role') === 'tab') {
+              candidate.setAttribute('aria-selected', String(isActive));
+            }
+            if (candidate.hasAttribute('aria-expanded')) {
+              candidate.setAttribute('aria-expanded', String(isActive));
+            }
+          });
+
+          panels.forEach((panel) => {
+            if (!(panel instanceof HTMLElement)) return;
+            const isActive = panel.dataset.homePanel === id;
+            panel.classList.toggle('is-active', isActive);
+            panel.hidden = !isActive;
+          });
+
+          mobilePanels.forEach((panel) => {
+            if (!(panel instanceof HTMLElement)) return;
+            const isActive = panel.dataset.homeMobilePanel === id;
+            panel.classList.toggle('is-active', isActive);
+            panel.hidden = !isActive;
+          });
+        };
 
         buttons.forEach((button) => {
-          button.addEventListener('click', () => {
-            if (!(button instanceof HTMLElement)) return;
-            const id = button.dataset.homeTab;
+          button.addEventListener('click', () => activateTab(button));
+        });
 
-            buttons.forEach((candidate) => {
-              if (!(candidate instanceof HTMLElement)) return;
-              const isActive = candidate.dataset.homeTab === id;
-              candidate.classList.toggle('is-active', isActive);
-              if (candidate.getAttribute('role') === 'tab') {
-                candidate.setAttribute('aria-selected', String(isActive));
-              }
-              if (candidate.hasAttribute('aria-expanded')) {
-                candidate.setAttribute('aria-expanded', String(isActive));
-              }
-            });
-
-            panels.forEach((panel) => {
-              if (!(panel instanceof HTMLElement)) return;
-              const isActive = panel.dataset.homePanel === id;
-              panel.classList.toggle('is-active', isActive);
-              panel.hidden = !isActive;
-            });
-
-            mobilePanels.forEach((panel) => {
-              if (!(panel instanceof HTMLElement)) return;
-              const isActive = panel.dataset.homeMobilePanel === id;
-              panel.classList.toggle('is-active', isActive);
-              panel.hidden = !isActive;
-            });
-          });
+        setupAutoRotatingTabs({
+          root: tabsRoot,
+          tabs: buttons.filter((button) => button.getAttribute('role') === 'tab'),
+          activate: activateTab,
         });
       });
     });

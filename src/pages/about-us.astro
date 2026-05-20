@@ -288,6 +288,8 @@ const schema = {
   </article>
 
   <script>
+    import { setupAutoRotatingTabs } from '../scripts/autoRotatingTabs';
+
     document.querySelectorAll('[data-about-values-tabs]').forEach((root) => {
       const tabs = Array.from(root.querySelectorAll('[role="tab"]'));
       const panels = Array.from(root.querySelectorAll('[role="tabpanel"]'));
@@ -327,6 +329,12 @@ const schema = {
           activateTab(nextTab);
           nextTab.focus();
         });
+      });
+
+      setupAutoRotatingTabs({
+        root,
+        tabs,
+        activate: activateTab,
       });
     });
   </script>

@@ -198,6 +198,8 @@ const stripOuterParagraph = (value: string) => value.replace(/^<p>/, '').replace
 </section>
 
 <script>
+  import { setupAutoRotatingTabs } from '../../scripts/autoRotatingTabs';
+
   const initPerformanceCreativeTabs = () => {
     document.querySelectorAll<HTMLElement>('[data-pc-tabs]').forEach((container) => {
       if (container.dataset.initialized === 'true') return;
@@ -239,6 +241,12 @@ const stripOuterParagraph = (value: string) => value.replace(/^<p>/, '').replace
             activate(tabs[nextIndex]);
           }
         });
+      });
+
+      setupAutoRotatingTabs({
+        root: container,
+        tabs,
+        activate,
       });
     });
   };

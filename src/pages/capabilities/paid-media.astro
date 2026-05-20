@@ -253,6 +253,8 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
 </BaseLayout>
 
 <script>
+  import { setupAutoRotatingTabs } from '../../scripts/autoRotatingTabs';
+
   const initPaidMediaTabs = () => {
     document.querySelectorAll<HTMLElement>('[data-paid-media-tabs]').forEach((container) => {
       if (container.dataset.initialized === 'true') return;
@@ -294,6 +296,12 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
             activate(tabs[nextIndex]);
           }
         });
+      });
+
+      setupAutoRotatingTabs({
+        root: container,
+        tabs,
+        activate,
       });
     });
   };

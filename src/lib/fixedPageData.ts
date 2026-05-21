@@ -1,9 +1,10 @@
 import { block, type EditableImage, type SimplePortableTextBlock } from './simplePortableTextCore';
 
 type Cta = { label?: string; href?: string };
-type ImageField = { image?: EditableImage; imageAlt?: string; videoUrl?: string; videoPoster?: EditableImage };
+type VideoFile = unknown;
+type ImageField = { image?: EditableImage; imageAlt?: string; videoFile?: VideoFile; videoUrl?: string; videoPoster?: EditableImage };
 type RichSection = { heading?: string; body?: SimplePortableTextBlock[] };
-type Card = { title?: string; lead?: string; body?: SimplePortableTextBlock[]; icon?: EditableImage; image?: EditableImage; imageAlt?: string; videoUrl?: string; videoPoster?: EditableImage };
+type Card = { title?: string; lead?: string; body?: SimplePortableTextBlock[]; icon?: EditableImage; image?: EditableImage; imageAlt?: string; videoFile?: VideoFile; videoUrl?: string; videoPoster?: EditableImage };
 type Logo = { image?: EditableImage; alt?: string };
 type FeatureTab = Card & { id?: string };
 

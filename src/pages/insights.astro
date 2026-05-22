@@ -8,7 +8,6 @@ import InsightsPagination from '../components/InsightsPagination.astro';
 import { getAllBlogCategories, getAllBlogPosts, getLatestBlogPosts, toInsightsArticleCards, toLatestPostCards } from '../lib/blogPosts';
 import { defaultInsightsPageData, mergeInsightsPageData } from '../lib/insightsPageData';
 import { insightsPageQuery, sanityClient, urlFor } from '../lib/sanity';
-import { srcFor } from '../lib/fixedPageRender';
 
 const [sanityPage, posts, categories, latestBlogPosts] = await Promise.all([
   sanityClient.fetch(insightsPageQuery).catch(() => null),
@@ -38,7 +37,6 @@ const heroImage = (() => {
   }
 })();
 const heroVideo = typeof page.hero.videoUrl === 'string' ? page.hero.videoUrl.trim() : '';
-const heroPoster = heroVideo ? srcFor(page.hero.videoPoster) || heroImage : undefined;
 const heroMedia = heroVideo || heroImage;
 
 const schema = {
@@ -76,7 +74,7 @@ const schema = {
     <!-- ============================================
          HERO SECTION
          ============================================ -->
-    <InsightsHero headline={page.hero.headline} body={page.hero.body} imageSrc={heroMedia} imageAlt={page.hero.imageAlt} imagePoster={heroPoster} />
+    <InsightsHero headline={page.hero.headline} body={page.hero.body} imageSrc={heroMedia} imageAlt={page.hero.imageAlt} />
 
     <LatestPostsSection posts={latestPosts} />
 

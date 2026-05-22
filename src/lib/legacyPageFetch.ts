@@ -22,5 +22,30 @@ export async function loadLegacyPage(definition: LegacyPageDefinition): Promise<
 
 export async function loadAuthors(): Promise<LegacyAuthorData[]> {
   const authors = await sanityClient.fetch<LegacyAuthorData[]>(allAuthorsPageQuery);
-  return mergeLegacyAuthors(authors || []);
+  return mergeLegacyAuthors((authors || []).map(normalizeAuthorLatestPosts));
+}
+
+function normalizeAuthorLatestPosts(author: LegacyAuthorData): LegacyAuthorData {
+  if (!author.latestPosts?.length) return author;
+
+  return {
+    ...author,
+    latestPosts: author.latestPosts.map((post) => ({
+      ...post,
+      date: formatDateLabel(post.date),
+    })),
+  };
+}
+
+function formatDateLabel(value: string | undefined): string | undefined {
+  if (!value) return undefined;
+  const date = new Date(value);
+  if (Number.isNaN(date.valueOf())) return value;
+
+  return new Intl.DateTimeFormat('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+    timeZone: 'UTC',
+  }).format(date);
 }

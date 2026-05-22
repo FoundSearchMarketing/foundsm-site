@@ -23,7 +23,7 @@ const { page } = Astro.props;
 const isFirstPartyData = page.path === '/whitepapers/first-party-data/';
 const firstPartyTitle = 'Why First-Party Data Is Your Most Valuable Profit Lever';
 const firstPartyDescription = "In this comprehensive technical guide, you'll learn how to architect a closed-loop data system that feeds real revenue intelligence (not noisy browser signals) back into your ad platforms. You'll discover how to capture durable identifiers, store them in a resilient first-party framework, and push enriched, truth-based events directly into Google, Meta, LinkedIn, and beyond.";
-const firstPartyOgImage = 'https://foundsm.com/found2025/wp-content/uploads/2026/03/first-party-whitepaper-feature.webp';
+const firstPartyOgImage = page.ogImage || 'https://cdn.sanity.io/images/vzneqxsx/staging/f8b72279cf7ea37f21d3f088e72e7a009a4cb3cf-1200x801.webp';
 ---
 
 <BaseLayout

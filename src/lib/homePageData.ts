@@ -34,7 +34,6 @@ type MediaField = {
   imageAlt?: string;
   videoFile?: unknown;
   videoUrl?: string;
-  videoPoster?: string;
 };
 
 export type HomePageData = {
@@ -89,7 +88,6 @@ export type HomePageData = {
     image?: string;
     imageAlt?: string;
     videoUrl?: string;
-    videoPoster?: string;
   };
   partners: Cta & {
     heading?: string;

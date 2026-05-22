@@ -1,4 +1,6 @@
 ---
+import { legacyUploadAsset, normalizeLegacyAssetUrl } from '../../lib/legacyAssets';
+
 interface InsightPost {
   title: string;
   href: string;
@@ -57,7 +59,7 @@ const fallbackPosts: InsightPost[] = [
   {
     title: 'Bot Traffic and Bad Lookalikes: How Dirty Signals Can Wreck Your Funnel and Your Targeting',
     href: '/insights/bot-traffic-and-bad-lookalikes-how-dirty-signals-can-wreck-your-funnel-and-your-targeting/',
-    imageSrc: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/bot-traffic-sm-768x513.webp',
+    imageSrc: legacyUploadAsset('2026/03/bot-traffic-sm-768x513.webp'),
     imageAlt: '',
     categories: [{ label: 'Marketing Analytics & Tracking' }, { label: 'Paid Media Strategy' }],
     publishedLabel: 'March 20, 2026',
@@ -66,7 +68,7 @@ const fallbackPosts: InsightPost[] = [
   {
     title: 'Google Ads API Update: A Critical Change for Customer Match',
     href: '/insights/google-ads-api-update-a-critical-change-for-customer-match/',
-    imageSrc: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/GA-API-update-hero-768x513.webp',
+    imageSrc: legacyUploadAsset('2026/03/GA-API-update-hero-768x513.webp'),
     imageAlt: '',
     categories: [{ label: 'Industry Insights' }, { label: 'Marketing Analytics & Tracking' }],
     publishedLabel: 'March 11, 2026',
@@ -75,7 +77,7 @@ const fallbackPosts: InsightPost[] = [
   {
     title: "When Marketing Metrics and Financial Results Don't Align: Understanding Signal Loss",
     href: '/insights/when-marketing-metrics-and-financial-results-dont-align-understanding-signal-loss/',
-    imageSrc: 'https://foundsm.com/found2025/wp-content/uploads/2026/02/Untitled-1200-x-801-px-768x513.webp',
+    imageSrc: legacyUploadAsset('2026/02/Untitled-1200-x-801-px-768x513.webp'),
     imageAlt: '',
     categories: [{ label: 'Industry Insights' }, { label: 'Marketing Analytics & Tracking' }],
     publishedLabel: 'March 6, 2026',
@@ -84,7 +86,7 @@ const fallbackPosts: InsightPost[] = [
   {
     title: "Google's Vision for 2026: Building a Revenue Engine Powered by Data",
     href: '/insights/googles-vision-for-2026-building-a-revenue-engine-powered-by-data/',
-    imageSrc: 'https://foundsm.com/found2025/wp-content/uploads/2026/02/dataengine-768x432.webp',
+    imageSrc: legacyUploadAsset('2026/02/dataengine-768x432.webp'),
     imageAlt: '',
     categories: [{ label: 'Industry Insights' }, { label: 'Marketing Analytics & Tracking' }, { label: 'Paid Media Strategy' }],
     publishedLabel: 'February 18, 2026',
@@ -100,7 +102,7 @@ const fallbackPosts: InsightPost[] = [
   {
     title: 'Closing the Loop: How Conversion APIs and Value-Based Bidding Transform Performance Marketing',
     href: '/insights/closing-the-loop-how-conversion-apis-and-value-based-bidding-transform-performance-marketing/',
-    imageSrc: 'https://foundsm.com/found2025/wp-content/uploads/2026/01/closing-the-loop-main-768x768.webp',
+    imageSrc: legacyUploadAsset('2026/01/closing-the-loop-main-768x768.webp'),
     imageAlt: '',
     categories: [{ label: 'AI' }, { label: 'Paid Media Strategy' }],
     publishedLabel: 'January 23, 2026',
@@ -108,7 +110,11 @@ const fallbackPosts: InsightPost[] = [
   },
 ];
 
-const insightPosts = posts.length ? posts.slice(0, 6) : fallbackPosts;
+const insightPosts = (posts.length ? posts.slice(0, 6) : fallbackPosts).map((post) => ({
+  ...post,
+  imageSrc: normalizeLegacyAssetUrl(post.imageSrc),
+}));
+const firstPartyHeroImage = legacyUploadAsset('2026/03/first-party-whitepaper-feature.webp');
 
 const firstPartyBullets = [
   {
@@ -262,7 +268,7 @@ const firstPartyBullets = [
 {variant === 'first-party-data' && (
   <>
     <section class="wp-first-party-hero" aria-labelledby="first-party-title">
-      <div class="wp-first-party-hero__bg" aria-hidden="true"></div>
+      <div class="wp-first-party-hero__bg" style={`--first-party-hero-bg: url('${firstPartyHeroImage}')`} aria-hidden="true"></div>
       <div class="wp-first-party-hero__inner">
         <h1 id="first-party-title">Why First-Party Data Is<br />Your Most Valuable<br />Profit Lever</h1>
         <aside class="wp-download-card" aria-labelledby="download-title">
@@ -736,7 +742,7 @@ const firstPartyBullets = [
     min-block-size: 32rem;
     background:
       linear-gradient(90deg, rgba(35, 31, 32, 0.72), rgba(35, 31, 32, 0.38)),
-      url('https://foundsm.com/found2025/wp-content/uploads/2026/03/first-party-whitepaper-feature.webp') center / cover no-repeat;
+      var(--first-party-hero-bg) center / cover no-repeat;
   }
 
   .wp-first-party-hero__inner {

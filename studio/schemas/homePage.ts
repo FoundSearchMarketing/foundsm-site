@@ -127,12 +127,6 @@ const imageWithAltFields = [
     type: 'url',
     description: 'Optional MP4/WebM URL to render instead of the image.',
   }),
-  defineField({
-    name: 'videoPoster',
-    title: 'Video Poster',
-    type: 'image',
-    options: { hotspot: true },
-  }),
 ];
 
 const withoutImageValues = {

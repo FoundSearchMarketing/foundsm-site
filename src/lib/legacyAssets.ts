@@ -16,8 +16,12 @@ const legacyAssetMap = new Map<string, string>([
   ['/found2025/wp-content/uploads/2026/03/bot-traffic-sm-768x513.webp', '/images/pages/insights/bot-traffic-sm-768x513.webp'],
   ['/found2025/wp-content/uploads/2026/03/bot-traffic-sm-850x500.webp', '/images/pages/insights/bot-traffic-sm-850x500.webp'],
   ['/found2025/wp-content/uploads/2026/03/capi-eye.webp', '/images/pages/capabilities/capi-eye.webp'],
+  ['/found2025/wp-content/uploads/2025/11/Balance-of-Humans-and-Automation_Nov-2025.pdf', '/whitepapers/balance-of-humans-and-automation-nov-2025.pdf'],
+  ['/found2025/wp-content/uploads/2026/01/Foundsm_Data_Activation_whitepaper_2026.pdf', '/whitepapers/data-activation-whitepaper-2026.pdf'],
+  ['/found2025/wp-content/uploads/2026/01/foundsm_data_activation_whitepaper_2026.pdf', '/whitepapers/data-activation-whitepaper-2026.pdf'],
 ]);
 
+const legacyAssetPrefix = '/found2025/wp-content/';
 const foundHosts = new Set(['foundsm.com', 'www.foundsm.com']);
 
 export function normalizeLegacyAssetUrl(value: string | undefined): string {
@@ -27,7 +31,14 @@ export function normalizeLegacyAssetUrl(value: string | undefined): string {
     const url = new URL(value, 'https://foundsm.com');
     if (!foundHosts.has(url.hostname)) return value;
 
-    return legacyAssetMap.get(url.pathname) || value;
+    const mapped = legacyAssetMap.get(url.pathname);
+    if (mapped) return mapped;
+
+    if (url.pathname.startsWith(legacyAssetPrefix) && hasAssetExtension(url.pathname)) {
+      return `/images/legacy/${url.pathname.slice(legacyAssetPrefix.length)}`;
+    }
+
+    return value;
   } catch {
     return value;
   }
@@ -45,4 +56,8 @@ export function normalizeLegacyAssetSrcset(value: string | undefined): string | 
       return [normalizeLegacyAssetUrl(url), ...descriptor].join(' ');
     })
     .join(', ');
+}
+
+function hasAssetExtension(pathname: string): boolean {
+  return /\.(avif|webp|png|jpe?g|gif|svg|pdf|mp4|webm|mov|m4v|woff2?|ttf|otf)$/i.test(pathname);
 }

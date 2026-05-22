@@ -1,4 +1,5 @@
 ---
+import { normalizeLegacyAssetUrl } from '../../lib/legacyAssets';
 import type { InsightResourcePage } from '../../lib/insightResourceContent';
 
 interface Props {
@@ -6,8 +7,9 @@ interface Props {
 }
 
 const { page } = Astro.props;
-const contourImage = 'https://foundsm.com/found2025/wp-content/uploads/2025/11/contour-2.png';
-const webinarHeroBg = 'https://foundsm.com/found2025/wp-content/uploads/2026/02/infotrust-webinar-header.webp';
+const contourImage = normalizeLegacyAssetUrl('/images/legacy/uploads/2025/11/contour-2.png');
+const webinarHeroBg = normalizeLegacyAssetUrl('/images/legacy/uploads/2026/02/infotrust-webinar-header.webp');
+const resourceImage = (src: string | undefined) => normalizeLegacyAssetUrl(src) || '';
 ---
 
 {page.kind === 'archive' && (
@@ -18,7 +20,7 @@ const webinarHeroBg = 'https://foundsm.com/found2025/wp-content/uploads/2026/02/
           <h1>{page.heroTitle}</h1>
           <p>{page.heroDescription}</p>
         </div>
-        <img class="resource-hero__image" src={page.heroImage} alt="" width="434" height="609" loading="eager" fetchpriority="high" />
+        <img class="resource-hero__image" src={resourceImage(page.heroImage)} alt="" width="434" height="609" loading="eager" fetchpriority="high" />
       </div>
     </section>
 
@@ -47,7 +49,7 @@ const webinarHeroBg = 'https://foundsm.com/found2025/wp-content/uploads/2026/02/
                 <h3><a href={card.href}>{card.title}</a></h3>
                 <a class="resource-card__image-link" href={card.href} tabindex="-1" aria-hidden="true">
                   <img
-                    src={card.image}
+                    src={resourceImage(card.image)}
                     alt={card.imageAlt || ''}
                     width="850"
                     height="500"
@@ -82,7 +84,7 @@ const webinarHeroBg = 'https://foundsm.com/found2025/wp-content/uploads/2026/02/
           )}
         </div>
         <aside class="webinar-form-card" aria-label={page.formHeading}>
-          <img src={page.heroImage} alt={page.heroImageAlt} width="1024" height="576" loading="eager" fetchpriority="high" />
+          <img src={resourceImage(page.heroImage)} alt={page.heroImageAlt} width="1024" height="576" loading="eager" fetchpriority="high" />
           <h2>{page.formHeading}</h2>
           <div class="webinar-form-card__embed">
             <div class="hs-form-frame" data-region="na1" data-form-id={page.formId} data-portal-id="5045186"></div>

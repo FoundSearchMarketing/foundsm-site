@@ -9531,6 +9531,11 @@
       "permanent": true
     },
     {
+      "source": "/found2025/wp-content/uploads/2025/11/Balance-of-Humans-and-Automation_Nov-2025.pdf",
+      "destination": "/whitepapers/balance-of-humans-and-automation-nov-2025.pdf",
+      "permanent": true
+    },
+    {
       "source": "/found2025/wp-content/uploads/2026/01/Foundsm_Data_Activation_whitepaper_2026.pdf",
       "destination": "/whitepapers/data-activation-whitepaper-2026.pdf",
       "permanent": true

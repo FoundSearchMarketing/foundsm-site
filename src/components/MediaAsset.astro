@@ -1,4 +1,6 @@
 ---
+import { normalizeLegacyAssetUrl } from '../lib/legacyAssets';
+
 interface Props {
   src: string;
   alt?: string;
@@ -23,7 +25,9 @@ const {
   class: className,
 } = Astro.props;
 
-const normalizedSrc = src.split(/[?#]/)[0] || '';
+const resolvedSrc = normalizeLegacyAssetUrl(src);
+const resolvedPoster = normalizeLegacyAssetUrl(poster);
+const normalizedSrc = resolvedSrc.split(/[?#]/)[0] || '';
 const normalizedExtensionSrc = normalizedSrc.toLowerCase();
 const isVideo = /\.(mp4|webm|mov|m4v)$/i.test(normalizedSrc);
 const videoType = normalizedExtensionSrc.endsWith('.webm')
@@ -44,17 +48,17 @@ const mediaStyle = fit ? `--media-asset-fit: ${fit}` : undefined;
     loop
     playsinline
     preload={loading === 'eager' ? 'auto' : 'metadata'}
-    poster={poster}
+    poster={resolvedPoster || undefined}
     aria-label={alt || undefined}
     aria-hidden={alt ? undefined : 'true'}
   >
-    <source src={src} type={videoType} />
+    <source src={resolvedSrc} type={videoType} />
   </video>
 ) : (
   <img
     class={mediaClass}
     style={mediaStyle}
-    src={src}
+    src={resolvedSrc}
     alt={alt}
     width={width}
     height={height}

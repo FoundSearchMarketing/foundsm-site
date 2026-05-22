@@ -1,5 +1,6 @@
 import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import { urlFor } from './sanity';
+import { normalizeLegacyAssetUrl } from './legacyAssets';
 import { block, type SimplePortableTextBlock, type SimpleSpan } from './simplePortableTextCore';
 
 export type EditableImage = SanityImageSource | string | null | undefined;
@@ -52,7 +53,7 @@ export function portableTextToPlainText(blocks?: SimplePortableTextBlock[]): str
 
 export function imageUrl(source: EditableImage): string | undefined {
   if (!source) return undefined;
-  if (typeof source === 'string') return source || undefined;
+  if (typeof source === 'string') return normalizeLegacyAssetUrl(source) || undefined;
 
   try {
     return urlFor(source).auto('format').url();

@@ -367,7 +367,6 @@ const sharedRecentPosts: LegacyAuthorLatestPost[] = [
   {
     title: 'Bot Traffic and Bad Lookalikes: How Dirty Signals Can Wreck Your Funnel and Your Targeting',
     href: '/insights/dirty-signals-bot-traffic-junk-leads/',
-    imageSrc: '/images/legacy/uploads/2026/03/bot-traffic-sm-768x513.webp',
     imageAlt: '',
     imageWidth: 768,
     imageHeight: 513,
@@ -376,7 +375,6 @@ const sharedRecentPosts: LegacyAuthorLatestPost[] = [
   {
     title: 'Google Ads API Update: A Critical Change for Customer Match',
     href: '/insights/customer-match-uploads-disabled-in-google-ads-api/',
-    imageSrc: '/images/legacy/uploads/2026/03/GA-API-update-hero-768x513.webp',
     imageAlt: '',
     imageWidth: 768,
     imageHeight: 513,
@@ -385,7 +383,6 @@ const sharedRecentPosts: LegacyAuthorLatestPost[] = [
   {
     title: 'When Marketing Metrics and Financial Results Don’t Align: Understanding Signal Loss',
     href: '/insights/signal-loss-costs-real-revenue/',
-    imageSrc: '/images/legacy/uploads/2026/02/Untitled-1200-x-801-px-768x513.webp',
     imageAlt: 'ROAS vs. Profit',
     imageWidth: 768,
     imageHeight: 513,
@@ -394,7 +391,6 @@ const sharedRecentPosts: LegacyAuthorLatestPost[] = [
   {
     title: 'Google’s Vision for 2026: Building a Revenue Engine Powered by Data',
     href: '/insights/googles-vision-for-2026-building-a-revenue-engine-powered-by-data/',
-    imageSrc: '/images/legacy/uploads/2026/02/dataengine-768x432.webp',
     imageAlt: '',
     imageWidth: 768,
     imageHeight: 432,
@@ -406,7 +402,6 @@ const legacyAuthorProfileDetails: Record<string, Partial<LegacyAuthorData>> = {
   caroline: {
     wpId: 5202,
     profileHeading: 'Caroline Stoner | Head of user experience',
-    profileImage: '/images/legacy/uploads/2026/02/Caroline_author_profile-240x300.webp',
     profileImageAlt: '',
     profileTeam: 'Innovation',
     profileFoundStartDate: '2017',
@@ -423,7 +418,6 @@ const legacyAuthorProfileDetails: Record<string, Partial<LegacyAuthorData>> = {
   emily: {
     wpId: 5986,
     profileHeading: 'Emily Williams-Hempstead | Strategist',
-    profileImage: '/images/legacy/uploads/2026/03/Emily-FoundSM.webp',
     profileImageAlt: '',
     profileTeam: 'Client Partnership',
     profileFoundStartDate: '2020',
@@ -439,7 +433,6 @@ const legacyAuthorProfileDetails: Record<string, Partial<LegacyAuthorData>> = {
   julie: {
     wpId: 5007,
     profileHeading: 'Julie Warnecke | CEO',
-    profileImage: '/images/legacy/uploads/2026/02/Julie-Warnecke-FoundSM-au.webp',
     profileImageAlt: '',
     profileTeam: 'Executive Leadership',
     profileFoundStartDate: '2006',
@@ -456,7 +449,6 @@ const legacyAuthorProfileDetails: Record<string, Partial<LegacyAuthorData>> = {
       {
         title: 'How Advantage+ Is Reshaping Student Recruitment, Insights from a Meta Education Summit',
         href: '/insights/how-advantage-is-reshaping-student-recruitment-insights-from-a-meta-education-summit/',
-        imageSrc: '/images/legacy/uploads/2025/11/PXL_20251105_210949084-768x579.webp?ver=1773767518',
         imageAlt: '',
         imageWidth: 768,
         imageHeight: 579,
@@ -467,7 +459,6 @@ const legacyAuthorProfileDetails: Record<string, Partial<LegacyAuthorData>> = {
   kelley: {
     wpId: 5196,
     profileHeading: 'kelley swart | VP, Strategy & Growth',
-    profileImage: '/images/legacy/uploads/2026/02/Kelley_author_profile-240x300.webp',
     profileImageAlt: '',
     profileTeam: 'Executive Leadership',
     profileFoundStartDate: '2014',
@@ -482,7 +473,6 @@ const legacyAuthorProfileDetails: Record<string, Partial<LegacyAuthorData>> = {
       {
         title: 'Our Top Takeaways From Search Marketing Expo Advanced 2025',
         href: '/insights/our-top-takeaways-from-search-marketing-expo-advanced-2025/',
-        imageSrc: '/images/legacy/uploads/2025/06/SMX-Conference-2025-1-sm-768x576.webp',
         imageAlt: '',
         imageWidth: 768,
         imageHeight: 576,
@@ -493,7 +483,6 @@ const legacyAuthorProfileDetails: Record<string, Partial<LegacyAuthorData>> = {
   kelsey: {
     wpId: 5194,
     profileHeading: 'kelsey connor | Director, Marketing & Brand Strategy',
-    profileImage: '/images/legacy/uploads/2026/02/Kelsey_author_profile-240x300.webp',
     profileImageAlt: '',
     profileTeam: 'Agency Operations',
     profileFoundStartDate: '2025',
@@ -510,7 +499,6 @@ const legacyAuthorProfileDetails: Record<string, Partial<LegacyAuthorData>> = {
       {
         title: 'Wrapping Up 19 Years With Purpose: Found’s Year-End Tradition of Giving Back',
         href: '/insights/wrapping-up-19-years-with-purpose-founds-year-end-tradition-of-giving-back/',
-        imageSrc: '/images/legacy/uploads/2026/01/img_0446-768x576.jpg',
         imageAlt: '',
         imageWidth: 768,
         imageHeight: 576,
@@ -521,7 +509,6 @@ const legacyAuthorProfileDetails: Record<string, Partial<LegacyAuthorData>> = {
   kylie: {
     wpId: 5563,
     profileHeading: 'Kylie Colquitt | Group Account Director',
-    profileImage: '/images/legacy/uploads/2026/02/Kylie_author_profile.webp',
     profileImageAlt: '',
     profileTeam: 'Client Partnership',
     profileFoundStartDate: '2017',
@@ -537,7 +524,6 @@ const legacyAuthorProfileDetails: Record<string, Partial<LegacyAuthorData>> = {
   maria: {
     wpId: 5303,
     profileHeading: 'maria escobedo | Associate Data Analyst',
-    profileImage: '/images/legacy/uploads/2026/02/Maria_author_profile-240x300.webp',
     profileImageAlt: '',
     profileTeam: 'Client Partnership',
     profileFoundStartDate: '2022',
@@ -554,7 +540,6 @@ const legacyAuthorProfileDetails: Record<string, Partial<LegacyAuthorData>> = {
   matt: {
     wpId: 5565,
     profileHeading: 'matt dragoo | Senior Data Analyst',
-    profileImage: '/images/legacy/uploads/2026/02/Matt_author_profile.webp',
     profileImageAlt: '',
     profileTeam: 'Client Partnership',
     profileFoundStartDate: '2019',
@@ -571,7 +556,6 @@ const legacyAuthorProfileDetails: Record<string, Partial<LegacyAuthorData>> = {
   nicholas: {
     wpId: 5984,
     profileHeading: 'Nicholas Hoium | Head of Data Engineering',
-    profileImage: '/images/legacy/uploads/2026/03/Nicholas_author_profile.webp',
     profileImageAlt: '',
     profileTeam: 'Innovation',
     profileFoundStartDate: '2010',
@@ -587,7 +571,6 @@ const legacyAuthorProfileDetails: Record<string, Partial<LegacyAuthorData>> = {
   ryan: {
     wpId: 5198,
     profileHeading: 'Ryan Eme | Head of Data Intelligence',
-    profileImage: '/images/legacy/uploads/2026/02/Ryan_author_profile-240x300.webp',
     profileImageAlt: '',
     profileTeam: 'Innovation',
     profileFoundStartDate: '2014',
@@ -604,7 +587,6 @@ const legacyAuthorProfileDetails: Record<string, Partial<LegacyAuthorData>> = {
       {
         title: 'ICDPA Isn’t Just Compliance. It’s the Foundation of Smarter Data Strategy.',
         href: '/insights/indiana-consumer-data-protection-act/',
-        imageSrc: '/images/legacy/uploads/2026/02/ICDPA-blog-feature-768x513.webp',
         imageAlt: "Indiana's New Data Privacy Laws",
         imageWidth: 768,
         imageHeight: 513,
@@ -613,7 +595,6 @@ const legacyAuthorProfileDetails: Record<string, Partial<LegacyAuthorData>> = {
       {
         title: 'A 3 Minute Implementation Guide to Segmenting AI Traffic in GA4',
         href: '/insights/a-3-minute-implementation-guide-to-segmenting-ai-traffic-in-ga4/',
-        imageSrc: '/images/legacy/uploads/2025/12/GA4-Blog-image-768x512.png',
         imageAlt: '',
         imageWidth: 768,
         imageHeight: 512,
@@ -870,12 +851,12 @@ function mergeLegacyAuthor(definition: LegacyAuthorDefinition, incoming?: Legacy
     schemaJson: incoming?.schemaJson,
     wpId: incoming?.wpId ?? profile?.wpId,
     profileHeading: incoming?.profileHeading || profile?.profileHeading,
-    profileImage: incoming?.profileImage || profile?.profileImage,
+    profileImage: incoming?.profileImage || incoming?.image,
     profileImageAlt: incoming?.profileImageAlt ?? profile?.profileImageAlt,
     profileTeam: incoming?.profileTeam || profile?.profileTeam,
     profileFoundStartDate: incoming?.profileFoundStartDate || profile?.profileFoundStartDate,
     profileExpertise: incoming?.profileExpertise || profile?.profileExpertise,
     profileBody: hasBlocks(incoming?.profileBody) ? incoming.profileBody : profile?.profileBody,
-    latestPosts: hasLatestPosts(incoming?.latestPosts) ? incoming.latestPosts : profile?.latestPosts,
+    latestPosts: hasLatestPosts(incoming?.latestPosts) ? incoming.latestPosts : [],
   };
 }

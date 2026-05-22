@@ -1,5 +1,5 @@
 ---
-import { normalizeLegacyAssetUrl } from '../../lib/legacyAssets';
+import { legacyUploadAsset, normalizeLegacyAssetUrl } from '../../lib/legacyAssets';
 import type { InsightResourcePage } from '../../lib/insightResourceContent';
 
 interface Props {
@@ -7,8 +7,8 @@ interface Props {
 }
 
 const { page } = Astro.props;
-const contourImage = normalizeLegacyAssetUrl('/images/legacy/uploads/2025/11/contour-2.png');
-const webinarHeroBg = normalizeLegacyAssetUrl('/images/legacy/uploads/2026/02/infotrust-webinar-header.webp');
+const contourImage = '/images/pages/data-activation/contour-2.png';
+const webinarHeroBg = legacyUploadAsset('2026/02/infotrust-webinar-header.webp');
 const resourceImage = (src: string | undefined) => normalizeLegacyAssetUrl(src) || '';
 ---
 

@@ -325,20 +325,20 @@ export const allAuthorsPageQuery = `*[_type == "author"] | order(name asc) {
   schemaJson,
   wpId,
   profileHeading,
-  profileImage,
+  "profileImage": coalesce(profileImage, image.asset->url),
   profileImageAlt,
   profileTeam,
   profileFoundStartDate,
   profileExpertise,
   profileBody,
-  latestPosts[] {
+  "latestPosts": *[_type == "blogPost" && references(^._id)] | order(publishedAt desc)[0...4] {
     title,
-    href,
-    imageSrc,
-    imageAlt,
-    imageWidth,
-    imageHeight,
-    date
+    "href": "/insights/" + slug.current + "/",
+    "imageSrc": featuredImage.asset->url,
+    "imageAlt": coalesce(featuredImage.alt, title),
+    "imageWidth": 768,
+    "imageHeight": 513,
+    "date": publishedAt
   }
 }`;
 

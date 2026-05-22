@@ -18,7 +18,7 @@ const profileFoundStartDate = author.profileFoundStartDate || author.foundStartD
 const profileExpertise = author.profileExpertise || author.expertise;
 const profileBodyHtml = renderSimplePortableText(author.profileBody) || (author.bio ? `<p>${author.bio}</p>` : '');
 const latestPosts = author.latestPosts || [];
-const decorativeImage = normalizeLegacyAssetUrl('/images/legacy/uploads/2026/02/glasstopen_sm.webp');
+const decorativeImage = '';
 
 const normalizePost = (post: LegacyAuthorLatestPost) => ({
   ...post,
@@ -32,7 +32,7 @@ const normalizePost = (post: LegacyAuthorLatestPost) => ({
 <section class="author-detail-hero" aria-labelledby="author-detail-heading">
   <div class="author-detail-hero__inner">
     <h2 id="author-detail-heading">About the Author</h2>
-    <img class="author-detail-hero__mark" src={decorativeImage} alt="" width="70" height="72" loading="eager" decoding="async" />
+    {decorativeImage && <img class="author-detail-hero__mark" src={decorativeImage} alt="" width="70" height="72" loading="eager" decoding="async" />}
   </div>
 </section>
 

@@ -9532,7 +9532,12 @@
     },
     {
       "source": "/found2025/wp-content/uploads/2026/01/Foundsm_Data_Activation_whitepaper_2026.pdf",
-      "destination": "/found2025/wp-content/uploads/2026/01/foundsm_data_activation_whitepaper_2026.pdf",
+      "destination": "/whitepapers/data-activation-whitepaper-2026.pdf",
+      "permanent": true
+    },
+    {
+      "source": "/found2025/wp-content/uploads/2026/01/foundsm_data_activation_whitepaper_2026.pdf",
+      "destination": "/whitepapers/data-activation-whitepaper-2026.pdf",
       "permanent": true
     },
     {

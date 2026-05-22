@@ -260,7 +260,6 @@ export const legacyAuthorDefinitions: LegacyAuthorDefinition[] = [
     foundStartDate: '2006',
     expertise: 'Measurement Strategy, Operational Excellence, Strategic Growth',
     bio: 'Julie Warnecke is the Founder and CEO of Found Search Marketing, a Midwest firm managing over $200M in annual media spend. An early Google employee instrumental in launching AdWords, she established Found in 2006. Today, she leads a team of 50+ that serves as a seamless extension of client teams.',
-    image: '/images/pages/team/julie-warnecke.webp',
   },
   {
     slug: 'kelley',
@@ -270,7 +269,6 @@ export const legacyAuthorDefinitions: LegacyAuthorDefinition[] = [
     foundStartDate: '2014',
     expertise: 'Client Alignment, Growth Architecture, Scalable Systems',
     bio: "Kelley, Found's VP of Strategy & Growth, brings 25+ years of experience, starting at Google Ads. She has led strategic planning for Fortune 1000 clients like Home Depot and Staples across CPG, Retail, and Higher Ed. Her focus is on strategic oversight and building strong relationships that exceed client goals.",
-    image: '/images/pages/team/kelley-swart.webp',
   },
   {
     slug: 'nicholas',
@@ -280,7 +278,6 @@ export const legacyAuthorDefinitions: LegacyAuthorDefinition[] = [
     foundStartDate: '2010',
     expertise: 'Google Cloud Certified Data Engineer',
     bio: 'With over 15 years of experience, Head of Data Engineering Nicholas Hoium builds advanced pipelines and web analytics solutions. The IU Bloomington graduate and Google Cloud Certified Engineer transforms raw information into accessible intelligence. Off the clock, Nicholas enjoys indie games, traveling, and watching soccer.',
-    image: '/images/pages/team/nicholas-hoium.webp',
   },
   {
     slug: 'ryan',
@@ -290,7 +287,6 @@ export const legacyAuthorDefinitions: LegacyAuthorDefinition[] = [
     foundStartDate: '2014',
     expertise: 'Audience Intelligence, Data Strategy, Attribution Modeling',
     bio: 'Ryan Eme is the Head of Data Intelligence at Found, bringing 20 years of experience in data-driven marketing. A Certified Google Cloud Data Engineer, he helps clients in higher ed and healthcare unlock business growth. Known for his innovative problem-solving, Ryan is so effective that clients frequently ask to clone him.',
-    image: '/images/pages/team/ryan-eme.webp',
   },
   {
     slug: 'adam',
@@ -300,7 +296,6 @@ export const legacyAuthorDefinitions: LegacyAuthorDefinition[] = [
     foundStartDate: '2016',
     expertise: 'Strategic Media, Performance Forecasting, Channel Strategy',
     bio: 'Adam joined Found Search Marketing in 2016, leveraging his media strategy background to drive client results through research and testing. A Brown University graduate in Cognitive Neuroscience and Economics, he began his career with the Indianapolis Colts. Outside the office, Adam stays active through CrossFit, backpacking, and various team sports.',
-    image: '/images/pages/team/adam-persinger.webp',
   },
   {
     slug: 'caroline',
@@ -310,7 +305,6 @@ export const legacyAuthorDefinitions: LegacyAuthorDefinition[] = [
     foundStartDate: '2017',
     expertise: 'User Experience & Strategy, CRO, Unbounce Expert',
     bio: 'As one of only 10 Unbounce Experts worldwide, Caroline specializes in creating high-performing landing pages and optimizing conversion rates. Her background spans CRO, web design, and SEO, with a focus on higher education. When not driving client results, Caroline enjoys gardening, cozy video games, and exploring the city with her family.',
-    image: '/images/pages/team/caroline-stoner.webp',
   },
   {
     slug: 'kylie',
@@ -320,7 +314,6 @@ export const legacyAuthorDefinitions: LegacyAuthorDefinition[] = [
     foundStartDate: '2017',
     expertise: 'Client Services',
     bio: 'As Group Account Director, Kylie leverages 15+ years of experience to orchestrate cross-channel strategies that drive client growth. Having supported brands like General Motors at top Chicago agencies, she brings calm, collaborative leadership to her team. Outside work, Kylie enjoys life with her daughter and dog.',
-    image: '/images/pages/team/kylie-colquitt.webp',
   },
   {
     slug: 'matt',
@@ -357,7 +350,6 @@ export const legacyAuthorDefinitions: LegacyAuthorDefinition[] = [
     foundStartDate: '2025',
     expertise: 'Marketing, Brand & Positioning',
     bio: 'Kelsey brings nearly 20 years of expertise as Director of Agency Marketing and Brand Strategy. She fosters seamless client-agency collaboration to drive results through authentic leadership. A proud Hoosier with an MBA, Kelsey serves the community as REV Committee Chair and enjoys flipping houses and cheering on her family.',
-    image: '/images/pages/team/kelsey-connor.webp',
   },
 ];
 
@@ -367,7 +359,6 @@ const sharedRecentPosts: LegacyAuthorLatestPost[] = [
   {
     title: 'Bot Traffic and Bad Lookalikes: How Dirty Signals Can Wreck Your Funnel and Your Targeting',
     href: '/insights/dirty-signals-bot-traffic-junk-leads/',
-    imageSrc: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/bot-traffic-sm-768x513.webp',
     imageAlt: '',
     imageWidth: 768,
     imageHeight: 513,
@@ -376,7 +367,6 @@ const sharedRecentPosts: LegacyAuthorLatestPost[] = [
   {
     title: 'Google Ads API Update: A Critical Change for Customer Match',
     href: '/insights/customer-match-uploads-disabled-in-google-ads-api/',
-    imageSrc: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/GA-API-update-hero-768x513.webp',
     imageAlt: '',
     imageWidth: 768,
     imageHeight: 513,
@@ -385,7 +375,6 @@ const sharedRecentPosts: LegacyAuthorLatestPost[] = [
   {
     title: 'When Marketing Metrics and Financial Results Don’t Align: Understanding Signal Loss',
     href: '/insights/signal-loss-costs-real-revenue/',
-    imageSrc: 'https://foundsm.com/found2025/wp-content/uploads/2026/02/Untitled-1200-x-801-px-768x513.webp',
     imageAlt: 'ROAS vs. Profit',
     imageWidth: 768,
     imageHeight: 513,
@@ -394,7 +383,6 @@ const sharedRecentPosts: LegacyAuthorLatestPost[] = [
   {
     title: 'Google’s Vision for 2026: Building a Revenue Engine Powered by Data',
     href: '/insights/googles-vision-for-2026-building-a-revenue-engine-powered-by-data/',
-    imageSrc: 'https://foundsm.com/found2025/wp-content/uploads/2026/02/dataengine-768x432.webp',
     imageAlt: '',
     imageWidth: 768,
     imageHeight: 432,
@@ -406,7 +394,6 @@ const legacyAuthorProfileDetails: Record<string, Partial<LegacyAuthorData>> = {
   caroline: {
     wpId: 5202,
     profileHeading: 'Caroline Stoner | Head of user experience',
-    profileImage: 'https://foundsm.com/found2025/wp-content/uploads/2026/02/Caroline_author_profile-240x300.webp',
     profileImageAlt: '',
     profileTeam: 'Innovation',
     profileFoundStartDate: '2017',
@@ -423,7 +410,6 @@ const legacyAuthorProfileDetails: Record<string, Partial<LegacyAuthorData>> = {
   emily: {
     wpId: 5986,
     profileHeading: 'Emily Williams-Hempstead | Strategist',
-    profileImage: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/Emily-FoundSM.webp',
     profileImageAlt: '',
     profileTeam: 'Client Partnership',
     profileFoundStartDate: '2020',
@@ -439,7 +425,6 @@ const legacyAuthorProfileDetails: Record<string, Partial<LegacyAuthorData>> = {
   julie: {
     wpId: 5007,
     profileHeading: 'Julie Warnecke | CEO',
-    profileImage: 'https://foundsm.com/found2025/wp-content/uploads/2026/02/Julie-Warnecke-FoundSM-au.webp',
     profileImageAlt: '',
     profileTeam: 'Executive Leadership',
     profileFoundStartDate: '2006',
@@ -456,7 +441,6 @@ const legacyAuthorProfileDetails: Record<string, Partial<LegacyAuthorData>> = {
       {
         title: 'How Advantage+ Is Reshaping Student Recruitment, Insights from a Meta Education Summit',
         href: '/insights/how-advantage-is-reshaping-student-recruitment-insights-from-a-meta-education-summit/',
-        imageSrc: 'https://foundsm.com/found2025/wp-content/uploads/2025/11/PXL_20251105_210949084-768x579.webp?ver=1773767518',
         imageAlt: '',
         imageWidth: 768,
         imageHeight: 579,
@@ -467,7 +451,6 @@ const legacyAuthorProfileDetails: Record<string, Partial<LegacyAuthorData>> = {
   kelley: {
     wpId: 5196,
     profileHeading: 'kelley swart | VP, Strategy & Growth',
-    profileImage: 'https://foundsm.com/found2025/wp-content/uploads/2026/02/Kelley_author_profile-240x300.webp',
     profileImageAlt: '',
     profileTeam: 'Executive Leadership',
     profileFoundStartDate: '2014',
@@ -482,7 +465,6 @@ const legacyAuthorProfileDetails: Record<string, Partial<LegacyAuthorData>> = {
       {
         title: 'Our Top Takeaways From Search Marketing Expo Advanced 2025',
         href: '/insights/our-top-takeaways-from-search-marketing-expo-advanced-2025/',
-        imageSrc: 'https://foundsm.com/found2025/wp-content/uploads/2025/06/SMX-Conference-2025-1-sm-768x576.webp',
         imageAlt: '',
         imageWidth: 768,
         imageHeight: 576,
@@ -493,7 +475,6 @@ const legacyAuthorProfileDetails: Record<string, Partial<LegacyAuthorData>> = {
   kelsey: {
     wpId: 5194,
     profileHeading: 'kelsey connor | Director, Marketing & Brand Strategy',
-    profileImage: 'https://foundsm.com/found2025/wp-content/uploads/2026/02/Kelsey_author_profile-240x300.webp',
     profileImageAlt: '',
     profileTeam: 'Agency Operations',
     profileFoundStartDate: '2025',
@@ -510,7 +491,6 @@ const legacyAuthorProfileDetails: Record<string, Partial<LegacyAuthorData>> = {
       {
         title: 'Wrapping Up 19 Years With Purpose: Found’s Year-End Tradition of Giving Back',
         href: '/insights/wrapping-up-19-years-with-purpose-founds-year-end-tradition-of-giving-back/',
-        imageSrc: 'https://foundsm.com/found2025/wp-content/uploads/2026/01/img_0446-768x576.jpg',
         imageAlt: '',
         imageWidth: 768,
         imageHeight: 576,
@@ -521,7 +501,6 @@ const legacyAuthorProfileDetails: Record<string, Partial<LegacyAuthorData>> = {
   kylie: {
     wpId: 5563,
     profileHeading: 'Kylie Colquitt | Group Account Director',
-    profileImage: 'https://foundsm.com/found2025/wp-content/uploads/2026/02/Kylie_author_profile.webp',
     profileImageAlt: '',
     profileTeam: 'Client Partnership',
     profileFoundStartDate: '2017',
@@ -537,7 +516,6 @@ const legacyAuthorProfileDetails: Record<string, Partial<LegacyAuthorData>> = {
   maria: {
     wpId: 5303,
     profileHeading: 'maria escobedo | Associate Data Analyst',
-    profileImage: 'https://foundsm.com/found2025/wp-content/uploads/2026/02/Maria_author_profile-240x300.webp',
     profileImageAlt: '',
     profileTeam: 'Client Partnership',
     profileFoundStartDate: '2022',
@@ -554,7 +532,6 @@ const legacyAuthorProfileDetails: Record<string, Partial<LegacyAuthorData>> = {
   matt: {
     wpId: 5565,
     profileHeading: 'matt dragoo | Senior Data Analyst',
-    profileImage: 'https://foundsm.com/found2025/wp-content/uploads/2026/02/Matt_author_profile.webp',
     profileImageAlt: '',
     profileTeam: 'Client Partnership',
     profileFoundStartDate: '2019',
@@ -571,7 +548,6 @@ const legacyAuthorProfileDetails: Record<string, Partial<LegacyAuthorData>> = {
   nicholas: {
     wpId: 5984,
     profileHeading: 'Nicholas Hoium | Head of Data Engineering',
-    profileImage: 'https://foundsm.com/found2025/wp-content/uploads/2026/03/Nicholas_author_profile.webp',
     profileImageAlt: '',
     profileTeam: 'Innovation',
     profileFoundStartDate: '2010',
@@ -587,7 +563,6 @@ const legacyAuthorProfileDetails: Record<string, Partial<LegacyAuthorData>> = {
   ryan: {
     wpId: 5198,
     profileHeading: 'Ryan Eme | Head of Data Intelligence',
-    profileImage: 'https://foundsm.com/found2025/wp-content/uploads/2026/02/Ryan_author_profile-240x300.webp',
     profileImageAlt: '',
     profileTeam: 'Innovation',
     profileFoundStartDate: '2014',
@@ -604,7 +579,6 @@ const legacyAuthorProfileDetails: Record<string, Partial<LegacyAuthorData>> = {
       {
         title: 'ICDPA Isn’t Just Compliance. It’s the Foundation of Smarter Data Strategy.',
         href: '/insights/indiana-consumer-data-protection-act/',
-        imageSrc: 'https://foundsm.com/found2025/wp-content/uploads/2026/02/ICDPA-blog-feature-768x513.webp',
         imageAlt: "Indiana's New Data Privacy Laws",
         imageWidth: 768,
         imageHeight: 513,
@@ -613,7 +587,6 @@ const legacyAuthorProfileDetails: Record<string, Partial<LegacyAuthorData>> = {
       {
         title: 'A 3 Minute Implementation Guide to Segmenting AI Traffic in GA4',
         href: '/insights/a-3-minute-implementation-guide-to-segmenting-ai-traffic-in-ga4/',
-        imageSrc: 'https://foundsm.com/found2025/wp-content/uploads/2025/12/GA4-Blog-image-768x512.png',
         imageAlt: '',
         imageWidth: 768,
         imageHeight: 512,
@@ -786,7 +759,6 @@ function buildDefaultLegacyPageData(definition: LegacyPageDefinition): LegacyPag
         eyebrow: 'Authors',
         heading: 'From Google Roots\nto Agile Results',
         subheading: heroBody,
-        image: '/images/pages/team/adam-persinger.webp',
         imageAlt: 'Found Search Marketing team member',
       },
       body: [block(introBody)],
@@ -870,12 +842,12 @@ function mergeLegacyAuthor(definition: LegacyAuthorDefinition, incoming?: Legacy
     schemaJson: incoming?.schemaJson,
     wpId: incoming?.wpId ?? profile?.wpId,
     profileHeading: incoming?.profileHeading || profile?.profileHeading,
-    profileImage: incoming?.profileImage || profile?.profileImage,
+    profileImage: incoming?.profileImage || incoming?.image,
     profileImageAlt: incoming?.profileImageAlt ?? profile?.profileImageAlt,
     profileTeam: incoming?.profileTeam || profile?.profileTeam,
     profileFoundStartDate: incoming?.profileFoundStartDate || profile?.profileFoundStartDate,
     profileExpertise: incoming?.profileExpertise || profile?.profileExpertise,
     profileBody: hasBlocks(incoming?.profileBody) ? incoming.profileBody : profile?.profileBody,
-    latestPosts: hasLatestPosts(incoming?.latestPosts) ? incoming.latestPosts : profile?.latestPosts,
+    latestPosts: hasLatestPosts(incoming?.latestPosts) ? incoming.latestPosts : [],
   };
 }

@@ -16,14 +16,13 @@ const toVideoUrl = (item?: { videoUrl?: string; videoFile?: any }) => {
 export const srcFor = toImageUrl;
 
 export function imageProps(
-  item?: { image?: any; imageAlt?: string; videoFile?: any; videoUrl?: string; videoPoster?: any },
+  item?: { image?: any; imageAlt?: string; videoFile?: any; videoUrl?: string },
   loading: 'eager' | 'lazy' = 'lazy',
 ) {
   const imageSrc = toImageUrl(item?.image);
   const videoSrc = toVideoUrl(item);
   const src = videoSrc || imageSrc;
-  const poster = videoSrc ? toImageUrl(item?.videoPoster) || imageSrc : undefined;
-  return src ? { src, alt: item?.imageAlt || '', loading, poster } : undefined;
+  return src ? { src, alt: item?.imageAlt || '', loading } : undefined;
 }
 
 export function cardsFor(cards: CardList = []) {
@@ -38,7 +37,6 @@ export function cardsFor(cards: CardList = []) {
       icon: toImageUrl(card.icon),
       image: videoSrc || imageSrc,
       imageAlt: card.imageAlt,
-      imagePoster: videoSrc ? toImageUrl((card as any).videoPoster) || imageSrc : undefined,
     };
   });
 }
@@ -54,7 +52,6 @@ export function tabsFor(tabs: TabList = []) {
       icon: toImageUrl(tab.icon),
       image: videoSrc || imageSrc,
       imageAlt: tab.imageAlt,
-      imagePoster: videoSrc ? toImageUrl((tab as any).videoPoster) || imageSrc : undefined,
     };
   });
 }

@@ -1,4 +1,6 @@
 ---
+import { normalizeLegacyAssetSrcset, normalizeLegacyAssetUrl } from '../lib/legacyAssets';
+
 interface ArticleCategory {
   label: string;
   slug: string;
@@ -32,6 +34,14 @@ interface Props {
 }
 
 const { articles, filterScope = 'insights-articles', postsPerPage = 6 } = Astro.props;
+const normalizedArticles = articles.map((article) => ({
+  ...article,
+  image: {
+    ...article.image,
+    src: normalizeLegacyAssetUrl(article.image.src),
+    srcset: normalizeLegacyAssetSrcset(article.image.srcset),
+  },
+}));
 ---
 
 <section
@@ -49,7 +59,7 @@ const { articles, filterScope = 'insights-articles', postsPerPage = 6 } = Astro.
   >
     <div class="insights-article-cards__grid" id="insights-article-cards-grid" role="list">
       {
-        articles.map((article, index) => {
+        normalizedArticles.map((article, index) => {
           const dataCategory = article.categories.map((category) => category.slug).join(' ');
 
           return (

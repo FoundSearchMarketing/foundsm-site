@@ -6,7 +6,6 @@ interface ImageProps {
   alt: string;
   width?: number;
   height?: number;
-  poster?: string;
 }
 
 interface CtaLink {
@@ -43,7 +42,7 @@ const paragraphs = Array.isArray(body) ? body : [body];
   <div class="split-feature__inner">
     {image && (
       <div class="split-feature__media">
-        <MediaAsset src={image.src} alt={image.alt} width={image.width} height={image.height} loading="lazy" poster={image.poster} fill />
+        <MediaAsset src={image.src} alt={image.alt} width={image.width} height={image.height} loading="lazy" fill />
       </div>
     )}
 

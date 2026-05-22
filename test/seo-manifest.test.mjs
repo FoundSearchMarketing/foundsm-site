@@ -30,6 +30,31 @@ test('Yoast redirects are merged under Vercel static redirect limits', () => {
   assert.ok(vercel.redirects.some((redirect) => redirect.source === '/capabilities-paid-media' && redirect.destination === '/capabilities/paid-media/'));
 });
 
+test('legacy whitepaper upload URLs redirect to clean PDF URLs', () => {
+  const expectedRedirects = new Map([
+    [
+      '/found2025/wp-content/uploads/2025/11/Balance-of-Humans-and-Automation_Nov-2025.pdf',
+      '/whitepapers/balance-of-humans-and-automation-nov-2025.pdf',
+    ],
+    [
+      '/found2025/wp-content/uploads/2026/01/Foundsm_Data_Activation_whitepaper_2026.pdf',
+      '/whitepapers/data-activation-whitepaper-2026.pdf',
+    ],
+    [
+      '/found2025/wp-content/uploads/2026/01/foundsm_data_activation_whitepaper_2026.pdf',
+      '/whitepapers/data-activation-whitepaper-2026.pdf',
+    ],
+  ]);
+
+  for (const [source, destination] of expectedRedirects) {
+    assert.ok(vercel.redirects.some((redirect) => (
+      redirect.source === source
+      && redirect.destination === destination
+      && redirect.permanent === true
+    )), source);
+  }
+});
+
 test('query-string redirects use Vercel query matchers instead of source query strings', () => {
   assert.ok(vercel.redirects.every((redirect) => !redirect.source.includes('?')));
   assert.ok(manifest.redirects.every((redirect) => !redirect.source.includes('?')));

@@ -57,10 +57,10 @@ function renderRichText(blocks?: PortableTextBlock[]): string {
 }
 
 const showCta = (item?: { ctaText?: string; ctaUrl?: string }) => Boolean(item?.ctaText && item?.ctaUrl);
-const mediaFor = (item?: { image?: string; imageAlt?: string; videoUrl?: string; videoPoster?: string }) => {
+const mediaFor = (item?: { image?: string; imageAlt?: string; videoUrl?: string }) => {
   const videoSrc = item?.videoUrl?.trim();
   const src = videoSrc || item?.image;
-  return src ? { src, alt: item?.imageAlt || '', poster: videoSrc ? item?.videoPoster || item?.image : undefined } : undefined;
+  return src ? { src, alt: item?.imageAlt || '' } : undefined;
 };
 const metricValue = (metric: { value?: number }) => String(metric.value ?? '');
 const testimonialRole = [homepage.metrics.testimonial.authorTitle, homepage.metrics.testimonial.authorCompany].filter(Boolean).join(' - ');
@@ -169,7 +169,7 @@ const ecosystemTabs = homepage.ecosystem.tabs.map((tab) => ({
       </div>
       {introMedia && (
         <figure class="home-intro__media">
-          <MediaAsset src={introMedia.src} alt={introMedia.alt} width="742" height="739" loading="eager" poster={introMedia.poster} />
+          <MediaAsset src={introMedia.src} alt={introMedia.alt} width="742" height="739" loading="eager" />
         </figure>
       )}
     </div>
@@ -207,7 +207,7 @@ const ecosystemTabs = homepage.ecosystem.tabs.map((tab) => ({
     <div class="home-shell home-outcomes__grid">
       {outcomesMedia && (
         <figure class="home-outcomes__media">
-          <MediaAsset src={outcomesMedia.src} alt={outcomesMedia.alt} width="950" height="794" loading="lazy" poster={outcomesMedia.poster} />
+          <MediaAsset src={outcomesMedia.src} alt={outcomesMedia.alt} width="950" height="794" loading="lazy" />
         </figure>
       )}
       <div class="home-outcomes__copy">
@@ -291,7 +291,7 @@ const ecosystemTabs = homepage.ecosystem.tabs.map((tab) => ({
 
       {metricsMedia && (
         <figure class="home-metric-card home-metric-card--image">
-          <MediaAsset src={metricsMedia.src} alt={metricsMedia.alt} width="337" height="276" loading="eager" poster={metricsMedia.poster} />
+          <MediaAsset src={metricsMedia.src} alt={metricsMedia.alt} width="337" height="276" loading="eager" />
         </figure>
       )}
     </div>
@@ -369,7 +369,7 @@ const ecosystemTabs = homepage.ecosystem.tabs.map((tab) => ({
                 >
                   {tab.media && (
                     <figure class="home-tabs__mobile-media">
-                      <MediaAsset src={tab.media.src} alt={tab.media.alt || tab.title || ''} width="413" height="535" loading="eager" poster={tab.media.poster} />
+                      <MediaAsset src={tab.media.src} alt={tab.media.alt || tab.title || ''} width="413" height="535" loading="eager" />
                     </figure>
                   )}
                   <div class="home-tabs__mobile-copy">
@@ -398,7 +398,7 @@ const ecosystemTabs = homepage.ecosystem.tabs.map((tab) => ({
               </div>
               {tab.media && (
                 <figure class="home-tabs__panel-media">
-                  <MediaAsset src={tab.media.src} alt={tab.media.alt || tab.title || ''} width="413" height="535" loading="eager" poster={tab.media.poster} />
+                  <MediaAsset src={tab.media.src} alt={tab.media.alt || tab.title || ''} width="413" height="535" loading="eager" />
                 </figure>
               )}
             </article>

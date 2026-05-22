@@ -42,7 +42,6 @@ const leaders = leaderSource
       role: leader.role || fallback.role || '',
       image: srcFor(leader.image),
       videoUrl: leader.videoUrl || fallback.videoUrl,
-      videoPoster: srcFor(leader.videoPoster) || srcFor(leader.image),
     };
   })
   .filter((leader) => leader.name);

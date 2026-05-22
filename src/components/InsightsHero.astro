@@ -6,7 +6,6 @@ interface Props {
   body?: string;
   imageSrc?: string;
   imageAlt?: string;
-  imagePoster?: string;
 }
 
 const {
@@ -14,7 +13,6 @@ const {
   body = 'Great performance begins by staying sharp. Tap into fresh insights, news, and forward-thinking strategies from our team and beyond.',
   imageSrc,
   imageAlt = '',
-  imagePoster,
 } = Astro.props;
 ---
 
@@ -33,7 +31,6 @@ const {
           width="434"
           height="609"
           loading="eager"
-          poster={imagePoster}
         />
       </figure>
     )}

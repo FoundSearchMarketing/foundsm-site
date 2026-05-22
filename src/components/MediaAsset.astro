@@ -19,14 +19,12 @@ const {
   width,
   height,
   loading = 'lazy',
-  poster,
   fill = false,
   fit,
   class: className,
 } = Astro.props;
 
 const resolvedSrc = normalizeLegacyAssetUrl(src);
-const resolvedPoster = normalizeLegacyAssetUrl(poster);
 const normalizedSrc = resolvedSrc.split(/[?#]/)[0] || '';
 const normalizedExtensionSrc = normalizedSrc.toLowerCase();
 const isVideo = /\.(mp4|webm|mov|m4v)$/i.test(normalizedSrc);
@@ -48,7 +46,6 @@ const mediaStyle = fit ? `--media-asset-fit: ${fit}` : undefined;
     loop
     playsinline
     preload={loading === 'eager' ? 'auto' : 'metadata'}
-    poster={resolvedPoster || undefined}
     aria-label={alt || undefined}
     aria-hidden={alt ? undefined : 'true'}
   >

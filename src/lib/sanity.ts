@@ -19,8 +19,7 @@ export function urlFor(source: SanityImageSource) {
 
 const editableMediaProjection = `
   ...,
-  "videoUrl": coalesce(videoFile.asset->url, videoUrl),
-  "videoPoster": videoPoster.asset->url
+  "videoUrl": coalesce(videoFile.asset->url, videoUrl)
 `;
 
 const editableCardProjection = `
@@ -88,7 +87,6 @@ export const allTeamMembersQuery = `*[_type == "teamMember"] | order(order asc) 
   role,
   image,
   "videoUrl": coalesce(videoFile.asset->url, videoUrl),
-  "videoPoster": videoPoster.asset->url,
   bio,
   linkedin
 }`;
@@ -133,8 +131,7 @@ export const homePageQuery = `*[_type == "homePage"][0] {
     body,
     "image": image.asset->url,
     imageAlt,
-    "videoUrl": coalesce(videoFile.asset->url, videoUrl),
-    "videoPoster": videoPoster.asset->url
+    "videoUrl": coalesce(videoFile.asset->url, videoUrl)
   },
   ctaStrip,
   clientLogos {
@@ -148,7 +145,6 @@ export const homePageQuery = `*[_type == "homePage"][0] {
     "image": image.asset->url,
     imageAlt,
     "videoUrl": coalesce(videoFile.asset->url, videoUrl),
-    "videoPoster": videoPoster.asset->url,
     heading,
     body,
     ctaText,
@@ -170,8 +166,7 @@ export const homePageQuery = `*[_type == "homePage"][0] {
     ownershipCard,
     "image": image.asset->url,
     imageAlt,
-    "videoUrl": coalesce(videoFile.asset->url, videoUrl),
-    "videoPoster": videoPoster.asset->url
+    "videoUrl": coalesce(videoFile.asset->url, videoUrl)
   },
   partners {
     heading,
@@ -196,8 +191,7 @@ export const homePageQuery = `*[_type == "homePage"][0] {
       ctaUrl,
       "image": image.asset->url,
       imageAlt,
-      "videoUrl": coalesce(videoFile.asset->url, videoUrl),
-      "videoPoster": videoPoster.asset->url
+      "videoUrl": coalesce(videoFile.asset->url, videoUrl)
     }
   }
 }`;

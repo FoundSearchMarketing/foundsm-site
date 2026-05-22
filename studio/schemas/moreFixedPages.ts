@@ -61,7 +61,6 @@ const imageFields = [
   defineField({ name: 'imageAlt', title: 'Image Alt Text', type: 'string' }),
   defineField({ name: 'videoFile', title: 'Video File', type: 'file', options: { accept: 'video/mp4,video/webm,video/quicktime' }, description: 'Optional uploaded video asset. Takes precedence over Video URL.' }),
   defineField({ name: 'videoUrl', title: 'Video URL', type: 'url', description: 'Optional MP4/WebM URL to render instead of the image.' }),
-  defineField({ name: 'videoPoster', title: 'Video Poster', type: 'image', options: { hotspot: true } }),
 ];
 
 const requiredImageFields = [
@@ -69,7 +68,6 @@ const requiredImageFields = [
   defineField({ name: 'imageAlt', title: 'Image Alt Text', type: 'string' }),
   defineField({ name: 'videoFile', title: 'Video File', type: 'file', options: { accept: 'video/mp4,video/webm,video/quicktime' }, description: 'Optional uploaded video asset. Takes precedence over Video URL.' }),
   defineField({ name: 'videoUrl', title: 'Video URL', type: 'url', description: 'Optional MP4/WebM URL to render instead of the image.' }),
-  defineField({ name: 'videoPoster', title: 'Video Poster', type: 'image', options: { hotspot: true } }),
 ];
 
 const richSectionFields = [
@@ -87,7 +85,6 @@ const cardMember = defineArrayMember({
     defineField({ name: 'imageAlt', title: 'Image Alt Text', type: 'string' }),
     defineField({ name: 'videoFile', title: 'Video File', type: 'file', options: { accept: 'video/mp4,video/webm,video/quicktime' }, description: 'Optional uploaded video asset. Takes precedence over Video URL.' }),
     defineField({ name: 'videoUrl', title: 'Video URL', type: 'url', description: 'Optional MP4/WebM URL to render instead of the image.' }),
-    defineField({ name: 'videoPoster', title: 'Video Poster', type: 'image', options: { hotspot: true } }),
   ],
   preview: { select: { title: 'title', media: 'image' } },
 });

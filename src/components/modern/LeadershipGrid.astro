@@ -6,7 +6,6 @@ interface Leader {
   role: string;
   image?: string;
   videoUrl?: string;
-  videoPoster?: string;
 }
 
 interface Props {
@@ -53,7 +52,6 @@ const sectionClass = ['leadership-section', `leadership-section--${layout}`].joi
                 src={mediaSrc}
                 alt={`${leader.name}, ${leader.role}`}
                 loading="lazy"
-                poster={leader.videoPoster || leader.image}
                 fill
               />
             )}

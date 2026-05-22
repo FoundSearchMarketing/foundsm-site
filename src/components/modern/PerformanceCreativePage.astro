@@ -7,7 +7,6 @@ interface ImageProps {
   width?: number;
   height?: number;
   loading?: 'eager' | 'lazy';
-  poster?: string;
 }
 
 interface TabItem {
@@ -17,7 +16,6 @@ interface TabItem {
   icon?: string;
   image?: string;
   imageAlt?: string;
-  imagePoster?: string;
 }
 
 interface CardItem {
@@ -81,7 +79,6 @@ const stripOuterParagraph = (value: string) => value.replace(/^<p>/, '').replace
           width={hero.image.width}
           height={hero.image.height}
           loading={hero.image.loading ?? 'eager'}
-          poster={hero.image.poster}
           fill
         />
       </figure>
@@ -93,7 +90,7 @@ const stripOuterParagraph = (value: string) => value.replace(/^<p>/, '').replace
   <div class="pc-work__inner">
     {split.image && (
       <figure class="pc-work__media">
-        <MediaAsset src={split.image.src} alt={split.image.alt ?? ''} width={split.image.width} height={split.image.height} loading="lazy" poster={split.image.poster} />
+        <MediaAsset src={split.image.src} alt={split.image.alt ?? ''} width={split.image.width} height={split.image.height} loading="lazy" />
       </figure>
     )}
 
@@ -155,7 +152,7 @@ const stripOuterParagraph = (value: string) => value.replace(/^<p>/, '').replace
               </div>
               {tab.image && (
                 <figure class="pc-tabs__panel-media">
-                  <MediaAsset src={tab.image} alt={tab.imageAlt ?? tab.title} loading="lazy" poster={tab.imagePoster} />
+                  <MediaAsset src={tab.image} alt={tab.imageAlt ?? tab.title} loading="lazy" />
                 </figure>
               )}
             </article>
@@ -173,7 +170,7 @@ const stripOuterParagraph = (value: string) => value.replace(/^<p>/, '').replace
     <div class="pc-experience__grid">
       {secondary.image && (
         <figure class="pc-experience__media">
-          <MediaAsset src={secondary.image.src} alt={secondary.image.alt ?? ''} width={secondary.image.width} height={secondary.image.height} loading="lazy" poster={secondary.image.poster} />
+          <MediaAsset src={secondary.image.src} alt={secondary.image.alt ?? ''} width={secondary.image.width} height={secondary.image.height} loading="lazy" />
         </figure>
       )}
 

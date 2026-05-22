@@ -8,7 +8,6 @@ interface TabItem {
   icon?: string;
   image?: string;
   imageAlt?: string;
-  imagePoster?: string;
 }
 
 interface Props {
@@ -74,7 +73,7 @@ const { title, subtitle, tabs, idPrefix, theme = 'muted' } = Astro.props;
               </div>
               {tab.image && (
                 <div class="feature-tabs__panel-media">
-                  <MediaAsset src={tab.image} alt={tab.imageAlt ?? tab.title} loading="lazy" poster={tab.imagePoster} fill />
+                  <MediaAsset src={tab.image} alt={tab.imageAlt ?? tab.title} loading="lazy" fill />
                 </div>
               )}
             </article>

@@ -260,7 +260,6 @@ export const legacyAuthorDefinitions: LegacyAuthorDefinition[] = [
     foundStartDate: '2006',
     expertise: 'Measurement Strategy, Operational Excellence, Strategic Growth',
     bio: 'Julie Warnecke is the Founder and CEO of Found Search Marketing, a Midwest firm managing over $200M in annual media spend. An early Google employee instrumental in launching AdWords, she established Found in 2006. Today, she leads a team of 50+ that serves as a seamless extension of client teams.',
-    image: '/images/pages/team/julie-warnecke.webp',
   },
   {
     slug: 'kelley',
@@ -270,7 +269,6 @@ export const legacyAuthorDefinitions: LegacyAuthorDefinition[] = [
     foundStartDate: '2014',
     expertise: 'Client Alignment, Growth Architecture, Scalable Systems',
     bio: "Kelley, Found's VP of Strategy & Growth, brings 25+ years of experience, starting at Google Ads. She has led strategic planning for Fortune 1000 clients like Home Depot and Staples across CPG, Retail, and Higher Ed. Her focus is on strategic oversight and building strong relationships that exceed client goals.",
-    image: '/images/pages/team/kelley-swart.webp',
   },
   {
     slug: 'nicholas',
@@ -280,7 +278,6 @@ export const legacyAuthorDefinitions: LegacyAuthorDefinition[] = [
     foundStartDate: '2010',
     expertise: 'Google Cloud Certified Data Engineer',
     bio: 'With over 15 years of experience, Head of Data Engineering Nicholas Hoium builds advanced pipelines and web analytics solutions. The IU Bloomington graduate and Google Cloud Certified Engineer transforms raw information into accessible intelligence. Off the clock, Nicholas enjoys indie games, traveling, and watching soccer.',
-    image: '/images/pages/team/nicholas-hoium.webp',
   },
   {
     slug: 'ryan',
@@ -290,7 +287,6 @@ export const legacyAuthorDefinitions: LegacyAuthorDefinition[] = [
     foundStartDate: '2014',
     expertise: 'Audience Intelligence, Data Strategy, Attribution Modeling',
     bio: 'Ryan Eme is the Head of Data Intelligence at Found, bringing 20 years of experience in data-driven marketing. A Certified Google Cloud Data Engineer, he helps clients in higher ed and healthcare unlock business growth. Known for his innovative problem-solving, Ryan is so effective that clients frequently ask to clone him.',
-    image: '/images/pages/team/ryan-eme.webp',
   },
   {
     slug: 'adam',
@@ -300,7 +296,6 @@ export const legacyAuthorDefinitions: LegacyAuthorDefinition[] = [
     foundStartDate: '2016',
     expertise: 'Strategic Media, Performance Forecasting, Channel Strategy',
     bio: 'Adam joined Found Search Marketing in 2016, leveraging his media strategy background to drive client results through research and testing. A Brown University graduate in Cognitive Neuroscience and Economics, he began his career with the Indianapolis Colts. Outside the office, Adam stays active through CrossFit, backpacking, and various team sports.',
-    image: '/images/pages/team/adam-persinger.webp',
   },
   {
     slug: 'caroline',
@@ -310,7 +305,6 @@ export const legacyAuthorDefinitions: LegacyAuthorDefinition[] = [
     foundStartDate: '2017',
     expertise: 'User Experience & Strategy, CRO, Unbounce Expert',
     bio: 'As one of only 10 Unbounce Experts worldwide, Caroline specializes in creating high-performing landing pages and optimizing conversion rates. Her background spans CRO, web design, and SEO, with a focus on higher education. When not driving client results, Caroline enjoys gardening, cozy video games, and exploring the city with her family.',
-    image: '/images/pages/team/caroline-stoner.webp',
   },
   {
     slug: 'kylie',
@@ -320,7 +314,6 @@ export const legacyAuthorDefinitions: LegacyAuthorDefinition[] = [
     foundStartDate: '2017',
     expertise: 'Client Services',
     bio: 'As Group Account Director, Kylie leverages 15+ years of experience to orchestrate cross-channel strategies that drive client growth. Having supported brands like General Motors at top Chicago agencies, she brings calm, collaborative leadership to her team. Outside work, Kylie enjoys life with her daughter and dog.',
-    image: '/images/pages/team/kylie-colquitt.webp',
   },
   {
     slug: 'matt',
@@ -357,7 +350,6 @@ export const legacyAuthorDefinitions: LegacyAuthorDefinition[] = [
     foundStartDate: '2025',
     expertise: 'Marketing, Brand & Positioning',
     bio: 'Kelsey brings nearly 20 years of expertise as Director of Agency Marketing and Brand Strategy. She fosters seamless client-agency collaboration to drive results through authentic leadership. A proud Hoosier with an MBA, Kelsey serves the community as REV Committee Chair and enjoys flipping houses and cheering on her family.',
-    image: '/images/pages/team/kelsey-connor.webp',
   },
 ];
 
@@ -767,7 +759,6 @@ function buildDefaultLegacyPageData(definition: LegacyPageDefinition): LegacyPag
         eyebrow: 'Authors',
         heading: 'From Google Roots\nto Agile Results',
         subheading: heroBody,
-        image: '/images/pages/team/adam-persinger.webp',
         imageAlt: 'Found Search Marketing team member',
       },
       body: [block(introBody)],

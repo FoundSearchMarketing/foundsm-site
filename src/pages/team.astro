@@ -40,9 +40,9 @@ const leaders = leaderSource
     return {
       name: leader.name || fallback.name || '',
       role: leader.role || fallback.role || '',
-      image: srcFor(leader.image) || srcFor(fallback.image),
+      image: srcFor(leader.image),
       videoUrl: leader.videoUrl || fallback.videoUrl,
-      videoPoster: srcFor(leader.videoPoster) || srcFor(fallback.videoPoster) || srcFor(leader.image) || srcFor(fallback.image),
+      videoPoster: srcFor(leader.videoPoster) || srcFor(leader.image),
     };
   })
   .filter((leader) => leader.name);

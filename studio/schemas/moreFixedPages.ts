@@ -39,6 +39,7 @@ const richTextField = (name: string, title: string) =>
   });
 
 const seoFields = createSeoFields();
+const eventSeoFields = createSeoFields({ includeOgImage: false });
 
 const ctaFields = [
   defineField({ name: 'label', title: 'Label', type: 'string' }),
@@ -226,7 +227,7 @@ export const eventLandingPage = defineType({
   type: 'document',
   groups,
   fields: [
-    ...seoFields,
+    ...eventSeoFields,
     defineField({ name: 'ogImage', title: 'Open Graph Image URL', type: 'url', group: 'seo' }),
     defineField({ name: 'event', title: 'Event Schema', type: 'object', group: 'content', fields: [defineField({ name: 'name', title: 'Name', type: 'string' }), defineField({ name: 'description', title: 'Description', type: 'text', rows: 3 }), defineField({ name: 'startDate', title: 'Start Date ISO', type: 'string' }), defineField({ name: 'endDate', title: 'End Date ISO', type: 'string' }), defineField({ name: 'locationLabel', title: 'Location Label', type: 'string' }), defineField({ name: 'locationUrl', title: 'Location URL', type: 'url' })] }),
     defineField({ name: 'nav', title: 'Navigation Labels', type: 'object', group: 'content', fields: [defineField({ name: 'topicsLabel', title: 'Topics Label', type: 'string' }), defineField({ name: 'benefitsLabel', title: 'Benefits Label', type: 'string' }), defineField({ name: 'ctaLabel', title: 'CTA Label', type: 'string' })] }),

@@ -1,4 +1,5 @@
 import { sanityClient, urlFor } from './sanity';
+import { normalizeLegacyAssetUrl } from './legacyAssets';
 
 export interface BlogPostCategory {
   label: string;
@@ -167,7 +168,7 @@ export function toLatestPostCards(posts: BlogPost[], limit = 2) {
     categories: post.categories.map((category) => category.label).join(', '),
     title: post.title,
     href: `/insights/${post.slug}/`,
-    imageSrc: post.cardImage || post.heroImage,
+    imageSrc: normalizeLegacyAssetUrl(post.cardImage || post.heroImage),
     imageAlt: post.heroImageAlt,
     date: post.publishedLabel,
     excerpt: post.excerpt,
@@ -185,7 +186,7 @@ export function toInsightsArticleCards(posts: BlogPost[]) {
     datetime: post.publishedAt,
     excerpt: post.excerpt,
     image: {
-      src: post.cardImage || post.heroImage,
+      src: normalizeLegacyAssetUrl(post.cardImage || post.heroImage),
       width: 1200,
       height: 706,
       alt: post.heroImageAlt,
@@ -393,18 +394,19 @@ function rewriteHref(href: string, slugs: Set<string>): string {
 }
 
 function imageUrl(
-  source: SanityBlock | undefined,
+  source: SanityBlock | string | undefined,
   width: number,
   height?: number,
   options: { ignoreImageParams?: boolean } = {},
 ): string {
+  if (typeof source === 'string') return normalizeLegacyAssetUrl(source);
   if (!source?.asset) return '';
 
   try {
     const builder = (options.ignoreImageParams ? urlFor(source as any).ignoreImageParams() : urlFor(source as any))
       .width(width)
       .auto('format');
-    return height ? builder.height(height).fit('crop').url() : builder.url();
+    return normalizeLegacyAssetUrl(height ? builder.height(height).fit('crop').url() : builder.url());
   } catch {
     return '';
   }

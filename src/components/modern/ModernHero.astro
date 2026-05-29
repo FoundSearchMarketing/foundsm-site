@@ -7,7 +7,6 @@ interface HeroImage {
   width?: number;
   height?: number;
   loading?: 'eager' | 'lazy';
-  poster?: string;
 }
 
 interface CtaLink {
@@ -96,7 +95,6 @@ const mediaStyle = [
           width={image.width}
           height={image.height}
           loading={image.loading ?? 'eager'}
-          poster={image.poster}
           fill
           fit={imageFit}
         />

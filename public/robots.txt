@@ -2,6 +2,5 @@ User-agent: *
 Disallow: /wp-admin/
 Disallow: /sandbox/
 Disallow: /found2025/
-Allow: /found2025/wp-content/uploads/
 
 Sitemap: https://foundsm.com/sitemap.xml

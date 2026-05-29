@@ -36,6 +36,8 @@ const heroImage = (() => {
     return undefined;
   }
 })();
+const heroVideo = typeof page.hero.videoUrl === 'string' ? page.hero.videoUrl.trim() : '';
+const heroMedia = heroVideo || heroImage;
 
 const schema = {
   "@context": "https://schema.org",
@@ -72,7 +74,7 @@ const schema = {
     <!-- ============================================
          HERO SECTION
          ============================================ -->
-    <InsightsHero headline={page.hero.headline} body={page.hero.body} imageSrc={heroImage} imageAlt={page.hero.imageAlt} />
+    <InsightsHero headline={page.hero.headline} body={page.hero.body} imageSrc={heroMedia} imageAlt={page.hero.imageAlt} />
 
     <LatestPostsSection posts={latestPosts} />
 

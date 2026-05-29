@@ -1,4 +1,6 @@
 ---
+import { normalizeLegacyAssetUrl } from '../lib/legacyAssets';
+
 interface LatestPost {
   type: string;
   categories: string;
@@ -16,6 +18,10 @@ interface Props {
 }
 
 const { posts } = Astro.props;
+const normalizedPosts = posts.map((post) => ({
+  ...post,
+  imageSrc: normalizeLegacyAssetUrl(post.imageSrc),
+}));
 ---
 
 <section class="elementor-section latest-posts" aria-labelledby="latest-posts-heading">
@@ -26,7 +32,7 @@ const { posts } = Astro.props;
   <div class="e-con-inner latest-posts__panel">
     <div class="latest-posts__grid" role="list">
       {
-        posts.map((post) => (
+        normalizedPosts.map((post) => (
           <a class="featured-card" href={post.href} role="listitem">
             <div class="featured-card__inner">
               <p class="tag-line">{post.type}</p>

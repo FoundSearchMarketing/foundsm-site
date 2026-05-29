@@ -1,4 +1,5 @@
 import manifest from './seoManifest.generated.json';
+import { normalizeLegacyAssetUrl } from './legacyAssets';
 
 export const SITE_URL = 'https://foundsm.com';
 export const SITE_NAME = 'Found Search Marketing';
@@ -144,7 +145,7 @@ export function resolveSeo(route: string, input: SeoInput = {}): ResolvedSeo {
   const twitterImage = resolveImage(input.twitterImage) || resolveImage(fallback.twitterImage) || ogImage;
   const ogImageMeta = resolveImageMeta(input.ogImage) || resolveImageMeta(fallback.ogImage) || seoManifest.defaultOgImage;
   const robots = chooseRobots(input.robots, fallback.robots);
-  const schema = parseSchema(undefined, input.schemaJson) || input.schema || fallback.schema || createDefaultSchema({
+  const schema = normalizeSchemaAssetUrls(parseSchema(undefined, input.schemaJson) || input.schema || fallback.schema || createDefaultSchema({
     title,
     description,
     canonical,
@@ -152,7 +153,7 @@ export function resolveSeo(route: string, input: SeoInput = {}): ResolvedSeo {
     ogType: firstText(input.ogType, fallback.ogType, 'website'),
     publishedAt: input.publishedAt || fallback.publishedAt,
     modifiedAt: input.modifiedAt || fallback.modifiedAt,
-  });
+  }));
 
   return {
     title,
@@ -218,8 +219,32 @@ function resolveImageMeta(image?: string | SeoImage): SeoImage | undefined {
 
 function normalizeImageUrl(value: string): string {
   if (!value) return value;
-  if (value.startsWith('/')) return `${SITE_URL}${value}`;
-  return value.replace('https://foundsm.com/', 'https://foundsm.com/');
+  const normalized = normalizeLegacyAssetUrl(value);
+  if (normalized.startsWith('/')) return `${SITE_URL}${normalized}`;
+  return normalized.replace('https://www.foundsm.com/', `${SITE_URL}/`);
+}
+
+function normalizeSchemaAssetUrls(value: JsonLd | undefined): JsonLd | undefined {
+  if (!value) return undefined;
+  return normalizeSchemaValue(value) as JsonLd;
+}
+
+function normalizeSchemaValue(value: unknown): unknown {
+  if (typeof value === 'string') {
+    return normalizeImageUrl(value);
+  }
+
+  if (Array.isArray(value)) {
+    return value.map((item) => normalizeSchemaValue(item));
+  }
+
+  if (value && typeof value === 'object') {
+    return Object.fromEntries(
+      Object.entries(value).map(([key, item]) => [key, normalizeSchemaValue(item)]),
+    );
+  }
+
+  return value;
 }
 
 function normalizeTwitterSite(value: string): string {

@@ -39,7 +39,7 @@ const richTextField = (name: string, title: string) =>
   });
 
 const seoFields = createSeoFields();
-const eventSeoFields = createSeoFields({ includeOgImage: false });
+const seoFieldsWithoutOgImage = createSeoFields({ includeOgImage: false });
 
 const ctaFields = [
   defineField({ name: 'label', title: 'Label', type: 'string' }),
@@ -59,15 +59,15 @@ const ctaFields = [
 const imageFields = [
   defineField({ name: 'image', title: 'Image', type: 'image', options: { hotspot: true } }),
   defineField({ name: 'imageAlt', title: 'Image Alt Text', type: 'string' }),
+  defineField({ name: 'videoFile', title: 'Video File', type: 'file', options: { accept: 'video/mp4,video/webm,video/quicktime' }, description: 'Optional uploaded video asset. Takes precedence over Video URL.' }),
   defineField({ name: 'videoUrl', title: 'Video URL', type: 'url', description: 'Optional MP4/WebM URL to render instead of the image.' }),
-  defineField({ name: 'videoPoster', title: 'Video Poster', type: 'image', options: { hotspot: true } }),
 ];
 
 const requiredImageFields = [
   defineField({ name: 'image', title: 'Image', type: 'image', options: { hotspot: true }, validation: (Rule) => Rule.required() }),
   defineField({ name: 'imageAlt', title: 'Image Alt Text', type: 'string' }),
+  defineField({ name: 'videoFile', title: 'Video File', type: 'file', options: { accept: 'video/mp4,video/webm,video/quicktime' }, description: 'Optional uploaded video asset. Takes precedence over Video URL.' }),
   defineField({ name: 'videoUrl', title: 'Video URL', type: 'url', description: 'Optional MP4/WebM URL to render instead of the image.' }),
-  defineField({ name: 'videoPoster', title: 'Video Poster', type: 'image', options: { hotspot: true } }),
 ];
 
 const richSectionFields = [
@@ -83,8 +83,8 @@ const cardMember = defineArrayMember({
     defineField({ name: 'icon', title: 'Icon', type: 'image' }),
     defineField({ name: 'image', title: 'Image', type: 'image' }),
     defineField({ name: 'imageAlt', title: 'Image Alt Text', type: 'string' }),
+    defineField({ name: 'videoFile', title: 'Video File', type: 'file', options: { accept: 'video/mp4,video/webm,video/quicktime' }, description: 'Optional uploaded video asset. Takes precedence over Video URL.' }),
     defineField({ name: 'videoUrl', title: 'Video URL', type: 'url', description: 'Optional MP4/WebM URL to render instead of the image.' }),
-    defineField({ name: 'videoPoster', title: 'Video Poster', type: 'image', options: { hotspot: true } }),
   ],
   preview: { select: { title: 'title', media: 'image' } },
 });
@@ -227,7 +227,7 @@ export const eventLandingPage = defineType({
   type: 'document',
   groups,
   fields: [
-    ...eventSeoFields,
+    ...seoFieldsWithoutOgImage,
     defineField({ name: 'ogImage', title: 'Open Graph Image URL', type: 'url', group: 'seo' }),
     defineField({ name: 'event', title: 'Event Schema', type: 'object', group: 'content', fields: [defineField({ name: 'name', title: 'Name', type: 'string' }), defineField({ name: 'description', title: 'Description', type: 'text', rows: 3 }), defineField({ name: 'startDate', title: 'Start Date ISO', type: 'string' }), defineField({ name: 'endDate', title: 'End Date ISO', type: 'string' }), defineField({ name: 'locationLabel', title: 'Location Label', type: 'string' }), defineField({ name: 'locationUrl', title: 'Location URL', type: 'url' })] }),
     defineField({ name: 'nav', title: 'Navigation Labels', type: 'object', group: 'content', fields: [defineField({ name: 'topicsLabel', title: 'Topics Label', type: 'string' }), defineField({ name: 'benefitsLabel', title: 'Benefits Label', type: 'string' }), defineField({ name: 'ctaLabel', title: 'CTA Label', type: 'string' })] }),

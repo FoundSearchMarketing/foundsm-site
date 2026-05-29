@@ -1,8 +1,9 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import MediaAsset from '../../components/MediaAsset.astro';
 import { capabilitiesPageQuery, sanityClient } from '../../lib/sanity';
 import { defaultCapabilitiesPageData, mergeCapabilitiesPageData } from '../../lib/fixedPageData';
-import { richHtml, srcFor } from '../../lib/fixedPageRender';
+import { imageProps, richHtml } from '../../lib/fixedPageRender';
 
 const sanityPage = await sanityClient.fetch(capabilitiesPageQuery).catch(() => null);
 const page = mergeCapabilitiesPageData(sanityPage);
@@ -15,12 +16,12 @@ const paidDetail = page.details[1];
 const creativeDetail = page.details[2];
 const imageLoading = (loading: 'eager' | 'lazy' = 'lazy') => loading;
 
-const heroImage = srcFor(page.hero.image);
-const outcomesImage = srcFor(page.outcomes.image);
-const workflowImage = srcFor(page.workflow.image);
-const dataImage = dataDetail ? srcFor(dataDetail.image) : undefined;
-const paidImage = paidDetail ? srcFor(paidDetail.image) : undefined;
-const creativeImage = creativeDetail ? srcFor(creativeDetail.image) : undefined;
+const heroMedia = imageProps(page.hero, 'eager');
+const outcomesMedia = imageProps(page.outcomes);
+const workflowMedia = imageProps(page.workflow);
+const dataMedia = imageProps(dataDetail);
+const paidMedia = imageProps(paidDetail);
+const creativeMedia = imageProps(creativeDetail);
 const heroImageAlt = page.hero.imageAlt || '';
 const outcomesImageAlt = page.outcomes.imageAlt || '';
 const workflowImageAlt = page.workflow.imageAlt || '';
@@ -45,24 +46,21 @@ const schema = {
 <BaseLayout title={title} description={description} canonical={canonical} robots={robots} schema={schema}>
   <div class="capabilities-page">
     <section class="capabilities-hero" aria-labelledby="capabilities-hero-title">
-      <div class:list={['capabilities-hero__inner', { 'capabilities-hero__inner--text-only': !heroImage }]}>
+      <div class:list={['capabilities-hero__inner', { 'capabilities-hero__inner--text-only': !heroMedia }]}>
         <div class="capabilities-hero__copy">
           <h1 id="capabilities-hero-title" class="capabilities-hero__title">{page.hero.heading}</h1>
           <div class="capabilities-hero__text" set:html={richHtml(page.hero.body)} />
         </div>
 
-        {heroImage && (
+        {heroMedia && (
           <div class="capabilities-hero__media" aria-hidden={heroImageAlt ? undefined : 'true'}>
-            <img
+            <MediaAsset
               class="capabilities-hero__image"
-              src={heroImage}
-              sizes="(min-width: 1024px) 40vw, 0px"
+              src={heroMedia.src}
               width="800"
               height="800"
               alt={heroImageAlt}
               loading="eager"
-              fetchpriority="high"
-              decoding="async"
             />
           </div>
         )}
@@ -75,18 +73,16 @@ const schema = {
         <h2 id="outcomes-title" class="outcomes-section__title">{page.outcomes.heading}</h2>
       </div>
 
-      <div class:list={['outcomes-section__inner', { 'outcomes-section__inner--text-only': !outcomesImage }]}>
-        {outcomesImage && (
+      <div class:list={['outcomes-section__inner', { 'outcomes-section__inner--text-only': !outcomesMedia }]}>
+        {outcomesMedia && (
           <div class="outcomes-section__media" aria-hidden={outcomesImageAlt ? undefined : 'true'}>
-            <img
+            <MediaAsset
               class="outcomes-section__image"
-              src={outcomesImage}
-              sizes="(min-width: 1024px) 36vw, 0px"
+              src={outcomesMedia.src}
               width="524"
               height="725"
               alt={outcomesImageAlt}
               loading={imageLoading()}
-              decoding="async"
             />
           </div>
         )}
@@ -96,23 +92,22 @@ const schema = {
     </section>
 
     <section class="workflow-section" aria-labelledby="workflow-title">
-      <div class:list={['workflow-section__inner', { 'workflow-section__inner--text-only': !workflowImage }]}>
+      <div class:list={['workflow-section__inner', { 'workflow-section__inner--text-only': !workflowMedia }]}>
         <div class="workflow-section__copy">
           <h2 id="workflow-title" class="workflow-section__title">{page.workflow.heading}</h2>
           <div class="workflow-section__text" set:html={richHtml(page.workflow.body)} />
           {page.workflow.prompt && <p class="workflow-section__prompt">{page.workflow.prompt}</p>}
         </div>
 
-        {workflowImage && (
+        {workflowMedia && (
           <div class="workflow-section__media">
-            <img
+            <MediaAsset
               class="workflow-section__image"
-              src={workflowImage}
+              src={workflowMedia.src}
               width="500"
               height="500"
               alt={workflowImageAlt}
               loading={imageLoading()}
-              decoding="async"
             />
           </div>
         )}
@@ -120,7 +115,7 @@ const schema = {
     </section>
 
     <section class="capability-detail capability-detail--data" id="capabilities-data-reporting-analytics" aria-labelledby="capability-data-title">
-      <div class:list={['capability-detail__inner', { 'capability-detail__inner--text-only': !dataImage }]}>
+      <div class:list={['capability-detail__inner', { 'capability-detail__inner--text-only': !dataMedia }]}>
         <div class="capability-detail__copy">
           <h2 id="capability-data-title" class="capability-detail__title">{dataDetail?.heading}</h2>
           <div class="capability-detail__text" set:html={richHtml(dataDetail?.body)} />
@@ -129,17 +124,15 @@ const schema = {
           )}
         </div>
 
-        {dataImage && (
+        {dataMedia && (
           <div class="capability-detail__media" aria-hidden={dataImageAlt ? undefined : 'true'}>
-            <img
+            <MediaAsset
               class="capability-detail__image"
-              src={dataImage}
-              sizes="(min-width: 1024px) 44vw, 0px"
+              src={dataMedia.src}
               width="1024"
               height="983"
               alt={dataImageAlt}
               loading={imageLoading()}
-              decoding="async"
             />
           </div>
         )}
@@ -147,18 +140,16 @@ const schema = {
     </section>
 
     <section class="capability-detail capability-detail--paid" id="capabilities-paid-media" aria-labelledby="capability-paid-title">
-      <div class:list={['capability-detail__inner capability-detail__inner--reverse', { 'capability-detail__inner--text-only': !paidImage }]}>
-        {paidImage && (
+      <div class:list={['capability-detail__inner capability-detail__inner--reverse', { 'capability-detail__inner--text-only': !paidMedia }]}>
+        {paidMedia && (
           <div class="capability-detail__media" aria-hidden={paidImageAlt ? undefined : 'true'}>
-            <img
+            <MediaAsset
               class="capability-detail__image"
-              src={paidImage}
-              sizes="(min-width: 1024px) 36vw, 0px"
+              src={paidMedia.src}
               width="753"
               height="768"
               alt={paidImageAlt}
               loading={imageLoading()}
-              decoding="async"
             />
           </div>
         )}
@@ -174,7 +165,7 @@ const schema = {
     </section>
 
     <section class="capability-detail capability-detail--creative" id="capabilities-performance-creative" aria-labelledby="capability-creative-title">
-      <div class:list={['capability-detail__inner', { 'capability-detail__inner--text-only': !creativeImage }]}>
+      <div class:list={['capability-detail__inner', { 'capability-detail__inner--text-only': !creativeMedia }]}>
         <div class="capability-detail__copy">
           <h2 id="capability-creative-title" class="capability-detail__title">{creativeDetail?.heading}</h2>
           <div class="capability-detail__text" set:html={richHtml(creativeDetail?.body)} />
@@ -183,17 +174,15 @@ const schema = {
           )}
         </div>
 
-        {creativeImage && (
+        {creativeMedia && (
           <div class="capability-detail__media" aria-hidden={creativeImageAlt ? undefined : 'true'}>
-            <img
+            <MediaAsset
               class="capability-detail__image"
-              src={creativeImage}
-              sizes="(min-width: 1024px) 36vw, 0px"
+              src={creativeMedia.src}
               width="753"
               height="768"
               alt={creativeImageAlt}
               loading={imageLoading()}
-              decoding="async"
             />
           </div>
         )}
@@ -277,19 +266,21 @@ const schema = {
   .capabilities-hero__media {
     overflow: hidden;
     border-radius: var(--capabilities-image-radius);
+    --media-asset-radius: var(--capabilities-image-radius);
+    --media-asset-fit: cover;
   }
 
-  .capabilities-hero__image {
-    width: 100%;
+  .capabilities-hero__media :global(.capabilities-hero__image) {
+    inline-size: 100%;
     aspect-ratio: 1;
-    border-radius: inherit;
+    border-radius: var(--capabilities-image-radius);
     object-fit: cover;
   }
 
   .outcomes-section {
     position: relative;
     margin-top: 1.25rem;
-    margin-bottom: 12.5rem;
+    margin-bottom: 0;
     padding: 5rem 0 7.5rem;
     background: var(--capabilities-light);
   }
@@ -349,9 +340,13 @@ const schema = {
     justify-content: center;
   }
 
-  .outcomes-section__image {
-    width: 100%;
-    max-width: 32.75rem;
+  .outcomes-section__media {
+    --media-asset-radius: var(--capabilities-image-radius);
+  }
+
+  .outcomes-section__media :global(.outcomes-section__image) {
+    inline-size: 100%;
+    max-inline-size: 32.75rem;
     border-radius: var(--capabilities-image-radius);
   }
 
@@ -366,6 +361,7 @@ const schema = {
 
   .workflow-section {
     min-height: 35.9375rem;
+    padding-block: clamp(3rem, 5vw, 5rem);
     background: linear-gradient(180deg, #ffffff 0%, var(--capabilities-light) 100%);
   }
 
@@ -395,9 +391,14 @@ const schema = {
     line-height: 1.6;
   }
 
-  .workflow-section__image {
-    width: min(100%, 31.25rem);
+  .workflow-section__media {
+    --media-asset-radius: var(--capabilities-image-radius);
+  }
+
+  .workflow-section__media :global(.workflow-section__image) {
+    inline-size: min(100%, 31.25rem);
     margin-inline: auto 0;
+    border-radius: var(--capabilities-image-radius);
   }
 
   .capability-detail {
@@ -494,8 +495,12 @@ const schema = {
     background: var(--capabilities-orange);
   }
 
-  .capability-detail__image {
-    width: 100%;
+  .capability-detail__media {
+    --media-asset-radius: var(--capabilities-image-radius);
+  }
+
+  .capability-detail__media :global(.capability-detail__image) {
+    inline-size: 100%;
     height: auto;
     border-radius: var(--capabilities-image-radius);
   }
@@ -535,7 +540,7 @@ const schema = {
 
     .outcomes-section {
       margin-top: 0;
-      margin-bottom: 5rem;
+      margin-bottom: 0;
       padding: 3rem 0 5rem;
     }
 
@@ -560,6 +565,7 @@ const schema = {
 
     .workflow-section {
       min-height: 0;
+      padding-block: 3rem;
     }
 
     .workflow-section__inner {

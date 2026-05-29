@@ -322,8 +322,9 @@ const normalizedArticles = articles.map((article) => ({
     --article-card-copy-line-height: 36px;
     --article-card-button-size: 15px;
     --article-card-button-line-height: 24px;
+    --article-cards-max-width: 1260px;
 
-    inline-size: min(calc(100% - (2 * var(--page-gutter))), var(--content-max-width));
+    inline-size: min(calc(100% - (2 * var(--page-gutter))), var(--article-cards-max-width));
     margin-block: 0 100px;
     margin-inline: auto;
     background: #ffffff;
@@ -380,16 +381,20 @@ const normalizedArticles = articles.map((article) => ({
 
   .insights-article-card__image-link {
     display: block;
+    overflow: hidden;
+    border-radius: 30px;
+    background: #ffffff;
   }
 
   .insights-article-card__image {
     display: block;
     width: 100%;
     max-width: 100%;
-    height: 280px;
-    object-fit: cover;
+    height: auto;
+    aspect-ratio: 850 / 500;
+    object-fit: contain;
     object-position: center center;
-    border-radius: 40px;
+    border-radius: 30px;
   }
 
   .insights-article-card__categories {
@@ -494,7 +499,6 @@ const normalizedArticles = articles.map((article) => ({
 
   @media (max-width: 1599px) {
     .insights-article-card__image {
-      height: 100%;
       object-position: center center;
       border-radius: 30px;
     }

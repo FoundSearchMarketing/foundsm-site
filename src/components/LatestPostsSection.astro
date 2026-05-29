@@ -59,6 +59,7 @@ const normalizedPosts = posts.map((post) => ({
     --found-green: #8dc63f;
     --found-tag-blue: rgba(10, 173, 239, 0.3);
     --found-white: #ffffff;
+    --latest-posts-max-width: 1260px;
 
     position: relative;
     margin-block: 0 100px;
@@ -83,7 +84,7 @@ const normalizedPosts = posts.map((post) => ({
   .e-con-inner {
     position: relative;
     z-index: 1;
-    inline-size: min(calc(100% - (2 * var(--page-gutter))), var(--content-max-width));
+    inline-size: min(calc(100% - (2 * var(--page-gutter))), var(--latest-posts-max-width));
     margin: 0 auto;
   }
 
@@ -187,15 +188,18 @@ const normalizedPosts = posts.map((post) => ({
   }
 
   .featured-card__image {
+    display: block;
     overflow: hidden;
     border: 0;
     border-radius: 30px;
+    background: transparent;
   }
 
   .featured-card__image img {
     width: 100%;
     aspect-ratio: 850 / 500;
-    object-fit: cover;
+    height: auto;
+    object-fit: contain;
     object-position: center center;
     border-radius: 30px;
     opacity: 1;

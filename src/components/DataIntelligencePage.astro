@@ -178,37 +178,46 @@ const ctaText = [page.cta?.title, ctaBody].filter(Boolean).join(' ');
     letter-spacing: 0;
   }
 
+  .di-hero {
+    padding-block: var(--split-hero-padding-block);
+    background: #ffffff;
+  }
+
   .di-hero__inner {
     display: grid;
-    grid-template-columns: minmax(0, 42.1875rem) minmax(0, 35.9375rem);
-    justify-content: space-between;
+    grid-template-columns: var(--split-hero-grid-columns);
     align-items: start;
-    gap: 6.25rem;
-    width: min(100%, 87.5rem);
+    gap: var(--split-hero-gap);
+    width: var(--split-hero-content-width);
     margin-inline: auto;
-    padding: 7.1875rem 1.5625rem 0;
   }
 
   .di-hero__copy {
     display: grid;
-    gap: 1.875rem;
-    min-height: 37.5rem;
+    gap: 1.5rem;
+    max-inline-size: var(--split-hero-copy-max-width);
     align-content: start;
+    padding-block-start: var(--split-hero-copy-padding-block-start);
+    padding-inline-start: var(--split-hero-copy-padding-inline-start);
   }
 
   .di-hero h1 {
-    max-width: 42.5rem;
+    max-width: var(--split-hero-copy-max-width);
     margin: 0;
-    font-size: 4.375rem;
-    line-height: 1.071;
+    font-size: var(--split-hero-title-size);
+    line-height: var(--split-hero-title-line-height);
   }
 
   .di-hero__body,
   .di-work__body,
   .di-analytics__intro {
     color: #231f20;
-    font-size: 1.25rem;
-    line-height: 1.8;
+    font-size: var(--split-hero-body-size);
+    line-height: var(--split-hero-body-line-height);
+  }
+
+  .di-hero__body {
+    max-inline-size: var(--split-hero-body-max-width);
   }
 
   .di-hero__body :global(p),
@@ -221,9 +230,54 @@ const ctaText = [page.cta?.title, ctaBody].filter(Boolean).join(' ');
     overflow: hidden;
     justify-self: end;
     width: 100%;
-    border-radius: 2.5rem;
+    aspect-ratio: var(--split-hero-media-aspect-ratio);
+    border-radius: var(--split-hero-media-radius);
     --media-asset-inline-size: 100%;
-    --media-asset-radius: 2.5rem;
+    --media-asset-aspect-ratio: var(--split-hero-media-aspect-ratio);
+    --media-asset-fit: cover;
+    --media-asset-radius: var(--split-hero-media-radius);
+  }
+
+  .di-hero__media :global(.media-asset) {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+
+  @media (min-width: 1025px) {
+    .di-hero {
+      padding-block: 6.875rem 4rem;
+    }
+
+    .di-hero__inner {
+      grid-template-columns: minmax(0, 43.75rem) minmax(0, 35.9375rem);
+      gap: 6.25rem;
+      width: min(calc(100% - 2.5rem), 87.5rem);
+    }
+
+    .di-hero__copy {
+      max-inline-size: 43.75rem;
+      padding-block-start: 0;
+      padding-inline-start: 1.5625rem;
+    }
+
+    .di-hero h1 {
+      inline-size: 45rem;
+      max-inline-size: 45rem;
+      font-size: 4.375rem;
+      line-height: 1.071;
+      /* Matches the tighter WordPress heading measure without using negative tracking. */
+      transform: scaleX(0.9375);
+      transform-origin: left top;
+    }
+
+    .di-hero__body {
+      max-inline-size: 42.1875rem;
+    }
+
+    .di-hero__media {
+      aspect-ratio: 575 / 552;
+    }
   }
 
   .di-work {
@@ -481,6 +535,15 @@ const ctaText = [page.cta?.title, ctaBody].filter(Boolean).join(' ');
     background: #b9dc89;
   }
 
+  @media (min-width: 1025px) {
+    .di-work__inner,
+    .di-intelligence__inner,
+    .di-analytics__inner,
+    .di-cta__inner {
+      width: var(--page-visual-content-width);
+    }
+  }
+
   @keyframes di-marquee {
     to {
       transform: translateX(-50%);
@@ -494,7 +557,7 @@ const ctaText = [page.cta?.title, ctaBody].filter(Boolean).join(' ');
     }
 
     .di-hero__copy {
-      min-height: 16.4375rem;
+      min-height: 0;
     }
 
     .di-hero__media {
@@ -508,7 +571,7 @@ const ctaText = [page.cta?.title, ctaBody].filter(Boolean).join(' ');
 
   @media (max-width: 767px) {
     .di-hero__inner {
-      padding: 1.25rem 1.25rem 0;
+      width: var(--split-hero-content-width);
     }
 
     .di-hero__copy {
@@ -517,15 +580,15 @@ const ctaText = [page.cta?.title, ctaBody].filter(Boolean).join(' ');
     }
 
     .di-hero h1 {
-      font-size: 2.8125rem;
-      line-height: 1.111;
+      font-size: var(--split-hero-title-size);
+      line-height: var(--split-hero-title-line-height);
     }
 
     .di-hero__body,
     .di-work__body,
     .di-analytics__intro {
-      font-size: 1.125rem;
-      line-height: 1.667;
+      font-size: var(--split-hero-body-size);
+      line-height: var(--split-hero-body-line-height);
     }
 
     .di-work__inner {

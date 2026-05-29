@@ -89,13 +89,13 @@ const schema = {
   <article class="about-modern">
     <section class="about-hero" aria-labelledby="about-hero-heading">
       <div class:list={['about-shell about-hero__grid', { 'about-hero__grid--text-only': !heroImage }]}>
-        <div class="about-hero__copy fade-in-up">
+        <div class="about-hero__copy">
           <h1 id="about-hero-heading">{page.hero.heading}</h1>
           <div class="about-hero__text" set:html={aboutRichHtml(page.hero.body)} />
         </div>
 
         {heroMedia && (
-          <div class="about-hero__media fade-in-up" aria-hidden={page.hero.imageAlt ? undefined : 'true'}>
+          <div class="about-hero__media" aria-hidden={page.hero.imageAlt ? undefined : 'true'}>
             <MediaAsset
               src={heroMedia.src}
               alt={heroMedia.alt}
@@ -474,31 +474,48 @@ const schema = {
     .about-hero {
       display: grid;
       align-items: center;
-      padding: 6.25rem 0 3.75rem;
+      padding-block: var(--split-hero-padding-block);
       background: #ffffff;
     }
 
     .about-hero__grid {
       display: grid;
-      gap: 2.5rem;
+      gap: var(--split-hero-gap);
       align-items: start;
+      inline-size: var(--split-hero-content-width);
     }
 
     .about-hero__copy {
-      max-width: 43rem;
+      max-width: var(--split-hero-copy-max-width);
+      padding-block-start: var(--split-hero-copy-padding-block-start);
+      padding-inline-start: var(--split-hero-copy-padding-inline-start);
     }
 
     .about-hero__text {
-      margin-top: 1.35rem;
-      max-width: 39rem;
+      margin-top: 1.5rem;
+      max-width: var(--split-hero-body-max-width);
+    }
+
+    .about-hero__text :global(p) {
+      font-size: var(--split-hero-body-size);
+      line-height: var(--split-hero-body-line-height);
     }
 
     .about-hero__media {
       display: none;
-      --media-asset-inline-size: min(37.7vw, 42.625rem);
-      --media-asset-aspect-ratio: 682 / 660;
+      overflow: hidden;
+      aspect-ratio: var(--split-hero-media-aspect-ratio);
+      border-radius: var(--split-hero-media-radius);
+      --media-asset-inline-size: 100%;
+      --media-asset-aspect-ratio: var(--split-hero-media-aspect-ratio);
       --media-asset-fit: cover;
-      --media-asset-radius: 2.5rem;
+      --media-asset-radius: var(--split-hero-media-radius);
+    }
+
+    .about-hero__media :global(.media-asset) {
+      inline-size: 100%;
+      block-size: 100%;
+      object-fit: cover;
     }
 
     .about-who {
@@ -893,27 +910,33 @@ const schema = {
     }
 
     @media (min-width: 1025px) {
+      .about-shell:not(.about-hero__grid) {
+        inline-size: var(--page-visual-content-width);
+      }
+
       .about-approach {
         margin-bottom: 5rem;
         padding: 0 0 2.5rem;
       }
 
       .about-hero__grid {
-        grid-template-columns: minmax(0, 1fr) auto;
-        gap: 5rem;
+        grid-template-columns: minmax(0, 50.5rem) minmax(0, 33.875rem);
+        gap: 1.875rem;
       }
 
       .about-hero__copy {
-        margin-top: 1.75rem;
+        margin-top: 0;
+        max-width: 50.5rem;
       }
 
       .about-hero__grid--text-only {
-        grid-template-columns: minmax(0, 43rem);
+        grid-template-columns: minmax(0, var(--split-hero-copy-max-width));
       }
 
       .about-hero__media {
         display: block;
         margin-top: 0.625rem;
+        aspect-ratio: 542 / 525;
       }
 
       .about-who__grid {
@@ -1008,14 +1031,14 @@ const schema = {
 
     @media (min-width: 1200px) {
       .about-hero {
-        min-height: 42rem;
+        min-height: auto;
       }
     }
 
     @media (max-width: 767px) {
       .about-modern h1 {
-        font-size: 2rem;
-        line-height: 1.08;
+        font-size: var(--split-hero-title-size);
+        line-height: var(--split-hero-title-line-height);
       }
 
       .about-modern h2 {
@@ -1036,7 +1059,7 @@ const schema = {
       .about-hero {
         min-height: auto;
         margin-bottom: 2.875rem;
-        padding: 1rem 0 15.375rem;
+        padding-block: var(--split-hero-padding-block);
         background: #ffffff;
       }
 

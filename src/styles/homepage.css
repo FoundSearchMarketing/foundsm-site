@@ -26,6 +26,12 @@ body.home-page {
   margin-inline: auto;
 }
 
+@media (min-width: 1025px) {
+  .home-shell {
+    width: var(--page-visual-content-width);
+  }
+}
+
 .home-button {
   display: inline-flex;
   align-items: center;
@@ -291,6 +297,12 @@ body.home-page {
   letter-spacing: -1px;
   line-height: 1.1;
   text-align: center;
+}
+
+@media (min-width: 1025px) {
+  .home-logo-marquee h2 {
+    width: var(--page-visual-content-width);
+  }
 }
 
 .home-logo-marquee__frame {

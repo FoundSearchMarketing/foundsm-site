@@ -102,35 +102,41 @@ const secondActionColumn = actionItems.slice(3);
     letter-spacing: 0;
   }
 
+  .da-hero {
+    padding-block: var(--split-hero-padding-block);
+    background: #ffffff;
+  }
+
   .da-hero__inner {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    align-items: center;
-    gap: 6.25rem;
-    inline-size: min(100%, var(--content-max-width));
+    grid-template-columns: var(--split-hero-grid-columns);
+    align-items: start;
+    gap: var(--split-hero-gap);
+    inline-size: var(--split-hero-content-width);
     margin-inline: auto;
-    padding: 6.25rem 1.5625rem 3rem;
     overflow: hidden;
   }
 
   .da-hero__copy {
     display: grid;
     align-content: start;
-    gap: 1.875rem;
-    min-block-size: 27.4375rem;
+    gap: 1.5rem;
+    max-inline-size: var(--split-hero-copy-max-width);
+    padding-block-start: var(--split-hero-copy-padding-block-start);
+    padding-inline-start: var(--split-hero-copy-padding-inline-start);
   }
 
   .da-hero h1 {
-    max-inline-size: 41rem;
-    font-size: 4.375rem;
-    line-height: 1.06;
+    max-inline-size: var(--split-hero-copy-max-width);
+    font-size: var(--split-hero-title-size);
+    line-height: var(--split-hero-title-line-height);
   }
 
   .da-hero__body {
-    max-inline-size: 41rem;
+    max-inline-size: var(--split-hero-body-max-width);
     color: #231f20;
-    font-size: 1.25rem;
-    line-height: 1.75;
+    font-size: var(--split-hero-body-size);
+    line-height: var(--split-hero-body-line-height);
   }
 
   .da-hero__body :global(p),
@@ -141,10 +147,47 @@ const secondActionColumn = actionItems.slice(3);
 
   .da-hero__media {
     overflow: hidden;
-    block-size: 35.9375rem;
-    border-radius: 2.5rem;
+    aspect-ratio: var(--split-hero-media-aspect-ratio);
+    border-radius: var(--split-hero-media-radius);
     background: #e8ebe6;
     --media-asset-fit: cover;
+    --media-asset-radius: var(--split-hero-media-radius);
+  }
+
+  @media (min-width: 1025px) {
+    .da-hero {
+      padding-block: 3.75rem 3rem;
+    }
+
+    .da-hero__inner {
+      grid-template-columns: minmax(0, 43.75rem) minmax(0, 37.5rem);
+      gap: 6.25rem;
+      inline-size: min(calc(100% - 2.5rem), 87.5rem);
+    }
+
+    .da-hero__copy {
+      max-inline-size: 43.75rem;
+      padding-block-start: 4.25rem;
+      padding-inline-start: 1.5625rem;
+    }
+
+    .da-hero h1 {
+      inline-size: 45rem;
+      max-inline-size: 45rem;
+      font-size: 3.75rem;
+      line-height: 1.083;
+      /* Matches the tighter WordPress heading measure without using negative tracking. */
+      transform: scaleX(0.9375);
+      transform-origin: left top;
+    }
+
+    .da-hero__body {
+      max-inline-size: 42.1875rem;
+    }
+
+    .da-hero__media {
+      aspect-ratio: 600 / 575;
+    }
   }
 
   .da-actions {
@@ -271,31 +314,42 @@ const secondActionColumn = actionItems.slice(3);
     line-height: 1.45;
   }
 
+  @media (min-width: 1025px) {
+    .da-actions__inner,
+    .da-why__inner,
+    .da-cta__inner {
+      inline-size: var(--page-visual-content-width);
+    }
+  }
+
   @media (max-width: 1024px) {
+    .da-hero {
+      padding-block: var(--split-hero-padding-block);
+    }
+
     .da-hero__inner {
       grid-template-columns: 1fr;
-      gap: 1rem;
-      padding: 1.25rem 1.25rem 2rem;
+      gap: var(--split-hero-gap);
     }
 
     .da-hero__copy {
-      min-block-size: 16.4375rem;
       gap: 1rem;
       order: 1;
     }
 
     .da-hero h1 {
-      font-size: 2.125rem;
-      line-height: 1.15;
+      font-size: var(--split-hero-title-size);
+      line-height: var(--split-hero-title-line-height);
     }
 
     .da-hero__body {
-      font-size: 0.9375rem;
-      line-height: 1.6;
+      font-size: var(--split-hero-body-size);
+      line-height: var(--split-hero-body-line-height);
     }
 
     .da-hero__media {
-      block-size: 20rem;
+      inline-size: min(100%, 28rem);
+      margin-inline: auto;
       order: 2;
     }
 
@@ -361,8 +415,8 @@ const secondActionColumn = actionItems.slice(3);
 
   @media (max-width: 640px) {
     .da-hero__media {
-      block-size: 12.5rem;
-      border-radius: 1.5rem;
+      aspect-ratio: var(--split-hero-media-aspect-ratio);
+      border-radius: var(--split-hero-media-radius);
     }
 
     .da-actions {

@@ -236,6 +236,36 @@ const mediaStyle = [
     --media-asset-max-block-size: 100%;
   }
 
+  @media (min-width: 1025px) {
+    .modern-hero--split {
+      padding-inline: var(--page-gutter);
+    }
+
+    .modern-hero--split .modern-hero__inner {
+      grid-template-columns: var(--split-hero-grid-columns);
+      gap: var(--split-hero-gap);
+      inline-size: var(--split-hero-content-width);
+    }
+
+    .modern-hero--split .modern-hero__copy {
+      max-inline-size: var(--split-hero-copy-max-width);
+      padding-block-start: var(--split-hero-copy-padding-block-start);
+      padding-inline-start: var(--split-hero-copy-padding-inline-start);
+    }
+
+    .modern-hero--split h1 {
+      max-inline-size: var(--split-hero-copy-max-width);
+      font-size: var(--split-hero-title-size);
+      line-height: var(--split-hero-title-line-height);
+    }
+
+    .modern-hero--split .modern-hero__intro {
+      max-inline-size: var(--split-hero-body-max-width);
+      font-size: var(--split-hero-body-size);
+      line-height: var(--split-hero-body-line-height);
+    }
+  }
+
   @media (max-width: 1024px) {
     .modern-hero {
       padding-block: 4rem;

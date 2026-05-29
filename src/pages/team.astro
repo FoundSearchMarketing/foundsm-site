@@ -97,7 +97,6 @@ const leaders = leaderSource
 
   :global(.team-hero .modern-hero__inner) {
     align-items: start;
-    gap: 6.25rem;
   }
 
   :global(.team-hero .modern-hero__intro) {
@@ -117,6 +116,17 @@ const leaders = leaderSource
     gap: 2rem;
     inline-size: min(100%, var(--content-max-width));
     margin-inline: auto;
+  }
+
+  @media (min-width: 1025px) {
+    :global(.team-hero .modern-hero__inner) {
+      gap: var(--split-hero-gap);
+      inline-size: var(--split-hero-content-width);
+    }
+
+    .team-careers-cta__inner {
+      inline-size: var(--page-visual-content-width);
+    }
   }
 
   .team-careers-cta__copy {

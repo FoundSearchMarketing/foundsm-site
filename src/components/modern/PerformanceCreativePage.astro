@@ -277,25 +277,26 @@ const stripOuterParagraph = (value: string) => value.replace(/^<p>/, '').replace
 
   .pc-hero {
     overflow: hidden;
-    padding: 6.25rem 1.5625rem 0;
+    padding-block: var(--split-hero-padding-block);
     background: #ffffff;
   }
 
   .pc-hero__inner {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 37.1875rem);
-    align-items: center;
-    gap: 6.25rem;
-    min-block-size: 37.5rem;
-    inline-size: min(100%, 86.875rem);
+    grid-template-columns: var(--split-hero-grid-columns);
+    align-items: start;
+    gap: var(--split-hero-gap);
+    inline-size: var(--split-hero-content-width);
     margin-inline: auto;
   }
 
   .pc-hero__copy {
     display: grid;
     align-content: start;
-    gap: 1.25rem;
-    min-block-size: 37.5rem;
+    gap: 1.5rem;
+    max-inline-size: var(--split-hero-copy-max-width);
+    padding-block-start: var(--split-hero-copy-padding-block-start);
+    padding-inline-start: var(--split-hero-copy-padding-inline-start);
   }
 
   .pc-hero h1,
@@ -309,21 +310,58 @@ const stripOuterParagraph = (value: string) => value.replace(/^<p>/, '').replace
   }
 
   .pc-hero h1 {
-    max-inline-size: 43.5rem;
-    font-size: 4.375rem;
-    line-height: 1.071;
+    max-inline-size: var(--split-hero-copy-max-width);
+    font-size: var(--split-hero-title-size);
+    line-height: var(--split-hero-title-line-height);
   }
 
   .pc-hero__intro {
-    max-inline-size: 43rem;
+    max-inline-size: var(--split-hero-body-max-width);
+    font-size: var(--split-hero-body-size);
+    line-height: var(--split-hero-body-line-height);
   }
 
   .pc-hero__media {
     overflow: hidden;
-    border-radius: 2.5rem;
-    aspect-ratio: 1;
+    border-radius: var(--split-hero-media-radius);
+    aspect-ratio: var(--split-hero-media-aspect-ratio);
     background: #e8ebe6;
     --media-asset-fit: cover;
+    --media-asset-radius: var(--split-hero-media-radius);
+  }
+
+  .pc-hero__media :global(.media-asset) {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+
+  @media (min-width: 1025px) {
+    .pc-hero {
+      padding-block: 6.25rem 3.75rem;
+    }
+
+    .pc-hero__inner {
+      grid-template-columns: minmax(0, 43.4375rem) minmax(0, 37.1875rem);
+      gap: 6.25rem;
+      inline-size: var(--split-hero-content-width);
+    }
+
+    .pc-hero__copy {
+      max-inline-size: 43.4375rem;
+      padding-block-start: 0;
+      padding-inline-start: 1.25rem;
+    }
+
+    .pc-hero h1 {
+      max-inline-size: 43.4375rem;
+      font-size: 4.375rem;
+      line-height: 1.071;
+    }
+
+    .pc-hero__media {
+      aspect-ratio: 1;
+    }
   }
 
   .pc-work {
@@ -568,6 +606,14 @@ const stripOuterParagraph = (value: string) => value.replace(/^<p>/, '').replace
     font-weight: 700;
   }
 
+  @media (min-width: 1025px) {
+    .pc-work__inner,
+    .pc-tabs__inner,
+    .pc-experience__inner {
+      inline-size: var(--page-visual-content-width);
+    }
+  }
+
   @media (max-width: 1024px) {
     .pc-copy,
     .pc-tabs__panel-copy,
@@ -577,7 +623,7 @@ const stripOuterParagraph = (value: string) => value.replace(/^<p>/, '').replace
     }
 
     .pc-hero {
-      padding: 1.25rem 1.25rem 0;
+      padding-block: var(--split-hero-padding-block);
     }
 
     .pc-hero__inner,
@@ -588,7 +634,6 @@ const stripOuterParagraph = (value: string) => value.replace(/^<p>/, '').replace
 
     .pc-hero__inner {
       gap: 2rem;
-      min-block-size: auto;
     }
 
     .pc-hero__copy {
@@ -596,8 +641,8 @@ const stripOuterParagraph = (value: string) => value.replace(/^<p>/, '').replace
     }
 
     .pc-hero h1 {
-      font-size: 2.8125rem;
-      line-height: 1.111;
+      font-size: var(--split-hero-title-size);
+      line-height: var(--split-hero-title-line-height);
     }
 
     .pc-hero__media {

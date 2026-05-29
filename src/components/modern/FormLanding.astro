@@ -307,6 +307,29 @@ const introParagraphs = Array.isArray(intro) ? intro : [intro];
     }
   }
 
+  @media (min-width: 1025px) {
+    .form-landing--contact .form-landing__inner {
+      inline-size: var(--split-hero-content-width);
+    }
+
+    .form-landing--contact .form-landing__copy {
+      padding-block-start: var(--split-hero-copy-padding-block-start);
+      padding-inline: var(--split-hero-copy-padding-inline-start) 0;
+    }
+
+    .form-landing--contact h1 {
+      max-inline-size: var(--split-hero-copy-max-width);
+      font-size: var(--split-hero-title-size);
+      line-height: var(--split-hero-title-line-height);
+    }
+
+    .form-landing--contact .form-landing__intro {
+      max-inline-size: var(--split-hero-body-max-width);
+      font-size: var(--split-hero-body-size);
+      line-height: var(--split-hero-body-line-height);
+    }
+  }
+
   @media (max-width: 900px) {
     .form-landing__inner {
       grid-template-columns: 1fr;

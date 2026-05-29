@@ -511,46 +511,49 @@ const schema = {
     }
 
     .approach-hero {
-      padding-block: 6.25rem 3.125rem;
+      padding-block: var(--split-hero-padding-block);
       background: var(--color-white);
     }
 
     .approach-hero__grid {
       display: grid;
-      grid-template-columns: minmax(0, 1.25fr) minmax(22rem, 0.75fr);
-      align-items: center;
-      gap: 3.4375rem;
+      grid-template-columns: var(--split-hero-grid-columns);
+      align-items: start;
+      gap: var(--split-hero-gap);
+      inline-size: var(--split-hero-content-width);
     }
 
     .approach-hero__grid--without-media {
-      grid-template-columns: minmax(0, 1fr);
+      grid-template-columns: minmax(0, var(--split-hero-copy-max-width));
     }
 
     .approach-hero__copy {
       display: grid;
       gap: 1.5rem;
-      max-inline-size: 57rem;
+      max-inline-size: var(--split-hero-copy-max-width);
+      padding-block-start: var(--split-hero-copy-padding-block-start);
+      padding-inline-start: var(--split-hero-copy-padding-inline-start);
     }
 
     .approach-hero h1 {
       margin: 0;
       color: var(--approach-color-text);
-      font-size: var(--approach-h1-size);
+      font-size: var(--split-hero-title-size);
       font-weight: 900;
-      line-height: var(--approach-h1-line-height);
+      line-height: var(--split-hero-title-line-height);
       letter-spacing: 0;
     }
 
     .approach-hero__intro {
-      max-inline-size: 50rem;
+      max-inline-size: var(--split-hero-body-max-width);
     }
 
     .approach-hero__intro p {
       margin: 0;
       color: var(--approach-color-text);
-      font-size: var(--approach-body-size);
+      font-size: var(--split-hero-body-size);
       font-weight: 400;
-      line-height: var(--approach-body-line-height);
+      line-height: var(--split-hero-body-line-height);
     }
 
     .approach-hero__intro p + p {
@@ -558,13 +561,37 @@ const schema = {
     }
 
     .approach-hero__media {
-      min-block-size: 42vh;
       overflow: hidden;
-      border-radius: 2.5rem;
+      aspect-ratio: var(--split-hero-media-aspect-ratio);
+      border-radius: var(--split-hero-media-radius);
       background: var(--color-surface-muted);
       --media-asset-fit: cover;
       --media-asset-position: center;
-      --media-asset-min-block-size: 42vh;
+      --media-asset-aspect-ratio: var(--split-hero-media-aspect-ratio);
+      --media-asset-radius: var(--split-hero-media-radius);
+    }
+
+    @media (min-width: 1025px) {
+      .approach-shell:not(.approach-hero__grid) {
+        inline-size: var(--page-visual-content-width);
+      }
+
+      .approach-hero__grid {
+        grid-template-columns: minmax(0, 50.125rem) minmax(0, 34.875rem);
+        gap: 1.875rem;
+      }
+
+      .approach-hero__copy {
+        max-inline-size: 50.125rem;
+      }
+
+      .approach-hero__intro {
+        max-inline-size: 50rem;
+      }
+
+      .approach-hero__media {
+        aspect-ratio: 558 / 378;
+      }
     }
 
     .approach-intro {
@@ -1021,7 +1048,7 @@ const schema = {
       }
 
       .approach-hero {
-        padding-block: 1.25rem 0;
+        padding-block: var(--split-hero-padding-block);
       }
 
       .approach-hero__grid,
@@ -1032,18 +1059,16 @@ const schema = {
       }
 
       .approach-hero__grid {
-        gap: 0;
+        gap: var(--split-hero-gap);
       }
 
       .approach-hero__copy {
-        order: 2;
-        padding-block-start: 2rem;
+        order: 1;
+        padding-block-start: 0;
       }
 
       .approach-hero__media {
-        order: 1;
-        min-block-size: 37vh;
-        --media-asset-min-block-size: 37vh;
+        order: 2;
       }
 
       .approach-intro {

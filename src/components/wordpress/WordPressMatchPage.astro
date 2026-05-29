@@ -828,6 +828,16 @@ const firstPartyBullets = [
     list-style: disc;
   }
 
+  @media (min-width: 1025px) {
+    .wp-newsletter-hero__grid {
+      inline-size: var(--split-hero-content-width);
+    }
+
+    .wp-newsletter-copy {
+      padding-inline-start: var(--split-hero-copy-padding-inline-start);
+    }
+  }
+
   @media (max-width: 900px) {
     .desktop-break {
       display: none;

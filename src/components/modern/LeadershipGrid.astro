@@ -204,6 +204,12 @@ const sectionClass = ['leadership-section', `leadership-section--${layout}`].joi
     }
   }
 
+  @media (min-width: 1025px) {
+    .leadership-section__inner {
+      inline-size: var(--page-visual-content-width);
+    }
+  }
+
   @media (max-width: 700px) {
     .leadership-section {
       padding-block: 3.5rem;

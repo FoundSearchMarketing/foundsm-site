@@ -104,6 +104,16 @@ const {
     object-fit: cover;
   }
 
+  @media (min-width: 1025px) {
+    .insights-hero__inner {
+      inline-size: var(--split-hero-content-width);
+    }
+
+    .insights-hero__copy {
+      padding-inline: var(--split-hero-copy-padding-inline-start) 0;
+    }
+  }
+
   @media (max-width: 1024px) {
     .insights-hero__inner {
       display: block;

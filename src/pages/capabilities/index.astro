@@ -208,7 +208,7 @@ const schema = {
   }
 
   .capabilities-hero {
-    padding: 3.75rem 0 5.625rem;
+    padding-block: var(--split-hero-padding-block);
     background: #ffffff;
   }
 
@@ -216,19 +216,24 @@ const schema = {
   .outcomes-section__inner,
   .workflow-section__inner,
   .capability-detail__inner {
-    inline-size: min(calc(100% - (2 * var(--page-gutter))), var(--content-max-width));
+    inline-size: var(--split-hero-content-width);
     margin-inline: auto;
   }
 
   .capabilities-hero__inner {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(24rem, 40%);
-    align-items: center;
-    gap: 7.5rem;
+    grid-template-columns: var(--split-hero-grid-columns);
+    align-items: start;
+    gap: var(--split-hero-gap);
+  }
+
+  .capabilities-hero__copy {
+    padding-block-start: var(--split-hero-copy-padding-block-start);
+    padding-inline-start: var(--split-hero-copy-padding-inline-start);
   }
 
   .capabilities-hero__inner--text-only {
-    grid-template-columns: minmax(0, 44rem);
+    grid-template-columns: minmax(0, var(--split-hero-copy-max-width));
   }
 
   .capabilities-hero__title,
@@ -242,7 +247,8 @@ const schema = {
   }
 
   .capabilities-hero__title {
-    font-size: 3.75rem;
+    font-size: var(--split-hero-title-size);
+    line-height: var(--split-hero-title-line-height);
   }
 
   .workflow-section__title {
@@ -254,26 +260,27 @@ const schema = {
   .workflow-section__text,
   .capability-detail__text {
     color: var(--capabilities-dark);
-    font-size: 1.25rem;
+    font-size: var(--split-hero-body-size);
     font-weight: 400;
-    line-height: 1.8;
+    line-height: var(--split-hero-body-line-height);
   }
 
   .capabilities-hero__text {
-    max-width: 43rem;
+    max-width: var(--split-hero-body-max-width);
   }
 
   .capabilities-hero__media {
     overflow: hidden;
-    border-radius: var(--capabilities-image-radius);
-    --media-asset-radius: var(--capabilities-image-radius);
+    aspect-ratio: var(--split-hero-media-aspect-ratio);
+    border-radius: var(--split-hero-media-radius);
+    --media-asset-radius: var(--split-hero-media-radius);
     --media-asset-fit: cover;
   }
 
   .capabilities-hero__media :global(.capabilities-hero__image) {
     inline-size: 100%;
-    aspect-ratio: 1;
-    border-radius: var(--capabilities-image-radius);
+    aspect-ratio: var(--split-hero-media-aspect-ratio);
+    border-radius: var(--split-hero-media-radius);
     object-fit: cover;
   }
 
@@ -427,6 +434,14 @@ const schema = {
     grid-template-columns: minmax(0, 54rem);
   }
 
+  @media (min-width: 1025px) {
+    .outcomes-section__inner,
+    .workflow-section__inner,
+    .capability-detail__inner {
+      inline-size: var(--page-visual-content-width);
+    }
+  }
+
   .capability-detail__title {
     margin: 0 0 0.9375rem;
     padding-bottom: 0.3125rem;
@@ -507,7 +522,7 @@ const schema = {
 
   @media (max-width: 1024px) {
     .capabilities-hero {
-      padding: 1.875rem 0 5.625rem;
+      padding-block: var(--split-hero-padding-block);
     }
 
     .capabilities-hero__inner,
@@ -520,16 +535,16 @@ const schema = {
 
     .capabilities-hero__title,
     .workflow-section__title {
-      font-size: 2.375rem;
-      line-height: 1.1;
+      font-size: var(--split-hero-title-size);
+      line-height: var(--split-hero-title-line-height);
     }
 
     .capabilities-hero__text,
     .outcomes-section__copy,
     .workflow-section__text,
     .capability-detail__text {
-      font-size: 1.125rem;
-      line-height: 1.67;
+      font-size: var(--split-hero-body-size);
+      line-height: var(--split-hero-body-line-height);
     }
 
     .capabilities-hero__media,

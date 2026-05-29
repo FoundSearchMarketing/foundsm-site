@@ -30,6 +30,7 @@ export interface BlogPost {
   authorTitle: string;
   authorUrl: string;
   heroImage: string;
+  cardImage: string;
   heroImageAlt: string;
   contentHtml: string;
   categories: BlogPostCategory[];
@@ -167,7 +168,7 @@ export function toLatestPostCards(posts: BlogPost[], limit = 2) {
     categories: post.categories.map((category) => category.label).join(', '),
     title: post.title,
     href: `/insights/${post.slug}/`,
-    imageSrc: normalizeLegacyAssetUrl(post.heroImage),
+    imageSrc: normalizeLegacyAssetUrl(post.cardImage || post.heroImage),
     imageAlt: post.heroImageAlt,
     date: post.publishedLabel,
     excerpt: post.excerpt,
@@ -185,9 +186,9 @@ export function toInsightsArticleCards(posts: BlogPost[]) {
     datetime: post.publishedAt,
     excerpt: post.excerpt,
     image: {
-      src: normalizeLegacyAssetUrl(post.heroImage),
+      src: normalizeLegacyAssetUrl(post.cardImage || post.heroImage),
       width: 1200,
-      height: 800,
+      height: 706,
       alt: post.heroImageAlt,
       wpImageId: post.id,
     },
@@ -230,6 +231,7 @@ function mapSanityPost(post: SanityBlogPost, slugs: Set<string>): BlogPost | und
     : undefined;
 
   const heroImage = imageUrl(post.featuredImage, 1200, 801);
+  const cardImage = imageUrl(post.featuredImage, 1200, undefined, { ignoreImageParams: true });
   const canonicalUrl = post.canonicalUrl || `https://foundsm.com/insights/${slug}/`;
 
   return {
@@ -256,6 +258,7 @@ function mapSanityPost(post: SanityBlogPost, slugs: Set<string>): BlogPost | und
     authorTitle: post.author?.title || '',
     authorUrl: '',
     heroImage,
+    cardImage,
     heroImageAlt: post.featuredImage?.alt || post.title,
     contentHtml: renderContentHtml(post.body || [], slugs),
     categories: category ? [category] : [],
@@ -390,12 +393,19 @@ function rewriteHref(href: string, slugs: Set<string>): string {
   return href;
 }
 
-function imageUrl(source: SanityBlock | string | undefined, width: number, height?: number): string {
+function imageUrl(
+  source: SanityBlock | string | undefined,
+  width: number,
+  height?: number,
+  options: { ignoreImageParams?: boolean } = {},
+): string {
   if (typeof source === 'string') return normalizeLegacyAssetUrl(source);
   if (!source?.asset) return '';
 
   try {
-    const builder = urlFor(source as any).width(width).auto('format');
+    const builder = (options.ignoreImageParams ? urlFor(source as any).ignoreImageParams() : urlFor(source as any))
+      .width(width)
+      .auto('format');
     return normalizeLegacyAssetUrl(height ? builder.height(height).fit('crop').url() : builder.url());
   } catch {
     return '';

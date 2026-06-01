@@ -295,6 +295,7 @@ export const defaultTeamPageData: TeamPageData = {
   hero: {
     heading: 'Together, We Solve.',
     body: [block("In an industry that never stops evolving, Found Search Marketing stands out as an agency that knows exactly who we are. Grounded in a deep commitment to our clients, we combine precision with agility to thrive in a fast-moving world. We're proud cool nerds, energized by the pursuit of high-ceiling, complex problems that drive significant business impact.")],
+    image: '/images/pages/team/tr-andy-ryan.webp',
     imageAlt: 'Found Search Marketing team members collaborating',
     cta: { label: 'Join Our Team', href: '/about-us/#careers' },
   },

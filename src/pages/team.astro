@@ -17,6 +17,13 @@ const description = page.seoDescription || defaultTeamPageData.seoDescription;
 const canonical = page.canonicalUrl || defaultTeamPageData.canonicalUrl;
 const careersHref = '/about-us/#careers';
 const heroCta = page.hero.cta?.label ? { label: page.hero.cta.label, href: careersHref } : undefined;
+const heroMedia = imageProps(
+  {
+    image: page.hero.image || defaultTeamPageData.hero.image,
+    imageAlt: page.hero.imageAlt || defaultTeamPageData.hero.imageAlt,
+  },
+  'eager',
+);
 const careersCta = page.cta.cta?.label ? { label: page.cta.cta.label, href: careersHref } : undefined;
 const careersBodyHtml = richHtml(page.cta.body);
 const schema = {
@@ -54,7 +61,7 @@ const leaders = leaderSource
     intro={richText(page.hero.body)}
     introHtml={richHtml(page.hero.body)}
     cta={heroCta}
-    image={imageProps(page.hero, 'eager')}
+    image={heroMedia}
     imageShape="rounded"
     mediaHeight="33rem"
     className="team-hero"

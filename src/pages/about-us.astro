@@ -659,8 +659,8 @@ const schema = {
     .values-tabs {
       position: relative;
       display: grid;
+      align-items: start;
       gap: 2rem;
-      min-height: 45.3125rem;
       padding: 2.1875rem 1.5625rem;
       border-radius: 2.5rem;
       background: var(--about-ink);
@@ -767,9 +767,9 @@ const schema = {
 
     .values-tabs__panel {
       display: grid;
+      align-items: start;
       gap: 1.5rem;
-      height: 100%;
-      min-height: 33rem;
+      min-height: 0;
       padding: 0;
     }
 
@@ -779,7 +779,7 @@ const schema = {
 
     .values-tabs__panel-copy {
       display: grid;
-      align-content: center;
+      align-content: start;
       gap: 1rem;
       justify-items: start;
     }
@@ -800,12 +800,13 @@ const schema = {
     }
 
     .values-tabs__panel-media {
-      align-self: end;
+      align-self: start;
+      width: min(100%, 23rem);
       overflow: hidden;
       border-radius: 2.5rem;
       background: rgba(255, 255, 255, 0.07);
       --media-asset-inline-size: 100%;
-      --media-asset-max-block-size: 28rem;
+      --media-asset-max-block-size: none;
       --media-asset-aspect-ratio: 368 / 474;
       --media-asset-fit: cover;
     }
@@ -959,9 +960,8 @@ const schema = {
       }
 
       .values-tabs__panel {
-        grid-template-columns: minmax(0, 1fr) 27.6875rem;
+        grid-template-columns: minmax(0, 1fr) 23rem;
         gap: 3.4375rem;
-        min-height: 34rem;
       }
 
       .about-split {
@@ -1138,17 +1138,16 @@ const schema = {
       }
 
       .values-tabs {
-        min-height: 75rem;
         border-radius: 2rem;
       }
 
       .values-tabs__panel {
-        min-height: 38rem;
+        gap: 2rem;
       }
 
       .values-tabs__panel-media {
         justify-self: center;
-        width: min(100%, 10rem);
+        width: min(100%, 23rem);
         border-radius: 1.5rem;
       }
 

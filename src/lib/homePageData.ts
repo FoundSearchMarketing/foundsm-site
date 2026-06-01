@@ -288,6 +288,10 @@ export const defaultHomePageData: HomePageData = {
 };
 
 const keep = <T>(value: T | undefined | null, fallback: T): T => value ?? fallback;
+const keepText = (value: string | undefined | null, fallback?: string) => {
+  const text = value?.trim();
+  return text ? value : fallback;
+};
 const isPlaceholderHeading = (value?: string | null) => !value || value.trim().toLowerCase() === 'test';
 
 const mergeObject = <T extends Record<string, any>>(fallback: T, value?: Partial<T> | null): T => ({
@@ -352,7 +356,8 @@ export function mergeHomePageData(value?: Partial<HomePageData> | null): HomePag
       heading: isPlaceholderHeading(page.partners?.heading) ? defaults.partners.heading : page.partners?.heading,
       body: keep(page.partners?.body, defaults.partners.body),
       logos: mergeList(defaults.partners.logos, page.partners?.logos),
-      ctaUrl: defaults.partners.ctaUrl,
+      ctaText: keepText(page.partners?.ctaText, defaults.partners.ctaText),
+      ctaUrl: keepText(page.partners?.ctaUrl, defaults.partners.ctaUrl),
     },
     ecosystem: {
       ...defaults.ecosystem,

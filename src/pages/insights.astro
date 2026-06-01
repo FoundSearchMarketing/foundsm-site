@@ -5,18 +5,18 @@ import LatestPostsSection from '../components/LatestPostsSection.astro';
 import InsightsArticlesTabs from '../components/InsightsArticlesTabs.astro';
 import InsightsArticleCards from '../components/InsightsArticleCards.astro';
 import InsightsPagination from '../components/InsightsPagination.astro';
-import { getAllBlogCategories, getAllBlogPosts, getLatestBlogPosts, toInsightsArticleCards, toLatestPostCards } from '../lib/blogPosts';
+import { getAllBlogCategories, getAllBlogPosts, toInsightsArticleCards, toLatestPostCards } from '../lib/blogPosts';
 import { defaultInsightsPageData, mergeInsightsPageData } from '../lib/insightsPageData';
 import { insightsPageQuery, sanityClient, urlFor } from '../lib/sanity';
 
-const [sanityPage, posts, categories, latestBlogPosts] = await Promise.all([
+const [sanityPage, posts, categories] = await Promise.all([
   sanityClient.fetch(insightsPageQuery).catch(() => null),
   getAllBlogPosts(),
   getAllBlogCategories(),
-  getLatestBlogPosts(2),
 ]);
 const page = mergeInsightsPageData(sanityPage);
-const latestPosts = toLatestPostCards(latestBlogPosts);
+const latestPostCount = 2;
+const latestPosts = toLatestPostCards(posts, latestPostCount);
 const articleCards = toInsightsArticleCards(posts);
 const articleTabs = [
   { label: 'All', filter: '__all', active: true },

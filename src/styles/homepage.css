@@ -236,6 +236,25 @@ body.home-page {
   --media-asset-radius: 40px;
 }
 
+@media (min-width: 1101px) {
+  .home-intro__grid {
+    align-items: stretch;
+  }
+
+  .home-intro__media {
+    position: relative;
+    overflow: hidden;
+    --media-asset-inline-size: calc(100% - 20px);
+    --media-asset-block-size: calc(100% - 20px);
+    --media-asset-fit: cover;
+  }
+
+  .home-intro__media .media-asset {
+    position: absolute;
+    inset: 10px;
+  }
+}
+
 .home-cta-strip {
   position: relative;
   overflow: hidden;
@@ -819,6 +838,10 @@ body.home-page {
 
   .home-system__intro {
     padding: 0;
+  }
+
+  .home-intro__media {
+    display: none;
   }
 
   .home-metrics__grid {

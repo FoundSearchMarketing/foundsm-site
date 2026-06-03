@@ -22,6 +22,7 @@ This project uses a **branch-based deployment pipeline** with GitHub Actions and
 - **`build.yml`** — runs `npm run build` on every PR to `main` or `develop`. Protects both branches from broken builds.
 - **`deploy-staging.yml`** — pushes to `develop` automatically build and deploy to the Vercel preview environment with `SANITY_DATASET=staging`.
 - **`deploy-production.yml`** — pushes to `main` run the production build, but the deploy job waits on the `production` GitHub Environment approval before shipping.
+- **`promote-sanity-production.yml`** — manually promotes published Sanity content from `staging` into `production`, after the same `production` GitHub Environment approval.
 - **`sanity-webhook.yml`** — `repository_dispatch` entrypoint for Sanity. Rebuilds staging or production based on the `dataset` field in the payload.
 
 ## How to Deploy
@@ -38,6 +39,22 @@ This project uses a **branch-based deployment pipeline** with GitHub Actions and
 4. Go to **Actions → Deploy to Production** — the run will be paused on "Waiting for review".
 5. Click **Review deployments**, approve it. The deploy continues.
 
+### Promote Sanity content
+Use this when the staging dataset has been reviewed and should replace matching documents in production.
+
+1. Go to **Actions → Promote Sanity Staging to Production → Run workflow**.
+2. Leave the branch set to `main`.
+3. Type `promote staging` in the confirmation field.
+4. Click **Run workflow**.
+5. Open the run and approve the `production` environment when GitHub asks for review.
+6. Download the `sanity-promotion-<run-id>` artifact if you need the production backup tarball.
+
+The workflow exports the current `production` dataset, exports published documents from `staging` with `--no-drafts`, then imports that staging tarball into `production` with `--replace`.
+
+`--replace` overwrites production documents that have matching IDs in the staging export. It does not delete production-only documents that are absent from staging.
+
+After promotion, the production Sanity webhook should dispatch **Deploy to Production**. If the webhook is disabled or delayed, run **Deploy to Production** manually from `main`.
+
 ### Emergency rollback
 Two options, in order of preference:
 
@@ -52,6 +69,7 @@ Two options, in order of preference:
 | `VERCEL_TOKEN`       | Personal token from Vercel → Account Settings → Tokens |
 | `VERCEL_ORG_ID`      | From `.vercel/project.json` after `vercel link`        |
 | `VERCEL_PROJECT_ID`  | From `.vercel/project.json` after `vercel link`        |
+| `SANITY_AUTH_TOKEN`  | Sanity API token with Editor access to `staging` and `production` |
 
 ### Variables (Settings → Secrets and variables → Actions → Variables)
 | Name                | Value       |

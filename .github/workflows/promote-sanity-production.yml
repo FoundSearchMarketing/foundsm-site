@@ -1,0 +1,96 @@
+name: Promote Sanity Staging to Production
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'Type "promote staging" to confirm replacing matching production documents.'
+        required: true
+        type: string
+
+concurrency:
+  group: promote-sanity-production
+  cancel-in-progress: false
+
+jobs:
+  promote:
+    name: Promote staging dataset to production
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+    env:
+      CI: true
+      SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.12
+
+      - name: Confirm promotion request
+        env:
+          CONFIRM_PROMOTION: ${{ inputs.confirm }}
+        run: |
+          set -euo pipefail
+
+          if [ "${GITHUB_REF_NAME}" != "main" ]; then
+            echo "::error::Run this workflow from the main branch."
+            exit 1
+          fi
+
+          if [ "${CONFIRM_PROMOTION}" != "promote staging" ]; then
+            echo "::error::Confirmation must exactly match: promote staging"
+            exit 1
+          fi
+
+          if [ -z "${SANITY_AUTH_TOKEN}" ]; then
+            echo "::error::Missing SANITY_AUTH_TOKEN secret."
+            exit 1
+          fi
+
+      - name: Install Sanity Studio dependencies
+        run: bun install --cwd studio --frozen-lockfile
+
+      - name: Prepare artifact paths
+        id: artifacts
+        run: |
+          set -euo pipefail
+
+          TIMESTAMP="$(date -u +'%Y%m%dT%H%M%SZ')"
+          BACKUP_FILE="sanity-promotion-artifacts/production-before-promote-${TIMESTAMP}.tar.gz"
+          STAGING_FILE="sanity-promotion-artifacts/staging-promote-${TIMESTAMP}.tar.gz"
+
+          mkdir -p sanity-promotion-artifacts
+
+          echo "backup_file=${BACKUP_FILE}" >> "$GITHUB_OUTPUT"
+          echo "staging_file=${STAGING_FILE}" >> "$GITHUB_OUTPUT"
+
+      - name: Promote staging to production
+        working-directory: studio
+        run: |
+          set -euo pipefail
+
+          ./node_modules/.bin/sanity dataset list
+
+          ./node_modules/.bin/sanity dataset export production "../${{ steps.artifacts.outputs.backup_file }}" --overwrite
+          ./node_modules/.bin/sanity dataset export staging "../${{ steps.artifacts.outputs.staging_file }}" --no-drafts --overwrite
+
+          test -s "../${{ steps.artifacts.outputs.backup_file }}"
+          test -s "../${{ steps.artifacts.outputs.staging_file }}"
+
+          ./node_modules/.bin/sanity dataset import "../${{ steps.artifacts.outputs.staging_file }}" production --replace
+
+      - name: Upload promotion artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sanity-promotion-${{ github.run_id }}
+          path: sanity-promotion-artifacts/
+          if-no-files-found: ignore
+          retention-days: 30

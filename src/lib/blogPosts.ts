@@ -47,6 +47,8 @@ type SanityAuthor = {
   name?: string;
   title?: string;
   linkedin?: string;
+  imageUrl?: string;
+  profileImageAlt?: string;
 };
 type SanitySpan = {
   _key?: string;
@@ -99,6 +101,12 @@ type RenderGroup =
   | { type: 'block'; block: SanityBlock };
 type RenderState = { sectionCount: number };
 type RenderOptions = { linkClass?: string };
+type QuoteAuthor = {
+  name?: string;
+  title?: string;
+  imageUrl?: string;
+  profileImageAlt?: string;
+};
 
 const sanityBlogPostsQuery = `*[_type == "blogPost"] | order(publishedAt desc) {
   _id,
@@ -121,7 +129,14 @@ const sanityBlogPostsQuery = `*[_type == "blogPost"] | order(publishedAt desc) {
   twitterImage,
   schemaJson,
   "category": category->{ title, slug },
-  "author": author->{ name, title, linkedin }
+  "author": author->{ name, title, linkedin, "imageUrl": coalesce(profileImage, image.asset->url), profileImageAlt }
+}`;
+
+const sanityQuoteAuthorsQuery = `*[_type == "author"] {
+  name,
+  title,
+  "imageUrl": coalesce(profileImage, image.asset->url),
+  profileImageAlt
 }`;
 
 let blogPostsPromise: Promise<BlogPost[]> | undefined;
@@ -197,9 +212,13 @@ export function toInsightsArticleCards(posts: BlogPost[]) {
 
 async function loadSanityBlogPosts(): Promise<BlogPost[]> {
   let sanityPosts: SanityBlogPost[];
+  let quoteAuthors: QuoteAuthor[];
 
   try {
-    sanityPosts = await sanityClient.fetch<SanityBlogPost[]>(sanityBlogPostsQuery);
+    [sanityPosts, quoteAuthors] = await Promise.all([
+      sanityClient.fetch<SanityBlogPost[]>(sanityBlogPostsQuery),
+      sanityClient.fetch<QuoteAuthor[]>(sanityQuoteAuthorsQuery),
+    ]);
   } catch (error) {
     throw new Error(`Unable to load Sanity blog posts: ${formatUnknownError(error)}`);
   }
@@ -207,9 +226,10 @@ async function loadSanityBlogPosts(): Promise<BlogPost[]> {
   if (!Array.isArray(sanityPosts)) {
     throw new Error('Unable to load Sanity blog posts: Sanity returned an unexpected response.');
   }
+  if (!Array.isArray(quoteAuthors)) quoteAuthors = [];
 
   const slugs = new Set(sanityPosts.map((post) => post.slug?.current).filter(Boolean) as string[]);
-  const posts = sanityPosts.map((post) => mapSanityPost(post, slugs)).filter(Boolean) as BlogPost[];
+  const posts = sanityPosts.map((post) => mapSanityPost(post, slugs, quoteAuthors)).filter(Boolean) as BlogPost[];
 
   if (posts.length === 0) {
     throw new Error(`Unable to load Sanity blog posts: Sanity returned ${sanityPosts.length} records, but none had a usable slug and title.`);
@@ -218,7 +238,7 @@ async function loadSanityBlogPosts(): Promise<BlogPost[]> {
   return posts.sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
 }
 
-function mapSanityPost(post: SanityBlogPost, slugs: Set<string>): BlogPost | undefined {
+function mapSanityPost(post: SanityBlogPost, slugs: Set<string>, quoteAuthors: QuoteAuthor[]): BlogPost | undefined {
   const slug = post.slug?.current;
   if (!slug || !post.title) return undefined;
 
@@ -260,17 +280,32 @@ function mapSanityPost(post: SanityBlogPost, slugs: Set<string>): BlogPost | und
     heroImage,
     cardImage,
     heroImageAlt: post.featuredImage?.alt || post.title,
-    contentHtml: renderContentHtml(post.body || [], slugs),
+    contentHtml: renderContentHtml(post.body || [], slugs, quoteAuthors),
     categories: category ? [category] : [],
   };
 }
 
-function renderContentHtml(blocks: SanityBlock[], slugs: Set<string>): string {
+function renderContentHtml(blocks: SanityBlock[], slugs: Set<string>, quoteAuthors: QuoteAuthor[]): string {
   const state = { sectionCount: 0 };
-  const bodyHtml = groupBlocks(blocks)
-    .map((group) => renderGroup(group, slugs, state))
-    .filter(Boolean)
-    .join('');
+  const groups = groupBlocks(blocks);
+  const htmlParts: string[] = [];
+
+  for (let index = 0; index < groups.length; index++) {
+    const group = groups[index];
+    const nextGroup = groups[index + 1];
+
+    if (group.type === 'block' && isPullQuoteBlock(group.block)) {
+      const attributionBlock = nextGroup?.type === 'block' && isAttributionBlock(nextGroup.block) ? nextGroup.block : undefined;
+      htmlParts.push(renderPullQuote(group.block, attributionBlock, slugs, quoteAuthors));
+      if (attributionBlock) index++;
+      continue;
+    }
+
+    const html = renderGroup(group, slugs, state);
+    if (html) htmlParts.push(html);
+  }
+
+  const bodyHtml = htmlParts.join('');
 
   return `<section class="blog-post__content-section article-content">${bodyHtml}</section>`;
 }
@@ -338,6 +373,74 @@ function renderBlock(block: SanityBlock, slugs: Set<string>, state: RenderState)
   }
 
   return `<p>${inner}</p>`;
+}
+
+function renderPullQuote(block: SanityBlock, attributionBlock: SanityBlock | undefined, slugs: Set<string>, quoteAuthors: QuoteAuthor[]): string {
+  const quoteHtml = renderChildren(block, slugs);
+  const attributionText = attributionBlock ? blockText(attributionBlock) : '';
+  const matchedAuthor = findQuoteAuthor(attributionText, quoteAuthors);
+  const imageUrl = matchedAuthor?.imageUrl ? normalizeLegacyAssetUrl(matchedAuthor.imageUrl) : '';
+  const imageAlt = matchedAuthor?.profileImageAlt || matchedAuthor?.name || '';
+
+  return [
+    '<figure class="blog-post__quote">',
+    '<div class="blog-post__quote-content">',
+    '<div class="blog-post__quote-mark" aria-hidden="true">&ldquo;</div>',
+    `<blockquote class="blog-post__quote-copy"><p>${quoteHtml}</p></blockquote>`,
+    attributionText ? `<figcaption class="blog-post__quote-author">${escapeHtml(attributionText)}</figcaption>` : '',
+    '</div>',
+    imageUrl
+      ? `<div class="blog-post__quote-media"><img src="${escapeAttribute(imageUrl)}" alt="${escapeAttribute(imageAlt)}" loading="lazy"></div>`
+      : '',
+    '</figure>',
+  ].join('');
+}
+
+function isPullQuoteBlock(block: SanityBlock): boolean {
+  if (block._type !== 'block') return false;
+  if (block.style === 'blockquote') return true;
+  if ((block.style || 'normal') !== 'normal') return false;
+
+  const text = blockText(block).trim();
+  if (!/^["'“‘]/.test(text) || !/["'”’]$/.test(text)) return false;
+
+  const spans = block.children || [];
+  const textSpans = spans.filter((span) => (span.text || '').trim());
+  return textSpans.length > 0 && textSpans.every((span) => span.marks?.includes('strong'));
+}
+
+function isAttributionBlock(block: SanityBlock): boolean {
+  if (block._type !== 'block' || (block.style || 'normal') !== 'normal') return false;
+
+  const text = blockText(block).trim();
+  if (!/^[-–—]\s*\S+/.test(text)) return false;
+
+  const spans = block.children || [];
+  return spans.some((span) => span.marks?.includes('em'));
+}
+
+function findQuoteAuthor(attributionText: string, quoteAuthors: QuoteAuthor[]): QuoteAuthor | undefined {
+  const speakerName = attributionText
+    .replace(/^[-–—]\s*/, '')
+    .split(/[|,]/)[0]
+    .trim();
+  if (!speakerName) return undefined;
+
+  const normalizedSpeaker = normalizePersonName(speakerName);
+  return quoteAuthors.find((author) => normalizePersonName(author.name || '') === normalizedSpeaker);
+}
+
+function normalizePersonName(value: string): string {
+  return value
+    .toLowerCase()
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
+}
+
+function blockText(block: SanityBlock): string {
+  return (block.children || []).map((span) => span.text || '').join('');
 }
 
 function renderChildren(block: SanityBlock, slugs: Set<string>, options: RenderOptions = {}): string {

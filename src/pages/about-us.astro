@@ -922,6 +922,7 @@ const schema = {
 
       .about-hero__grid {
         grid-template-columns: minmax(0, 50.5rem) minmax(0, 33.875rem);
+        align-items: stretch;
         gap: 1.875rem;
       }
 
@@ -936,16 +937,41 @@ const schema = {
 
       .about-hero__media {
         display: block;
-        margin-top: 0.625rem;
-        aspect-ratio: 542 / 525;
+        position: relative;
+        margin-top: 0;
+        aspect-ratio: auto;
       }
 
       .about-who__grid {
         grid-template-columns: minmax(0, 1fr) minmax(18rem, 26rem);
+        align-items: stretch;
       }
 
       .about-who__grid--text-only {
         grid-template-columns: minmax(0, 43rem);
+      }
+
+      .about-who {
+        margin-bottom: 5rem;
+      }
+
+      .about-who__media {
+        position: relative;
+        align-self: stretch;
+        justify-self: stretch;
+        inline-size: 100%;
+        overflow: hidden;
+        margin-bottom: 0;
+        --media-asset-aspect-ratio: auto;
+      }
+
+      .about-hero__media :global(.media-asset),
+      .about-who__media :global(.media-asset) {
+        position: absolute;
+        inset: 0;
+        inline-size: 100%;
+        block-size: 100%;
+        object-fit: cover;
       }
 
       .mission-grid {
@@ -1035,6 +1061,17 @@ const schema = {
       }
     }
 
+    @media (max-width: 1024px) {
+      .about-who {
+        margin-bottom: 3.125rem;
+        padding-bottom: 4rem;
+      }
+
+      .about-who__media {
+        display: none;
+      }
+    }
+
     @media (max-width: 767px) {
       .about-modern h1 {
         font-size: var(--split-hero-title-size);
@@ -1070,7 +1107,7 @@ const schema = {
       .about-who {
         margin-top: 0;
         margin-bottom: 3.125rem;
-        padding: 2.5rem 0 15.75rem;
+        padding: 2.5rem 0 4rem;
         overflow: hidden;
       }
 

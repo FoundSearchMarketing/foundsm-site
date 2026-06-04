@@ -16,9 +16,15 @@ const { posts, heading = 'Latest insights', emptyText = 'No posts are published 
     <div class="legacy-posts__list">
       {posts.map((post) => (
         <article class="legacy-post">
-          {post.heroImage && (
+          {(post.featuredVideo || post.heroImage) && (
             <a href={`/insights/${post.slug}/`} class="legacy-post__image" aria-label={post.title}>
-              <img src={post.heroImage} alt={post.heroImageAlt || post.title} loading="lazy" width="360" height="220" />
+              {post.featuredVideo ? (
+                <video autoplay muted loop playsinline preload="metadata" poster={post.heroImage || undefined} aria-label={post.heroImageAlt || post.title}>
+                  <source src={post.featuredVideo} type="video/mp4" />
+                </video>
+              ) : (
+                <img src={post.heroImage} alt={post.heroImageAlt || post.title} loading="lazy" width="360" height="220" />
+              )}
             </a>
           )}
           <div class="legacy-post__body">
@@ -59,7 +65,8 @@ const { posts, heading = 'Latest insights', emptyText = 'No posts are published 
     padding-bottom: var(--space-lg);
   }
 
-  .legacy-post__image img {
+  .legacy-post__image img,
+  .legacy-post__image video {
     aspect-ratio: 16 / 10;
     background: var(--color-surface-muted);
     border-radius: var(--radius);

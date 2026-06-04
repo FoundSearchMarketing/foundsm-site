@@ -453,18 +453,34 @@ async function importCategories(categories) {
   }
 }
 
+function normalizeCategoryRefs(categories, legacyCategory) {
+  const refs = Array.isArray(categories) && categories.length > 0
+    ? categories
+    : legacyCategory
+      ? [legacyCategory]
+      : [];
+  const seen = new Set();
+
+  return refs.filter((ref) => {
+    if (!ref?._ref || seen.has(ref._ref)) return false;
+    seen.add(ref._ref);
+    return true;
+  });
+}
+
 async function importPosts(posts) {
   console.log(`\n📝 Importing ${posts.length} blog posts...`);
 
   for (const post of posts) {
     console.log(`\n  Processing: ${post.slug.current}`);
+    const categoryRefs = normalizeCategoryRefs(post.categories, post.category);
 
     if (DRY_RUN) {
       const body = htmlToPortableText(post.content_clean_html);
       console.log(`  [dry-run] Would create post: ${post.title}`);
       console.log(`    Portable Text blocks: ${body.length}`);
       console.log(`    Author ref: ${post.author?._ref || 'none'}`);
-      console.log(`    Category ref: ${post.category?._ref || 'none'}`);
+      console.log(`    Category refs: ${categoryRefs.map((category) => category._ref).join(', ') || 'none'}`);
       continue;
     }
 
@@ -506,7 +522,8 @@ async function importPosts(posts) {
       excerpt: post.excerpt,
       body: body.filter((b) => !b._sanity_import), // remove failed image blocks
       author: post.author || undefined,
-      category: post.category || undefined,
+      category: post.category || categoryRefs[0] || undefined,
+      categories: categoryRefs.length > 0 ? categoryRefs : undefined,
       seoTitle: post.seoTitle || undefined,
       seoDescription: post.seoDescription || undefined,
     };

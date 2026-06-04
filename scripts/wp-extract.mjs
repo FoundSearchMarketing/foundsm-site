@@ -192,9 +192,11 @@ async function extractPosts(categoryMap, tagMap, authorMap) {
     const slug = p.slug;
     console.log(`   Processing: ${slug}`);
 
-    // Resolve category (first one)
-    const catId = p.categories?.[0];
-    const category = catId ? categoryMap.get(catId) || { wp_id: catId, name: 'Unknown', slug: 'unknown' } : null;
+    // Resolve categories
+    const categories = (p.categories || []).map((catId) => (
+      categoryMap.get(catId) || { wp_id: catId, name: 'Unknown', slug: 'unknown' }
+    ));
+    const category = categories[0] || null;
 
     // Resolve tags
     const tags = (p.tags || []).map((tid) => tagMap.get(tid) || { wp_id: tid, name: 'Unknown', slug: 'unknown' });
@@ -254,6 +256,7 @@ async function extractPosts(categoryMap, tagMap, authorMap) {
       content_html: contentHtml,
       author,
       category,
+      categories,
       tags,
       featuredImage,
       inlineImages,

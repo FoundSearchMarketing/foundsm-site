@@ -31,6 +31,7 @@ export interface BlogPost {
   authorUrl: string;
   heroImage: string;
   cardImage: string;
+  featuredVideo: string;
   heroImageAlt: string;
   contentHtml: string;
   categories: BlogPostCategory[];
@@ -68,6 +69,8 @@ type SanityBlock = {
   listItem?: 'bullet' | 'number';
   level?: number;
   asset?: { _ref: string };
+  url?: string;
+  mimeType?: string;
   alt?: string;
   caption?: string;
 };
@@ -79,6 +82,7 @@ type SanityBlogPost = {
   excerpt?: string;
   body?: SanityBlock[];
   featuredImage?: SanityBlock;
+  featuredVideo?: string;
   seoTitle?: string;
   seoDescription?: string;
   canonicalUrl?: string;
@@ -92,6 +96,7 @@ type SanityBlogPost = {
   twitterImage?: SanityBlock;
   schemaJson?: string;
   category?: SanityCategory | null;
+  categories?: SanityCategory[] | null;
   author?: SanityAuthor | null;
 };
 type RenderGroup =
@@ -106,8 +111,16 @@ const sanityBlogPostsQuery = `*[_type == "blogPost"] | order(publishedAt desc) {
   slug,
   publishedAt,
   excerpt,
-  body,
+  body[]{
+    ...,
+    _type == "file" => {
+      ...,
+      "url": asset->url,
+      "mimeType": asset->mimeType
+    }
+  },
   featuredImage,
+  "featuredVideo": featuredVideo.asset->url,
   seoTitle,
   seoDescription,
   canonicalUrl,
@@ -120,6 +133,7 @@ const sanityBlogPostsQuery = `*[_type == "blogPost"] | order(publishedAt desc) {
   twitterDescription,
   twitterImage,
   schemaJson,
+  "categories": categories[]->{ title, slug },
   "category": category->{ title, slug },
   "author": author->{ name, title, linkedin }
 }`;
@@ -170,6 +184,7 @@ export function toLatestPostCards(posts: BlogPost[], limit = 2) {
     href: `/insights/${post.slug}/`,
     imageSrc: normalizeLegacyAssetUrl(post.cardImage || post.heroImage),
     imageAlt: post.heroImageAlt,
+    videoSrc: normalizeLegacyAssetUrl(post.featuredVideo),
     date: post.publishedLabel,
     excerpt: post.excerpt,
     ctaLabel: 'Keep Reading',
@@ -192,6 +207,7 @@ export function toInsightsArticleCards(posts: BlogPost[]) {
       alt: post.heroImageAlt,
       wpImageId: post.id,
     },
+    videoSrc: normalizeLegacyAssetUrl(post.featuredVideo),
   }));
 }
 
@@ -223,15 +239,11 @@ function mapSanityPost(post: SanityBlogPost, slugs: Set<string>): BlogPost | und
   if (!slug || !post.title) return undefined;
 
   const publishedAt = normalizeDate(post.publishedAt);
-  const category = post.category?.title
-    ? {
-        label: post.category.title,
-        slug: post.category.slug?.current || slugify(post.category.title),
-      }
-    : undefined;
+  const categories = normalizeCategories(post.categories, post.category);
 
   const heroImage = imageUrl(post.featuredImage, 1200, 801);
   const cardImage = imageUrl(post.featuredImage, 1200, undefined, { ignoreImageParams: true });
+  const featuredVideo = normalizeLegacyAssetUrl(post.featuredVideo);
   const canonicalUrl = post.canonicalUrl || `https://foundsm.com/insights/${slug}/`;
 
   return {
@@ -259,10 +271,27 @@ function mapSanityPost(post: SanityBlogPost, slugs: Set<string>): BlogPost | und
     authorUrl: '',
     heroImage,
     cardImage,
+    featuredVideo,
     heroImageAlt: post.featuredImage?.alt || post.title,
     contentHtml: renderContentHtml(post.body || [], slugs),
-    categories: category ? [category] : [],
+    categories,
   };
+}
+
+function normalizeCategories(categories: SanityCategory[] | null | undefined, legacyCategory: SanityCategory | null | undefined): BlogPostCategory[] {
+  const normalized = new Map<string, BlogPostCategory>();
+
+  for (const category of categories?.length ? categories : legacyCategory ? [legacyCategory] : []) {
+    if (!category?.title) continue;
+
+    const normalizedCategory = {
+      label: category.title,
+      slug: category.slug?.current || slugify(category.title),
+    };
+    normalized.set(normalizedCategory.slug, normalizedCategory);
+  }
+
+  return [...normalized.values()];
 }
 
 function renderContentHtml(blocks: SanityBlock[], slugs: Set<string>): string {
@@ -320,6 +349,22 @@ function renderBlock(block: SanityBlock, slugs: Set<string>, state: RenderState)
     return [
       '<figure class="blog-post__figure">',
       `<img src="${escapeAttribute(src)}" alt="${escapeAttribute(block.alt || '')}" loading="lazy">`,
+      block.caption ? `<figcaption>${escapeHtml(block.caption)}</figcaption>` : '',
+      '</figure>',
+    ].join('');
+  }
+
+  if (block._type === 'file') {
+    const src = normalizeLegacyAssetUrl(block.url);
+    if (!src || !isVideoUrl(src, block.mimeType)) return '';
+
+    const type = block.mimeType || videoMimeType(src);
+
+    return [
+      '<figure class="blog-post__figure blog-post__figure--video">',
+      '<video class="blog-post__content-video" controls playsinline preload="metadata">',
+      `<source src="${escapeAttribute(src)}" type="${escapeAttribute(type)}">`,
+      '</video>',
       block.caption ? `<figcaption>${escapeHtml(block.caption)}</figcaption>` : '',
       '</figure>',
     ].join('');
@@ -457,6 +502,16 @@ function slugify(value: string): string {
     .trim()
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-|-$/g, '');
+}
+
+function isVideoUrl(value: string, mimeType = ''): boolean {
+  return /^video\//i.test(mimeType) || /\.(mp4|webm|mov|m4v)(?:[?#].*)?$/i.test(value);
+}
+
+function videoMimeType(value: string): string {
+  const pathname = value.split(/[?#]/)[0].toLowerCase();
+  if (pathname.endsWith('.webm')) return 'video/webm';
+  return 'video/mp4';
 }
 
 function formatUnknownError(error: unknown): string {

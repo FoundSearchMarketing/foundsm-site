@@ -23,6 +23,7 @@ const decorativeImage = '';
 const normalizePost = (post: LegacyAuthorLatestPost) => ({
   ...post,
   imageSrc: normalizeLegacyAssetUrl(post.imageSrc),
+  videoSrc: normalizeLegacyAssetUrl(post.videoSrc),
   imageAlt: post.imageAlt ?? '',
   imageWidth: post.imageWidth || 768,
   imageHeight: post.imageHeight || 513,
@@ -118,16 +119,22 @@ const normalizePost = (post: LegacyAuthorLatestPost) => ({
           const normalizedPost = normalizePost(post);
           return (
             <article class="author-latest-card" role="listitem">
-              {normalizedPost.imageSrc && (
+              {(normalizedPost.videoSrc || normalizedPost.imageSrc) && (
                 <a class="author-latest-card__image" href={normalizedPost.href} aria-label={normalizedPost.title} tabindex="-1">
-                  <img
-                    src={normalizedPost.imageSrc}
-                    alt={normalizedPost.imageAlt}
-                    width={normalizedPost.imageWidth}
-                    height={normalizedPost.imageHeight}
-                    loading="eager"
-                    decoding="async"
-                  />
+                  {normalizedPost.videoSrc ? (
+                    <video autoplay muted loop playsinline preload="metadata" poster={normalizedPost.imageSrc || undefined} aria-label={normalizedPost.imageAlt || normalizedPost.title}>
+                      <source src={normalizedPost.videoSrc} type="video/mp4" />
+                    </video>
+                  ) : (
+                    <img
+                      src={normalizedPost.imageSrc}
+                      alt={normalizedPost.imageAlt}
+                      width={normalizedPost.imageWidth}
+                      height={normalizedPost.imageHeight}
+                      loading="eager"
+                      decoding="async"
+                    />
+                  )}
                 </a>
               )}
               <div class="author-latest-card__body">
@@ -350,7 +357,8 @@ const normalizePost = (post: LegacyAuthorLatestPost) => ({
     background: #ffffff;
   }
 
-  .author-latest-card__image img {
+  .author-latest-card__image img,
+  .author-latest-card__image video {
     display: block;
     inline-size: 100%;
     block-size: auto;

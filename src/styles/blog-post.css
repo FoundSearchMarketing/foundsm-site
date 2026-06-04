@@ -1,7 +1,7 @@
 /* Scoped styles for migrated blog posts. Source: /Users/theoden/Documents/test/blogposts-modern/assets/blog-post.css */
 
 
-body.blog-post-page .blog-post *, body.blog-post-page .blog-post *::before, body.blog-post-page .blog-post *::after{ box-sizing: border-box; }body.blog-post-page.blog-post-page{ text-size-adjust: 100%; scroll-behavior: smooth; }body.blog-post-page .blog-post img, body.blog-post-page .blog-post svg, body.blog-post-page .blog-post iframe{ display: block; max-inline-size: 100%; }body.blog-post-page .blog-post img{ block-size: auto; }
+body.blog-post-page .blog-post *, body.blog-post-page .blog-post *::before, body.blog-post-page .blog-post *::after{ box-sizing: border-box; }body.blog-post-page.blog-post-page{ text-size-adjust: 100%; scroll-behavior: smooth; }body.blog-post-page .blog-post img, body.blog-post-page .blog-post svg, body.blog-post-page .blog-post iframe, body.blog-post-page .blog-post video{ display: block; max-inline-size: 100%; }body.blog-post-page .blog-post img, body.blog-post-page .blog-post video{ block-size: auto; }
 body.blog-post-page{
     --color-page: #ffffff;
     --color-hero: #f0f1f0;
@@ -96,7 +96,7 @@ body.blog-post-page .blog-post__back-link{
     border-radius: var(--radius-media);
     background: transparent;
     box-shadow: none;
-  }body.blog-post-page .blog-post__hero-media[hidden]{ display: none; }body.blog-post-page .blog-post__hero-image{
+  }body.blog-post-page .blog-post__hero-media[hidden]{ display: none; }body.blog-post-page .blog-post__hero-image, body.blog-post-page .blog-post__hero-video{
     inline-size: 100%;
     block-size: auto;
     height: auto;
@@ -154,11 +154,14 @@ body.blog-post-page .blog-post__back-link{
     padding-inline-start: 1.45rem;
   }body.blog-post-page .blog-post__content-section ul{ list-style: disc; }body.blog-post-page .blog-post__content-section ol{ list-style: decimal; }body.blog-post-page .blog-post__content-section li > ul, body.blog-post-page .blog-post__content-section li > ol{
     margin-block-start: 0.7rem;
-  }body.blog-post-page .blog-post__content-section img, body.blog-post-page .blog-post__figure img{
+  }body.blog-post-page .blog-post__content-section img, body.blog-post-page .blog-post__figure img, body.blog-post-page .blog-post__content-video{
     inline-size: auto;
     max-inline-size: min(100%, 720px);
     margin-inline: auto;
     border-radius: 20px;
+  }body.blog-post-page .blog-post__content-video{
+    inline-size: min(100%, 720px);
+    background: var(--color-dark);
   }body.blog-post-page .blog-post__figure{
     margin-block: clamp(1.8rem, 4vw, 3rem);
   }body.blog-post-page .blog-post__video{

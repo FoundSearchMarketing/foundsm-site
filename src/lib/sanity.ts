@@ -46,6 +46,8 @@ export const allPostsQuery = `*[_type == "blogPost"] | order(publishedAt desc) {
   twitterDescription,
   "twitterImage": twitterImage.asset->url,
   schemaJson,
+  "featuredVideo": featuredVideo.asset->url,
+  "categories": categories[]->{ title, slug },
   "category": category->{ title, slug },
   "author": author->{ name, title, image }
 }`;
@@ -56,7 +58,14 @@ export const postBySlugQuery = `*[_type == "blogPost" && slug.current == $slug][
   slug,
   publishedAt,
   excerpt,
-  body,
+  body[]{
+    ...,
+    _type == "file" => {
+      ...,
+      "url": asset->url,
+      "mimeType": asset->mimeType
+    }
+  },
   featuredImage,
   seoTitle,
   seoDescription,
@@ -70,6 +79,8 @@ export const postBySlugQuery = `*[_type == "blogPost" && slug.current == $slug][
   twitterDescription,
   "twitterImage": twitterImage.asset->url,
   schemaJson,
+  "featuredVideo": featuredVideo.asset->url,
+  "categories": categories[]->{ title, slug },
   "category": category->{ title, slug },
   "author": author->{ name, title, image, bio, linkedin }
 }`;
@@ -91,13 +102,15 @@ export const allTeamMembersQuery = `*[_type == "teamMember"] | order(order asc) 
   linkedin
 }`;
 
-export const relatedPostsQuery = `*[_type == "blogPost" && slug.current != $slug && category._ref == $categoryId] | order(publishedAt desc)[0...3] {
+export const relatedPostsQuery = `*[_type == "blogPost" && slug.current != $slug && ($categoryId in categories[]._ref || category._ref == $categoryId)] | order(publishedAt desc)[0...3] {
   _id,
   title,
   slug,
   publishedAt,
   excerpt,
   featuredImage,
+  "featuredVideo": featuredVideo.asset->url,
+  "categories": categories[]->{ title, slug },
   "category": category->{ title, slug }
 }`;
 
@@ -330,6 +343,7 @@ export const allAuthorsPageQuery = `*[_type == "author"] | order(name asc) {
     "href": "/insights/" + slug.current + "/",
     "imageSrc": featuredImage.asset->url,
     "imageAlt": coalesce(featuredImage.alt, title),
+    "videoSrc": featuredVideo.asset->url,
     "imageWidth": 768,
     "imageHeight": 513,
     "date": publishedAt

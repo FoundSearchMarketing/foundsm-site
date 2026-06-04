@@ -164,6 +164,20 @@ function extractAuthorFromHtml(html) {
   return null;
 }
 
+function getPostCategoryIds(post) {
+  const categories = Array.isArray(post.categories) && post.categories.length > 0
+    ? post.categories
+    : post.category
+      ? [post.category]
+      : [];
+
+  return [...new Set(categories.map((category) => category?.wp_id).filter(Boolean))];
+}
+
+function toCategoryReference(categoryId) {
+  return { _type: 'reference', _ref: categoryId };
+}
+
 // ── Main ──
 
 async function main() {
@@ -221,11 +235,12 @@ async function main() {
       console.log(`    ⚠ Author not in mapping: "${authorName}"`);
     }
 
-    // 4. Resolve category
-    const wpCatId = post.category?.wp_id;
-    const categoryId = wpCatId
-      ? mapping.categoryLookup[String(wpCatId)]
-      : null;
+    // 4. Resolve categories
+    const categoryRefs = getPostCategoryIds(post)
+      .map((wpCatId) => mapping.categoryLookup[String(wpCatId)])
+      .filter(Boolean)
+      .map(toCategoryReference);
+    const primaryCategoryRef = categoryRefs[0] || null;
 
     // 5. Decode HTML entities in text fields
     const title = decodeHtmlEntities(post.title);
@@ -241,9 +256,8 @@ async function main() {
       publishedAt: post.publishedAt,
       excerpt,
       author: authorId ? { _type: 'reference', _ref: authorId } : null,
-      category: categoryId
-        ? { _type: 'reference', _ref: categoryId }
-        : null,
+      category: primaryCategoryRef,
+      categories: categoryRefs,
       seoTitle: seoTitle !== title ? seoTitle : undefined,
       seoDescription: seoDescription || undefined,
       content_clean_html: rewrittenHtml,

@@ -26,6 +26,7 @@ export interface LegacyAuthorLatestPost {
   href: string;
   imageSrc?: string;
   imageAlt?: string;
+  videoSrc?: string;
   imageWidth?: number;
   imageHeight?: number;
   date?: string;

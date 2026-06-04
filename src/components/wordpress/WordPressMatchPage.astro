@@ -6,6 +6,7 @@ interface InsightPost {
   href: string;
   imageSrc?: string;
   imageAlt?: string;
+  videoSrc?: string;
   categories?: { label: string }[];
   publishedLabel?: string;
   excerpt?: string;
@@ -113,6 +114,7 @@ const fallbackPosts: InsightPost[] = [
 const insightPosts = (posts.length ? posts.slice(0, 6) : fallbackPosts).map((post) => ({
   ...post,
   imageSrc: normalizeLegacyAssetUrl(post.imageSrc),
+  videoSrc: normalizeLegacyAssetUrl(post.videoSrc),
 }));
 const firstPartyHeroImage = legacyUploadAsset('2026/03/first-party-whitepaper-feature.webp');
 
@@ -250,7 +252,13 @@ const firstPartyBullets = [
         <div class="wp-insights-grid">
           {insightPosts.map((post) => (
             <article class="wp-insight-card">
-              {post.imageSrc && <img src={post.imageSrc} alt={post.imageAlt || ''} loading="lazy" decoding="async" />}
+              {post.videoSrc ? (
+                <video autoplay muted loop playsinline preload="metadata" poster={post.imageSrc || undefined} aria-label={post.imageAlt || post.title}>
+                  <source src={post.videoSrc} type="video/mp4" />
+                </video>
+              ) : post.imageSrc && (
+                <img src={post.imageSrc} alt={post.imageAlt || ''} loading="lazy" decoding="async" />
+              )}
               <p class="wp-insight-card__meta">{(post.categories || []).map((category) => category.label).join(', ')}</p>
               <h3><a href={post.href}>{post.title}</a></h3>
               {post.publishedLabel && <time>{post.publishedLabel}</time>}
@@ -671,7 +679,9 @@ const firstPartyBullets = [
     gap: 1.25rem;
   }
 
-  .wp-insight-card img {
+  .wp-insight-card img,
+  .wp-insight-card video {
+    display: block;
     inline-size: 100%;
     aspect-ratio: 1.5;
     border-radius: 1rem;

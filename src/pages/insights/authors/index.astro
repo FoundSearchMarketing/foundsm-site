@@ -27,6 +27,7 @@ const latestPosts = latestBlogPosts.map((post, index) => {
     href: `/insights/${post.slug}/`,
     imageSrc: post.heroImage,
     imageAlt: post.heroImageAlt || post.title,
+    videoSrc: post.featuredVideo,
     imageWidth: 768,
     imageHeight: 513,
     date: post.publishedLabel,
@@ -136,7 +137,11 @@ const latestPosts = latestBlogPosts.map((post, index) => {
         {latestPosts.map((post) => (
           <article class="authors-latest-card" role="listitem">
             <a class="authors-latest-card__image" href={post.href} aria-label={post.title}>
-              {post.imageSrc && (
+              {post.videoSrc ? (
+                <video autoplay muted loop playsinline preload={post.loading === 'eager' ? 'auto' : 'metadata'} poster={post.imageSrc || undefined} aria-label={post.imageAlt || post.title}>
+                  <source src={post.videoSrc} type="video/mp4" />
+                </video>
+              ) : post.imageSrc && (
                 <img
                   src={post.imageSrc}
                   alt={post.imageAlt}
@@ -419,7 +424,8 @@ const latestPosts = latestBlogPosts.map((post, index) => {
     background: #f5f5f5;
   }
 
-  .authors-latest-card__image img {
+  .authors-latest-card__image img,
+  .authors-latest-card__image video {
     display: block;
     inline-size: 100%;
     block-size: 100%;

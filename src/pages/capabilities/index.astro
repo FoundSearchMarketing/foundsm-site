@@ -357,8 +357,49 @@ const schema = {
     border-radius: var(--capabilities-image-radius);
   }
 
+  @media (min-width: 1441px) {
+    .outcomes-section {
+      padding-bottom: 13.5rem;
+    }
+
+    .outcomes-section__heading {
+      margin-bottom: 8rem;
+    }
+
+    .outcomes-section__inner {
+      align-items: stretch;
+    }
+
+    .outcomes-section__media {
+      position: relative;
+      align-self: stretch;
+      overflow: visible;
+      border-radius: var(--capabilities-image-radius);
+    }
+
+    .outcomes-section__media :global(.outcomes-section__image) {
+      position: absolute;
+      inset-inline: 0;
+      inset-block-start: 50%;
+      inline-size: 100%;
+      block-size: 156.25%;
+      max-inline-size: none;
+      border-radius: var(--capabilities-image-radius);
+      object-fit: cover;
+      object-position: top center;
+      transform: translateY(-50%);
+    }
+  }
+
   .outcomes-section__copy {
     padding-top: 1.25rem;
+  }
+
+  @media (min-width: 1441px) {
+    .outcomes-section__copy {
+      align-self: center;
+      padding-top: 0;
+    }
   }
 
   .outcomes-section__copy p + p,

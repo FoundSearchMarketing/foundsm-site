@@ -6,6 +6,7 @@ interface LoopCard {
   href: string;
   imageSrc?: string;
   imageAlt?: string;
+  videoSrc?: string;
   tag?: string;
 }
 
@@ -59,9 +60,15 @@ const {
                   </svg>
                 </span>
               </span>
-              {post.imageSrc && (
+              {(post.videoSrc || post.imageSrc) && (
                 <span class="filter-loop-card__image-wrap">
-                  <img src={post.imageSrc} alt={post.imageAlt ?? ''} loading="lazy" decoding="async" />
+                  {post.videoSrc ? (
+                    <video autoplay muted loop playsinline preload="metadata" poster={post.imageSrc || undefined} aria-label={post.imageAlt ?? ''}>
+                      <source src={post.videoSrc} type="video/mp4" />
+                    </video>
+                  ) : (
+                    <img src={post.imageSrc} alt={post.imageAlt ?? ''} loading="lazy" decoding="async" />
+                  )}
                   <span class="filter-loop-card__tag">{post.tag ?? 'Blog'}</span>
                 </span>
               )}
@@ -225,7 +232,8 @@ const {
     margin-top: auto;
   }
 
-  .filter-loop-card__image-wrap img {
+  .filter-loop-card__image-wrap img,
+  .filter-loop-card__image-wrap video {
     display: block;
     inline-size: 100%;
     aspect-ratio: 850 / 500;

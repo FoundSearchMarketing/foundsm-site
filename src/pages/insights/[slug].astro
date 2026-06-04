@@ -56,6 +56,17 @@ const schema = page
       headline: post?.title,
       description,
       image: post?.heroImage,
+      ...(post?.featuredVideo
+        ? {
+            video: {
+              '@type': 'VideoObject',
+              name: post.title,
+              contentUrl: post.featuredVideo,
+              thumbnailUrl: post.heroImage || undefined,
+              uploadDate: post.publishedAt,
+            },
+          }
+        : {}),
       datePublished: post?.publishedAt,
       dateModified: post?.publishedAt,
       ...(author

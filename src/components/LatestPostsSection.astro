@@ -8,6 +8,7 @@ interface LatestPost {
   href: string;
   imageSrc: string;
   imageAlt: string;
+  videoSrc?: string;
   date: string;
   excerpt: string;
   ctaLabel?: string;
@@ -21,6 +22,7 @@ const { posts } = Astro.props;
 const normalizedPosts = posts.map((post) => ({
   ...post,
   imageSrc: normalizeLegacyAssetUrl(post.imageSrc),
+  videoSrc: normalizeLegacyAssetUrl(post.videoSrc),
 }));
 ---
 
@@ -38,9 +40,17 @@ const normalizedPosts = posts.map((post) => ({
               <p class="tag-line">{post.type}</p>
               <div class="category-line">{post.categories}</div>
               <h3 class="featured-card__title">{post.title}</h3>
-              <span class="featured-card__image">
-                <img src={post.imageSrc} alt={post.imageAlt} loading="lazy" />
-              </span>
+              {(post.videoSrc || post.imageSrc) && (
+                <span class="featured-card__image">
+                  {post.videoSrc ? (
+                    <video autoplay muted loop playsinline preload="metadata" poster={post.imageSrc || undefined} aria-label={post.imageAlt || post.title}>
+                      <source src={post.videoSrc} type="video/mp4" />
+                    </video>
+                  ) : (
+                    <img src={post.imageSrc} alt={post.imageAlt} loading="lazy" />
+                  )}
+                </span>
+              )}
               <p class="meta-line">{post.date}</p>
               <p class="excerpt">{post.excerpt}</p>
               <span class="button">{post.ctaLabel ?? 'Keep Reading'} <span aria-hidden="true">&rarr;</span></span>
@@ -195,7 +205,9 @@ const normalizedPosts = posts.map((post) => ({
     background: transparent;
   }
 
-  .featured-card__image img {
+  .featured-card__image img,
+  .featured-card__image video {
+    display: block;
     width: 100%;
     aspect-ratio: 850 / 500;
     height: auto;
@@ -207,7 +219,9 @@ const normalizedPosts = posts.map((post) => ({
   }
 
   .featured-card:hover .featured-card__image img,
-  .featured-card__image:hover img {
+  .featured-card:hover .featured-card__image video,
+  .featured-card__image:hover img,
+  .featured-card__image:hover video {
     opacity: 1;
     filter: none;
   }
@@ -276,7 +290,8 @@ const normalizedPosts = posts.map((post) => ({
     }
 
     .featured-card__image,
-    .featured-card__image img {
+    .featured-card__image img,
+    .featured-card__image video {
       border-radius: 20px;
     }
 

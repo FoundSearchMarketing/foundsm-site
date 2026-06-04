@@ -9,6 +9,7 @@ interface Props {
 
 const { post, navigation } = Astro.props;
 const authorLabel = [post.authorName, post.authorTitle].filter(Boolean).join(', ');
+const hasHeroMedia = Boolean(post.featuredVideo || post.heroImage);
 ---
 
 <div class="blog-post" data-post-slug={post.slug}>
@@ -35,9 +36,15 @@ const authorLabel = [post.authorName, post.authorTitle].filter(Boolean).join(', 
             </time>
           </div>
         </div>
-        {post.heroImage && (
+        {hasHeroMedia && (
           <figure class="blog-post__hero-media" aria-hidden="true">
-            <img class="blog-post__hero-image" src={post.heroImage} alt={post.heroImageAlt} loading="eager" itemprop="image" />
+            {post.featuredVideo ? (
+              <video class="blog-post__hero-video" autoplay muted loop playsinline preload="metadata" poster={post.heroImage || undefined}>
+                <source src={post.featuredVideo} type="video/mp4" />
+              </video>
+            ) : (
+              <img class="blog-post__hero-image" src={post.heroImage} alt={post.heroImageAlt} loading="eager" itemprop="image" />
+            )}
           </figure>
         )}
       </div>

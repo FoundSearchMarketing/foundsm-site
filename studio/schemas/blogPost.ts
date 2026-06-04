@@ -27,9 +27,24 @@ export default defineType({
     }),
     defineField({
       name: 'category',
-      title: 'Category',
+      title: 'Legacy Category',
       type: 'reference',
       to: [{ type: 'blogCategory' }],
+      hidden: true,
+      readOnly: true,
+      description: 'Deprecated single-category field retained for existing imported posts.',
+    }),
+    defineField({
+      name: 'categories',
+      title: 'Categories',
+      type: 'array',
+      of: [
+        {
+          type: 'reference',
+          to: [{ type: 'blogCategory' }],
+        },
+      ],
+      validation: (rule) => rule.unique(),
     }),
     defineField({
       name: 'publishedAt',
@@ -41,6 +56,13 @@ export default defineType({
       title: 'Featured Image',
       type: 'image',
       options: { hotspot: true },
+    }),
+    defineField({
+      name: 'featuredVideo',
+      title: 'Featured MP4 Video',
+      type: 'file',
+      description: 'Optional. When set, this MP4 is used for post thumbnails and the main post hero. The featured image remains the poster and social fallback.',
+      options: { accept: 'video/mp4' },
     }),
     defineField({
       name: 'excerpt',
@@ -63,6 +85,18 @@ export default defineType({
               title: 'Alt Text',
               type: 'string',
             },
+            {
+              name: 'caption',
+              title: 'Caption',
+              type: 'string',
+            },
+          ],
+        },
+        {
+          type: 'file',
+          title: 'MP4 Video',
+          options: { accept: 'video/mp4' },
+          fields: [
             {
               name: 'caption',
               title: 'Caption',

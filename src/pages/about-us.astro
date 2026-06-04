@@ -260,27 +260,25 @@ const schema = {
     </section>
 
     <section class="about-team" aria-labelledby="about-team-heading">
-      <div class="about-shell">
-        <h2 id="about-team-heading" class="fade-in-up">{page.team.heading}</h2>
+      <div class:list={['about-shell about-team__grid', { 'about-team__grid--text-only': !teamMedia }]}>
+        <div class="about-team__copy fade-in-up">
+          <h2 id="about-team-heading">{page.team.heading}</h2>
+          <div class="about-team__text" set:html={aboutRichHtml(page.teamCta.body)} />
+          {page.teamCta.cta?.label && page.teamCta.cta?.href && (
+            <a class="about-button about-button--dark about-team__button" href={page.teamCta.cta.href}>{page.teamCta.cta.label}</a>
+          )}
+        </div>
+
         {teamMedia && (
           <div class="about-team__image fade-in-up">
             <MediaAsset
               src={teamMedia.src}
               alt={teamMedia.alt}
-              width="1399"
-              height="699"
+              width="900"
+              height="675"
               loading="lazy"
             />
           </div>
-        )}
-      </div>
-    </section>
-
-    <section class="about-team-cta" aria-label="About the Found team">
-      <div class="about-shell about-team-cta__grid fade-in-up">
-        <div class="about-team-cta__copy" set:html={aboutRichHtml(page.teamCta.body)} />
-        {page.teamCta.cta?.label && page.teamCta.cta?.href && (
-          <a class="about-button about-button--dark" href={page.teamCta.cta.href}>{page.teamCta.cta.label}</a>
         )}
       </div>
     </section>
@@ -824,12 +822,24 @@ const schema = {
     }
 
     .about-split__media {
+      position: relative;
+      justify-self: center;
+      margin-inline: auto;
+      inline-size: min(100%, 38rem);
       overflow: hidden;
+      aspect-ratio: 4 / 3;
       border-radius: 2.5rem;
       background: var(--about-surface);
       --media-asset-inline-size: 100%;
-      --media-asset-aspect-ratio: 1;
       --media-asset-fit: cover;
+      --media-asset-position: center center;
+    }
+
+    .about-split__media :global(.media-asset) {
+      inline-size: 100%;
+      block-size: 100%;
+      object-fit: cover;
+      object-position: center center;
     }
 
     .about-split__copy {
@@ -839,43 +849,51 @@ const schema = {
     }
 
     .about-team {
-      padding: 0 0 0.625rem;
+      padding: 0 0 5rem;
       background: #ffffff;
-      text-align: center;
+    }
+
+    .about-team__grid {
+      display: grid;
+      grid-template-areas:
+        "copy"
+        "media";
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .about-team__copy {
+      display: grid;
+      grid-area: copy;
+      gap: 1.25rem;
+      max-width: 52rem;
+    }
+
+    .about-team__copy h2 {
+      margin: 0;
+    }
+
+    .about-team__button {
+      margin-top: 0.25rem;
     }
 
     .about-team__image {
-      margin-top: 2rem;
+      position: relative;
+      grid-area: media;
+      justify-self: center;
+      inline-size: min(100%, 38rem);
       overflow: hidden;
+      aspect-ratio: 4 / 3;
       border-radius: 2.5rem;
       box-shadow: var(--about-shadow);
       --media-asset-inline-size: 100%;
-      --media-asset-aspect-ratio: 1399 / 699;
       --media-asset-fit: cover;
     }
 
-    .about-team-cta {
-      margin-bottom: 3.125rem;
-      padding: 0.625rem 0 4rem;
-      background: #ffffff;
-    }
-
-    .about-team-cta__grid {
-      display: grid;
-      gap: 1.5rem;
-      align-items: center;
-      padding: 0;
-      border-radius: 0;
-      background: transparent;
-      box-shadow: none;
-    }
-
-    .about-team-cta__copy {
-      max-width: 54rem;
-    }
-
-    .about-team-cta .about-button {
-      justify-self: start;
+    .about-team__image :global(.media-asset) {
+      inline-size: 100%;
+      block-size: 100%;
+      object-fit: cover;
     }
 
     .about-careers {
@@ -991,20 +1009,28 @@ const schema = {
       }
 
       .about-split {
-        grid-template-columns: minmax(18rem, 0.98fr) minmax(0, 1fr);
+        grid-template-columns: minmax(20rem, 38rem) minmax(0, 1fr);
+        gap: 4rem;
       }
 
       .about-split--text-only {
         grid-template-columns: minmax(0, 38rem);
       }
 
-      .about-team-cta__grid {
-        grid-template-columns: minmax(0, 1fr) auto;
-        padding: 2rem;
+      .about-team__grid {
+        grid-template-areas:
+          "copy media";
+        grid-template-columns: minmax(0, 1fr) minmax(20rem, 38rem);
+        gap: 1.5rem 4rem;
       }
 
-      .about-team-cta {
-        margin-bottom: 5rem;
+      .about-team__grid--text-only {
+        grid-template-areas: "copy";
+        grid-template-columns: minmax(0, 54rem);
+      }
+
+      .about-team__image {
+        justify-self: end;
       }
     }
 
@@ -1202,8 +1228,12 @@ const schema = {
         padding-top: 1rem;
       }
 
-      .about-team-cta__grid {
+      .about-team__grid {
         gap: 1.5rem;
+      }
+
+      .about-team__image {
+        border-radius: 2rem;
       }
     }
 

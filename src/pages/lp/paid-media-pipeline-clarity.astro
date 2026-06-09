@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BlockRenderer from '../../components/blocks/BlockRenderer.astro';
+import page from '../../../docs/ai-page-builder/foundsm-paid-media-pipeline-clarity.landing-page-draft.json';
+
+const draft = page as any;
+const slug = draft.slug?.current || 'paid-media-pipeline-clarity';
+const seoTitle = draft.seoTitle || draft.title;
+const seoDescription = draft.seoDescription || '';
+---
+
+<BaseLayout
+  title={seoTitle}
+  description={seoDescription}
+  canonical={draft.canonicalUrl || `https://foundsm.com/lp/${slug}/`}
+  ogTitle={draft.ogTitle}
+  ogDescription={draft.ogDescription}
+  ogImage={draft.ogImage}
+  robots={draft.robots}
+  twitterCard={draft.twitterCard}
+  twitterTitle={draft.twitterTitle}
+  twitterDescription={draft.twitterDescription}
+  twitterImage={draft.twitterImage}
+  schemaJson={draft.schemaJson}
+  hideNavigation={draft.hideNavigation}
+  hideFooter={draft.hideFooter}
+>
+  {draft.sections?.map((section: any) => (
+    <BlockRenderer section={section} />
+  ))}
+</BaseLayout>

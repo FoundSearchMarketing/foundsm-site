@@ -1,0 +1,26 @@
+---
+import FeatureTabs from '../modern/FeatureTabs.astro';
+import { tabsFor } from '../../lib/fixedPageRender';
+
+interface Props {
+  title?: string;
+  subtitle?: string;
+  idPrefix?: string;
+  tabs?: any[];
+  theme?: 'light' | 'muted';
+}
+
+const { title, subtitle, idPrefix, tabs = [], theme = 'muted' } = Astro.props;
+const safeIdPrefix = idPrefix || (title || 'feature-tabs').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'feature-tabs';
+const preparedTabs = tabsFor(tabs).filter((tab) => tab.title);
+---
+
+{preparedTabs.length > 0 && (
+  <FeatureTabs
+    title={title}
+    subtitle={subtitle}
+    tabs={preparedTabs}
+    idPrefix={safeIdPrefix}
+    theme={theme}
+  />
+)}

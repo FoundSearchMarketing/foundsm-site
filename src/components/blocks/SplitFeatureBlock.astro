@@ -1,0 +1,41 @@
+---
+import SplitFeature from '../modern/SplitFeature.astro';
+import { imageProps, richHtml, richText } from '../../lib/fixedPageRender';
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  body?: any[];
+  cta?: { label?: string; href?: string };
+  image?: unknown;
+  imageAlt?: string;
+  videoUrl?: string;
+  imagePosition?: 'left' | 'right';
+  theme?: 'light' | 'muted' | 'dark';
+}
+
+const {
+  eyebrow,
+  title,
+  body = [],
+  cta,
+  image,
+  imageAlt,
+  videoUrl,
+  imagePosition = 'left',
+  theme = 'light',
+} = Astro.props;
+
+const ctaLink = cta?.label && cta.href ? { label: cta.label, href: cta.href } : undefined;
+---
+
+<SplitFeature
+  eyebrow={eyebrow}
+  title={title}
+  body={richText(body)}
+  bodyHtml={richHtml(body)}
+  image={imageProps({ image, imageAlt, videoUrl })}
+  imagePosition={imagePosition}
+  theme={theme}
+  cta={ctaLink}
+/>

@@ -1,0 +1,445 @@
+{
+  "_id": "drafts.landing-page-paid-media-pipeline-clarity",
+  "_type": "landingPage",
+  "title": "Paid Media Pipeline Clarity Landing Page",
+  "slug": {
+    "_type": "slug",
+    "current": "paid-media-pipeline-clarity"
+  },
+  "seoTitle": "Paid Media Pipeline Clarity | FoundSM",
+  "seoDescription": "FoundSM helps enterprise marketing teams connect paid media, analytics, first-party data, and creative testing so spend optimizes toward pipeline and revenue.",
+  "canonicalUrl": "https://foundsm.com/lp/paid-media-pipeline-clarity/",
+  "robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+  "ogTitle": "Paid Media Pipeline Clarity | FoundSM",
+  "ogDescription": "Connect paid media, analytics, first-party data, and performance creative into one measurable growth system.",
+  "twitterCard": "summary_large_image",
+  "twitterTitle": "Paid Media Pipeline Clarity | FoundSM",
+  "twitterDescription": "Build a clearer measurement system for paid media decisions, pipeline visibility, and growth optimization.",
+  "hideNavigation": false,
+  "hideFooter": false,
+  "sections": [
+    {
+      "_type": "modernHeroBlock",
+      "_key": "paid-media-clarity-hero",
+      "eyebrow": "Enterprise paid media measurement",
+      "title": "Connect paid media to pipeline.",
+      "intro": [
+        {
+          "_key": "paid-media-clarity-hero-intro-1",
+          "_type": "block",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_key": "paid-media-clarity-hero-intro-1-span",
+              "_type": "span",
+              "text": "When platform reporting stops short of pipeline clarity, FoundSM connects paid media, analytics, first-party data, and creative testing into one measurable growth system.",
+              "marks": []
+            }
+          ]
+        }
+      ],
+      "cta": {
+        "label": "Talk to a growth strategist",
+        "href": "/contact-us/"
+      },
+      "image": "https://placehold.co/1200x900/e8ebe6/1a1a1a?text=Paid+Media+Measurement+System",
+      "imageAlt": "Placeholder visualization of paid media, analytics, first-party data, and pipeline signals connected in one growth system",
+      "layoutPreset": "split",
+      "tone": "soft",
+      "titleScale": "display",
+      "imageShape": "rounded",
+      "imageFit": "contain",
+      "sizePreset": "compact"
+    },
+    {
+      "_type": "statementBandBlock",
+      "_key": "paid-media-signal-statement",
+      "lead": "Paid media performance depends on the quality of the signals behind it.",
+      "body": [
+        {
+          "_key": "paid-media-signal-statement-body",
+          "_type": "block",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_key": "paid-media-signal-statement-body-span",
+              "_type": "span",
+              "text": "When conversion data, attribution, audience inputs, and creative learning are disconnected, optimization gets pulled toward easy-to-measure activity instead of business outcomes.",
+              "marks": []
+            }
+          ]
+        }
+      ],
+      "theme": "dark",
+      "pattern": true,
+      "width": "default"
+    },
+    {
+      "_type": "splitFeatureBlock",
+      "_key": "paid-media-measurement-loop",
+      "eyebrow": "Measurement clarity",
+      "title": "Connect spend to the decisions leaders need.",
+      "body": [
+        {
+          "_key": "paid-media-measurement-loop-body-1",
+          "_type": "block",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_key": "paid-media-measurement-loop-body-1-span",
+              "_type": "span",
+              "text": "FoundSM helps marketing teams build a cleaner view of what paid media is producing across campaigns, audiences, conversion paths, and downstream pipeline.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_key": "paid-media-measurement-loop-body-2",
+          "_type": "block",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_key": "paid-media-measurement-loop-body-2-span",
+              "_type": "span",
+              "text": "That measurement foundation helps teams reduce wasted spend, protect budget, and optimize toward outcomes that executives can evaluate with confidence.",
+              "marks": []
+            }
+          ]
+        }
+      ],
+      "image": "https://placehold.co/1000x750/f2f3f2/1a1a1a?text=Pipeline+Measurement+Map",
+      "imageAlt": "Placeholder image of a pipeline measurement map connecting campaign inputs to qualified conversations and revenue outcomes",
+      "imagePosition": "right",
+      "theme": "light"
+    },
+    {
+      "_type": "featureTabsBlock",
+      "_key": "paid-media-connected-system-tabs",
+      "title": "The connected system behind better optimization",
+      "subtitle": "FoundSM brings the core growth disciplines together so paid media decisions are guided by cleaner data, stronger context, and clearer learning.",
+      "idPrefix": "paid-media-measurement",
+      "theme": "muted",
+      "tabs": [
+        {
+          "_key": "paid-media-tab-data-activation",
+          "title": "Data activation",
+          "body": [
+            {
+              "_key": "paid-media-tab-data-activation-body",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "paid-media-tab-data-activation-body-span",
+                  "_type": "span",
+                  "text": "Use first-party audiences, CRM milestones, and qualified lead signals to give media platforms more useful feedback than basic form fills.",
+                  "marks": []
+                }
+              ]
+            }
+          ],
+          "icon": "https://placehold.co/120x120/f2f3f2/1a1a1a?text=Data",
+          "image": "https://placehold.co/900x700/e8ebe6/1a1a1a?text=First-party+Data+Activation",
+          "imageAlt": "Placeholder visualization of first-party data activation feeding paid media platforms"
+        },
+        {
+          "_key": "paid-media-tab-analytics-attribution",
+          "title": "Analytics and attribution",
+          "body": [
+            {
+              "_key": "paid-media-tab-analytics-attribution-body",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "paid-media-tab-analytics-attribution-body-span",
+                  "_type": "span",
+                  "text": "Strengthen tracking, reporting, and attribution logic so marketing leaders can understand the relationship between spend, pipeline, and revenue.",
+                  "marks": []
+                }
+              ]
+            }
+          ],
+          "icon": "https://placehold.co/120x120/f2f3f2/1a1a1a?text=Attr",
+          "image": "https://placehold.co/900x700/e8ebe6/1a1a1a?text=Analytics+and+Attribution",
+          "imageAlt": "Placeholder dashboard showing analytics and attribution connected to pipeline reporting"
+        },
+        {
+          "_key": "paid-media-tab-media-optimization",
+          "title": "Paid media optimization",
+          "body": [
+            {
+              "_key": "paid-media-tab-media-optimization-body",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "paid-media-tab-media-optimization-body-span",
+                  "_type": "span",
+                  "text": "Plan channel mix, bidding, audience strategy, and budget movement around signals that better reflect qualified demand.",
+                  "marks": []
+                }
+              ]
+            }
+          ],
+          "icon": "https://placehold.co/120x120/f2f3f2/1a1a1a?text=Media",
+          "image": "https://placehold.co/900x700/e8ebe6/1a1a1a?text=Paid+Media+Optimization",
+          "imageAlt": "Placeholder image of paid media optimization guided by business outcome signals"
+        },
+        {
+          "_key": "paid-media-tab-performance-creative",
+          "title": "Performance creative",
+          "body": [
+            {
+              "_key": "paid-media-tab-performance-creative-body",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "paid-media-tab-performance-creative-body-span",
+                  "_type": "span",
+                  "text": "Turn audience insight and campaign learning into creative tests that improve message clarity, conversion quality, and landing page performance.",
+                  "marks": []
+                }
+              ]
+            }
+          ],
+          "icon": "https://placehold.co/120x120/f2f3f2/1a1a1a?text=Creative",
+          "image": "https://placehold.co/900x700/e8ebe6/1a1a1a?text=Performance+Creative+Testing",
+          "imageAlt": "Placeholder visualization of performance creative testing informed by paid media and audience data"
+        }
+      ]
+    },
+    {
+      "_type": "cardGridBlock",
+      "_key": "paid-media-leader-outcomes",
+      "title": "What better measurement makes possible",
+      "subtitle": "The goal is not more reporting. It is a paid media system that helps leaders make stronger investment decisions.",
+      "columns": 4,
+      "theme": "light",
+      "cards": [
+        {
+          "_key": "paid-media-outcome-less-waste",
+          "title": "Less wasted spend",
+          "lead": "See what is not moving the business.",
+          "body": [
+            {
+              "_key": "paid-media-outcome-less-waste-body",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "paid-media-outcome-less-waste-body-span",
+                  "_type": "span",
+                  "text": "Use cleaner measurement to identify inefficient audiences, placements, conversion paths, and budget allocations.",
+                  "marks": []
+                }
+              ]
+            }
+          ],
+          "icon": "https://placehold.co/120x120/e8ebe6/1a1a1a?text=Spend"
+        },
+        {
+          "_key": "paid-media-outcome-clearer-pipeline",
+          "title": "Clearer pipeline visibility",
+          "lead": "Connect campaigns to qualified demand.",
+          "body": [
+            {
+              "_key": "paid-media-outcome-clearer-pipeline-body",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "paid-media-outcome-clearer-pipeline-body-span",
+                  "_type": "span",
+                  "text": "Give leaders a more practical view of how paid media contributes to pipeline stages and revenue conversations.",
+                  "marks": []
+                }
+              ]
+            }
+          ],
+          "icon": "https://placehold.co/120x120/e8ebe6/1a1a1a?text=Pipe"
+        },
+        {
+          "_key": "paid-media-outcome-stronger-platform-feedback",
+          "title": "Stronger platform feedback",
+          "lead": "Improve the signal quality behind automation.",
+          "body": [
+            {
+              "_key": "paid-media-outcome-stronger-platform-feedback-body",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "paid-media-outcome-stronger-platform-feedback-body-span",
+                  "_type": "span",
+                  "text": "Feed bidding and audience systems with inputs that better represent valuable prospects and sales-ready demand.",
+                  "marks": []
+                }
+              ]
+            }
+          ],
+          "icon": "https://placehold.co/120x120/e8ebe6/1a1a1a?text=Signals"
+        },
+        {
+          "_key": "paid-media-outcome-more-confident-tests",
+          "title": "More confident testing",
+          "lead": "Learn from creative and media together.",
+          "body": [
+            {
+              "_key": "paid-media-outcome-more-confident-tests-body",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "paid-media-outcome-more-confident-tests-body-span",
+                  "_type": "span",
+                  "text": "Evaluate creative tests against conversion quality, not only click behavior or surface-level engagement.",
+                  "marks": []
+                }
+              ]
+            }
+          ],
+          "icon": "https://placehold.co/120x120/e8ebe6/1a1a1a?text=Tests"
+        }
+      ]
+    },
+    {
+      "_type": "cardGridBlock",
+      "_key": "paid-media-experience-proof",
+      "title": "Experience behind the work",
+      "subtitle": "FoundSM brings long-running search marketing experience and cross-discipline fluency to enterprise growth systems.",
+      "columns": 4,
+      "theme": "muted",
+      "cards": [
+        {
+          "_key": "paid-media-proof-search-since-2006",
+          "title": "Search marketing since 2006",
+          "lead": "Experience through major platform shifts.",
+          "body": [
+            {
+              "_key": "paid-media-proof-search-since-2006-body",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "paid-media-proof-search-since-2006-body-span",
+                  "_type": "span",
+                  "text": "FoundSM has worked in search marketing since 2006, helping teams adapt as paid media and measurement have changed.",
+                  "marks": []
+                }
+              ]
+            }
+          ],
+          "icon": "https://placehold.co/120x120/e8ebe6/1a1a1a?text=2006"
+        },
+        {
+          "_key": "paid-media-proof-google-meta",
+          "title": "Google and Meta experience",
+          "lead": "Platform context without platform tunnel vision.",
+          "body": [
+            {
+              "_key": "paid-media-proof-google-meta-body",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "paid-media-proof-google-meta-body-span",
+                  "_type": "span",
+                  "text": "The team works across Google, Meta, and broader paid media environments with a focus on business outcomes.",
+                  "marks": []
+                }
+              ]
+            }
+          ],
+          "icon": "https://placehold.co/120x120/e8ebe6/1a1a1a?text=G%2BM"
+        },
+        {
+          "_key": "paid-media-proof-analytics-attribution",
+          "title": "Analytics and attribution",
+          "lead": "Measurement treated as a growth system.",
+          "body": [
+            {
+              "_key": "paid-media-proof-analytics-attribution-body",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "paid-media-proof-analytics-attribution-body-span",
+                  "_type": "span",
+                  "text": "FoundSM helps teams make analytics and attribution more useful for budget decisions, performance reviews, and executive reporting.",
+                  "marks": []
+                }
+              ]
+            }
+          ],
+          "icon": "https://placehold.co/120x120/e8ebe6/1a1a1a?text=Measure"
+        },
+        {
+          "_key": "paid-media-proof-data-creative",
+          "title": "Data and creative activation",
+          "lead": "Signals, audiences, and testing connected.",
+          "body": [
+            {
+              "_key": "paid-media-proof-data-creative-body",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "paid-media-proof-data-creative-body-span",
+                  "_type": "span",
+                  "text": "Experience across first-party data activation and performance creative helps teams improve both targeting inputs and conversion learning.",
+                  "marks": []
+                }
+              ]
+            }
+          ],
+          "icon": "https://placehold.co/120x120/e8ebe6/1a1a1a?text=Act"
+        }
+      ]
+    },
+    {
+      "_type": "modernCtaBlock",
+      "_key": "paid-media-final-cta",
+      "title": "Talk through the growth system behind your spend.",
+      "body": [
+        {
+          "_key": "paid-media-final-cta-body",
+          "_type": "block",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_key": "paid-media-final-cta-body-span",
+              "_type": "span",
+              "text": "Bring your questions about measurement, signal quality, first-party data, creative testing, or paid media optimization. We will help you identify where the system needs more clarity.",
+              "marks": []
+            }
+          ]
+        }
+      ],
+      "cta": {
+        "label": "Talk to a growth strategist",
+        "href": "/contact-us/"
+      },
+      "theme": "green",
+      "align": "split"
+    }
+  ]
+}

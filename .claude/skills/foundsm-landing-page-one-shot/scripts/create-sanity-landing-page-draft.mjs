@@ -5,7 +5,8 @@ import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { createClient } from '@sanity/client';
 
-const [jsonPath] = process.argv.slice(2);
+const args = process.argv.slice(2);
+const [jsonPath] = args;
 
 function loadEnvLocal() {
   const envPath = path.join(process.cwd(), '.env.local');
@@ -42,16 +43,17 @@ loadEnvLocal();
 
 const token = process.env.SANITY_WRITE_TOKEN || process.env.SANITY_TOKEN;
 
-if (!jsonPath || !token) {
-  console.error(`
+if (args.includes('--help') || !jsonPath || !token) {
+  const output = args.includes('--help') ? console.log : console.error;
+  output(`
 Usage:
-  node scripts/create-sanity-landing-page-draft.mjs <landing-page.json>
+  bun scripts/create-sanity-landing-page-draft.mjs <landing-page.json>
 
-Creates or replaces an unpublished landingPage draft in the Sanity staging dataset.
+Creates or replaces and publishes a landingPage in the Sanity staging dataset.
 Requires SANITY_WRITE_TOKEN in the repo root .env.local file or process environment.
-This script never writes to production and never publishes documents.
+This script never writes to production.
 `);
-  process.exit(1);
+  process.exit(args.includes('--help') ? 0 : 1);
 }
 
 const projectId = 'vzneqxsx';
@@ -81,11 +83,17 @@ const publishedId = source._id?.startsWith('drafts.')
   ? source._id.slice('drafts.'.length)
   : source._id || slugToId(slug);
 
-const draft = {
+const published = {
   ...source,
-  _id: `drafts.${publishedId}`,
+  _id: publishedId,
   _type: 'landingPage',
 };
+
+delete published._rev;
+delete published._createdAt;
+delete published._updatedAt;
+
+const draftId = `drafts.${publishedId}`;
 
 const client = createClient({
   projectId,
@@ -95,12 +103,18 @@ const client = createClient({
   useCdn: false,
 });
 
-const result = await client.createOrReplace(draft);
+const result = await client
+  .transaction()
+  .createOrReplace(published)
+  .delete(draftId)
+  .commit({ visibility: 'sync' });
 
 console.log(JSON.stringify({
   dataset,
-  draftId: result._id,
-  title: result.title,
+  documentId: publishedId,
+  deletedDraftId: draftId,
+  transactionId: result.transactionId,
+  title: published.title,
   slug,
-  studioHint: 'Open the staging Studio and look for this unpublished Landing Page draft.',
+  studioHint: 'Open the staging Studio to review the published staging Landing Page.',
 }, null, 2));

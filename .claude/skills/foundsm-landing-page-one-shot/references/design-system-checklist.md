@@ -10,4 +10,4 @@
 - Give feature tabs a stable lowercase `idPrefix` with letters, numbers, and hyphens.
 - Reject raw CSS, inline styles, arbitrary colors, custom font sizes, custom font weights, custom breakpoints, and negative letter spacing.
 
-If a draft violates the checklist, revise it before final output and briefly note the correction.
+If a page violates the checklist, revise it before final output and briefly note the correction.

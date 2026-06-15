@@ -37,6 +37,7 @@ Classify the request before changing anything:
 - Preserve fixed capability routes and existing `/lp/[slug]` behavior unless the user explicitly asks to change them.
 - Keep meaningful media alt text, CTA consistency, concise headings, and valid token values.
 - Always run the design-system review before final output.
+- Always run the page-builder bug fixer after JSON/content/schema/renderer edits and before final output.
 
 ## Workflow
 
@@ -47,6 +48,8 @@ Classify the request before changing anything:
 5. If schema fields change, update schema, query projection, renderer props, demo data, and docs/skills references together.
 6. If frontend/styles change, validate responsive behavior and avoid text overlap.
 7. Before final output, apply the `foundsm-design-system-police` checklist in `references/design-system-checklist.md`.
+8. Run the `foundsm-page-builder-bug-fixer` checks. For JSON/content edits, run the JSON fixer and use the fixed output. For schema/frontend edits, also run tests and build.
+9. If a preview URL exists, run the bug-fixer preview smoke check before handoff.
 
 ## Code Pointers
 
@@ -59,6 +62,18 @@ Classify the request before changing anything:
 
 ## Validation Guidance
 
-- For JSON-only edits, validate structure and token values.
-- For schema/frontend edits, run `git diff --check`, `npm test`, and `npm run build`.
+- For JSON-only edits, run:
+
+```bash
+bun .codex/skills/foundsm-page-builder-bug-fixer/scripts/fix-landing-page-json.mjs <landing-page.json> --out <fixed-landing-page.json> --report <bug-fixer-report.json>
+```
+
+- For schema/frontend edits, run `git diff --check`, `bun test`, and `bun run build`.
+- For preview handoff, run:
+
+```bash
+bun .codex/skills/foundsm-page-builder-bug-fixer/scripts/check-preview-smoke.mjs <preview-url>
+```
+
 - For visual changes, run a local page render or screenshot check on desktop and mobile.
+- If the bug fixer, tests, build, or preview smoke fails, block handoff and report the failure clearly.

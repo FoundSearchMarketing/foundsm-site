@@ -15,6 +15,32 @@
 
 `heroBlock`, `statsBlock`, `featuresBlock`, `testimonialBlock`, `ctaBlock`, `formBlock`, `textBlock`, `imageTextBlock`, `logoBarBlock`, and `faqBlock` remain valid. Prefer modern POC blocks for new AI-assisted landing pages.
 
+## Placeholder Media
+
+When a user does not provide a real image, keep the section visual by adding a temporary placeholder image URL in `videoUrl`; leave `image` unset until an editor uploads a real Sanity image asset. The placeholder must visibly say `Image goes here - WIDTHxHEIGHT` and the `imageAlt` must say what image should replace it.
+
+Use this format:
+
+```json
+{
+  "videoUrl": "https://placehold.co/1200x900?text=Image+goes+here+-+1200x900",
+  "imageAlt": "Image goes here - replace with a paid media dashboard image, 1200x900."
+}
+```
+
+Recommended placeholder canvases:
+
+| Component or media slot | Placeholder size |
+| --- | --- |
+| `modernHeroBlock` split media, rounded/plain | `1200x900` |
+| `modernHeroBlock` circle media | `1200x1200` |
+| `splitFeatureBlock` media | `960x720` |
+| `featureTabsBlock.tabs[].image` | `826x1070` |
+| `cardGridBlock.cards[].image` | `800x600` |
+| `heroBlock` media | `1200x900` |
+| `imageTextBlock` media | `960x720` |
+| `logoBarBlock.logos[].image` | `320x160` |
+
 ## Token Values
 
 ```json

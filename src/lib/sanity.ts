@@ -376,7 +376,20 @@ export const landingPageBySlugQuery = `*[_type == "landingPage" && slug.current 
     "backgroundImage": backgroundImage.asset->url,
     "authorImage": authorImage.asset->url,
     "image": image.asset->url,
+    "videoUrl": coalesce(videoFile.asset->url, videoUrl),
     "ogImage": ogImage.asset->url,
+    tabs[] {
+      ...,
+      "icon": icon.asset->url,
+      "image": image.asset->url,
+      "videoUrl": coalesce(videoFile.asset->url, videoUrl)
+    },
+    cards[] {
+      ...,
+      "icon": icon.asset->url,
+      "image": image.asset->url,
+      "videoUrl": coalesce(videoFile.asset->url, videoUrl)
+    },
     logos[] {
       "url": asset->url,
       alt

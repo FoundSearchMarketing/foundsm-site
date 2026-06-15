@@ -1,0 +1,25 @@
+---
+import StatementBand from '../modern/StatementBand.astro';
+import { richHtml, richText } from '../../lib/fixedPageRender';
+
+interface Props {
+  lead: string;
+  body?: any[];
+  theme?: 'dark' | 'muted' | 'light';
+  pattern?: boolean;
+  width?: 'default' | 'narrow';
+}
+
+const { lead, body = [], theme = 'dark', pattern = false, width = 'default' } = Astro.props;
+---
+
+{lead && (
+  <StatementBand
+    lead={lead}
+    body={richText(body)}
+    bodyHtml={richHtml(body)}
+    theme={theme}
+    pattern={pattern}
+    width={width}
+  />
+)}

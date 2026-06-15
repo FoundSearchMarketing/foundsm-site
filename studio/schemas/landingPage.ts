@@ -33,6 +33,12 @@ export default defineType({
       type: 'array',
       group: 'content',
       of: [
+        defineArrayMember({ type: 'modernHeroBlock' }),
+        defineArrayMember({ type: 'splitFeatureBlock' }),
+        defineArrayMember({ type: 'featureTabsBlock' }),
+        defineArrayMember({ type: 'cardGridBlock' }),
+        defineArrayMember({ type: 'statementBandBlock' }),
+        defineArrayMember({ type: 'modernCtaBlock' }),
         defineArrayMember({ type: 'heroBlock' }),
         defineArrayMember({ type: 'statsBlock' }),
         defineArrayMember({ type: 'featuresBlock' }),

@@ -18,6 +18,12 @@ import textBlock from './blocks/textBlock';
 import imageTextBlock from './blocks/imageTextBlock';
 import logoBarBlock from './blocks/logoBarBlock';
 import faqBlock from './blocks/faqBlock';
+import modernHeroBlock from './blocks/modernHeroBlock';
+import splitFeatureBlock from './blocks/splitFeatureBlock';
+import featureTabsBlock from './blocks/featureTabsBlock';
+import cardGridBlock from './blocks/cardGridBlock';
+import statementBandBlock from './blocks/statementBandBlock';
+import modernCtaBlock from './blocks/modernCtaBlock';
 
 export const schemaTypes = [
   blogPost,
@@ -47,4 +53,10 @@ export const schemaTypes = [
   imageTextBlock,
   logoBarBlock,
   faqBlock,
+  modernHeroBlock,
+  splitFeatureBlock,
+  featureTabsBlock,
+  cardGridBlock,
+  statementBandBlock,
+  modernCtaBlock,
 ];

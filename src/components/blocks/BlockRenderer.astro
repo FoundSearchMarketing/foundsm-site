@@ -9,6 +9,12 @@ import TextBlock from './TextBlock.astro';
 import ImageTextBlock from './ImageTextBlock.astro';
 import LogoBarBlock from './LogoBarBlock.astro';
 import FaqBlock from './FaqBlock.astro';
+import ModernHeroBlock from './ModernHeroBlock.astro';
+import SplitFeatureBlock from './SplitFeatureBlock.astro';
+import FeatureTabsBlock from './FeatureTabsBlock.astro';
+import CardGridBlock from './CardGridBlock.astro';
+import StatementBandBlock from './StatementBandBlock.astro';
+import ModernCtaBlock from './ModernCtaBlock.astro';
 
 interface Props {
   section: any;
@@ -27,3 +33,9 @@ const { section } = Astro.props;
 {section._type === 'imageTextBlock' && <ImageTextBlock {...section} />}
 {section._type === 'logoBarBlock' && <LogoBarBlock {...section} />}
 {section._type === 'faqBlock' && <FaqBlock {...section} />}
+{section._type === 'modernHeroBlock' && <ModernHeroBlock {...section} />}
+{section._type === 'splitFeatureBlock' && <SplitFeatureBlock {...section} />}
+{section._type === 'featureTabsBlock' && <FeatureTabsBlock {...section} />}
+{section._type === 'cardGridBlock' && <CardGridBlock {...section} />}
+{section._type === 'statementBandBlock' && <StatementBandBlock {...section} />}
+{section._type === 'modernCtaBlock' && <ModernCtaBlock {...section} />}

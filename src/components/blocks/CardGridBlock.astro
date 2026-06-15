@@ -1,0 +1,25 @@
+---
+import CardGrid from '../modern/CardGrid.astro';
+import { cardsFor } from '../../lib/fixedPageRender';
+
+interface Props {
+  title?: string;
+  subtitle?: string;
+  cards?: any[];
+  columns?: 2 | 3 | 4;
+  theme?: 'light' | 'muted' | 'dark';
+}
+
+const { title, subtitle, cards = [], columns = 3, theme = 'light' } = Astro.props;
+const preparedCards = cardsFor(cards).filter((card) => card.title);
+---
+
+{preparedCards.length > 0 && (
+  <CardGrid
+    title={title}
+    subtitle={subtitle}
+    cards={preparedCards}
+    columns={columns}
+    theme={theme}
+  />
+)}

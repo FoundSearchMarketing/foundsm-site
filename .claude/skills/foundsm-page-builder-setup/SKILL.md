@@ -51,10 +51,11 @@ The FoundSM page-builder skills are not ready yet. Please add SANITY_WRITE_TOKEN
 - Confirm `lsof` is available so the one-shot skill can check and restart the selected preview port.
 - Confirm dependencies are installed and `@sanity/client` is resolvable.
 - Confirm `.env.local` exists and contains a non-placeholder `SANITY_WRITE_TOKEN`.
-- Confirm the Codex and Claude page-builder skill entrypoints exist.
+- Confirm the Codex and Claude page-builder skill entrypoints exist, including the flow-explaining helper.
 - Confirm the one-shot Sanity staging publisher scripts exist.
 - Confirm the one-shot local preview server-control scripts exist.
 - Confirm the bug-fixer JSON and preview-smoke scripts exist.
+- Confirm the marketing quickstart and prompts/FAQ docs exist.
 - Optionally confirm the token can read from the Sanity `staging` dataset without writing.
 
 ## Output Rules

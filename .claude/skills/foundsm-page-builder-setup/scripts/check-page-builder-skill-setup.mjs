@@ -179,12 +179,14 @@ const skillFiles = [
   '.codex/skills/foundsm-design-system-police/SKILL.md',
   '.codex/skills/foundsm-page-builder-bug-fixer/SKILL.md',
   '.codex/skills/foundsm-page-builder-setup/SKILL.md',
+  '.codex/skills/foundsm-page-builder-flow-explainer/SKILL.md',
   '.claude/skills/foundsm-landing-page-one-shot/SKILL.md',
   '.claude/skills/foundsm-landing-page-component-editor/SKILL.md',
   '.claude/skills/foundsm-available-component-lister/SKILL.md',
   '.claude/skills/foundsm-design-system-police/SKILL.md',
   '.claude/skills/foundsm-page-builder-bug-fixer/SKILL.md',
   '.claude/skills/foundsm-page-builder-setup/SKILL.md',
+  '.claude/skills/foundsm-page-builder-flow-explainer/SKILL.md',
 ];
 
 for (const skillFile of skillFiles) {
@@ -231,6 +233,19 @@ for (const bugFixerScript of bugFixerScripts) {
     pass('Bug fixer script', `${bugFixerScript} exists.`);
   } else {
     fail('Bug fixer script', `${bugFixerScript} is missing.`);
+  }
+}
+
+const marketingDocs = [
+  'docs/ai-page-builder/marketing-skill-quickstart.md',
+  'docs/ai-page-builder/marketing-skill-prompts-and-faq.md',
+];
+
+for (const marketingDoc of marketingDocs) {
+  if (fileExists(marketingDoc)) {
+    pass('Marketing docs', `${marketingDoc} exists.`);
+  } else {
+    fail('Marketing docs', `${marketingDoc} is missing.`);
   }
 }
 

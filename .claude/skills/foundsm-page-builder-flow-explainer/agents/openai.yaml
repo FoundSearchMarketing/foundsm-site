@@ -1,0 +1,4 @@
+interface:
+  display_name: "FoundSM Page Builder Flow"
+  short_description: "Explain FoundSM AI page-builder workflow"
+  default_prompt: "Explain the philosophy, order, and next step for the FoundSM AI page-builder workflow."

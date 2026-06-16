@@ -1,0 +1,64 @@
+---
+import ModernHero from '../modern/ModernHero.astro';
+import { imageProps, richHtml, richText } from '../../lib/fixedPageRender';
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  intro?: any[];
+  cta?: { label?: string; href?: string };
+  image?: unknown;
+  imageAlt?: string;
+  videoUrl?: string;
+  layoutPreset?: 'split' | 'textOnly';
+  tone?: 'light' | 'soft' | 'dark';
+  titleScale?: 'default' | 'display';
+  imageShape?: 'rounded' | 'circle' | 'plain';
+  imageFit?: 'cover' | 'contain';
+  sizePreset?: 'compact' | 'standard' | 'spacious';
+}
+
+const {
+  eyebrow,
+  title,
+  intro = [],
+  cta,
+  image,
+  imageAlt,
+  videoUrl,
+  layoutPreset = 'split',
+  tone = 'light',
+  titleScale = 'default',
+  imageShape = 'rounded',
+  imageFit = 'cover',
+  sizePreset = 'standard',
+} = Astro.props;
+
+const heroImage = layoutPreset === 'textOnly'
+  ? undefined
+  : imageProps({ image, imageAlt, videoUrl }, 'eager');
+const ctaLink = cta?.label && cta.href ? { label: cta.label, href: cta.href } : undefined;
+const introHtml = richHtml(intro);
+const mediaHeights = {
+  compact: { desktop: '26rem', tablet: '22rem', mobile: '18rem' },
+  standard: { desktop: undefined, tablet: undefined, mobile: undefined },
+  spacious: { desktop: '38rem', tablet: '30rem', mobile: '22rem' },
+};
+const mediaHeight = mediaHeights[sizePreset] || mediaHeights.standard;
+---
+
+<ModernHero
+  eyebrow={eyebrow}
+  title={title}
+  intro={richText(intro)}
+  introHtml={introHtml}
+  cta={ctaLink}
+  image={heroImage}
+  tone={tone}
+  imageShape={imageShape}
+  titleScale={titleScale}
+  imageFit={imageFit}
+  mediaHeight={mediaHeight.desktop}
+  mediaHeightTablet={mediaHeight.tablet}
+  mediaHeightMobile={mediaHeight.mobile}
+/>

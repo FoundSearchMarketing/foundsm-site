@@ -1,0 +1,427 @@
+{
+  "_id": "drafts.landing-page-enterprise-paid-media-revenue-system",
+  "_type": "landingPage",
+  "title": "Enterprise Paid Media Revenue System Landing Page",
+  "slug": {
+    "_type": "slug",
+    "current": "enterprise-paid-media-revenue-system"
+  },
+  "seoTitle": "Enterprise Paid Media Revenue System | FoundSM",
+  "seoDescription": "FoundSM helps enterprise marketing teams connect paid media, analytics, first-party data, and creative into one measurable growth system.",
+  "canonicalUrl": "https://foundsm.com/lp/enterprise-paid-media-revenue-system/",
+  "robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+  "ogTitle": "Enterprise Paid Media Revenue System | FoundSM",
+  "ogDescription": "Connect paid media performance to pipeline and revenue with a clearer growth system.",
+  "twitterCard": "summary_large_image",
+  "twitterTitle": "Enterprise Paid Media Revenue System | FoundSM",
+  "twitterDescription": "Build a connected measurement system for paid media, pipeline visibility, and qualified conversations.",
+  "hideNavigation": false,
+  "hideFooter": false,
+  "sections": [
+    {
+      "_type": "modernHeroBlock",
+      "_key": "enterprise-paid-media-revenue-hero",
+      "eyebrow": "Enterprise paid media growth",
+      "title": "Turn paid media into measurable revenue growth.",
+      "intro": [
+        {
+          "_key": "enterprise-paid-media-revenue-hero-intro",
+          "_type": "block",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_key": "enterprise-paid-media-revenue-hero-intro-span",
+              "_type": "span",
+              "text": "FoundSM connects paid media, analytics, first-party data, and performance creative into one measurable growth system so marketing leaders can see what creates pipeline, qualified conversations, and revenue.",
+              "marks": []
+            }
+          ]
+        }
+      ],
+      "cta": {
+        "label": "Talk to a growth strategist",
+        "href": "/contact-us/"
+      },
+      "imageAlt": "Placeholder visualization of enterprise paid media, analytics, first-party data, and creative signals connected to pipeline and revenue",
+      "layoutPreset": "split",
+      "tone": "soft",
+      "titleScale": "display",
+      "imageShape": "rounded",
+      "imageFit": "contain",
+      "sizePreset": "compact",
+      "videoUrl": "https://placehold.co/1200x900/e8ebe6/1a1a1a?text=Enterprise+Revenue+Growth+System"
+    },
+    {
+      "_type": "statementBandBlock",
+      "_key": "enterprise-paid-media-revenue-statement",
+      "lead": "Enterprise growth teams need one version of paid media truth.",
+      "body": [
+        {
+          "_key": "enterprise-paid-media-revenue-statement-body",
+          "_type": "block",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_key": "enterprise-paid-media-revenue-statement-body-span",
+              "_type": "span",
+              "text": "When media, analytics, CRM, and creative learning live in separate conversations, performance decisions drift toward channel metrics instead of pipeline quality and revenue impact.",
+              "marks": []
+            }
+          ]
+        }
+      ],
+      "theme": "dark",
+      "pattern": true,
+      "width": "default"
+    },
+    {
+      "_type": "splitFeatureBlock",
+      "_key": "enterprise-paid-media-revenue-measurement",
+      "eyebrow": "Pipeline-connected measurement",
+      "title": "See which spend creates qualified pipeline.",
+      "body": [
+        {
+          "_key": "enterprise-paid-media-revenue-measurement-body-1",
+          "_type": "block",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_key": "enterprise-paid-media-revenue-measurement-body-1-span",
+              "_type": "span",
+              "text": "FoundSM helps teams connect campaign activity, conversion paths, CRM milestones, and revenue signals into a clearer operating view of paid media performance.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_key": "enterprise-paid-media-revenue-measurement-body-2",
+          "_type": "block",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_key": "enterprise-paid-media-revenue-measurement-body-2-span",
+              "_type": "span",
+              "text": "That view gives VPs of Marketing and Growth Directors a practical way to evaluate budget, audience quality, creative learning, and pipeline contribution together.",
+              "marks": []
+            }
+          ]
+        }
+      ],
+      "cta": {
+        "label": "Talk to a growth strategist",
+        "href": "/contact-us/"
+      },
+      "imageAlt": "Placeholder map showing paid media spend connected through analytics and CRM milestones to qualified pipeline",
+      "imagePosition": "right",
+      "theme": "light",
+      "videoUrl": "https://placehold.co/1000x750/f2f3f2/1a1a1a?text=Pipeline+Performance+Map"
+    },
+    {
+      "_type": "featureTabsBlock",
+      "_key": "enterprise-paid-media-revenue-tabs",
+      "title": "A growth system leaders can manage",
+      "subtitle": "Connect the disciplines that influence paid media outcomes so the team can optimize toward qualified demand instead of isolated platform activity.",
+      "idPrefix": "enterprise-revenue-system",
+      "theme": "muted",
+      "tabs": [
+        {
+          "_key": "enterprise-paid-media-tab-media",
+          "title": "Paid media performance",
+          "body": [
+            {
+              "_key": "enterprise-paid-media-tab-media-body",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "enterprise-paid-media-tab-media-body-span",
+                  "_type": "span",
+                  "text": "Plan channel mix, budget movement, bidding, and audience strategy around the signals most connected to qualified conversations and revenue.",
+                  "marks": []
+                }
+              ]
+            }
+          ],
+          "icon": "https://placehold.co/120x120/f2f3f2/1a1a1a?text=Media",
+          "imageAlt": "Placeholder dashboard view of paid media performance connected to qualified pipeline signals",
+          "videoUrl": "https://placehold.co/900x700/e8ebe6/1a1a1a?text=Paid+Media+Performance"
+        },
+        {
+          "_key": "enterprise-paid-media-tab-analytics",
+          "title": "Analytics and attribution",
+          "body": [
+            {
+              "_key": "enterprise-paid-media-tab-analytics-body",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "enterprise-paid-media-tab-analytics-body-span",
+                  "_type": "span",
+                  "text": "Improve tracking, attribution logic, reporting, and executive visibility so spend can be evaluated against pipeline and revenue movement.",
+                  "marks": []
+                }
+              ]
+            }
+          ],
+          "icon": "https://placehold.co/120x120/f2f3f2/1a1a1a?text=Data",
+          "imageAlt": "Placeholder analytics report connecting campaign activity with pipeline and revenue reporting",
+          "videoUrl": "https://placehold.co/900x700/e8ebe6/1a1a1a?text=Analytics+and+Attribution"
+        },
+        {
+          "_key": "enterprise-paid-media-tab-first-party-data",
+          "title": "First-party data",
+          "body": [
+            {
+              "_key": "enterprise-paid-media-tab-first-party-data-body",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "enterprise-paid-media-tab-first-party-data-body-span",
+                  "_type": "span",
+                  "text": "Activate audience, CRM, lifecycle, and quality signals that help platforms learn from business value instead of only surface-level conversions.",
+                  "marks": []
+                }
+              ]
+            }
+          ],
+          "icon": "https://placehold.co/120x120/f2f3f2/1a1a1a?text=1P",
+          "imageAlt": "Placeholder flow showing first-party customer and CRM signals feeding paid media optimization",
+          "videoUrl": "https://placehold.co/900x700/e8ebe6/1a1a1a?text=First-party+Data+Activation"
+        },
+        {
+          "_key": "enterprise-paid-media-tab-creative",
+          "title": "Performance creative",
+          "body": [
+            {
+              "_key": "enterprise-paid-media-tab-creative-body",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "enterprise-paid-media-tab-creative-body-span",
+                  "_type": "span",
+                  "text": "Turn audience insight and campaign learning into creative tests that improve message-market fit, conversion quality, and landing page performance.",
+                  "marks": []
+                }
+              ]
+            }
+          ],
+          "icon": "https://placehold.co/120x120/f2f3f2/1a1a1a?text=Test",
+          "imageAlt": "Placeholder creative testing board informed by paid media, audience, and pipeline signals",
+          "videoUrl": "https://placehold.co/900x700/e8ebe6/1a1a1a?text=Performance+Creative+Testing"
+        }
+      ]
+    },
+    {
+      "_type": "cardGridBlock",
+      "_key": "enterprise-paid-media-revenue-outcomes",
+      "title": "What connected measurement makes possible",
+      "subtitle": "Give enterprise teams a more reliable way to understand paid media performance, defend investment, and focus on revenue-producing demand.",
+      "columns": 3,
+      "theme": "light",
+      "cards": [
+        {
+          "_key": "enterprise-paid-media-outcome-pipeline",
+          "title": "Pipeline visibility",
+          "lead": "Connect campaigns to sales-ready demand.",
+          "body": [
+            {
+              "_key": "enterprise-paid-media-outcome-pipeline-body",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "enterprise-paid-media-outcome-pipeline-body-span",
+                  "_type": "span",
+                  "text": "Understand how paid media contributes across lead quality, qualified conversations, pipeline stages, and revenue reviews.",
+                  "marks": []
+                }
+              ]
+            }
+          ],
+          "icon": "https://placehold.co/120x120/e8ebe6/1a1a1a?text=Pipe"
+        },
+        {
+          "_key": "enterprise-paid-media-outcome-budget",
+          "title": "Budget confidence",
+          "lead": "Move investment with clearer context.",
+          "body": [
+            {
+              "_key": "enterprise-paid-media-outcome-budget-body",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "enterprise-paid-media-outcome-budget-body-span",
+                  "_type": "span",
+                  "text": "Evaluate channels, campaigns, and audiences with a view of downstream quality instead of optimizing only around low-friction conversions.",
+                  "marks": []
+                }
+              ]
+            }
+          ],
+          "icon": "https://placehold.co/120x120/e8ebe6/1a1a1a?text=Spend"
+        },
+        {
+          "_key": "enterprise-paid-media-outcome-learning",
+          "title": "Faster creative learning",
+          "lead": "Tie testing to business value.",
+          "body": [
+            {
+              "_key": "enterprise-paid-media-outcome-learning-body",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "enterprise-paid-media-outcome-learning-body-span",
+                  "_type": "span",
+                  "text": "Use audience and pipeline feedback to shape stronger creative tests, sharper landing pages, and more useful campaign hypotheses.",
+                  "marks": []
+                }
+              ]
+            }
+          ],
+          "icon": "https://placehold.co/120x120/e8ebe6/1a1a1a?text=Learn"
+        }
+      ]
+    },
+    {
+      "_type": "cardGridBlock",
+      "_key": "enterprise-paid-media-revenue-operating-model",
+      "title": "Built for enterprise operating rhythms",
+      "subtitle": "The work is structured to help marketing, growth, analytics, and revenue stakeholders use the same performance language.",
+      "columns": 4,
+      "theme": "muted",
+      "cards": [
+        {
+          "_key": "enterprise-paid-media-rhythm-executive",
+          "title": "Executive reporting",
+          "lead": "Translate spend into growth decisions.",
+          "body": [
+            {
+              "_key": "enterprise-paid-media-rhythm-executive-body",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "enterprise-paid-media-rhythm-executive-body-span",
+                  "_type": "span",
+                  "text": "Shape reporting around questions leaders need to answer about investment, pipeline quality, and revenue contribution.",
+                  "marks": []
+                }
+              ]
+            }
+          ],
+          "icon": "https://placehold.co/120x120/e8ebe6/1a1a1a?text=Report"
+        },
+        {
+          "_key": "enterprise-paid-media-rhythm-revenue",
+          "title": "Revenue alignment",
+          "lead": "Use shared definitions of quality.",
+          "body": [
+            {
+              "_key": "enterprise-paid-media-rhythm-revenue-body",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "enterprise-paid-media-rhythm-revenue-body-span",
+                  "_type": "span",
+                  "text": "Connect paid media evaluation to the milestones, qualification standards, and feedback loops the revenue team already uses.",
+                  "marks": []
+                }
+              ]
+            }
+          ],
+          "icon": "https://placehold.co/120x120/e8ebe6/1a1a1a?text=Align"
+        },
+        {
+          "_key": "enterprise-paid-media-rhythm-signal",
+          "title": "Signal governance",
+          "lead": "Make optimization inputs more useful.",
+          "body": [
+            {
+              "_key": "enterprise-paid-media-rhythm-signal-body",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "enterprise-paid-media-rhythm-signal-body-span",
+                  "_type": "span",
+                  "text": "Clarify which first-party, CRM, analytics, and conversion signals should guide bidding, audience, and budget decisions.",
+                  "marks": []
+                }
+              ]
+            }
+          ],
+          "icon": "https://placehold.co/120x120/e8ebe6/1a1a1a?text=Signal"
+        },
+        {
+          "_key": "enterprise-paid-media-rhythm-testing",
+          "title": "Testing discipline",
+          "lead": "Learn across media and creative.",
+          "body": [
+            {
+              "_key": "enterprise-paid-media-rhythm-testing-body",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "enterprise-paid-media-rhythm-testing-body-span",
+                  "_type": "span",
+                  "text": "Prioritize creative, landing page, and audience tests around the questions most likely to improve qualified demand.",
+                  "marks": []
+                }
+              ]
+            }
+          ],
+          "icon": "https://placehold.co/120x120/e8ebe6/1a1a1a?text=Test"
+        }
+      ]
+    },
+    {
+      "_type": "modernCtaBlock",
+      "_key": "enterprise-paid-media-revenue-final-cta",
+      "title": "Talk through the growth system behind your spend.",
+      "body": [
+        {
+          "_key": "enterprise-paid-media-revenue-final-cta-body",
+          "_type": "block",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_key": "enterprise-paid-media-revenue-final-cta-body-span",
+              "_type": "span",
+              "text": "Bring the questions your team is trying to answer about paid media, attribution, first-party data, creative testing, pipeline, or revenue visibility.",
+              "marks": []
+            }
+          ]
+        }
+      ],
+      "cta": {
+        "label": "Talk to a growth strategist",
+        "href": "/contact-us/"
+      },
+      "theme": "green",
+      "align": "split"
+    }
+  ]
+}

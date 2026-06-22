@@ -12,7 +12,7 @@ Use this skill when the user asks which reusable components, blocks, or sections
 1. List only approved `landingPage.sections` blocks from `references/component-catalog.md`.
 2. Group blocks by job-to-be-done.
 3. For each block, include its use case, required values, and optional tokens.
-4. Prefer the modern POC blocks for new AI-assisted landing pages.
+4. Prefer the shared landing-page blocks over legacy generic blocks for new AI-assisted landing pages.
 5. Do not list unsupported components, raw styling controls, arbitrary colors, custom font sizes, or custom CSS options.
 6. Before final output, apply the `foundsm-design-system-police` rule: verify the list includes only approved blocks and tokenized controls.
 

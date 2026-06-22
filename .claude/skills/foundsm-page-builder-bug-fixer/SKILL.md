@@ -21,7 +21,7 @@ This skill is passive by linked instruction. It is not automatically invoked by 
 
 - Valid root `landingPage` shape, title, slug, and non-empty sections.
 - Supported `landingPage.sections` block `_type`s only.
-- Required values for approved modern POC blocks.
+- Required values for approved shared landing-page blocks.
 - Valid design tokens from the component catalog.
 - Missing `_key`s on sections, Portable Text, tabs, cards, logos, and other nested arrays.
 - No raw CSS/style fields, arbitrary colors, arbitrary font sizes, or unsupported responsive controls.

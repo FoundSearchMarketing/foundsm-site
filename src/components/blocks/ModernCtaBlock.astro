@@ -8,9 +8,10 @@ interface Props {
   cta?: { label?: string; href?: string };
   theme?: 'dark' | 'green' | 'light' | 'white';
   align?: 'split' | 'centered';
+  layoutPreset?: 'panel' | 'strip' | 'compact';
 }
 
-const { title, body = [], cta, theme = 'dark', align = 'split' } = Astro.props;
+const { title, body = [], cta, theme = 'dark', align = 'split', layoutPreset = 'panel' } = Astro.props;
 ---
 
 <CtaPanel
@@ -21,4 +22,5 @@ const { title, body = [], cta, theme = 'dark', align = 'split' } = Astro.props;
   ctaHref={cta?.href}
   theme={theme}
   align={align}
+  layoutPreset={layoutPreset}
 />

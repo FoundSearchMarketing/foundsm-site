@@ -24,6 +24,11 @@ import featureTabsBlock from './blocks/featureTabsBlock';
 import cardGridBlock from './blocks/cardGridBlock';
 import statementBandBlock from './blocks/statementBandBlock';
 import modernCtaBlock from './blocks/modernCtaBlock';
+import proofMosaicBlock from './blocks/proofMosaicBlock';
+import formLandingBlock from './blocks/formLandingBlock';
+import accordionBlock from './blocks/accordionBlock';
+import peopleGridBlock from './blocks/peopleGridBlock';
+import eventHeroBlock from './blocks/eventHeroBlock';
 
 export const schemaTypes = [
   blogPost,
@@ -59,4 +64,9 @@ export const schemaTypes = [
   cardGridBlock,
   statementBandBlock,
   modernCtaBlock,
+  proofMosaicBlock,
+  formLandingBlock,
+  accordionBlock,
+  peopleGridBlock,
+  eventHeroBlock,
 ];

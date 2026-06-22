@@ -1,0 +1,40 @@
+---
+import LeadershipGrid from '../modern/LeadershipGrid.astro';
+import { richHtml, richText, srcFor } from '../../lib/fixedPageRender';
+
+interface Person {
+  name?: string;
+  role?: string;
+  image?: any;
+  videoUrl?: string;
+}
+
+interface Props {
+  title?: string;
+  intro?: any[];
+  people?: Person[];
+  layout?: 'centered' | 'split';
+  showImages?: boolean;
+}
+
+const { title = '', intro = [], people = [], layout = 'centered', showImages = true } = Astro.props;
+const leaders = people
+  .map((person) => ({
+    name: person.name || '',
+    role: person.role || '',
+    image: srcFor(person.image),
+    videoUrl: person.videoUrl,
+  }))
+  .filter((person) => person.name);
+---
+
+{leaders.length > 0 && (
+  <LeadershipGrid
+    title={title}
+    intro={richText(intro)}
+    introHtml={richHtml(intro)}
+    leaders={leaders}
+    layout={layout}
+    showImages={showImages}
+  />
+)}

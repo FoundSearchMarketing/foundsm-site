@@ -12,11 +12,11 @@ Use this skill when the user asks to create, draft, generate, or build a FoundSM
 1. Run the Passive Setup Gate once per agent session before doing any page-generation work.
 2. If setup is not ready, exit early. Do not generate JSON, do not ask marketing users for implementation details, and tell the user only the blocking fixes from `foundsm-page-builder-setup`.
 3. Extract the goal, audience, offer, primary CTA, proof points, required form/contact path, tone, and must-have ideas.
-4. Choose 4-7 sections from the approved component catalog in `references/component-catalog.md`.
-5. Put the strongest promise in `modernHeroBlock`.
-6. Use `splitFeatureBlock`, `featureTabsBlock`, and `cardGridBlock` for the main body.
+4. Choose 4-8 sections from the approved shared component catalog in `references/component-catalog.md`.
+5. Put the strongest promise in `modernHeroBlock`, or use `eventHeroBlock` for event/campaign pages with metadata and dual CTAs.
+6. Use `splitFeatureBlock`, `featureTabsBlock`, `cardGridBlock`, `proofMosaicBlock`, `accordionBlock`, `peopleGridBlock`, and `logoBarBlock` as the body pattern requires.
 7. Use one `statementBandBlock` only when a strong strategic statement helps the page.
-8. End with `modernCtaBlock` or `formBlock`.
+8. End with `modernCtaBlock` or `formLandingBlock` when conversion needs a HubSpot form.
 9. Create a complete Sanity `landingPage` JSON with `_type`, `title`, `slug`, SEO fields, and ordered `sections`.
 10. Before writing to Sanity, apply the `foundsm-design-system-police` checklist in `references/design-system-checklist.md`.
 11. Run the `foundsm-page-builder-bug-fixer` JSON fixer. If it reports hard failures, stop and report the fixes needed.
@@ -49,7 +49,7 @@ If it fails, treat `foundsm-page-builder-setup` as the active blocking skill: st
 ## Constraints
 
 - Use only approved FoundSM `landingPage.sections` blocks from `references/component-catalog.md`.
-- Prefer modern POC blocks for new AI-assisted pages.
+- Prefer the shared landing-page blocks over legacy generic blocks for new AI-assisted pages.
 - Use only approved design tokens for theme, layout, size, columns, image position, image fit, image shape, and alignment.
 - Do not create raw CSS, arbitrary colors, custom font sizes, custom breakpoints, inline styles, unsupported components, or one-off layout behavior.
 - Do not invent client names, logos, metrics, case studies, awards, or performance claims. Mark unknown proof as placeholder copy.

@@ -11,6 +11,11 @@ const supportedTypes = new Set([
   'cardGridBlock',
   'statementBandBlock',
   'modernCtaBlock',
+  'proofMosaicBlock',
+  'formLandingBlock',
+  'accordionBlock',
+  'peopleGridBlock',
+  'eventHeroBlock',
   'heroBlock',
   'statsBlock',
   'featuresBlock',
@@ -38,10 +43,17 @@ const tokenRules = {
   },
   featureTabsBlock: {
     theme: { values: ['light', 'muted'], defaultValue: 'muted' },
+    layoutPreset: { values: ['mediaPanel', 'badgePanel', 'ecosystem'], defaultValue: 'mediaPanel' },
+    autoRotate: { values: [true, false], defaultValue: false },
   },
   cardGridBlock: {
     columns: { values: [2, 3, 4], defaultValue: 3 },
     theme: { values: ['light', 'muted', 'dark'], defaultValue: 'light' },
+    variant: {
+      values: ['standard', 'icon', 'numbered', 'credential', 'topic', 'benefit'],
+      defaultValue: 'standard',
+    },
+    density: { values: ['compact', 'standard'], defaultValue: 'standard' },
   },
   statementBandBlock: {
     theme: { values: ['dark', 'muted', 'light'], defaultValue: 'dark' },
@@ -51,6 +63,32 @@ const tokenRules = {
   modernCtaBlock: {
     theme: { values: ['dark', 'green', 'light', 'white'], defaultValue: 'green' },
     align: { values: ['split', 'centered'], defaultValue: 'split' },
+    layoutPreset: { values: ['panel', 'strip', 'compact'], defaultValue: 'panel' },
+  },
+  proofMosaicBlock: {
+    theme: { values: ['light', 'dark'], defaultValue: 'light' },
+    layoutPreset: { values: ['mosaic', 'compact'], defaultValue: 'mosaic' },
+  },
+  formLandingBlock: {
+    variant: { values: ['contact', 'newsletter', 'resource', 'event'], defaultValue: 'contact' },
+    theme: { values: ['light', 'dark', 'muted'], defaultValue: 'dark' },
+    showFormCard: { values: [true, false], defaultValue: true },
+  },
+  accordionBlock: {
+    theme: { values: ['light', 'muted', 'dark'], defaultValue: 'light' },
+    layoutPreset: { values: ['singleColumn', 'twoColumn'], defaultValue: 'twoColumn' },
+  },
+  peopleGridBlock: {
+    layout: { values: ['centered', 'split'], defaultValue: 'centered' },
+    showImages: { values: [true, false], defaultValue: true },
+  },
+  eventHeroBlock: {
+    theme: { values: ['dark', 'green', 'light'], defaultValue: 'dark' },
+  },
+  logoBarBlock: {
+    displayMode: { values: ['static', 'marquee'], defaultValue: 'static' },
+    theme: { values: ['light', 'muted'], defaultValue: 'light' },
+    density: { values: ['compact', 'standard'], defaultValue: 'standard' },
   },
 };
 
@@ -229,10 +267,12 @@ function validateSection(section, sectionPath) {
         fix(`${sectionPath}.idPrefix`, 'Created missing idPrefix from section title or feature-tabs default.');
       }
       validateTitledRichTextArray(section, 'tabs', sectionPath);
+      validateNestedCtas(section.tabs, sectionPath, 'tabs');
       break;
     case 'cardGridBlock':
       requireText(section, 'title', sectionPath);
       validateTitledRichTextArray(section, 'cards', sectionPath);
+      validateNestedCtas(section.cards, sectionPath, 'cards');
       break;
     case 'statementBandBlock':
       requireText(section, 'lead', sectionPath);
@@ -243,10 +283,199 @@ function validateSection(section, sectionPath) {
       normalizePortableText(section, 'body', sectionPath, false);
       ensureCta(section, sectionPath, true);
       break;
+    case 'proofMosaicBlock':
+      requireText(section, 'title', sectionPath);
+      validateMetrics(section, sectionPath);
+      validateQuote(section, sectionPath);
+      validateFeatureCard(section, sectionPath);
+      break;
+    case 'formLandingBlock':
+      requireText(section, 'title', sectionPath);
+      normalizePortableText(section, 'intro', sectionPath, true);
+      normalizePortableText(section, 'summary', sectionPath, false);
+      requireText(section, 'hubspotFormId', sectionPath);
+      break;
+    case 'accordionBlock':
+      requireText(section, 'title', sectionPath);
+      normalizePortableText(section, 'body', sectionPath, false);
+      validateTitledRichTextArray(section, 'items', sectionPath);
+      break;
+    case 'peopleGridBlock':
+      requireText(section, 'title', sectionPath);
+      normalizePortableText(section, 'intro', sectionPath, false);
+      validatePeople(section, sectionPath);
+      break;
+    case 'eventHeroBlock':
+      validateEventHero(section, sectionPath);
+      break;
+    case 'logoBarBlock':
+      validateLogoBar(section, sectionPath);
+      break;
     default:
       normalizeGenericBlock(section, sectionPath);
       break;
   }
+}
+
+function validateMetrics(section, sectionPath) {
+  if (!Array.isArray(section.metrics) || section.metrics.length === 0) {
+    warn(`${sectionPath}.metrics`, 'proofMosaicBlock has no metrics. Add metrics when proof is available.');
+    return;
+  }
+
+  section.metrics.forEach((metric, index) => {
+    const itemPath = `${sectionPath}.metrics[${index}]`;
+    if (!isPlainObject(metric)) {
+      hard(itemPath, 'Metric item must be an object.');
+      return;
+    }
+    requireText(metric, 'value', itemPath);
+    requireText(metric, 'label', itemPath);
+  });
+}
+
+function validateQuote(section, sectionPath) {
+  if (!section.quote) {
+    return;
+  }
+
+  if (!isPlainObject(section.quote)) {
+    hard(`${sectionPath}.quote`, 'quote must be an object.');
+    return;
+  }
+
+  if (!hasString(section.quote.text)) {
+    warn(`${sectionPath}.quote.text`, 'Quote is present without quote text.');
+  }
+}
+
+function validateFeatureCard(section, sectionPath) {
+  if (!section.featureCard) {
+    return;
+  }
+
+  if (!isPlainObject(section.featureCard)) {
+    hard(`${sectionPath}.featureCard`, 'featureCard must be an object.');
+    return;
+  }
+
+  requireText(section.featureCard, 'title', `${sectionPath}.featureCard`);
+  normalizePortableText(section.featureCard, 'body', `${sectionPath}.featureCard`, false);
+  ensureNamedCta(section.featureCard, 'cta', `${sectionPath}.featureCard`, false);
+}
+
+function validatePeople(section, sectionPath) {
+  const peoplePath = `${sectionPath}.people`;
+
+  if (!Array.isArray(section.people) || section.people.length === 0) {
+    hard(peoplePath, 'peopleGridBlock must include at least one person.');
+    return;
+  }
+
+  section.people.forEach((person, index) => {
+    const personPath = `${peoplePath}[${index}]`;
+    if (!isPlainObject(person)) {
+      hard(personPath, 'Person item must be an object.');
+      return;
+    }
+    requireText(person, 'name', personPath);
+    requireText(person, 'role', personPath);
+  });
+}
+
+function validateEventHero(section, sectionPath) {
+  if (!Array.isArray(section.titleLines) || section.titleLines.filter(hasString).length === 0) {
+    if (hasString(section.title)) {
+      section.titleLines = [section.title];
+      fix(`${sectionPath}.titleLines`, 'Created titleLines from legacy title.');
+    } else {
+      hard(`${sectionPath}.titleLines`, 'eventHeroBlock must include at least one title line.');
+    }
+  }
+
+  requireText(section, 'description', sectionPath);
+  ensureNamedCta(section, 'primaryCta', sectionPath, true);
+  ensureNamedCta(section, 'secondaryCta', sectionPath, false);
+
+  validateLabelValueArray(section, 'meta', sectionPath, false);
+  validateLabelValueArray(section, 'stats', sectionPath, false);
+
+  if (section.chips !== undefined) {
+    if (!Array.isArray(section.chips)) {
+      hard(`${sectionPath}.chips`, 'chips must be an array of text labels.');
+    } else {
+      section.chips = section.chips.filter(hasString);
+    }
+  }
+}
+
+function validateLogoBar(section, sectionPath) {
+  const logosPath = `${sectionPath}.logos`;
+
+  if (!Array.isArray(section.logos) || section.logos.length === 0) {
+    hard(logosPath, 'logoBarBlock must include at least one logo.');
+    return;
+  }
+
+  section.logos.forEach((logo, index) => {
+    const logoPath = `${logosPath}[${index}]`;
+    if (!isPlainObject(logo)) {
+      hard(logoPath, 'Logo item must be an object.');
+      return;
+    }
+
+    const hasLegacyImageAlt = hasString(logo.alt);
+    const hasObjectName = hasString(logo.name);
+    const hasAnyMedia = Boolean(logo.asset || logo.image || logo.videoFile || logo.videoUrl || logo.url);
+
+    if (!hasLegacyImageAlt && !hasObjectName) {
+      hard(logoPath, 'Logo item must include name for logo objects or alt for legacy image logos.');
+    }
+
+    if (!hasAnyMedia) {
+      warn(logoPath, 'Logo item has no media. Add a logo image asset or temporary videoUrl placeholder before handoff.');
+    }
+
+    if (hasString(logo.url) && !hasString(logo.videoUrl)) {
+      logo.videoUrl = logo.url;
+      delete logo.url;
+      fix(`${logoPath}.url`, 'Moved logo URL to videoUrl for Sanity compatibility.');
+    }
+  });
+}
+
+function validateLabelValueArray(section, fieldName, sectionPath, required) {
+  const value = section[fieldName];
+  const fieldPath = `${sectionPath}.${fieldName}`;
+
+  if (!Array.isArray(value) || value.length === 0) {
+    if (required) {
+      hard(fieldPath, `${fieldName} must include at least one item.`);
+    }
+    return;
+  }
+
+  value.forEach((item, index) => {
+    const itemPath = `${fieldPath}[${index}]`;
+    if (!isPlainObject(item)) {
+      hard(itemPath, `${fieldName} item must be an object.`);
+      return;
+    }
+    requireText(item, 'label', itemPath);
+    requireText(item, 'value', itemPath);
+  });
+}
+
+function validateNestedCtas(items, sectionPath, fieldName) {
+  if (!Array.isArray(items)) {
+    return;
+  }
+
+  items.forEach((item, index) => {
+    if (isPlainObject(item) && item.cta) {
+      ensureNamedCta(item, 'cta', `${sectionPath}.${fieldName}[${index}]`, false);
+    }
+  });
 }
 
 function validateTitledRichTextArray(section, fieldName, sectionPath) {
@@ -585,6 +814,12 @@ function placeholderAlt(value, valuePath) {
 }
 
 function blockLabel(valuePath) {
+  if (valuePath.includes('people')) {
+    return 'person';
+  }
+  if (valuePath.includes('proof')) {
+    return 'proof';
+  }
   if (valuePath.includes('tabs')) {
     return 'feature tab';
   }
@@ -606,6 +841,12 @@ function extractPlaceholderDimensions(url) {
 }
 
 function defaultDimensions(value, valuePath) {
+  if (valuePath.includes('people')) {
+    return '800x800';
+  }
+  if (valuePath.includes('proofMosaicBlock')) {
+    return '1200x800';
+  }
   if (valuePath.includes('tabs')) {
     return '826x1070';
   }

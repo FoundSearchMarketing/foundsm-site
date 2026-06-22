@@ -144,19 +144,17 @@ const sectionClass = ['leadership-section', `leadership-section--${layout}`].joi
     --media-asset-position: center;
   }
 
-  .leader-card--no-image {
+  .leader-card--no-image,
+  .leader-card--text-only {
     block-size: auto;
     min-block-size: 4.375rem;
     overflow: visible;
     background: transparent;
   }
 
-  .leader-card--no-image .leader-card__overlay {
+  .leader-card--no-image .leader-card__overlay,
+  .leader-card--text-only .leader-card__overlay {
     position: static;
-  }
-
-  .leader-card--text-only {
-    background: transparent;
   }
 
   :global(.leader-card .media-asset) {

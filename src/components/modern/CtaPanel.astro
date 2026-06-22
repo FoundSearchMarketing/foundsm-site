@@ -7,11 +7,12 @@ interface Props {
   ctaHref?: string;
   theme?: 'dark' | 'green' | 'light' | 'white';
   align?: 'split' | 'centered';
+  layoutPreset?: 'panel' | 'strip' | 'compact';
 }
 
-const { title, body, bodyHtml, ctaLabel, ctaHref, theme = 'dark', align = 'split' } = Astro.props;
+const { title, body, bodyHtml, ctaLabel, ctaHref, theme = 'dark', align = 'split', layoutPreset = 'panel' } = Astro.props;
 const paragraphs = Array.isArray(body) ? body : body ? [body] : [];
-const classes = ['modern-cta', `modern-cta--${theme}`, `modern-cta--${align}`].join(' ');
+const classes = ['modern-cta', `modern-cta--${theme}`, `modern-cta--${align}`, `modern-cta--${layoutPreset}`].join(' ');
 ---
 
 <section class={classes} aria-label={title ?? ctaLabel ?? 'Call to action'}>
@@ -33,6 +34,14 @@ const classes = ['modern-cta', `modern-cta--${theme}`, `modern-cta--${align}`].j
 <style>
   .modern-cta {
     padding: 4rem var(--gutter);
+  }
+
+  .modern-cta--strip {
+    padding-block: 2rem;
+  }
+
+  .modern-cta--compact {
+    padding-block: 3rem;
   }
 
   .modern-cta--dark {
@@ -62,6 +71,20 @@ const classes = ['modern-cta', `modern-cta--${theme}`, `modern-cta--${align}`].j
     gap: 2rem;
     inline-size: min(100%, var(--content-max-width));
     margin-inline: auto;
+  }
+
+  .modern-cta--panel .modern-cta__inner {
+    padding: 2.5rem;
+    border-radius: 0.5rem;
+  }
+
+  .modern-cta--dark.modern-cta--panel .modern-cta__inner {
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .modern-cta--light.modern-cta--panel .modern-cta__inner,
+  .modern-cta--white.modern-cta--panel .modern-cta__inner {
+    background: rgba(26, 26, 26, 0.04);
   }
 
   .modern-cta--centered {
@@ -144,6 +167,10 @@ const classes = ['modern-cta', `modern-cta--${theme}`, `modern-cta--${align}`].j
   @media (max-width: 760px) {
     .modern-cta__inner {
       grid-template-columns: 1fr;
+    }
+
+    .modern-cta--panel .modern-cta__inner {
+      padding: 1.5rem;
     }
 
     .modern-cta h2 {

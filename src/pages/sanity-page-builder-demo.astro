@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BlockRenderer from '../components/blocks/BlockRenderer.astro';
+import { pageBuilderDemoData } from '../lib/pageBuilderDemoData';
+
+const page = pageBuilderDemoData as any;
+const slug = page.slug?.current || 'shared-component-demo';
+---
+
+<BaseLayout
+  title={page.seoTitle || page.title}
+  description={page.seoDescription || ''}
+  canonical={`https://foundsm.com/lp/${slug}/`}
+  hideNavigation={page.hideNavigation}
+  hideFooter={page.hideFooter}
+>
+  {page.sections?.map((section: any) => (
+    <BlockRenderer section={section} />
+  ))}
+</BaseLayout>

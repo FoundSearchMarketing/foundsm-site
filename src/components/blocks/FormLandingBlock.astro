@@ -1,0 +1,49 @@
+---
+import FormLanding from '../modern/FormLanding.astro';
+import { richHtml, richText } from '../../lib/fixedPageRender';
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  lead?: string;
+  intro?: any[];
+  hubspotFormId?: string;
+  portalId?: string;
+  summary?: any[];
+  variant?: 'contact' | 'newsletter' | 'resource' | 'event';
+  theme?: 'light' | 'dark' | 'muted';
+  showFormCard?: boolean;
+}
+
+const {
+  eyebrow,
+  title = '',
+  lead,
+  intro = [],
+  hubspotFormId,
+  portalId,
+  summary = [],
+  variant = 'contact',
+  theme = 'dark',
+  showFormCard = true,
+} = Astro.props;
+const shouldLoadFormScript = hubspotFormId !== '00000000-0000-0000-0000-000000000000';
+---
+
+{hubspotFormId && (
+  <FormLanding
+    eyebrow={eyebrow}
+    title={title}
+    lead={lead}
+    intro={richText(intro)}
+    introHtml={richHtml(intro)}
+    formId={hubspotFormId}
+    portalId={portalId}
+    summary={richText(summary)}
+    summaryHtml={richHtml(summary)}
+    variant={variant}
+    theme={theme}
+    showFormCard={showFormCard}
+    loadFormScript={shouldLoadFormScript}
+  />
+)}

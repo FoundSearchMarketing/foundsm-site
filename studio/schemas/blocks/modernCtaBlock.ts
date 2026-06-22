@@ -35,6 +35,19 @@ export default defineType({
       },
       initialValue: 'split',
     }),
+    defineField({
+      name: 'layoutPreset',
+      title: 'Layout Preset',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Panel', value: 'panel' },
+          { title: 'Strip', value: 'strip' },
+          { title: 'Compact', value: 'compact' },
+        ],
+      },
+      initialValue: 'panel',
+    }),
   ],
   preview: {
     select: { title: 'title' },

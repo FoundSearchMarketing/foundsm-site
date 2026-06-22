@@ -5,6 +5,8 @@ interface TabItem {
   title: string;
   body: string;
   bodyHtml?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
   icon?: string;
   image?: string;
   imageAlt?: string;
@@ -16,12 +18,14 @@ interface Props {
   tabs: TabItem[];
   idPrefix: string;
   theme?: 'light' | 'muted';
+  layoutPreset?: 'mediaPanel' | 'badgePanel' | 'ecosystem';
+  autoRotate?: boolean;
 }
 
-const { title, subtitle, tabs, idPrefix, theme = 'muted' } = Astro.props;
+const { title, subtitle, tabs, idPrefix, theme = 'muted', layoutPreset = 'mediaPanel', autoRotate = false } = Astro.props;
 ---
 
-<section class={`feature-tabs feature-tabs--${theme}`} aria-labelledby={title ? `${idPrefix}-heading` : undefined}>
+<section class={`feature-tabs feature-tabs--${theme} feature-tabs--${layoutPreset}`} aria-labelledby={title ? `${idPrefix}-heading` : undefined}>
   <div class="feature-tabs__outer">
     {(title || subtitle) && (
       <div class="feature-tabs__header">
@@ -30,7 +34,7 @@ const { title, subtitle, tabs, idPrefix, theme = 'muted' } = Astro.props;
       </div>
     )}
 
-    <div class="feature-tabs__inner" data-feature-tabs>
+    <div class="feature-tabs__inner" data-feature-tabs data-feature-tabs-auto-rotate={autoRotate ? 'true' : 'false'}>
       <div class="feature-tabs__nav" role="tablist" aria-label={title ?? 'Feature tabs'}>
         {tabs.map((tab, index) => {
           const tabId = `${idPrefix}-tab-${index + 1}`;
@@ -70,6 +74,7 @@ const { title, subtitle, tabs, idPrefix, theme = 'muted' } = Astro.props;
               <div class="feature-tabs__panel-copy">
                 <h3>{tab.title}</h3>
                 {tab.bodyHtml ? <div set:html={tab.bodyHtml} /> : <p>{tab.body}</p>}
+                {tab.ctaLabel && tab.ctaHref && <a class="feature-tabs__cta" href={tab.ctaHref}>{tab.ctaLabel}</a>}
               </div>
               {tab.image && (
                 <div class="feature-tabs__panel-media">
@@ -85,6 +90,8 @@ const { title, subtitle, tabs, idPrefix, theme = 'muted' } = Astro.props;
 </section>
 
 <script>
+  import { setupAutoRotatingTabs } from '../../scripts/autoRotatingTabs';
+
   const initModernFeatureTabs = () => {
     document.querySelectorAll<HTMLElement>('[data-feature-tabs]').forEach((container) => {
       if (container.dataset.initialized === 'true') return;
@@ -127,6 +134,14 @@ const { title, subtitle, tabs, idPrefix, theme = 'muted' } = Astro.props;
           }
         });
       });
+
+      if (container.dataset.featureTabsAutoRotate === 'true') {
+        setupAutoRotatingTabs({
+          root: container,
+          tabs,
+          activate,
+        });
+      }
     });
   };
 
@@ -179,6 +194,16 @@ const { title, subtitle, tabs, idPrefix, theme = 'muted' } = Astro.props;
     background: #f2f3f2;
   }
 
+  .feature-tabs--ecosystem .feature-tabs__inner {
+    grid-template-columns: minmax(18rem, 0.34fr) minmax(0, 1fr);
+    background: #1a1a1a;
+    color: #ffffff;
+  }
+
+  .feature-tabs--badgePanel .feature-tabs__inner {
+    align-items: center;
+  }
+
   .feature-tabs__nav {
     display: grid;
     align-content: start;
@@ -209,6 +234,17 @@ const { title, subtitle, tabs, idPrefix, theme = 'muted' } = Astro.props;
     background: rgba(255, 255, 255, 0.62);
   }
 
+  .feature-tabs--ecosystem .feature-tabs__tab {
+    color: rgba(255, 255, 255, 0.72);
+  }
+
+  .feature-tabs--ecosystem .feature-tabs__tab:hover,
+  .feature-tabs--ecosystem .feature-tabs__tab:focus-visible,
+  .feature-tabs--ecosystem .feature-tabs__tab.is-active {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.1);
+  }
+
   .feature-tabs__rail {
     align-self: stretch;
     inline-size: 0.38rem;
@@ -218,6 +254,14 @@ const { title, subtitle, tabs, idPrefix, theme = 'muted' } = Astro.props;
 
   .feature-tabs__tab.is-active .feature-tabs__rail {
     background: #1a1a1a;
+  }
+
+  .feature-tabs--ecosystem .feature-tabs__rail {
+    background: rgba(255, 255, 255, 0.18);
+  }
+
+  .feature-tabs--ecosystem .feature-tabs__tab.is-active .feature-tabs__rail {
+    background: var(--color-primary);
   }
 
   .feature-tabs__icon {
@@ -260,6 +304,36 @@ const { title, subtitle, tabs, idPrefix, theme = 'muted' } = Astro.props;
     line-height: 1.75;
   }
 
+  .feature-tabs--ecosystem .feature-tabs__panel-copy p {
+    color: rgba(255, 255, 255, 0.76);
+  }
+
+  .feature-tabs__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    justify-self: start;
+    min-block-size: 3rem;
+    margin-block-start: 0.25rem;
+    padding: 0.75rem 1.25rem;
+    border-radius: 999px;
+    background: #1a1a1a;
+    color: #ffffff;
+    font-weight: 800;
+    line-height: 1.2;
+    transition: transform var(--transition-fast), background-color var(--transition-fast);
+  }
+
+  .feature-tabs--ecosystem .feature-tabs__cta {
+    background: var(--color-primary);
+    color: #1a1a1a;
+  }
+
+  .feature-tabs__cta:hover,
+  .feature-tabs__cta:focus-visible {
+    transform: translateY(-1px);
+  }
+
   .feature-tabs__panel-media {
     overflow: hidden;
     border-radius: 2.5rem;
@@ -268,7 +342,8 @@ const { title, subtitle, tabs, idPrefix, theme = 'muted' } = Astro.props;
   }
 
   @media (max-width: 1024px) {
-    .feature-tabs__inner {
+    .feature-tabs__inner,
+    .feature-tabs--ecosystem .feature-tabs__inner {
       grid-template-columns: 1fr;
       gap: 2rem;
       padding: 2.1875rem 1.5625rem;

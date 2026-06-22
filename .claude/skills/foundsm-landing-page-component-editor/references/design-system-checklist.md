@@ -1,10 +1,13 @@
 # Design System Checklist
 
-- Use only approved blocks or intentionally add a new reusable block across schema, query, renderer, demo, and docs.
-- Prefer tokens for theme, alignment, layout, image position, columns, and size.
-- Keep responsiveness inside components, not Sanity content.
-- Do not add arbitrary colors, raw font sizes, custom breakpoints, inline styles, or negative letter spacing.
-- Keep cards at 8px border radius or less unless matching an established component.
-- Ensure text fits containers at desktop and mobile.
-- Include meaningful alt text for meaningful media.
-- Keep the final implementation compatible with existing `/lp/[slug]` pages.
+- Page starts with `modernHeroBlock` or `eventHeroBlock` and ends with `modernCtaBlock` or `formLandingBlock` when reviewing full page JSON.
+- All sections use approved `_type` values from `references/component-catalog.md`.
+- Token fields use approved token values only.
+- No raw CSS, inline styles, arbitrary colors, custom font sizes, custom font weights, custom breakpoints, editor-owned responsiveness, or negative letter spacing.
+- CTA labels are consistent and CTA URLs are real paths.
+- Meaningful media has useful alt text; temporary placeholder media uses `videoUrl`, not `image`.
+- Card grids use 2, 3, or 4 columns and approved `variant`/`density` tokens.
+- Feature tabs use stable lowercase `idPrefix` values and approved `layoutPreset` tokens.
+- Forms use HubSpot IDs in `formLandingBlock`; do not store custom form field definitions in Sanity.
+- People, event metadata, metrics, logos, and proof claims must be supplied by the user or clearly marked as placeholders.
+- Text should be concise enough to fit existing responsive components.

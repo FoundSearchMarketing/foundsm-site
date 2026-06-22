@@ -1580,6 +1580,7 @@ p + p {
   }
 
   .site-footer__newsletter-embed {
+    --footer-newsletter-form-inset: 0rem;
     inline-size: min(21.875rem, calc(100vw - 2.5rem));
     min-block-size: 18rem;
     margin: -1.5625rem 0 0;

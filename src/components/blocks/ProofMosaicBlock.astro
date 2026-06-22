@@ -1,0 +1,266 @@
+---
+import MediaAsset from '../MediaAsset.astro';
+import { imageProps, richHtml, richText } from '../../lib/fixedPageRender';
+
+interface Metric {
+  eyebrow?: string;
+  prefix?: string;
+  value?: string;
+  suffix?: string;
+  label?: string;
+}
+
+interface Props {
+  title?: string;
+  metrics?: Metric[];
+  quote?: {
+    text?: string;
+    authorName?: string;
+    authorTitle?: string;
+    authorCompany?: string;
+    authorImage?: string;
+    authorImageAlt?: string;
+  };
+  featureCard?: {
+    title?: string;
+    body?: any[];
+    cta?: { label?: string; href?: string };
+  };
+  image?: any;
+  imageAlt?: string;
+  videoFile?: any;
+  videoUrl?: string;
+  theme?: 'light' | 'dark';
+  layoutPreset?: 'mosaic' | 'compact';
+}
+
+const {
+  title,
+  metrics = [],
+  quote,
+  featureCard,
+  theme = 'light',
+  layoutPreset = 'mosaic',
+} = Astro.props;
+const media = imageProps(Astro.props);
+const visibleMetrics = metrics.filter((metric) => metric.value && metric.label);
+const quoteRole = [quote?.authorTitle, quote?.authorCompany].filter(Boolean).join(' - ');
+const featureBody = richHtml(featureCard?.body);
+---
+
+{(title || visibleMetrics.length > 0 || quote?.text || featureCard?.title || media) && (
+  <section class={`proof-mosaic proof-mosaic--${theme} proof-mosaic--${layoutPreset}`} aria-labelledby={title ? 'proof-mosaic-title' : undefined}>
+    <div class="proof-mosaic__inner">
+      {title && <h2 id="proof-mosaic-title">{title}</h2>}
+      <div class="proof-mosaic__grid">
+        {visibleMetrics.map((metric) => (
+          <article class="proof-card proof-card--metric">
+            {metric.eyebrow && <p class="proof-card__eyebrow">{metric.eyebrow}</p>}
+            <p class="proof-card__value">
+              {metric.prefix && <span>{metric.prefix}</span>}
+              <strong>{metric.value}</strong>
+              {metric.suffix && <span>{metric.suffix}</span>}
+            </p>
+            <p class="proof-card__label">{metric.label}</p>
+          </article>
+        ))}
+
+        {quote?.text && (
+          <article class="proof-card proof-card--quote">
+            <blockquote>
+              <p>&ldquo;{quote.text}&rdquo;</p>
+              {(quote.authorName || quoteRole || quote.authorImage) && (
+                <footer>
+                  {quote.authorImage && <img src={quote.authorImage} alt={quote.authorImageAlt || quote.authorName || ''} width="36" height="36" loading="lazy" />}
+                  <span>
+                    {quote.authorName && <strong>{quote.authorName}</strong>}
+                    {quoteRole && <span>{quoteRole}</span>}
+                  </span>
+                </footer>
+              )}
+            </blockquote>
+          </article>
+        )}
+
+        {(featureCard?.title || featureBody || featureCard?.cta?.label) && (
+          <article class="proof-card proof-card--feature">
+            {featureCard?.title && <h3>{featureCard.title}</h3>}
+            {featureBody ? <div class="proof-card__body" set:html={featureBody} /> : featureCard?.body && <p>{richText(featureCard.body)}</p>}
+            {featureCard?.cta?.label && featureCard?.cta?.href && <a href={featureCard.cta.href}>{featureCard.cta.label}</a>}
+          </article>
+        )}
+
+        {media && (
+          <figure class="proof-card proof-card--media">
+            <MediaAsset src={media.src} alt={media.alt} loading={media.loading} fill />
+          </figure>
+        )}
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  .proof-mosaic {
+    padding: 5rem var(--gutter);
+    background: #ffffff;
+    color: #1a1a1a;
+  }
+
+  .proof-mosaic--dark {
+    background: #1a1a1a;
+    color: #ffffff;
+  }
+
+  .proof-mosaic--compact {
+    padding-block: 3.5rem;
+  }
+
+  .proof-mosaic__inner {
+    inline-size: min(100%, var(--content-max-width));
+    margin-inline: auto;
+  }
+
+  .proof-mosaic h2 {
+    max-inline-size: 54rem;
+    margin: 0 0 2rem;
+    color: inherit;
+    font-size: clamp(2.2rem, 4vw, 3.75rem);
+    font-weight: 900;
+    line-height: 1.05;
+  }
+
+  .proof-mosaic__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .proof-card {
+    display: grid;
+    align-content: start;
+    gap: 0.75rem;
+    min-block-size: 12rem;
+    padding: 1.4rem;
+    border: 1px solid rgba(26, 26, 26, 0.12);
+    border-radius: 0.5rem;
+    background: #f2f3f2;
+  }
+
+  .proof-mosaic--dark .proof-card {
+    border-color: rgba(255, 255, 255, 0.16);
+    background: rgba(255, 255, 255, 0.07);
+  }
+
+  .proof-card--quote,
+  .proof-card--feature,
+  .proof-card--media {
+    grid-column: span 2;
+  }
+
+  .proof-card__eyebrow,
+  .proof-card__label,
+  .proof-card blockquote,
+  .proof-card p {
+    margin: 0;
+  }
+
+  .proof-card__eyebrow {
+    color: rgba(26, 26, 26, 0.58);
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+
+  .proof-mosaic--dark .proof-card__eyebrow {
+    color: rgba(255, 255, 255, 0.58);
+  }
+
+  .proof-card__value {
+    display: flex;
+    align-items: baseline;
+    gap: 0.12em;
+    font-family: var(--font-heading);
+    font-size: clamp(2.4rem, 4vw, 4rem);
+    font-weight: 900;
+    line-height: 0.95;
+  }
+
+  .proof-card__label,
+  .proof-card__body,
+  .proof-card blockquote p {
+    color: rgba(26, 26, 26, 0.74);
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  .proof-mosaic--dark .proof-card__label,
+  .proof-mosaic--dark .proof-card__body,
+  .proof-mosaic--dark .proof-card blockquote p {
+    color: rgba(255, 255, 255, 0.76);
+  }
+
+  .proof-card h3 {
+    margin: 0;
+    color: inherit;
+    font-size: 1.5rem;
+    line-height: 1.2;
+  }
+
+  .proof-card footer {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-block-start: 1.25rem;
+  }
+
+  .proof-card footer img {
+    border-radius: 999px;
+    object-fit: cover;
+  }
+
+  .proof-card footer span {
+    display: grid;
+    gap: 0.12rem;
+    color: currentColor;
+    font-size: 0.9rem;
+    line-height: 1.35;
+  }
+
+  .proof-card a {
+    justify-self: start;
+    color: currentColor;
+    font-weight: 800;
+    text-decoration: underline;
+    text-underline-offset: 0.22em;
+  }
+
+  .proof-card--media {
+    overflow: hidden;
+    min-block-size: 18rem;
+    padding: 0;
+    --media-asset-fit: cover;
+  }
+
+  @media (max-width: 900px) {
+    .proof-mosaic__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 640px) {
+    .proof-mosaic {
+      padding-block: 3.5rem;
+    }
+
+    .proof-mosaic__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .proof-card--quote,
+    .proof-card--feature,
+    .proof-card--media {
+      grid-column: auto;
+    }
+  }
+</style>

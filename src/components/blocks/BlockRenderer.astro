@@ -15,6 +15,11 @@ import FeatureTabsBlock from './FeatureTabsBlock.astro';
 import CardGridBlock from './CardGridBlock.astro';
 import StatementBandBlock from './StatementBandBlock.astro';
 import ModernCtaBlock from './ModernCtaBlock.astro';
+import ProofMosaicBlock from './ProofMosaicBlock.astro';
+import FormLandingBlock from './FormLandingBlock.astro';
+import AccordionBlock from './AccordionBlock.astro';
+import PeopleGridBlock from './PeopleGridBlock.astro';
+import EventHeroBlock from './EventHeroBlock.astro';
 
 interface Props {
   section: any;
@@ -39,3 +44,8 @@ const { section } = Astro.props;
 {section._type === 'cardGridBlock' && <CardGridBlock {...section} />}
 {section._type === 'statementBandBlock' && <StatementBandBlock {...section} />}
 {section._type === 'modernCtaBlock' && <ModernCtaBlock {...section} />}
+{section._type === 'proofMosaicBlock' && <ProofMosaicBlock {...section} />}
+{section._type === 'formLandingBlock' && <FormLandingBlock {...section} />}
+{section._type === 'accordionBlock' && <AccordionBlock {...section} />}
+{section._type === 'peopleGridBlock' && <PeopleGridBlock {...section} />}
+{section._type === 'eventHeroBlock' && <EventHeroBlock {...section} />}

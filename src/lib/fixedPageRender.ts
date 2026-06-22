@@ -31,9 +31,13 @@ export function cardsFor(cards: CardList = []) {
     const imageSrc = toImageUrl(card.image);
     return {
       title: card.title || '',
+      number: (card as any).number,
       lead: card.lead,
+      meta: (card as any).meta,
       body: portableTextToPlainText(card.body),
       bodyHtml: renderSimplePortableText(card.body),
+      ctaLabel: (card as any).cta?.label,
+      ctaHref: (card as any).cta?.href,
       icon: toImageUrl(card.icon),
       image: videoSrc || imageSrc,
       imageAlt: card.imageAlt,
@@ -49,6 +53,8 @@ export function tabsFor(tabs: TabList = []) {
       title: tab.title || '',
       body: portableTextToPlainText(tab.body),
       bodyHtml: renderSimplePortableText(tab.body),
+      ctaLabel: (tab as any).cta?.label,
+      ctaHref: (tab as any).cta?.href,
       icon: toImageUrl(tab.icon),
       image: videoSrc || imageSrc,
       imageAlt: tab.imageAlt,

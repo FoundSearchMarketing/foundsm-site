@@ -1,26 +1,56 @@
 ---
+import LogoMarquee from '../modern/LogoMarquee.astro';
+
 interface Logo {
-  url: string;
-  alt: string;
+  url?: string;
+  src?: string;
+  name?: string;
+  alt?: string;
+  imageAlt?: string;
+  videoUrl?: string;
 }
 
 interface Props {
   heading?: string;
   logos?: Logo[];
+  displayMode?: 'static' | 'marquee';
+  theme?: 'light' | 'muted';
+  density?: 'compact' | 'standard';
 }
 
-const { heading, logos = [] } = Astro.props;
+const { heading, logos = [], displayMode = 'static', theme = 'light', density = 'standard' } = Astro.props;
+const normalizedLogos = logos
+  .map((logo) => ({
+    src: logo.url || logo.src || logo.videoUrl,
+    alt: logo.alt || logo.imageAlt || logo.name || '',
+  }))
+  .filter((logo): logo is { src: string; alt: string } => Boolean(logo.src));
+const marqueeLogos = normalizedLogos;
 ---
 
-<section class="section" aria-label={heading || 'Partners'}>
-  <div class="container">
-    {heading && <h2 class="logo-marquee__heading fade-in-up">{heading}</h2>}
-    <div class="partners__grid fade-in-up">
-      {logos.map((logo) => (
-        <div class="partners__badge">
-          <img src={logo.url} alt={logo.alt} loading="lazy" width="160" height="80" />
-        </div>
-      ))}
+{displayMode === 'marquee' ? (
+  <LogoMarquee title={heading} logos={marqueeLogos} theme={theme} />
+) : (
+  <section class={`section lp-logo-bar lp-logo-bar--${theme} lp-logo-bar--${density}`} aria-label={heading || 'Partners'}>
+    <div class="container">
+      {heading && <h2 class="logo-marquee__heading fade-in-up">{heading}</h2>}
+      <div class="partners__grid fade-in-up">
+        {normalizedLogos.map((logo) => (
+          <div class="partners__badge">
+            <img src={logo.src} alt={logo.alt} loading="lazy" width="160" height="80" />
+          </div>
+        ))}
+      </div>
     </div>
-  </div>
-</section>
+  </section>
+)}
+
+<style>
+  .lp-logo-bar--muted {
+    background: #f2f3f2;
+  }
+
+  .lp-logo-bar--compact {
+    padding-block: 2.5rem;
+  }
+</style>

@@ -47,6 +47,52 @@ function rewriteUrls(html, rewrites) {
   return result;
 }
 
+function escapeHtmlAttribute(str) {
+  return String(str || '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+function parseElementorSettings(raw) {
+  if (!raw) return {};
+
+  try {
+    return JSON.parse(decodeHtmlEntities(raw));
+  } catch {
+    return {};
+  }
+}
+
+function getElementorVideoUrl(settings) {
+  const hostedUrl = typeof settings.hosted_url === 'object'
+    ? settings.hosted_url?.url
+    : settings.hosted_url;
+
+  return [
+    settings.youtube_url,
+    settings.vimeo_url,
+    settings.dailymotion_url,
+    settings.external_url,
+    hostedUrl,
+    settings.url,
+  ].find((value) => typeof value === 'string' && value.trim());
+}
+
+function getElementorVideoTitle(settings) {
+  return [
+    settings.title,
+    settings.video_title,
+    settings.caption,
+  ].find((value) => typeof value === 'string' && value.trim());
+}
+
+function videoEmbedMarker(url, title = '') {
+  const titleAttr = title ? ` data-video-title="${escapeHtmlAttribute(title)}"` : '';
+  return `<figure data-video-embed-url="${escapeHtmlAttribute(url)}"${titleAttr}></figure>`;
+}
+
 /**
  * Extract clean article content from Elementor HTML.
  *
@@ -63,6 +109,7 @@ function extractCleanContent(elementorHtml) {
   for (let i = 1; i < widgetSections.length; i++) {
     const section = widgetSections[i];
     const widgetType = section.substring(0, section.indexOf('"'));
+    const beforeWidgetType = widgetSections[i - 1] || '';
 
     if (widgetType === 'text-editor.default') {
       // Content starts right after 'text-editor.default">\n'
@@ -100,6 +147,15 @@ function extractCleanContent(elementorHtml) {
       }
 
       blocks.push(content);
+    } else if (widgetType === 'video.default') {
+      const settingsMatch = beforeWidgetType.match(/data-settings="([^"]*)"/g)?.pop();
+      const settingsRaw = settingsMatch?.match(/data-settings="([^"]*)"/)?.[1] || '';
+      const settings = parseElementorSettings(settingsRaw);
+      const videoUrl = getElementorVideoUrl(settings);
+
+      if (videoUrl) {
+        blocks.push(videoEmbedMarker(videoUrl, getElementorVideoTitle(settings)));
+      }
     }
   }
 

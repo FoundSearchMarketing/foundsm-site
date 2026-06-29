@@ -104,6 +104,41 @@ export default defineType({
             },
           ],
         },
+        {
+          name: 'videoEmbed',
+          title: 'Video Embed',
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'url',
+              title: 'Video URL',
+              type: 'url',
+              validation: (rule) => rule.required().uri({ scheme: ['http', 'https'] }),
+            }),
+            defineField({
+              name: 'title',
+              title: 'Title',
+              type: 'string',
+            }),
+            defineField({
+              name: 'caption',
+              title: 'Caption',
+              type: 'string',
+            }),
+          ],
+          preview: {
+            select: {
+              title: 'title',
+              subtitle: 'url',
+            },
+            prepare(selection) {
+              return {
+                title: selection.title || 'Video embed',
+                subtitle: selection.subtitle,
+              };
+            },
+          },
+        },
       ],
     }),
     ...createSeoFields({ group: false, descriptionMax: 180 }),

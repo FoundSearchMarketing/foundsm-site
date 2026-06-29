@@ -3,7 +3,11 @@ interface CardItem {
   title: string;
   body: string;
   bodyHtml?: string;
+  number?: string;
   lead?: string;
+  meta?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
   icon?: string;
   image?: string;
   imageAlt?: string;
@@ -15,6 +19,8 @@ interface Props {
   cards: CardItem[];
   columns?: 2 | 3 | 4;
   theme?: 'light' | 'muted' | 'dark';
+  variant?: 'standard' | 'icon' | 'numbered' | 'credential' | 'topic' | 'benefit';
+  density?: 'compact' | 'standard';
 }
 
 const {
@@ -23,10 +29,12 @@ const {
   cards,
   columns = 3,
   theme = 'light',
+  variant = 'standard',
+  density = 'standard',
 } = Astro.props;
 ---
 
-<section class={`card-grid-section card-grid-section--${theme}`} aria-labelledby={title ? `${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-heading` : undefined}>
+<section class={`card-grid-section card-grid-section--${theme} card-grid-section--${density} card-grid-section--${variant}`} aria-labelledby={title ? `${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-heading` : undefined}>
   <div class="card-grid-section__inner">
     {(title || subtitle) && (
       <div class="card-grid-section__header">
@@ -36,19 +44,22 @@ const {
     )}
 
     <div class={`card-grid card-grid--${columns}`}>
-      {cards.map((card) => (
+      {cards.map((card, index) => (
         <article class="modern-card">
           {card.image && (
             <div class="modern-card__image">
               <img src={card.image} alt={card.imageAlt ?? ''} loading="lazy" decoding="async" />
             </div>
           )}
+          {variant === 'numbered' && <p class="modern-card__number">{card.number || String(index + 1).padStart(2, '0')}</p>}
           {card.icon && (
             <img class="modern-card__icon" src={card.icon} alt="" loading="lazy" decoding="async" />
           )}
+          {card.meta && <p class="modern-card__meta">{card.meta}</p>}
           <h3>{card.title}</h3>
           {card.lead && <p class="modern-card__lead">{card.lead}</p>}
           {card.bodyHtml ? <div class="modern-card__body" set:html={card.bodyHtml} /> : <p class="modern-card__body">{card.body}</p>}
+          {card.ctaLabel && card.ctaHref && <a class="modern-card__cta" href={card.ctaHref}>{card.ctaLabel}</a>}
         </article>
       ))}
     </div>
@@ -58,6 +69,10 @@ const {
 <style>
   .card-grid-section {
     padding: 5rem var(--gutter);
+  }
+
+  .card-grid-section--compact {
+    padding-block: 3.5rem;
   }
 
   .card-grid-section--muted {
@@ -130,6 +145,17 @@ const {
     box-shadow: 0 16px 34px rgba(26, 26, 26, 0.06);
   }
 
+  .card-grid-section--compact .modern-card {
+    gap: 0.55rem;
+    padding: 1.1rem;
+  }
+
+  .card-grid-section--credential .modern-card,
+  .card-grid-section--topic .modern-card,
+  .card-grid-section--benefit .modern-card {
+    box-shadow: none;
+  }
+
   .card-grid-section--dark .modern-card {
     border-color: rgba(255, 255, 255, 0.16);
     background: rgba(255, 255, 255, 0.07);
@@ -153,6 +179,28 @@ const {
     inline-size: 3.25rem;
     block-size: 3.25rem;
     object-fit: contain;
+  }
+
+  .modern-card__number {
+    margin: 0;
+    color: var(--color-primary);
+    font-family: var(--font-heading);
+    font-size: 2.4rem;
+    font-weight: 900;
+    line-height: 0.95;
+  }
+
+  .modern-card__meta {
+    margin: 0;
+    color: rgba(26, 26, 26, 0.56);
+    font-size: 0.78rem;
+    font-weight: 800;
+    line-height: 1.3;
+    text-transform: uppercase;
+  }
+
+  .card-grid-section--dark .modern-card__meta {
+    color: rgba(255, 255, 255, 0.58);
   }
 
   .modern-card h3 {
@@ -180,6 +228,22 @@ const {
     color: rgba(26, 26, 26, 0.72);
     font-size: 0.95rem;
     line-height: 1.68;
+  }
+
+  .modern-card__cta {
+    align-self: end;
+    justify-self: start;
+    margin-block-start: 0.35rem;
+    color: #1a1a1a;
+    font-weight: 800;
+    line-height: 1.3;
+    text-decoration: underline;
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.22em;
+  }
+
+  .card-grid-section--dark .modern-card__cta {
+    color: #ffffff;
   }
 
   .card-grid-section--dark .modern-card__body {

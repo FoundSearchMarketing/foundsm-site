@@ -8,9 +8,11 @@ interface Props {
   idPrefix?: string;
   tabs?: any[];
   theme?: 'light' | 'muted';
+  layoutPreset?: 'mediaPanel' | 'badgePanel' | 'ecosystem';
+  autoRotate?: boolean;
 }
 
-const { title, subtitle, idPrefix, tabs = [], theme = 'muted' } = Astro.props;
+const { title, subtitle, idPrefix, tabs = [], theme = 'muted', layoutPreset = 'mediaPanel', autoRotate = false } = Astro.props;
 const safeIdPrefix = idPrefix || (title || 'feature-tabs').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'feature-tabs';
 const preparedTabs = tabsFor(tabs).filter((tab) => tab.title);
 ---
@@ -22,5 +24,7 @@ const preparedTabs = tabsFor(tabs).filter((tab) => tab.title);
     tabs={preparedTabs}
     idPrefix={safeIdPrefix}
     theme={theme}
+    layoutPreset={layoutPreset}
+    autoRotate={autoRotate}
   />
 )}

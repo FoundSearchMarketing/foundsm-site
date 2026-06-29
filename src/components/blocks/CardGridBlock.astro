@@ -8,9 +8,11 @@ interface Props {
   cards?: any[];
   columns?: 2 | 3 | 4;
   theme?: 'light' | 'muted' | 'dark';
+  variant?: 'standard' | 'icon' | 'numbered' | 'credential' | 'topic' | 'benefit';
+  density?: 'compact' | 'standard';
 }
 
-const { title, subtitle, cards = [], columns = 3, theme = 'light' } = Astro.props;
+const { title, subtitle, cards = [], columns = 3, theme = 'light', variant = 'standard', density = 'standard' } = Astro.props;
 const preparedCards = cardsFor(cards).filter((card) => card.title);
 ---
 
@@ -21,5 +23,7 @@ const preparedCards = cardsFor(cards).filter((card) => card.title);
     cards={preparedCards}
     columns={columns}
     theme={theme}
+    variant={variant}
+    density={density}
   />
 )}

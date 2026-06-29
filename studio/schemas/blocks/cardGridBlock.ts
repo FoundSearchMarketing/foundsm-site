@@ -1,5 +1,5 @@
 import { defineArrayMember, defineField, defineType } from 'sanity';
-import { mediaFields, richTextField, themeField } from './pageBuilderFields';
+import { ctaField, mediaFields, richTextField, themeField } from './pageBuilderFields';
 
 export default defineType({
   name: 'cardGridBlock',
@@ -12,6 +12,7 @@ export default defineType({
       name: 'cards',
       title: 'Cards',
       type: 'array',
+      validation: (Rule) => Rule.required().min(1),
       of: [
         defineArrayMember({
           type: 'object',
@@ -22,8 +23,11 @@ export default defineType({
               type: 'string',
               validation: (Rule) => Rule.required(),
             }),
+            defineField({ name: 'number', title: 'Number', type: 'string' }),
             defineField({ name: 'lead', title: 'Lead', type: 'string' }),
+            defineField({ name: 'meta', title: 'Meta', type: 'string' }),
             richTextField(),
+            ctaField(),
             defineField({ name: 'icon', title: 'Icon', type: 'image' }),
             ...mediaFields,
           ],
@@ -43,6 +47,34 @@ export default defineType({
         ],
       },
       initialValue: 3,
+    }),
+    defineField({
+      name: 'variant',
+      title: 'Variant',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Standard', value: 'standard' },
+          { title: 'Icon', value: 'icon' },
+          { title: 'Numbered', value: 'numbered' },
+          { title: 'Credential', value: 'credential' },
+          { title: 'Topic', value: 'topic' },
+          { title: 'Benefit', value: 'benefit' },
+        ],
+      },
+      initialValue: 'standard',
+    }),
+    defineField({
+      name: 'density',
+      title: 'Density',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Compact', value: 'compact' },
+          { title: 'Standard', value: 'standard' },
+        ],
+      },
+      initialValue: 'standard',
     }),
     themeField('theme', 'Theme', 'light'),
   ],

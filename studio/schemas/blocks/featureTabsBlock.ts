@@ -1,5 +1,5 @@
 import { defineArrayMember, defineField, defineType } from 'sanity';
-import { mediaFields, richTextField } from './pageBuilderFields';
+import { ctaField, mediaFields, richTextField } from './pageBuilderFields';
 
 export default defineType({
   name: 'featureTabsBlock',
@@ -19,6 +19,7 @@ export default defineType({
       name: 'tabs',
       title: 'Tabs',
       type: 'array',
+      validation: (Rule) => Rule.required().min(1),
       of: [
         defineArrayMember({
           type: 'object',
@@ -30,6 +31,7 @@ export default defineType({
               validation: (Rule) => Rule.required(),
             }),
             richTextField(),
+            ctaField(),
             defineField({ name: 'icon', title: 'Icon', type: 'image' }),
             ...mediaFields,
           ],
@@ -48,6 +50,25 @@ export default defineType({
         ],
       },
       initialValue: 'muted',
+    }),
+    defineField({
+      name: 'layoutPreset',
+      title: 'Layout Preset',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Media Panel', value: 'mediaPanel' },
+          { title: 'Badge Panel', value: 'badgePanel' },
+          { title: 'Ecosystem', value: 'ecosystem' },
+        ],
+      },
+      initialValue: 'mediaPanel',
+    }),
+    defineField({
+      name: 'autoRotate',
+      title: 'Auto Rotate',
+      type: 'boolean',
+      initialValue: false,
     }),
   ],
   preview: {

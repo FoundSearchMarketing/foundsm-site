@@ -1,0 +1,265 @@
+---
+interface MetaItem {
+  icon?: string;
+  label?: string;
+  value?: string;
+}
+
+interface StatItem {
+  value?: string;
+  label?: string;
+}
+
+interface Props {
+  eyebrow?: string;
+  titleLines?: string[];
+  accentLine?: string;
+  description?: string;
+  meta?: MetaItem[];
+  primaryCta?: { label?: string; href?: string };
+  secondaryCta?: { label?: string; href?: string };
+  cardTitle?: string;
+  stats?: StatItem[];
+  chips?: string[];
+  theme?: 'dark' | 'green' | 'light';
+}
+
+const {
+  eyebrow,
+  titleLines = [],
+  accentLine,
+  description,
+  meta = [],
+  primaryCta,
+  secondaryCta,
+  cardTitle,
+  stats = [],
+  chips = [],
+  theme = 'dark',
+} = Astro.props;
+const [firstTitleLine, ...remainingTitleLines] = titleLines;
+---
+
+<section class={`event-hero event-hero--${theme}`} aria-labelledby="event-hero-title">
+  <div class="event-hero__inner">
+    <div class="event-hero__copy">
+      {eyebrow && <p class="event-hero__eyebrow">{eyebrow}</p>}
+      <h1 id="event-hero-title">
+        {firstTitleLine}
+        {accentLine && <Fragment><br /><span>{accentLine}</span></Fragment>}
+        {remainingTitleLines.map((line) => <Fragment><br />{line}</Fragment>)}
+      </h1>
+      {description && <p class="event-hero__description">{description}</p>}
+      {meta.length > 0 && (
+        <div class="event-hero__meta">
+          {meta.map((item) => (
+            <div class="event-hero__meta-item">
+              {item.icon && <span aria-hidden="true">{item.icon}</span>}
+              <p>
+                {item.label && <strong>{item.label}</strong>}
+                {item.value && <span>{item.value}</span>}
+              </p>
+            </div>
+          ))}
+        </div>
+      )}
+      {(primaryCta?.label || secondaryCta?.label) && (
+        <div class="event-hero__actions">
+          {primaryCta?.label && primaryCta?.href && <a class="event-hero__button event-hero__button--primary" href={primaryCta.href}>{primaryCta.label}</a>}
+          {secondaryCta?.label && secondaryCta?.href && <a class="event-hero__button event-hero__button--secondary" href={secondaryCta.href}>{secondaryCta.label}</a>}
+        </div>
+      )}
+    </div>
+
+    {(cardTitle || stats.length > 0 || chips.length > 0) && (
+      <aside class="event-hero__card" aria-label={cardTitle || 'Event highlights'}>
+        {cardTitle && <h2>{cardTitle}</h2>}
+        {stats.length > 0 && (
+          <div class="event-hero__stats">
+            {stats.map((stat) => (
+              <p>
+                {stat.value && <strong>{stat.value}</strong>}
+                {stat.label && <span>{stat.label}</span>}
+              </p>
+            ))}
+          </div>
+        )}
+        {chips.length > 0 && (
+          <div class="event-hero__chips">
+            {chips.map((chip) => <span>{chip}</span>)}
+          </div>
+        )}
+      </aside>
+    )}
+  </div>
+</section>
+
+<style>
+  .event-hero {
+    padding: 6rem var(--gutter);
+    background: #1a1a1a;
+    color: #ffffff;
+  }
+
+  .event-hero--green {
+    background: #223018;
+  }
+
+  .event-hero--light {
+    background: #f2f3f2;
+    color: #1a1a1a;
+  }
+
+  .event-hero__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(20rem, 0.42fr);
+    align-items: center;
+    gap: clamp(2rem, 5vw, 5rem);
+    inline-size: min(100%, var(--content-max-width));
+    margin-inline: auto;
+  }
+
+  .event-hero__copy {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .event-hero__eyebrow {
+    margin: 0;
+    color: var(--color-primary);
+    font-size: 0.82rem;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+
+  .event-hero h1,
+  .event-hero h2,
+  .event-hero p {
+    margin: 0;
+  }
+
+  .event-hero h1 {
+    color: inherit;
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    font-weight: 900;
+    line-height: 0.95;
+  }
+
+  .event-hero h1 span {
+    color: var(--color-primary);
+  }
+
+  .event-hero__description {
+    max-inline-size: 48rem;
+    color: currentColor;
+    font-size: 1.15rem;
+    line-height: 1.7;
+    opacity: 0.82;
+  }
+
+  .event-hero__meta,
+  .event-hero__actions,
+  .event-hero__stats,
+  .event-hero__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .event-hero__meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-inline-size: 12rem;
+    padding: 0.85rem;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 0.5rem;
+    background: rgba(255, 255, 255, 0.07);
+  }
+
+  .event-hero--light .event-hero__meta-item {
+    border-color: rgba(26, 26, 26, 0.12);
+    background: #ffffff;
+  }
+
+  .event-hero__meta-item p {
+    display: grid;
+    gap: 0.1rem;
+    font-size: 0.9rem;
+    line-height: 1.3;
+  }
+
+  .event-hero__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-block-size: 3.25rem;
+    padding: 0.85rem 1.35rem;
+    border-radius: 999px;
+    font-weight: 800;
+  }
+
+  .event-hero__button--primary {
+    background: var(--color-primary);
+    color: #1a1a1a;
+  }
+
+  .event-hero__button--secondary {
+    border: 1px solid currentColor;
+    color: currentColor;
+  }
+
+  .event-hero__card {
+    display: grid;
+    gap: 1.25rem;
+    padding: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 0.5rem;
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .event-hero--light .event-hero__card {
+    border-color: rgba(26, 26, 26, 0.12);
+    background: #ffffff;
+  }
+
+  .event-hero__card h2 {
+    color: inherit;
+    font-size: 1.4rem;
+    line-height: 1.2;
+  }
+
+  .event-hero__stats p {
+    display: grid;
+    min-inline-size: 5.5rem;
+  }
+
+  .event-hero__stats strong {
+    color: var(--color-primary);
+    font-family: var(--font-heading);
+    font-size: 2.4rem;
+    line-height: 1;
+  }
+
+  .event-hero__chips span {
+    padding: 0.45rem 0.7rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.12);
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+
+  .event-hero--light .event-hero__chips span {
+    background: #f2f3f2;
+  }
+
+  @media (max-width: 860px) {
+    .event-hero {
+      padding-block: 4rem;
+    }
+
+    .event-hero__inner {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

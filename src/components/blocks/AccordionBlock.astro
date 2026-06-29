@@ -1,0 +1,213 @@
+---
+import { richHtml } from '../../lib/fixedPageRender';
+
+interface AccordionItem {
+  title?: string;
+  body?: any[];
+  icon?: string;
+}
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  body?: any[];
+  items?: AccordionItem[];
+  theme?: 'light' | 'muted' | 'dark';
+  layoutPreset?: 'singleColumn' | 'twoColumn';
+}
+
+const { eyebrow, title, body = [], items = [], theme = 'light', layoutPreset = 'twoColumn' } = Astro.props;
+const visibleItems = items.filter((item) => item.title);
+const sectionId = title ? title.toLowerCase().replace(/[^a-z0-9]+/g, '-') : 'accordion';
+---
+
+{visibleItems.length > 0 && (
+  <section class={`lp-accordion lp-accordion--${theme} lp-accordion--${layoutPreset}`} aria-labelledby={`${sectionId}-heading`} data-lp-accordion>
+    <div class="lp-accordion__inner">
+      <div class="lp-accordion__header">
+        {eyebrow && <p class="lp-accordion__eyebrow">{eyebrow}</p>}
+        {title && <h2 id={`${sectionId}-heading`}>{title}</h2>}
+        {body.length > 0 && <div class="lp-accordion__body" set:html={richHtml(body)} />}
+      </div>
+
+      <div class="lp-accordion__items">
+        {visibleItems.map((item, index) => {
+          const triggerId = `${sectionId}-trigger-${index + 1}`;
+          const panelId = `${sectionId}-panel-${index + 1}`;
+          const isOpen = index === 0;
+          return (
+            <article class:list={['lp-accordion__item', { 'is-open': isOpen }]}>
+              <h3>
+                <button type="button" id={triggerId} aria-expanded={String(isOpen)} aria-controls={panelId} data-lp-accordion-trigger>
+                  <span>{item.title}</span>
+                  <span aria-hidden="true">+</span>
+                </button>
+              </h3>
+              <div id={panelId} role="region" aria-labelledby={triggerId} hidden={!isOpen} data-lp-accordion-panel>
+                {item.icon && <img src={item.icon} alt="" width="48" height="48" loading="lazy" />}
+                <div set:html={richHtml(item.body)} />
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+)}
+
+<script>
+  const initLandingAccordions = () => {
+    document.querySelectorAll('[data-lp-accordion]').forEach((root) => {
+      if (!(root instanceof HTMLElement) || root.dataset.initialized === 'true') return;
+      root.dataset.initialized = 'true';
+
+      const triggers = Array.from(root.querySelectorAll('[data-lp-accordion-trigger]'));
+      const panels = Array.from(root.querySelectorAll('[data-lp-accordion-panel]'));
+
+      triggers.forEach((trigger) => {
+        if (!(trigger instanceof HTMLButtonElement)) return;
+        trigger.addEventListener('click', () => {
+          const panelId = trigger.getAttribute('aria-controls');
+          const nextOpen = trigger.getAttribute('aria-expanded') !== 'true';
+
+          triggers.forEach((item) => {
+            if (!(item instanceof HTMLButtonElement)) return;
+            const isCurrent = item === trigger && nextOpen;
+            item.setAttribute('aria-expanded', String(isCurrent));
+            item.closest('.lp-accordion__item')?.classList.toggle('is-open', isCurrent);
+          });
+
+          panels.forEach((panel) => {
+            if (!(panel instanceof HTMLElement)) return;
+            panel.hidden = !(panel.id === panelId && nextOpen);
+          });
+        });
+      });
+    });
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLandingAccordions, { once: true });
+  } else {
+    initLandingAccordions();
+  }
+
+  document.addEventListener('astro:page-load', initLandingAccordions);
+</script>
+
+<style>
+  .lp-accordion {
+    padding: 5rem var(--gutter);
+    background: #ffffff;
+    color: #1a1a1a;
+  }
+
+  .lp-accordion--muted {
+    background: #f2f3f2;
+  }
+
+  .lp-accordion--dark {
+    background: #1a1a1a;
+    color: #ffffff;
+  }
+
+  .lp-accordion__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 0.42fr) minmax(0, 0.58fr);
+    gap: 3rem;
+    inline-size: min(100%, var(--content-max-width));
+    margin-inline: auto;
+  }
+
+  .lp-accordion--singleColumn .lp-accordion__inner {
+    grid-template-columns: 1fr;
+  }
+
+  .lp-accordion__header {
+    display: grid;
+    align-content: start;
+    gap: 1rem;
+  }
+
+  .lp-accordion__eyebrow {
+    margin: 0;
+    color: var(--color-primary);
+    font-size: 0.82rem;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+
+  .lp-accordion h2,
+  .lp-accordion h3 {
+    margin: 0;
+    color: inherit;
+  }
+
+  .lp-accordion h2 {
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    font-weight: 900;
+    line-height: 1.08;
+  }
+
+  .lp-accordion__body,
+  .lp-accordion__item div {
+    color: rgba(26, 26, 26, 0.72);
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .lp-accordion--dark .lp-accordion__body,
+  .lp-accordion--dark .lp-accordion__item div {
+    color: rgba(255, 255, 255, 0.76);
+  }
+
+  .lp-accordion__items {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .lp-accordion__item {
+    border: 1px solid rgba(26, 26, 26, 0.12);
+    border-radius: 0.5rem;
+    background: #ffffff;
+  }
+
+  .lp-accordion--dark .lp-accordion__item {
+    border-color: rgba(255, 255, 255, 0.16);
+    background: rgba(255, 255, 255, 0.07);
+  }
+
+  .lp-accordion__item button {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    inline-size: 100%;
+    padding: 1.1rem 1.25rem;
+    color: inherit;
+    text-align: left;
+    font-weight: 800;
+    line-height: 1.35;
+  }
+
+  .lp-accordion__item [role='region'] {
+    display: grid;
+    gap: 0.85rem;
+    padding: 0 1.25rem 1.25rem;
+  }
+
+  .lp-accordion__item [hidden] {
+    display: none;
+  }
+
+  .lp-accordion__item img {
+    inline-size: 3rem;
+    block-size: 3rem;
+    object-fit: contain;
+  }
+
+  @media (max-width: 840px) {
+    .lp-accordion__inner {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

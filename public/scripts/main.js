@@ -333,7 +333,53 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // =========================================================
-  // 10. SMOOTH SCROLL FOR ANCHOR LINKS
+  // 10. OPEN INTERNAL LINKS IN NEW TABS
+  // =========================================================
+  function initInternalLinksNewTab() {
+    const internalHosts = new Set(['foundsm.com', 'www.foundsm.com']);
+    const currentHost = window.location.hostname.replace(/^www\./i, '');
+
+    document.querySelectorAll('a[href]').forEach(link => {
+      const href = link.getAttribute('href')?.trim();
+      if (
+        !href ||
+        href.startsWith('#') ||
+        link.hasAttribute('target') ||
+        link.hasAttribute('download') ||
+        /^(mailto:|tel:|sms:|javascript:)/i.test(href)
+      ) {
+        return;
+      }
+
+      let url;
+      try {
+        url = new URL(href, window.location.href);
+      } catch {
+        return;
+      }
+
+      if (url.protocol !== 'http:' && url.protocol !== 'https:') return;
+
+      const linkHost = url.hostname.replace(/^www\./i, '');
+      const isInternal = linkHost === currentHost || internalHosts.has(url.hostname);
+      const isSamePageAnchor = Boolean(url.hash) &&
+        url.origin === window.location.origin &&
+        url.pathname === window.location.pathname &&
+        url.search === window.location.search;
+
+      if (!isInternal || isSamePageAnchor) return;
+
+      const rel = new Set((link.getAttribute('rel') || '').split(/\s+/).filter(Boolean));
+      rel.add('noopener');
+      rel.add('noreferrer');
+
+      link.setAttribute('target', '_blank');
+      link.setAttribute('rel', Array.from(rel).join(' '));
+    });
+  }
+
+  // =========================================================
+  // 11. SMOOTH SCROLL FOR ANCHOR LINKS
   // =========================================================
   function initSmoothScroll() {
     document.addEventListener('click', (e) => {
@@ -362,7 +408,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // =========================================================
-  // 11. COOKIE SETTINGS
+  // 12. COOKIE SETTINGS
   // Open the OneTrust preference center from footer controls
   // =========================================================
   function initCookieSettings() {
@@ -413,7 +459,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // =========================================================
-  // 12. HERO TEXT STAGGER ANIMATION ON PAGE LOAD
+  // 13. HERO TEXT STAGGER ANIMATION ON PAGE LOAD
   // Elements with .hero-stagger get delayed fade-in-up
   // =========================================================
   function initHeroStagger() {
@@ -445,6 +491,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // =========================================================
   // INITIALIZE ALL MODULES
   // =========================================================
+  initInternalLinksNewTab();
   initSmoothScroll();
   initCookieSettings();
   initHeroStagger();

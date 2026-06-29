@@ -333,13 +333,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // =========================================================
-  // 10. OPEN INTERNAL LINKS IN NEW TABS
+  // 10. OPEN BLOG CONTENT INTERNAL LINKS IN NEW TABS
   // =========================================================
-  function initInternalLinksNewTab() {
+  function initBlogInternalLinksNewTab() {
     const internalHosts = new Set(['foundsm.com', 'www.foundsm.com']);
     const currentHost = window.location.hostname.replace(/^www\./i, '');
 
-    document.querySelectorAll('a[href]').forEach(link => {
+    document.querySelectorAll('.blog-post__content-section a[href]').forEach(link => {
       const href = link.getAttribute('href')?.trim();
       if (
         !href ||
@@ -491,7 +491,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // =========================================================
   // INITIALIZE ALL MODULES
   // =========================================================
-  initInternalLinksNewTab();
+  initBlogInternalLinksNewTab();
   initSmoothScroll();
   initCookieSettings();
   initHeroStagger();

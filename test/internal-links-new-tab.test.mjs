@@ -29,14 +29,19 @@ function installBrowserApiStubs(window) {
 async function renderScriptFixture() {
   const dom = new JSDOM(
     `
-      <a id="relative" href="/contact-us/">Contact</a>
-      <a id="absolute" href="https://www.foundsm.com/dataconnect/">Data Connect</a>
-      <a id="same-page-anchor" href="#section">Jump</a>
-      <a id="same-page-path-anchor" href="/current/#section">Jump</a>
-      <a id="external" href="https://example.com/">External</a>
-      <a id="mail" href="mailto:info@foundsm.com">Email</a>
-      <a id="download" href="/whitepapers/example.pdf" download>Download</a>
-      <a id="existing-target" href="/newsletter/" target="_self">Newsletter</a>
+      <nav>
+        <a id="site-nav-relative" href="/contact-us/">Contact</a>
+      </nav>
+      <section class="blog-post__content-section">
+        <a id="relative" href="/contact-us/">Contact</a>
+        <a id="absolute" href="https://www.foundsm.com/dataconnect/">Data Connect</a>
+        <a id="same-page-anchor" href="#section">Jump</a>
+        <a id="same-page-path-anchor" href="/current/#section">Jump</a>
+        <a id="external" href="https://example.com/">External</a>
+        <a id="mail" href="mailto:info@foundsm.com">Email</a>
+        <a id="download" href="/whitepapers/example.pdf" download>Download</a>
+        <a id="existing-target" href="/newsletter/" target="_self">Newsletter</a>
+      </section>
       <div id="section"></div>
       <script>${mainScript}</script>
     `,
@@ -60,7 +65,7 @@ async function renderScriptFixture() {
   return dom.window.document;
 }
 
-test('main script opens internal links in new tabs', async () => {
+test('main script opens blog content internal links in new tabs', async () => {
   const document = await renderScriptFixture();
 
   for (const id of ['relative', 'absolute']) {
@@ -71,10 +76,10 @@ test('main script opens internal links in new tabs', async () => {
   }
 });
 
-test('main script leaves non-page-navigation links unchanged', async () => {
+test('main script leaves non-blog-content and non-page-navigation links unchanged', async () => {
   const document = await renderScriptFixture();
 
-  for (const id of ['same-page-anchor', 'same-page-path-anchor', 'external', 'mail', 'download']) {
+  for (const id of ['site-nav-relative', 'same-page-anchor', 'same-page-path-anchor', 'external', 'mail', 'download']) {
     const link = document.getElementById(id);
 
     assert.equal(link.getAttribute('target'), null, `${id} target`);

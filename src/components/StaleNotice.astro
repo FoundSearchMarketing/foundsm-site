@@ -1,0 +1,56 @@
+---
+import type { BlogPost } from '../lib/blogPosts';
+import { formatContentDate, getStaleness } from '../lib/staleness';
+
+interface Props {
+  post: BlogPost;
+}
+
+const { post } = Astro.props;
+const staleness = getStaleness({
+  publishedAt: post.publishedAt,
+  lastReviewed: post.lastReviewed,
+  evergreen: post.evergreen,
+});
+const freshnessLabel = staleness.freshnessDate ? formatContentDate(staleness.freshnessDate) : '';
+const quietDateLabel = staleness.freshnessSource === 'lastReviewed' ? 'Last reviewed' : 'Originally published';
+const noticeDateLabel = staleness.freshnessSource === 'lastReviewed' ? 'Last reviewed' : 'Published';
+const relatedPosts = post.relatedPosts.slice(0, 3);
+---
+
+{staleness.showNotice && (
+  <aside class="blog-post__stale-notice" aria-labelledby="stale-notice-title">
+    <div class="blog-post__stale-notice-copy">
+      <p class="blog-post__stale-notice-eyebrow">Content note</p>
+      <h2 class="blog-post__stale-notice-title" id="stale-notice-title">This article may be out of date</h2>
+      <p class="blog-post__stale-notice-body">
+        Marketing platforms and privacy guidance change quickly. For the latest thinking, start with these newer Found insights.
+      </p>
+      {freshnessLabel && (
+        <p class="blog-post__stale-notice-date">
+          {noticeDateLabel} <time datetime={staleness.freshnessDate}>{freshnessLabel}</time>
+        </p>
+      )}
+    </div>
+    {relatedPosts.length > 0 ? (
+      <ul class="blog-post__stale-notice-links" aria-label="Recent related posts">
+        {relatedPosts.map((relatedPost) => (
+          <li>
+            <a href={`/insights/${relatedPost.slug}/`}>
+              <span>{relatedPost.title}</span>
+              <time datetime={relatedPost.publishedAt}>{relatedPost.publishedLabel}</time>
+            </a>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <a class="blog-post__stale-notice-all" href="/insights/">See recent insights</a>
+    )}
+  </aside>
+)}
+
+{staleness.showReviewLine && freshnessLabel && (
+  <p class="blog-post__review-note">
+    {quietDateLabel} <time datetime={staleness.freshnessDate}>{freshnessLabel}</time>
+  </p>
+)}

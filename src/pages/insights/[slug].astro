@@ -6,9 +6,10 @@ import { getAllBlogPosts, getBlogPostNavigation, type BlogPost } from '../../lib
 import { loadLegacyPages } from '../../lib/legacyPageFetch';
 import { getLegacyPageDefinitionsByGroup, pathToSingleSlug, type LegacyPageData } from '../../lib/legacyPageData';
 import { getInsightResourceMeta } from '../../lib/insightResourceContent';
+import { isLocalRedirectSource } from '../../lib/redirectedRoutes';
 
 export async function getStaticPaths() {
-  const legacyInsightDefinitions = getLegacyPageDefinitionsByGroup('insights');
+  const legacyInsightDefinitions = getLegacyPageDefinitionsByGroup('insights').filter((definition) => !isLocalRedirectSource(definition.path));
   const [posts, legacyPages] = await Promise.all([
     getAllBlogPosts(),
     loadLegacyPages(legacyInsightDefinitions),

@@ -97,6 +97,66 @@
       "permanent": true
     },
     {
+      "source": "/DataConnect",
+      "destination": "/dataconnect/",
+      "permanent": true
+    },
+    {
+      "source": "/DataConnect/",
+      "destination": "/dataconnect/",
+      "permanent": true
+    },
+    {
+      "source": "/insights-filter-results",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/insights-filter-results/",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/insights-march-update",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/insights-march-update/",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/insights-march-update-v2",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/insights-march-update-v2/",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/insights/category/ai",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/insights/category/ai/",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/insights/category/paid-media-strategy",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/insights/category/paid-media-strategy/",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
       "source": "/",
       "destination": "/",
       "permanent": true,

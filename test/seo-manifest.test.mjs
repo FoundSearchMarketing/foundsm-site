@@ -4,6 +4,7 @@ import { test } from 'node:test';
 
 const manifest = JSON.parse(readFileSync(new URL('../src/lib/seoManifest.generated.json', import.meta.url), 'utf8'));
 const vercel = JSON.parse(readFileSync(new URL('../vercel.json', import.meta.url), 'utf8'));
+const localRedirects = JSON.parse(readFileSync(new URL('../src/lib/redirectedRoutes.json', import.meta.url), 'utf8'));
 
 test('generated manifest contains core Yoast SEO fields', () => {
   const home = manifest.routes['/'];
@@ -71,4 +72,41 @@ test('noindex routes stay out of indexable expectations', () => {
   const noindexRoutes = Object.entries(manifest.routes).filter(([, route]) => String(route.robots).includes('noindex'));
   assert.ok(noindexRoutes.length > 0);
   assert.ok(noindexRoutes.some(([path]) => path === '/safelist/' || path === '/thank-you/'));
+});
+
+test('local SEO remediation redirects are mirrored in Vercel config', () => {
+  for (const expected of localRedirects) {
+    assert.ok(vercel.redirects.some((redirect) => (
+      redirect.source === expected.source
+      && redirect.destination === expected.destination
+      && redirect.permanent === expected.permanent
+    )), `${expected.source} should redirect to ${expected.destination}`);
+  }
+});
+
+test('sitemap generation excludes local redirected routes and prefers current route SEO', () => {
+  const source = readFileSync(new URL('../src/pages/sitemap.xml.ts', import.meta.url), 'utf8');
+
+  assert.match(source, /getLocalRedirectSources/);
+  assert.match(source, /resolveRouteSeo/);
+  assert.match(source, /robots:\s*post\.robots/);
+  assert.match(source, /canonical:\s*post\.canonicalUrl/);
+});
+
+test('SEO copy overrides cover dashboard title and description findings', () => {
+  const source = readFileSync(new URL('../src/lib/seo.ts', import.meta.url), 'utf8');
+
+  assert.match(source, /SEO_COPY_OVERRIDES/);
+  assert.match(source, /About Found Search Marketing \| Paid Media Agency/);
+  assert.match(source, /Segment AI Traffic in GA4 in 3 Minutes/);
+  assert.match(source, /Found's 19-Year Giving Tradition/);
+  assert.match(source, /Learn how first-party data can strengthen measurement/);
+});
+
+test('blog post links normalize legacy DataConnect CTAs', () => {
+  const source = readFileSync(new URL('../src/lib/blogPosts.ts', import.meta.url), 'utf8');
+
+  assert.match(source, /normalizeKnownFoundHref/);
+  assert.match(source, /url\.pathname\.toLowerCase\(\) === '\/dataconnect\/'/);
+  assert.match(source, /`\/dataconnect\/\$\{url\.search\}\$\{url\.hash\}`/);
 });

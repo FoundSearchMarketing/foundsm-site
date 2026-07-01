@@ -293,7 +293,7 @@ function mapSanityPost(post: SanityBlogPost, slugs: Set<string>, quoteAuthors: Q
     cardImage,
     featuredVideo,
     heroImageAlt: post.featuredImage?.alt || post.title,
-    contentHtml: renderContentHtml(post.body || [], slugs, quoteAuthors),
+    contentHtml: renderContentHtml(post.body || [], slugs, quoteAuthors, post.title),
     categories,
   };
 }
@@ -314,7 +314,7 @@ function normalizeCategories(categories: SanityCategory[] | null | undefined, le
   return [...normalized.values()];
 }
 
-function renderContentHtml(blocks: SanityBlock[], slugs: Set<string>, quoteAuthors: QuoteAuthor[]): string {
+function renderContentHtml(blocks: SanityBlock[], slugs: Set<string>, quoteAuthors: QuoteAuthor[], postTitle: string): string {
   const state = { sectionCount: 0 };
   const groups = groupBlocks(blocks);
   const htmlParts: string[] = [];
@@ -330,7 +330,7 @@ function renderContentHtml(blocks: SanityBlock[], slugs: Set<string>, quoteAutho
       continue;
     }
 
-    const html = renderGroup(group, slugs, state);
+    const html = renderGroup(group, slugs, state, postTitle);
     if (html) htmlParts.push(html);
   }
 
@@ -359,7 +359,7 @@ function groupBlocks(blocks: SanityBlock[]): RenderGroup[] {
   return groups;
 }
 
-function renderGroup(group: RenderGroup, slugs: Set<string>, state: RenderState): string {
+function renderGroup(group: RenderGroup, slugs: Set<string>, state: RenderState, postTitle: string): string {
   if (group.type === 'list') {
     if (isTableOfContentsList(group)) {
       const items = group.items
@@ -373,17 +373,18 @@ function renderGroup(group: RenderGroup, slugs: Set<string>, state: RenderState)
     return `<${tag}>${items}</${tag}>`;
   }
 
-  return renderBlock(group.block, slugs, state);
+  return renderBlock(group.block, slugs, state, postTitle);
 }
 
-function renderBlock(block: SanityBlock, slugs: Set<string>, state: RenderState): string {
+function renderBlock(block: SanityBlock, slugs: Set<string>, state: RenderState, postTitle: string): string {
   if (block._type === 'image' && block.asset) {
     const src = imageUrl(block, 1200);
     if (!src) return '';
+    const alt = block.alt || block.caption || postTitle;
 
     return [
       '<figure class="blog-post__figure">',
-      `<img src="${escapeAttribute(src)}" alt="${escapeAttribute(block.alt || '')}" loading="lazy">`,
+      `<img src="${escapeAttribute(src)}" alt="${escapeAttribute(alt)}" loading="lazy">`,
       block.caption ? `<figcaption>${escapeHtml(block.caption)}</figcaption>` : '',
       '</figure>',
     ].join('');
@@ -526,6 +527,9 @@ function isTableOfContentsList(group: Extract<RenderGroup, { type: 'list' }>): b
 }
 
 function rewriteHref(href: string, slugs: Set<string>): string {
+  const normalizedKnownHref = normalizeKnownFoundHref(href);
+  if (normalizedKnownHref) return normalizedKnownHref;
+
   try {
     const url = new URL(href, 'https://foundsm.com');
     const isFoundDomain = url.hostname === 'foundsm.com' || url.hostname === 'www.foundsm.com';
@@ -539,6 +543,22 @@ function rewriteHref(href: string, slugs: Set<string>): string {
   }
 
   return href;
+}
+
+function normalizeKnownFoundHref(href: string): string | undefined {
+  try {
+    const url = new URL(href, 'https://foundsm.com');
+    const isFoundDomain = url.hostname === 'foundsm.com' || url.hostname === 'www.foundsm.com';
+    if (!isFoundDomain) return undefined;
+
+    if (url.pathname.toLowerCase() === '/dataconnect/' || url.pathname.toLowerCase() === '/dataconnect') {
+      return `/dataconnect/${url.search}${url.hash}`;
+    }
+  } catch {
+    return undefined;
+  }
+
+  return undefined;
 }
 
 function imageUrl(

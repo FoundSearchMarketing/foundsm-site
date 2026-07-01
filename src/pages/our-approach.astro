@@ -80,7 +80,7 @@ const schema = {
           <figure class="approach-hero__media" aria-hidden={page.hero.imageAlt ? undefined : 'true'}>
             <MediaAsset
               src={heroMedia.src}
-              alt={heroMedia.alt}
+              alt={heroMedia.alt || page.hero.heading || 'Our approach hero image'}
               width="692"
               height="722"
               loading="eager"
@@ -107,7 +107,7 @@ const schema = {
             <figure class="approach-intro__media" aria-hidden={page.intro.imageAlt ? undefined : 'true'}>
               <MediaAsset
                 src={introMedia.src}
-                alt={introMedia.alt}
+                alt={introMedia.alt || page.intro.heading || 'Our approach introduction image'}
                 width="424"
                 height="401"
                 loading="lazy"
@@ -168,7 +168,7 @@ const schema = {
                     >
                       <img
                         src={item.iconSrc}
-                        alt=""
+                        alt={`${item.title} icon`}
                         width="50"
                         height="50"
                         loading="lazy"
@@ -242,7 +242,7 @@ const schema = {
                     <div class="approach-partnerships__badge">
                       <MediaAsset
                         src={tab.media.src}
-                        alt={tab.media.alt || tab.label || ''}
+                        alt={tab.media.alt || tab.label || 'Partnership image'}
                         loading="lazy"
                       />
                     </div>

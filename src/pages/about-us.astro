@@ -98,7 +98,7 @@ const schema = {
           <div class="about-hero__media" aria-hidden={page.hero.imageAlt ? undefined : 'true'}>
             <MediaAsset
               src={heroMedia.src}
-              alt={heroMedia.alt}
+              alt={heroMedia.alt || page.hero.heading || 'About Found hero image'}
               width="682"
               height="660"
               loading="eager"
@@ -127,7 +127,7 @@ const schema = {
                     <img
                       src={credential.imageSrc}
                       sizes="(max-width: 767px) 5rem, 6rem"
-                      alt={credential.alt || ''}
+                      alt={credential.alt || credential.text || 'Found credential'}
                       loading="lazy"
                     />
                   )}
@@ -142,7 +142,7 @@ const schema = {
           <div class="about-who__media fade-in-up">
             <MediaAsset
               src={whoMedia.src}
-              alt={whoMedia.alt}
+              alt={whoMedia.alt || page.who.heading || 'Found team image'}
               width="652"
               height="1266"
               loading="lazy"
@@ -169,7 +169,7 @@ const schema = {
         <div class="mission-grid">
           {missionCards.map((card) => (
             <article class="mission-card fade-in-up">
-              {card.iconSrc && <img src={card.iconSrc} alt="" width="50" height="50" loading="lazy" />}
+              {card.iconSrc && <img src={card.iconSrc} alt={`${card.title} icon`} width="50" height="50" loading="lazy" />}
               <h3>{card.title}</h3>
               <div set:html={aboutRichHtml(card.body)} />
             </article>
@@ -196,7 +196,7 @@ const schema = {
                 >
                   <span class="values-tabs__tab-bar" aria-hidden="true"></span>
                   <span class="values-tabs__tab-icon" aria-hidden="true">
-                    {value.iconSrc && <img src={value.iconSrc} alt="" width="50" height="50" loading="lazy" />}
+                    {value.iconSrc && <img src={value.iconSrc} alt={`${value.title} icon`} width="50" height="50" loading="lazy" />}
                   </span>
                   <span>{value.title}</span>
                 </button>
@@ -222,7 +222,7 @@ const schema = {
                   <div class="values-tabs__panel-media">
                     <MediaAsset
                       src={value.media.src}
-                      alt={value.media.alt || value.title || ''}
+                      alt={value.media.alt || value.title || 'Found value image'}
                       width="368"
                       height="474"
                       loading={index === 0 ? 'eager' : 'lazy'}
@@ -242,7 +242,7 @@ const schema = {
           <div class="about-split__media fade-in-up">
             <MediaAsset
               src={approachMedia.src}
-              alt={approachMedia.alt}
+              alt={approachMedia.alt || page.approach.heading || 'Found approach image'}
               width="604"
               height="604"
               loading="lazy"
@@ -273,7 +273,7 @@ const schema = {
           <div class="about-team__image fade-in-up">
             <MediaAsset
               src={teamMedia.src}
-              alt={teamMedia.alt}
+              alt={teamMedia.alt || page.team.heading || 'Found team image'}
               width="900"
               height="675"
               loading="lazy"

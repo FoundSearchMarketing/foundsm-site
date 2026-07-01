@@ -32,6 +32,8 @@ export const allPostsQuery = `*[_type == "blogPost"] | order(publishedAt desc) {
   title,
   slug,
   publishedAt,
+  lastReviewed,
+  evergreen,
   excerpt,
   featuredImage,
   seoTitle,
@@ -57,6 +59,8 @@ export const postBySlugQuery = `*[_type == "blogPost" && slug.current == $slug][
   title,
   slug,
   publishedAt,
+  lastReviewed,
+  evergreen,
   excerpt,
   body[]{
     ...,

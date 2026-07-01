@@ -68,7 +68,7 @@ const schema = page
           }
         : {}),
       datePublished: post?.publishedAt,
-      dateModified: post?.publishedAt,
+      dateModified: post?.modifiedAt || post?.publishedAt,
       ...(author
         ? {
             author: {

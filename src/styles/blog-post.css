@@ -423,3 +423,101 @@ body.blog-post-page .blog-post__content-section code {
   background: var(--color-panel);
   font-size: 0.9em;
 }
+
+body.blog-post-page .blog-post__stale-notice {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 0.72fr);
+  gap: clamp(1.25rem, 4vw, 2rem);
+  margin-block-end: clamp(2.5rem, 5vw, 4rem);
+  padding: clamp(1.35rem, 3vw, 2rem);
+  border: 1px solid rgba(79, 143, 34, 0.26);
+  border-inline-start: 6px solid var(--color-accent);
+  border-radius: 8px;
+  background: #fbfcf8;
+  color: var(--color-text);
+}
+
+body.blog-post-page .blog-post__stale-notice-copy {
+  min-inline-size: 0;
+}
+
+body.blog-post-page .blog-post__stale-notice-eyebrow {
+  margin: 0 0 0.55rem;
+  color: var(--color-accent-dark);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+body.blog-post-page .blog-post__stale-notice-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 2vw, 1.75rem);
+  line-height: 1.18;
+}
+
+body.blog-post-page .blog-post__stale-notice-body {
+  margin: 0.75rem 0 0;
+  color: var(--color-muted);
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+body.blog-post-page .blog-post__stale-notice-date {
+  margin: 0.9rem 0 0;
+  color: var(--color-muted);
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+body.blog-post-page .blog-post__stale-notice-links {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+body.blog-post-page .blog-post__stale-notice-links a {
+  display: grid;
+  gap: 0.35rem;
+  padding-block: 0 0.75rem;
+  border-block-end: 1px solid rgba(35, 31, 32, 0.12);
+  color: var(--color-text);
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.35;
+  text-decoration: none;
+}
+
+body.blog-post-page .blog-post__stale-notice-links li:last-child a {
+  padding-block-end: 0;
+  border-block-end: 0;
+}
+
+body.blog-post-page .blog-post__stale-notice-links time {
+  color: var(--color-muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+body.blog-post-page .blog-post__stale-notice-all {
+  align-self: start;
+  color: var(--color-accent-dark);
+  font-weight: 700;
+}
+
+body.blog-post-page .blog-post__review-note {
+  margin: 0 0 clamp(1.5rem, 4vw, 2.5rem);
+  color: var(--color-muted);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+@media (max-width: 720px) {
+  body.blog-post-page .blog-post__stale-notice {
+    grid-template-columns: 1fr;
+  }
+}

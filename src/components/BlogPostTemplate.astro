@@ -1,5 +1,6 @@
 ---
 import type { BlogPost, BlogPostNavigation } from '../lib/blogPosts';
+import StaleNotice from './StaleNotice.astro';
 import '../styles/blog-post.css';
 
 interface Props {
@@ -51,6 +52,7 @@ const hasHeroMedia = Boolean(post.featuredVideo || post.heroImage);
     </header>
 
     <div class="blog-post__body">
+      <StaleNotice post={post} />
       <Fragment set:html={post.contentHtml} />
 
       {(navigation.previous || navigation.next) && (

@@ -75,6 +75,7 @@ type SanityBlock = {
   mimeType?: string;
   alt?: string;
   caption?: string;
+  title?: string;
 };
 type SanityBlogPost = {
   _id: string;
@@ -405,6 +406,10 @@ function renderBlock(block: SanityBlock, slugs: Set<string>, state: RenderState)
     ].join('');
   }
 
+  if (block._type === 'videoEmbed') {
+    return renderVideoEmbed(block);
+  }
+
   if (block._type !== 'block') return '';
 
   const inner = renderChildren(block, slugs);
@@ -558,6 +563,58 @@ function imageUrl(
   } catch {
     return '';
   }
+}
+
+function renderVideoEmbed(block: SanityBlock): string {
+  const url = normalizeLegacyAssetUrl(block.url);
+  if (!url) return '';
+
+  const embed = videoEmbedUrl(url);
+  const title = block.title || block.caption || 'Embedded video';
+
+  if (!embed) {
+    return [
+      '<figure class="blog-post__figure blog-post__figure--video">',
+      `<a class="blog-post__video-fallback" href="${escapeAttribute(url)}" rel="noopener noreferrer" target="_blank">${escapeHtml(title)}</a>`,
+      block.caption ? `<figcaption>${escapeHtml(block.caption)}</figcaption>` : '',
+      '</figure>',
+    ].join('');
+  }
+
+  return [
+    '<figure class="blog-post__figure blog-post__figure--video">',
+    '<div class="blog-post__video-embed">',
+    `<iframe src="${escapeAttribute(embed)}" title="${escapeAttribute(title)}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`,
+    '</div>',
+    block.caption ? `<figcaption>${escapeHtml(block.caption)}</figcaption>` : '',
+    '</figure>',
+  ].join('');
+}
+
+function videoEmbedUrl(value: string): string {
+  try {
+    const url = new URL(value);
+    const hostname = url.hostname.replace(/^www\./, '').toLowerCase();
+
+    if (hostname === 'youtu.be') {
+      const id = url.pathname.split('/').filter(Boolean)[0];
+      return id ? `https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}` : '';
+    }
+
+    if (hostname === 'youtube.com' || hostname === 'm.youtube.com' || hostname === 'youtube-nocookie.com') {
+      const id = url.searchParams.get('v') || url.pathname.match(/^\/(?:embed|shorts|live)\/([^/?#]+)/)?.[1];
+      return id ? `https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}` : '';
+    }
+
+    if (hostname === 'vimeo.com' || hostname === 'player.vimeo.com') {
+      const id = url.pathname.match(/\/(?:video\/)?(\d+)/)?.[1];
+      return id ? `https://player.vimeo.com/video/${encodeURIComponent(id)}` : '';
+    }
+  } catch {
+    return '';
+  }
+
+  return '';
 }
 
 function normalizeDate(value: string | undefined): string {

@@ -162,6 +162,31 @@ body.blog-post-page .blog-post__back-link{
   }body.blog-post-page .blog-post__content-video{
     inline-size: min(100%, 720px);
     background: var(--color-dark);
+  }body.blog-post-page .blog-post__video-embed{
+    position: relative;
+    inline-size: min(100%, 720px);
+    aspect-ratio: 16 / 9;
+    margin-inline: auto;
+    overflow: hidden;
+    border-radius: 20px;
+    background: var(--color-dark);
+  }body.blog-post-page .blog-post__video-embed iframe{
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    border: 0;
+  }body.blog-post-page .blog-post__video-fallback{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-block-size: 3rem;
+    padding: 0.85rem 1.35rem;
+    border-radius: 999px;
+    background: var(--color-dark);
+    color: var(--color-dark-text);
+    font-weight: 700;
+    text-decoration: none;
   }body.blog-post-page .blog-post__figure{
     margin-block: clamp(1.8rem, 4vw, 3rem);
   }body.blog-post-page .blog-post__video{

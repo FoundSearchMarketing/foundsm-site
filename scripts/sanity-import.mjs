@@ -69,7 +69,7 @@ function genKey() {
 
 /**
  * Lightweight HTML → Sanity Portable Text converter.
- * Handles: h1-h6, p, ul, ol, li, blockquote, hr, img, a, strong, em, b, i, u, br
+ * Handles: h1-h6, p, ul, ol, li, blockquote, hr, img, video embeds, a, strong, em, b, i, u, br
  */
 function htmlToPortableText(html) {
   const blocks = [];
@@ -83,7 +83,7 @@ function htmlToPortableText(html) {
 
   // Split into top-level block elements
   const blockRegex =
-    /<(h[1-6]|p|ul|ol|blockquote|hr|figure|figcaption|img)(\s[^>]*)?\/?>([\s\S]*?)<\/\1>|<(hr|img)(\s[^>]*)?\/?\s*>/gi;
+    /<(h[1-6]|p|ul|ol|blockquote|hr|figure|figcaption|img|iframe|video)(\s[^>]*)?\/?>([\s\S]*?)<\/\1>|<(hr|img|iframe)(\s[^>]*)?\/?\s*>/gi;
 
   let match;
   let lastIndex = 0;
@@ -156,12 +156,36 @@ function htmlToPortableText(html) {
 
       case 'img': {
         const src = attrs.match(/src="([^"]+)"/)?.[1];
-        const alt = attrs.match(/alt="([^"]*)"/) ?.[1];
+        const alt = attrs.match(/alt="([^"]*)"/)?.[1];
         if (src) blocks.push(makeImageBlock(src, alt || ''));
         break;
       }
 
-      case 'figure':
+      case 'figure': {
+        const videoBlock = videoBlockFromHtml(attrs, inner);
+        if (videoBlock) {
+          blocks.push(videoBlock);
+          break;
+        }
+
+        const img = inner.match(/<img[^>]+src="([^"]+)"[^>]*(?:alt="([^"]*)")?[^>]*\/?>/i);
+        if (img) {
+          blocks.push(makeImageBlock(img[1], img[2] || ''));
+          break;
+        }
+
+        const caption = inner.match(/<figcaption[^>]*>([\s\S]*?)<\/figcaption>/i)?.[1];
+        if (caption) blocks.push(makeBlock('normal', parseInlineContent(caption)));
+        break;
+      }
+
+      case 'iframe':
+      case 'video': {
+        const videoBlock = videoBlockFromHtml(attrs, inner);
+        if (videoBlock) blocks.push(videoBlock);
+        break;
+      }
+
       case 'figcaption':
         // Extract text content from figcaptions
         blocks.push(makeBlock('normal', parseInlineContent(inner)));
@@ -206,6 +230,57 @@ function makeImageBlock(src, alt) {
     _key: genKey(),
     _sanity_import: { src, alt },
   };
+}
+
+function makeVideoEmbedBlock(url, title = '', caption = '') {
+  return {
+    _type: 'videoEmbed',
+    _key: genKey(),
+    url: decodeEntities(url),
+    title: title ? decodeEntities(stripHtml(title)) : undefined,
+    caption: caption ? decodeEntities(stripHtml(caption)) : undefined,
+  };
+}
+
+function makeVideoFileBlock(src, caption = '') {
+  return {
+    _type: 'file',
+    _key: genKey(),
+    caption: caption ? decodeEntities(stripHtml(caption)) : undefined,
+    _sanity_file_import: { src },
+  };
+}
+
+function videoBlockFromHtml(attrs, inner = '') {
+  const markerUrl = attrs.match(/data-video-embed-url="([^"]+)"/)?.[1];
+  if (markerUrl) {
+    return makeVideoEmbedBlock(
+      markerUrl,
+      attrs.match(/data-video-title="([^"]*)"/)?.[1] || '',
+      attrs.match(/data-video-caption="([^"]*)"/)?.[1] || ''
+    );
+  }
+
+  const iframeSrc = attrs.match(/src="([^"]+)"/)?.[1] || inner.match(/<iframe[^>]+src="([^"]+)"/i)?.[1];
+  if (iframeSrc) {
+    const title = attrs.match(/title="([^"]*)"/)?.[1] || inner.match(/<iframe[^>]+title="([^"]*)"/i)?.[1] || '';
+    const caption = inner.match(/<figcaption[^>]*>([\s\S]*?)<\/figcaption>/i)?.[1] || '';
+    return makeVideoEmbedBlock(iframeSrc, title, caption);
+  }
+
+  const videoSrc = attrs.match(/src="([^"]+)"/)?.[1] || inner.match(/<source[^>]+src="([^"]+)"/i)?.[1];
+  if (!videoSrc) return null;
+
+  const caption = inner.match(/<figcaption[^>]*>([\s\S]*?)<\/figcaption>/i)?.[1] || '';
+  return isVideoFileUrl(videoSrc) ? makeVideoFileBlock(videoSrc, caption) : makeVideoEmbedBlock(videoSrc, '', caption);
+}
+
+function stripHtml(value) {
+  return String(value || '').replace(/<[^>]*>/g, '').trim();
+}
+
+function isVideoFileUrl(value) {
+  return /\.(mp4|webm|mov|m4v)(?:[?#].*)?$/i.test(String(value || ''));
 }
 
 function parseInlineContent(html) {
@@ -419,6 +494,41 @@ async function uploadImageFromFile(localPath) {
   }
 }
 
+async function uploadFileFromUrl(fileUrl) {
+  try {
+    const res = await fetch(fileUrl);
+    if (!res.ok) {
+      console.error(`    ✗ Failed to fetch file: ${fileUrl} (${res.status})`);
+      return null;
+    }
+
+    const buffer = Buffer.from(await res.arrayBuffer());
+    const filename = path.basename(new URL(fileUrl).pathname);
+    const contentType = res.headers.get('content-type') || contentTypeFromFilename(filename);
+
+    const asset = await client.assets.upload('file', buffer, {
+      filename,
+      contentType,
+    });
+
+    return asset._id;
+  } catch (err) {
+    console.error(`    ✗ File upload error: ${fileUrl} — ${err.message}`);
+    return null;
+  }
+}
+
+function contentTypeFromFilename(filename) {
+  const ext = path.extname(filename).toLowerCase();
+  const contentTypes = {
+    '.mp4': 'video/mp4',
+    '.m4v': 'video/mp4',
+    '.mov': 'video/quicktime',
+    '.webm': 'video/webm',
+  };
+  return contentTypes[ext] || 'application/octet-stream';
+}
+
 // ── Import Functions ──
 
 async function importAuthors(authors) {
@@ -498,7 +608,7 @@ async function importPosts(posts) {
     // 2. Convert HTML to Portable Text
     const body = htmlToPortableText(post.content_clean_html);
 
-    // 3. Upload inline images referenced in Portable Text
+    // 3. Upload inline media referenced in Portable Text
     for (const block of body) {
       if (block._type === 'image' && block._sanity_import) {
         const { src, alt } = block._sanity_import;
@@ -510,6 +620,15 @@ async function importPosts(posts) {
         }
         delete block._sanity_import;
       }
+      if (block._type === 'file' && block._sanity_file_import) {
+        const { src } = block._sanity_file_import;
+        console.log(`    Uploading inline file: ${path.basename(src)}`);
+        const assetId = await uploadFileFromUrl(src);
+        if (assetId) {
+          block.asset = { _type: 'reference', _ref: assetId };
+          delete block._sanity_file_import;
+        }
+      }
     }
 
     // 4. Build Sanity document
@@ -520,7 +639,7 @@ async function importPosts(posts) {
       slug: post.slug,
       publishedAt: post.publishedAt,
       excerpt: post.excerpt,
-      body: body.filter((b) => !b._sanity_import), // remove failed image blocks
+      body: body.filter((b) => !b._sanity_import && !b._sanity_file_import), // remove failed media blocks
       author: post.author || undefined,
       category: post.category || categoryRefs[0] || undefined,
       categories: categoryRefs.length > 0 ? categoryRefs : undefined,

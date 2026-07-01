@@ -325,7 +325,7 @@ function attachRelatedPosts(posts: BlogPost[]): BlogPost[] {
   }));
 }
 
-function selectRelatedPosts(post: BlogPost, posts: BlogPost[], limit = 3): RelatedBlogPost[] {
+function selectRelatedPosts(post: BlogPost, posts: BlogPost[], limit = 2): RelatedBlogPost[] {
   const categorySlugs = new Set(post.categories.map((category) => category.slug));
   const candidates = posts.filter((candidate) => candidate.slug !== post.slug);
   const freshCandidates = candidates.filter((candidate) => !getStaleness(candidate).showNotice);

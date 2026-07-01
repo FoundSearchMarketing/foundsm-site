@@ -15,7 +15,7 @@ const staleness = getStaleness({
 const freshnessLabel = staleness.freshnessDate ? formatContentDate(staleness.freshnessDate) : '';
 const quietDateLabel = staleness.freshnessSource === 'lastReviewed' ? 'Last reviewed' : 'Originally published';
 const noticeDateLabel = staleness.freshnessSource === 'lastReviewed' ? 'Last reviewed' : 'Published';
-const relatedPosts = post.relatedPosts.slice(0, 3);
+const relatedPosts = post.relatedPosts.slice(0, 2);
 ---
 
 {staleness.showNotice && (
@@ -28,7 +28,7 @@ const relatedPosts = post.relatedPosts.slice(0, 3);
       </p>
       {freshnessLabel && (
         <p class="blog-post__stale-notice-date">
-          {noticeDateLabel} <time datetime={staleness.freshnessDate}>{freshnessLabel}</time>
+          {noticeDateLabel}{' '}<time datetime={staleness.freshnessDate}>{freshnessLabel}</time>
         </p>
       )}
     </div>
@@ -51,6 +51,6 @@ const relatedPosts = post.relatedPosts.slice(0, 3);
 
 {staleness.showReviewLine && freshnessLabel && (
   <p class="blog-post__review-note">
-    {quietDateLabel} <time datetime={staleness.freshnessDate}>{freshnessLabel}</time>
+    {quietDateLabel}{' '}<time datetime={staleness.freshnessDate}>{freshnessLabel}</time>
   </p>
 )}

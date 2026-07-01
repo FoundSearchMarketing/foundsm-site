@@ -4,6 +4,7 @@ import { join, relative } from 'node:path';
 
 const distDir = new URL('../dist/', import.meta.url).pathname;
 const manifest = JSON.parse(readFileSync(new URL('../src/lib/seoManifest.generated.json', import.meta.url), 'utf8'));
+const localRedirects = JSON.parse(readFileSync(new URL('../src/lib/redirectedRoutes.json', import.meta.url), 'utf8'));
 
 if (!existsSync(distDir)) {
   throw new Error('Missing dist directory. Run `npm run build` before `npm run verify:seo`.');
@@ -50,11 +51,14 @@ if (!existsSync(sitemapFile)) {
   const sitemap = readFileSync(sitemapFile, 'utf8');
   if (sitemap.includes('https://www.foundsm.com/')) failures.push('sitemap contains www canonicals');
   const sitemapUrls = [...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map((match) => match[1]);
-  const redirectSources = new Set((manifest.redirects || []).filter(isUnconditionalRedirect).map((redirect) => normalizePath(redirect.source)));
+  const redirectSources = new Set([
+    ...(manifest.redirects || []).filter(isUnconditionalRedirect).map((redirect) => normalizePath(redirect.source)),
+    ...localRedirects.map((redirect) => normalizePath(redirect.source)),
+  ]);
   for (const url of sitemapUrls) {
     const route = normalizePath(new URL(url).pathname);
-    const seo = manifest.routes[route];
-    if (seo?.robots?.includes('noindex')) failures.push(`sitemap includes noindex route ${route}`);
+    const robots = renderedRobotsForRoute(route) || manifest.routes[route]?.robots || '';
+    if (robots.includes('noindex')) failures.push(`sitemap includes noindex route ${route}`);
     if (redirectSources.has(route)) failures.push(`sitemap includes redirect source ${route}`);
   }
 }
@@ -87,6 +91,18 @@ function normalizePath(path) {
   let pathname = path.startsWith('/') ? path : `/${path}`;
   if (pathname !== '/' && !/\.[a-z0-9]{2,8}$/i.test(pathname.split('/').pop() || '') && !pathname.endsWith('/')) pathname += '/';
   return pathname;
+}
+
+function renderedRobotsForRoute(route) {
+  const file = route === '/'
+    ? join(distDir, 'index.html')
+    : join(distDir, route.replace(/^\/|\/$/g, ''), 'index.html');
+
+  if (!existsSync(file)) return '';
+
+  const html = readFileSync(file, 'utf8');
+  const match = html.match(/<meta\s+[^>]*(?:name=["']robots["'][^>]*content=["']([^"']+)["']|content=["']([^"']+)["'][^>]*name=["']robots["'])[^>]*>/i);
+  return match?.[1] || match?.[2] || '';
 }
 
 function isUnconditionalRedirect(redirect) {

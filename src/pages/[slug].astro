@@ -8,9 +8,10 @@ import { getLatestBlogPosts } from '../lib/blogPosts';
 import { loadLegacyPages } from '../lib/legacyPageFetch';
 import { getLegacyPageDefinitionsByGroup, pathToSingleSlug, type LegacyPageData } from '../lib/legacyPageData';
 import { richHtml, richText, srcFor } from '../lib/fixedPageRender';
+import { isLocalRedirectSource } from '../lib/redirectedRoutes';
 
 export async function getStaticPaths() {
-  const rootDefinitions = getLegacyPageDefinitionsByGroup('root');
+  const rootDefinitions = getLegacyPageDefinitionsByGroup('root').filter((definition) => !isLocalRedirectSource(definition.path));
   const pages = await loadLegacyPages(rootDefinitions);
 
   return rootDefinitions.map((definition) => ({

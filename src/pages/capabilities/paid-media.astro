@@ -135,7 +135,7 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
                 >
                   <span class="paid-media-tabs__rail" aria-hidden="true"></span>
                   {tab.iconSrc ? (
-                    <img class="paid-media-tabs__icon" src={tab.iconSrc} alt="" loading="lazy" decoding="async" />
+                    <img class="paid-media-tabs__icon" src={tab.iconSrc} alt={`${tab.title} icon`} loading="lazy" decoding="async" />
                   ) : (
                     <span class="paid-media-placeholder paid-media-placeholder--icon">Missing tab icon</span>
                   )}
@@ -187,7 +187,7 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
           {channelCards.map((card, index) => (
             <article class={`paid-media-journey-card paid-media-journey-card--${journeyTones[index] || 'green'}`} tabindex="0">
               {card.iconSrc ? (
-                <img class="paid-media-journey-card__icon" src={card.iconSrc} alt="" loading="lazy" decoding="async" />
+                <img class="paid-media-journey-card__icon" src={card.iconSrc} alt={`${card.title} icon`} loading="lazy" decoding="async" />
               ) : (
                 <span class="paid-media-placeholder paid-media-placeholder--icon">Missing card icon</span>
               )}
@@ -212,7 +212,7 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
           {analyticsCards.map((card) => (
             <article class="paid-media-analytics-card">
               {card.iconSrc ? (
-                <img class="paid-media-analytics-card__icon" src={card.iconSrc} alt="" loading="lazy" decoding="async" />
+                <img class="paid-media-analytics-card__icon" src={card.iconSrc} alt={`${card.title} icon`} loading="lazy" decoding="async" />
               ) : (
                 <span class="paid-media-placeholder paid-media-placeholder--icon">Missing analytics icon</span>
               )}
@@ -241,7 +241,7 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
           {logoTracks.map((logo, index) => (
             <figure class="paid-media-logos__item" aria-hidden={index >= logos.length ? 'true' : undefined}>
               {logo.src ? (
-                <img src={logo.src} alt={index >= logos.length ? '' : logo.alt} loading="eager" decoding="async" />
+                <img src={logo.src} alt={logo.alt || page.logoMarquee?.title || 'Paid media partner logo'} loading="eager" decoding="async" />
               ) : (
                 <span class="paid-media-placeholder paid-media-placeholder--logo">Missing logo image</span>
               )}

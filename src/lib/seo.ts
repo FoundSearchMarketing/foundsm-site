@@ -77,6 +77,57 @@ type SeoManifest = {
 
 const seoManifest = manifest as SeoManifest;
 
+type SeoCopyOverride = Pick<SeoInput, 'title' | 'description'>;
+
+export const SEO_COPY_OVERRIDES: Record<string, SeoCopyOverride> = {
+  '/about-us/': {
+    title: 'About Found Search Marketing | Paid Media Agency',
+    description: 'Founded in 2006, Found helps enterprise brands drive measurable growth through trusted partnerships and precise paid media execution.',
+  },
+  '/capabilities/': {
+    title: 'Capabilities | Found Search Marketing',
+  },
+  '/capabilities/data-activation/': {
+    description: 'Activate first-party customer data across ad platforms to improve targeting, reduce wasted spend, and scale qualified lead generation.',
+  },
+  '/capabilities/data-intelligence/': {
+    description: 'Unify data across platforms, APIs, and teams so marketing decisions are clearer, faster, and tied to measurable growth.',
+  },
+  '/insights/a-3-minute-implementation-guide-to-segmenting-ai-traffic-in-ga4/': {
+    title: 'Segment AI Traffic in GA4 in 3 Minutes',
+    description: 'Set up a GA4 segment for AI search traffic in minutes and compare answer-engine visits against your other channels.',
+  },
+  '/insights/closing-the-loop-how-conversion-apis-and-value-based-bidding-transform-performance-marketing/': {
+    title: 'Conversion APIs and Value-Based Bidding',
+  },
+  '/insights/dirty-signals-bot-traffic-junk-leads/': {
+    title: 'Dirty Signals: Bot Traffic and Bad Lookalikes',
+  },
+  '/insights/googles-vision-for-2026-building-a-revenue-engine-powered-by-data/': {
+    title: 'Google 2026 Revenue Engine Vision',
+  },
+  '/insights/how-advantage-is-reshaping-student-recruitment-insights-from-a-meta-education-summit/': {
+    title: 'How Advantage+ Is Reshaping Recruitment',
+    description: 'See how Meta Advantage+ is changing student recruitment by expanding audience discovery and improving higher-ed campaign strategy.',
+  },
+  '/insights/indiana-consumer-data-protection-act/': {
+    title: 'ICDPA and Smarter Data Strategy',
+  },
+  '/insights/signal-loss-costs-real-revenue/': {
+    title: 'Signal Loss and Revenue Alignment',
+  },
+  '/insights/wrapping-up-19-years-with-purpose-founds-year-end-tradition-of-giving-back/': {
+    title: "Found's 19-Year Giving Tradition",
+    description: "See how Found's year-end giving tradition brings the team together around service, local impact, and shared purpose.",
+  },
+  '/privacy-policy/': {
+    description: 'Learn how Found Search Marketing collects, uses, and protects personal information when you visit our site or engage with our services.',
+  },
+  '/whitepapers/first-party-data/': {
+    description: 'Learn how first-party data can strengthen measurement, improve ad platform signals, and drive more profitable marketing performance.',
+  },
+};
+
 export function normalizePath(path = '/'): string {
   if (!path) return '/';
   let pathname = path;
@@ -138,9 +189,10 @@ export function isIndexableRobots(value?: string): boolean {
 
 export function resolveSeo(route: string, input: SeoInput = {}): ResolvedSeo {
   const fallback = getManifestSeo(route) || {};
+  const override = getSeoCopyOverride(route);
   const canonical = normalizeCanonicalUrl(input.canonical || input.canonicalUrl || fallback.canonical || fallback.canonicalUrl, route);
-  const title = firstText(input.title, fallback.title, SITE_NAME);
-  const description = firstText(input.description, fallback.description, '');
+  const title = firstText(override.title, input.title, fallback.title, SITE_NAME);
+  const description = firstText(override.description, input.description, fallback.description, '');
   const ogImage = resolveImage(input.ogImage) || resolveImage(fallback.ogImage) || resolveImage(seoManifest.defaultOgImage) || DEFAULT_OG_IMAGE;
   const twitterImage = resolveImage(input.twitterImage) || resolveImage(fallback.twitterImage) || ogImage;
   const ogImageMeta = resolveImageMeta(input.ogImage) || resolveImageMeta(fallback.ogImage) || seoManifest.defaultOgImage;
@@ -178,6 +230,10 @@ export function resolveSeo(route: string, input: SeoInput = {}): ResolvedSeo {
     schema,
     sourceWpId: fallback.sourceWpId,
   };
+}
+
+function getSeoCopyOverride(route: string): SeoCopyOverride {
+  return SEO_COPY_OVERRIDES[normalizePath(route)] || {};
 }
 
 function chooseRobots(input?: string, fallback?: string): string {

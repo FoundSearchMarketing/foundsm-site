@@ -53,7 +53,7 @@ const ctaText = [page.cta?.title, ctaBody].filter(Boolean).join(' ');
         <div class="di-hero__media" aria-hidden="true">
           <MediaAsset
             src={heroImage.src}
-            alt={heroImage.alt ?? ''}
+            alt={heroImage.alt || page.hero.heading || 'Data intelligence hero image'}
             width={heroImage.width}
             height={heroImage.height}
             loading="eager"
@@ -69,7 +69,7 @@ const ctaText = [page.cta?.title, ctaBody].filter(Boolean).join(' ');
         <div class="di-work__media">
           <MediaAsset
             src={splitImage.src}
-            alt={splitImage.alt ?? ''}
+            alt={splitImage.alt || page.split?.heading || 'Data intelligence workflow image'}
             width={splitImage.width}
             height={splitImage.height}
             loading="lazy"
@@ -95,7 +95,7 @@ const ctaText = [page.cta?.title, ctaBody].filter(Boolean).join(' ');
         {primaryCards.map((card, index) => (
           <article class="di-intelligence-card" style={`--card-accent: ${cardStyles[index]?.color ?? '#8dc63f'}`}>
             <div class="di-intelligence-card__tile">
-              {card.icon && <img src={card.icon} alt="" loading="lazy" decoding="async" />}
+              {card.icon && <img src={card.icon} alt={`${card.title} icon`} loading="lazy" decoding="async" />}
               <h3>{card.title}</h3>
             </div>
             <div class="di-intelligence-card__body" set:html={card.bodyHtml} />
@@ -108,7 +108,7 @@ const ctaText = [page.cta?.title, ctaBody].filter(Boolean).join(' ');
           <div class="di-logo-marquee__track">
             {logoTrack.map((logo, index) => (
               <figure class="di-logo-marquee__item" aria-hidden={index >= logos.length ? 'true' : undefined}>
-                <img src={logo.src} alt={index >= logos.length ? '' : logo.alt} loading="lazy" decoding="async" />
+                <img src={logo.src} alt={logo.alt || page.logoMarquee?.title || 'Data intelligence partner logo'} loading="lazy" decoding="async" />
               </figure>
             ))}
           </div>
@@ -140,7 +140,7 @@ const ctaText = [page.cta?.title, ctaBody].filter(Boolean).join(' ');
           <div class="di-analytics__media">
             <MediaAsset
               src={analyticsImage.src}
-              alt={analyticsImage.alt ?? ''}
+              alt={analyticsImage.alt || page.secondarySplit?.heading || 'Data analytics image'}
               width={analyticsImage.width}
               height={analyticsImage.height}
               loading="lazy"

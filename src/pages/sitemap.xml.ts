@@ -1,7 +1,8 @@
 import seoManifest from '../lib/seoManifest.generated.json';
-import { DEFAULT_ROBOTS, SITE_URL, isIndexableRobots, normalizePath } from '../lib/seo';
+import { DEFAULT_ROBOTS, SITE_URL, canonicalForPath, isIndexableRobots, normalizePath } from '../lib/seo';
 import { getAllBlogPosts } from '../lib/blogPosts';
 import { legacyAuthorDefinitions, legacyPageDefinitions } from '../lib/legacyPageData';
+import { getLocalRedirectSources } from '../lib/redirectedRoutes';
 
 type ManifestRoute = {
   path?: string;
@@ -9,6 +10,8 @@ type ManifestRoute = {
   robots?: string;
   modifiedAt?: string;
 };
+
+type RouteSeo = Pick<ManifestRoute, 'canonical' | 'robots' | 'modifiedAt'>;
 
 type ManifestRedirect = {
   source: string;
@@ -38,16 +41,19 @@ const staticRoutes = [
 
 export async function GET() {
   const localRoutes = await getLocalRoutes();
-  const redirectSources = new Set((seoManifest.redirects || []).filter(isUnconditionalRedirect).map((redirect) => normalizePath(redirect.source)));
+  const redirectSources = new Set([
+    ...(seoManifest.redirects || []).filter(isUnconditionalRedirect).map((redirect) => normalizePath(redirect.source)),
+    ...getLocalRedirectSources(),
+  ]);
   const manifestRoutes = seoManifest.routes as Record<string, ManifestRoute>;
-  const urls = [...localRoutes]
+  const urls = [...localRoutes.keys()]
     .map((route) => normalizePath(route))
     .filter((route) => !redirectSources.has(route))
-    .map((route) => ({ route, seo: manifestRoutes[route] }))
-    .filter(({ seo }) => isIndexableRobots(seo?.robots || DEFAULT_ROBOTS))
+    .map((route) => ({ route, seo: resolveRouteSeo(route, localRoutes.get(route), manifestRoutes[route]) }))
+    .filter(({ seo }) => isIndexableRobots(seo.robots))
     .map(({ route, seo }) => ({
-      loc: seo?.canonical || `${SITE_URL}${route === '/' ? '/' : route.slice(1)}`,
-      lastmod: formatLastmod(seo?.modifiedAt),
+      loc: seo.canonical,
+      lastmod: formatLastmod(seo.modifiedAt),
     }))
     .sort((a, b) => a.loc.localeCompare(b.loc));
 
@@ -74,29 +80,53 @@ function isUnconditionalRedirect(redirect: ManifestRedirect) {
   return !redirect.has?.length && !redirect.missing?.length;
 }
 
-async function getLocalRoutes(): Promise<Set<string>> {
-  const routes = new Set(staticRoutes.map(normalizePath));
+async function getLocalRoutes(): Promise<Map<string, RouteSeo>> {
+  const routes = new Map<string, RouteSeo>();
+  const addRoute = (route: string, seo: RouteSeo = {}) => {
+    const normalized = normalizePath(route);
+    routes.set(normalized, {
+      ...(routes.get(normalized) || {}),
+      ...seo,
+    });
+  };
+
+  for (const route of staticRoutes) {
+    addRoute(route);
+  }
 
   for (const definition of legacyPageDefinitions) {
-    routes.add(definition.path);
+    addRoute(definition.path);
   }
 
   for (const author of legacyAuthorDefinitions) {
-    routes.add(`/insights/authors/${author.slug}/`);
+    addRoute(`/insights/authors/${author.slug}/`);
   }
 
   try {
     const posts = await getAllBlogPosts();
     for (const post of posts) {
-      routes.add(`/insights/${post.slug}/`);
+      addRoute(`/insights/${post.slug}/`, {
+        canonical: post.canonicalUrl,
+        robots: post.robots,
+        modifiedAt: post.modifiedAt || post.publishedAt,
+      });
     }
   } catch {
     for (const path of Object.keys(seoManifest.routes || {})) {
-      if (isLocalManifestInsight(path)) routes.add(path);
+      if (isLocalManifestInsight(path)) addRoute(path);
     }
   }
 
   return routes;
+}
+
+function resolveRouteSeo(route: string, current: RouteSeo | undefined, fallback: ManifestRoute | undefined): RouteSeo {
+  return {
+    ...(fallback || {}),
+    ...current,
+    canonical: current?.canonical || fallback?.canonical || canonicalForPath(route),
+    robots: current?.robots || fallback?.robots || DEFAULT_ROBOTS,
+  };
 }
 
 function isLocalManifestInsight(path: string): boolean {

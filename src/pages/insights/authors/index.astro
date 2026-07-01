@@ -64,7 +64,7 @@ const latestPosts = latestBlogPosts.map((post, index) => {
       </div>
       {heroImage && (
         <figure class="authors-hero__figure" aria-hidden={page.hero.imageAlt ? undefined : 'true'}>
-          <img src={heroImage} alt={page.hero.imageAlt || ''} width="595" height="400" loading="eager" fetchpriority="high" decoding="async" />
+          <img src={heroImage} alt={page.hero.imageAlt || page.hero.heading || 'Found authors'} width="595" height="400" loading="eager" fetchpriority="high" decoding="async" />
         </figure>
       )}
     </div>
@@ -81,11 +81,12 @@ const latestPosts = latestBlogPosts.map((post, index) => {
         {authors.map((author, index) => {
           const href = `/insights/authors/${author.slug}/`;
           const authorImage = author.image || `https://placehold.co/640x600?text=${encodeURIComponent(author.name)}`;
+          const authorImageAlt = [author.name, author.title].filter(Boolean).join(', ');
 
           return (
             <article class="author-profile">
               <a class="author-profile__media" href={href} aria-label={`Read more about ${author.name}`}>
-                <img src={authorImage} alt="" width="640" height="600" loading={index < 2 ? 'eager' : 'lazy'} decoding="async" />
+                <img src={authorImage} alt={authorImageAlt} width="640" height="600" loading={index < 2 ? 'eager' : 'lazy'} decoding="async" />
                 <span class="author-profile__label">
                   <span class="author-profile__name">{author.name}</span>
                   {author.title && <span class="author-profile__title">{author.title}</span>}

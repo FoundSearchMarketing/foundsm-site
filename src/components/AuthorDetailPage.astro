@@ -12,7 +12,7 @@ const profileHeading = author.profileHeading || [author.name, author.title].filt
 const [profileName, ...profileTitleParts] = profileHeading.split('|');
 const profileTitle = profileTitleParts.join('|').trim();
 const profileImage = normalizeLegacyAssetUrl(author.profileImage || author.image) || `https://placehold.co/300x375?text=${encodeURIComponent(author.name)}`;
-const profileImageAlt = author.profileImageAlt ?? '';
+const profileImageAlt = author.profileImageAlt || [author.name, author.title].filter(Boolean).join(', ');
 const profileTeam = author.profileTeam || author.team;
 const profileFoundStartDate = author.profileFoundStartDate || author.foundStartDate;
 const profileExpertise = author.profileExpertise || author.expertise;
@@ -24,7 +24,7 @@ const normalizePost = (post: LegacyAuthorLatestPost) => ({
   ...post,
   imageSrc: normalizeLegacyAssetUrl(post.imageSrc),
   videoSrc: normalizeLegacyAssetUrl(post.videoSrc),
-  imageAlt: post.imageAlt ?? '',
+  imageAlt: post.imageAlt || post.title,
   imageWidth: post.imageWidth || 768,
   imageHeight: post.imageHeight || 513,
 });
@@ -39,7 +39,7 @@ const normalizePost = (post: LegacyAuthorLatestPost) => ({
 
 <section class="author-profile-detail" aria-labelledby="author-profile-heading">
   <div class="author-profile-detail__inner">
-    <h3
+    <h1
       id="author-profile-heading"
       class:list={[
         'author-profile-detail__heading',
@@ -53,7 +53,7 @@ const normalizePost = (post: LegacyAuthorLatestPost) => ({
           <span class="author-profile-detail__heading-title">{profileTitle}</span>
         </>
       )}
-    </h3>
+    </h1>
 
     <div class="author-profile-detail__content">
       <img

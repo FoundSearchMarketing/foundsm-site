@@ -20,7 +20,7 @@ const resourceImage = (src: string | undefined) => normalizeLegacyAssetUrl(src) 
           <h1>{page.heroTitle}</h1>
           <p>{page.heroDescription}</p>
         </div>
-        <img class="resource-hero__image" src={resourceImage(page.heroImage)} alt="" width="434" height="609" loading="eager" fetchpriority="high" />
+        <img class="resource-hero__image" src={resourceImage(page.heroImage)} alt={page.heroTitle} width="434" height="609" loading="eager" fetchpriority="high" />
       </div>
     </section>
 
@@ -50,7 +50,7 @@ const resourceImage = (src: string | undefined) => normalizeLegacyAssetUrl(src) 
                 <a class="resource-card__image-link" href={card.href} tabindex="-1" aria-hidden="true">
                   <img
                     src={resourceImage(card.image)}
-                    alt={card.imageAlt || ''}
+                    alt={card.imageAlt || card.title}
                     width="850"
                     height="500"
                     loading={index < 3 ? 'eager' : 'lazy'}

@@ -1,9 +1,17 @@
 import { sanityClient, urlFor } from './sanity';
+import { getStaleness } from './staleness';
 import { normalizeLegacyAssetUrl } from './legacyAssets';
 
 export interface BlogPostCategory {
   label: string;
   slug: string;
+}
+
+export interface RelatedBlogPost {
+  slug: string;
+  title: string;
+  publishedAt: string;
+  publishedLabel: string;
 }
 
 export interface BlogPost {
@@ -25,6 +33,8 @@ export interface BlogPost {
   excerpt: string;
   publishedAt: string;
   modifiedAt?: string;
+  lastReviewed?: string;
+  evergreen: boolean;
   publishedLabel: string;
   authorName: string;
   authorTitle: string;
@@ -35,6 +45,7 @@ export interface BlogPost {
   heroImageAlt: string;
   contentHtml: string;
   categories: BlogPostCategory[];
+  relatedPosts: RelatedBlogPost[];
 }
 
 export interface BlogPostNavigation {
@@ -82,6 +93,8 @@ type SanityBlogPost = {
   title?: string;
   slug?: SanitySlug;
   publishedAt?: string;
+  lastReviewed?: string;
+  evergreen?: boolean;
   excerpt?: string;
   body?: SanityBlock[];
   featuredImage?: SanityBlock;
@@ -119,6 +132,8 @@ const sanityBlogPostsQuery = `*[_type == "blogPost"] | order(publishedAt desc) {
   title,
   slug,
   publishedAt,
+  lastReviewed,
+  evergreen,
   excerpt,
   body[]{
     ...,
@@ -252,7 +267,7 @@ async function loadSanityBlogPosts(): Promise<BlogPost[]> {
     throw new Error(`Unable to load Sanity blog posts: Sanity returned ${sanityPosts.length} records, but none had a usable slug and title.`);
   }
 
-  return posts.sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
+  return attachRelatedPosts(posts.sort((a, b) => b.publishedAt.localeCompare(a.publishedAt)));
 }
 
 function mapSanityPost(post: SanityBlogPost, slugs: Set<string>, quoteAuthors: QuoteAuthor[]): BlogPost | undefined {
@@ -266,6 +281,7 @@ function mapSanityPost(post: SanityBlogPost, slugs: Set<string>, quoteAuthors: Q
   const cardImage = imageUrl(post.featuredImage, 1200, undefined, { ignoreImageParams: true });
   const featuredVideo = normalizeLegacyAssetUrl(post.featuredVideo);
   const canonicalUrl = post.canonicalUrl || `https://foundsm.com/insights/${slug}/`;
+  const lastReviewed = normalizeOptionalDate(post.lastReviewed);
 
   return {
     id: stableId(post._id || slug),
@@ -285,7 +301,9 @@ function mapSanityPost(post: SanityBlogPost, slugs: Set<string>, quoteAuthors: Q
     schemaJson: post.schemaJson,
     excerpt: post.excerpt || post.seoDescription || '',
     publishedAt,
-    modifiedAt: publishedAt,
+    modifiedAt: lastReviewed || publishedAt,
+    lastReviewed,
+    evergreen: Boolean(post.evergreen),
     publishedLabel: formatDateLabel(post.publishedAt || publishedAt),
     authorName: post.author?.name || '',
     authorTitle: post.author?.title || '',
@@ -296,6 +314,49 @@ function mapSanityPost(post: SanityBlogPost, slugs: Set<string>, quoteAuthors: Q
     heroImageAlt: post.featuredImage?.alt || post.title,
     contentHtml: renderContentHtml(post.body || [], slugs, quoteAuthors, post.title),
     categories,
+    relatedPosts: [],
+  };
+}
+
+function attachRelatedPosts(posts: BlogPost[]): BlogPost[] {
+  return posts.map((post) => ({
+    ...post,
+    relatedPosts: selectRelatedPosts(post, posts),
+  }));
+}
+
+function selectRelatedPosts(post: BlogPost, posts: BlogPost[], limit = 2): RelatedBlogPost[] {
+  const categorySlugs = new Set(post.categories.map((category) => category.slug));
+  const candidates = posts.filter((candidate) => candidate.slug !== post.slug);
+  const freshCandidates = candidates.filter((candidate) => !getStaleness(candidate).showNotice);
+  const selected = [
+    ...rankRelatedPosts(post, freshCandidates, categorySlugs),
+    ...rankRelatedPosts(post, candidates, categorySlugs),
+  ];
+  const deduped = new Map<string, BlogPost>();
+
+  for (const candidate of selected) {
+    if (!deduped.has(candidate.slug)) deduped.set(candidate.slug, candidate);
+    if (deduped.size >= limit) break;
+  }
+
+  return [...deduped.values()].map(toRelatedPost);
+}
+
+function rankRelatedPosts(post: BlogPost, candidates: BlogPost[], categorySlugs: Set<string>): BlogPost[] {
+  const sameCategory = candidates.filter((candidate) => candidate.categories.some((category) => categorySlugs.has(category.slug)));
+  const sameCategorySlugs = new Set(sameCategory.map((candidate) => candidate.slug));
+  const fallback = candidates.filter((candidate) => !sameCategorySlugs.has(candidate.slug));
+
+  return [...sameCategory, ...fallback].filter((candidate) => candidate.slug !== post.slug);
+}
+
+function toRelatedPost(post: BlogPost): RelatedBlogPost {
+  return {
+    slug: post.slug,
+    title: post.title,
+    publishedAt: post.publishedAt,
+    publishedLabel: post.publishedLabel,
   };
 }
 
@@ -642,6 +703,11 @@ function normalizeDate(value: string | undefined): string {
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return value;
   return date.toISOString().slice(0, 10);
+}
+
+function normalizeOptionalDate(value: string | undefined): string | undefined {
+  const normalized = normalizeDate(value);
+  return normalized || undefined;
 }
 
 function formatDateLabel(value: string): string {

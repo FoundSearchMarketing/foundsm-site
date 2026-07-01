@@ -75,7 +75,7 @@ const stripOuterParagraph = (value: string) => value.replace(/^<p>/, '').replace
       <figure class="pc-hero__media">
         <MediaAsset
           src={hero.image.src}
-          alt={hero.image.alt ?? ''}
+          alt={hero.image.alt || hero.title || 'Performance creative hero image'}
           width={hero.image.width}
           height={hero.image.height}
           loading={hero.image.loading ?? 'eager'}
@@ -90,7 +90,7 @@ const stripOuterParagraph = (value: string) => value.replace(/^<p>/, '').replace
   <div class="pc-work__inner">
     {split.image && (
       <figure class="pc-work__media">
-        <MediaAsset src={split.image.src} alt={split.image.alt ?? ''} width={split.image.width} height={split.image.height} loading="lazy" />
+        <MediaAsset src={split.image.src} alt={split.image.alt || split.title || 'Performance creative workflow image'} width={split.image.width} height={split.image.height} loading="lazy" />
       </figure>
     )}
 
@@ -126,7 +126,7 @@ const stripOuterParagraph = (value: string) => value.replace(/^<p>/, '').replace
               tabindex={selected ? '0' : '-1'}
             >
               <span class="pc-tabs__rail" aria-hidden="true"><span></span></span>
-              {tab.icon && <img class="pc-tabs__icon" src={tab.icon} alt="" loading="lazy" decoding="async" />}
+              {tab.icon && <img class="pc-tabs__icon" src={tab.icon} alt={`${tab.title} icon`} loading="lazy" decoding="async" />}
               <span>{tab.title}</span>
             </button>
           );
@@ -170,7 +170,7 @@ const stripOuterParagraph = (value: string) => value.replace(/^<p>/, '').replace
     <div class="pc-experience__grid">
       {secondary.image && (
         <figure class="pc-experience__media">
-          <MediaAsset src={secondary.image.src} alt={secondary.image.alt ?? ''} width={secondary.image.width} height={secondary.image.height} loading="lazy" />
+          <MediaAsset src={secondary.image.src} alt={secondary.image.alt || secondary.title || 'Performance creative experience image'} width={secondary.image.width} height={secondary.image.height} loading="lazy" />
         </figure>
       )}
 

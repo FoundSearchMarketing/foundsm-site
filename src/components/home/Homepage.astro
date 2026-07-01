@@ -169,7 +169,7 @@ const ecosystemTabs = homepage.ecosystem.tabs.map((tab) => ({
       </div>
       {introMedia && (
         <figure class="home-intro__media">
-          <MediaAsset src={introMedia.src} alt={introMedia.alt} width="742" height="739" loading="eager" />
+          <MediaAsset src={introMedia.src} alt={introMedia.alt || homepage.intro.heading || 'Found Search Marketing introduction image'} width="742" height="739" loading="eager" />
         </figure>
       )}
     </div>
@@ -191,7 +191,7 @@ const ecosystemTabs = homepage.ecosystem.tabs.map((tab) => ({
             <figure class="home-logo-marquee__item" aria-hidden={index >= clientLogos.length ? 'true' : undefined}>
               <img
                 src={logo.src}
-                alt={index >= clientLogos.length ? '' : logo.alt || ''}
+                alt={logo.alt || 'Client logo'}
                 width={logo.width}
                 height={logo.height}
                 loading="lazy"
@@ -207,7 +207,7 @@ const ecosystemTabs = homepage.ecosystem.tabs.map((tab) => ({
     <div class="home-shell home-outcomes__grid">
       {outcomesMedia && (
         <figure class="home-outcomes__media">
-          <MediaAsset src={outcomesMedia.src} alt={outcomesMedia.alt} width="950" height="794" loading="lazy" />
+          <MediaAsset src={outcomesMedia.src} alt={outcomesMedia.alt || homepage.outcomes.heading || 'Found outcomes image'} width="950" height="794" loading="lazy" />
         </figure>
       )}
       <div class="home-outcomes__copy">
@@ -250,7 +250,7 @@ const ecosystemTabs = homepage.ecosystem.tabs.map((tab) => ({
             {homepage.metrics.testimonial.authorImage && (
               <img
                 src={homepage.metrics.testimonial.authorImage}
-                alt={homepage.metrics.testimonial.authorImageAlt || ''}
+                alt={homepage.metrics.testimonial.authorImageAlt || homepage.metrics.testimonial.authorName || 'Testimonial author'}
                 width="21"
                 height="21"
                 loading="lazy"
@@ -291,7 +291,7 @@ const ecosystemTabs = homepage.ecosystem.tabs.map((tab) => ({
 
       {metricsMedia && (
         <figure class="home-metric-card home-metric-card--image">
-          <MediaAsset src={metricsMedia.src} alt={metricsMedia.alt} width="337" height="276" loading="eager" />
+          <MediaAsset src={metricsMedia.src} alt={metricsMedia.alt || homepage.metrics.ownershipCard.heading || 'Found metrics image'} width="337" height="276" loading="eager" />
         </figure>
       )}
     </div>
@@ -305,7 +305,7 @@ const ecosystemTabs = homepage.ecosystem.tabs.map((tab) => ({
         <div class="home-partners__logos" aria-label="Partner logos">
           {partnerLogos.map((logo) => (
             <figure>
-              <img src={logo.src} alt={logo.alt || ''} width={logo.width || 184} height={logo.height || 80} loading="eager" />
+              <img src={logo.src} alt={logo.alt || 'Partner logo'} width={logo.width || 184} height={logo.height || 80} loading="eager" />
             </figure>
           ))}
         </div>
@@ -340,7 +340,7 @@ const ecosystemTabs = homepage.ecosystem.tabs.map((tab) => ({
                 data-home-tab={tab.id}
               >
                 <span class="home-tabs__button-bar" aria-hidden="true"></span>
-                {tab.icon ? <img src={tab.icon} alt="" width="50" height="50" loading="eager" /> : <span aria-hidden="true"></span>}
+                {tab.icon ? <img src={tab.icon} alt={`${tab.title} icon`} width="50" height="50" loading="eager" /> : <span aria-hidden="true"></span>}
                 <span>{tab.title}</span>
               </button>
             ))}
@@ -357,7 +357,7 @@ const ecosystemTabs = homepage.ecosystem.tabs.map((tab) => ({
                   data-home-tab={tab.id}
                 >
                   <span class="home-tabs__button-bar" aria-hidden="true"></span>
-                  {tab.icon ? <img src={tab.icon} alt="" width="50" height="50" loading="eager" /> : <span aria-hidden="true"></span>}
+                  {tab.icon ? <img src={tab.icon} alt={`${tab.title} icon`} width="50" height="50" loading="eager" /> : <span aria-hidden="true"></span>}
                   <span>{tab.title}</span>
                 </button>
                 <article
@@ -369,7 +369,7 @@ const ecosystemTabs = homepage.ecosystem.tabs.map((tab) => ({
                 >
                   {tab.media && (
                     <figure class="home-tabs__mobile-media">
-                      <MediaAsset src={tab.media.src} alt={tab.media.alt || tab.title || ''} width="413" height="535" loading="eager" />
+                      <MediaAsset src={tab.media.src} alt={tab.media.alt || tab.title || 'Performance ecosystem image'} width="413" height="535" loading="eager" />
                     </figure>
                   )}
                   <div class="home-tabs__mobile-copy">
@@ -398,7 +398,7 @@ const ecosystemTabs = homepage.ecosystem.tabs.map((tab) => ({
               </div>
               {tab.media && (
                 <figure class="home-tabs__panel-media">
-                  <MediaAsset src={tab.media.src} alt={tab.media.alt || tab.title || ''} width="413" height="535" loading="eager" />
+                  <MediaAsset src={tab.media.src} alt={tab.media.alt || tab.title || 'Performance ecosystem image'} width="413" height="535" loading="eager" />
                 </figure>
               )}
             </article>

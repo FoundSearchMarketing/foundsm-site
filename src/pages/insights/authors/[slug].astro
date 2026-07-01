@@ -19,7 +19,8 @@ interface Props {
 
 const { author } = Astro.props;
 const canonical = author.canonicalUrl || `https://foundsm.com/insights/authors/${author.slug}/`;
-const description = author.seoDescription || author.bio || `Insights by ${author.name} from Found Search Marketing.`;
+const authorDescription = `Read insights from ${author.name}${author.title ? `, ${author.title}` : ''} at Found Search Marketing.`;
+const description = isValidMetaDescription(author.seoDescription) ? author.seoDescription : authorDescription;
 const firstName = author.name.split(' ')[0] || author.name;
 const schema = {
   '@context': 'https://schema.org',
@@ -34,6 +35,11 @@ const schema = {
     sameAs: author.linkedin ? [author.linkedin] : undefined,
   },
 };
+
+function isValidMetaDescription(value?: string) {
+  const length = value?.trim().length || 0;
+  return length >= 70 && length <= 160;
+}
 ---
 
 <BaseLayout

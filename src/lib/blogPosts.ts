@@ -75,6 +75,7 @@ type SanityBlock = {
   mimeType?: string;
   alt?: string;
   caption?: string;
+  title?: string;
 };
 type SanityBlogPost = {
   _id: string;
@@ -293,7 +294,7 @@ function mapSanityPost(post: SanityBlogPost, slugs: Set<string>, quoteAuthors: Q
     cardImage,
     featuredVideo,
     heroImageAlt: post.featuredImage?.alt || post.title,
-    contentHtml: renderContentHtml(post.body || [], slugs, quoteAuthors),
+    contentHtml: renderContentHtml(post.body || [], slugs, quoteAuthors, post.title),
     categories,
   };
 }
@@ -314,7 +315,7 @@ function normalizeCategories(categories: SanityCategory[] | null | undefined, le
   return [...normalized.values()];
 }
 
-function renderContentHtml(blocks: SanityBlock[], slugs: Set<string>, quoteAuthors: QuoteAuthor[]): string {
+function renderContentHtml(blocks: SanityBlock[], slugs: Set<string>, quoteAuthors: QuoteAuthor[], postTitle: string): string {
   const state = { sectionCount: 0 };
   const groups = groupBlocks(blocks);
   const htmlParts: string[] = [];
@@ -330,7 +331,7 @@ function renderContentHtml(blocks: SanityBlock[], slugs: Set<string>, quoteAutho
       continue;
     }
 
-    const html = renderGroup(group, slugs, state);
+    const html = renderGroup(group, slugs, state, postTitle);
     if (html) htmlParts.push(html);
   }
 
@@ -359,7 +360,7 @@ function groupBlocks(blocks: SanityBlock[]): RenderGroup[] {
   return groups;
 }
 
-function renderGroup(group: RenderGroup, slugs: Set<string>, state: RenderState): string {
+function renderGroup(group: RenderGroup, slugs: Set<string>, state: RenderState, postTitle: string): string {
   if (group.type === 'list') {
     if (isTableOfContentsList(group)) {
       const items = group.items
@@ -373,17 +374,18 @@ function renderGroup(group: RenderGroup, slugs: Set<string>, state: RenderState)
     return `<${tag}>${items}</${tag}>`;
   }
 
-  return renderBlock(group.block, slugs, state);
+  return renderBlock(group.block, slugs, state, postTitle);
 }
 
-function renderBlock(block: SanityBlock, slugs: Set<string>, state: RenderState): string {
+function renderBlock(block: SanityBlock, slugs: Set<string>, state: RenderState, postTitle: string): string {
   if (block._type === 'image' && block.asset) {
     const src = imageUrl(block, 1200);
     if (!src) return '';
+    const alt = block.alt || block.caption || postTitle;
 
     return [
       '<figure class="blog-post__figure">',
-      `<img src="${escapeAttribute(src)}" alt="${escapeAttribute(block.alt || '')}" loading="lazy">`,
+      `<img src="${escapeAttribute(src)}" alt="${escapeAttribute(alt)}" loading="lazy">`,
       block.caption ? `<figcaption>${escapeHtml(block.caption)}</figcaption>` : '',
       '</figure>',
     ].join('');
@@ -403,6 +405,10 @@ function renderBlock(block: SanityBlock, slugs: Set<string>, state: RenderState)
       block.caption ? `<figcaption>${escapeHtml(block.caption)}</figcaption>` : '',
       '</figure>',
     ].join('');
+  }
+
+  if (block._type === 'videoEmbed') {
+    return renderVideoEmbed(block);
   }
 
   if (block._type !== 'block') return '';
@@ -526,6 +532,9 @@ function isTableOfContentsList(group: Extract<RenderGroup, { type: 'list' }>): b
 }
 
 function rewriteHref(href: string, slugs: Set<string>): string {
+  const normalizedKnownHref = normalizeKnownFoundHref(href);
+  if (normalizedKnownHref) return normalizedKnownHref;
+
   try {
     const url = new URL(href, 'https://foundsm.com');
     const isFoundDomain = url.hostname === 'foundsm.com' || url.hostname === 'www.foundsm.com';
@@ -539,6 +548,22 @@ function rewriteHref(href: string, slugs: Set<string>): string {
   }
 
   return href;
+}
+
+function normalizeKnownFoundHref(href: string): string | undefined {
+  try {
+    const url = new URL(href, 'https://foundsm.com');
+    const isFoundDomain = url.hostname === 'foundsm.com' || url.hostname === 'www.foundsm.com';
+    if (!isFoundDomain) return undefined;
+
+    if (url.pathname.toLowerCase() === '/dataconnect/' || url.pathname.toLowerCase() === '/dataconnect') {
+      return `/dataconnect/${url.search}${url.hash}`;
+    }
+  } catch {
+    return undefined;
+  }
+
+  return undefined;
 }
 
 function imageUrl(
@@ -558,6 +583,58 @@ function imageUrl(
   } catch {
     return '';
   }
+}
+
+function renderVideoEmbed(block: SanityBlock): string {
+  const url = normalizeLegacyAssetUrl(block.url);
+  if (!url) return '';
+
+  const embed = videoEmbedUrl(url);
+  const title = block.title || block.caption || 'Embedded video';
+
+  if (!embed) {
+    return [
+      '<figure class="blog-post__figure blog-post__figure--video">',
+      `<a class="blog-post__video-fallback" href="${escapeAttribute(url)}" rel="noopener noreferrer" target="_blank">${escapeHtml(title)}</a>`,
+      block.caption ? `<figcaption>${escapeHtml(block.caption)}</figcaption>` : '',
+      '</figure>',
+    ].join('');
+  }
+
+  return [
+    '<figure class="blog-post__figure blog-post__figure--video">',
+    '<div class="blog-post__video-embed">',
+    `<iframe src="${escapeAttribute(embed)}" title="${escapeAttribute(title)}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`,
+    '</div>',
+    block.caption ? `<figcaption>${escapeHtml(block.caption)}</figcaption>` : '',
+    '</figure>',
+  ].join('');
+}
+
+function videoEmbedUrl(value: string): string {
+  try {
+    const url = new URL(value);
+    const hostname = url.hostname.replace(/^www\./, '').toLowerCase();
+
+    if (hostname === 'youtu.be') {
+      const id = url.pathname.split('/').filter(Boolean)[0];
+      return id ? `https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}` : '';
+    }
+
+    if (hostname === 'youtube.com' || hostname === 'm.youtube.com' || hostname === 'youtube-nocookie.com') {
+      const id = url.searchParams.get('v') || url.pathname.match(/^\/(?:embed|shorts|live)\/([^/?#]+)/)?.[1];
+      return id ? `https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}` : '';
+    }
+
+    if (hostname === 'vimeo.com' || hostname === 'player.vimeo.com') {
+      const id = url.pathname.match(/\/(?:video\/)?(\d+)/)?.[1];
+      return id ? `https://player.vimeo.com/video/${encodeURIComponent(id)}` : '';
+    }
+  } catch {
+    return '';
+  }
+
+  return '';
 }
 
 function normalizeDate(value: string | undefined): string {

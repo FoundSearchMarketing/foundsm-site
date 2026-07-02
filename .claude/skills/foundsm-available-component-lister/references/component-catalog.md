@@ -37,7 +37,7 @@ Use these approved Sanity `landingPage.sections` blocks for AI-assisted landing 
   },
   "splitFeatureBlock": {
     "imagePosition": ["left", "right"],
-    "mediaHeight": ["standard", "short"],
+    "mediaHeight": ["standard", "short", "hero"],
     "theme": ["light", "muted", "dark"]
   },
   "featureTabsBlock": {

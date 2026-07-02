@@ -13,7 +13,6 @@ interface Props {
   theme?: 'light' | 'dark' | 'muted';
   loadFormScript?: boolean;
   showFormCard?: boolean;
-  hideCopy?: boolean;
 }
 
 const {
@@ -30,15 +29,14 @@ const {
   theme = variant === 'newsletter' ? 'light' : 'dark',
   loadFormScript = true,
   showFormCard = true,
-  hideCopy = false,
 } = Astro.props;
 const introParagraphs = Array.isArray(intro) ? intro : [intro];
 const sectionId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 ---
 
-<section id={sectionId} class:list={['form-landing', `form-landing--${variant}`, `form-landing--theme-${theme}`, { 'form-landing--loads-form': loadFormScript, 'form-landing--copy-hidden': hideCopy }]} aria-labelledby={`${variant}-form-heading`}>
+<section id={sectionId} class:list={['form-landing', `form-landing--${variant}`, `form-landing--theme-${theme}`, { 'form-landing--loads-form': loadFormScript }]} aria-labelledby={`${variant}-form-heading`}>
   <div class="form-landing__inner">
-    <div class:list={['form-landing__copy', { 'form-landing__copy--visually-hidden': hideCopy }]}>
+    <div class="form-landing__copy">
       {eyebrow && <p class="form-landing__eyebrow">{eyebrow}</p>}
       <h1 id={`${variant}-form-heading`}>{title}</h1>
       {lead && <p class="form-landing__lead"><strong>{lead}</strong></p>}
@@ -153,27 +151,6 @@ const sectionId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-
     display: grid;
     gap: 1rem;
     padding-block-start: 2rem;
-  }
-
-  .form-landing__copy--visually-hidden {
-    position: absolute;
-    inline-size: 1px;
-    block-size: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-  }
-
-  .form-landing--copy-hidden .form-landing__inner {
-    grid-template-columns: minmax(0, 1fr);
-    justify-items: center;
-  }
-
-  .form-landing--copy-hidden .form-landing__form-card {
-    inline-size: min(100%, 34rem);
   }
 
   .form-landing--dataconnect .form-landing__inner {

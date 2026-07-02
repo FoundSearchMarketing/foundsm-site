@@ -943,17 +943,30 @@ body.home-page .site-header {
     line-height: 1.1;
   }
 
-  /* Question only on mobile: no plus icon, no right-side icons/chip */
+  /* Mobile: plus, mic, and lens icons stay; AI Mode chip hidden */
   .home-search__input {
-    gap: 0;
+    gap: 12px;
     height: 54px;
     border-radius: 27px;
-    padding: 0 20px;
+    padding: 0 16px;
   }
 
-  .home-search__icon--plus,
-  .home-search__icons {
+  .home-search__ai {
     display: none;
+  }
+
+  .home-search__icons {
+    gap: 12px;
+  }
+
+  .home-search__icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .home-search__icon--plus {
+    width: 22px;
+    height: 22px;
   }
 
   .home-search__text {

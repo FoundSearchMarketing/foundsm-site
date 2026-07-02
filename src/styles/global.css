@@ -1290,12 +1290,8 @@ p + p {
   color: var(--color-dark);
 }
 
-.site-footer__column[aria-labelledby="footer-newsletter-title"] .site-footer__heading {
-  inline-size: min(100%, 21.875rem);
-}
-
 .site-footer__copy {
-  max-inline-size: 25rem;
+  max-inline-size: 100%;
   color: var(--color-dark);
   font-size: 1.25rem;
   line-height: 2.25rem;
@@ -1378,7 +1374,7 @@ p + p {
 
 .site-footer__newsletter-embed {
   --footer-newsletter-form-inset: 2.5rem;
-  inline-size: min(100%, 21.875rem);
+  inline-size: 100%;
   min-block-size: 18rem;
   margin: -1.5625rem 0 0;
   overflow: hidden;
@@ -1396,7 +1392,7 @@ p + p {
 }
 
 .site-footer__newsletter-fallback {
-  max-inline-size: 21.875rem;
+  max-inline-size: 100%;
   margin: 0;
   color: rgba(26, 26, 26, 0.72);
   font-size: 0.95rem;

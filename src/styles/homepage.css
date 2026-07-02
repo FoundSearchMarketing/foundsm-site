@@ -62,26 +62,18 @@ body.home-page {
   background: #3a3536;
 }
 
+/* Persistent nav/hero separation: same treatment as .site-header.is-scrolled */
+body.home-page .site-header {
+  border-color: rgba(26, 26, 26, 0.25);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
 .home-splash {
-  position: relative;
-  overflow: hidden;
   background: var(--home-gray-light);
   padding-block: 100px clamp(70px, 8vw, 100px);
 }
 
-.home-splash::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: url("/images/pages/our-approach/topography-light.svg");
-  background-position: center;
-  background-size: cover;
-  opacity: 0.7;
-}
-
 .home-splash__inner {
-  position: relative;
-  z-index: 1;
   display: grid;
   justify-items: center;
   text-align: center;
@@ -951,41 +943,22 @@ body.home-page {
     line-height: 1.1;
   }
 
+  /* Question only on mobile: no plus icon, no right-side icons/chip */
   .home-search__input {
-    gap: 12px;
+    gap: 0;
     height: 54px;
     border-radius: 27px;
-    padding: 0 10px 0 16px;
+    padding: 0 20px;
+  }
+
+  .home-search__icon--plus,
+  .home-search__icons {
+    display: none;
   }
 
   .home-search__text {
     font-size: 16px;
     line-height: 24px;
-  }
-
-  .home-search__icons {
-    gap: 12px;
-  }
-
-  .home-search__icon {
-    width: 20px;
-    height: 20px;
-  }
-
-  .home-search__icon--plus {
-    width: 22px;
-    height: 22px;
-  }
-
-  .home-search__ai {
-    gap: 6px;
-    padding: 8px 12px;
-    font-size: 13px;
-  }
-
-  .home-search__icon--ai {
-    width: 16px;
-    height: 16px;
   }
 
   .home-cta-strip__inner {

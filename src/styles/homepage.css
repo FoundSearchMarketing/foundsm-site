@@ -943,15 +943,16 @@ body.home-page .site-header {
     line-height: 1.1;
   }
 
-  /* Mobile: plus, mic, and lens icons stay; AI Mode chip hidden */
+  /* Mobile: mic and lens icons stay; plus icon and AI Mode chip hidden */
   .home-search__input {
     gap: 12px;
     height: 54px;
     border-radius: 27px;
-    padding: 0 16px;
+    padding: 0 16px 0 20px;
   }
 
-  .home-search__ai {
+  .home-search__ai,
+  .home-search__icon--plus {
     display: none;
   }
 
@@ -962,11 +963,6 @@ body.home-page .site-header {
   .home-search__icon {
     width: 20px;
     height: 20px;
-  }
-
-  .home-search__icon--plus {
-    width: 22px;
-    height: 22px;
   }
 
   .home-search__text {

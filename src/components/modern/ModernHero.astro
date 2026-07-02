@@ -29,6 +29,7 @@ interface Props {
   mediaHeight?: string;
   mediaHeightTablet?: string;
   mediaHeightMobile?: string;
+  mediaGridColumns?: string;
   imageMaxWidth?: string;
   className?: string;
 }
@@ -48,6 +49,7 @@ const {
   mediaHeight,
   mediaHeightTablet,
   mediaHeightMobile,
+  mediaGridColumns,
   imageMaxWidth,
   className,
 } = Astro.props;
@@ -67,9 +69,11 @@ const mediaStyle = [
   mediaHeightMobile ? `--modern-hero-media-height-mobile: ${mediaHeightMobile}` : '',
   imageMaxWidth ? `--modern-hero-image-max-width: ${imageMaxWidth}` : '',
 ].filter(Boolean).join('; ');
+
+const heroStyle = mediaGridColumns ? `--modern-hero-grid-columns: ${mediaGridColumns}` : undefined;
 ---
 
-<section class={heroClass} aria-labelledby={`${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-hero-heading`}>
+<section class={heroClass} style={heroStyle} aria-labelledby={`${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-hero-heading`}>
   <div class="modern-hero__inner">
     <div class="modern-hero__copy">
       {eyebrow && <p class="modern-hero__eyebrow">{eyebrow}</p>}
@@ -281,7 +285,7 @@ const mediaStyle = [
     }
 
     .modern-hero--split .modern-hero__inner {
-      grid-template-columns: var(--split-hero-grid-columns);
+      grid-template-columns: var(--modern-hero-grid-columns, var(--split-hero-grid-columns));
       gap: var(--split-hero-gap);
       inline-size: var(--split-hero-content-width);
     }

@@ -114,12 +114,11 @@ body.home-page {
 
 .home-search__input {
   display: flex;
-  flex: 0 1 auto;
+  flex: 1 1 auto;
   align-items: center;
   justify-content: space-between;
   gap: 0;
-  width: auto;
-  max-width: calc(100% - 155px);
+  min-width: 0;
   height: 80px;
   overflow: hidden;
   border-radius: 40px;

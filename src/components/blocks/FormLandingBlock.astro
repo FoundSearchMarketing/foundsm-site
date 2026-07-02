@@ -13,6 +13,7 @@ interface Props {
   variant?: 'contact' | 'newsletter' | 'resource' | 'event';
   theme?: 'light' | 'dark' | 'muted';
   showFormCard?: boolean;
+  hideCopy?: boolean;
 }
 
 const {
@@ -26,6 +27,7 @@ const {
   variant = 'contact',
   theme = 'dark',
   showFormCard = true,
+  hideCopy = false,
 } = Astro.props;
 const shouldLoadFormScript = hubspotFormId !== '00000000-0000-0000-0000-000000000000';
 ---
@@ -45,5 +47,6 @@ const shouldLoadFormScript = hubspotFormId !== '00000000-0000-0000-0000-00000000
     theme={theme}
     showFormCard={showFormCard}
     loadFormScript={shouldLoadFormScript}
+    hideCopy={hideCopy}
   />
 )}

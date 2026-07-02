@@ -19,7 +19,9 @@ interface Props {
   body: string | string[];
   bodyHtml?: string;
   image?: ImageProps;
+  hubspotFormId?: string;
   imagePosition?: 'left' | 'right';
+  mediaHeight?: 'standard' | 'short';
   theme?: 'light' | 'muted' | 'dark';
   cta?: CtaLink;
 }
@@ -30,19 +32,39 @@ const {
   body,
   bodyHtml,
   image,
+  hubspotFormId,
   imagePosition = 'left',
+  mediaHeight = 'standard',
   theme = 'light',
   cta,
 } = Astro.props;
 
 const paragraphs = Array.isArray(body) ? body : [body];
+const HUBSPOT_PORTAL_ID = '5045186';
+const showForm = Boolean(hubspotFormId) && !image;
+const sectionClasses = [
+  'split-feature',
+  `split-feature--${theme}`,
+  `split-feature--image-${imagePosition}`,
+  mediaHeight === 'short' ? 'split-feature--media-short' : '',
+].filter(Boolean).join(' ');
 ---
 
-<section class={`split-feature split-feature--${theme} split-feature--image-${imagePosition}`} aria-labelledby={`${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-heading`}>
+<section class={sectionClasses} aria-labelledby={`${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-heading`}>
   <div class="split-feature__inner">
     {image && (
       <div class="split-feature__media">
         <MediaAsset src={image.src} alt={image.alt} width={image.width} height={image.height} loading="lazy" fill />
+      </div>
+    )}
+    {showForm && (
+      <div class="split-feature__form">
+        <div
+          class="hs-form-frame"
+          data-region="na1"
+          data-form-id={hubspotFormId}
+          data-portal-id={HUBSPOT_PORTAL_ID}
+        ></div>
       </div>
     )}
 
@@ -60,6 +82,10 @@ const paragraphs = Array.isArray(body) ? body : [body];
     </div>
   </div>
 </section>
+
+{showForm && (
+  <script is:inline src={`https://js.hsforms.net/forms/embed/${HUBSPOT_PORTAL_ID}.js`} defer></script>
+)}
 
 <style>
   .split-feature {
@@ -84,7 +110,8 @@ const paragraphs = Array.isArray(body) ? body : [body];
     margin-inline: auto;
   }
 
-  .split-feature--image-right .split-feature__media {
+  .split-feature--image-right .split-feature__media,
+  .split-feature--image-right .split-feature__form {
     order: 2;
   }
 
@@ -97,6 +124,23 @@ const paragraphs = Array.isArray(body) ? body : [body];
     border-radius: 2.5rem;
     background: #e6e9e4;
     --media-asset-fit: cover;
+  }
+
+  .split-feature--media-short .split-feature__media {
+    aspect-ratio: 3 / 2;
+    max-block-size: 22rem;
+    align-self: center;
+  }
+
+  .split-feature__form {
+    padding: 2rem;
+    border: 1px solid var(--color-border-subtle);
+    border-radius: 1.25rem;
+    background: #ffffff;
+  }
+
+  .split-feature--dark .split-feature__form {
+    border-color: rgba(255, 255, 255, 0.16);
   }
 
   .split-feature__copy {
@@ -152,8 +196,13 @@ const paragraphs = Array.isArray(body) ? body : [body];
     }
 
     .split-feature--image-right .split-feature__media,
+    .split-feature--image-right .split-feature__form,
     .split-feature--image-right .split-feature__copy {
       order: initial;
+    }
+
+    .split-feature__form {
+      padding: 1.5rem;
     }
 
     .split-feature h2 {

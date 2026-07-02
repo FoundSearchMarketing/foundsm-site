@@ -39,6 +39,7 @@ const tokenRules = {
   },
   splitFeatureBlock: {
     imagePosition: { values: ['left', 'right'], defaultValue: 'right' },
+    mediaHeight: { values: ['standard', 'short'], defaultValue: 'standard' },
     theme: { values: ['light', 'muted', 'dark'], defaultValue: 'light' },
   },
   featureTabsBlock: {

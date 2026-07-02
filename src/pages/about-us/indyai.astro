@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BlockRenderer from '../../components/blocks/BlockRenderer.astro';
+import { sanityClient, landingPageBySlugQuery } from '../../lib/sanity';
+
+const slug = 'found-ai-meetup';
+const page = await sanityClient.fetch(landingPageBySlugQuery, { slug });
+
+if (!page) {
+  return Astro.redirect('/404');
+}
+
+const seoTitle = page.seoTitle || page.title;
+const seoDescription = page.seoDescription || '';
+---
+
+<BaseLayout
+  title={seoTitle}
+  description={seoDescription}
+  canonical={page.canonicalUrl || 'https://foundsm.com/about-us/indyai/'}
+  ogTitle={page.ogTitle}
+  ogDescription={page.ogDescription}
+  ogImage={page.ogImage}
+  robots={page.robots}
+  twitterCard={page.twitterCard}
+  twitterTitle={page.twitterTitle}
+  twitterDescription={page.twitterDescription}
+  twitterImage={page.twitterImage}
+  schemaJson={page.schemaJson}
+  hideNavigation={page.hideNavigation}
+  hideFooter={page.hideFooter}
+>
+  {page.sections?.map((section: any) => (
+    <BlockRenderer section={section} />
+  ))}
+</BaseLayout>

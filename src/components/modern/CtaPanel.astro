@@ -45,8 +45,26 @@ const classes = ['modern-cta', `modern-cta--${theme}`, `modern-cta--${align}`, `
   }
 
   .modern-cta--dark {
-    background: #1a1a1a;
+    position: relative;
+    overflow: hidden;
+    background: var(--color-dark, #1a1a1a);
     color: #ffffff;
+  }
+
+  .modern-cta--dark::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('/images/pages/our-approach/streets-light.svg');
+    background-position: center;
+    background-size: cover;
+    opacity: 0.16;
+    pointer-events: none;
+  }
+
+  .modern-cta--dark .modern-cta__inner {
+    position: relative;
+    z-index: 1;
   }
 
   .modern-cta--green {

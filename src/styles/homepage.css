@@ -943,7 +943,7 @@ body.home-page .site-header {
     line-height: 1.1;
   }
 
-  /* Mobile: mic and lens icons stay; plus icon and AI Mode chip hidden */
+  /* Mobile: mic icon stays; plus, lens, and AI Mode chip hidden */
   .home-search__input {
     gap: 12px;
     height: 54px;
@@ -952,7 +952,8 @@ body.home-page .site-header {
   }
 
   .home-search__ai,
-  .home-search__icon--plus {
+  .home-search__icon--plus,
+  .home-search__icon--lens {
     display: none;
   }
 

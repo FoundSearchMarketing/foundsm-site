@@ -128,8 +128,16 @@ const sectionClasses = [
 
   .split-feature--media-short .split-feature__media {
     aspect-ratio: 3 / 2;
-    max-block-size: 22rem;
+    inline-size: min(100%, 33rem);
     align-self: center;
+  }
+
+  .split-feature--media-short.split-feature--image-right .split-feature__media {
+    justify-self: end;
+  }
+
+  .split-feature--media-short.split-feature--image-left .split-feature__media {
+    justify-self: start;
   }
 
   .split-feature__form {
@@ -199,6 +207,10 @@ const sectionClasses = [
     .split-feature--image-right .split-feature__form,
     .split-feature--image-right .split-feature__copy {
       order: initial;
+    }
+
+    .split-feature--media-short.split-feature--image-right .split-feature__media {
+      justify-self: start;
     }
 
     .split-feature__form {

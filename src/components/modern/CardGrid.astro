@@ -52,15 +52,11 @@ const {
             </div>
           )}
           {variant === 'numbered' && <p class="modern-card__number">{card.number || String(index + 1).padStart(2, '0')}</p>}
-          <div class="modern-card__header">
-            {card.icon && (
-              <img class="modern-card__icon" src={card.icon} alt="" loading="lazy" decoding="async" />
-            )}
-            <div class="modern-card__heading-group">
-              {card.meta && <p class="modern-card__meta">{card.meta}</p>}
-              <h3>{card.title}</h3>
-            </div>
-          </div>
+          {card.icon && (
+            <img class="modern-card__icon" src={card.icon} alt="" loading="lazy" decoding="async" />
+          )}
+          {card.meta && <p class="modern-card__meta">{card.meta}</p>}
+          <h3>{card.title}</h3>
           {card.lead && <p class="modern-card__lead">{card.lead}</p>}
           {card.bodyHtml ? <div class="modern-card__body" set:html={card.bodyHtml} /> : <p class="modern-card__body">{card.body}</p>}
           {card.ctaLabel && card.ctaHref && <a class="modern-card__cta" href={card.ctaHref}>{card.ctaLabel}</a>}
@@ -179,33 +175,10 @@ const {
     object-fit: cover;
   }
 
-  .modern-card__header {
-    display: contents;
-  }
-
-  .modern-card__heading-group {
-    display: contents;
-  }
-
   .modern-card__icon {
     inline-size: 3.25rem;
     block-size: 3.25rem;
     object-fit: contain;
-  }
-
-  .card-grid-section--icon .modern-card__header {
-    display: flex;
-    align-items: center;
-    gap: 0.85rem;
-  }
-
-  .card-grid-section--icon .modern-card__heading-group {
-    display: grid;
-    gap: 0.2rem;
-  }
-
-  .card-grid-section--icon .modern-card__icon {
-    flex-shrink: 0;
   }
 
   .modern-card__number {

@@ -1209,10 +1209,7 @@ p + p {
 
 .site-footer__columns {
   display: grid;
-  /* Content-sized tracks + space-between keeps the visual gap between
-     sections equal even though the brand column is narrower. */
-  grid-template-columns: auto minmax(0, 25rem) minmax(0, 25rem);
-  justify-content: space-between;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(2.5rem, 5.5vw, 5rem);
   padding-block: clamp(2.5rem, 6.65vw, 6rem);
 }
@@ -1293,8 +1290,12 @@ p + p {
   color: var(--color-dark);
 }
 
+.site-footer__column[aria-labelledby="footer-newsletter-title"] .site-footer__heading {
+  inline-size: min(100%, 21.875rem);
+}
+
 .site-footer__copy {
-  max-inline-size: 100%;
+  max-inline-size: 25rem;
   color: var(--color-dark);
   font-size: 1.25rem;
   line-height: 2.25rem;
@@ -1377,7 +1378,7 @@ p + p {
 
 .site-footer__newsletter-embed {
   --footer-newsletter-form-inset: 2.5rem;
-  inline-size: 100%;
+  inline-size: min(100%, 21.875rem);
   min-block-size: 18rem;
   margin: -1.5625rem 0 0;
   overflow: hidden;
@@ -1395,7 +1396,7 @@ p + p {
 }
 
 .site-footer__newsletter-fallback {
-  max-inline-size: 100%;
+  max-inline-size: 21.875rem;
   margin: 0;
   color: rgba(26, 26, 26, 0.72);
   font-size: 0.95rem;

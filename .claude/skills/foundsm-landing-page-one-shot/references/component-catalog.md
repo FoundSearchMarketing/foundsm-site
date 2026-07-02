@@ -7,7 +7,7 @@ Use these approved Sanity `landingPage.sections` blocks for AI-assisted landing 
 | `_type` | Best Use | Required Values | Optional Tokens |
 | --- | --- | --- | --- |
 | `modernHeroBlock` | First viewport, campaign promise, primary CTA | `title`, `intro`, `cta` | `secondaryCta`, `layoutPreset`, `tone`, `titleScale`, `imageShape`, `imageFit`, `sizePreset`, media |
-| `splitFeatureBlock` | Explain one idea with supporting media | `title`, `body` | `eyebrow`, `cta`, media, `imagePosition`, `theme` |
+| `splitFeatureBlock` | Explain one idea with supporting media | `title`, `body` | `eyebrow`, `cta`, media, `hubspotFormId`, `imagePosition`, `mediaHeight`, `theme` |
 | `featureTabsBlock` | Compare parallel ideas, methods, solutions, or audience paths | `title`, `tabs[].title`, `tabs[].body` | `subtitle`, `idPrefix`, tab icon/media/CTA, `theme`, `layoutPreset`, `autoRotate` |
 | `cardGridBlock` | Benefits, services, proof points, steps, topic cards, credentials | `title`, `cards[].title`, `cards[].body` | `subtitle`, card `lead`, `icon`, `number`, `meta`, media, `cta`, `columns`, `theme`, `variant`, `density` |
 | `statementBandBlock` | Emphasized principle, short proof statement, POV break | `lead`, `body` | `theme`, `pattern`, `width` |
@@ -37,6 +37,7 @@ Use these approved Sanity `landingPage.sections` blocks for AI-assisted landing 
   },
   "splitFeatureBlock": {
     "imagePosition": ["left", "right"],
+    "mediaHeight": ["standard", "short"],
     "theme": ["light", "muted", "dark"]
   },
   "featureTabsBlock": {

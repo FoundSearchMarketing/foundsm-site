@@ -17,6 +17,12 @@ export default defineType({
     ctaField(),
     ...mediaFields,
     defineField({
+      name: 'hubspotFormId',
+      title: 'HubSpot Form ID',
+      type: 'string',
+      description: 'Embed a HubSpot form in the media slot when no image is set',
+    }),
+    defineField({
       name: 'imagePosition',
       title: 'Image Position',
       type: 'string',
@@ -27,6 +33,18 @@ export default defineType({
         ],
       },
       initialValue: 'left',
+    }),
+    defineField({
+      name: 'mediaHeight',
+      title: 'Media Height',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Standard', value: 'standard' },
+          { title: 'Short', value: 'short' },
+        ],
+      },
+      initialValue: 'standard',
     }),
     themeField('theme', 'Theme', 'light'),
   ],

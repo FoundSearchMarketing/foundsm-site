@@ -15,6 +15,7 @@ export default defineType({
     }),
     richTextField('intro', 'Intro'),
     ctaField(),
+    ctaField('secondaryCta', 'Secondary CTA'),
     ...mediaFields,
     defineField({
       name: 'layoutPreset',

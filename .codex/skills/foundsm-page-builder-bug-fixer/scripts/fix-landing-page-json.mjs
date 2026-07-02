@@ -251,9 +251,6 @@ function validateSection(section, sectionPath) {
       requireText(section, 'title', sectionPath);
       requirePortableText(section, 'intro', sectionPath);
       ensureCta(section, sectionPath, true);
-      if (section.secondaryCta) {
-        ensureNamedCta(section, 'secondaryCta', sectionPath, false);
-      }
       break;
     case 'splitFeatureBlock':
       requireText(section, 'title', sectionPath);

@@ -39,7 +39,6 @@ const tokenRules = {
   },
   splitFeatureBlock: {
     imagePosition: { values: ['left', 'right'], defaultValue: 'right' },
-    mediaHeight: { values: ['standard', 'short'], defaultValue: 'standard' },
     theme: { values: ['light', 'muted', 'dark'], defaultValue: 'light' },
   },
   featureTabsBlock: {
@@ -252,9 +251,6 @@ function validateSection(section, sectionPath) {
       requireText(section, 'title', sectionPath);
       requirePortableText(section, 'intro', sectionPath);
       ensureCta(section, sectionPath, true);
-      if (section.secondaryCta) {
-        ensureNamedCta(section, 'secondaryCta', sectionPath, false);
-      }
       break;
     case 'splitFeatureBlock':
       requireText(section, 'title', sectionPath);

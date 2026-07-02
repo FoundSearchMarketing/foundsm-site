@@ -63,10 +63,25 @@ body.home-page {
 }
 
 .home-splash {
+  position: relative;
+  overflow: hidden;
+  background: var(--home-gray-light);
   padding-block: 100px clamp(70px, 8vw, 100px);
 }
 
+.home-splash::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("/images/pages/our-approach/topography-light.svg");
+  background-position: center;
+  background-size: cover;
+  opacity: 0.7;
+}
+
 .home-splash__inner {
+  position: relative;
+  z-index: 1;
   display: grid;
   justify-items: center;
   text-align: center;
@@ -928,7 +943,36 @@ body.home-page {
   }
 
   .home-search {
+    gap: 0;
+  }
+
+  .home-search__logo {
     display: none;
+  }
+
+  .home-search__input {
+    height: 56px;
+    border-radius: 28px;
+    padding: 12px 22px;
+  }
+
+  .home-search__text {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .home-search__icons {
+    gap: 14px;
+    padding-left: 14px;
+  }
+
+  .home-search__icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .home-search__divider {
+    height: 32px;
   }
 
   .home-cta-strip__inner {

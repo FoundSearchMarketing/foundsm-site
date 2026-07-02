@@ -33,7 +33,7 @@ Use these approved Sanity `landingPage.sections` blocks for AI-assisted landing 
     "titleScale": ["default", "display"],
     "imageShape": ["rounded", "circle", "plain"],
     "imageFit": ["cover", "contain"],
-    "sizePreset": ["compact", "standard", "spacious"]
+    "sizePreset": ["compact", "standard", "spacious", "framed"]
   },
   "splitFeatureBlock": {
     "imagePosition": ["left", "right"],

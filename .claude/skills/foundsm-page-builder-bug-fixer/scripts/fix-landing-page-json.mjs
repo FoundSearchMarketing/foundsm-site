@@ -35,7 +35,7 @@ const tokenRules = {
     titleScale: { values: ['default', 'display'], defaultValue: 'default' },
     imageShape: { values: ['rounded', 'circle', 'plain'], defaultValue: 'rounded' },
     imageFit: { values: ['cover', 'contain'], defaultValue: 'cover' },
-    sizePreset: { values: ['compact', 'standard', 'spacious'], defaultValue: 'standard' },
+    sizePreset: { values: ['compact', 'standard', 'spacious', 'framed'], defaultValue: 'standard' },
   },
   splitFeatureBlock: {
     imagePosition: { values: ['left', 'right'], defaultValue: 'right' },

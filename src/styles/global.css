@@ -1209,7 +1209,10 @@ p + p {
 
 .site-footer__columns {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  /* Content-sized tracks + space-between keeps the visual gap between
+     sections equal even though the brand column is narrower. */
+  grid-template-columns: auto minmax(0, 25rem) minmax(0, 25rem);
+  justify-content: space-between;
   gap: clamp(2.5rem, 5.5vw, 5rem);
   padding-block: clamp(2.5rem, 6.65vw, 6rem);
 }

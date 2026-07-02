@@ -41,6 +41,13 @@ export default defineType({
       initialValue: 'dark',
     }),
     defineField({ name: 'showFormCard', title: 'Show Form Card', type: 'boolean', initialValue: true }),
+    defineField({
+      name: 'hideCopy',
+      title: 'Hide Copy',
+      type: 'boolean',
+      description: 'Visually hide the eyebrow/lead/intro copy so only the form shows. The title is kept for accessibility and anchor links but is visually hidden too.',
+      initialValue: false,
+    }),
   ],
   preview: {
     select: { title: 'title', subtitle: 'variant' },

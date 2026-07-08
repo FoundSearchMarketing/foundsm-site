@@ -3,6 +3,7 @@ import { DEFAULT_ROBOTS, SITE_URL, canonicalForPath, isIndexableRobots, normaliz
 import { getAllBlogPosts } from '../lib/blogPosts';
 import { legacyAuthorDefinitions, legacyPageDefinitions } from '../lib/legacyPageData';
 import { getLocalRedirectSources } from '../lib/redirectedRoutes';
+import { defaultEventLandingPageData } from '../lib/morePageData';
 
 type ManifestRoute = {
   path?: string;
@@ -93,6 +94,8 @@ async function getLocalRoutes(): Promise<Map<string, RouteSeo>> {
   for (const route of staticRoutes) {
     addRoute(route);
   }
+
+  addRoute('/events/lunch-and-learn/', { robots: defaultEventLandingPageData.robots });
 
   for (const definition of legacyPageDefinitions) {
     addRoute(definition.path);

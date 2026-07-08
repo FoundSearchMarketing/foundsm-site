@@ -317,7 +317,7 @@ export const legacyAuthorDefinitions: LegacyAuthorDefinition[] = [
     bio: 'As Group Account Director, Kylie leverages 15+ years of experience to orchestrate cross-channel strategies that drive client growth. Having supported brands like General Motors at top Chicago agencies, she brings calm, collaborative leadership to her team. Outside work, Kylie enjoys life with her daughter and dog.',
   },
   {
-    slug: 'matt',
+    slug: 'matt-dragoo',
     name: 'Matt Dragoo',
     title: 'Senior Data Analyst',
     team: 'Client Partnership',

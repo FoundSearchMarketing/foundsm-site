@@ -290,7 +290,10 @@ function mapSanityPost(post: SanityBlogPost, slugs: Set<string>, quoteAuthors: Q
     publishedLabel: formatDateLabel(post.publishedAt || publishedAt),
     authorName: post.author?.name || '',
     authorTitle: post.author?.title || '',
-    authorUrl: post.author?.slug ? `/insights/authors/${post.author.slug}/` : '',
+    authorUrl:
+      post.author?.slug && post.author.slug !== 'found-search-marketing'
+        ? `/insights/authors/${post.author.slug}/`
+        : '',
     heroImage,
     cardImage,
     featuredVideo,

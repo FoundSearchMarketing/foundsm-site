@@ -690,8 +690,7 @@ function normalizeCanonical(value, path) {
 }
 
 function canonicalForPath(path) {
-  const normalized = normalizePath(path);
-  return `${SITE_URL}${normalized === '/' ? '/' : normalized.slice(1)}`;
+  return `${SITE_URL}${normalizePath(path)}`;
 }
 
 function normalizePath(path) {

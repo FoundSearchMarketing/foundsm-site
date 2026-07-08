@@ -256,6 +256,20 @@ async function loadSanityBlogPosts(): Promise<BlogPost[]> {
   return posts.sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
 }
 
+// Bylines for these authors render as plain text instead of linking to an author page.
+const UNLINKED_AUTHOR_SLUGS = new Set([
+  'found-search-marketing',
+  'andrew-thomas',
+  'becca-reagle',
+  'guest',
+  'joe-shearer',
+  'logan-hartman',
+  'megan-hackman',
+  'qing-zhao',
+  'rachel-keen',
+  'thomas-brodbeck',
+]);
+
 function mapSanityPost(post: SanityBlogPost, slugs: Set<string>, quoteAuthors: QuoteAuthor[]): BlogPost | undefined {
   const slug = post.slug?.current;
   if (!slug || !post.title) return undefined;
@@ -291,7 +305,7 @@ function mapSanityPost(post: SanityBlogPost, slugs: Set<string>, quoteAuthors: Q
     authorName: post.author?.name || '',
     authorTitle: post.author?.title || '',
     authorUrl:
-      post.author?.slug && post.author.slug !== 'found-search-marketing'
+      post.author?.slug && !UNLINKED_AUTHOR_SLUGS.has(post.author.slug)
         ? `/insights/authors/${post.author.slug}/`
         : '',
     heroImage,

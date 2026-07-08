@@ -42,6 +42,7 @@ export default defineType({
         list: [
           { title: 'Standard', value: 'standard' },
           { title: 'Short', value: 'short' },
+          { title: 'Match Hero', value: 'hero' },
         ],
       },
       initialValue: 'standard',

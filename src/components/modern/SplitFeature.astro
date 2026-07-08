@@ -21,7 +21,7 @@ interface Props {
   image?: ImageProps;
   hubspotFormId?: string;
   imagePosition?: 'left' | 'right';
-  mediaHeight?: 'standard' | 'short';
+  mediaHeight?: 'standard' | 'short' | 'hero';
   theme?: 'light' | 'muted' | 'dark';
   cta?: CtaLink;
 }
@@ -46,7 +46,8 @@ const sectionClasses = [
   'split-feature',
   `split-feature--${theme}`,
   `split-feature--image-${imagePosition}`,
-  mediaHeight === 'short' ? 'split-feature--media-short' : '',
+  mediaHeight && mediaHeight !== 'standard' ? `split-feature--media-${mediaHeight}` : '',
+  showForm ? 'split-feature--has-form' : '',
 ].filter(Boolean).join(' ');
 ---
 
@@ -128,8 +129,47 @@ const sectionClasses = [
 
   .split-feature--media-short .split-feature__media {
     aspect-ratio: 3 / 2;
-    max-block-size: 22rem;
+    inline-size: min(100%, 33rem);
     align-self: center;
+  }
+
+  .split-feature--media-short.split-feature--image-right .split-feature__media {
+    justify-self: end;
+  }
+
+  .split-feature--media-short.split-feature--image-left .split-feature__media {
+    justify-self: start;
+  }
+
+  /* Mirror the framed split hero's media geometry so the image matches the
+     hero box size (31.5rem x 32.375rem) and edges exactly, with the copy
+     top-aligned to the image. */
+  @media (min-width: 1025px) {
+    .split-feature--media-hero {
+      padding-inline: var(--page-gutter);
+    }
+
+    .split-feature--media-hero .split-feature__inner {
+      grid-template-columns: minmax(0, 1fr) minmax(22rem, 31.5rem);
+      gap: var(--split-hero-gap);
+      align-items: start;
+      inline-size: var(--split-hero-content-width);
+    }
+
+    .split-feature--media-hero.split-feature--image-left .split-feature__inner {
+      grid-template-columns: minmax(22rem, 31.5rem) minmax(0, 1fr);
+    }
+
+    .split-feature--media-hero .split-feature__media {
+      inline-size: 100%;
+      block-size: 32.375rem;
+      border-radius: var(--split-hero-media-radius, 2.5rem);
+      align-self: start;
+    }
+  }
+
+  .split-feature--has-form .split-feature__inner {
+    align-items: start;
   }
 
   .split-feature__form {
@@ -199,6 +239,10 @@ const sectionClasses = [
     .split-feature--image-right .split-feature__form,
     .split-feature--image-right .split-feature__copy {
       order: initial;
+    }
+
+    .split-feature--media-short.split-feature--image-right .split-feature__media {
+      justify-self: start;
     }
 
     .split-feature__form {

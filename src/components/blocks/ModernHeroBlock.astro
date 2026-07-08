@@ -16,7 +16,7 @@ interface Props {
   titleScale?: 'default' | 'display';
   imageShape?: 'rounded' | 'circle' | 'plain';
   imageFit?: 'cover' | 'contain';
-  sizePreset?: 'compact' | 'standard' | 'spacious';
+  sizePreset?: 'compact' | 'standard' | 'spacious' | 'framed';
 }
 
 const {
@@ -46,8 +46,10 @@ const mediaHeights = {
   compact: { desktop: '26rem', tablet: '22rem', mobile: '18rem' },
   standard: { desktop: undefined, tablet: undefined, mobile: undefined },
   spacious: { desktop: '38rem', tablet: '30rem', mobile: '22rem' },
+  framed: { desktop: '32.375rem', tablet: undefined, mobile: undefined },
 };
 const mediaHeight = mediaHeights[sizePreset] || mediaHeights.standard;
+const mediaGridColumns = sizePreset === 'framed' ? 'minmax(0, 1fr) minmax(22rem, 31.5rem)' : undefined;
 ---
 
 <ModernHero
@@ -65,4 +67,5 @@ const mediaHeight = mediaHeights[sizePreset] || mediaHeights.standard;
   mediaHeight={mediaHeight.desktop}
   mediaHeightTablet={mediaHeight.tablet}
   mediaHeightMobile={mediaHeight.mobile}
+  mediaGridColumns={mediaGridColumns}
 />

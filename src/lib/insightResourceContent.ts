@@ -242,6 +242,15 @@ const archivePages: InsightArchivePage[] = [
         datetime: '2026-01-20',
         excerpt: 'Are you scaling profit or just burning cash? Answer 7 questions to uncover your Revenue Engineering Score and identify the leaks in your paid media budget.',
       },
+      {
+        label: 'Guide, Tools and Guides',
+        title: 'Why First-Party Data Is Your Most Valuable Profit Lever',
+        href: '/whitepapers/first-party-data/',
+        image: legacyUploadAsset('2026/03/first-party-whitepaper-feature-850x500.webp'),
+        dateLabel: 'December 9, 2025',
+        datetime: '2025-12-09',
+        excerpt: 'AI has permanently rewritten the rules of digital advertising. The brands that win will be the ones that control and activate their own first-party data — this whitepaper is your blueprint for doing exactly that.',
+      },
     ],
   },
   {

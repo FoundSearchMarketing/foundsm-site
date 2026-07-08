@@ -500,7 +500,7 @@ export const defaultEventLandingPageData: EventLandingPageData = {
   seoTitle: 'Lunch & Learn: Scale Smarter with AI-Powered Paid Media | Found Search Marketing',
   seoDescription: 'Join Found Search Marketing for a free 60-minute virtual session on AI-powered paid media strategy. April 15, 2026 at 12:00 PM ET.',
   canonicalUrl: 'https://foundsm.com/events/lunch-and-learn',
-  robots: 'index, follow',
+  robots: 'noindex, nofollow',
   ogImage: 'https://foundsm.com/images/og-lunch-and-learn.jpg',
   event: {
     name: 'Scale Smarter with AI-Powered Paid Media',

@@ -10265,6 +10265,21 @@
       "source": "/who-we-are/our-people-jr",
       "destination": "/team/",
       "permanent": true
+    },
+    {
+      "source": "/blog/:slug*",
+      "destination": "/insights/:slug*/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/:slug+/",
+      "destination": "/insights/:slug+/",
+      "permanent": true
     }
   ]
 }

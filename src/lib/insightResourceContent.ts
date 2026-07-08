@@ -234,7 +234,16 @@ const archivePages: InsightArchivePage[] = [
     columns: 2,
     cards: [
       {
-        label: 'Quiz, Tools and Guides',
+        label: 'Tools',
+        title: 'Server-Side ROAS Calculator',
+        href: 'https://fsm-serverside-calc-site.vercel.app/',
+        image: 'https://cdn.sanity.io/images/vzneqxsx/staging/b3dd16e6aa0f3a54e6a971382656bc842f8ac85f-850x500.png',
+        dateLabel: 'July 8, 2026',
+        datetime: '2026-07-08',
+        excerpt: 'Estimate the potential increase in conversions and cost savings by moving to server-side tracking. Enter your monthly media spend and conversions to project your savings.',
+      },
+      {
+        label: 'Quiz',
         title: 'Signal Quiz',
         href: '/signal-quiz/',
         image: legacyUploadAsset('2026/03/signal-quiz-feature-850x500.webp'),
@@ -243,7 +252,7 @@ const archivePages: InsightArchivePage[] = [
         excerpt: 'Are you scaling profit or just burning cash? Answer 7 questions to uncover your Revenue Engineering Score and identify the leaks in your paid media budget.',
       },
       {
-        label: 'Guide, Tools and Guides',
+        label: 'Guide',
         title: 'Why First-Party Data Is Your Most Valuable Profit Lever',
         href: '/whitepapers/first-party-data/',
         image: legacyUploadAsset('2026/03/first-party-whitepaper-feature-850x500.webp'),

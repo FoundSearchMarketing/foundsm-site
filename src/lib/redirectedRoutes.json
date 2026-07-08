@@ -10,6 +10,16 @@
     "permanent": true
   },
   {
+    "source": "/insights/blog",
+    "destination": "/insights/",
+    "permanent": true
+  },
+  {
+    "source": "/insights/blog/",
+    "destination": "/insights/",
+    "permanent": true
+  },
+  {
     "source": "/insights-filter-results",
     "destination": "/insights/",
     "permanent": true

@@ -385,8 +385,6 @@ const resourcePages: InsightResourcePage[] = [
 
 const byPath = new Map(resourcePages.map((page) => [page.path, page]));
 
-export const blogArchivePage = archivePages[0];
-
 export function getInsightResourcePage(path: string | undefined): InsightResourcePage | undefined {
   if (!path) return undefined;
   const normalized = path.startsWith('/') ? path : `/${path}`;

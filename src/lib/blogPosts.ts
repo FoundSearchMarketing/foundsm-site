@@ -47,6 +47,7 @@ type SanityCategory = { title?: string; slug?: SanitySlug };
 type SanityAuthor = {
   name?: string;
   title?: string;
+  slug?: string;
   linkedin?: string;
   imageUrl?: string;
   profileImageAlt?: string;
@@ -144,7 +145,7 @@ const sanityBlogPostsQuery = `*[_type == "blogPost"] | order(publishedAt desc) {
   schemaJson,
   "categories": categories[]->{ title, slug },
   "category": category->{ title, slug },
-  "author": author->{ name, title, linkedin, "imageUrl": coalesce(profileImage, image.asset->url), profileImageAlt }
+  "author": author->{ name, title, "slug": slug.current, linkedin, "imageUrl": coalesce(profileImage, image.asset->url), profileImageAlt }
 }`;
 
 const sanityQuoteAuthorsQuery = `*[_type == "author"] {
@@ -255,6 +256,20 @@ async function loadSanityBlogPosts(): Promise<BlogPost[]> {
   return posts.sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
 }
 
+// Bylines for these authors render as plain text instead of linking to an author page.
+const UNLINKED_AUTHOR_SLUGS = new Set([
+  'found-search-marketing',
+  'andrew-thomas',
+  'becca-reagle',
+  'guest',
+  'joe-shearer',
+  'logan-hartman',
+  'megan-hackman',
+  'qing-zhao',
+  'rachel-keen',
+  'thomas-brodbeck',
+]);
+
 function mapSanityPost(post: SanityBlogPost, slugs: Set<string>, quoteAuthors: QuoteAuthor[]): BlogPost | undefined {
   const slug = post.slug?.current;
   if (!slug || !post.title) return undefined;
@@ -289,7 +304,10 @@ function mapSanityPost(post: SanityBlogPost, slugs: Set<string>, quoteAuthors: Q
     publishedLabel: formatDateLabel(post.publishedAt || publishedAt),
     authorName: post.author?.name || '',
     authorTitle: post.author?.title || '',
-    authorUrl: '',
+    authorUrl:
+      post.author?.slug && !UNLINKED_AUTHOR_SLUGS.has(post.author.slug)
+        ? `/insights/authors/${post.author.slug}/`
+        : '',
     heroImage,
     cardImage,
     featuredVideo,

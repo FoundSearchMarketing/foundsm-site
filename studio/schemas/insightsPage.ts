@@ -30,6 +30,15 @@ export default defineType({
         defineField({ name: 'videoUrl', title: 'Video URL', type: 'url', description: 'Optional MP4/WebM URL to render instead of the image.' }),
       ],
     }),
+    defineField({
+      name: 'featuredPosts',
+      title: 'Featured Posts',
+      type: 'array',
+      group: 'content',
+      description: 'Posts pinned in the "Featured Insights" section at the top of the Insights page. Falls back to the two most recent posts when empty.',
+      of: [{ type: 'reference', to: [{ type: 'blogPost' }] }],
+      validation: (Rule) => Rule.max(2).unique(),
+    }),
   ],
   initialValue: defaultInsightsPageData,
 });

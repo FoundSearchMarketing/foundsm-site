@@ -149,7 +149,7 @@ export function normalizePath(path = '/'): string {
 }
 
 export function canonicalForPath(path = '/'): string {
-  return `${SITE_URL}${normalizePath(path) === '/' ? '/' : normalizePath(path).slice(1)}`;
+  return `${SITE_URL}${normalizePath(path)}`;
 }
 
 export function normalizeCanonicalUrl(value?: string, route = '/'): string {

@@ -10290,6 +10290,81 @@
       "source": "/blog/:slug+/",
       "destination": "/insights/:slug+/",
       "permanent": true
+    },
+    {
+      "source": "/clients/",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/clients/case-study/",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/data-management/data-warehousing/",
+      "destination": "/capabilities/data-intelligence/",
+      "permanent": true
+    },
+    {
+      "source": "/services/",
+      "destination": "/capabilities/",
+      "permanent": true
+    },
+    {
+      "source": "/services/email-marketing/",
+      "destination": "/capabilities/",
+      "permanent": true
+    },
+    {
+      "source": "/services/marketing-analytics/",
+      "destination": "/capabilities/data-intelligence/",
+      "permanent": true
+    },
+    {
+      "source": "/services/marketing-analytics/google-analytics-app-web/",
+      "destination": "/capabilities/data-intelligence/",
+      "permanent": true
+    },
+    {
+      "source": "/services/marketing-analytics/google-tag-manager/",
+      "destination": "/capabilities/data-intelligence/",
+      "permanent": true
+    },
+    {
+      "source": "/services/marketing-analytics/kpi-discovery-measurement-plans/",
+      "destination": "/capabilities/data-intelligence/",
+      "permanent": true
+    },
+    {
+      "source": "/services/marketing-analytics/regulatory-compliance/",
+      "destination": "/capabilities/data-intelligence/",
+      "permanent": true
+    },
+    {
+      "source": "/services/paid-media-management/",
+      "destination": "/capabilities/paid-media/",
+      "permanent": true
+    },
+    {
+      "source": "/services/search-engine-marketing/",
+      "destination": "/capabilities/paid-media/",
+      "permanent": true
+    },
+    {
+      "source": "/services/social-media-management/",
+      "destination": "/capabilities/paid-media/",
+      "permanent": true
+    },
+    {
+      "source": "/services/web-analytics/",
+      "destination": "/capabilities/data-intelligence/",
+      "permanent": true
+    },
+    {
+      "source": "/who-we-are/",
+      "destination": "/about-us/",
+      "permanent": true
     }
   ]
 }

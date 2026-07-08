@@ -31,7 +31,6 @@ const staticRoutes = [
   '/contact-us/',
   '/events/lunch-and-learn/',
   '/insights/',
-  '/insights/blog/',
   '/insights/authors/',
   '/newsletter/',
   '/our-approach/',

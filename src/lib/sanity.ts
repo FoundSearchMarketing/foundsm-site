@@ -281,7 +281,8 @@ export const eventLandingPageQuery = `*[_id == "eventLandingPage"][0]`;
 
 export const insightsPageQuery = `*[_id == "insightsPage"][0] {
   ...,
-  hero { ${editableMediaProjection} }
+  hero { ${editableMediaProjection} },
+  "featuredPostSlugs": featuredPosts[]->slug.current
 }`;
 
 export const legacyPagesByPathsQuery = `*[_type == "legacyPage" && path in $paths] {

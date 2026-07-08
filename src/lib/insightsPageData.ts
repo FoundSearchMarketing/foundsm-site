@@ -16,6 +16,7 @@ export type InsightsPageData = SeoFields & {
     videoFile?: unknown;
     videoUrl?: string;
   };
+  featuredPostSlugs?: string[];
 };
 
 export const defaultInsightsPageData: InsightsPageData = {

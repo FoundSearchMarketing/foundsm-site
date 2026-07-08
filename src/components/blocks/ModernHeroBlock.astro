@@ -7,6 +7,7 @@ interface Props {
   title: string;
   intro?: any[];
   cta?: { label?: string; href?: string };
+  secondaryCta?: { label?: string; href?: string };
   image?: unknown;
   imageAlt?: string;
   videoUrl?: string;
@@ -15,7 +16,7 @@ interface Props {
   titleScale?: 'default' | 'display';
   imageShape?: 'rounded' | 'circle' | 'plain';
   imageFit?: 'cover' | 'contain';
-  sizePreset?: 'compact' | 'standard' | 'spacious';
+  sizePreset?: 'compact' | 'standard' | 'spacious' | 'framed';
 }
 
 const {
@@ -23,6 +24,7 @@ const {
   title,
   intro = [],
   cta,
+  secondaryCta,
   image,
   imageAlt,
   videoUrl,
@@ -38,13 +40,16 @@ const heroImage = layoutPreset === 'textOnly'
   ? undefined
   : imageProps({ image, imageAlt, videoUrl }, 'eager');
 const ctaLink = cta?.label && cta.href ? { label: cta.label, href: cta.href } : undefined;
+const secondaryCtaLink = secondaryCta?.label && secondaryCta.href ? { label: secondaryCta.label, href: secondaryCta.href } : undefined;
 const introHtml = richHtml(intro);
 const mediaHeights = {
   compact: { desktop: '26rem', tablet: '22rem', mobile: '18rem' },
   standard: { desktop: undefined, tablet: undefined, mobile: undefined },
   spacious: { desktop: '38rem', tablet: '30rem', mobile: '22rem' },
+  framed: { desktop: '32.375rem', tablet: undefined, mobile: undefined },
 };
 const mediaHeight = mediaHeights[sizePreset] || mediaHeights.standard;
+const mediaGridColumns = sizePreset === 'framed' ? 'minmax(0, 1fr) minmax(22rem, 31.5rem)' : undefined;
 ---
 
 <ModernHero
@@ -53,6 +58,7 @@ const mediaHeight = mediaHeights[sizePreset] || mediaHeights.standard;
   intro={richText(intro)}
   introHtml={introHtml}
   cta={ctaLink}
+  secondaryCta={secondaryCtaLink}
   image={heroImage}
   tone={tone}
   imageShape={imageShape}
@@ -61,4 +67,5 @@ const mediaHeight = mediaHeights[sizePreset] || mediaHeights.standard;
   mediaHeight={mediaHeight.desktop}
   mediaHeightTablet={mediaHeight.tablet}
   mediaHeightMobile={mediaHeight.mobile}
+  mediaGridColumns={mediaGridColumns}
 />

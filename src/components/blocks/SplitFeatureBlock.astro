@@ -10,7 +10,9 @@ interface Props {
   image?: unknown;
   imageAlt?: string;
   videoUrl?: string;
+  hubspotFormId?: string;
   imagePosition?: 'left' | 'right';
+  mediaHeight?: 'standard' | 'short' | 'hero';
   theme?: 'light' | 'muted' | 'dark';
 }
 
@@ -22,7 +24,9 @@ const {
   image,
   imageAlt,
   videoUrl,
+  hubspotFormId,
   imagePosition = 'left',
+  mediaHeight = 'standard',
   theme = 'light',
 } = Astro.props;
 
@@ -35,7 +39,9 @@ const ctaLink = cta?.label && cta.href ? { label: cta.label, href: cta.href } : 
   body={richText(body)}
   bodyHtml={richHtml(body)}
   image={imageProps({ image, imageAlt, videoUrl })}
+  hubspotFormId={hubspotFormId}
   imagePosition={imagePosition}
+  mediaHeight={mediaHeight}
   theme={theme}
   cta={ctaLink}
 />

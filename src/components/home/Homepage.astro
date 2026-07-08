@@ -135,23 +135,32 @@ const ecosystemTabs = homepage.ecosystem.tabs.map((tab) => ({
       {homepage.hero.subheadline && <p class="home-splash__content">{homepage.hero.subheadline}</p>}
 
       <div class="home-search" aria-label="Search prompt examples">
-        <span class="home-search__logo" aria-hidden="true">Search</span>
         <div class="home-search__input">
+          <svg class="home-search__icon home-search__icon--plus" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+            <path d="M12 5v14M5 12h14" />
+          </svg>
           <span class="home-search__text" data-home-search-text></span>
           <div class="home-search__icons" aria-hidden="true">
-            <svg class="home-search__icon home-search__icon--close" viewBox="0 0 24 24" focusable="false" data-home-search-close>
-              <path d="m5 5 14 14M19 5 5 19" />
-            </svg>
-            <div class="home-search__divider"></div>
             <svg class="home-search__icon" viewBox="0 0 24 24" focusable="false">
               <path d="M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3Z" />
               <path d="M5 11v1a7 7 0 0 0 14 0v-1" />
               <path d="M12 19v3" />
             </svg>
-            <svg class="home-search__icon" viewBox="0 0 24 24" focusable="false">
-              <circle cx="11" cy="11" r="7" />
-              <path d="m16.5 16.5 4.5 4.5" />
+            <svg class="home-search__icon home-search__icon--lens" viewBox="0 0 24 24" focusable="false">
+              <path d="M7 4h-.5A2.5 2.5 0 0 0 4 6.5V7" />
+              <path d="M17 4h.5A2.5 2.5 0 0 1 20 6.5V7" />
+              <path d="M4 15v1.5A2.5 2.5 0 0 0 6.5 19H7" />
+              <circle cx="12" cy="11.5" r="4" />
+              <circle class="home-search__lens-dot" cx="17.5" cy="18" r="2" />
             </svg>
+            <span class="home-search__ai">
+              <svg class="home-search__icon home-search__icon--ai" viewBox="0 0 24 24" focusable="false">
+                <circle cx="10.5" cy="11.5" r="6" />
+                <path d="m15 16 5 5" />
+                <path class="home-search__ai-spark" d="M19 3.5c.35 1.6 1 2.25 2.6 2.6-1.6.35-2.25 1-2.6 2.6-.35-1.6-1-2.25-2.6-2.6 1.6-.35 2.25-1 2.6-2.6Z" />
+              </svg>
+              AI Mode
+            </span>
           </div>
         </div>
         <div class="home-search__prompts" data-home-search-prompts hidden>
@@ -422,7 +431,7 @@ const ecosystemTabs = homepage.ecosystem.tabs.map((tab) => ({
         .map((item) => item.textContent?.trim() || '')
         .filter(Boolean);
       if (searchText && promptItems.length > 0) {
-        const closeIcon = searchText.closest('.home-search__input')?.querySelector('[data-home-search-close]');
+        let activePrompts = promptItems;
         let phraseIndex = 0;
         let charIndex = 0;
         let isDeleting = false;
@@ -431,24 +440,33 @@ const ecosystemTabs = homepage.ecosystem.tabs.map((tab) => ({
         const deleteSpeed = 30;
         const waitTime = 2000;
 
+        // Skip prompts that would be heavily truncated (over ~20% overflow,
+        // e.g. long questions in the narrow mobile pill); mild ellipsis is
+        // fine. Fall back to the full list if none would fit.
+        const measureCtx = document.createElement('canvas').getContext('2d');
+        const filterPromptsToFit = () => {
+          const width = searchText.clientWidth;
+          if (!width || !measureCtx) return;
+          const style = window.getComputedStyle(searchText);
+          measureCtx.font = `${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
+          const fitting = promptItems.filter((phrase) => measureCtx.measureText(phrase).width <= width * 1.2);
+          if (fitting.length > 0) activePrompts = fitting;
+        };
+
         searchText.classList.add('visible');
 
         const typeText = () => {
           if (!root.isConnected || isWaiting) return;
 
-          const currentPhrase = promptItems[phraseIndex];
+          const currentPhrase = activePrompts[phraseIndex];
 
           if (isDeleting) {
             searchText.textContent = currentPhrase.substring(0, charIndex - 1);
             charIndex -= 1;
 
-            if ((closeIcon instanceof HTMLElement || closeIcon instanceof SVGElement) && charIndex === 0) {
-              closeIcon.style.opacity = '0';
-            }
-
             if (charIndex === 0) {
               isDeleting = false;
-              phraseIndex = (phraseIndex + 1) % promptItems.length;
+              phraseIndex = (phraseIndex + 1) % activePrompts.length;
               window.setTimeout(typeText, 500);
               return;
             }
@@ -459,10 +477,6 @@ const ecosystemTabs = homepage.ecosystem.tabs.map((tab) => ({
 
           searchText.textContent = currentPhrase.substring(0, charIndex + 1);
           charIndex += 1;
-
-          if ((closeIcon instanceof HTMLElement || closeIcon instanceof SVGElement) && charIndex === 1) {
-            closeIcon.style.opacity = '1';
-          }
 
           if (charIndex === currentPhrase.length) {
             isWaiting = true;
@@ -477,7 +491,10 @@ const ecosystemTabs = homepage.ecosystem.tabs.map((tab) => ({
           window.setTimeout(typeText, typeSpeed);
         };
 
-        window.setTimeout(typeText, 1000);
+        window.setTimeout(() => {
+          filterPromptsToFit();
+          typeText();
+        }, 1000);
       }
 
       root.querySelectorAll('[data-home-tabs]').forEach((tabsRoot) => {

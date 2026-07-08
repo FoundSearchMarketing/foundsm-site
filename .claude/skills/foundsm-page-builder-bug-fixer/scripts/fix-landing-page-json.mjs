@@ -35,10 +35,11 @@ const tokenRules = {
     titleScale: { values: ['default', 'display'], defaultValue: 'default' },
     imageShape: { values: ['rounded', 'circle', 'plain'], defaultValue: 'rounded' },
     imageFit: { values: ['cover', 'contain'], defaultValue: 'cover' },
-    sizePreset: { values: ['compact', 'standard', 'spacious'], defaultValue: 'standard' },
+    sizePreset: { values: ['compact', 'standard', 'spacious', 'framed'], defaultValue: 'standard' },
   },
   splitFeatureBlock: {
     imagePosition: { values: ['left', 'right'], defaultValue: 'right' },
+    mediaHeight: { values: ['standard', 'short', 'hero'], defaultValue: 'standard' },
     theme: { values: ['light', 'muted', 'dark'], defaultValue: 'light' },
   },
   featureTabsBlock: {
@@ -251,6 +252,9 @@ function validateSection(section, sectionPath) {
       requireText(section, 'title', sectionPath);
       requirePortableText(section, 'intro', sectionPath);
       ensureCta(section, sectionPath, true);
+      if (section.secondaryCta) {
+        ensureNamedCta(section, 'secondaryCta', sectionPath, false);
+      }
       break;
     case 'splitFeatureBlock':
       requireText(section, 'title', sectionPath);

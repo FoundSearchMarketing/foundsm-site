@@ -20,6 +20,7 @@ interface Props {
   intro?: string | string[];
   introHtml?: string;
   cta?: CtaLink;
+  secondaryCta?: CtaLink;
   image?: HeroImage;
   tone?: 'light' | 'soft' | 'dark';
   imageShape?: 'rounded' | 'circle' | 'plain';
@@ -28,6 +29,7 @@ interface Props {
   mediaHeight?: string;
   mediaHeightTablet?: string;
   mediaHeightMobile?: string;
+  mediaGridColumns?: string;
   imageMaxWidth?: string;
   className?: string;
 }
@@ -38,6 +40,7 @@ const {
   intro,
   introHtml,
   cta,
+  secondaryCta,
   image,
   tone = 'light',
   imageShape = 'rounded',
@@ -46,6 +49,7 @@ const {
   mediaHeight,
   mediaHeightTablet,
   mediaHeightMobile,
+  mediaGridColumns,
   imageMaxWidth,
   className,
 } = Astro.props;
@@ -65,9 +69,11 @@ const mediaStyle = [
   mediaHeightMobile ? `--modern-hero-media-height-mobile: ${mediaHeightMobile}` : '',
   imageMaxWidth ? `--modern-hero-image-max-width: ${imageMaxWidth}` : '',
 ].filter(Boolean).join('; ');
+
+const heroStyle = mediaGridColumns ? `--modern-hero-grid-columns: ${mediaGridColumns}` : undefined;
 ---
 
-<section class={heroClass} aria-labelledby={`${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-hero-heading`}>
+<section class={heroClass} style={heroStyle} aria-labelledby={`${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-hero-heading`}>
   <div class="modern-hero__inner">
     <div class="modern-hero__copy">
       {eyebrow && <p class="modern-hero__eyebrow">{eyebrow}</p>}
@@ -79,8 +85,15 @@ const mediaStyle = [
           {paragraphs.map((item) => <p>{item}</p>)}
         </div>
       )}
-      {cta && (
-        <a class="modern-hero__button" href={cta.href}>{cta.label}</a>
+      {(cta || secondaryCta) && (
+        <div class="modern-hero__actions">
+          {cta && (
+            <a class="modern-hero__button" href={cta.href}>{cta.label}</a>
+          )}
+          {secondaryCta && (
+            <a class="modern-hero__button modern-hero__button--secondary" href={secondaryCta.href}>{secondaryCta.label}</a>
+          )}
+        </div>
       )}
     </div>
 
@@ -183,10 +196,17 @@ const mediaStyle = [
     color: rgba(255, 255, 255, 0.82);
   }
 
+  .modern-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-self: start;
+    gap: 1rem;
+  }
+
   .modern-hero__button {
     display: inline-flex;
     justify-content: center;
-    justify-self: start;
     min-block-size: 3.75rem;
     padding: 1.125rem 2.75rem;
     border-radius: 999px;
@@ -202,6 +222,29 @@ const mediaStyle = [
   .modern-hero__button:focus-visible {
     background: #b9dc89;
     transform: translateY(-1px);
+  }
+
+  .modern-hero__button--secondary {
+    background: transparent;
+    color: var(--color-dark);
+    box-shadow: inset 0 0 0 0.125rem rgba(26, 26, 26, 0.24);
+  }
+
+  .modern-hero__button--secondary:hover,
+  .modern-hero__button--secondary:focus-visible {
+    background: rgba(26, 26, 26, 0.06);
+    box-shadow: inset 0 0 0 0.125rem rgba(26, 26, 26, 0.32);
+  }
+
+  .modern-hero--dark .modern-hero__button--secondary {
+    color: #ffffff;
+    box-shadow: inset 0 0 0 0.125rem rgba(255, 255, 255, 0.4);
+  }
+
+  .modern-hero--dark .modern-hero__button--secondary:hover,
+  .modern-hero--dark .modern-hero__button--secondary:focus-visible {
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: inset 0 0 0 0.125rem rgba(255, 255, 255, 0.6);
   }
 
   .modern-hero__media {
@@ -242,7 +285,7 @@ const mediaStyle = [
     }
 
     .modern-hero--split .modern-hero__inner {
-      grid-template-columns: var(--split-hero-grid-columns);
+      grid-template-columns: var(--modern-hero-grid-columns, var(--split-hero-grid-columns));
       gap: var(--split-hero-gap);
       inline-size: var(--split-hero-content-width);
     }

@@ -19,7 +19,9 @@ interface Props {
   body: string | string[];
   bodyHtml?: string;
   image?: ImageProps;
+  hubspotFormId?: string;
   imagePosition?: 'left' | 'right';
+  mediaHeight?: 'standard' | 'short' | 'hero';
   theme?: 'light' | 'muted' | 'dark';
   cta?: CtaLink;
 }
@@ -30,19 +32,40 @@ const {
   body,
   bodyHtml,
   image,
+  hubspotFormId,
   imagePosition = 'left',
+  mediaHeight = 'standard',
   theme = 'light',
   cta,
 } = Astro.props;
 
 const paragraphs = Array.isArray(body) ? body : [body];
+const HUBSPOT_PORTAL_ID = '5045186';
+const showForm = Boolean(hubspotFormId) && !image;
+const sectionClasses = [
+  'split-feature',
+  `split-feature--${theme}`,
+  `split-feature--image-${imagePosition}`,
+  mediaHeight && mediaHeight !== 'standard' ? `split-feature--media-${mediaHeight}` : '',
+  showForm ? 'split-feature--has-form' : '',
+].filter(Boolean).join(' ');
 ---
 
-<section class={`split-feature split-feature--${theme} split-feature--image-${imagePosition}`} aria-labelledby={`${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-heading`}>
+<section class={sectionClasses} aria-labelledby={`${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-heading`}>
   <div class="split-feature__inner">
     {image && (
       <div class="split-feature__media">
         <MediaAsset src={image.src} alt={image.alt} width={image.width} height={image.height} loading="lazy" fill />
+      </div>
+    )}
+    {showForm && (
+      <div class="split-feature__form">
+        <div
+          class="hs-form-frame"
+          data-region="na1"
+          data-form-id={hubspotFormId}
+          data-portal-id={HUBSPOT_PORTAL_ID}
+        ></div>
       </div>
     )}
 
@@ -60,6 +83,10 @@ const paragraphs = Array.isArray(body) ? body : [body];
     </div>
   </div>
 </section>
+
+{showForm && (
+  <script is:inline src={`https://js.hsforms.net/forms/embed/${HUBSPOT_PORTAL_ID}.js`} defer></script>
+)}
 
 <style>
   .split-feature {
@@ -84,7 +111,8 @@ const paragraphs = Array.isArray(body) ? body : [body];
     margin-inline: auto;
   }
 
-  .split-feature--image-right .split-feature__media {
+  .split-feature--image-right .split-feature__media,
+  .split-feature--image-right .split-feature__form {
     order: 2;
   }
 
@@ -97,6 +125,62 @@ const paragraphs = Array.isArray(body) ? body : [body];
     border-radius: 2.5rem;
     background: #e6e9e4;
     --media-asset-fit: cover;
+  }
+
+  .split-feature--media-short .split-feature__media {
+    aspect-ratio: 3 / 2;
+    inline-size: min(100%, 33rem);
+    align-self: center;
+  }
+
+  .split-feature--media-short.split-feature--image-right .split-feature__media {
+    justify-self: end;
+  }
+
+  .split-feature--media-short.split-feature--image-left .split-feature__media {
+    justify-self: start;
+  }
+
+  /* Mirror the framed split hero's media geometry so the image matches the
+     hero box size (31.5rem x 32.375rem) and edges exactly, with the copy
+     top-aligned to the image. */
+  @media (min-width: 1025px) {
+    .split-feature--media-hero {
+      padding-inline: var(--page-gutter);
+    }
+
+    .split-feature--media-hero .split-feature__inner {
+      grid-template-columns: minmax(0, 1fr) minmax(22rem, 31.5rem);
+      gap: var(--split-hero-gap);
+      align-items: start;
+      inline-size: var(--split-hero-content-width);
+    }
+
+    .split-feature--media-hero.split-feature--image-left .split-feature__inner {
+      grid-template-columns: minmax(22rem, 31.5rem) minmax(0, 1fr);
+    }
+
+    .split-feature--media-hero .split-feature__media {
+      inline-size: 100%;
+      block-size: 32.375rem;
+      border-radius: var(--split-hero-media-radius, 2.5rem);
+      align-self: start;
+    }
+  }
+
+  .split-feature--has-form .split-feature__inner {
+    align-items: start;
+  }
+
+  .split-feature__form {
+    padding: 2rem;
+    border: 1px solid var(--color-border-subtle);
+    border-radius: 1.25rem;
+    background: #ffffff;
+  }
+
+  .split-feature--dark .split-feature__form {
+    border-color: rgba(255, 255, 255, 0.16);
   }
 
   .split-feature__copy {
@@ -152,8 +236,17 @@ const paragraphs = Array.isArray(body) ? body : [body];
     }
 
     .split-feature--image-right .split-feature__media,
+    .split-feature--image-right .split-feature__form,
     .split-feature--image-right .split-feature__copy {
       order: initial;
+    }
+
+    .split-feature--media-short.split-feature--image-right .split-feature__media {
+      justify-self: start;
+    }
+
+    .split-feature__form {
+      padding: 1.5rem;
     }
 
     .split-feature h2 {

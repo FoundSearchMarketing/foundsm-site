@@ -15,6 +15,7 @@ export default defineType({
     }),
     richTextField('intro', 'Intro'),
     ctaField(),
+    ctaField('secondaryCta', 'Secondary CTA'),
     ...mediaFields,
     defineField({
       name: 'layoutPreset',
@@ -87,6 +88,7 @@ export default defineType({
           { title: 'Compact', value: 'compact' },
           { title: 'Standard', value: 'standard' },
           { title: 'Spacious', value: 'spacious' },
+          { title: 'Framed (504x518)', value: 'framed' },
         ],
       },
       initialValue: 'standard',

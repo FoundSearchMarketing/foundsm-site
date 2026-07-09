@@ -34,7 +34,7 @@ const resourceImage = (src: string | undefined) => normalizeLegacyAssetUrl(src) 
       </div>
     </nav>
 
-    <section class="resource-listing" aria-labelledby="resource-listing-title">
+    <section class:list={['resource-listing', { 'resource-listing--narrow': page.breadcrumbLabel === 'Tools and Guides' }]} aria-labelledby="resource-listing-title">
       <div class="resource-listing__inner">
         <header class="resource-listing__header">
           <h2 id="resource-listing-title">{page.sectionTitle}</h2>
@@ -46,8 +46,8 @@ const resourceImage = (src: string | undefined) => normalizeLegacyAssetUrl(src) 
               <div class="resource-card__inner" style={`--resource-card-bg: url('${contourImage}')`}>
                 <p class="resource-card__label">{card.label}</p>
                 {card.categories?.length ? <p class="resource-card__categories">{card.categories.join(', ')}</p> : null}
-                <h3><a href={card.href}>{card.title}</a></h3>
-                <a class="resource-card__image-link" href={card.href} tabindex="-1" aria-hidden="true">
+                <h3><a href={card.href} target="_blank" rel="noopener">{card.title}</a></h3>
+                <a class="resource-card__image-link" href={card.href} target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
                   <img
                     src={resourceImage(card.image)}
                     alt={card.imageAlt || card.title}
@@ -57,9 +57,9 @@ const resourceImage = (src: string | undefined) => normalizeLegacyAssetUrl(src) 
                     decoding="async"
                   />
                 </a>
-                <p class="resource-card__date"><time datetime={card.datetime}>{card.dateLabel}</time></p>
+                {card.dateLabel ? <p class="resource-card__date"><time datetime={card.datetime}>{card.dateLabel}</time></p> : null}
                 <p class="resource-card__excerpt">{card.excerpt}</p>
-                <a class="resource-card__button" href={card.href}>Keep Reading →</a>
+                <a class="resource-card__button" href={card.href} target="_blank" rel="noopener">{card.ctaLabel || 'Keep Reading →'}</a>
               </div>
             </article>
           ))}
@@ -223,6 +223,10 @@ const resourceImage = (src: string | undefined) => normalizeLegacyAssetUrl(src) 
   .resource-listing__inner {
     inline-size: min(calc(100% - 20px), 1400px);
     margin-inline: auto;
+  }
+
+  .resource-listing--narrow .resource-listing__inner {
+    inline-size: min(calc(100% - 20px), 1260px);
   }
 
   .resource-listing__header {

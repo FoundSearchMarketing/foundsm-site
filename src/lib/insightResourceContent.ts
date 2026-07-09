@@ -236,7 +236,7 @@ const archivePages: InsightArchivePage[] = [
       {
         label: 'Tools',
         title: 'Server-Side ROAS Calculator',
-        href: 'https://fsm-serverside-calc-site.vercel.app/',
+        href: 'https://sst-roas.foundsm.com/',
         image: 'https://cdn.sanity.io/images/vzneqxsx/staging/b3dd16e6aa0f3a54e6a971382656bc842f8ac85f-850x500.png',
         dateLabel: 'July 8, 2026',
         datetime: '2026-07-08',

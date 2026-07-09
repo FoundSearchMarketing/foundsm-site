@@ -241,6 +241,13 @@ const archivePages: InsightArchivePage[] = [
         excerpt: 'Estimate the potential increase in conversions and cost savings by moving to server-side tracking. Enter your monthly media spend and conversions to project your savings.',
       },
       {
+        label: 'Tools',
+        title: 'ROI Calculator',
+        href: 'https://roi.foundsm.com/',
+        image: 'https://cdn.sanity.io/images/vzneqxsx/staging/e0556d13e6c209a94384855ce2ffc7cb64922ddf-850x500.png',
+        excerpt: 'Estimate the return on ad spend for a media campaign. Enter your budget, cost per click, and conversion assumptions to project clicks, leads, revenue, and profit.',
+      },
+      {
         label: 'Quiz',
         title: 'Signal Quiz',
         href: '/signal-quiz/',

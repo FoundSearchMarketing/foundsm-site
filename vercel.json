@@ -484,26 +484,6 @@
       "permanent": true
     },
     {
-      "source": "/agency-calendar",
-      "destination": "/",
-      "permanent": true
-    },
-    {
-      "source": "/agency-calendar/",
-      "destination": "/",
-      "permanent": true
-    },
-    {
-      "source": "/agency-calendar/:path*",
-      "destination": "/",
-      "permanent": true
-    },
-    {
-      "source": "/agency-calendar/:path+/",
-      "destination": "/",
-      "permanent": true
-    },
-    {
       "source": "/approach",
       "destination": "/our-approach/",
       "permanent": true

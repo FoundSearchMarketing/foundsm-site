@@ -10,6 +10,7 @@ export interface InsightResourceCard {
   dateLabel?: string;
   datetime?: string;
   excerpt: string;
+  ctaLabel?: string;
 }
 
 export interface InsightArchivePage {
@@ -239,6 +240,7 @@ const archivePages: InsightArchivePage[] = [
         href: 'https://sst-roas.foundsm.com/',
         image: 'https://cdn.sanity.io/images/vzneqxsx/staging/b3dd16e6aa0f3a54e6a971382656bc842f8ac85f-850x500.png',
         excerpt: 'Estimate the potential increase in conversions and cost savings by moving to server-side tracking. Enter your monthly media spend and conversions to project your savings.',
+        ctaLabel: 'Calculate Your Savings →',
       },
       {
         label: 'Tools',
@@ -246,6 +248,7 @@ const archivePages: InsightArchivePage[] = [
         href: 'https://roi.foundsm.com/',
         image: 'https://cdn.sanity.io/images/vzneqxsx/staging/e0556d13e6c209a94384855ce2ffc7cb64922ddf-850x500.png',
         excerpt: 'Estimate the return on ad spend for a media campaign. Enter your budget, cost per click, and conversion assumptions to project clicks, leads, revenue, and profit.',
+        ctaLabel: 'Calculate Your ROI →',
       },
       {
         label: 'Quiz',
@@ -253,6 +256,7 @@ const archivePages: InsightArchivePage[] = [
         href: '/signal-quiz/',
         image: legacyUploadAsset('2026/03/signal-quiz-feature-850x500.webp'),
         excerpt: 'Are you scaling profit or just burning cash? Answer 7 questions to uncover your Revenue Engineering Score and identify the leaks in your paid media budget.',
+        ctaLabel: 'Take the Quiz →',
       },
       {
         label: 'Guide',
@@ -260,6 +264,7 @@ const archivePages: InsightArchivePage[] = [
         href: '/whitepapers/first-party-data/',
         image: legacyUploadAsset('2026/03/first-party-whitepaper-feature-850x500.webp'),
         excerpt: 'AI has permanently rewritten the rules of digital advertising. The brands that win will be the ones that control and activate their own first-party data — this whitepaper is your blueprint for doing exactly that.',
+        ctaLabel: 'Get the Whitepaper →',
       },
     ],
   },

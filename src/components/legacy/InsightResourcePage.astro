@@ -46,8 +46,8 @@ const resourceImage = (src: string | undefined) => normalizeLegacyAssetUrl(src) 
               <div class="resource-card__inner" style={`--resource-card-bg: url('${contourImage}')`}>
                 <p class="resource-card__label">{card.label}</p>
                 {card.categories?.length ? <p class="resource-card__categories">{card.categories.join(', ')}</p> : null}
-                <h3><a href={card.href}>{card.title}</a></h3>
-                <a class="resource-card__image-link" href={card.href} tabindex="-1" aria-hidden="true">
+                <h3><a href={card.href} target="_blank" rel="noopener">{card.title}</a></h3>
+                <a class="resource-card__image-link" href={card.href} target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
                   <img
                     src={resourceImage(card.image)}
                     alt={card.imageAlt || card.title}
@@ -59,7 +59,7 @@ const resourceImage = (src: string | undefined) => normalizeLegacyAssetUrl(src) 
                 </a>
                 <p class="resource-card__date"><time datetime={card.datetime}>{card.dateLabel}</time></p>
                 <p class="resource-card__excerpt">{card.excerpt}</p>
-                <a class="resource-card__button" href={card.href}>Keep Reading →</a>
+                <a class="resource-card__button" href={card.href} target="_blank" rel="noopener">Keep Reading →</a>
               </div>
             </article>
           ))}

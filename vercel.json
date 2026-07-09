@@ -117,6 +117,16 @@
       "permanent": true
     },
     {
+      "source": "/insights/authors/matt",
+      "destination": "/insights/authors/matt-dragoo/",
+      "permanent": true
+    },
+    {
+      "source": "/insights/authors/matt/",
+      "destination": "/insights/authors/matt-dragoo/",
+      "permanent": true
+    },
+    {
       "source": "/insights-filter-results",
       "destination": "/insights/",
       "permanent": true

@@ -34,7 +34,7 @@ const resourceImage = (src: string | undefined) => normalizeLegacyAssetUrl(src) 
       </div>
     </nav>
 
-    <section class="resource-listing" aria-labelledby="resource-listing-title">
+    <section class:list={['resource-listing', { 'resource-listing--narrow': page.breadcrumbLabel === 'Tools and Guides' }]} aria-labelledby="resource-listing-title">
       <div class="resource-listing__inner">
         <header class="resource-listing__header">
           <h2 id="resource-listing-title">{page.sectionTitle}</h2>
@@ -223,6 +223,10 @@ const resourceImage = (src: string | undefined) => normalizeLegacyAssetUrl(src) 
   .resource-listing__inner {
     inline-size: min(calc(100% - 20px), 1400px);
     margin-inline: auto;
+  }
+
+  .resource-listing--narrow .resource-listing__inner {
+    inline-size: min(calc(100% - 20px), 1260px);
   }
 
   .resource-listing__header {

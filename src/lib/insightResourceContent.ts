@@ -231,7 +231,7 @@ const archivePages: InsightArchivePage[] = [
     heroImage: legacyUploadAsset('2026/03/tools_insights_header_images.webp'),
     breadcrumbLabel: 'Tools and Guides',
     sectionTitle: 'Tools and Guides',
-    columns: 2,
+    columns: 3,
     cards: [
       {
         label: 'Tools',

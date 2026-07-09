@@ -52,6 +52,19 @@ export default defineType({
       type: 'datetime',
     }),
     defineField({
+      name: 'lastReviewed',
+      title: 'Last Reviewed',
+      type: 'datetime',
+      description: 'Optional. Use this when content has been checked for accuracy without changing the original publish date.',
+    }),
+    defineField({
+      name: 'evergreen',
+      title: 'Evergreen',
+      type: 'boolean',
+      initialValue: false,
+      description: 'Skip stale-content notices for posts that should remain current over time.',
+    }),
+    defineField({
       name: 'featuredImage',
       title: 'Featured Image',
       type: 'image',

@@ -99,9 +99,27 @@ const seo = resolveSeo(Astro.url.pathname, seoProps);
 
   <script is:inline src="/scripts/main.js"></script>
 
-  <!-- HubSpot Tracking Code -->
+  <!-- HubSpot Tracking Code — injected on first interaction (5s fallback) to keep its ~1.4s of JS execution off the critical rendering path on mobile -->
   {enableThirdPartyScripts && (
-    <script is:inline type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/5045186.js"></script>
+    <script is:inline>
+      (function () {
+        var events = ['scroll', 'pointerdown', 'keydown', 'touchstart'];
+        var loaded = false;
+        function loadHubSpot() {
+          if (loaded) return;
+          loaded = true;
+          var s = document.createElement('script');
+          s.id = 'hs-script-loader';
+          s.async = true;
+          s.defer = true;
+          s.src = '//js.hs-scripts.com/5045186.js';
+          document.body.appendChild(s);
+          events.forEach(function (e) { window.removeEventListener(e, loadHubSpot); });
+        }
+        events.forEach(function (e) { window.addEventListener(e, loadHubSpot, { passive: true }); });
+        setTimeout(loadHubSpot, 5000);
+      })();
+    </script>
   )}
 </body>
 </html>

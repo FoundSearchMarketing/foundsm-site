@@ -12,6 +12,11 @@
       "permanent": true
     },
     {
+      "source": "/ns.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
       "source": "/our-approach.html",
       "destination": "/our-approach/",
       "permanent": true

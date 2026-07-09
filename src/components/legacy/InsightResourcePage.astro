@@ -57,7 +57,7 @@ const resourceImage = (src: string | undefined) => normalizeLegacyAssetUrl(src) 
                     decoding="async"
                   />
                 </a>
-                <p class="resource-card__date"><time datetime={card.datetime}>{card.dateLabel}</time></p>
+                {card.dateLabel ? <p class="resource-card__date"><time datetime={card.datetime}>{card.dateLabel}</time></p> : null}
                 <p class="resource-card__excerpt">{card.excerpt}</p>
                 <a class="resource-card__button" href={card.href} target="_blank" rel="noopener">Keep Reading →</a>
               </div>

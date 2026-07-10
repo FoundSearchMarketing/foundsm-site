@@ -93,29 +93,6 @@ export const SEO_COPY_OVERRIDES: Record<string, SeoCopyOverride> = {
   '/capabilities/data-intelligence/': {
     description: 'Unify data across platforms, APIs, and teams so marketing decisions are clearer, faster, and tied to measurable growth.',
   },
-  '/insights/a-3-minute-implementation-guide-to-segmenting-ai-traffic-in-ga4/': {
-    title: 'Segment AI Traffic in GA4 in 3 Minutes',
-    description: 'Set up a GA4 segment for AI search traffic in minutes and compare answer-engine visits against your other channels.',
-  },
-  '/insights/closing-the-loop-how-conversion-apis-and-value-based-bidding-transform-performance-marketing/': {
-    title: 'Conversion APIs and Value-Based Bidding',
-  },
-  '/insights/dirty-signals-bot-traffic-junk-leads/': {
-    title: 'Dirty Signals: Bot Traffic and Bad Lookalikes',
-  },
-  '/insights/googles-vision-for-2026-building-a-revenue-engine-powered-by-data/': {
-    title: 'Google 2026 Revenue Engine Vision',
-  },
-  '/insights/indiana-consumer-data-protection-act/': {
-    title: 'ICDPA and Smarter Data Strategy',
-  },
-  '/insights/signal-loss-costs-real-revenue/': {
-    title: 'Signal Loss and Revenue Alignment',
-  },
-  '/insights/wrapping-up-19-years-with-purpose-founds-year-end-tradition-of-giving-back/': {
-    title: "Found's 19-Year Giving Tradition",
-    description: "See how Found's year-end giving tradition brings the team together around service, local impact, and shared purpose.",
-  },
   '/privacy-policy/': {
     description: 'Learn how Found Search Marketing collects, uses, and protects personal information when you visit our site or engage with our services.',
   },

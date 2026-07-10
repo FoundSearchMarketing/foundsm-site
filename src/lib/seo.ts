@@ -106,10 +106,6 @@ export const SEO_COPY_OVERRIDES: Record<string, SeoCopyOverride> = {
   '/insights/googles-vision-for-2026-building-a-revenue-engine-powered-by-data/': {
     title: 'Google 2026 Revenue Engine Vision',
   },
-  '/insights/how-advantage-is-reshaping-student-recruitment-insights-from-a-meta-education-summit/': {
-    title: 'How Advantage+ Is Reshaping Recruitment',
-    description: 'See how Meta Advantage+ is changing student recruitment by expanding audience discovery and improving higher-ed campaign strategy.',
-  },
   '/insights/indiana-consumer-data-protection-act/': {
     title: 'ICDPA and Smarter Data Strategy',
   },

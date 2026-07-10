@@ -175,7 +175,7 @@ export const defaultAboutPageData: AboutPageData = {
     imageAlt: 'Found Search Marketing team members collaborating',
     credentials: [
       { image: '/images/pages/about-us/google-partner.png', alt: 'Google Partner badge', text: 'Certified in many Google marketing products' },
-      { image: '/images/pages/about-us/ibj.png', alt: 'Indianapolis Business Journal badge', text: 'Named one of the largest Marketing Firms in Indianapolis' },
+      { image: '/images/pages/about-us/ibj.png', alt: 'Indianapolis Business Journal Top 25 List 2026 badge', text: 'Named one of the largest Marketing Firms in Indianapolis' },
       { image: '/images/pages/about-us/wbe-digital-badge.svg', alt: 'Women-Owned Business Enterprise badge', text: 'Independently owned, certified Women-Owned Business' },
       { image: '/images/pages/about-us/indiana.png', alt: 'Indiana badge', text: 'Multiple winners of Best Places to Work awards' },
     ],

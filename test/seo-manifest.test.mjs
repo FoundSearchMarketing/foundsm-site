@@ -25,15 +25,25 @@ test('default Open Graph image is a deployable raster asset', () => {
   const imagePath = new URL(`../public${defaultOgImage.pathname}`, import.meta.url);
 
   assert.equal(defaultOgImage.origin, 'https://foundsm.com');
-  assert.match(defaultOgImage.pathname, /\.(?:jpe?g|png|webp)$/i);
+  assert.match(defaultOgImage.pathname, /\.(?:jpe?g|png)$/i);
   assert.ok(existsSync(imagePath), `${defaultOgImage.pathname} should exist in public/`);
 });
 
-test('share image resolution skips SVG fallbacks', () => {
+test('share image resolution emits scraper-safe social images', () => {
   const source = readFileSync(new URL('../src/lib/seo.ts', import.meta.url), 'utf8');
 
   assert.ok(source.includes('resolveShareImage'));
-  assert.ok(source.includes('.svg(?:[?#]|$)'));
+  assert.ok(source.includes("endsWith('.svg')"));
+  assert.ok(source.includes("endsWith('.webp')"));
+  assert.ok(source.includes('cdn.sanity.io'));
+  assert.ok(source.includes('w=1200&h=630&fit=crop&fm=jpg&q=80'));
+});
+
+test('SEO resolver preserves modifiedAt values', () => {
+  const source = readFileSync(new URL('../src/lib/seo.ts', import.meta.url), 'utf8');
+
+  assert.ok(source.includes('modifiedAt: input.modifiedAt || fallback.modifiedAt'));
+  assert.doesNotMatch(source, /modifidAt/);
 });
 
 test('canonical URLs are normalized to non-www foundsm.com', () => {

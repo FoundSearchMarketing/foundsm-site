@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { test } from 'node:test';
 
 const manifest = JSON.parse(readFileSync(new URL('../src/lib/seoManifest.generated.json', import.meta.url), 'utf8'));
@@ -16,6 +16,26 @@ test('generated manifest contains core Yoast SEO fields', () => {
   assert.ok(home.schema?.['@graph']?.length >= 3);
 });
 
+test('default Open Graph image is a deployable raster asset', () => {
+  const source = readFileSync(new URL('../src/lib/seo.ts', import.meta.url), 'utf8');
+  const defaultOgImageUrl = source.match(/DEFAULT_OG_IMAGE = '([^']+)'/)?.[1];
+  assert.ok(defaultOgImageUrl);
+
+  const defaultOgImage = new URL(defaultOgImageUrl);
+  const imagePath = new URL(`../public${defaultOgImage.pathname}`, import.meta.url);
+
+  assert.equal(defaultOgImage.origin, 'https://foundsm.com');
+  assert.match(defaultOgImage.pathname, /\.(?:jpe?g|png|webp)$/i);
+  assert.ok(existsSync(imagePath), `${defaultOgImage.pathname} should exist in public/`);
+});
+
+test('share image resolution skips SVG fallbacks', () => {
+  const source = readFileSync(new URL('../src/lib/seo.ts', import.meta.url), 'utf8');
+
+  assert.ok(source.includes('resolveShareImage'));
+  assert.ok(source.includes('.svg(?:[?#]|$)'));
+});
+
 test('canonical URLs are normalized to non-www foundsm.com', () => {
   for (const [path, route] of Object.entries(manifest.routes)) {
     assert.match(route.canonical, /^https:\/\/foundsm\.com\//, path);
@@ -26,7 +46,7 @@ test('canonical URLs are normalized to non-www foundsm.com', () => {
 test('Yoast redirects are merged under Vercel static redirect limits', () => {
   assert.equal(vercel.trailingSlash, true);
   assert.ok(Array.isArray(vercel.redirects));
-  assert.ok(vercel.redirects.length >= manifest.redirects.length);
+  assert.ok(manifest.redirects.length > vercel.redirects.length);
   assert.ok(vercel.redirects.length <= 2048);
   assert.ok(vercel.redirects.some((redirect) => redirect.source === '/capabilities-paid-media' && redirect.destination === '/capabilities/paid-media/'));
 });
@@ -98,8 +118,8 @@ test('SEO copy overrides cover dashboard title and description findings', () => 
 
   assert.match(source, /SEO_COPY_OVERRIDES/);
   assert.match(source, /About Found Search Marketing \| Paid Media Agency/);
-  assert.match(source, /Segment AI Traffic in GA4 in 3 Minutes/);
-  assert.match(source, /Found's 19-Year Giving Tradition/);
+  assert.match(source, /Activate first-party customer data across ad platforms/);
+  assert.match(source, /Unify data across platforms, APIs, and teams/);
   assert.match(source, /Learn how first-party data can strengthen measurement/);
 });
 

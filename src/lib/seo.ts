@@ -4,7 +4,7 @@ import { normalizeLegacyAssetUrl } from './legacyAssets';
 export const SITE_URL = 'https://foundsm.com';
 export const SITE_NAME = 'Found Search Marketing';
 export const DEFAULT_ROBOTS = 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
-const DEFAULT_OG_IMAGE = 'https://foundsm.com/images/og-image-1200x630.jpg';
+const DEFAULT_OG_IMAGE = 'https://foundsm.com/images/og-image-1200x630.png';
 
 export type JsonLd = Record<string, unknown> | Record<string, unknown>[];
 
@@ -166,8 +166,9 @@ export function resolveSeo(route: string, input: SeoInput = {}): ResolvedSeo {
   const canonical = normalizeCanonicalUrl(input.canonical || input.canonicalUrl || fallback.canonical || fallback.canonicalUrl, route);
   const title = firstText(override.title, input.title, fallback.title, SITE_NAME);
   const description = firstText(override.description, input.description, fallback.description, '');
-  const ogImage = resolveImage(input.ogImage) || resolveImage(fallback.ogImage) || resolveImage(seoManifest.defaultOgImage) || DEFAULT_OG_IMAGE;
-  const twitterImage = resolveImage(input.twitterImage) || resolveImage(fallback.twitterImage) || ogImage;
+  const defaultShareImage = DEFAULT_OG_IMAGE;
+  const ogImage = resolveShareImage(input.ogImage) || resolveShareImage(fallback.ogImage) || defaultShareImage;
+  const twitterImage = resolveShareImage(input.twitterImage) || resolveShareImage(fallback.twitterImage) || ogImage;
   const ogImageMeta = resolveImageMeta(input.ogImage) || resolveImageMeta(fallback.ogImage) || seoManifest.defaultOgImage;
   const robots = chooseRobots(input.robots, fallback.robots);
   const schema = normalizeSchemaAssetUrls(parseSchema(undefined, input.schemaJson) || input.schema || fallback.schema || createDefaultSchema({
@@ -199,7 +200,7 @@ export function resolveSeo(route: string, input: SeoInput = {}): ResolvedSeo {
     twitterDescription: firstText(input.twitterDescription, fallback.twitterDescription, input.ogDescription, fallback.ogDescription, description),
     twitterImage,
     publishedAt: input.publishedAt || fallback.publishedAt,
-    modifiedAt: input.modifiedAt || fallback.modifiedAt,
+    modifiedAt: input.modifidAt || fallback.modifiedAt,
     schema,
     sourceWpId: fallback.sourceWpId,
   };
@@ -241,6 +242,12 @@ function resolveImage(image?: string | SeoImage): string | undefined {
   return undefined;
 }
 
+function resolveShareImage(image?: string | SeoImage): string | undefined {
+  const url = resolveImage(image);
+  if (!url || /\.svg(?:[?#]|$)/i.test(url)) return undefined;
+  return url;
+}
+
 function resolveImageMeta(image?: string | SeoImage): SeoImage | undefined {
   if (!image || typeof image === 'string') return undefined;
   return image;
@@ -248,6 +255,7 @@ function resolveImageMeta(image?: string | SeoImage): SeoImage | undefined {
 
 function normalizeImageUrl(value: string): string {
   if (!value) return value;
+  if (value === 'https://foundsm.com/images/og-image-1200x630.jpg') return DEFAULT_OG_IMAGE;
   const normalized = normalizeLegacyAssetUrl(value);
   if (normalized.startsWith('/')) return `${SITE_URL}${normalized}`;
   return normalized.replace('https://www.foundsm.com/', `${SITE_URL}/`);

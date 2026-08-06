@@ -4,7 +4,7 @@ import { normalizeLegacyAssetUrl } from './legacyAssets';
 export const SITE_URL = 'https://foundsm.com';
 export const SITE_NAME = 'Found Search Marketing';
 export const DEFAULT_ROBOTS = 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
-const DEFAULT_OG_IMAGE = 'https://foundsm.com/images/og-image-1200x630.png';
+const DEFAULT_OG_IMAGE = 'https://foundsm.com/images/og-image-1200x630.jpg';
 
 export type JsonLd = Record<string, unknown> | Record<string, unknown>[];
 
@@ -282,7 +282,7 @@ function getDefaultShareImage(): SeoImage {
 
 function normalizeImageUrl(value: string): string {
   if (!value) return value;
-  if (value === 'https://foundsm.com/images/og-image-1200x630.jpg') return DEFAULT_OG_IMAGE;
+  if (value === 'https://foundsm.com/images/og-image-1200x630.png') return DEFAULT_OG_IMAGE;
   const normalized = normalizeLegacyAssetUrl(value);
   if (normalized.startsWith('/')) return `${SITE_URL}${normalized}`;
   return normalized.replace('https://www.foundsm.com/', `${SITE_URL}/`);

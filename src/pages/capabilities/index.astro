@@ -555,11 +555,17 @@ const schema = {
 
   .capability-detail__media {
     --media-asset-radius: var(--capabilities-image-radius);
+    /* Cap media height below the 39rem section min-height so copy, not the
+       image, determines how tall each capability detail section is */
+    --media-asset-max-block-size: 34rem;
+    --media-asset-fit: cover;
   }
 
   .capability-detail__media :global(.capability-detail__image) {
     inline-size: 100%;
     height: auto;
+    max-block-size: 34rem;
+    object-fit: cover;
     border-radius: var(--capabilities-image-radius);
   }
 

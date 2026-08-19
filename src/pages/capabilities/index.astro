@@ -57,8 +57,8 @@ const schema = {
             <MediaAsset
               class="capabilities-hero__image"
               src={heroMedia.src}
-              width="800"
-              height="800"
+              width="900"
+              height="600"
               alt={heroImageAlt}
               loading="eager"
             />
@@ -270,6 +270,8 @@ const schema = {
   }
 
   .capabilities-hero__media {
+    /* Page-scoped override: 3/2 keeps the hero image height close to the short hero copy */
+    --split-hero-media-aspect-ratio: 3 / 2;
     overflow: hidden;
     aspect-ratio: var(--split-hero-media-aspect-ratio);
     border-radius: var(--split-hero-media-radius);

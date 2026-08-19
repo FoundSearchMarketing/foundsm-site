@@ -399,6 +399,8 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
   }
 
   .paid-media-hero__media {
+    /* Page-scoped override: 3/2 keeps the hero image shorter than the copy */
+    --split-hero-media-aspect-ratio: 3 / 2;
     overflow: hidden;
     aspect-ratio: var(--split-hero-media-aspect-ratio);
     border-radius: var(--split-hero-media-radius);
@@ -437,7 +439,7 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
     }
 
     .paid-media-hero__media {
-      aspect-ratio: 1;
+      aspect-ratio: var(--split-hero-media-aspect-ratio);
       border-radius: 2.1875rem;
       --media-asset-radius: 2.1875rem;
     }

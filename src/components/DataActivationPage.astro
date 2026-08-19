@@ -146,6 +146,8 @@ const secondActionColumn = actionItems.slice(3);
   }
 
   .da-hero__media {
+    /* Page-scoped override: 3/2 keeps the hero image shorter than the copy */
+    --split-hero-media-aspect-ratio: 3 / 2;
     overflow: hidden;
     aspect-ratio: var(--split-hero-media-aspect-ratio);
     border-radius: var(--split-hero-media-radius);
@@ -186,7 +188,7 @@ const secondActionColumn = actionItems.slice(3);
     }
 
     .da-hero__media {
-      aspect-ratio: 600 / 575;
+      aspect-ratio: var(--split-hero-media-aspect-ratio);
     }
   }
 

@@ -243,8 +243,8 @@ const schema = {
             <MediaAsset
               src={approachMedia.src}
               alt={approachMedia.alt || page.approach.heading || 'Found approach image'}
-              width="604"
-              height="604"
+              width="960"
+              height="540"
               loading="lazy"
             />
           </div>
@@ -274,8 +274,8 @@ const schema = {
             <MediaAsset
               src={teamMedia.src}
               alt={teamMedia.alt || page.team.heading || 'Found team image'}
-              width="900"
-              height="675"
+              width="960"
+              height="540"
               loading="lazy"
             />
           </div>
@@ -287,7 +287,7 @@ const schema = {
       <div class="about-shell about-careers__inner fade-in-up">
         <p class="about-eyebrow">Careers</p>
         <h2 id="about-careers-heading">Open Positions</h2>
-        <p class="about-careers__empty">No open positions</p>
+        <p class="about-careers__empty">We don't have any openings right now, but we're always interested in meeting great people — check back soon.</p>
       </div>
     </section>
   </article>
@@ -827,7 +827,9 @@ const schema = {
       margin-inline: auto;
       inline-size: min(100%, 38rem);
       overflow: hidden;
-      aspect-ratio: 4 / 3;
+      /* 16/9 keeps the image shorter than the adjacent copy so text, not
+         media, sets the section height */
+      aspect-ratio: 16 / 9;
       border-radius: 2.5rem;
       background: var(--about-surface);
       --media-asset-inline-size: 100%;
@@ -883,17 +885,22 @@ const schema = {
       justify-self: center;
       inline-size: min(100%, 38rem);
       overflow: hidden;
-      aspect-ratio: 4 / 3;
+      /* 16/9 keeps the image shorter than the adjacent copy so text, not
+         media, sets the section height */
+      aspect-ratio: 16 / 9;
       border-radius: 2.5rem;
       box-shadow: var(--about-shadow);
       --media-asset-inline-size: 100%;
       --media-asset-fit: cover;
+      /* Portrait source: bias the crop toward the top so faces stay in frame */
+      --media-asset-position: center 20%;
     }
 
     .about-team__image :global(.media-asset) {
       inline-size: 100%;
       block-size: 100%;
       object-fit: cover;
+      object-position: center 20%;
     }
 
     .about-careers {

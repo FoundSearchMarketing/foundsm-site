@@ -227,6 +227,8 @@ const ctaText = [page.cta?.title, ctaBody].filter(Boolean).join(' ');
   }
 
   .di-hero__media {
+    /* Page-scoped override: 3/2 keeps the hero image close to the copy height */
+    --split-hero-media-aspect-ratio: 3 / 2;
     overflow: hidden;
     justify-self: end;
     width: 100%;
@@ -276,7 +278,7 @@ const ctaText = [page.cta?.title, ctaBody].filter(Boolean).join(' ');
     }
 
     .di-hero__media {
-      aspect-ratio: 575 / 552;
+      aspect-ratio: var(--split-hero-media-aspect-ratio);
     }
   }
 

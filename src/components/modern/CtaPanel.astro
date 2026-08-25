@@ -12,7 +12,8 @@ interface Props {
 
 const { title, body, bodyHtml, ctaLabel, ctaHref, theme = 'dark', align = 'split', layoutPreset = 'panel' } = Astro.props;
 const paragraphs = Array.isArray(body) ? body : body ? [body] : [];
-const classes = ['modern-cta', `modern-cta--${theme}`, `modern-cta--${align}`, `modern-cta--${layoutPreset}`].join(' ');
+const buttonOnly = !title && paragraphs.length === 0 && !bodyHtml;
+const classes = ['modern-cta', `modern-cta--${theme}`, `modern-cta--${align}`, `modern-cta--${layoutPreset}`, buttonOnly ? 'modern-cta--button-only' : ''].filter(Boolean).join(' ');
 ---
 
 <section class={classes} aria-label={title ?? ctaLabel ?? 'Call to action'}>
@@ -42,6 +43,21 @@ const classes = ['modern-cta', `modern-cta--${theme}`, `modern-cta--${align}`, `
 
   .modern-cta--compact {
     padding-block: 3rem;
+  }
+
+  .modern-cta--button-only {
+    padding-block: 0 4rem;
+  }
+
+  .modern-cta--button-only .modern-cta__inner {
+    display: block;
+  }
+
+  .modern-cta--button-only .modern-cta__button {
+    min-block-size: 3.75rem;
+    padding: 1.125rem 2.75rem;
+    font-size: 1.25rem;
+    font-weight: 500;
   }
 
   .modern-cta--dark {

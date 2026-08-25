@@ -79,7 +79,7 @@ const sectionClasses = [
         {paragraphs.map((paragraph) => <p>{paragraph}</p>)}
       </div>
       )}
-      {cta && <a class="split-feature__link" href={cta.href}>{cta.label}</a>}
+      {cta && <a class="split-feature__button" href={cta.href}>{cta.label}</a>}
     </div>
   </div>
 </section>
@@ -221,12 +221,26 @@ const sectionClasses = [
     color: rgba(255, 255, 255, 0.78);
   }
 
-  .split-feature__link {
+  .split-feature__button {
     display: inline-flex;
+    justify-content: center;
     justify-self: start;
-    margin-block-start: 0.35rem;
-    color: var(--color-primary);
-    font-weight: 700;
+    margin-block-start: 0.85rem;
+    min-block-size: 3.75rem;
+    padding: 1.125rem 2.75rem;
+    border-radius: 999px;
+    background: var(--color-primary);
+    color: var(--color-dark);
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 1.2;
+    transition: background-color var(--transition-fast), transform var(--transition-fast);
+  }
+
+  .split-feature__button:hover,
+  .split-feature__button:focus-visible {
+    background: #b9dc89;
+    transform: translateY(-1px);
   }
 
   @media (max-width: 900px) {

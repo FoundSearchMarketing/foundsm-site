@@ -45,7 +45,7 @@ const {
 
     <div class={`card-grid card-grid--${columns}`}>
       {cards.map((card, index) => (
-        <article class="modern-card">
+        <article class="modern-card" id={card.title ? card.title.toLowerCase().replace(/[^a-z0-9]+/g, '-') : undefined}>
           {card.image && (
             <div class="modern-card__image">
               <img src={card.image} alt={card.imageAlt ?? ''} loading="lazy" decoding="async" />

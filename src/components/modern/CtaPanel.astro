@@ -15,6 +15,7 @@ const paragraphs = Array.isArray(body) ? body : body ? [body] : [];
 const buttonOnly = !title && paragraphs.length === 0 && !bodyHtml;
 const classes = ['modern-cta', `modern-cta--${theme}`, `modern-cta--${align}`, `modern-cta--${layoutPreset}`, buttonOnly ? 'modern-cta--button-only' : ''].filter(Boolean).join(' ');
 const buttonVariant = theme === 'green' || theme === 'light' ? 'btn--dark' : 'btn--primary';
+const buttonSize = buttonOnly ? ' btn--lg' : '';
 ---
 
 <section class={classes} aria-label={title ?? ctaLabel ?? 'Call to action'}>
@@ -29,7 +30,7 @@ const buttonVariant = theme === 'green' || theme === 'light' ? 'btn--dark' : 'bt
         </div>
       )}
     </div>
-    {ctaLabel && ctaHref && <a class={`btn ${buttonVariant} modern-cta__button`} href={ctaHref}>{ctaLabel}</a>}
+    {ctaLabel && ctaHref && <a class={`btn ${buttonVariant}${buttonSize} modern-cta__button`} href={ctaHref}>{ctaLabel}</a>}
   </div>
 </section>
 
@@ -54,13 +55,6 @@ const buttonVariant = theme === 'green' || theme === 'light' ? 'btn--dark' : 'bt
 
   .modern-cta--button-only .modern-cta__inner {
     display: block;
-  }
-
-  .modern-cta--button-only .modern-cta__button {
-    min-block-size: 3.75rem;
-    padding: 1.125rem 2.75rem;
-    font-size: 1.25rem;
-    font-weight: 500;
   }
 
   .modern-cta--dark {

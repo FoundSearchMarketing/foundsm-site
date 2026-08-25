@@ -232,10 +232,9 @@ body.blog-post-page .blog-post__back-link{
     border-radius: 999px;
     background: var(--color-text);
     color: #fff;
-    font-size: 0.95rem;
+    font-size: 1rem;
     font-weight: 500;
     text-decoration: none;
-    text-transform: uppercase;
   }body.blog-post-page .blog-post__quote{
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(180px, 280px);

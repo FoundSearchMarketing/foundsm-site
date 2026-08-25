@@ -403,6 +403,16 @@ p + p {
   font-size: 1.125rem;
 }
 
+/* Large buttons step down to the base size on small screens — the single
+   site-wide rule; components must not define their own button shrinks. */
+@media (max-width: 640px) {
+  .btn--lg {
+    min-block-size: 3.25rem;
+    padding: 0.9rem 1.75rem;
+    font-size: var(--text-btn);
+  }
+}
+
 .btn-full {
   width: 100%;
 }

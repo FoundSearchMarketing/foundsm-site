@@ -151,7 +151,7 @@ const firstPartyBullets = [
     <section class="wp-newsletter-hero" aria-labelledby="newsletter-title">
       <div class="wp-shell wp-newsletter-hero__grid">
         <div class="wp-newsletter-copy">
-          <p class="wp-newsletter-kicker">Get Found<br />in Your<br />Inbox</p>
+          <p class="wp-newsletter-kicker">Get Found in Your Inbox</p>
           <h1 id="newsletter-title">Sign Up for Our<br class="desktop-break" /> Newsletter</h1>
         </div>
         <aside class="wp-newsletter-form" aria-label="Newsletter signup form">
@@ -357,7 +357,7 @@ const firstPartyBullets = [
   }
 
   .wp-newsletter-hero {
-    padding-block: 6.1rem 6rem;
+    padding-block: var(--split-hero-padding-block);
     background: #fff;
   }
 
@@ -373,22 +373,20 @@ const firstPartyBullets = [
   }
 
   .wp-newsletter-kicker {
-    max-inline-size: 40rem;
-    margin: 0 0 2.5rem;
-    color: #231f20;
-    font-family: var(--font-heading);
-    font-size: clamp(4.5rem, 8.8vw, 8rem);
+    margin: 0 0 1.35rem;
+    color: var(--color-primary);
+    font-size: 0.875rem;
     font-weight: 700;
-    line-height: 0.9;
+    line-height: 1.2;
+    text-transform: uppercase;
   }
 
   .wp-newsletter-hero h1 {
+    max-inline-size: var(--split-hero-copy-max-width);
     margin: 0;
-    color: var(--color-primary);
-    font-family: var(--font-body);
-    font-size: clamp(2.5rem, 4vw, 4rem);
-    font-weight: 900;
-    line-height: 1.1;
+    color: #231f20;
+    font-size: var(--split-hero-title-size);
+    line-height: var(--split-hero-title-line-height);
     letter-spacing: 0;
   }
 
@@ -855,25 +853,9 @@ const firstPartyBullets = [
       display: none;
     }
 
-    .wp-newsletter-hero {
-      padding-block: 3.5rem 4rem;
-    }
-
     .wp-newsletter-hero__grid {
       grid-template-columns: 1fr;
       gap: 3rem;
-    }
-
-    .wp-newsletter-kicker {
-      max-inline-size: 22rem;
-      margin-inline: auto;
-      font-size: clamp(3.55rem, 14vw, 3.95rem);
-      text-align: center;
-    }
-
-    .wp-newsletter-hero h1 {
-      font-size: clamp(2.05rem, 9vw, 2.35rem);
-      text-align: center;
     }
 
     .wp-newsletter-form {

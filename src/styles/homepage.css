@@ -62,12 +62,6 @@ body.home-page {
   background: #3a3536;
 }
 
-/* Persistent nav/hero separation: same treatment as .site-header.is-scrolled */
-body.home-page .site-header {
-  border-color: rgba(26, 26, 26, 0.25);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
 .home-splash {
   background: var(--home-gray-light);
   padding-block: 100px clamp(70px, 8vw, 100px);

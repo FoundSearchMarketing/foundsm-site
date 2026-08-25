@@ -155,7 +155,7 @@ const ctaText = [page.cta?.title, ctaBody].filter(Boolean).join(' ');
     <div class="di-cta__inner">
       {ctaText && <h2>{ctaText}</h2>}
       {page.cta?.cta?.label && page.cta?.cta?.href && (
-        <a class="di-cta__button" href={page.cta.cta.href}>{page.cta.cta.label}</a>
+        <a class="btn btn--primary btn--lg di-cta__button" href={page.cta.cta.href}>{page.cta.cta.label}</a>
       )}
     </div>
   </section>
@@ -486,24 +486,7 @@ const ctaText = [page.cta?.title, ctaBody].filter(Boolean).join(' ');
   }
 
   .di-cta__button {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
     justify-self: start;
-    min-height: 3.75rem;
-    padding: 1.125rem 1.875rem;
-    border-radius: 2.1875rem;
-    background: var(--color-primary);
-    color: #231f20;
-    font-size: 1.25rem;
-    font-weight: 500;
-    line-height: 1.2;
-    transition: background-color var(--transition-fast);
-  }
-
-  .di-cta__button:hover,
-  .di-cta__button:focus-visible {
-    background: #b9dc89;
   }
 
   @media (min-width: 1025px) {

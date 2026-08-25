@@ -74,7 +74,7 @@ const { title, subtitle, tabs, idPrefix, theme = 'muted', layoutPreset = 'mediaP
               <div class="feature-tabs__panel-copy">
                 <h3>{tab.title}</h3>
                 {tab.bodyHtml ? <div set:html={tab.bodyHtml} /> : <p>{tab.body}</p>}
-                {tab.ctaLabel && tab.ctaHref && <a class="feature-tabs__cta" href={tab.ctaHref}>{tab.ctaLabel}</a>}
+                {tab.ctaLabel && tab.ctaHref && <a class={`btn ${layoutPreset === 'ecosystem' ? 'btn--primary' : 'btn--dark'} feature-tabs__cta`} href={tab.ctaHref}>{tab.ctaLabel}</a>}
               </div>
               {tab.image && (
                 <div class="feature-tabs__panel-media">
@@ -309,29 +309,8 @@ const { title, subtitle, tabs, idPrefix, theme = 'muted', layoutPreset = 'mediaP
   }
 
   .feature-tabs__cta {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
     justify-self: start;
-    min-block-size: 3rem;
     margin-block-start: 0.25rem;
-    padding: 0.75rem 1.25rem;
-    border-radius: 999px;
-    background: #1a1a1a;
-    color: #ffffff;
-    font-weight: 800;
-    line-height: 1.2;
-    transition: transform var(--transition-fast), background-color var(--transition-fast);
-  }
-
-  .feature-tabs--ecosystem .feature-tabs__cta {
-    background: var(--color-primary);
-    color: #1a1a1a;
-  }
-
-  .feature-tabs__cta:hover,
-  .feature-tabs__cta:focus-visible {
-    transform: translateY(-1px);
   }
 
   .feature-tabs__panel-media {

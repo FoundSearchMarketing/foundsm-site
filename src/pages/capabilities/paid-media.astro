@@ -228,7 +228,7 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
       <div class="paid-media-cta__inner">
         <div class="paid-media-rich-text" set:html={sectionHtml(page.cta?.body, 'CTA copy')} />
         {page.cta?.cta?.label && page.cta?.cta?.href ? (
-          <a class="paid-media-cta__button" href={page.cta.cta.href}>{page.cta.cta.label}</a>
+          <a class="btn btn--primary btn--lg paid-media-cta__button" href={page.cta.cta.href}>{page.cta.cta.label}</a>
         ) : (
           <span class="paid-media-placeholder">Missing CTA link</span>
         )}
@@ -706,27 +706,6 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
     font-size: 1.25rem;
     font-weight: 800;
     line-height: 1.55;
-  }
-
-  .paid-media-cta__button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-block-size: 3.75rem;
-    padding: 1rem 2.2rem;
-    border-radius: 999px;
-    background: var(--paid-media-green);
-    color: #1a1a1a;
-    font-size: 1.05rem;
-    font-weight: 800;
-    line-height: 1.2;
-    transition: transform var(--transition-fast), background-color var(--transition-fast);
-  }
-
-  .paid-media-cta__button:hover,
-  .paid-media-cta__button:focus-visible {
-    background: #b9dc89;
-    transform: translateY(-1px);
   }
 
   .paid-media-logos {

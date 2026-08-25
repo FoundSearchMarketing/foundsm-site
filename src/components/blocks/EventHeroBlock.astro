@@ -65,8 +65,8 @@ const [firstTitleLine, ...remainingTitleLines] = titleLines;
       )}
       {(primaryCta?.label || secondaryCta?.label) && (
         <div class="event-hero__actions">
-          {primaryCta?.label && primaryCta?.href && <a class="event-hero__button event-hero__button--primary" href={primaryCta.href}>{primaryCta.label}</a>}
-          {secondaryCta?.label && secondaryCta?.href && <a class="event-hero__button event-hero__button--secondary" href={secondaryCta.href}>{secondaryCta.label}</a>}
+          {primaryCta?.label && primaryCta?.href && <a class="btn btn--primary" href={primaryCta.href}>{primaryCta.label}</a>}
+          {secondaryCta?.label && secondaryCta?.href && <a class={`btn ${theme === 'light' ? 'btn--secondary' : 'btn--secondary-white'}`} href={secondaryCta.href}>{secondaryCta.label}</a>}
         </div>
       )}
     </div>
@@ -187,26 +187,6 @@ const [firstTitleLine, ...remainingTitleLines] = titleLines;
     gap: 0.1rem;
     font-size: 0.9rem;
     line-height: 1.3;
-  }
-
-  .event-hero__button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-block-size: 3.25rem;
-    padding: 0.85rem 1.35rem;
-    border-radius: 999px;
-    font-weight: 800;
-  }
-
-  .event-hero__button--primary {
-    background: var(--color-primary);
-    color: #1a1a1a;
-  }
-
-  .event-hero__button--secondary {
-    border: 1px solid currentColor;
-    color: currentColor;
   }
 
   .event-hero__card {

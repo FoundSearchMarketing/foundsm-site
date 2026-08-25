@@ -155,7 +155,7 @@ const firstPartyBullets = [
           <h1 id="newsletter-title">Sign Up for Our<br class="desktop-break" /> Newsletter</h1>
         </div>
         <aside class="wp-newsletter-form" aria-label="Newsletter signup form">
-          <div class="hs-form-frame" data-region="na1" data-form-id="f757bd34-b8c5-4f2a-a1ef-19c3a364683b" data-portal-id="5045186"></div>
+          <div class="_form_1"></div>
         </aside>
       </div>
     </section>
@@ -305,7 +305,11 @@ const firstPartyBullets = [
   </>
 )}
 
-{(variant === 'newsletter' || variant === 'first-party-data') && (
+{variant === 'newsletter' && (
+  <script is:inline src="https://foundsm.activehosted.com/f/embed.php?id=1" charset="utf-8" defer></script>
+)}
+
+{variant === 'first-party-data' && (
   <script is:inline src="https://js.hsforms.net/forms/embed/5045186.js" defer></script>
 )}
 

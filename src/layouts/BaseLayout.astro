@@ -99,25 +99,29 @@ const seo = resolveSeo(Astro.url.pathname, seoProps);
 
   <script is:inline src="/scripts/main.js"></script>
 
-  <!-- HubSpot Tracking Code — injected on first interaction (5s fallback) to keep its ~1.4s of JS execution off the critical rendering path on mobile -->
+  <!-- ActiveCampaign Site Tracking — injected on first interaction (5s fallback) to keep third-party JS off the critical rendering path on mobile; replaced the HubSpot tracker during the Aug 2026 migration -->
   {enableThirdPartyScripts && (
     <script is:inline>
       (function () {
         var events = ['scroll', 'pointerdown', 'keydown', 'touchstart'];
         var loaded = false;
-        function loadHubSpot() {
+        function loadActiveCampaign() {
           if (loaded) return;
           loaded = true;
+          window.visitorGlobalObjectAlias = 'vgo';
+          window.vgo = window.vgo || function () { (window.vgo.q = window.vgo.q || []).push(arguments); };
+          window.vgo.l = new Date().getTime();
           var s = document.createElement('script');
-          s.id = 'hs-script-loader';
           s.async = true;
-          s.defer = true;
-          s.src = '//js.hs-scripts.com/5045186.js';
+          s.src = 'https://diffuser-cdn.app-us1.com/diffuser/diffuser.js';
           document.body.appendChild(s);
-          events.forEach(function (e) { window.removeEventListener(e, loadHubSpot); });
+          window.vgo('setAccount', '227250883');
+          window.vgo('setTrackByDefault', true);
+          window.vgo('process');
+          events.forEach(function (e) { window.removeEventListener(e, loadActiveCampaign); });
         }
-        events.forEach(function (e) { window.addEventListener(e, loadHubSpot, { passive: true }); });
-        setTimeout(loadHubSpot, 5000);
+        events.forEach(function (e) { window.addEventListener(e, loadActiveCampaign, { passive: true }); });
+        setTimeout(loadActiveCampaign, 5000);
       })();
     </script>
   )}

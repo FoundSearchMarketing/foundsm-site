@@ -83,7 +83,8 @@
 
 @media (min-width: 1025px) {
   :root {
-    --split-hero-content-width: min(calc(100vw - 3.125rem), 86.875rem);
+    --split-hero-content-width: min(calc(100vw - (2 * var(--gutter))), var(--content-max-width));
+    --split-hero-copy-padding-inline-start: 0;
   }
 }
 

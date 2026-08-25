@@ -272,7 +272,10 @@ export const defaultContactPageData: FormPageData = {
   ],
   formId: '4f48ec0c-d036-4c2f-b461-4b5f4c03c3fc',
   portalId: '5045186',
-  summary: [block("We're ready to learn more about your business goals and talk about all the ways we can work together to find solutions that drive impact and lead to profitable revenue. Whether it's smarter paid media strategy, creative that converts, or finding clarity in your data, we're ready to sit on the same side of the table and get to work.")],
+  summary: [
+    block("We're ready to learn more about your business goals and talk about all the ways we can work together to find solutions that drive impact and lead to profitable revenue."),
+    block("Whether it's smarter paid media strategy, creative that converts, or finding clarity in your data, we're ready to sit on the same side of the table and get to work."),
+  ],
 };
 
 export const defaultNewsletterPageData: FormPageData = {

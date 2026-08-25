@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BlockRenderer from '../components/blocks/BlockRenderer.astro';
+import { sanityClient, landingPageBySlugQuery, allLandingPagesQuery } from '../lib/sanity';
+
+// Renders landingPage documents whose slug is a nested site path
+// (e.g. "capabilities/ad-account-migration"). Single-segment landing
+// pages continue to render under /lp/[slug].astro.
+export async function getStaticPaths() {
+  const pages = await sanityClient.fetch(allLandingPagesQuery);
+  return pages
+    .filter((page: any) => page.slug?.current?.includes('/'))
+    .map((page: any) => ({
+      params: { path: page.slug.current },
+    }));
+}
+
+const { path } = Astro.params;
+const page = await sanityClient.fetch(landingPageBySlugQuery, { slug: path });
+
+if (!page) {
+  return Astro.redirect('/404');
+}
+
+const seoTitle = page.seoTitle || page.title;
+const seoDescription = page.seoDescription || '';
+---
+
+<BaseLayout
+  title={seoTitle}
+  description={seoDescription}
+  canonical={page.canonicalUrl || `https://foundsm.com/${path}/`}
+  ogTitle={page.ogTitle}
+  ogDescription={page.ogDescription}
+  ogImage={page.ogImage}
+  robots={page.robots}
+  twitterCard={page.twitterCard}
+  twitterTitle={page.twitterTitle}
+  twitterDescription={page.twitterDescription}
+  twitterImage={page.twitterImage}
+  schemaJson={page.schemaJson}
+  hideNavigation={page.hideNavigation}
+  hideFooter={page.hideFooter}
+>
+  {page.sections?.map((section: any) => (
+    <BlockRenderer section={section} />
+  ))}
+</BaseLayout>

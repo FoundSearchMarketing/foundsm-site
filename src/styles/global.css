@@ -326,7 +326,7 @@ p + p {
   padding: 0.9rem 1.75rem;
   font-family: var(--font-body);
   font-size: var(--text-btn);
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1.2;
   text-align: center;
   border-radius: var(--radius-pill);
@@ -669,7 +669,7 @@ p + p {
   border-radius: var(--radius-pill);
   padding-inline: 1.0625rem;
   font-size: 1.125rem;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1.22;
   justify-content: center;
 }
@@ -1324,7 +1324,7 @@ p + p {
   background: var(--color-dark);
   color: var(--color-white);
   font-size: 1.125rem;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1.5rem;
   cursor: pointer;
   transition:

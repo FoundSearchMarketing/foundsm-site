@@ -30,10 +30,18 @@ const totalPages = Math.ceil(posts.length / postsPerPage);
 const pageTitle = page.seoTitle || defaultInsightsPageData.seoTitle;
 const pageDescription = page.seoDescription || defaultInsightsPageData.seoDescription;
 const canonical = page.canonicalUrl || defaultInsightsPageData.canonicalUrl;
+// The lightbulb photo carries ~50px of pure-black padding above and below
+// the bulb (source is 434x609); the rect crop trims it so the visible bulb
+// top-aligns with the headline. Applied only to this exact asset.
+const LIGHTBULB_ASSET_REF = 'image-7ba62a3b1abe0c305a95bd44a6688b2d326ad885-434x609-webp';
+const heroImageRef = (page.hero.image as { asset?: { _ref?: string } } | undefined)?.asset?._ref;
 const heroImage = (() => {
   if (!page.hero.image) return undefined;
 
   try {
+    if (heroImageRef === LIGHTBULB_ASSET_REF) {
+      return urlFor(page.hero.image).rect(0, 50, 434, 510).width(600).auto('format').url();
+    }
     return urlFor(page.hero.image).width(868).height(1218).fit('crop').auto('format').url();
   } catch {
     return undefined;

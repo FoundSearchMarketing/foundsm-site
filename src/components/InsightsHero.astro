@@ -29,7 +29,7 @@ const {
           src={imageSrc}
           alt={imageAlt}
           width="434"
-          height="609"
+          height="510"
           loading="eager"
         />
       </figure>
@@ -90,7 +90,9 @@ const {
   }
 
   .insights-hero__figure {
-    margin: 0;
+    /* drop the image to the headline's visual top: 10px copy padding
+       plus the h1's half-leading */
+    margin: 1.25rem 0 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -99,8 +101,8 @@ const {
   .insights-hero__figure :global(.insights-hero__media) {
     display: block;
     inline-size: 100%;
-    max-inline-size: 340px;
-    aspect-ratio: 434 / 609;
+    max-inline-size: 300px;
+    aspect-ratio: 434 / 510;
     block-size: auto;
     object-fit: cover;
   }

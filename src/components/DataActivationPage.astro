@@ -79,7 +79,7 @@ const secondActionColumn = actionItems.slice(3);
       <div class="da-cta__inner">
         {page.cta.title && <h2>{page.cta.title}</h2>}
         {page.cta.cta?.label && page.cta.cta?.href && (
-          <a class="da-cta__button" href={page.cta.cta.href}>{page.cta.cta.label}</a>
+          <a class="btn btn--dark btn--lg da-cta__button" href={page.cta.cta.href}>{page.cta.cta.label}</a>
         )}
         <div class="da-cta__body" set:html={richHtml(page.cta.body)} />
       </div>
@@ -283,29 +283,6 @@ const secondActionColumn = actionItems.slice(3);
   .da-cta h2 {
     font-size: 3.125rem;
     line-height: 0.88;
-  }
-
-  .da-cta__button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-block-size: 3.9375rem;
-    padding: 1.25rem 3.125rem;
-    border-radius: 999px;
-    background: #231f20;
-    color: #ffffff;
-    font-size: 1.125rem;
-    font-weight: 700;
-    line-height: 1.2;
-    text-align: center;
-    transition: background-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
-  }
-
-  .da-cta__button:hover,
-  .da-cta__button:focus-visible {
-    background: #b9dc89;
-    color: #231f20;
-    transform: translateY(-1px);
   }
 
   .da-cta__body {

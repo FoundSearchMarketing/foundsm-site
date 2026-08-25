@@ -90,7 +90,7 @@ const leaders = leaderSource
         <h2 id="team-careers-heading">{page.cta.heading}</h2>
         {careersBodyHtml && <div set:html={careersBodyHtml} />}
       </div>
-      {careersCta && <a class="team-careers-cta__button" href={careersCta.href}>{careersCta.label}</a>}
+      {careersCta && <a class="btn btn--primary" href={careersCta.href}>{careersCta.label}</a>}
     </div>
   </section>
 
@@ -155,29 +155,6 @@ const leaders = leaderSource
     color: rgba(255, 255, 255, 0.84);
     font-size: 1.05rem;
     line-height: 1.7;
-  }
-
-  .team-careers-cta__button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-block-size: 3.5rem;
-    padding: 0.9rem 1.8rem;
-    border-radius: 999px;
-    background: #8bc53f;
-    color: #1a1a1a;
-    font-weight: 800;
-    line-height: 1.2;
-    text-align: center;
-    transition:
-      background-color var(--transition-fast),
-      transform var(--transition-fast);
-  }
-
-  .team-careers-cta__button:hover,
-  .team-careers-cta__button:focus-visible {
-    background: #a4d96a;
-    transform: translateY(-1px);
   }
 
   @media (max-width: 1024px) {

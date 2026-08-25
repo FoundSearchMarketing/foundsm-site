@@ -32,35 +32,8 @@ body.home-page {
   }
 }
 
-.home-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 54px;
-  border-radius: 999px;
-  background: var(--home-green);
-  color: var(--home-black);
-  padding: 14px 28px;
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 1.2;
-  text-align: center;
-  transition: transform 180ms ease, background 180ms ease;
-}
-
-.home-button:hover {
-  transform: translateY(-2px);
-  background: #a4d96a;
-}
-
-.home-button--dark {
-  background: var(--home-black);
-  color: var(--home-white);
-}
-
-.home-button--dark:hover {
-  background: #3a3536;
-}
+/* Buttons use the shared .btn system in global.css; .home-button is kept
+   only as a layout hook for section-specific placement rules below. */
 
 .home-splash {
   background: var(--home-gray-light);
@@ -301,15 +274,6 @@ body.home-page {
   font-weight: 700;
   letter-spacing: -0.2px;
   line-height: 32px;
-}
-
-.home-cta-strip .home-button {
-  background: var(--home-green);
-  color: var(--home-black);
-  font-size: 20px;
-  font-weight: 500;
-  line-height: 24px;
-  padding: 18px 30px;
 }
 
 .home-logo-marquee {
@@ -666,15 +630,6 @@ body.home-page {
   width: auto;
   max-width: 100%;
   height: auto;
-}
-
-.home-partners .home-button {
-  min-height: 0;
-  border-radius: 35px;
-  padding: 18px 30px;
-  font-size: 20px;
-  font-weight: 500;
-  line-height: 24px;
 }
 
 .home-system {

@@ -36,7 +36,6 @@ const staticRoutes = [
   '/our-approach/',
   '/privacy-policy/',
   '/team/',
-  '/whitepapers/',
 ];
 
 export async function GET() {

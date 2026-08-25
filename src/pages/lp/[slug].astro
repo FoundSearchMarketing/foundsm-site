@@ -5,9 +5,11 @@ import { sanityClient, landingPageBySlugQuery, allLandingPagesQuery } from '../.
 
 export async function getStaticPaths() {
   const pages = await sanityClient.fetch(allLandingPagesQuery);
-  return pages.map((page: any) => ({
-    params: { slug: page.slug.current },
-  }));
+  return pages
+    .filter((page: any) => !page.slug?.current?.includes('/'))
+    .map((page: any) => ({
+      params: { slug: page.slug.current },
+    }));
 }
 
 const { slug } = Astro.params;

@@ -950,14 +950,14 @@ const schema = {
       }
 
       .about-hero__grid {
-        grid-template-columns: minmax(0, 50.5rem) minmax(0, 33.875rem);
-        align-items: stretch;
-        gap: 1.875rem;
+        grid-template-columns: var(--split-hero-grid-columns);
+        align-items: start;
+        gap: var(--split-hero-gap);
       }
 
       .about-hero__copy {
         margin-top: 0;
-        max-width: 50.5rem;
+        max-width: var(--split-hero-copy-max-width);
       }
 
       .about-hero__grid--text-only {
@@ -967,8 +967,8 @@ const schema = {
       .about-hero__media {
         display: block;
         position: relative;
-        margin-top: 0;
-        aspect-ratio: auto;
+        margin-block-start: var(--split-hero-media-margin-block-start);
+        aspect-ratio: var(--split-hero-media-aspect-ratio);
       }
 
       .about-who__grid {

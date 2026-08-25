@@ -221,7 +221,7 @@ export const defaultAboutPageData: AboutPageData = {
 
 export const defaultCapabilitiesPageData: CapabilitiesPageData = {
   seoTitle: 'Capabilities | Found Search Marketing | Enterprise Paid Media Agency',
-  seoDescription: 'Found Search Marketing brings deep channel expertise, custom analytics, and agile strategy together to maximize performance across your entire media ecosystem.',
+  seoDescription: 'Found Search Marketing pairs deep channel expertise with advanced analytics and agile strategy — a growth system built around your business, not a service menu.',
   canonicalUrl: 'https://foundsm.com/capabilities/',
   robots: 'index, follow',
   hero: {

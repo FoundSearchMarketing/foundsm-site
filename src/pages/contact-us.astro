@@ -7,6 +7,9 @@ import { richHtml, richText } from '../lib/fixedPageRender';
 
 const sanityPage = await sanityClient.fetch(formPageQuery, { id: 'contactPage' }).catch(() => null);
 const page = mergeFormPageData(defaultContactPageData, sanityPage);
+// The summary copy renders inside the hero's left column (beside the form)
+// instead of as a separate band below it.
+const heroCopy = [...(page.intro ?? []), ...(page.summary ?? [])];
 const title = page.seoTitle || defaultContactPageData.seoTitle;
 const description = page.seoDescription || defaultContactPageData.seoDescription;
 const canonical = page.canonicalUrl || defaultContactPageData.canonicalUrl;
@@ -54,11 +57,9 @@ const schema = [
     variant="contact"
     eyebrow={page.eyebrow}
     title={page.heading || ''}
-    intro={richText(page.intro)}
-    introHtml={richHtml(page.intro)}
+    intro={richText(heroCopy)}
+    introHtml={richHtml(heroCopy)}
     formId={page.formId || ''}
     portalId={page.portalId}
-    summary={richText(page.summary)}
-    summaryHtml={richHtml(page.summary)}
   />
 </BaseLayout>

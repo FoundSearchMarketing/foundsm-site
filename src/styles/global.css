@@ -56,7 +56,9 @@
 
   /* Shared split-page hero layout */
   --split-hero-content-width: min(calc(100% - (2 * var(--page-gutter))), var(--content-max-width));
-  --split-hero-padding-block: 6.25rem 3.75rem;
+  --split-hero-padding-block-start: 6.25rem;
+  --split-hero-padding-block-end: 3.75rem;
+  --split-hero-padding-block: var(--split-hero-padding-block-start) var(--split-hero-padding-block-end);
   --split-hero-grid-columns: minmax(0, 1fr) minmax(22rem, 0.78fr);
   --split-hero-gap: 5rem;
   --split-hero-title-size: 3.75rem;
@@ -90,7 +92,8 @@
 @media (max-width: 1024px) {
   :root {
     --content-max-width: 64rem;
-    --split-hero-padding-block: 3rem 2.75rem;
+    --split-hero-padding-block-start: 3rem;
+    --split-hero-padding-block-end: 2.75rem;
     --split-hero-gap: 2rem;
     --split-hero-title-size: 2.8125rem;
     --split-hero-title-line-height: 1.111;
@@ -105,7 +108,8 @@
   :root {
     --content-max-width: 100%;
     --split-hero-content-width: calc(100% - 3.75rem);
-    --split-hero-padding-block: 1.875rem 2.25rem;
+    --split-hero-padding-block-start: 1.875rem;
+    --split-hero-padding-block-end: 2.25rem;
     --split-hero-title-size: 2.375rem;
     --split-hero-title-line-height: 1.105;
   }
@@ -421,7 +425,8 @@ p + p {
   position: sticky;
   inset-block-start: 0;
   z-index: var(--z-header);
-  border-bottom: 1px solid transparent;
+  border-bottom: 1px solid rgba(26, 26, 26, 0.25);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   background: var(--color-white);
   transition:
     background-color var(--transition-fast),

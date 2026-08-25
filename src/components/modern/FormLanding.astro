@@ -187,13 +187,6 @@ const sectionId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-
     letter-spacing: 0;
   }
 
-  .form-landing--newsletter h1 {
-    font-family: var(--font-body);
-    font-size: 3.375rem;
-    font-weight: 700;
-    line-height: 1.111;
-  }
-
   .form-landing--theme-dark h1,
   .form-landing--contact h1,
   .form-landing--dataconnect h1 {
@@ -250,15 +243,6 @@ const sectionId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-
     max-inline-size: none;
     font-size: 1.25rem;
     line-height: 1.8;
-  }
-
-  .form-landing--newsletter .form-landing__eyebrow {
-    color: #231f20;
-    font-family: var(--font-heading);
-    font-size: 7.9375rem;
-    font-weight: 700;
-    line-height: 0.9;
-    text-transform: none;
   }
 
   .form-landing__form-card {
@@ -391,7 +375,8 @@ const sectionId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-
       padding-inline: var(--split-hero-copy-padding-inline-start) 0;
     }
 
-    .form-landing--contact h1 {
+    .form-landing--contact h1,
+    .form-landing--newsletter h1 {
       max-inline-size: var(--split-hero-copy-max-width);
       font-size: var(--split-hero-title-size);
       line-height: var(--split-hero-title-line-height);
@@ -454,9 +439,6 @@ const sectionId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-
       line-height: 1.667;
     }
 
-    .form-landing--newsletter .form-landing__eyebrow {
-      font-size: 5rem;
-    }
   }
 
   @media (max-width: 640px) {
@@ -506,9 +488,6 @@ const sectionId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-
       line-height: 1.667;
     }
 
-    .form-landing--newsletter .form-landing__eyebrow {
-      font-size: 3.5rem;
-    }
 
     .form-landing__form-card {
       padding: 1rem;

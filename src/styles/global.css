@@ -1414,20 +1414,13 @@ p + p {
   cursor: pointer;
 }
 
-#footer-ac-form form ._submit {
-  background: var(--color-dark) !important;
-  color: var(--color-white) !important;
-}
-
-#footer-ac-form form ._submit:hover {
-  background: #3a3536 !important;
-}
-
+#footer-ac-form form ._submit,
 #newsletter-ac-form form ._submit {
   background: var(--color-primary) !important;
   color: var(--color-dark) !important;
 }
 
+#footer-ac-form form ._submit:hover,
 #newsletter-ac-form form ._submit:hover {
   background: var(--color-primary-hover) !important;
 }

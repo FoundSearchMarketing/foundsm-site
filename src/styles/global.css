@@ -1398,6 +1398,40 @@ p + p {
   line-height: 1.5;
 }
 
+/* ActiveCampaign form embeds: submit buttons follow the canonical .btn pill.
+   Scoped under owned wrapper ids to out-specify the embeds' own
+   #_form_<hash>_ !important rules (the hash changes between embed builds). */
+#footer-ac-form form ._submit,
+#newsletter-ac-form form ._submit {
+  min-block-size: 3.25rem;
+  padding: 0.9rem 1.75rem !important;
+  border: 0 !important;
+  border-radius: var(--radius-pill) !important;
+  font-family: var(--font-body) !important;
+  font-size: var(--text-btn) !important;
+  font-weight: 500 !important;
+  line-height: 1.2 !important;
+  cursor: pointer;
+}
+
+#footer-ac-form form ._submit {
+  background: var(--color-dark) !important;
+  color: var(--color-white) !important;
+}
+
+#footer-ac-form form ._submit:hover {
+  background: #3a3536 !important;
+}
+
+#newsletter-ac-form form ._submit {
+  background: var(--color-primary) !important;
+  color: var(--color-dark) !important;
+}
+
+#newsletter-ac-form form ._submit:hover {
+  background: var(--color-primary-hover) !important;
+}
+
 .site-footer__newsletter-embed {
   --footer-newsletter-form-inset: 2.5rem;
   inline-size: 100%;

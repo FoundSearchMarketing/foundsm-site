@@ -2006,6 +2006,11 @@
       "source": "/who-we-are/",
       "destination": "/about-us/",
       "permanent": true
+    },
+    {
+      "source": "/whitepapers/",
+      "destination": "/whitepapers/first-party-data/",
+      "permanent": true
     }
   ]
 }

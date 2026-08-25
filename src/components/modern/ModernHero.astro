@@ -99,7 +99,7 @@ const heroStyle = mediaGridColumns ? `--modern-hero-grid-columns: ${mediaGridCol
 
     {image && (
       <div
-        class={`modern-hero__media modern-hero__media--${imageShape} modern-hero__media--fit-${imageFit}`}
+        class={`modern-hero__media modern-hero__media--${imageShape} modern-hero__media--fit-${imageFit}${mediaHeight ? ' modern-hero__media--fixed' : ''}`}
         style={mediaStyle || undefined}
       >
         <MediaAsset
@@ -307,6 +307,15 @@ const heroStyle = mediaGridColumns ? `--modern-hero-grid-columns: ${mediaGridCol
       max-inline-size: var(--split-hero-body-max-width);
       font-size: var(--split-hero-body-size);
       line-height: var(--split-hero-body-line-height);
+    }
+
+    /* Standard split-hero media: shared aspect ratio, top-aligned with the
+       headline. An explicit mediaHeight prop opts back into a fixed box. */
+    .modern-hero--split .modern-hero__media:not(.modern-hero__media--fixed) {
+      min-block-size: 0;
+      block-size: auto;
+      aspect-ratio: var(--split-hero-media-aspect-ratio);
+      margin-block-start: var(--split-hero-media-margin-block-start);
     }
   }
 

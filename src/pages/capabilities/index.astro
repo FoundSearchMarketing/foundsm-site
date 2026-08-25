@@ -270,9 +270,8 @@ const schema = {
   }
 
   .capabilities-hero__media {
-    /* Page-scoped override: 3/2 keeps the hero image height close to the short hero copy */
-    --split-hero-media-aspect-ratio: 3 / 2;
     overflow: hidden;
+    margin-block-start: var(--split-hero-media-margin-block-start);
     aspect-ratio: var(--split-hero-media-aspect-ratio);
     border-radius: var(--split-hero-media-radius);
     --media-asset-radius: var(--split-hero-media-radius);

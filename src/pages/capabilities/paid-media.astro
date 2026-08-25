@@ -399,9 +399,8 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
   }
 
   .paid-media-hero__media {
-    /* Page-scoped override: 3/2 keeps the hero image shorter than the copy */
-    --split-hero-media-aspect-ratio: 3 / 2;
     overflow: hidden;
+    margin-block-start: var(--split-hero-media-margin-block-start);
     aspect-ratio: var(--split-hero-media-aspect-ratio);
     border-radius: var(--split-hero-media-radius);
     --media-asset-fit: cover;
@@ -409,10 +408,6 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
   }
 
   @media (min-width: 1025px) {
-    .paid-media-hero {
-      padding-block: 6.875rem 5rem;
-    }
-
     .paid-media-work__inner,
     .paid-media-tabs__inner,
     .paid-media-journey__inner,
@@ -421,28 +416,6 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
       inline-size: var(--page-visual-content-width);
     }
 
-    .paid-media-hero__inner {
-      grid-template-columns: minmax(0, 43.4375rem) minmax(0, 35.9375rem);
-      gap: 6.25rem;
-    }
-
-    .paid-media-hero__copy {
-      padding-block-start: 0;
-      padding-inline-start: 1.25rem;
-    }
-
-    .paid-media-hero h1 {
-      max-inline-size: 42.1875rem;
-      margin-block-end: 2.25rem;
-      font-size: 4.375rem;
-      line-height: 1.071;
-    }
-
-    .paid-media-hero__media {
-      aspect-ratio: var(--split-hero-media-aspect-ratio);
-      border-radius: 2.1875rem;
-      --media-asset-radius: 2.1875rem;
-    }
   }
 
   .paid-media-work {

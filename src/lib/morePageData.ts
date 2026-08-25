@@ -278,7 +278,7 @@ export const defaultContactPageData: FormPageData = {
 export const defaultNewsletterPageData: FormPageData = {
   variant: 'newsletter',
   seoTitle: "Sign Up For Found's Newsletter",
-  seoDescription: 'Found Search Marketing brings deep channel expertise, custom analytics, and agile strategy together to maximize performance across your entire media ecosystem.',
+  seoDescription: 'Sign up for Found Search Marketing’s monthly newsletter: insights, real-world strategies, and expert takes from the Found team.',
   canonicalUrl: 'https://foundsm.com/newsletter',
   eyebrow: 'Get Found in Your Inbox',
   heading: 'Sign Up for Our Newsletter',
@@ -290,7 +290,7 @@ export const defaultNewsletterPageData: FormPageData = {
 
 export const defaultTeamPageData: TeamPageData = {
   seoTitle: 'Our Team | Found Search Marketing',
-  seoDescription: 'Found Search Marketing brings deep channel expertise, custom analytics, and agile strategy together to maximize performance across your entire media ecosystem.',
+  seoDescription: 'Meet the Found Search Marketing team — client-first strategists, analysts, and creatives who have powered enterprise growth for nearly two decades.',
   canonicalUrl: 'https://foundsm.com/team',
   hero: {
     heading: 'Together, We Solve.',

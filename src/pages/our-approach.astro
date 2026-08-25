@@ -423,8 +423,16 @@ const schema = {
           nextPanel.classList.add('is-active');
         };
 
+        const partnershipRailProgress = createRailProgressFill({
+          bars: () => Array.from(tabsRoot.querySelectorAll('.approach-partnerships__tab[aria-selected="true"] .approach-partnerships__tab-rail span')),
+          keyframes: [{ height: '0%' }, { height: '100%' }],
+        });
+
         tabs.forEach((tab, index) => {
-          tab.addEventListener('click', () => activateTab(tab));
+          tab.addEventListener('click', () => {
+            partnershipRailProgress.cancel();
+            activateTab(tab);
+          });
 
           tab.addEventListener('keydown', (event) => {
             if (!['ArrowDown', 'ArrowRight', 'ArrowUp', 'ArrowLeft', 'Home', 'End'].includes(event.key)) {
@@ -446,6 +454,7 @@ const schema = {
 
             const nextTab = tabs[nextIndex];
             nextTab.focus();
+            partnershipRailProgress.cancel();
             activateTab(nextTab);
           });
         });
@@ -454,6 +463,8 @@ const schema = {
           root: tabsRoot,
           tabs,
           activate: activateTab,
+          onIntervalStart: partnershipRailProgress.start,
+          onIntervalPause: partnershipRailProgress.pause,
         });
       }
     })();
@@ -945,7 +956,7 @@ const schema = {
     .approach-partnerships__tab-rail span {
       position: absolute;
       inset-inline: 0;
-      inset-block-end: 0;
+      inset-block-start: 0;
       block-size: 0;
       border-radius: inherit;
       background: var(--color-white);
@@ -1016,7 +1027,7 @@ const schema = {
       align-items: center;
       justify-content: center;
       gap: 3.125rem;
-      margin-block-start: 4rem;
+      margin-block-start: 1rem;
     }
 
     .approach-partnerships__cta h3 {

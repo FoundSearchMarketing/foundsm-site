@@ -268,6 +268,7 @@ const schema = {
 
   <script>
     import { setupAutoRotatingTabs } from '../scripts/autoRotatingTabs';
+    import { createRailProgressFill } from '../scripts/railProgressFill';
 
     (() => {
       const root = document.querySelector('.approach-page');
@@ -354,8 +355,14 @@ const schema = {
           animatePanel(panel, shouldOpen);
         };
 
+        const railProgress = createRailProgressFill({
+          bars: () => Array.from(accordion.querySelectorAll('.approach-advantages__item.is-open .approach-advantages__rail span')),
+          keyframes: [{ height: '0%' }, { height: '100%' }],
+        });
+
         triggers.forEach((trigger) => {
           trigger.addEventListener('click', () => {
+            railProgress.cancel();
             triggers.forEach((otherTrigger) => {
               setAdvantageOpen(otherTrigger, otherTrigger === trigger);
             });
@@ -365,6 +372,18 @@ const schema = {
         syncAdvantagePanelHeight();
         document.fonts?.ready?.then(syncAdvantagePanelHeight);
         window.addEventListener('resize', queueAdvantagePanelSync, { passive: true });
+
+        setupAutoRotatingTabs({
+          root: accordion,
+          tabs: triggers,
+          activate: (trigger) => {
+            triggers.forEach((otherTrigger) => {
+              setAdvantageOpen(otherTrigger, otherTrigger === trigger);
+            });
+          },
+          onIntervalStart: railProgress.start,
+          onIntervalPause: railProgress.pause,
+        });
       }
 
       const tabsRoot = root.querySelector('[data-approach-tabs]');
@@ -777,7 +796,7 @@ const schema = {
     .approach-advantages__rail span {
       position: absolute;
       inset-inline: 0;
-      inset-block-end: 0;
+      inset-block-start: 0;
       block-size: 0;
       border-radius: inherit;
       background: var(--approach-color-text);

@@ -1,10 +1,12 @@
-const DEFAULT_ROTATION_INTERVAL = 5000;
+export const DEFAULT_ROTATION_INTERVAL = 5000;
 
 interface AutoRotatingTabsOptions<TabElement extends Element = Element> {
   root: Element;
   tabs: TabElement[];
   activate: (tab: TabElement) => void;
   interval?: number;
+  onIntervalStart?: () => void;
+  onIntervalPause?: () => void;
 }
 
 export function setupAutoRotatingTabs<TabElement extends Element>({
@@ -12,6 +14,8 @@ export function setupAutoRotatingTabs<TabElement extends Element>({
   tabs,
   activate,
   interval = DEFAULT_ROTATION_INTERVAL,
+  onIntervalStart,
+  onIntervalPause,
 }: AutoRotatingTabsOptions<TabElement>) {
   if (tabs.length < 2 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
@@ -38,6 +42,7 @@ export function setupAutoRotatingTabs<TabElement extends Element>({
     clearTimer();
     if (isPaused || !root.isConnected) return;
 
+    onIntervalStart?.();
     timer = window.setTimeout(() => {
       if (document.visibilityState === 'hidden') {
         schedule();
@@ -53,6 +58,7 @@ export function setupAutoRotatingTabs<TabElement extends Element>({
   const pause = () => {
     isPaused = true;
     clearTimer();
+    onIntervalPause?.();
   };
 
   const resume = () => {
@@ -71,6 +77,7 @@ export function setupAutoRotatingTabs<TabElement extends Element>({
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'hidden') {
       clearTimer();
+      onIntervalPause?.();
     } else if (!isPaused) {
       schedule();
     }

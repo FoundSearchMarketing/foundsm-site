@@ -420,6 +420,7 @@ const ecosystemTabs = homepage.ecosystem.tabs.map((tab) => ({
 
 <script>
   import { setupAutoRotatingTabs } from '../../scripts/autoRotatingTabs';
+  import { createRailProgressFill } from '../../scripts/railProgressFill';
 
   const initHomepage = () => {
     document.querySelectorAll('[data-homepage]').forEach((root) => {
@@ -501,6 +502,37 @@ const ecosystemTabs = homepage.ecosystem.tabs.map((tab) => ({
         const buttons = Array.from(tabsRoot.querySelectorAll('[data-home-tab]'));
         const panels = Array.from(tabsRoot.querySelectorAll('[data-home-panel]'));
         const mobilePanels = Array.from(tabsRoot.querySelectorAll('[data-home-mobile-panel]'));
+        const panelsHost = tabsRoot.querySelector('.home-tabs__panels');
+        let panelSyncFrame = 0;
+
+        // Reserve the tallest panel's height so the section stays a fixed
+        // size while rotation moves between tabs with different copy lengths.
+        const syncPanelHeight = () => {
+          if (!(panelsHost instanceof HTMLElement) || panels.length === 0) return;
+
+          const maxHeight = Math.max(...panels.map((panel) => {
+            if (!(panel instanceof HTMLElement)) return 0;
+            const wasHidden = panel.hidden;
+            panel.hidden = false;
+            panel.style.display = 'grid';
+            const height = panel.scrollHeight;
+            panel.style.removeProperty('display');
+            panel.hidden = wasHidden;
+            return height;
+          }));
+
+          if (Number.isFinite(maxHeight) && maxHeight > 0) {
+            panelsHost.style.minBlockSize = `${Math.ceil(maxHeight)}px`;
+          }
+        };
+
+        const queuePanelHeightSync = () => {
+          if (panelSyncFrame) window.cancelAnimationFrame(panelSyncFrame);
+          panelSyncFrame = window.requestAnimationFrame(() => {
+            panelSyncFrame = 0;
+            syncPanelHeight();
+          });
+        };
 
         const activateTab = (button) => {
           if (!(button instanceof HTMLElement)) return;
@@ -533,14 +565,29 @@ const ecosystemTabs = homepage.ecosystem.tabs.map((tab) => ({
           });
         };
 
+        const railProgress = createRailProgressFill({
+          bars: () => Array.from(tabsRoot.querySelectorAll('.home-tabs__button.is-active .home-tabs__button-bar')),
+          pseudoElement: '::before',
+        });
+
+        syncPanelHeight();
+        document.fonts?.ready?.then(syncPanelHeight);
+        window.addEventListener('load', queuePanelHeightSync, { once: true });
+        window.addEventListener('resize', queuePanelHeightSync, { passive: true });
+
         buttons.forEach((button) => {
-          button.addEventListener('click', () => activateTab(button));
+          button.addEventListener('click', () => {
+            railProgress.cancel();
+            activateTab(button);
+          });
         });
 
         setupAutoRotatingTabs({
           root: tabsRoot,
           tabs: buttons.filter((button) => button.getAttribute('role') === 'tab'),
           activate: activateTab,
+          onIntervalStart: railProgress.start,
+          onIntervalPause: railProgress.pause,
         });
       });
 

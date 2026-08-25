@@ -151,8 +151,8 @@ const firstPartyBullets = [
     <section class="wp-newsletter-hero" aria-labelledby="newsletter-title">
       <div class="wp-shell wp-newsletter-hero__grid">
         <div class="wp-newsletter-copy">
-          <p class="wp-newsletter-kicker">Get Found in Your Inbox</p>
           <h1 id="newsletter-title">Sign Up for Our<br class="desktop-break" /> Newsletter</h1>
+          <p class="wp-newsletter-hero__intro">Get Found in your inbox: monthly insights, real-world strategies, and expert takes from the Found team.</p>
         </div>
         <aside class="wp-newsletter-form" aria-label="Newsletter signup form">
           <div class="hs-form-frame" data-region="na1" data-form-id="f757bd34-b8c5-4f2a-a1ef-19c3a364683b" data-portal-id="5045186"></div>
@@ -372,13 +372,12 @@ const firstPartyBullets = [
     min-inline-size: 0;
   }
 
-  .wp-newsletter-kicker {
-    margin: 0 0 1.35rem;
-    color: var(--color-primary);
-    font-size: 0.875rem;
-    font-weight: 700;
-    line-height: 1.2;
-    text-transform: uppercase;
+  .wp-newsletter-hero__intro {
+    max-inline-size: var(--split-hero-body-max-width);
+    margin: 1.35rem 0 0;
+    color: rgba(26, 26, 26, 0.82);
+    font-size: var(--split-hero-body-size);
+    line-height: var(--split-hero-body-line-height);
   }
 
   .wp-newsletter-hero h1 {

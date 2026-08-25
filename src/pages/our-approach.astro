@@ -365,6 +365,16 @@ const schema = {
         syncAdvantagePanelHeight();
         document.fonts?.ready?.then(syncAdvantagePanelHeight);
         window.addEventListener('resize', queueAdvantagePanelSync, { passive: true });
+
+        setupAutoRotatingTabs({
+          root: accordion,
+          tabs: triggers,
+          activate: (trigger) => {
+            triggers.forEach((otherTrigger) => {
+              setAdvantageOpen(otherTrigger, otherTrigger === trigger);
+            });
+          },
+        });
       }
 
       const tabsRoot = root.querySelector('[data-approach-tabs]');

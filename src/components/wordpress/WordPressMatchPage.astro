@@ -155,7 +155,8 @@ const firstPartyBullets = [
           <h1 id="newsletter-title">Sign Up for Our<br class="desktop-break" /> Newsletter</h1>
         </div>
         <aside class="wp-newsletter-form" aria-label="Newsletter signup form">
-          <div class="_form_1"></div>
+          <div class="_form_4"></div>
+          <p class="wp-newsletter-consent">By subscribing, you agree to receive marketing emails from Found Search Marketing. You can unsubscribe anytime.</p>
         </aside>
       </div>
     </section>
@@ -306,7 +307,7 @@ const firstPartyBullets = [
 )}
 
 {variant === 'newsletter' && (
-  <script is:inline src="https://foundsm.activehosted.com/f/embed.php?id=1" charset="utf-8" defer></script>
+  <script is:inline src="https://foundsm.activehosted.com/f/embed.php?id=4" charset="utf-8" defer></script>
 )}
 
 {variant === 'first-party-data' && (
@@ -404,6 +405,13 @@ const firstPartyBullets = [
   .wp-newsletter-form .hs-form-frame {
     inline-size: 100%;
     min-block-size: 34rem;
+  }
+
+  .wp-newsletter-consent {
+    margin-block-start: 1rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: #5f6a60;
   }
 
   .wp-dark-strip {

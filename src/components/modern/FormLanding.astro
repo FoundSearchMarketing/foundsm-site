@@ -96,7 +96,8 @@ const sectionId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-
 
   .form-landing--contact {
     min-block-size: 56.25rem;
-    padding: 3.125rem 1.5625rem 0;
+    padding-block: var(--split-hero-padding-block-start) 0;
+    padding-inline: 1.5625rem;
     background-color: #231f20;
     background-image: url("/images/pages/our-approach/contact-bg-fc.svg");
     background-repeat: no-repeat;
@@ -461,7 +462,8 @@ const sectionId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-
   @media (max-width: 640px) {
     .form-landing--contact {
       min-block-size: 85.625rem;
-      padding: 1.25rem 1.25rem 0;
+      padding-block: var(--split-hero-padding-block-start) 0;
+      padding-inline: 1.25rem;
     }
 
     .form-landing--dataconnect {

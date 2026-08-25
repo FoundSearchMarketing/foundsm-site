@@ -267,7 +267,8 @@ const schema = {
   </div>
 
   <script>
-    import { DEFAULT_ROTATION_INTERVAL, setupAutoRotatingTabs } from '../scripts/autoRotatingTabs';
+    import { setupAutoRotatingTabs } from '../scripts/autoRotatingTabs';
+    import { createRailProgressFill } from '../scripts/railProgressFill';
 
     (() => {
       const root = document.querySelector('.approach-page');
@@ -354,27 +355,14 @@ const schema = {
           animatePanel(panel, shouldOpen);
         };
 
-        let railProgress = null;
-
-        const cancelRailProgress = () => {
-          railProgress?.cancel();
-          railProgress = null;
-        };
-
-        const startRailProgress = () => {
-          cancelRailProgress();
-          const rail = accordion.querySelector('.approach-advantages__item.is-open .approach-advantages__rail span');
-          if (!rail) return;
-
-          railProgress = rail.animate(
-            [{ height: '0%' }, { height: '100%' }],
-            { duration: DEFAULT_ROTATION_INTERVAL, easing: 'linear', fill: 'forwards' },
-          );
-        };
+        const railProgress = createRailProgressFill({
+          bars: () => Array.from(accordion.querySelectorAll('.approach-advantages__item.is-open .approach-advantages__rail span')),
+          keyframes: [{ height: '0%' }, { height: '100%' }],
+        });
 
         triggers.forEach((trigger) => {
           trigger.addEventListener('click', () => {
-            cancelRailProgress();
+            railProgress.cancel();
             triggers.forEach((otherTrigger) => {
               setAdvantageOpen(otherTrigger, otherTrigger === trigger);
             });
@@ -393,8 +381,8 @@ const schema = {
               setAdvantageOpen(otherTrigger, otherTrigger === trigger);
             });
           },
-          onIntervalStart: startRailProgress,
-          onIntervalPause: () => railProgress?.pause(),
+          onIntervalStart: railProgress.start,
+          onIntervalPause: railProgress.pause,
         });
       }
 

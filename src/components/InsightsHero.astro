@@ -53,12 +53,13 @@ const {
   .insights-hero__inner {
     display: grid;
     grid-template-columns: minmax(0, 50%) minmax(0, calc(50% - 100px));
-    align-items: center;
+    align-items: start;
     column-gap: 100px;
     inline-size: min(calc(100% - (2 * var(--page-gutter))), var(--content-max-width));
-    min-block-size: calc(609px + var(--header-height, 5.3125rem));
     margin-inline: auto;
-    padding-block-start: var(--header-height, 5.3125rem);
+    /* page--dark-hero pulls main up behind the header, so the hero re-adds
+       the header height on top of the shared split-hero offset */
+    padding-block: calc(var(--header-height, 5.3125rem) + var(--split-hero-padding-block-start)) var(--split-hero-padding-block-end);
   }
 
   .insights-hero__inner--text-only {
@@ -118,7 +119,7 @@ const {
     .insights-hero__inner {
       display: block;
       min-block-size: 0;
-      padding-block: var(--header-height, 5.3125rem) 55px;
+      padding-block: calc(var(--header-height, 5.3125rem) + var(--split-hero-padding-block-start)) var(--split-hero-padding-block-end);
     }
 
     .insights-hero__headline {

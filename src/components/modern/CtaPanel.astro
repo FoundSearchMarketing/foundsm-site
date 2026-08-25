@@ -14,6 +14,7 @@ const { title, body, bodyHtml, ctaLabel, ctaHref, theme = 'dark', align = 'split
 const paragraphs = Array.isArray(body) ? body : body ? [body] : [];
 const buttonOnly = !title && paragraphs.length === 0 && !bodyHtml;
 const classes = ['modern-cta', `modern-cta--${theme}`, `modern-cta--${align}`, `modern-cta--${layoutPreset}`, buttonOnly ? 'modern-cta--button-only' : ''].filter(Boolean).join(' ');
+const buttonVariant = theme === 'green' || theme === 'light' ? 'btn--dark' : 'btn--primary';
 ---
 
 <section class={classes} aria-label={title ?? ctaLabel ?? 'Call to action'}>
@@ -28,7 +29,7 @@ const classes = ['modern-cta', `modern-cta--${theme}`, `modern-cta--${align}`, `
         </div>
       )}
     </div>
-    {ctaLabel && ctaHref && <a class="modern-cta__button" href={ctaHref}>{ctaLabel}</a>}
+    {ctaLabel && ctaHref && <a class={`btn ${buttonVariant} modern-cta__button`} href={ctaHref}>{ctaLabel}</a>}
   </div>
 </section>
 
@@ -161,37 +162,7 @@ const classes = ['modern-cta', `modern-cta--${theme}`, `modern-cta--${align}`, `
   }
 
   .modern-cta__button {
-    display: inline-flex;
-    justify-content: center;
-    min-block-size: 3.25rem;
-    padding: 0.9rem 1.55rem;
-    border-radius: 999px;
-    background: var(--color-primary);
-    color: #1a1a1a;
-    font-weight: 700;
-    line-height: 1.2;
     white-space: nowrap;
-    transition: background-color var(--transition-fast), transform var(--transition-fast);
-  }
-
-  .modern-cta--green .modern-cta__button {
-    background: #1a1a1a;
-    color: #ffffff;
-  }
-
-  .modern-cta--light .modern-cta__button {
-    background: #1a1a1a;
-    color: #ffffff;
-  }
-
-  .modern-cta--white .modern-cta__button {
-    background: var(--color-primary);
-    color: #231f20;
-  }
-
-  .modern-cta__button:hover,
-  .modern-cta__button:focus-visible {
-    transform: translateY(-1px);
   }
 
   @media (max-width: 760px) {

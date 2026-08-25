@@ -14,7 +14,7 @@ const { headline, ctaText, ctaUrl, theme = 'dark' } = Astro.props;
   <div class="container cta-banner__inner fade-in-up">
     {headline && <h2 class="cta-banner__headline">{headline}</h2>}
     {ctaText && ctaUrl && (
-      <a href={ctaUrl} class="btn btn--green btn--lg">{ctaText}</a>
+      <a href={ctaUrl} class="btn btn--primary btn--lg">{ctaText}</a>
     )}
   </div>
 </section>

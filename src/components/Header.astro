@@ -58,6 +58,28 @@ const isPathSection = (href: string) => {
           </ul>
         </li>
         <li class="site-header__item site-header__item--has-submenu">
+          <a class="site-header__link" href="/resources/tools/" aria-current={isPathSection('/resources/') ? 'page' : undefined}>Resources</a>
+          <button
+            class="site-header__submenu-toggle"
+            type="button"
+            aria-label="Toggle Resources submenu"
+            aria-expanded="false"
+            aria-controls="submenu-resources"
+            aria-haspopup="true"
+          >
+            <span class="site-header__sr-only">Toggle Resources submenu</span>
+          </button>
+          <ul
+            class="site-header__submenu"
+            id="submenu-resources"
+            role="list"
+            aria-hidden="true"
+          >
+            <li><a class="site-header__submenu-link" href="/resources/tools/" aria-current={isExactPath('/resources/tools/') ? 'page' : undefined}>Tools &amp; Custom Products</a></li>
+            <li><a class="site-header__submenu-link" href="/whitepapers/" aria-current={isPathSection('/whitepapers/') ? 'page' : undefined}>Whitepapers</a></li>
+          </ul>
+        </li>
+        <li class="site-header__item site-header__item--has-submenu">
           <a class="site-header__link" href="/about-us/" aria-current={isExactPath('/about-us/') ? 'page' : undefined}>About Us</a>
           <button
             class="site-header__submenu-toggle"

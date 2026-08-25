@@ -237,13 +237,6 @@ export const legacyPageDefinitions: LegacyPageDefinition[] = [
     group: 'root',
   },
   {
-    id: 'legacy-whitepapers',
-    path: '/whitepapers/',
-    title: 'Whitepapers',
-    description: 'Browse Found whitepapers and resources for marketers working across paid media, analytics, and data strategy.',
-    group: 'whitepapers',
-  },
-  {
     id: 'legacy-first-party-data-whitepaper',
     path: '/whitepapers/first-party-data/',
     title: 'Why First-Party Data Is Your Most Valuable Profit Lever',

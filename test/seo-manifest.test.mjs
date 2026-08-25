@@ -26,7 +26,18 @@ test('canonical URLs are normalized to non-www foundsm.com', () => {
 test('Yoast redirects are merged under Vercel static redirect limits', () => {
   assert.equal(vercel.trailingSlash, true);
   assert.ok(Array.isArray(vercel.redirects));
-  assert.ok(vercel.redirects.length >= manifest.redirects.length);
+
+  // /agency-calendar/* Yoast redirects were intentionally dropped from
+  // vercel.json (#172) so those dead URLs 404 instead of piling onto the
+  // static redirect budget. Every other manifest redirect must still be
+  // mirrored into vercel.json by source.
+  const vercelSources = new Set(vercel.redirects.map((redirect) => redirect.source));
+  const unmirrored = manifest.redirects
+    .filter((redirect) => !redirect.source.startsWith('/agency-calendar/'))
+    .filter((redirect) => !vercelSources.has(redirect.source))
+    .map((redirect) => redirect.source);
+  assert.deepEqual(unmirrored, []);
+
   assert.ok(vercel.redirects.length <= 2048);
   assert.ok(vercel.redirects.some((redirect) => redirect.source === '/capabilities-paid-media' && redirect.destination === '/capabilities/paid-media/'));
 });
@@ -98,9 +109,13 @@ test('SEO copy overrides cover dashboard title and description findings', () => 
 
   assert.match(source, /SEO_COPY_OVERRIDES/);
   assert.match(source, /About Found Search Marketing \| Paid Media Agency/);
-  assert.match(source, /Segment AI Traffic in GA4 in 3 Minutes/);
-  assert.match(source, /Found's 19-Year Giving Tradition/);
+  assert.match(source, /Activate first-party customer data across ad platforms/);
+  assert.match(source, /Unify data across platforms, APIs, and teams/);
   assert.match(source, /Learn how first-party data can strengthen measurement/);
+
+  // Insights-post overrides live in Sanity now, not the code map (cbf7589).
+  assert.doesNotMatch(source, /Segment AI Traffic in GA4 in 3 Minutes/);
+  assert.doesNotMatch(source, /Found's 19-Year Giving Tradition/);
 });
 
 test('blog post links normalize legacy DataConnect CTAs', () => {

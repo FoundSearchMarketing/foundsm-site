@@ -592,6 +592,7 @@ const schema = {
 
     .approach-hero__media {
       overflow: hidden;
+      margin-block-start: var(--split-hero-media-margin-block-start);
       aspect-ratio: var(--split-hero-media-aspect-ratio);
       border-radius: var(--split-hero-media-radius);
       background: var(--color-surface-muted);
@@ -606,22 +607,6 @@ const schema = {
         inline-size: var(--page-visual-content-width);
       }
 
-      .approach-hero__grid {
-        grid-template-columns: minmax(0, 50.125rem) minmax(0, 34.875rem);
-        gap: 1.875rem;
-      }
-
-      .approach-hero__copy {
-        max-inline-size: 50.125rem;
-      }
-
-      .approach-hero__intro {
-        max-inline-size: 50rem;
-      }
-
-      .approach-hero__media {
-        aspect-ratio: 558 / 378;
-      }
     }
 
     .approach-intro {

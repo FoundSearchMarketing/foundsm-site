@@ -227,11 +227,10 @@ const ctaText = [page.cta?.title, ctaBody].filter(Boolean).join(' ');
   }
 
   .di-hero__media {
-    /* Page-scoped override: 3/2 keeps the hero image close to the copy height */
-    --split-hero-media-aspect-ratio: 3 / 2;
     overflow: hidden;
     justify-self: end;
     width: 100%;
+    margin-block-start: var(--split-hero-media-margin-block-start);
     aspect-ratio: var(--split-hero-media-aspect-ratio);
     border-radius: var(--split-hero-media-radius);
     --media-asset-inline-size: 100%;
@@ -247,38 +246,8 @@ const ctaText = [page.cta?.title, ctaBody].filter(Boolean).join(' ');
   }
 
   @media (min-width: 1025px) {
-    .di-hero {
-      padding-block: 6.875rem 4rem;
-    }
-
     .di-hero__inner {
-      grid-template-columns: minmax(0, 43.75rem) minmax(0, 35.9375rem);
-      gap: 6.25rem;
-      width: min(calc(100% - 2.5rem), 87.5rem);
-    }
-
-    .di-hero__copy {
-      max-inline-size: 43.75rem;
-      padding-block-start: 0;
-      padding-inline-start: 1.5625rem;
-    }
-
-    .di-hero h1 {
-      inline-size: 45rem;
-      max-inline-size: 45rem;
-      font-size: 4.375rem;
-      line-height: 1.071;
-      /* Matches the tighter WordPress heading measure without using negative tracking. */
-      transform: scaleX(0.9375);
-      transform-origin: left top;
-    }
-
-    .di-hero__body {
-      max-inline-size: 42.1875rem;
-    }
-
-    .di-hero__media {
-      aspect-ratio: var(--split-hero-media-aspect-ratio);
+      width: var(--split-hero-content-width);
     }
   }
 

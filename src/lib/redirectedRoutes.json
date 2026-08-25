@@ -70,11 +70,6 @@
     "permanent": true
   },
   {
-    "source": "/whitepapers",
-    "destination": "/whitepapers/first-party-data/",
-    "permanent": true
-  },
-  {
     "source": "/whitepapers/",
     "destination": "/whitepapers/first-party-data/",
     "permanent": true

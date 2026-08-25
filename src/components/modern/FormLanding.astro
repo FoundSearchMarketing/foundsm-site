@@ -72,7 +72,8 @@ const sectionId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-
   .form-landing {
     position: relative;
     overflow: hidden;
-    padding: 5rem var(--gutter);
+    padding-block: var(--split-hero-padding-block);
+    padding-inline: var(--gutter);
     background: #f2f3f2;
   }
 
@@ -105,7 +106,8 @@ const sectionId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-
 
   .form-landing--event {
     min-block-size: 0;
-    padding: 5rem 1.5625rem;
+    padding-block: var(--split-hero-padding-block);
+    padding-inline: 1.5625rem;
     background-image:
       linear-gradient(rgba(35, 31, 32, 0.88), rgba(35, 31, 32, 0.88)),
       url("/images/pages/performance-creative/map.png");
@@ -116,7 +118,8 @@ const sectionId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-
 
   .form-landing--resource {
     min-block-size: 0;
-    padding: 5rem 1.5625rem;
+    padding-block: var(--split-hero-padding-block);
+    padding-inline: 1.5625rem;
   }
 
   .form-landing--dataconnect {
@@ -150,7 +153,7 @@ const sectionId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-
   .form-landing__copy {
     display: grid;
     gap: 1rem;
-    padding-block-start: 2rem;
+    padding-block-start: var(--split-hero-copy-padding-block-start);
   }
 
   .form-landing--dataconnect .form-landing__inner {
@@ -456,10 +459,6 @@ const sectionId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-
   }
 
   @media (max-width: 640px) {
-    .form-landing {
-      padding-block: 3rem;
-    }
-
     .form-landing--contact {
       min-block-size: 85.625rem;
       padding: 1.25rem 1.25rem 0;

@@ -420,6 +420,7 @@ const ecosystemTabs = homepage.ecosystem.tabs.map((tab) => ({
 
 <script>
   import { setupAutoRotatingTabs } from '../../scripts/autoRotatingTabs';
+  import { createRailProgressFill } from '../../scripts/railProgressFill';
 
   const initHomepage = () => {
     document.querySelectorAll('[data-homepage]').forEach((root) => {
@@ -533,14 +534,24 @@ const ecosystemTabs = homepage.ecosystem.tabs.map((tab) => ({
           });
         };
 
+        const railProgress = createRailProgressFill({
+          bars: () => Array.from(tabsRoot.querySelectorAll('.home-tabs__button.is-active .home-tabs__button-bar')),
+          pseudoElement: '::before',
+        });
+
         buttons.forEach((button) => {
-          button.addEventListener('click', () => activateTab(button));
+          button.addEventListener('click', () => {
+            railProgress.cancel();
+            activateTab(button);
+          });
         });
 
         setupAutoRotatingTabs({
           root: tabsRoot,
           tabs: buttons.filter((button) => button.getAttribute('role') === 'tab'),
           activate: activateTab,
+          onIntervalStart: railProgress.start,
+          onIntervalPause: railProgress.pause,
         });
       });
 

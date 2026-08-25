@@ -81,6 +81,8 @@ const buttonSize = buttonOnly ? ' btn--lg' : '';
   }
 
   .modern-cta--green {
+    position: relative;
+    overflow: hidden;
     padding-block: 1rem;
     background: var(--color-primary);
     color: #1a1a1a;
@@ -89,6 +91,22 @@ const buttonSize = buttonOnly ? ' btn--lg' : '';
   .modern-cta--light {
     background: #f2f3f2;
     color: #1a1a1a;
+  }
+
+  .modern-cta--green::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('/images/pages/our-approach/topography-light.svg');
+    background-position: center;
+    background-size: cover;
+    opacity: 0.25;
+    pointer-events: none;
+  }
+
+  .modern-cta--green .modern-cta__inner {
+    position: relative;
+    z-index: 1;
   }
 
   .modern-cta--white {

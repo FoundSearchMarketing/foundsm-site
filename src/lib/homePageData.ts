@@ -275,7 +275,7 @@ export const defaultHomePageData: HomePageData = {
         id: 'creative',
         title: 'Performance Creative & CRO',
         body: [
-          block('To us, performance means generating high-quality leads that drive customer growth. We distill and clarify your messaging, take a UI/UX-focused approach to design, and complement it with engaging content that drives action. This includes conversion rate optimization (CRO) and other multivariate testing strategies to identify the highest level of performance from click to conversion to customer.'),
+          block('To us, performance means high-quality leads that drive customer growth. We sharpen your messaging, design with UI/UX in mind, and pair it with CRO and multivariate testing to maximize performance from click to conversion to customer.'),
         ],
         ctaText: 'Explore Our Creativity',
         ctaUrl: '/capabilities/performance-creative/',

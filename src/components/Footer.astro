@@ -61,12 +61,7 @@ import { enableThirdPartyScripts } from '../lib/thirdPartyScripts';
         <section class="site-footer__column" aria-labelledby="footer-newsletter-title">
           <h2 class="site-footer__heading" id="footer-newsletter-title">Sign Up for Our Newsletter</h2>
           <div class="site-footer__newsletter-embed">
-            <div
-              class="hs-form-frame"
-              data-region="na1"
-              data-form-id="36bfcb11-1834-4066-8dca-b8d3ae24eda0"
-              data-portal-id="5045186"
-            ></div>
+            <div class="_form_1"></div>
           </div>
           <p class="site-footer__newsletter-fallback">
             Having trouble with the form? <a href="/newsletter/">Visit the newsletter page</a>.
@@ -101,16 +96,24 @@ import { enableThirdPartyScripts } from '../lib/thirdPartyScripts';
 
 <script is:inline>
   (function() {
-    var embedSrc = 'https://js.hsforms.net/forms/embed/5045186.js';
-    var existingScript = document.querySelector('script[src="' + embedSrc + '"]');
-
-    if (existingScript) {
-      return;
+    // ActiveCampaign embed renders the footer newsletter form (._form_1).
+    var acSrc = 'https://foundsm.activehosted.com/f/embed.php?id=1';
+    if (!document.querySelector('script[src="' + acSrc + '"]')) {
+      var acScript = document.createElement('script');
+      acScript.src = acSrc;
+      acScript.charset = 'utf-8';
+      acScript.defer = true;
+      document.body.appendChild(acScript);
     }
 
-    var script = document.createElement('script');
-    script.src = embedSrc;
-    script.defer = true;
-    document.body.appendChild(script);
+    // HubSpot forms loader kept for pages still carrying legacy hs-form-frame
+    // embeds (InsightResourcePage, SplitFeature) — remove once those migrate.
+    var embedSrc = 'https://js.hsforms.net/forms/embed/5045186.js';
+    if (!document.querySelector('script[src="' + embedSrc + '"]')) {
+      var script = document.createElement('script');
+      script.src = embedSrc;
+      script.defer = true;
+      document.body.appendChild(script);
+    }
   })();
 </script>

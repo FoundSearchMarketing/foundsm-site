@@ -772,7 +772,8 @@ const firstPartyBullets = [
     display: grid;
     grid-template-columns: minmax(0, 42rem) minmax(25rem, 34rem);
     gap: 2.5rem;
-    inline-size: min(calc(100% - (2 * var(--page-gutter))), var(--content-max-width));
+    /* 78.5rem = title column + gap + download card, so the hero centers instead of left-packing */
+    inline-size: min(calc(100% - (2 * var(--page-gutter))), 78.5rem);
     block-size: 34.4rem;
     margin-inline: auto;
     padding-block: 3.75rem 0;
@@ -812,7 +813,7 @@ const firstPartyBullets = [
   .wp-first-party-body {
     position: relative;
     z-index: 0;
-    padding: 4.25rem var(--gutter) 10rem;
+    padding: 4.25rem max(var(--page-gutter), calc((100% - 78.5rem) / 2)) 10rem;
     background: #fff;
   }
 

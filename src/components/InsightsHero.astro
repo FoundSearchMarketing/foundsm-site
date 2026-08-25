@@ -45,8 +45,8 @@ const {
      to match the project CSS guidance. */
 
   .insights-hero {
-    background-color: #000000;
-    color: #ffffff;
+    background-color: var(--color-surface-muted);
+    color: var(--color-dark);
     margin-block-end: 50px;
   }
 
@@ -57,9 +57,7 @@ const {
     column-gap: 100px;
     inline-size: min(calc(100% - (2 * var(--page-gutter))), var(--content-max-width));
     margin-inline: auto;
-    /* page--dark-hero pulls main up behind the header, so the hero re-adds
-       the header height on top of the shared split-hero offset */
-    padding-block: calc(var(--header-height, 5.3125rem) + var(--split-hero-padding-block-start)) var(--split-hero-padding-block-end);
+    padding-block: var(--split-hero-padding-block-start) var(--split-hero-padding-block-end);
   }
 
   .insights-hero__inner--text-only {
@@ -73,7 +71,7 @@ const {
 
   .insights-hero__headline {
     margin: 0;
-    color: #ffffff;
+    color: var(--color-dark);
     font-family: 'Fraunces', Georgia, serif;
     font-size: 60px;
     font-weight: 900;
@@ -83,7 +81,7 @@ const {
 
   .insights-hero__body {
     margin: 20px 0;
-    color: #ffffff;
+    color: var(--color-dark);
     font-family: var(--font-body);
     font-size: 20px;
     line-height: 36px;
@@ -121,7 +119,7 @@ const {
     .insights-hero__inner {
       display: block;
       min-block-size: 0;
-      padding-block: calc(var(--header-height, 5.3125rem) + var(--split-hero-padding-block-start)) var(--split-hero-padding-block-end);
+      padding-block: var(--split-hero-padding-block-start) var(--split-hero-padding-block-end);
     }
 
     .insights-hero__headline {

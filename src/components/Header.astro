@@ -41,7 +41,6 @@ const isPathSection = (href: string) => {
             aria-label="Toggle Capabilities submenu"
             aria-expanded="false"
             aria-controls="submenu-capabilities"
-            aria-haspopup="true"
           >
             <span class="site-header__sr-only">Toggle Capabilities submenu</span>
           </button>
@@ -65,7 +64,6 @@ const isPathSection = (href: string) => {
             aria-label="Toggle Resources submenu"
             aria-expanded="false"
             aria-controls="submenu-resources"
-            aria-haspopup="true"
           >
             <span class="site-header__sr-only">Toggle Resources submenu</span>
           </button>
@@ -88,7 +86,6 @@ const isPathSection = (href: string) => {
             aria-label="Toggle About Us submenu"
             aria-expanded="false"
             aria-controls="submenu-about"
-            aria-haspopup="true"
           >
             <span class="site-header__sr-only">Toggle About Us submenu</span>
           </button>
@@ -127,6 +124,8 @@ const isPathSection = (href: string) => {
       <span class="site-header__sr-only">Toggle navigation menu</span>
     </button>
   </div>
+
+  <div class="site-header__scrim" aria-hidden="true"></div>
 </header>
 
 <script>
@@ -134,6 +133,7 @@ const isPathSection = (href: string) => {
     const header = document.querySelector<HTMLElement>(".site-header");
     const nav = document.querySelector<HTMLElement>(".site-header__nav");
     const menuToggle = document.querySelector<HTMLButtonElement>(".site-header__menu-toggle");
+    const scrim = document.querySelector<HTMLElement>(".site-header__scrim");
     const submenuItems = Array.from(
       document.querySelectorAll<HTMLElement>(".site-header__item--has-submenu")
     );
@@ -142,6 +142,25 @@ const isPathSection = (href: string) => {
     if (!header || !nav || !menuToggle) {
       return;
     }
+
+    /* The drawer and scrim are fixed to the viewport, so they need the real
+       header height. The --header-height token reads 85px below 1025px while
+       the header actually renders at 66px, so publish the measured value. */
+    const publishHeaderHeight = () => {
+      const { height } = header.getBoundingClientRect();
+      if (height > 0) {
+        header.style.setProperty("--header-h", `${Math.round(height)}px`);
+      }
+    };
+
+    const isFocusable = (el: HTMLElement) =>
+      el.getClientRects().length > 0 && getComputedStyle(el).visibility !== "hidden";
+
+    const drawerFocusables = () =>
+      [
+        menuToggle,
+        ...Array.from(nav.querySelectorAll<HTMLElement>("a[href], button:not([disabled])")),
+      ].filter(isFocusable);
 
     const setSubmenuOpen = (item: HTMLElement, open: boolean) => {
       const toggle = item.querySelector<HTMLButtonElement>(".site-header__submenu-toggle");
@@ -162,27 +181,48 @@ const isPathSection = (href: string) => {
     };
 
     const setMenuOpen = (open: boolean) => {
+      const isMobile = mobileQuery.matches;
+
+      if (open && isMobile) {
+        publishHeaderHeight();
+      }
+
       header.classList.toggle("is-menu-open", open);
       menuToggle.setAttribute("aria-expanded", String(open));
       menuToggle.setAttribute(
         "aria-label",
         open ? "Close navigation menu" : "Open navigation menu"
       );
-      nav.setAttribute("aria-hidden", mobileQuery.matches ? String(!open) : "false");
+      nav.setAttribute("aria-hidden", isMobile ? String(!open) : "false");
+      document.documentElement.classList.toggle("has-menu-open", isMobile && open);
 
       if (!open) {
         closeAllSubmenus();
+        return;
+      }
+
+      /* Move focus into the drawer so keyboard and screen reader users are not
+         left behind the scrim. Waits a frame for visibility to flip. */
+      if (isMobile) {
+        window.requestAnimationFrame(() => {
+          const first = nav.querySelector<HTMLElement>("a[href], button:not([disabled])");
+          if (first && isFocusable(first)) {
+            first.focus();
+          }
+        });
       }
     };
 
     const syncViewportState = () => {
+      publishHeaderHeight();
+
       if (mobileQuery.matches) {
-        nav.setAttribute(
-          "aria-hidden",
-          String(!header.classList.contains("is-menu-open"))
-        );
+        const open = header.classList.contains("is-menu-open");
+        nav.setAttribute("aria-hidden", String(!open));
+        document.documentElement.classList.toggle("has-menu-open", open);
       } else {
         header.classList.remove("is-menu-open");
+        document.documentElement.classList.remove("has-menu-open");
         nav.setAttribute("aria-hidden", "false");
         closeAllSubmenus();
         menuToggle.setAttribute("aria-expanded", "false");
@@ -196,6 +236,10 @@ const isPathSection = (href: string) => {
 
     menuToggle.addEventListener("click", () => {
       setMenuOpen(!header.classList.contains("is-menu-open"));
+    });
+
+    scrim?.addEventListener("click", () => {
+      setMenuOpen(false);
     });
 
     const closeTimers = new WeakMap<HTMLElement, number>();
@@ -272,6 +316,30 @@ const isPathSection = (href: string) => {
     });
 
     document.addEventListener("keydown", (event) => {
+      const menuOpen = header.classList.contains("is-menu-open");
+
+      /* Keep Tab inside the drawer while it is open; the page behind the scrim
+         is still focusable otherwise. The hamburger is part of the loop because
+         it doubles as the close button. */
+      if (event.key === "Tab" && mobileQuery.matches && menuOpen) {
+        const focusables = drawerFocusables();
+        if (!focusables.length) return;
+
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        const active = document.activeElement as HTMLElement | null;
+        const inside = active ? focusables.includes(active) : false;
+
+        if (event.shiftKey && (!inside || active === first)) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && (!inside || active === last)) {
+          event.preventDefault();
+          first.focus();
+        }
+        return;
+      }
+
       if (event.key !== "Escape") {
         return;
       }
@@ -286,7 +354,7 @@ const isPathSection = (href: string) => {
         return;
       }
 
-      if (mobileQuery.matches && header.classList.contains("is-menu-open")) {
+      if (mobileQuery.matches && menuOpen) {
         setMenuOpen(false);
         menuToggle.focus();
       }
@@ -294,6 +362,10 @@ const isPathSection = (href: string) => {
 
     window.addEventListener("resize", syncViewportState);
     window.addEventListener("scroll", updateScrollState, { passive: true });
+
+    if ("ResizeObserver" in window) {
+      new ResizeObserver(publishHeaderHeight).observe(header);
+    }
 
     syncViewportState();
     updateScrollState();

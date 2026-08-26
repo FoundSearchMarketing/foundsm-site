@@ -1500,6 +1500,16 @@ p + p {
   line-height: 1.5;
 }
 
+/* The embed's own #_form_<hash>_ rule sets padding: 15px 20px, which inset
+   the fields 20px from the column edge while the heading above sat flush.
+   Zero the inline padding only, so the fields start where the heading and the
+   Start the Conversation copy start; the 15px block padding is left alone
+   because the embed's 25px top margin is what .site-footer__newsletter-embed's
+   -1.5625rem margin cancels out. */
+#footer-ac-form form {
+  padding-inline: 0 !important;
+}
+
 /* ActiveCampaign form embeds: submit buttons follow the canonical .btn pill.
    Scoped under owned wrapper ids to out-specify the embeds' own
    #_form_<hash>_ !important rules (the hash changes between embed builds). */

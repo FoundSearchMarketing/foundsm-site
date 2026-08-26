@@ -148,7 +148,7 @@ const firstPartyBullets = [
 
 {variant === 'newsletter' && (
   <>
-    <section class="wp-newsletter-hero" aria-labelledby="newsletter-title">
+    <section class="wp-newsletter-hero dark-band" aria-labelledby="newsletter-title">
       <div class="wp-shell wp-newsletter-hero__grid">
         <div class="wp-newsletter-copy">
           <h1 id="newsletter-title">Sign Up for Our<br class="desktop-break" /> Newsletter</h1>
@@ -176,7 +176,7 @@ const firstPartyBullets = [
 )}
 
 {variant === 'signal-quiz' && (
-  <section class="wp-dark-hero wp-signal-hero" aria-labelledby="signal-title">
+  <section class="wp-dark-hero wp-signal-hero dark-band" aria-labelledby="signal-title">
     <div class="wp-shell wp-centered">
       <h1 id="signal-title">Curious where your organization<br class="desktop-break" /> stands?</h1>
       <p>Take the quiz to find out.</p>
@@ -188,7 +188,7 @@ const firstPartyBullets = [
 )}
 
 {variant === 'whitepapers-index' && (
-  <section class="wp-dark-hero wp-whitepaper-index" aria-labelledby="whitepapers-title">
+  <section class="wp-dark-hero wp-whitepaper-index dark-band" aria-labelledby="whitepapers-title">
     <div class="wp-shell wp-centered">
       <h1 id="whitepapers-title">You've built something great.<br />Now let data fuel your growth.</h1>
       <p>Found turns your data into a growth engine for smarter targeting and faster ROI.</p>
@@ -208,7 +208,7 @@ const firstPartyBullets = [
         <p>So glad you've found your way to us—welcome aboard! To make sure our emails land straight in your inbox and not your spam or junk folder, follow these quick steps to safelist us:</p>
       </div>
     </section>
-    <section class="wp-dark-strip wp-safelist-steps" aria-labelledby="safelist-steps-title">
+    <section class="wp-dark-strip wp-safelist-steps dark-band" aria-labelledby="safelist-steps-title">
       <div class="wp-shell">
         <h2 id="safelist-steps-title">How to Safelist Our Emails</h2>
         <div class="wp-safelist-columns">
@@ -316,7 +316,7 @@ const firstPartyBullets = [
       </aside>
       </div>
     </section>
-    <section class="wp-first-party-cta" aria-labelledby="first-party-cta-heading">
+    <section class="wp-first-party-cta dark-band" aria-labelledby="first-party-cta-heading">
       <div class="wp-first-party-cta__inner">
         <h2 id="first-party-cta-heading">Ready to make your data your most valuable profit lever?</h2>
         <a class="btn btn--primary btn--lg" href="#wp-download-card">Get the Whitepaper</a>
@@ -391,9 +391,10 @@ const firstPartyBullets = [
     display: block;
   }
 
+  /* Same dark field + street-map art as the contact hero, so the two
+     form pages read as one pair. Both come from .dark-band. */
   .wp-newsletter-hero {
     padding-block: 4rem 3.5rem;
-    background: #fff;
   }
 
   .wp-newsletter-hero__grid {
@@ -410,7 +411,7 @@ const firstPartyBullets = [
   .wp-newsletter-hero__intro {
     max-inline-size: var(--split-hero-body-max-width);
     margin: 1.35rem 0 0;
-    color: rgba(26, 26, 26, 0.82);
+    color: rgba(255, 255, 255, 0.82);
     font-size: var(--split-hero-body-size);
     line-height: var(--split-hero-body-line-height);
   }
@@ -418,7 +419,7 @@ const firstPartyBullets = [
   .wp-newsletter-hero h1 {
     max-inline-size: var(--split-hero-copy-max-width);
     margin: 0;
-    color: #231f20;
+    color: #ffffff;
     font-size: var(--split-hero-title-size);
     line-height: var(--split-hero-title-line-height);
     letter-spacing: 0;
@@ -438,25 +439,12 @@ const firstPartyBullets = [
     margin-block-start: 1rem;
     font-size: 0.875rem;
     line-height: 1.5;
-    color: #5f6a60;
+    color: rgba(255, 255, 255, 0.7);
   }
 
+  /* Field + street-map artwork come from .dark-band in global.css. */
   .wp-dark-strip {
-    position: relative;
     isolation: isolate;
-    overflow: hidden;
-    background: #231f20;
-    color: #fff;
-  }
-
-  .wp-dark-strip::before,
-  .wp-dark-hero::before {
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: url('/images/pages/our-approach/contact-bg-fc.svg') center / cover no-repeat;
-    content: '';
-    opacity: 0.7;
   }
 
 
@@ -489,15 +477,11 @@ const firstPartyBullets = [
   }
 
   .wp-dark-hero {
-    position: relative;
     isolation: isolate;
-    overflow: hidden;
-    background: #231f20;
-    color: #fff;
   }
 
   .wp-signal-hero {
-    padding-block: 13.8rem 10.7rem;
+    padding-block: 7.1rem 6.25rem;
   }
 
   .wp-dark-hero h1 {
@@ -512,7 +496,7 @@ const firstPartyBullets = [
     margin: 2rem auto 0;
     color: #fff;
     font-size: 1.5rem;
-    font-weight: 800;
+    font-weight: 400;
     line-height: 1.3;
   }
 
@@ -1053,24 +1037,10 @@ const firstPartyBullets = [
     }
   }
 
-  /* Standard closing band, same treatment as the team careers CTA */
+  /* Standard closing band; field + artwork come from .dark-band. */
   .wp-first-party-cta {
-    position: relative;
     isolation: isolate;
-    overflow: hidden;
     padding: clamp(3.5rem, 6vw, 5rem) var(--gutter);
-    background: #231f20;
-    color: #ffffff;
-  }
-
-  /* Same texture treatment the other dark bands use */
-  .wp-first-party-cta::before {
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: url('/images/pages/our-approach/contact-bg-fc.svg') center / cover no-repeat;
-    content: '';
-    opacity: 0.7;
   }
 
   .wp-first-party-cta__inner {
@@ -1141,7 +1111,7 @@ const firstPartyBullets = [
     }
 
     .wp-signal-hero {
-      padding-block: 19.5rem 10rem;
+      padding-block: 5rem 4rem;
     }
 
     .wp-whitepaper-index {

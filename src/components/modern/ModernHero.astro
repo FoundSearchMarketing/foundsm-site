@@ -12,6 +12,9 @@ interface HeroImage {
 interface CtaLink {
   label: string;
   href: string;
+  /* Set from the shared Sanity ctaField's "Open in new tab" toggle. Used for
+     links that leave the site, like the Server-Side ROAS Calculator. */
+  newTab?: boolean;
 }
 
 interface Props {
@@ -88,10 +91,10 @@ const heroStyle = mediaGridColumns ? `--modern-hero-grid-columns: ${mediaGridCol
       {(cta || secondaryCta) && (
         <div class="modern-hero__actions">
           {cta && (
-            <a class="btn btn--primary btn--lg" href={cta.href}>{cta.label}</a>
+            <a class="btn btn--primary btn--lg" href={cta.href} target={cta.newTab ? '_blank' : undefined} rel={cta.newTab ? 'noopener noreferrer' : undefined}>{cta.label}</a>
           )}
           {secondaryCta && (
-            <a class={`btn btn--lg ${tone === 'dark' ? 'btn--secondary-white' : 'btn--secondary'}`} href={secondaryCta.href}>{secondaryCta.label}</a>
+            <a class={`btn btn--lg ${tone === 'dark' ? 'btn--secondary-white' : 'btn--secondary'}`} href={secondaryCta.href} target={secondaryCta.newTab ? '_blank' : undefined} rel={secondaryCta.newTab ? 'noopener noreferrer' : undefined}>{secondaryCta.label}</a>
           )}
         </div>
       )}

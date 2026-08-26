@@ -166,9 +166,11 @@ export function resolveSeo(route: string, input: SeoInput = {}): ResolvedSeo {
   const canonical = normalizeCanonicalUrl(input.canonical || input.canonicalUrl || fallback.canonical || fallback.canonicalUrl, route);
   const title = firstText(override.title, input.title, fallback.title, SITE_NAME);
   const description = firstText(override.description, input.description, fallback.description, '');
-  const ogImage = resolveImage(input.ogImage) || resolveImage(fallback.ogImage) || resolveImage(seoManifest.defaultOgImage) || DEFAULT_OG_IMAGE;
-  const twitterImage = resolveImage(input.twitterImage) || resolveImage(fallback.twitterImage) || ogImage;
-  const ogImageMeta = resolveImageMeta(input.ogImage) || resolveImageMeta(fallback.ogImage) || seoManifest.defaultOgImage;
+  const defaultShareImage = getDefaultShareImage();
+  const ogImageMeta = resolveShareImage(input.ogImage) || resolveShareImage(fallback.ogImage) || defaultShareImage;
+  const twitterImageMeta = resolveShareImage(input.twitterImage) || resolveShareImage(fallback.twitterImage) || ogImageMeta;
+  const ogImage = ogImageMeta.url;
+  const twitterImage = twitterImageMeta.url;
   const robots = chooseRobots(input.robots, fallback.robots);
   const schema = normalizeSchemaAssetUrls(parseSchema(undefined, input.schemaJson) || input.schema || fallback.schema || createDefaultSchema({
     title,
@@ -241,13 +243,46 @@ function resolveImage(image?: string | SeoImage): string | undefined {
   return undefined;
 }
 
+function resolveShareImage(image?: string | SeoImage): SeoImage | undefined {
+  const url = resolveImage(image);
+  if (!url) return undefined;
+
+  const pathname = url.split(/[?#]/)[0] || '';
+  if (pathname.toLowerCase().endsWith('.svg')) return undefined;
+
+  if (url.includes('cdn.sanity.io')) {
+    return {
+      url: `${pathname}?w=1200&h=630&fit=crop&fm=jpg&q=80`,
+      width: 1200,
+      height: 630,
+    };
+  }
+
+  if (pathname.toLowerCase().endsWith('.webp')) return undefined;
+
+  return {
+    ...resolveImageMeta(image),
+    url,
+  };
+}
+
 function resolveImageMeta(image?: string | SeoImage): SeoImage | undefined {
   if (!image || typeof image === 'string') return undefined;
   return image;
 }
 
+function getDefaultShareImage(): SeoImage {
+  return {
+    ...(seoManifest.defaultOgImage || {}),
+    url: DEFAULT_OG_IMAGE,
+    width: seoManifest.defaultOgImage?.width || 1200,
+    height: seoManifest.defaultOgImage?.height || 630,
+  };
+}
+
 function normalizeImageUrl(value: string): string {
   if (!value) return value;
+  if (value === 'https://foundsm.com/images/og-image-1200x630.png') return DEFAULT_OG_IMAGE;
   const normalized = normalizeLegacyAssetUrl(value);
   if (normalized.startsWith('/')) return `${SITE_URL}${normalized}`;
   return normalized.replace('https://www.foundsm.com/', `${SITE_URL}/`);

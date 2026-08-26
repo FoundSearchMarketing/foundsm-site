@@ -7,6 +7,8 @@ interface Props {
   lead?: string;
   formId: string;
   portalId?: string;
+  /** ActiveCampaign form id. When set, the AC embed replaces the HubSpot frame. */
+  acFormId?: string;
   summary?: string;
   summaryHtml?: string;
   variant?: 'contact' | 'newsletter' | 'dataconnect' | 'resource' | 'event';
@@ -23,6 +25,7 @@ const {
   lead,
   formId,
   portalId = '5045186',
+  acFormId,
   summary,
   summaryHtml,
   variant = 'contact',
@@ -34,7 +37,7 @@ const introParagraphs = Array.isArray(intro) ? intro : [intro];
 const sectionId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 ---
 
-<section id={sectionId} class:list={['form-landing', `form-landing--${variant}`, `form-landing--theme-${theme}`, { 'form-landing--loads-form': loadFormScript }]} aria-labelledby={`${variant}-form-heading`}>
+<section id={sectionId} class:list={['form-landing', `form-landing--${variant}`, `form-landing--theme-${theme}`, { 'dark-band': variant === 'contact', 'form-landing--loads-form': loadFormScript }]} aria-labelledby={`${variant}-form-heading`}>
   <div class="form-landing__inner">
     <div class="form-landing__copy">
       {eyebrow && <p class="form-landing__eyebrow">{eyebrow}</p>}
@@ -44,7 +47,9 @@ const sectionId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-
     </div>
 
     <div class:list={['form-landing__form-card', { 'form-landing__form-card--bare': !showFormCard }]}>
-      {loadFormScript ? (
+      {acFormId ? (
+        <div class={`_form_${acFormId} form-landing__frame`} id="form-landing-ac"></div>
+      ) : loadFormScript ? (
         <div class="hs-form-frame form-landing__frame" data-region="na1" data-form-id={formId} data-portal-id={portalId}></div>
       ) : (
         <div class="form-landing__frame form-landing__frame--placeholder" aria-hidden="true">
@@ -66,7 +71,11 @@ const sectionId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-
   </section>
 )}
 
-{loadFormScript && <script is:inline src="https://js.hsforms.net/forms/embed/5045186.js" defer></script>}
+{acFormId ? (
+  <script is:inline src={`https://foundsm.activehosted.com/f/embed.php?id=${acFormId}`} charset="utf-8" defer></script>
+) : loadFormScript && (
+  <script is:inline src="https://js.hsforms.net/forms/embed/5045186.js" defer></script>
+)}
 
 <style>
   .form-landing {
@@ -74,6 +83,11 @@ const sectionId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-
     overflow: hidden;
     padding-block: var(--split-hero-padding-block);
     padding-inline: var(--gutter);
+  }
+
+  /* This `background` shorthand resets background-image, so keep it away from
+     any variant painting the shared .dark-band artwork. */
+  .form-landing:not(.dark-band) {
     background: #f2f3f2;
   }
 
@@ -94,15 +108,11 @@ const sectionId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-
     color: #ffffff;
   }
 
+  /* Field + street-map artwork come from .dark-band in global.css. */
   .form-landing--contact {
     min-block-size: 56.25rem;
     padding-block: var(--split-hero-padding-block-start) 0;
     padding-inline: 1.5625rem;
-    background-color: #231f20;
-    background-image: url("/images/pages/our-approach/contact-bg-fc.svg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    color: #ffffff;
   }
 
   .form-landing--event {
@@ -205,7 +215,7 @@ const sectionId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-
     margin-block-end: 1.25rem;
   }
 
-  .form-landing__copy > p,
+  .form-landing__copy > p:not(.form-landing__eyebrow),
   .form-landing__intro {
     max-inline-size: 40rem;
     color: rgba(26, 26, 26, 0.78);
@@ -229,16 +239,16 @@ const sectionId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-
     line-height: 1.8;
   }
 
-  .form-landing--theme-dark .form-landing__copy > p,
+  .form-landing--theme-dark .form-landing__copy > p:not(.form-landing__eyebrow),
   .form-landing--theme-dark .form-landing__intro,
-  .form-landing--contact .form-landing__copy > p,
+  .form-landing--contact .form-landing__copy > p:not(.form-landing__eyebrow),
   .form-landing--contact .form-landing__intro,
-  .form-landing--dataconnect .form-landing__copy > p,
+  .form-landing--dataconnect .form-landing__copy > p:not(.form-landing__eyebrow),
   .form-landing--dataconnect .form-landing__intro {
     color: #ffffff;
   }
 
-  .form-landing--dataconnect .form-landing__copy > p,
+  .form-landing--dataconnect .form-landing__copy > p:not(.form-landing__eyebrow),
   .form-landing--dataconnect .form-landing__intro {
     max-inline-size: none;
     font-size: 1.25rem;
@@ -270,6 +280,102 @@ const sectionId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-
     border-radius: 0;
     background: transparent;
     box-shadow: none;
+  }
+
+  /* ActiveCampaign embed on the contact hero: match the HubSpot form it
+     replaces — white labels over white rounded inputs on the dark band,
+     First/Last side by side, canonical green pill submit. Scoped under an
+     owned id because the embed ships #_form_<hash>_ !important rules and
+     that hash changes between embed builds. */
+  #form-landing-ac :global(form._form_8) {
+    inline-size: 100% !important;
+    max-inline-size: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    font-family: var(--font-body) !important;
+  }
+
+  #form-landing-ac :global(._form_8 ._form-title),
+  #form-landing-ac :global(._form_8 ._form-branding) {
+    display: none !important;
+  }
+
+  #form-landing-ac :global(._form_8 ._form-content) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem 1rem;
+  }
+
+  #form-landing-ac :global(._form_8 ._form_element),
+  #form-landing-ac :global(._form_8 ._button-wrapper) {
+    inline-size: 100%;
+    margin: 0 !important;
+  }
+
+  #form-landing-ac :global(._form_8 ._form_element:has(input[name='firstname'])),
+  #form-landing-ac :global(._form_8 ._form_element:has(input[name='lastname'])) {
+    inline-size: calc(50% - 0.5rem);
+  }
+
+  #form-landing-ac :global(._form_8 ._form-label),
+  #form-landing-ac :global(._form_8 ._form_element label) {
+    display: block !important;
+    margin-block-end: 0.35rem !important;
+    color: #ffffff !important;
+    font-family: var(--font-body) !important;
+    font-size: 0.8rem !important;
+    font-weight: 400 !important;
+  }
+
+  #form-landing-ac :global(._form_8 input[type='text']),
+  #form-landing-ac :global(._form_8 input[type='email']),
+  #form-landing-ac :global(._form_8 textarea) {
+    inline-size: 100% !important;
+    padding: 0.7rem 0.9rem !important;
+    border: 0 !important;
+    border-radius: 0.5rem !important;
+    background: #ffffff !important;
+    color: #142341 !important;
+    font-family: var(--font-body) !important;
+    font-size: 0.9rem !important;
+  }
+
+  #form-landing-ac :global(._form_8 textarea) {
+    min-block-size: 6rem !important;
+    resize: vertical;
+  }
+
+  #form-landing-ac :global(._form_8 ._field_html p) {
+    margin: 0.4rem 0 0 !important;
+    color: #ffffff !important;
+    font-size: 0.75rem !important;
+    line-height: 1.5 !important;
+  }
+
+  #form-landing-ac :global(._form_8 ._submit) {
+    inline-size: auto;
+    min-block-size: 3.25rem;
+    margin-block-start: 0.4rem !important;
+    padding: 0.9rem 1.75rem !important;
+    border: 0 !important;
+    border-radius: var(--radius-pill) !important;
+    background: var(--color-primary) !important;
+    color: var(--color-dark) !important;
+    font-family: var(--font-body) !important;
+    font-size: var(--text-btn) !important;
+    font-weight: 500 !important;
+    line-height: 1.2 !important;
+    cursor: pointer;
+  }
+
+  #form-landing-ac :global(._form_8 ._submit:hover) {
+    background: var(--color-primary-hover) !important;
+  }
+
+  #form-landing-ac :global(._form_8 ._form-thank-you) {
+    color: #ffffff !important;
+    font-family: var(--font-body) !important;
   }
 
   .form-landing__frame {
@@ -483,7 +589,7 @@ const sectionId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-
     }
 
     .form-landing--dataconnect .form-landing__lead,
-    .form-landing--dataconnect .form-landing__copy > p {
+    .form-landing--dataconnect .form-landing__copy > p:not(.form-landing__eyebrow) {
       font-size: 1.125rem;
       line-height: 1.667;
     }

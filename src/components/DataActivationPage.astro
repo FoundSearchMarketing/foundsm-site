@@ -75,13 +75,15 @@ const secondActionColumn = actionItems.slice(3);
   )}
 
   {page.cta && (
-    <section class="da-cta" aria-label={page.cta.title || page.cta.cta?.label || 'Contact Found Search Marketing'}>
+    <section class="da-cta green-band" aria-label={page.cta.title || page.cta.cta?.label || 'Contact Found Search Marketing'}>
       <div class="da-cta__inner">
-        {page.cta.title && <h2>{page.cta.title}</h2>}
+        <div class="da-cta__copy">
+          {page.cta.title && <h2>{page.cta.title}</h2>}
+          <div class="da-cta__body green-band__body" set:html={richHtml(page.cta.body)} />
+        </div>
         {page.cta.cta?.label && page.cta.cta?.href && (
-          <a class="btn btn--dark btn--lg da-cta__button" href={page.cta.cta.href}>{page.cta.cta.label}</a>
+          <a class="btn btn--dark da-cta__button" href={page.cta.cta.href}>{page.cta.cta.label}</a>
         )}
-        <div class="da-cta__body" set:html={richHtml(page.cta.body)} />
       </div>
     </section>
   )}
@@ -232,34 +234,36 @@ const secondActionColumn = actionItems.slice(3);
     line-height: 1.6;
   }
 
+  /* Green field, street-map texture and type scale come from .green-band
+     in global.css so every green section on the site reads the same. */
   .da-cta {
-    background: var(--color-primary);
-    color: #231f20;
-    padding-block: 1.75rem;
+    padding-block: 1rem;
   }
 
   .da-cta__inner {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
-    gap: 1rem 2rem;
+    gap: 2rem;
     inline-size: min(100%, var(--content-max-width));
-    min-block-size: 12.5rem;
     margin-inline: auto;
-    padding: 1.875rem 1.5625rem;
+    padding: 2.5rem;
   }
 
+  .da-cta__copy {
+    display: grid;
+    gap: 0.85rem;
+    max-inline-size: 64rem;
+  }
+
+  /* Re-state the band headline so it beats the page-wide 900-weight h2 rule. */
   .da-cta h2 {
-    font-size: 3.125rem;
-    line-height: 0.88;
+    color: var(--color-dark);
+    font-weight: 600;
   }
 
-  .da-cta__body {
-    grid-column: 1 / -1;
-    color: #231f20;
-    font-size: 1.25rem;
-    font-weight: 700;
-    line-height: 1.45;
+  .da-cta__button {
+    white-space: nowrap;
   }
 
   @media (min-width: 1025px) {
@@ -306,8 +310,7 @@ const secondActionColumn = actionItems.slice(3);
     }
 
     .da-actions h2,
-    .da-why h2,
-    .da-cta h2 {
+    .da-why h2 {
       font-size: 2.125rem;
       line-height: 1.15;
     }
@@ -341,15 +344,13 @@ const secondActionColumn = actionItems.slice(3);
     }
 
     .da-cta__inner {
-      grid-template-columns: minmax(0, 1fr) auto;
-      min-block-size: 14rem;
-      padding-block: 1.875rem;
+      grid-template-columns: 1fr;
+      padding: 1.5rem;
     }
 
-    .da-cta__body {
-      text-align: center;
-      font-size: 1rem;
-      line-height: 1.45;
+    .da-cta__button {
+      justify-self: start;
+      white-space: normal;
     }
   }
 

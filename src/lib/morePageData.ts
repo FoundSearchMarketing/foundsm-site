@@ -28,6 +28,8 @@ export type FormPageData = SeoFields & {
   intro?: SimplePortableTextBlock[];
   formId?: string;
   portalId?: string;
+  /** ActiveCampaign form id; when set the page renders the AC embed instead of HubSpot. */
+  acFormId?: string;
   summary?: SimplePortableTextBlock[];
 };
 
@@ -272,6 +274,7 @@ export const defaultContactPageData: FormPageData = {
   ],
   formId: '4f48ec0c-d036-4c2f-b461-4b5f4c03c3fc',
   portalId: '5045186',
+  acFormId: '8',
   summary: [
     block("We're ready to learn more about your business goals and talk about all the ways we can work together to find solutions that drive impact and lead to profitable revenue."),
     block("Whether it's smarter paid media strategy, creative that converts, or finding clarity in your data, we're ready to sit on the same side of the table and get to work."),

@@ -80,10 +80,14 @@ const marqueeLogos = normalizedLogos;
     filter: none;
   }
 
+  /* Sized off the tallest lockup in the row rather than the shortest: stacked
+     marks like Capital carry a second line of type that is unreadable at
+     wordmark height. Width is capped so a very wide mark scales down instead
+     of dominating the row. */
   .lp-logo-bar--dark .partners__badge img {
-    block-size: 2.5rem;
+    block-size: 3.5rem;
     inline-size: auto;
-    max-inline-size: 11rem;
+    max-inline-size: 13rem;
     object-fit: contain;
   }
 

@@ -1325,10 +1325,20 @@ p + p {
 .site-footer__columns {
   display: grid;
   /* Content-sized tracks + space-between keeps the visual gap between
-     sections equal even though the brand column is narrower. */
-  grid-template-columns: auto minmax(0, 25rem) minmax(0, 25rem);
+     sections equal even though the brand column is narrower.
+
+     At 25rem each text column had 380px of usable width after its 10px side
+     padding. That was ~16px short of the 396px "Sign Up for Our Newsletter"
+     needs to stay on one line, and ~9px short of the 389px that pulls "fit."
+     up out of a one-word last line in the Start the Conversation paragraph.
+     The conversation track only needs 26rem for that, and giving it 27rem
+     starves the newsletter track near 1240px, so the two differ on purpose.
+     The gap cap comes down so both tracks can reach their max near 1280px;
+     above ~1300px space-between governs the visual gap, so the cap is inert
+     there. */
+  grid-template-columns: auto minmax(0, 26rem) minmax(0, 27rem);
   justify-content: space-between;
-  gap: clamp(2.5rem, 5.5vw, 5rem);
+  gap: clamp(2rem, 3.5vw, 3.5rem);
   padding-block: clamp(2.5rem, 6.65vw, 6rem);
 }
 
@@ -1490,6 +1500,18 @@ p + p {
   line-height: 1.5;
 }
 
+/* The embed's own #_form_<hash>_ rule sets margin: 25px auto 0 and
+   padding: 15px 20px. The 20px inset the fields from the column edge while the
+   heading above sat flush; the 15px pushed the first field a matching 15px
+   below where the Start the Conversation copy starts. Zeroing both, plus the
+   margin the old -1.5625rem hack used to cancel, puts the label, inputs and
+   submit flush left and on the same baseline as the copy in the next column.
+   Scoped to the wrapper id because the embed's own id hash changes per build. */
+#footer-ac-form form {
+  margin-block-start: 0 !important;
+  padding: 0 !important;
+}
+
 /* ActiveCampaign form embeds: submit buttons follow the canonical .btn pill.
    Scoped under owned wrapper ids to out-specify the embeds' own
    #_form_<hash>_ !important rules (the hash changes between embed builds). */
@@ -1517,23 +1539,17 @@ p + p {
   background: var(--color-primary-hover) !important;
 }
 
+/* The ActiveCampaign embed renders inline and sizes itself, so this only has
+   to set the width. Everything else here was scaffolding for the HubSpot
+   iframe this replaced: a --footer-newsletter-form-inset that widened the
+   iframe past the column and shifted it back to hide its internal padding,
+   an 18rem reservation for the iframe's height, overflow: hidden to clip the
+   overhang, and a -1.5625rem margin cancelling the embed's own 25px. None of
+   it matched anything after the AC swap except the reservation and the
+   margin, which between them left 60px of dead space and pulled the form off
+   the baseline its neighbouring column sits on. */
 .site-footer__newsletter-embed {
-  --footer-newsletter-form-inset: 2.5rem;
   inline-size: 100%;
-  min-block-size: 18rem;
-  margin: -1.5625rem 0 0;
-  overflow: hidden;
-}
-
-.site-footer__newsletter-embed .hs-form-frame {
-  min-block-size: 18rem;
-}
-
-.site-footer__newsletter-embed iframe {
-  inline-size: calc(100% + (2 * var(--footer-newsletter-form-inset))) !important;
-  width: calc(100% + (2 * var(--footer-newsletter-form-inset))) !important;
-  max-inline-size: none;
-  transform: translateX(calc(-1 * var(--footer-newsletter-form-inset)));
 }
 
 .site-footer__lower {
@@ -1705,10 +1721,7 @@ p + p {
   }
 
   .site-footer__newsletter-embed {
-    --footer-newsletter-form-inset: 0rem;
     inline-size: min(21.875rem, calc(100vw - 2.5rem));
-    min-block-size: 18rem;
-    margin: -1.5625rem 0 0;
   }
 
   .site-footer__legal {

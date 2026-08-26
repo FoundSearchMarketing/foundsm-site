@@ -647,10 +647,10 @@ const schema = {
 
     .approach-intro__grid {
       display: grid;
-      grid-template-columns: minmax(0, 2fr) minmax(16rem, 1fr);
+      grid-template-columns: var(--split-hero-grid-columns);
       align-items: center;
       gap: 3.125rem;
-      margin-block-start: 3.75rem;
+      margin-block-start: 1.5rem;
       padding-inline: 0.625rem;
     }
 
@@ -658,8 +658,10 @@ const schema = {
       grid-template-columns: minmax(0, 1fr);
     }
 
-    .approach-intro__copy p {
-      margin: 0;
+    /* Copy arrives via set:html, so injected <p> tags never get Astro's scope
+       attribute — set inheritable metrics on the wrapper, like
+       .approach-section-header__body does. */
+    .approach-intro__copy {
       color: var(--approach-color-text);
       font-size: var(--approach-body-size);
       font-weight: 400;
@@ -668,12 +670,14 @@ const schema = {
 
     .approach-intro__media {
       overflow: hidden;
-      border-radius: 2.5rem;
+      aspect-ratio: var(--split-hero-media-aspect-ratio);
+      border-radius: var(--split-hero-media-radius);
       background: var(--color-white);
       --media-asset-inline-size: 100%;
-      --media-asset-block-size: 22.125rem;
       --media-asset-fit: cover;
       --media-asset-position: center;
+      --media-asset-aspect-ratio: var(--split-hero-media-aspect-ratio);
+      --media-asset-radius: var(--split-hero-media-radius);
     }
 
     .approach-callout {

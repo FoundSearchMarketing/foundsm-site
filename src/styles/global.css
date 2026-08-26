@@ -1501,14 +1501,16 @@ p + p {
   line-height: 1.5;
 }
 
-/* The embed's own #_form_<hash>_ rule sets padding: 15px 20px, which inset
-   the fields 20px from the column edge while the heading above sat flush.
-   Zero the inline padding only, so the fields start where the heading and the
-   Start the Conversation copy start; the 15px block padding is left alone
-   because the embed's 25px top margin is what .site-footer__newsletter-embed's
-   -1.5625rem margin cancels out. */
+/* The embed's own #_form_<hash>_ rule sets margin: 25px auto 0 and
+   padding: 15px 20px. The 20px inset the fields from the column edge while the
+   heading above sat flush; the 15px pushed the first field a matching 15px
+   below where the Start the Conversation copy starts. Zeroing both, plus the
+   margin the old -1.5625rem hack used to cancel, puts the label, inputs and
+   submit flush left and on the same baseline as the copy in the next column.
+   Scoped to the wrapper id because the embed's own id hash changes per build. */
 #footer-ac-form form {
-  padding-inline: 0 !important;
+  margin-block-start: 0 !important;
+  padding: 0 !important;
 }
 
 /* ActiveCampaign form embeds: submit buttons follow the canonical .btn pill.
@@ -1553,23 +1555,17 @@ p + p {
   border-color: rgba(255, 255, 255, 0.35) !important;
 }
 
+/* The ActiveCampaign embed renders inline and sizes itself, so this only has
+   to set the width. Everything else here was scaffolding for the HubSpot
+   iframe this replaced: a --footer-newsletter-form-inset that widened the
+   iframe past the column and shifted it back to hide its internal padding,
+   an 18rem reservation for the iframe's height, overflow: hidden to clip the
+   overhang, and a -1.5625rem margin cancelling the embed's own 25px. None of
+   it matched anything after the AC swap except the reservation and the
+   margin, which between them left 60px of dead space and pulled the form off
+   the baseline its neighbouring column sits on. */
 .site-footer__newsletter-embed {
-  --footer-newsletter-form-inset: 2.5rem;
   inline-size: 100%;
-  min-block-size: 18rem;
-  margin: -1.5625rem 0 0;
-  overflow: hidden;
-}
-
-.site-footer__newsletter-embed .hs-form-frame {
-  min-block-size: 18rem;
-}
-
-.site-footer__newsletter-embed iframe {
-  inline-size: calc(100% + (2 * var(--footer-newsletter-form-inset))) !important;
-  width: calc(100% + (2 * var(--footer-newsletter-form-inset))) !important;
-  max-inline-size: none;
-  transform: translateX(calc(-1 * var(--footer-newsletter-form-inset)));
 }
 
 .site-footer__lower {
@@ -1741,10 +1737,7 @@ p + p {
   }
 
   .site-footer__newsletter-embed {
-    --footer-newsletter-form-inset: 0rem;
     inline-size: min(21.875rem, calc(100vw - 2.5rem));
-    min-block-size: 18rem;
-    margin: -1.5625rem 0 0;
   }
 
   .site-footer__legal {

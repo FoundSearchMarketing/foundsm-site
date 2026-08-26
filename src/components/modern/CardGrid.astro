@@ -19,7 +19,7 @@ interface Props {
   cards: CardItem[];
   columns?: 2 | 3 | 4;
   theme?: 'light' | 'muted' | 'dark';
-  variant?: 'standard' | 'icon' | 'numbered' | 'credential' | 'topic' | 'benefit';
+  variant?: 'standard' | 'icon' | 'numbered' | 'credential' | 'topic' | 'benefit' | 'event';
   density?: 'compact' | 'standard';
 }
 
@@ -51,6 +51,11 @@ const {
               <img src={card.image} alt={card.imageAlt ?? ''} loading="lazy" decoding="async" />
             </div>
           )}
+          {variant === 'event' && card.meta && (
+            <div class="modern-card__date">
+              {card.meta.split('·').map((part) => <span>{part.trim()}</span>)}
+            </div>
+          )}
           {variant === 'numbered' && <p class="modern-card__number">{card.number || String(index + 1).padStart(2, '0')}</p>}
           <div class="modern-card__header">
             {card.icon && (
@@ -77,6 +82,58 @@ const {
 
   .card-grid-section--compact {
     padding-block: 3.5rem;
+  }
+
+  .card-grid-section--event .card-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .card-grid-section--event .modern-card {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: 1.5rem;
+    align-content: center;
+    padding: 1.35rem 1.35rem 1.35rem 0;
+    overflow: hidden;
+  }
+
+  .card-grid-section--event .modern-card > * {
+    grid-column: 2;
+  }
+
+  .card-grid-section--event .modern-card__date {
+    grid-column: 1;
+    grid-row: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.1rem;
+    min-inline-size: 7rem;
+    margin-block: -1.35rem;
+    padding: 1.35rem 1.1rem;
+    background: var(--color-primary);
+    color: #231f20;
+    text-align: center;
+  }
+
+  .card-grid-section--event .modern-card__date span {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    line-height: 1.25;
+    text-transform: uppercase;
+  }
+
+  .card-grid-section--event .modern-card__date span:nth-child(2) {
+    font-size: 2.6rem;
+    font-weight: 900;
+    letter-spacing: 0;
+    line-height: 1;
+  }
+
+  .card-grid-section--event .modern-card__meta {
+    display: none;
   }
 
   .card-grid-section--muted {

@@ -161,9 +161,10 @@ const megaMenus = [
 <style is:global>
 
 /* ---------- Mega menu panels ---------- */
-.site-header__item--mega { position: static; }
+.site-header .site-header__item--mega { position: static; }
 
-.site-header__mega {
+.site-header .site-header__mega {
+  max-inline-size: none;
   position: absolute;
   inset-block-start: 100%;
   inset-inline: 0;
@@ -188,7 +189,7 @@ const megaMenus = [
   block-size: 12px;
 }
 
-.site-header__item--mega:is(:hover, :focus-within, .is-submenu-open) > .site-header__mega {
+.site-header .site-header__item--mega:is(:hover, :focus-within, .is-submenu-open) > .site-header__mega {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;

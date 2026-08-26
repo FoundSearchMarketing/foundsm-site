@@ -151,7 +151,7 @@ const ctaText = [page.cta?.title, ctaBody].filter(Boolean).join(' ');
     </div>
   </section>
 
-  <section class="di-cta" aria-label={page.cta?.cta?.label || 'Contact Found Search Marketing'}>
+  <section class="di-cta dark-band" aria-label={page.cta?.cta?.label || 'Contact Found Search Marketing'}>
     <div class="di-cta__inner">
       {ctaText && <h2>{ctaText}</h2>}
       {page.cta?.cta?.label && page.cta?.cta?.href && (
@@ -453,15 +453,21 @@ const ctaText = [page.cta?.title, ctaBody].filter(Boolean).join(' ');
     font-weight: 700;
   }
 
+  /* The source art is an 800x1000 portrait, which rendered ~725px tall beside
+     a ~388px copy column. Pin it to the shared split-hero geometry so it sits
+     level with the copy, the way every other media panel on the site does. */
   .di-analytics__media {
     overflow: hidden;
-    border-radius: 2.5rem;
+    aspect-ratio: var(--split-hero-media-aspect-ratio);
+    border-radius: var(--split-hero-media-radius);
     --media-asset-inline-size: 100%;
-    --media-asset-radius: 2.5rem;
+    --media-asset-block-size: 100%;
+    --media-asset-fit: cover;
+    --media-asset-radius: var(--split-hero-media-radius);
   }
 
+  /* Field + street-map artwork come from .dark-band in global.css. */
   .di-cta {
-    background: #231f20;
     padding: 3.125rem 1.5625rem;
   }
 

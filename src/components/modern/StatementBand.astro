@@ -10,21 +10,24 @@ interface Props {
 
 const { lead, body, bodyHtml, theme = 'dark', pattern = false, width = 'default' } = Astro.props;
 const paragraphs = Array.isArray(body) ? body : [body];
+// A dark patterned band is the canonical .dark-band treatment in global.css.
 const classes = [
   'statement-band',
   `statement-band--${theme}`,
   pattern ? 'statement-band--pattern' : '',
+  pattern && theme === 'dark' ? 'dark-band' : '',
   width === 'narrow' ? 'statement-band--narrow' : '',
 ].filter(Boolean).join(' ');
+const bodyClasses = ['statement-band__body', pattern && theme === 'dark' ? 'dark-band__body' : ''].filter(Boolean).join(' ');
 ---
 
 <section class={classes}>
   <div class="statement-band__inner">
     <p class="statement-band__lead">{lead}</p>
     {bodyHtml ? (
-      <div class="statement-band__body" set:html={bodyHtml} />
+      <div class={bodyClasses} set:html={bodyHtml} />
     ) : (
-    <div class="statement-band__body">
+    <div class={bodyClasses}>
       {paragraphs.map((paragraph) => <p>{paragraph}</p>)}
     </div>
     )}
@@ -38,12 +41,17 @@ const classes = [
     padding: 4rem var(--gutter);
   }
 
-  .statement-band--dark {
+  /* A patterned dark band takes its field and artwork from .dark-band in
+     global.css, so only the unpatterned variant paints its own flat field. */
+  .statement-band--dark:not(.dark-band) {
     background: #1a1a1a;
+  }
+
+  .statement-band--dark {
     color: #ffffff;
   }
 
-  .statement-band--pattern {
+  .statement-band--pattern:not(.dark-band) {
     background-color: #231f20;
     background-image: url('/images/pages/our-approach/contact-bg-fc.svg');
     background-position: center;

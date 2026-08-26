@@ -237,21 +237,10 @@ body.home-page {
   }
 }
 
+/* Field + street-map artwork come from .dark-band in global.css so this strip
+   matches every other dark band on the site. */
 .home-cta-strip {
-  position: relative;
-  overflow: hidden;
-  background: var(--home-black);
   padding: 62px 25px 52px;
-}
-
-.home-cta-strip::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: url("/images/pages/our-approach/streets-light.svg");
-  background-position: center;
-  background-size: cover;
-  opacity: 0.18;
 }
 
 .home-cta-strip__inner {

@@ -118,7 +118,7 @@ const schema = {
       </div>
     </section>
 
-    <section class="approach-callout" aria-label="Approach callout">
+    <section class="approach-callout dark-band" aria-label="Approach callout">
       <div class="approach-shell approach-callout__grid">
         <h2>{page.callout.heading}</h2>
         <div class="approach-callout__action">
@@ -680,28 +680,10 @@ const schema = {
       --media-asset-radius: var(--split-hero-media-radius);
     }
 
+    /* Field + street-map artwork come from .dark-band in global.css. */
     .approach-callout {
-      position: relative;
       isolation: isolate;
       padding-block: 3.125rem 2.5rem;
-      overflow: hidden;
-      background: var(--approach-color-text);
-      color: var(--color-white);
-    }
-
-    .approach-callout::before {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-      background:
-        var(--approach-color-text)
-        url('/images/pages/our-approach/contact-bg-fc.svg') center / cover no-repeat;
-      content: '';
-    }
-
-    .approach-callout > .approach-shell {
-      position: relative;
-      z-index: 1;
     }
 
     .approach-callout__grid {

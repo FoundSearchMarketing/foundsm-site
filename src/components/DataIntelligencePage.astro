@@ -151,7 +151,7 @@ const ctaText = [page.cta?.title, ctaBody].filter(Boolean).join(' ');
     </div>
   </section>
 
-  <section class="di-cta" aria-label={page.cta?.cta?.label || 'Contact Found Search Marketing'}>
+  <section class="di-cta dark-band" aria-label={page.cta?.cta?.label || 'Contact Found Search Marketing'}>
     <div class="di-cta__inner">
       {ctaText && <h2>{ctaText}</h2>}
       {page.cta?.cta?.label && page.cta?.cta?.href && (
@@ -460,8 +460,8 @@ const ctaText = [page.cta?.title, ctaBody].filter(Boolean).join(' ');
     --media-asset-radius: 2.5rem;
   }
 
+  /* Field + street-map artwork come from .dark-band in global.css. */
   .di-cta {
-    background: #231f20;
     padding: 3.125rem 1.5625rem;
   }
 

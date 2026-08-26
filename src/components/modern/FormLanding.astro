@@ -34,7 +34,7 @@ const introParagraphs = Array.isArray(intro) ? intro : [intro];
 const sectionId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 ---
 
-<section id={sectionId} class:list={['form-landing', `form-landing--${variant}`, `form-landing--theme-${theme}`, { 'form-landing--loads-form': loadFormScript }]} aria-labelledby={`${variant}-form-heading`}>
+<section id={sectionId} class:list={['form-landing', `form-landing--${variant}`, `form-landing--theme-${theme}`, { 'dark-band': variant === 'contact', 'form-landing--loads-form': loadFormScript }]} aria-labelledby={`${variant}-form-heading`}>
   <div class="form-landing__inner">
     <div class="form-landing__copy">
       {eyebrow && <p class="form-landing__eyebrow">{eyebrow}</p>}
@@ -94,15 +94,11 @@ const sectionId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-
     color: #ffffff;
   }
 
+  /* Field + street-map artwork come from .dark-band in global.css. */
   .form-landing--contact {
     min-block-size: 56.25rem;
     padding-block: var(--split-hero-padding-block-start) 0;
     padding-inline: 1.5625rem;
-    background-color: #231f20;
-    background-image: url("/images/pages/our-approach/contact-bg-fc.svg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    color: #ffffff;
   }
 
   .form-landing--event {

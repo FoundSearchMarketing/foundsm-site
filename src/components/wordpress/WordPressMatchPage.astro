@@ -293,13 +293,42 @@ const firstPartyBullets = [
         <p><strong><em>This white paper is your blueprint for doing exactly that.</em></strong><br />In this comprehensive technical guide, you'll learn how to architect a closed-loop data system that feeds real revenue intelligence (not noisy browser signals) back into your ad platforms. You'll discover how to capture durable identifiers, store them in a resilient first-party framework, and push enriched, truth-based events directly into Google, Meta, LinkedIn, and beyond.</p>
         <h2>What You'll Gain</h2>
         <p>Marketers, revenue leaders, and technical operators will walk away with a deep understanding of:</p>
-        <ul>
+        <ul class="wp-first-party-gains">
           {firstPartyBullets.map((item) => <li><strong>{item.lead}</strong>{item.body}</li>)}
         </ul>
         <h2>Who This Is For</h2>
         <p>This resource is designed for <strong>Revenue Operations, Marketing Operations, Data Engineering, and Paid Media leaders</strong> who need more than conceptual advice and recognize the need for a detailed architectural plan.</p>
         <p>If you're responsible for scaling revenue, improving measurement, or modernizing your marketing infrastructure, this white paper will give you the strategic clarity and technical depth required to build an AI-ready organization.</p>
         <p><strong>Download the white paper to learn how first-party data becomes your most powerful profit lever and how to engineer the closed-loop system that drives sustainable, measurable growth.</strong></p>
+      </div>
+    </section>
+    <section class="wp-insights wp-first-party-insights" aria-labelledby="first-party-insights-title">
+      <div class="wp-shell">
+        <h2 id="first-party-insights-title">Keep Reading</h2>
+        <div class="wp-insights-grid">
+          {insightPosts.slice(0, 3).map((post) => (
+            <article class="wp-insight-card">
+              {post.videoSrc ? (
+                <video autoplay muted loop playsinline preload="metadata" poster={post.imageSrc || undefined} aria-label={post.imageAlt || post.title}>
+                  <source src={post.videoSrc} type="video/mp4" />
+                </video>
+              ) : post.imageSrc && (
+                <img src={post.imageSrc} alt={post.imageAlt || ''} loading="lazy" decoding="async" />
+              )}
+              <p class="wp-insight-card__meta">{(post.categories || []).map((category) => category.label).join(', ')}</p>
+              <h3><a href={post.href}>{post.title}</a></h3>
+              {post.publishedLabel && <time>{post.publishedLabel}</time>}
+              {post.excerpt && <p class="wp-insight-card__excerpt">{post.excerpt}</p>}
+              <a class="wp-dark-pill" href={post.href}>Read Article →</a>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+    <section class="wp-first-party-cta" aria-labelledby="first-party-cta-heading">
+      <div class="wp-first-party-cta__inner">
+        <h2 id="first-party-cta-heading">Ready to make your data your most valuable profit lever?</h2>
+        <a class="btn btn--primary btn--lg" href="#wp-download-card">Get the Whitepaper</a>
       </div>
     </section>
   </>
@@ -955,6 +984,79 @@ const firstPartyBullets = [
     margin: 0.75rem 0 0;
     padding-inline-start: 1.3rem;
     list-style: disc;
+  }
+
+  /* "What You'll Gain" checklist: two columns with green checks, matching
+     the site's card/checklist treatments instead of a plain bullet list */
+  .wp-first-party-copy ul.wp-first-party-gains {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem 2.5rem;
+    padding-inline-start: 0;
+    list-style: none;
+  }
+
+  .wp-first-party-gains li {
+    position: relative;
+    padding-inline-start: 2.1rem;
+  }
+
+  .wp-first-party-gains li::before {
+    content: '✓';
+    position: absolute;
+    inset-inline-start: 0;
+    inset-block-start: -0.1rem;
+    color: var(--color-primary);
+    font-size: 1.4rem;
+    font-weight: 900;
+    line-height: 1.4;
+  }
+
+  @media (max-width: 700px) {
+    .wp-first-party-copy ul.wp-first-party-gains {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .wp-first-party-insights {
+    padding: clamp(3rem, 5vw, 5rem) var(--gutter) clamp(3.5rem, 6vw, 5.5rem);
+    background: #f2f3f2;
+  }
+
+  .wp-first-party-insights h2 {
+    margin: 0 0 2.5rem;
+    font-size: clamp(2rem, 3vw, 2.5rem);
+    line-height: 1.16;
+  }
+
+  /* Standard closing band, same treatment as the team careers CTA */
+  .wp-first-party-cta {
+    padding: clamp(3.5rem, 6vw, 5rem) var(--gutter);
+    background: #231f20;
+    color: #ffffff;
+  }
+
+  .wp-first-party-cta__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 2rem;
+    inline-size: min(100%, var(--content-max-width));
+    margin-inline: auto;
+  }
+
+  .wp-first-party-cta h2 {
+    margin: 0;
+    max-inline-size: 38rem;
+    color: #ffffff;
+    font-size: clamp(1.75rem, 2.6vw, 2.25rem);
+    line-height: 1.2;
+  }
+
+  @media (max-width: 700px) {
+    .wp-first-party-cta__inner {
+      grid-template-columns: 1fr;
+      justify-items: start;
+    }
   }
 
   @media (min-width: 1025px) {

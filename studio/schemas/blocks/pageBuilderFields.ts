@@ -59,6 +59,12 @@ export const ctaField = (name = 'cta', title = 'CTA') =>
             return true;
           }),
       }),
+      defineField({
+        name: 'newTab',
+        title: 'Open in new tab',
+        type: 'boolean',
+        initialValue: false,
+      }),
     ],
   });
 

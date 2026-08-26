@@ -1384,6 +1384,33 @@ p + p {
   line-height: 1.5;
 }
 
+/* ActiveCampaign form embeds: submit buttons follow the canonical .btn pill.
+   Scoped under owned wrapper ids to out-specify the embeds' own
+   #_form_<hash>_ !important rules (the hash changes between embed builds). */
+#footer-ac-form form ._submit,
+#newsletter-ac-form form ._submit {
+  min-block-size: 3.25rem;
+  padding: 0.9rem 1.75rem !important;
+  border: 0 !important;
+  border-radius: var(--radius-pill) !important;
+  font-family: var(--font-body) !important;
+  font-size: var(--text-btn) !important;
+  font-weight: 500 !important;
+  line-height: 1.2 !important;
+  cursor: pointer;
+}
+
+#footer-ac-form form ._submit,
+#newsletter-ac-form form ._submit {
+  background: var(--color-primary) !important;
+  color: var(--color-dark) !important;
+}
+
+#footer-ac-form form ._submit:hover,
+#newsletter-ac-form form ._submit:hover {
+  background: var(--color-primary-hover) !important;
+}
+
 .site-footer__newsletter-embed {
   --footer-newsletter-form-inset: 2.5rem;
   inline-size: 100%;
@@ -1401,22 +1428,6 @@ p + p {
   width: calc(100% + (2 * var(--footer-newsletter-form-inset))) !important;
   max-inline-size: none;
   transform: translateX(calc(-1 * var(--footer-newsletter-form-inset)));
-}
-
-.site-footer__newsletter-fallback {
-  max-inline-size: 100%;
-  margin: 0;
-  color: rgba(26, 26, 26, 0.72);
-  font-size: 0.95rem;
-  line-height: 1.55;
-}
-
-.site-footer__newsletter-fallback a {
-  color: var(--color-dark);
-  font-weight: 700;
-  text-decoration: underline;
-  text-decoration-thickness: 0.08em;
-  text-underline-offset: 0.2em;
 }
 
 .site-footer__lower {

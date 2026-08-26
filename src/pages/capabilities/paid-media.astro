@@ -257,6 +257,7 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
 
 <script>
   import { setupAutoRotatingTabs } from '../../scripts/autoRotatingTabs';
+  import { createRailProgressFill } from '../../scripts/railProgressFill';
 
   const initPaidMediaTabs = () => {
     document.querySelectorAll<HTMLElement>('[data-paid-media-tabs]').forEach((container) => {
@@ -283,8 +284,16 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
         });
       };
 
+      const railProgress = createRailProgressFill({
+        bars: () => Array.from(container.querySelectorAll('.paid-media-tabs__tab.is-active .paid-media-tabs__rail')),
+        pseudoElement: '::before',
+      });
+
       tabs.forEach((tab) => {
-        tab.addEventListener('click', () => activate(tab));
+        tab.addEventListener('click', () => {
+          railProgress.cancel();
+          activate(tab);
+        });
         tab.addEventListener('keydown', (event) => {
           const current = tabs.indexOf(tab);
           const nextIndex = event.key === 'ArrowDown' || event.key === 'ArrowRight'
@@ -296,6 +305,7 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
           if (nextIndex >= 0) {
             event.preventDefault();
             tabs[nextIndex].focus();
+            railProgress.cancel();
             activate(tabs[nextIndex]);
           }
         });
@@ -305,6 +315,8 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
         root: container,
         tabs,
         activate,
+        onIntervalStart: railProgress.start,
+        onIntervalPause: railProgress.pause,
       });
     });
   };
@@ -490,14 +502,27 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
   }
 
   .paid-media-tabs__rail {
+    position: relative;
     align-self: stretch;
     inline-size: 0.35rem;
+    overflow: hidden;
     border-radius: 999px;
     background: rgba(26, 26, 26, 0.18);
   }
 
-  .paid-media-tabs__tab.is-active .paid-media-tabs__rail {
+  .paid-media-tabs__rail::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    transform: scaleY(0);
+    transform-origin: top;
+    border-radius: inherit;
     background: #1a1a1a;
+    transition: transform 220ms ease;
+  }
+
+  .paid-media-tabs__tab.is-active .paid-media-tabs__rail::before {
+    transform: scaleY(1);
   }
 
   .paid-media-tabs__icon {

@@ -1326,9 +1326,14 @@ p + p {
   display: grid;
   /* Content-sized tracks + space-between keeps the visual gap between
      sections equal even though the brand column is narrower. */
-  grid-template-columns: auto minmax(0, 25rem) minmax(0, 25rem);
+  /* The newsletter track gets 27rem so "Sign Up for Our Newsletter" sits on
+     one line like "Start the Conversation" — at 25rem the column's 380px of
+     usable width was ~16px short of the 396px the heading needs. The gap cap
+     comes down so the track can actually reach 27rem at ~1280px; above that
+     space-between governs the visual gap anyway, so the cap costs nothing. */
+  grid-template-columns: auto minmax(0, 25rem) minmax(0, 27rem);
   justify-content: space-between;
-  gap: clamp(2.5rem, 5.5vw, 5rem);
+  gap: clamp(2rem, 3.5vw, 3.5rem);
   padding-block: clamp(2.5rem, 6.65vw, 6rem);
 }
 

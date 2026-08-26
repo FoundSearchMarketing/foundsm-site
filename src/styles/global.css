@@ -1,13 +1,27 @@
 /* ==========================================================================
    Found Search Marketing - Main Stylesheet
-   Design System: Fraunces + Poppins, Green accent (#8BC53F)
+   Design System: Fraunces + Poppins, Green accent (#8DC63F)
    Mobile-first, optimized for 95+ PageSpeed
+
+   2026-08-26: the hex above previously read #8BC53F, which had not matched
+   --color-primary since the button system landed. Correcting it also re-hashes
+   this file, which staging needs. The prior build's shared chunk URL
+   (_astro/_path_.DOFwPuKk.css) has a 404 pinned in Vercel's edge cache under
+   the asset "immutable, max-age=31536000" header, so the 113 pages that link
+   it all render unstyled. Vercel exposes no purge for immutable static assets,
+   so moving the stylesheet to a fresh URL is the way out.
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
    0. Custom Properties
    -------------------------------------------------------------------------- */
 :root {
+  /* Bumped only to change this file's content hash, which moves the built
+     stylesheet to a new /_astro/ URL. Comments alone will not do it: Vite
+     strips them, so the minified output stays byte-identical and keeps the
+     old hash. Custom properties survive minification, so this does. */
+  --stylesheet-revision: "2026-08-26a";
+
   /* Colors */
   --color-primary: #8DC63F;
   --color-primary-hover: #B9DC89;

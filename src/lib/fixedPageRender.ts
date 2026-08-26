@@ -38,6 +38,7 @@ export function cardsFor(cards: CardList = []) {
       bodyHtml: renderSimplePortableText(card.body),
       ctaLabel: (card as any).cta?.label,
       ctaHref: (card as any).cta?.href,
+      ctaNewTab: (card as any).cta?.newTab === true,
       icon: toImageUrl(card.icon),
       image: videoSrc || imageSrc,
       imageAlt: card.imageAlt,

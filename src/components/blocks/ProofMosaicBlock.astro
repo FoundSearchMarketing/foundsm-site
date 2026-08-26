@@ -46,6 +46,7 @@ const media = imageProps(Astro.props);
 const visibleMetrics = metrics.filter((metric) => metric.value && metric.label);
 const quoteRole = [quote?.authorTitle, quote?.authorCompany].filter(Boolean).join(' - ');
 const featureBody = richHtml(featureCard?.body);
+const metricTones = ['green', 'red', 'orange', 'blue'];
 ---
 
 {(title || visibleMetrics.length > 0 || quote?.text || featureCard?.title || media) && (
@@ -53,8 +54,8 @@ const featureBody = richHtml(featureCard?.body);
     <div class="proof-mosaic__inner">
       {title && <h2 id="proof-mosaic-title">{title}</h2>}
       <div class="proof-mosaic__grid">
-        {visibleMetrics.map((metric) => (
-          <article class="proof-card proof-card--metric">
+        {visibleMetrics.map((metric, index) => (
+          <article class={`proof-card proof-card--metric proof-card--${metricTones[index % metricTones.length]}`}>
             {metric.eyebrow && <p class="proof-card__eyebrow">{metric.eyebrow}</p>}
             <p class="proof-card__value">
               {metric.prefix && <span>{metric.prefix}</span>}
@@ -122,18 +123,25 @@ const featureBody = richHtml(featureCard?.body);
   }
 
   .proof-mosaic h2 {
-    max-inline-size: 54rem;
-    margin: 0 0 2rem;
+    max-inline-size: 72rem;
+    margin: 0 auto 2.5rem;
     color: inherit;
     font-size: clamp(2.2rem, 4vw, 3.75rem);
     font-weight: 900;
     line-height: 1.05;
+    text-align: center;
   }
 
   .proof-mosaic__grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 1rem;
+  }
+
+  /* Metric-only proof sections mirror the paid-media journey cards. */
+  .proof-mosaic__grid:has(.proof-card--metric):not(:has(.proof-card--quote, .proof-card--feature, .proof-card--media)) {
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: 1.75rem 2rem;
   }
 
   .proof-card {
@@ -156,6 +164,71 @@ const featureBody = richHtml(featureCard?.body);
   .proof-card--feature,
   .proof-card--media {
     grid-column: span 2;
+  }
+
+  /* Journey-card treatment, ported from /capabilities/paid-media/. */
+  .proof-card--metric {
+    --card-tone: var(--proof-green);
+    --proof-dark: #231f20;
+    --proof-green: #8bc53f;
+    --proof-red: #f15a62;
+    --proof-orange: #ff9f1c;
+    --proof-blue: #28aee4;
+    align-content: center;
+    justify-items: center;
+    gap: 0.35rem;
+    min-block-size: 12.4rem;
+    padding: 1.35rem 2.25rem;
+    border: 4px solid var(--card-tone);
+    border-radius: 999px;
+    background: #9e9e9f;
+    color: var(--proof-dark);
+    text-align: center;
+    transition:
+      background-color var(--transition-fast),
+      transform var(--transition-fast);
+  }
+
+  .proof-card--metric:hover {
+    background: var(--card-tone);
+    transform: translateY(-2px);
+  }
+
+  .proof-card--green { --card-tone: var(--proof-green); }
+  .proof-card--red { --card-tone: var(--proof-red); }
+  .proof-card--orange { --card-tone: var(--proof-orange); }
+  .proof-card--blue { --card-tone: var(--proof-blue); }
+
+  .proof-mosaic--dark .proof-card--metric {
+    border-color: var(--card-tone);
+    background: #9e9e9f;
+  }
+
+  .proof-card--metric .proof-card__value {
+    justify-content: center;
+    color: inherit;
+  }
+
+  .proof-mosaic--dark .proof-card--metric .proof-card__label,
+  .proof-card--metric .proof-card__label {
+    color: inherit;
+    font-weight: 800;
+  }
+
+  .proof-mosaic--dark .proof-card--metric .proof-card__eyebrow,
+  .proof-card--metric .proof-card__eyebrow {
+    color: inherit;
+    opacity: 0.7;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .proof-card--metric {
+      transition: none;
+    }
+
+    .proof-card--metric:hover {
+      transform: none;
+    }
   }
 
   .proof-card__eyebrow,
@@ -251,6 +324,21 @@ const featureBody = richHtml(featureCard?.body);
   @media (max-width: 640px) {
     .proof-mosaic {
       padding-block: 3.5rem;
+    }
+
+    .proof-card--metric {
+      min-block-size: 11rem;
+      padding: 1.5rem 2rem;
+      border-radius: 5rem;
+    }
+
+    .proof-card--metric .proof-card__value {
+      font-size: clamp(2.2rem, 12vw, 3rem);
+    }
+
+    .proof-card--metric .proof-card__label {
+      font-size: 0.9rem;
+      line-height: 1.4;
     }
 
     .proof-mosaic__grid {

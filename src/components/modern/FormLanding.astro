@@ -102,6 +102,11 @@ const sectionId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-
     overflow: hidden;
     padding-block: var(--split-hero-padding-block);
     padding-inline: var(--gutter);
+  }
+
+  /* This `background` shorthand resets background-image, so keep it away from
+     any variant painting the shared .dark-band artwork. */
+  .form-landing:not(.dark-band) {
     background: #f2f3f2;
   }
 

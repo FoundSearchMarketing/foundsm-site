@@ -28,8 +28,8 @@ const {
           class="insights-hero__media"
           src={imageSrc}
           alt={imageAlt}
-          width="434"
-          height="510"
+          width="660"
+          height="440"
           loading="eager"
         />
       </figure>
@@ -52,9 +52,9 @@ const {
 
   .insights-hero__inner {
     display: grid;
-    grid-template-columns: minmax(0, 50%) minmax(0, calc(50% - 100px));
+    grid-template-columns: var(--split-hero-grid-columns);
     align-items: start;
-    column-gap: 100px;
+    column-gap: var(--split-hero-gap);
     inline-size: min(calc(100% - (2 * var(--page-gutter))), var(--content-max-width));
     margin-inline: auto;
     padding-block: var(--split-hero-padding-block-start) var(--split-hero-padding-block-end);
@@ -87,21 +87,18 @@ const {
     line-height: 36px;
   }
 
+  /* Media matches the shared split-hero geometry used on other pages. */
   .insights-hero__figure {
-    /* drop the image to the headline's visual top: 10px copy padding
-       plus the h1's half-leading */
-    margin: 1.25rem 0 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    margin: var(--split-hero-media-margin-block-start) 0 0;
+    overflow: hidden;
+    border-radius: var(--split-hero-media-radius);
+    aspect-ratio: var(--split-hero-media-aspect-ratio);
   }
 
   .insights-hero__figure :global(.insights-hero__media) {
     display: block;
     inline-size: 100%;
-    max-inline-size: 300px;
-    aspect-ratio: 434 / 510;
-    block-size: auto;
+    block-size: 100%;
     object-fit: cover;
   }
 

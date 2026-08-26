@@ -7,6 +7,8 @@ interface Props {
   lead?: string;
   formId: string;
   portalId?: string;
+  /** ActiveCampaign form id. When set, the AC embed replaces the HubSpot frame. */
+  acFormId?: string;
   summary?: string;
   summaryHtml?: string;
   variant?: 'contact' | 'newsletter' | 'dataconnect' | 'resource' | 'event';
@@ -23,6 +25,7 @@ const {
   lead,
   formId,
   portalId = '5045186',
+  acFormId,
   summary,
   summaryHtml,
   variant = 'contact',
@@ -44,7 +47,9 @@ const sectionId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-
     </div>
 
     <div class:list={['form-landing__form-card', { 'form-landing__form-card--bare': !showFormCard }]}>
-      {loadFormScript ? (
+      {acFormId ? (
+        <div class={`_form_${acFormId} form-landing__frame`} id="form-landing-ac"></div>
+      ) : loadFormScript ? (
         <div class="hs-form-frame form-landing__frame" data-region="na1" data-form-id={formId} data-portal-id={portalId}></div>
       ) : (
         <div class="form-landing__frame form-landing__frame--placeholder" aria-hidden="true">
@@ -66,7 +71,30 @@ const sectionId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-
   </section>
 )}
 
-{loadFormScript && <script is:inline src="https://js.hsforms.net/forms/embed/5045186.js" defer></script>}
+{acFormId ? (
+  <>
+    <script is:inline src={`https://foundsm.activehosted.com/f/embed.php?id=${acFormId}`} charset="utf-8" defer></script>
+    <script is:inline>
+      // The HubSpot original shipped the marketing opt-in pre-checked; AC forms
+      // cannot default a checkbox, so tick it once the embed renders.
+      (function precheckOptIn(tries) {
+        var box = document.querySelector('#form-landing-ac input[type="checkbox"]');
+        if (box) {
+          box.checked = true;
+          // AC renders the dropdown's first option blank; restore the prompt.
+          var sel = document.querySelector('#form-landing-ac select');
+          if (sel && sel.options.length && !sel.options[0].text.trim()) {
+            sel.options[0].text = 'Select option...';
+          }
+          return;
+        }
+        if (tries < 40) setTimeout(function () { precheckOptIn(tries + 1); }, 300);
+      })(0);
+    </script>
+  </>
+) : loadFormScript && (
+  <script is:inline src="https://js.hsforms.net/forms/embed/5045186.js" defer></script>
+)}
 
 <style>
   .form-landing {
@@ -270,6 +298,132 @@ const sectionId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-
     border-radius: 0;
     background: transparent;
     box-shadow: none;
+  }
+
+  /* ActiveCampaign embed on the contact hero: match the HubSpot form it
+     replaces — white labels over white rounded inputs on the dark band,
+     First/Last side by side, canonical green pill submit. Scoped under an
+     owned id because the embed ships #_form_<hash>_ !important rules and
+     that hash changes between embed builds. */
+  #form-landing-ac :global(form._form_8) {
+    inline-size: 100% !important;
+    max-inline-size: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    font-family: var(--font-body) !important;
+  }
+
+  #form-landing-ac :global(._form_8 ._form-title),
+  #form-landing-ac :global(._form_8 ._form-branding) {
+    display: none !important;
+  }
+
+  #form-landing-ac :global(._form_8 ._form-content) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem 1rem;
+  }
+
+  #form-landing-ac :global(._form_8 ._form_element),
+  #form-landing-ac :global(._form_8 ._button-wrapper) {
+    inline-size: 100%;
+    margin: 0 !important;
+  }
+
+  #form-landing-ac :global(._form_8 ._form_element:has(input[name='firstname'])),
+  #form-landing-ac :global(._form_8 ._form_element:has(input[name='lastname'])) {
+    inline-size: calc(50% - 0.5rem);
+  }
+
+  #form-landing-ac :global(._form_8 ._form-label),
+  #form-landing-ac :global(._form_8 ._form_element label) {
+    display: block !important;
+    margin-block-end: 0.35rem !important;
+    color: #ffffff !important;
+    font-family: var(--font-body) !important;
+    font-size: 0.8rem !important;
+    font-weight: 400 !important;
+  }
+
+  #form-landing-ac :global(._form_8 input[type='text']),
+  #form-landing-ac :global(._form_8 input[type='email']),
+  #form-landing-ac :global(._form_8 input[type='tel']),
+  #form-landing-ac :global(._form_8 select),
+  #form-landing-ac :global(._form_8 textarea) {
+    inline-size: 100% !important;
+    padding: 0.7rem 0.9rem !important;
+    border: 0 !important;
+    border-radius: 0.5rem !important;
+    background: #ffffff !important;
+    color: #142341 !important;
+    font-family: var(--font-body) !important;
+    font-size: 0.9rem !important;
+  }
+
+  #form-landing-ac :global(._form_8 textarea) {
+    min-block-size: 6rem !important;
+    resize: vertical;
+  }
+
+  #form-landing-ac :global(._form_8 ._field_html p) {
+    margin: 0.4rem 0 0 !important;
+    color: #ffffff !important;
+    font-size: 0.75rem !important;
+    line-height: 1.5 !important;
+  }
+
+  /* The checkbox field renders its title as a legend AND its option as a
+     label; the HubSpot original showed only the option, inline with the box. */
+  #form-landing-ac :global(._form_8 ._form-fieldset ._form-label) {
+    display: none !important;
+  }
+
+  #form-landing-ac :global(._form_8 ._form-fieldset) {
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+  }
+
+  #form-landing-ac :global(._form_8 ._checkbox-radio) {
+    display: flex !important;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  #form-landing-ac :global(._form_8 ._checkbox-radio input[type='checkbox']) {
+    inline-size: auto !important;
+    margin: 0 !important;
+    accent-color: var(--color-primary);
+  }
+
+  #form-landing-ac :global(._form_8 ._checkbox-radio label) {
+    margin: 0 !important;
+  }
+
+  #form-landing-ac :global(._form_8 ._submit) {
+    inline-size: auto;
+    min-block-size: 3.25rem;
+    margin-block-start: 0.4rem !important;
+    padding: 0.9rem 1.75rem !important;
+    border: 0 !important;
+    border-radius: var(--radius-pill) !important;
+    background: var(--color-primary) !important;
+    color: var(--color-dark) !important;
+    font-family: var(--font-body) !important;
+    font-size: var(--text-btn) !important;
+    font-weight: 500 !important;
+    line-height: 1.2 !important;
+    cursor: pointer;
+  }
+
+  #form-landing-ac :global(._form_8 ._submit:hover) {
+    background: var(--color-primary-hover) !important;
+  }
+
+  #form-landing-ac :global(._form_8 ._form-thank-you) {
+    color: #ffffff !important;
+    font-family: var(--font-body) !important;
   }
 
   .form-landing__frame {

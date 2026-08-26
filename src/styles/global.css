@@ -1218,6 +1218,95 @@ p + p {
 }
 
 /* --------------------------------------------------------------------------
+   7a. Dark Band (canonical dark section treatment)
+   -------------------------------------------------------------------------- */
+/* One treatment for every dark CTA / statement band on the site, matching the
+   band on /events/: the dark street-map field, white type, and regular-weight
+   supporting copy. `contact-bg-fc.svg` bakes in its own #221f20 ground and
+   #151314 streets, so it is the background rather than a translucent overlay.
+   Add `dark-band` to the <section> and put supporting copy in `dark-band__body`.
+   Tall feature sections keep their own artwork (contour, topography, map). */
+.dark-band {
+  position: relative;
+  overflow: hidden;
+  background-color: #231f20;
+  background-image: url('/images/pages/our-approach/contact-bg-fc.svg');
+  background-position: center;
+  background-size: cover;
+  color: var(--color-white);
+}
+
+/* Keep the content above the artwork. */
+.dark-band > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Supporting copy is never bold on a dark band - the headline carries the
+   weight, the copy stays quiet. */
+.dark-band__body,
+.dark-band__body p {
+  color: var(--color-white);
+  font-weight: 400;
+  opacity: 0.82;
+}
+
+/* --------------------------------------------------------------------------
+   7b. Green Band (canonical green section treatment)
+   -------------------------------------------------------------------------- */
+/* One treatment for every green section on the site: green field under the
+   street-map texture, bold Fraunces headline, regular-weight body copy below
+   it, and a dark pill button. Add `green-band` to the <section> and put the
+   supporting copy in a `green-band__body` element. Consumers: CtaPanel
+   (theme="green") and the fixed capability pages. */
+.green-band {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-primary);
+  color: var(--color-dark);
+}
+
+.green-band::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('/images/pages/our-approach/streets-light.svg');
+  background-position: center;
+  background-size: cover;
+  opacity: 0.14;
+  pointer-events: none;
+}
+
+/* Keep the content above the texture. */
+.green-band > * {
+  position: relative;
+  z-index: 1;
+}
+
+.green-band h2 {
+  margin: 0;
+  color: inherit;
+  font-size: 2.35rem;
+  font-weight: 600;
+  line-height: 1.16;
+  letter-spacing: 0;
+}
+
+.green-band__body {
+  color: currentColor;
+  font-size: 1.08rem;
+  font-weight: 400;
+  line-height: 1.7;
+  opacity: 0.84;
+}
+
+@media (max-width: 760px) {
+  .green-band h2 {
+    font-size: 2rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
    8. Footer
    -------------------------------------------------------------------------- */
 .site-footer {

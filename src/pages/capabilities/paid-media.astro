@@ -177,7 +177,7 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
       <section class="paid-media-tabs"><p class="paid-media-placeholder">Missing paid media tabs</p></section>
     )}
 
-    <section class="paid-media-journey" aria-labelledby="paid-media-journey-heading">
+    <section class="paid-media-journey dark-band" aria-labelledby="paid-media-journey-heading">
       <div class="paid-media-journey__inner">
         <div class="paid-media-section-heading paid-media-section-heading--center paid-media-section-heading--dark">
           <h2 id="paid-media-journey-heading">{page.primaryCards?.title || placeholder('journey heading')}</h2>
@@ -224,9 +224,9 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
       </div>
     </section>
 
-    <section class="paid-media-cta" aria-label={page.cta?.cta?.label || 'Paid media call to action'}>
+    <section class="paid-media-cta dark-band" aria-label={page.cta?.cta?.label || 'Paid media call to action'}>
       <div class="paid-media-cta__inner">
-        <div class="paid-media-rich-text" set:html={sectionHtml(page.cta?.body, 'CTA copy')} />
+        <div class="paid-media-rich-text dark-band__body" set:html={sectionHtml(page.cta?.body, 'CTA copy')} />
         {page.cta?.cta?.label && page.cta?.cta?.href ? (
           <a class="btn btn--primary btn--lg paid-media-cta__button" href={page.cta.cta.href}>{page.cta.cta.label}</a>
         ) : (
@@ -563,10 +563,9 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
     --media-asset-max-block-size: 26rem;
   }
 
+  /* Field + street-map artwork come from .dark-band in global.css. */
   .paid-media-journey {
     padding: clamp(4rem, 5vw, 5rem) var(--gutter) clamp(4rem, 5vw, 5.5rem);
-    background: var(--paid-media-dark);
-    color: #ffffff;
   }
 
   .paid-media-section-heading {
@@ -714,8 +713,6 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
 
   .paid-media-cta {
     padding: clamp(3.5rem, 5vw, 4.75rem) var(--gutter);
-    background: var(--paid-media-dark);
-    color: #ffffff;
   }
 
   .paid-media-cta__inner {
@@ -729,8 +726,13 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
     max-inline-size: 42rem;
     color: #ffffff;
     font-size: 1.25rem;
-    font-weight: 800;
     line-height: 1.55;
+  }
+
+  /* The auto track absorbs the leftover space, which stretched the pill to
+     twice its natural width. Pin it to the right edge instead. */
+  .paid-media-cta__button {
+    justify-self: end;
   }
 
   .paid-media-logos {

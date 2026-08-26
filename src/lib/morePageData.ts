@@ -275,7 +275,7 @@ export const defaultContactPageData: FormPageData = {
   portalId: '5045186',
   acFormId: '8',
   summary: [
-    block("Tell us your business goals — smarter paid media, creative that converts, clarity in your data — and we'll sit on the same side of the table and get to work."),
+    block("Smarter paid media, creative that converts, clarity in your data. Tell us your goals and we'll get to work."),
   ],
 };
 

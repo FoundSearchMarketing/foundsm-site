@@ -647,10 +647,10 @@ const schema = {
 
     .approach-intro__grid {
       display: grid;
-      grid-template-columns: minmax(0, 2fr) minmax(16rem, 1fr);
+      grid-template-columns: var(--split-hero-grid-columns);
       align-items: center;
       gap: 3.125rem;
-      margin-block-start: 3.75rem;
+      margin-block-start: 1.5rem;
       padding-inline: 0.625rem;
     }
 
@@ -670,12 +670,14 @@ const schema = {
 
     .approach-intro__media {
       overflow: hidden;
-      border-radius: 2.5rem;
+      aspect-ratio: var(--split-hero-media-aspect-ratio);
+      border-radius: var(--split-hero-media-radius);
       background: var(--color-white);
       --media-asset-inline-size: 100%;
-      --media-asset-block-size: 22.125rem;
       --media-asset-fit: cover;
       --media-asset-position: center;
+      --media-asset-aspect-ratio: var(--split-hero-media-aspect-ratio);
+      --media-asset-radius: var(--split-hero-media-radius);
     }
 
     .approach-callout {

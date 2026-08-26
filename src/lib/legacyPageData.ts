@@ -782,7 +782,7 @@ function buildDefaultLegacyPageData(definition: LegacyPageDefinition): LegacyPag
     cta: {
       heading: 'Ready to improve your marketing performance?',
       body: [block('Found helps teams connect data, media, and creative decisions to measurable business outcomes.')],
-      label: 'Start the Conversation',
+      label: "Let's Talk",
       href: '/contact-us',
     },
   };

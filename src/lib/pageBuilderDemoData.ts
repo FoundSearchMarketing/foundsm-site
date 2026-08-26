@@ -170,7 +170,7 @@ export const pageBuilderDemoData = {
       _key: 'cta-strip-demo',
       title: 'CTA strip preset for short next actions',
       body: [block('Use the strip preset when the page needs a concise mid-page or end-page action.')],
-      cta: { label: 'Start the Conversation', href: '/contact-us/' },
+      cta: { label: "Let's Talk", href: '/contact-us/' },
       theme: 'green',
       align: 'split',
       layoutPreset: 'strip',

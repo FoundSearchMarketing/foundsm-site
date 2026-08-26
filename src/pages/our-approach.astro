@@ -1120,6 +1120,19 @@ const schema = {
       }
     }
 
+    /* The hero headline is authored as two hard-broken lines. Below roughly
+       465px the longer line ("It's Not What We Do.") no longer fits on one row
+       at 2.375rem, so scale the type to the available width instead of letting
+       it wrap. 10.6 is the measured width-to-font-size ratio of that line in
+       Fraunces 900 (its optical sizing runs slightly wider at small sizes, so
+       the ratio carries a little headroom); 3.75rem is the hero's mobile
+       gutter. */
+    @media (max-width: 767px) {
+      .approach-hero h1 {
+        font-size: min(var(--split-hero-title-size), calc((100vw - 3.75rem) / 10.6));
+      }
+    }
+
     @media (max-width: 640px) {
       .approach-hero__media,
       .approach-intro__media,

@@ -6,8 +6,8 @@ interface Props {
   eyebrow?: string;
   title: string;
   intro?: any[];
-  cta?: { label?: string; href?: string };
-  secondaryCta?: { label?: string; href?: string };
+  cta?: { label?: string; href?: string; newTab?: boolean };
+  secondaryCta?: { label?: string; href?: string; newTab?: boolean };
   image?: unknown;
   imageAlt?: string;
   videoUrl?: string;
@@ -39,8 +39,8 @@ const {
 const heroImage = layoutPreset === 'textOnly'
   ? undefined
   : imageProps({ image, imageAlt, videoUrl }, 'eager');
-const ctaLink = cta?.label && cta.href ? { label: cta.label, href: cta.href } : undefined;
-const secondaryCtaLink = secondaryCta?.label && secondaryCta.href ? { label: secondaryCta.label, href: secondaryCta.href } : undefined;
+const ctaLink = cta?.label && cta.href ? { label: cta.label, href: cta.href, newTab: cta.newTab } : undefined;
+const secondaryCtaLink = secondaryCta?.label && secondaryCta.href ? { label: secondaryCta.label, href: secondaryCta.href, newTab: secondaryCta.newTab } : undefined;
 const introHtml = richHtml(intro);
 const mediaHeights = {
   compact: { desktop: '26rem', tablet: '22rem', mobile: '18rem' },

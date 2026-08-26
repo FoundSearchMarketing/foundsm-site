@@ -83,7 +83,7 @@ const leaders = leaderSource
     showImages
   />
 
-  <section class="team-careers-cta" aria-labelledby="team-careers-heading">
+  <section class="team-careers-cta dark-band" aria-labelledby="team-careers-heading">
     <div class="team-careers-cta__inner">
       <div class="team-careers-cta__copy">
         <h2 id="team-careers-heading">{page.cta.heading}</h2>
@@ -109,10 +109,9 @@ const leaders = leaderSource
     max-inline-size: 43rem;
   }
 
+  /* Field + street-map artwork come from .dark-band in global.css. */
   .team-careers-cta {
     padding: clamp(3.5rem, 6vw, 5rem) var(--gutter);
-    background: #231f20;
-    color: #ffffff;
   }
 
   .team-careers-cta__inner {

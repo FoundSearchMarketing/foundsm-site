@@ -13,7 +13,12 @@ interface Props {
 const { title, body, bodyHtml, ctaLabel, ctaHref, theme = 'dark', align = 'split', layoutPreset = 'panel' } = Astro.props;
 const paragraphs = Array.isArray(body) ? body : body ? [body] : [];
 const buttonOnly = !title && paragraphs.length === 0 && !bodyHtml;
-const classes = ['modern-cta', `modern-cta--${theme}`, `modern-cta--${align}`, `modern-cta--${layoutPreset}`, buttonOnly ? 'modern-cta--button-only' : ''].filter(Boolean).join(' ');
+// theme="green" / theme="dark" opt into the canonical band treatments in
+// global.css: green or dark field under the same street-map artwork, bold
+// headline, regular-weight body copy.
+const bandClass = theme === 'green' ? 'green-band' : theme === 'dark' ? 'dark-band' : '';
+const classes = ['modern-cta', `modern-cta--${theme}`, `modern-cta--${align}`, `modern-cta--${layoutPreset}`, bandClass, buttonOnly ? 'modern-cta--button-only' : ''].filter(Boolean).join(' ');
+const bodyClasses = ['modern-cta__body', bandClass ? `${bandClass}__body` : ''].filter(Boolean).join(' ');
 const buttonVariant = theme === 'green' || theme === 'light' ? 'btn--dark' : 'btn--primary';
 const buttonSize = buttonOnly ? ' btn--lg' : '';
 ---
@@ -23,9 +28,9 @@ const buttonSize = buttonOnly ? ' btn--lg' : '';
     <div class="modern-cta__copy">
       {title && <h2>{title}</h2>}
       {bodyHtml ? (
-        <div class="modern-cta__body" set:html={bodyHtml} />
+        <div class={bodyClasses} set:html={bodyHtml} />
       ) : paragraphs.length > 0 && (
-        <div class="modern-cta__body">
+        <div class={bodyClasses}>
           {paragraphs.map((paragraph) => <p>{paragraph}</p>)}
         </div>
       )}
@@ -57,56 +62,14 @@ const buttonSize = buttonOnly ? ' btn--lg' : '';
     display: block;
   }
 
-  .modern-cta--dark {
-    position: relative;
-    overflow: hidden;
-    background: var(--color-dark, #1a1a1a);
-    color: #ffffff;
-  }
-
-  .modern-cta--dark::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: url('/images/pages/our-approach/streets-light.svg');
-    background-position: center;
-    background-size: cover;
-    opacity: 0.16;
-    pointer-events: none;
-  }
-
-  .modern-cta--dark .modern-cta__inner {
-    position: relative;
-    z-index: 1;
-  }
-
+  /* Field, texture and type come from .green-band in global.css. */
   .modern-cta--green {
-    position: relative;
-    overflow: hidden;
     padding-block: 1rem;
-    background: var(--color-primary);
-    color: #1a1a1a;
   }
 
   .modern-cta--light {
     background: #f2f3f2;
     color: #1a1a1a;
-  }
-
-  .modern-cta--green::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: url('/images/pages/our-approach/streets-light.svg');
-    background-position: center;
-    background-size: cover;
-    opacity: 0.14;
-    pointer-events: none;
-  }
-
-  .modern-cta--green .modern-cta__inner {
-    position: relative;
-    z-index: 1;
   }
 
   .modern-cta--white {

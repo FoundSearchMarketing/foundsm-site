@@ -269,15 +269,13 @@ export const defaultContactPageData: FormPageData = {
     block([
       { _type: 'span', text: "We don't want to be your agency of record. " },
       { _type: 'span', text: 'We want to be your agency of results.', marks: ['strong'] },
-      { _type: 'span', text: " Let's see what we can achieve together." },
     ]),
   ],
   formId: '4f48ec0c-d036-4c2f-b461-4b5f4c03c3fc',
   portalId: '5045186',
   acFormId: '8',
   summary: [
-    block("We're ready to learn more about your business goals and talk about all the ways we can work together to find solutions that drive impact and lead to profitable revenue."),
-    block("Whether it's smarter paid media strategy, creative that converts, or finding clarity in your data, we're ready to sit on the same side of the table and get to work."),
+    block("Tell us your business goals — smarter paid media, creative that converts, clarity in your data — and we'll sit on the same side of the table and get to work."),
   ],
 };
 

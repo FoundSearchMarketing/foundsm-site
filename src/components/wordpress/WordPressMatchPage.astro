@@ -391,9 +391,16 @@ const firstPartyBullets = [
     display: block;
   }
 
+  /* Same dark field + street-map art as the contact hero, so the two
+     form pages read as one pair. */
   .wp-newsletter-hero {
     padding-block: 4rem 3.5rem;
-    background: #fff;
+    background-color: #231f20;
+    background-image: url("/images/pages/our-approach/contact-bg-fc.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    color: #ffffff;
   }
 
   .wp-newsletter-hero__grid {
@@ -410,7 +417,7 @@ const firstPartyBullets = [
   .wp-newsletter-hero__intro {
     max-inline-size: var(--split-hero-body-max-width);
     margin: 1.35rem 0 0;
-    color: rgba(26, 26, 26, 0.82);
+    color: rgba(255, 255, 255, 0.82);
     font-size: var(--split-hero-body-size);
     line-height: var(--split-hero-body-line-height);
   }
@@ -418,7 +425,7 @@ const firstPartyBullets = [
   .wp-newsletter-hero h1 {
     max-inline-size: var(--split-hero-copy-max-width);
     margin: 0;
-    color: #231f20;
+    color: #ffffff;
     font-size: var(--split-hero-title-size);
     line-height: var(--split-hero-title-line-height);
     letter-spacing: 0;
@@ -438,7 +445,7 @@ const firstPartyBullets = [
     margin-block-start: 1rem;
     font-size: 0.875rem;
     line-height: 1.5;
-    color: #5f6a60;
+    color: rgba(255, 255, 255, 0.7);
   }
 
   .wp-dark-strip {

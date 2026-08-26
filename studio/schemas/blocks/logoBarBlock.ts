@@ -92,6 +92,7 @@ export default defineType({
         list: [
           { title: 'Light', value: 'light' },
           { title: 'Muted', value: 'muted' },
+          { title: 'Dark', value: 'dark' },
         ],
       },
       initialValue: 'light',

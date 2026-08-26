@@ -14,7 +14,7 @@ interface Props {
   heading?: string;
   logos?: Logo[];
   displayMode?: 'static' | 'marquee';
-  theme?: 'light' | 'muted';
+  theme?: 'light' | 'muted' | 'dark';
   density?: 'compact' | 'standard';
 }
 
@@ -31,7 +31,7 @@ const marqueeLogos = normalizedLogos;
 {displayMode === 'marquee' ? (
   <LogoMarquee title={heading} logos={marqueeLogos} theme={theme} />
 ) : (
-  <section class={`section lp-logo-bar lp-logo-bar--${theme} lp-logo-bar--${density}`} aria-label={heading || 'Partners'}>
+  <section class={`section lp-logo-bar lp-logo-bar--${theme} lp-logo-bar--${density}${theme === 'dark' ? ' dark-band' : ''}`} aria-label={heading || 'Partners'}>
     <div class="container">
       {heading && <h2 class="logo-marquee__heading fade-in-up">{heading}</h2>}
       <div class="partners__grid fade-in-up">
@@ -48,6 +48,43 @@ const marqueeLogos = normalizedLogos;
 <style>
   .lp-logo-bar--muted {
     background: #f2f3f2;
+  }
+
+  /* The dark theme takes its field and artwork from the canonical .dark-band
+     treatment in global.css, so only the type and badge tuning lives here. */
+  .lp-logo-bar--dark .logo-marquee__heading {
+    color: var(--color-white);
+  }
+
+  .lp-logo-bar--dark .partners__grid {
+    gap: var(--space-md) var(--space-lg);
+  }
+
+  /* Client marks sit on white chips rather than being knocked out. These logos
+     come in as-supplied artwork: some carry black type that vanishes against
+     the field, others are white type on a solid colour block that a knockout
+     would flatten into a slab. A chip keeps every mark legible and on-brand. */
+  .lp-logo-bar--dark .partners__badge {
+    display: grid;
+    place-items: center;
+    block-size: auto;
+    padding: 0.85rem 1.4rem;
+    border-radius: 0.75rem;
+    background: var(--color-white);
+    opacity: 1;
+    filter: none;
+  }
+
+  .lp-logo-bar--dark .partners__badge:hover {
+    opacity: 1;
+    filter: none;
+  }
+
+  .lp-logo-bar--dark .partners__badge img {
+    block-size: 2.5rem;
+    inline-size: auto;
+    max-inline-size: 11rem;
+    object-fit: contain;
   }
 
   .lp-logo-bar--compact {

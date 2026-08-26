@@ -658,8 +658,10 @@ const schema = {
       grid-template-columns: minmax(0, 1fr);
     }
 
-    .approach-intro__copy p {
-      margin: 0;
+    /* Copy arrives via set:html, so injected <p> tags never get Astro's scope
+       attribute — set inheritable metrics on the wrapper, like
+       .approach-section-header__body does. */
+    .approach-intro__copy {
       color: var(--approach-color-text);
       font-size: var(--approach-body-size);
       font-weight: 400;

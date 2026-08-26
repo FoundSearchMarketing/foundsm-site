@@ -372,7 +372,7 @@ export const defaultApproachPageData: ApproachPageData = {
   },
   callout: {
     heading: 'Every piece of your lead generation ecosystem complementing another - perpetually adapting and improving with each iteration - is what our formula is all about.',
-    cta: { label: 'Start the Conversation', href: '/contact-us/' },
+    cta: { label: "Let's Talk", href: '/contact-us/' },
   },
   advantages: {
     eyebrow: 'The Found Difference',

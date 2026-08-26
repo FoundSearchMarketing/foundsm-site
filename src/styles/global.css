@@ -668,12 +668,25 @@ p + p {
   border-block-end: 1px solid rgba(26, 26, 26, 0.25);
 }
 
-.site-header__item--has-submenu:is(:hover, :focus-within, .is-submenu-open) > .site-header__submenu {
+.site-header__item--has-submenu:is(:focus-within, .is-submenu-open) > .site-header__submenu {
   display: block;
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
   transform: translateY(0);
+}
+
+/* Open on hover only where there is a real pointer. An iPad in landscape is
+   wide enough to get the desktop nav, and there a tap satisfies :hover with no
+   way to un-hover, which leaves a submenu stuck open. */
+@media (hover: hover) and (pointer: fine) {
+  .site-header__item--has-submenu:hover > .site-header__submenu {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
 }
 
 .site-header__submenu-link {
@@ -778,6 +791,17 @@ p + p {
   border: 0;
 }
 
+/* Mobile drawer scrim. Inert at 1025px and up, where the nav is inline. */
+.site-header__scrim {
+  display: none;
+}
+
+/* Scroll lock while the drawer is open. The class is only applied below
+   1025px, so desktop never loses its scrollbar. */
+html.has-menu-open {
+  overflow: hidden;
+}
+
 /* Scrolled state */
 .site-header.is-scrolled {
   border-color: rgba(26, 26, 26, 0.25);
@@ -817,12 +841,14 @@ p + p {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transform: translateY(0);
+  transform: translateX(0);
 }
 
 /* Tablet / mobile (≤1024px) */
 @media (max-width: 1024px) {
   .site-header__inner {
+    position: relative;
+    z-index: 2;
     grid-template-columns: auto 1fr auto;
     gap: 0.75rem;
     inline-size: min(calc(100% - (2 * var(--page-gutter))), var(--content-max-width));
@@ -841,29 +867,63 @@ p + p {
     justify-self: end;
   }
 
-  .site-header__nav {
-    position: absolute;
+  .site-header__scrim {
+    display: block;
+    position: fixed;
+    inset-block-start: var(--header-h, 4.0625rem);
+    inset-block-end: 0;
     inset-inline: 0;
-    inset-block-start: 100%;
+    z-index: 1;
+    background: rgba(26, 26, 26, 0.5);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition-base);
+  }
+
+  .site-header.is-menu-open .site-header__scrim {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Slide-in drawer. Fixed to the viewport so it owns the full height below
+     the header and scrolls internally however long the menu gets, instead of
+     being an absolutely positioned dropdown that can run past the fold.
+     --header-h is measured and published by the header script: the
+     --header-height token reads 85px below 1025px while the header actually
+     renders at 66px, so it cannot be used for the offset. */
+  .site-header__nav {
+    position: fixed;
+    /* Reset the desktop rule. justify-self applies to out-of-flow boxes, which
+       made width resolve to fit-content and hug the right edge. */
+    justify-self: stretch;
+    inset-block-start: var(--header-h, 4.0625rem);
+    inset-block-end: 0;
+    inset-inline-start: auto;
+    inset-inline-end: 0;
+    z-index: 2;
+    inline-size: min(21rem, 86vw);
+    overflow-y: auto;
+    overscroll-behavior: contain;
     border: 0;
     border-block-start: 1px solid rgba(26, 26, 26, 0.25);
+    border-inline-start: 1px solid rgba(26, 26, 26, 0.25);
     border-radius: 0;
     background: var(--color-white);
-    box-shadow: none;
-    padding: 0 var(--page-gutter) var(--space-sm);
-    opacity: 0;
+    box-shadow: -12px 0 28px rgba(0, 0, 0, 0.12);
+    padding: var(--space-xs) var(--space-md)
+      max(var(--space-lg), env(safe-area-inset-bottom));
+    opacity: 1;
     visibility: hidden;
     pointer-events: none;
-    transform: translateY(-0.75rem);
+    transform: translateX(100%);
     transition:
-      opacity var(--transition-base),
       transform var(--transition-base),
       visibility var(--transition-base);
   }
 
   .site-header__menu {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr;
     align-items: stretch;
     gap: 0;
   }
@@ -881,7 +941,8 @@ p + p {
   .site-header__item--has-submenu {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
-    gap: var(--space-xs);
+    align-items: center;
+    gap: 0;
     padding-block: 0;
   }
 
@@ -899,16 +960,24 @@ p + p {
     display: none;
   }
 
+  /* 56 x 52px, comfortably over the 24px WCAG 2.2 target-size floor and the
+     44pt Apple / 48dp Material guidance. The glyph stays small; the divider
+     makes it read as a control separate from the parent link. */
   .site-header__submenu-toggle {
     display: inline-grid;
-    inline-size: 1rem;
-    block-size: 1rem;
+    place-items: center;
+    inline-size: 3.5rem;
+    block-size: 3.25rem;
     margin-inline-end: 0;
+    border-inline-start: 1px solid rgba(26, 26, 26, 0.15);
   }
 
+  /* Span the parent link and the toggle, not just the link column. Collapse
+     itself is owned by the mega-panel rules in Header.astro (display none /
+     block), which also keeps collapsed links out of the tab order. */
   .site-header__submenu {
-    display: block;
     position: static;
+    grid-column: 1 / -1;
     inline-size: 100%;
     margin-block: 0;
     padding: 0;
@@ -916,48 +985,28 @@ p + p {
     border-radius: 0;
     box-shadow: none;
     background: transparent;
-    max-block-size: 0;
-    overflow: hidden;
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
     transform: none;
-    transition:
-      max-block-size var(--transition-base),
-      padding-block var(--transition-base),
-      margin-block var(--transition-base);
   }
 
-  .site-header__submenu > li:not(:last-child) {
-    border-block-end: 0;
-  }
-
-  .site-header__item--has-submenu:not(.is-submenu-open) > .site-header__submenu {
-    padding-block: 0;
-  }
-
-  .site-header__item--has-submenu.is-submenu-open > .site-header__submenu {
-    max-block-size: 24rem;
-    margin-block-end: 0.75rem;
-    padding-block: 0.125rem 0.5rem;
-  }
-
-  .site-header__submenu-link {
-    padding: 0.625rem 0 0.625rem 1rem;
-    font-size: 1rem;
+  /* 44px targets inside the drawer, matching Apple / Material guidance. */
+  .site-header__pillar-link,
+  .site-header__child-link {
+    display: flex;
+    align-items: center;
+    min-block-size: 2.75rem;
   }
 
   .site-header__item--cta {
-    grid-column: auto;
-    align-self: start;
+    grid-column: 1;
+    align-self: stretch;
     margin-inline-start: 0;
-    padding-block-start: 25px;
-    padding-inline: 8px;
+    padding-block-start: var(--space-sm);
+    padding-inline: 0;
   }
 
   .site-header__item--cta + .site-header__item--cta {
     margin-inline-start: 0;
-    padding-block-start: 25px;
+    padding-block-start: var(--space-xs);
   }
 
   .site-header__cta {
@@ -1009,19 +1058,6 @@ p + p {
     block-size: 1.875rem;
   }
 
-  .site-header__menu {
-    grid-template-columns: 1fr;
-  }
-
-  .site-header__item--cta {
-    grid-column: 1;
-    padding-inline: 0;
-    padding-block-start: 0.75rem;
-  }
-
-  .site-header__item--cta + .site-header__item--cta {
-    padding-block-start: 0.5rem;
-  }
 }
 
 /* --------------------------------------------------------------------------

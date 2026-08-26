@@ -100,7 +100,7 @@ const megaMenus = [
         {megaMenus.map((menu) => (
           <li class="site-header__item site-header__item--has-submenu site-header__item--mega">
             <a class="site-header__link" href={menu.href} aria-current={(menu.match === 'exact' ? isExactPath(menu.href) : isPathSection(menu.match.replace('section:',''))) ? 'page' : undefined}>{menu.label}</a>
-            <button class="site-header__submenu-toggle" type="button" aria-label={`Toggle ${menu.label} submenu`} aria-expanded="false" aria-controls={`submenu-${menu.id}`} aria-haspopup="true">
+            <button class="site-header__submenu-toggle" type="button" aria-label={`Toggle ${menu.label} submenu`} aria-expanded="false" aria-controls={`submenu-${menu.id}`}>
               <span class="site-header__sr-only">Toggle {menu.label} submenu</span>
             </button>
             <div class={`site-header__submenu site-header__mega${menu.compact ? ' site-header__mega--compact' : ''}`} id={`submenu-${menu.id}`} aria-hidden="true">
@@ -156,6 +156,8 @@ const megaMenus = [
       <span class="site-header__sr-only">Toggle navigation menu</span>
     </button>
   </div>
+
+  <div class="site-header__scrim" aria-hidden="true"></div>
 </header>
 
 <style is:global>
@@ -189,11 +191,20 @@ const megaMenus = [
   block-size: 12px;
 }
 
-.site-header .site-header__item--mega:is(:hover, :focus-within, .is-submenu-open) > .site-header__mega {
+.site-header .site-header__item--mega:is(:focus-within, .is-submenu-open) > .site-header__mega {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
   transform: translateY(0);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .site-header .site-header__item--mega:hover > .site-header__mega {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
 }
 
 .site-header__mega-inner {
@@ -300,11 +311,17 @@ const megaMenus = [
 }
 
 @media (max-width: 1024px) {
-  .site-header__item--mega { position: relative; }
+  /* These need to out-specify the base `.site-header .site-header__mega` rules
+     above (0,2,0). At 0,1,0 the base won, so the panels stayed absolute and all
+     three stacked at inset-block-start: 100% of the drawer, off the bottom and
+     on top of each other. */
+  .site-header .site-header__item--mega { position: relative; }
 
-  .site-header__mega {
+  .site-header .site-header__mega {
     position: static;
+    inset: auto;
     display: none;
+    inline-size: 100%;
     border: 0;
     box-shadow: none;
     background: transparent;
@@ -314,9 +331,9 @@ const megaMenus = [
     transform: none;
   }
 
-  .site-header__item--mega.is-submenu-open > .site-header__mega { display: block; }
+  .site-header .site-header__item--mega.is-submenu-open > .site-header__mega { display: block; }
 
-  .site-header__item--mega:is(:hover, :focus-within):not(.is-submenu-open) > .site-header__mega { display: none; }
+  .site-header .site-header__item--mega:is(:hover, :focus-within):not(.is-submenu-open) > .site-header__mega { display: none; }
 
   .site-header__mega-inner { display: block; inline-size: 100%; padding-block: 0.5rem 1rem; }
 
@@ -340,6 +357,7 @@ const megaMenus = [
     const header = document.querySelector<HTMLElement>(".site-header");
     const nav = document.querySelector<HTMLElement>(".site-header__nav");
     const menuToggle = document.querySelector<HTMLButtonElement>(".site-header__menu-toggle");
+    const scrim = document.querySelector<HTMLElement>(".site-header__scrim");
     const submenuItems = Array.from(
       document.querySelectorAll<HTMLElement>(".site-header__item--has-submenu")
     );
@@ -348,6 +366,25 @@ const megaMenus = [
     if (!header || !nav || !menuToggle) {
       return;
     }
+
+    /* The drawer and scrim are fixed to the viewport, so they need the real
+       header height. The --header-height token reads 85px below 1025px while
+       the header actually renders at 66px, so publish the measured value. */
+    const publishHeaderHeight = () => {
+      const { height } = header.getBoundingClientRect();
+      if (height > 0) {
+        header.style.setProperty("--header-h", `${Math.round(height)}px`);
+      }
+    };
+
+    const isFocusable = (el: HTMLElement) =>
+      el.getClientRects().length > 0 && getComputedStyle(el).visibility !== "hidden";
+
+    const drawerFocusables = () =>
+      [
+        menuToggle,
+        ...Array.from(nav.querySelectorAll<HTMLElement>("a[href], button:not([disabled])")),
+      ].filter(isFocusable);
 
     const setSubmenuOpen = (item: HTMLElement, open: boolean) => {
       const toggle = item.querySelector<HTMLButtonElement>(".site-header__submenu-toggle");
@@ -368,27 +405,48 @@ const megaMenus = [
     };
 
     const setMenuOpen = (open: boolean) => {
+      const isMobile = mobileQuery.matches;
+
+      if (open && isMobile) {
+        publishHeaderHeight();
+      }
+
       header.classList.toggle("is-menu-open", open);
       menuToggle.setAttribute("aria-expanded", String(open));
       menuToggle.setAttribute(
         "aria-label",
         open ? "Close navigation menu" : "Open navigation menu"
       );
-      nav.setAttribute("aria-hidden", mobileQuery.matches ? String(!open) : "false");
+      nav.setAttribute("aria-hidden", isMobile ? String(!open) : "false");
+      document.documentElement.classList.toggle("has-menu-open", isMobile && open);
 
       if (!open) {
         closeAllSubmenus();
+        return;
+      }
+
+      /* Move focus into the drawer so keyboard and screen reader users are not
+         left behind the scrim. Waits a frame for visibility to flip. */
+      if (isMobile) {
+        window.requestAnimationFrame(() => {
+          const first = nav.querySelector<HTMLElement>("a[href], button:not([disabled])");
+          if (first && isFocusable(first)) {
+            first.focus();
+          }
+        });
       }
     };
 
     const syncViewportState = () => {
+      publishHeaderHeight();
+
       if (mobileQuery.matches) {
-        nav.setAttribute(
-          "aria-hidden",
-          String(!header.classList.contains("is-menu-open"))
-        );
+        const open = header.classList.contains("is-menu-open");
+        nav.setAttribute("aria-hidden", String(!open));
+        document.documentElement.classList.toggle("has-menu-open", open);
       } else {
         header.classList.remove("is-menu-open");
+        document.documentElement.classList.remove("has-menu-open");
         nav.setAttribute("aria-hidden", "false");
         closeAllSubmenus();
         menuToggle.setAttribute("aria-expanded", "false");
@@ -402,6 +460,10 @@ const megaMenus = [
 
     menuToggle.addEventListener("click", () => {
       setMenuOpen(!header.classList.contains("is-menu-open"));
+    });
+
+    scrim?.addEventListener("click", () => {
+      setMenuOpen(false);
     });
 
     const closeTimers = new WeakMap<HTMLElement, number>();
@@ -478,6 +540,30 @@ const megaMenus = [
     });
 
     document.addEventListener("keydown", (event) => {
+      const menuOpen = header.classList.contains("is-menu-open");
+
+      /* Keep Tab inside the drawer while it is open; the page behind the scrim
+         is still focusable otherwise. The hamburger is part of the loop because
+         it doubles as the close button. */
+      if (event.key === "Tab" && mobileQuery.matches && menuOpen) {
+        const focusables = drawerFocusables();
+        if (!focusables.length) return;
+
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        const active = document.activeElement as HTMLElement | null;
+        const inside = active ? focusables.includes(active) : false;
+
+        if (event.shiftKey && (!inside || active === first)) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && (!inside || active === last)) {
+          event.preventDefault();
+          first.focus();
+        }
+        return;
+      }
+
       if (event.key !== "Escape") {
         return;
       }
@@ -492,7 +578,7 @@ const megaMenus = [
         return;
       }
 
-      if (mobileQuery.matches && header.classList.contains("is-menu-open")) {
+      if (mobileQuery.matches && menuOpen) {
         setMenuOpen(false);
         menuToggle.focus();
       }
@@ -500,6 +586,10 @@ const megaMenus = [
 
     window.addEventListener("resize", syncViewportState);
     window.addEventListener("scroll", updateScrollState, { passive: true });
+
+    if ("ResizeObserver" in window) {
+      new ResizeObserver(publishHeaderHeight).observe(header);
+    }
 
     syncViewportState();
     updateScrollState();

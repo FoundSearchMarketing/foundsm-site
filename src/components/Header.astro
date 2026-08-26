@@ -5,6 +5,70 @@ const isPathSection = (href: string) => {
   const normalizedHref = href.replace(/\/$/, '') || '/';
   return currentPath === normalizedHref || currentPath.startsWith(`${normalizedHref}/`);
 };
+const megaMenus = [
+  {
+    id: 'capabilities',
+    label: 'Capabilities',
+    href: '/capabilities/',
+    match: 'exact',
+    pillars: [
+      { label: 'Paid Media', href: '/capabilities/paid-media/', desc: 'Search, social, display, and programmatic engineered as one system.' },
+      { label: 'Data Activation', href: '/capabilities/data-activation/', desc: 'Your first-party data, connected to the platforms where growth happens.' },
+      { label: 'Data Intelligence', href: '/capabilities/data-intelligence/', desc: 'Unified data so marketing decisions are clearer, faster, and measurable.', children: [
+        { label: 'Server-Side Tracking', href: '/capabilities/data-intelligence/server-side-tracking/' },
+      ] },
+      { label: 'Performance Creative', href: '/capabilities/performance-creative/', desc: 'Fast-track creative paired with data-backed testing and CRO.' },
+    ],
+    panel: {
+      title: 'Specialized Services',
+      desc: 'Engagements built for a specific moment in your business.',
+      links: [
+        { label: 'Ad Account Migration', href: '/capabilities/ad-account-migration/' },
+        { label: 'Home Services', href: '/industry/home-services/' },
+        { label: 'Case Studies', href: '/results/case-studies/' },
+      ],
+    },
+  },
+  {
+    id: 'resources',
+    label: 'Resources',
+    href: '/resources/tools/',
+    match: 'section:/resources/',
+    pillars: [
+      { label: 'Tools & Custom Builds', href: '/resources/tools/', desc: 'The systems we built because nothing off the shelf worked.', children: [
+        { label: 'The Found Build Library', href: '/resources/tools/custom-builds/' },
+      ] },
+      { label: 'Whitepapers', href: '/whitepapers/first-party-data/', desc: 'Long-form research on the data problems costing you revenue.' },
+      { label: 'Events', href: '/events/', desc: 'Where we have been, and where we are headed next.' },
+      { label: 'Insights', href: '/insights/', desc: 'Problem-first thinking on paid media, data, and AI.' },
+    ],
+    panel: {
+      title: 'Free Tools',
+      desc: 'Run them on your own account. No sales call required.',
+      links: [
+        { label: 'Server-Side ROAS Calculator', href: 'https://sst-roas.foundsm.com/', newTab: true },
+        { label: 'Signal Quality Assessment', href: '/signal-quiz/', newTab: true },
+      ],
+    },
+  },
+  {
+    id: 'about',
+    label: 'About Us',
+    href: '/about-us/',
+    match: 'exact',
+    compact: true,
+    pillars: [
+      { label: 'Who We Are', href: '/about-us/', desc: 'A data engineering firm that activates paid media.' },
+      { label: 'Team', href: '/team/', desc: 'The people doing the work on your account.' },
+      { label: 'Newsletter', href: '/newsletter/', desc: 'Strategy, platform changes, and first invites to our events.' },
+    ],
+    panel: {
+      title: 'Join Us',
+      desc: 'We hire people who would rather build the fix than file a ticket.',
+      links: [{ label: 'Open Roles', href: '/about-us/#careers' }],
+    },
+  },
+];
 ---
 
 <header class="site-header">
@@ -33,76 +97,40 @@ const isPathSection = (href: string) => {
         <li class="site-header__item">
           <a class="site-header__link" href="/insights/" aria-current={isPathSection('/insights/') ? 'page' : undefined}>Insights</a>
         </li>
-        <li class="site-header__item site-header__item--has-submenu">
-          <a class="site-header__link" href="/capabilities/" aria-current={isExactPath('/capabilities/') ? 'page' : undefined}>Capabilities</a>
-          <button
-            class="site-header__submenu-toggle"
-            type="button"
-            aria-label="Toggle Capabilities submenu"
-            aria-expanded="false"
-            aria-controls="submenu-capabilities"
-            aria-haspopup="true"
-          >
-            <span class="site-header__sr-only">Toggle Capabilities submenu</span>
-          </button>
-          <ul
-            class="site-header__submenu"
-            id="submenu-capabilities"
-            role="list"
-            aria-hidden="true"
-          >
-            <li><a class="site-header__submenu-link" href="/capabilities/paid-media/" aria-current={isExactPath('/capabilities/paid-media/') ? 'page' : undefined}>Paid Media</a></li>
-            <li><a class="site-header__submenu-link" href="/capabilities/data-activation/" aria-current={isExactPath('/capabilities/data-activation/') ? 'page' : undefined}>Data Activation</a></li>
-            <li><a class="site-header__submenu-link" href="/capabilities/data-intelligence/" aria-current={isExactPath('/capabilities/data-intelligence/') ? 'page' : undefined}>Data Intelligence</a></li>
-            <li><a class="site-header__submenu-link" href="/capabilities/performance-creative/" aria-current={isExactPath('/capabilities/performance-creative/') ? 'page' : undefined}>Performance Creative</a></li>
-            <li><a class="site-header__submenu-link" href="/capabilities/ad-account-migration/" aria-current={isExactPath('/capabilities/ad-account-migration/') ? 'page' : undefined}>Ad Account Migration</a></li>
-          </ul>
-        </li>
-        <li class="site-header__item site-header__item--has-submenu">
-          <a class="site-header__link" href="/resources/tools/" aria-current={isPathSection('/resources/') ? 'page' : undefined}>Resources</a>
-          <button
-            class="site-header__submenu-toggle"
-            type="button"
-            aria-label="Toggle Resources submenu"
-            aria-expanded="false"
-            aria-controls="submenu-resources"
-            aria-haspopup="true"
-          >
-            <span class="site-header__sr-only">Toggle Resources submenu</span>
-          </button>
-          <ul
-            class="site-header__submenu"
-            id="submenu-resources"
-            role="list"
-            aria-hidden="true"
-          >
-            <li><a class="site-header__submenu-link" href="/resources/tools/" aria-current={isExactPath('/resources/tools/') ? 'page' : undefined}>Tools &amp; Custom Builds</a></li>
-            <li><a class="site-header__submenu-link" href="/whitepapers/first-party-data/" aria-current={isPathSection('/whitepapers/') ? 'page' : undefined}>Whitepapers</a></li>
-            <li><a class="site-header__submenu-link" href="/events/" aria-current={isPathSection('/events/') ? 'page' : undefined}>Events</a></li>
-          </ul>
-        </li>
-        <li class="site-header__item site-header__item--has-submenu">
-          <a class="site-header__link" href="/about-us/" aria-current={isExactPath('/about-us/') ? 'page' : undefined}>About Us</a>
-          <button
-            class="site-header__submenu-toggle"
-            type="button"
-            aria-label="Toggle About Us submenu"
-            aria-expanded="false"
-            aria-controls="submenu-about"
-            aria-haspopup="true"
-          >
-            <span class="site-header__sr-only">Toggle About Us submenu</span>
-          </button>
-          <ul
-            class="site-header__submenu"
-            id="submenu-about"
-            role="list"
-            aria-hidden="true"
-          >
-            <li><a class="site-header__submenu-link" href="/newsletter/">Newsletter</a></li>
-            <li><a class="site-header__submenu-link" href="/team/">Team</a></li>
-          </ul>
-        </li>
+        {megaMenus.map((menu) => (
+          <li class="site-header__item site-header__item--has-submenu site-header__item--mega">
+            <a class="site-header__link" href={menu.href} aria-current={(menu.match === 'exact' ? isExactPath(menu.href) : isPathSection(menu.match.replace('section:',''))) ? 'page' : undefined}>{menu.label}</a>
+            <button class="site-header__submenu-toggle" type="button" aria-label={`Toggle ${menu.label} submenu`} aria-expanded="false" aria-controls={`submenu-${menu.id}`} aria-haspopup="true">
+              <span class="site-header__sr-only">Toggle {menu.label} submenu</span>
+            </button>
+            <div class={`site-header__submenu site-header__mega${menu.compact ? ' site-header__mega--compact' : ''}`} id={`submenu-${menu.id}`} aria-hidden="true">
+              <div class="site-header__mega-inner">
+                <div class="site-header__mega-pillars">
+                  {menu.pillars.map((p) => (
+                    <div class="site-header__pillar">
+                      <a class="site-header__pillar-link" href={p.href}>{p.label}</a>
+                      <p class="site-header__pillar-desc">{p.desc}</p>
+                      {p.children && (
+                        <ul class="site-header__pillar-children" role="list">
+                          {p.children.map((c) => <li><a class="site-header__child-link" href={c.href}>{c.label}</a></li>)}
+                        </ul>
+                      )}
+                    </div>
+                  ))}
+                </div>
+                <div class="site-header__mega-panel">
+                  <p class="site-header__mega-panel-title">{menu.panel.title}</p>
+                  <p class="site-header__mega-panel-desc">{menu.panel.desc}</p>
+                  <ul class="site-header__mega-panel-list" role="list">
+                    {menu.panel.links.map((l) => (
+                      <li><a class="site-header__child-link" href={l.href} target={l.newTab ? '_blank' : undefined} rel={l.newTab ? 'noopener noreferrer' : undefined}>{l.label}</a></li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </li>
+        ))}
         <li class="site-header__item site-header__item--cta">
           <a class="site-header__link site-header__cta site-header__cta--primary" href="/contact-us/">Contact Us</a>
         </li>
@@ -129,6 +157,182 @@ const isPathSection = (href: string) => {
     </button>
   </div>
 </header>
+
+<style is:global>
+
+/* ---------- Mega menu panels ---------- */
+.site-header__item--mega { position: static; }
+
+.site-header__mega {
+  position: absolute;
+  inset-block-start: 100%;
+  inset-inline: 0;
+  inline-size: 100%;
+  display: block;
+  padding: 0;
+  border-block-start: 1px solid rgba(35, 31, 32, 0.12);
+  background: var(--color-white);
+  box-shadow: 0 18px 30px rgba(0, 0, 0, 0.12);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(0.4rem);
+  transition: opacity var(--transition-base), transform var(--transition-base), visibility var(--transition-base);
+}
+
+.site-header__mega::before {
+  content: "";
+  position: absolute;
+  inset-block-end: 100%;
+  inset-inline: 0;
+  block-size: 12px;
+}
+
+.site-header__item--mega:is(:hover, :focus-within, .is-submenu-open) > .site-header__mega {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.site-header__mega-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(17rem, 22rem);
+  gap: 3rem;
+  inline-size: min(calc(100% - (2 * var(--gutter))), var(--content-max-width));
+  margin-inline: auto;
+  padding-block: 2.75rem 3rem;
+}
+
+.site-header__mega-pillars {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2rem 3rem;
+  align-content: start;
+}
+
+.site-header__mega--compact .site-header__mega-pillars {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2rem;
+}
+
+.site-header__pillar-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #231f20;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+
+.site-header__pillar-link::after {
+  content: "\203A";
+  font-size: 1.15em;
+  line-height: 1;
+  transform: translateY(-0.05em);
+  transition: transform var(--transition-base);
+}
+
+.site-header__pillar-link:hover,
+.site-header__pillar-link:focus-visible { color: var(--color-primary); }
+
+.site-header__pillar-link:hover::after { transform: translate(0.2rem, -0.05em); }
+
+.site-header__pillar-desc {
+  margin: 0.55rem 0 0;
+  max-inline-size: 26rem;
+  color: rgba(35, 31, 32, 0.72);
+  font-size: 0.95rem;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.site-header__pillar-children {
+  display: grid;
+  gap: 0.4rem;
+  margin: 0.85rem 0 0;
+  padding: 0 0 0 0.9rem;
+  border-inline-start: 2px solid var(--color-primary);
+  list-style: none;
+}
+
+.site-header__child-link {
+  display: inline-block;
+  color: #231f20;
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.site-header__child-link:hover,
+.site-header__child-link:focus-visible { color: var(--color-primary); }
+
+.site-header__mega-panel {
+  padding: 1.85rem;
+  border-inline-start: 3px solid var(--color-primary);
+  background: #f4f5f3;
+}
+
+.site-header__mega-panel-title {
+  margin: 0;
+  color: #231f20;
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.site-header__mega-panel-desc {
+  margin: 0.5rem 0 0;
+  color: rgba(35, 31, 32, 0.72);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.site-header__mega-panel-list {
+  display: grid;
+  gap: 0.6rem;
+  margin: 1.15rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (max-width: 1024px) {
+  .site-header__item--mega { position: relative; }
+
+  .site-header__mega {
+    position: static;
+    display: none;
+    border: 0;
+    box-shadow: none;
+    background: transparent;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: none;
+  }
+
+  .site-header__item--mega.is-submenu-open > .site-header__mega { display: block; }
+
+  .site-header__item--mega:is(:hover, :focus-within):not(.is-submenu-open) > .site-header__mega { display: none; }
+
+  .site-header__mega-inner { display: block; inline-size: 100%; padding-block: 0.5rem 1rem; }
+
+  .site-header__mega-pillars,
+  .site-header__mega--compact .site-header__mega-pillars { display: block; }
+
+  .site-header__pillar { padding-block: 0.75rem; }
+
+  .site-header__pillar-link { font-size: 1.1rem; }
+
+  .site-header__pillar-desc { display: none; }
+
+  .site-header__mega-panel { margin-block-start: 1rem; padding: 1.25rem; }
+
+  .site-header__mega-panel-desc { display: none; }
+}
+</style>
 
 <script>
   (() => {

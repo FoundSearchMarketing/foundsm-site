@@ -489,8 +489,69 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // =========================================================
+  // 14. CONVERSION EVENT TRACKING (PostHog)
+  // Named events for CTAs, downloads, contact intent, and
+  // HubSpot form submits. No-ops when PostHog is not loaded
+  // (local dev, or third-party scripts disabled).
+  // =========================================================
+  function initAnalyticsEvents() {
+    function capture(name, props) {
+      if (typeof window.posthog?.capture !== 'function') return;
+      window.posthog.capture(name, { page_path: window.location.pathname, ...props });
+    }
+
+    // CTA classes span the legacy (wp-*) and modern design systems.
+    const CTA_SELECTOR = [
+      'a.btn',
+      'a.modern-cta__button',
+      'a.site-header__cta',
+      'a.wp-green-pill',
+      'a.wp-dark-pill'
+    ].join(', ');
+
+    document.addEventListener('click', (e) => {
+      const link = e.target.closest('a[href]');
+      if (!link) return;
+
+      const href = link.getAttribute('href') || '';
+      const label = link.textContent.trim().slice(0, 100);
+
+      if (href.startsWith('tel:') || href.startsWith('mailto:')) {
+        capture('contact_link_clicked', {
+          method: href.startsWith('tel:') ? 'phone' : 'email',
+          link_text: label
+        });
+        return;
+      }
+
+      // Ungated whitepaper PDFs linked from article body copy
+      if (href.split('?')[0].endsWith('.pdf')) {
+        capture('file_downloaded', {
+          file_url: link.href,
+          file_name: href.split('/').pop().split('?')[0],
+          link_text: label
+        });
+        return;
+      }
+
+      if (link.matches(CTA_SELECTOR)) {
+        capture('cta_clicked', { cta_text: label, cta_href: link.href });
+      }
+    });
+
+    // HubSpot embeds post their lifecycle events to the parent window.
+    window.addEventListener('message', (e) => {
+      if (e.data?.type !== 'hsFormCallback') return;
+      if (e.data.eventName !== 'onFormSubmitted') return;
+
+      capture('form_submitted', { form_id: e.data.id });
+    });
+  }
+
+  // =========================================================
   // INITIALIZE ALL MODULES
   // =========================================================
+  initAnalyticsEvents();
   initBlogInternalLinksNewTab();
   initSmoothScroll();
   initCookieSettings();

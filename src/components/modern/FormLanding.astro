@@ -72,26 +72,7 @@ const sectionId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-
 )}
 
 {acFormId ? (
-  <>
-    <script is:inline src={`https://foundsm.activehosted.com/f/embed.php?id=${acFormId}`} charset="utf-8" defer></script>
-    <script is:inline>
-      // The HubSpot original shipped the marketing opt-in pre-checked; AC forms
-      // cannot default a checkbox, so tick it once the embed renders.
-      (function precheckOptIn(tries) {
-        var box = document.querySelector('#form-landing-ac input[type="checkbox"]');
-        if (box) {
-          box.checked = true;
-          // AC renders the dropdown's first option blank; restore the prompt.
-          var sel = document.querySelector('#form-landing-ac select');
-          if (sel && sel.options.length && !sel.options[0].text.trim()) {
-            sel.options[0].text = 'Select option...';
-          }
-          return;
-        }
-        if (tries < 40) setTimeout(function () { precheckOptIn(tries + 1); }, 300);
-      })(0);
-    </script>
-  </>
+  <script is:inline src={`https://foundsm.activehosted.com/f/embed.php?id=${acFormId}`} charset="utf-8" defer></script>
 ) : loadFormScript && (
   <script is:inline src="https://js.hsforms.net/forms/embed/5045186.js" defer></script>
 )}
@@ -349,8 +330,6 @@ const sectionId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-
 
   #form-landing-ac :global(._form_8 input[type='text']),
   #form-landing-ac :global(._form_8 input[type='email']),
-  #form-landing-ac :global(._form_8 input[type='tel']),
-  #form-landing-ac :global(._form_8 select),
   #form-landing-ac :global(._form_8 textarea) {
     inline-size: 100% !important;
     padding: 0.7rem 0.9rem !important;
@@ -372,34 +351,6 @@ const sectionId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-
     color: #ffffff !important;
     font-size: 0.75rem !important;
     line-height: 1.5 !important;
-  }
-
-  /* The checkbox field renders its title as a legend AND its option as a
-     label; the HubSpot original showed only the option, inline with the box. */
-  #form-landing-ac :global(._form_8 ._form-fieldset ._form-label) {
-    display: none !important;
-  }
-
-  #form-landing-ac :global(._form_8 ._form-fieldset) {
-    margin: 0 !important;
-    padding: 0 !important;
-    border: 0 !important;
-  }
-
-  #form-landing-ac :global(._form_8 ._checkbox-radio) {
-    display: flex !important;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  #form-landing-ac :global(._form_8 ._checkbox-radio input[type='checkbox']) {
-    inline-size: auto !important;
-    margin: 0 !important;
-    accent-color: var(--color-primary);
-  }
-
-  #form-landing-ac :global(._form_8 ._checkbox-radio label) {
-    margin: 0 !important;
   }
 
   #form-landing-ac :global(._form_8 ._submit) {

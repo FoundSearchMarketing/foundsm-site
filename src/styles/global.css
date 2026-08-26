@@ -1325,13 +1325,18 @@ p + p {
 .site-footer__columns {
   display: grid;
   /* Content-sized tracks + space-between keeps the visual gap between
-     sections equal even though the brand column is narrower. */
-  /* The newsletter track gets 27rem so "Sign Up for Our Newsletter" sits on
-     one line like "Start the Conversation" — at 25rem the column's 380px of
-     usable width was ~16px short of the 396px the heading needs. The gap cap
-     comes down so the track can actually reach 27rem at ~1280px; above that
-     space-between governs the visual gap anyway, so the cap costs nothing. */
-  grid-template-columns: auto minmax(0, 25rem) minmax(0, 27rem);
+     sections equal even though the brand column is narrower.
+
+     At 25rem each text column had 380px of usable width after its 10px side
+     padding. That was ~16px short of the 396px "Sign Up for Our Newsletter"
+     needs to stay on one line, and ~9px short of the 389px that pulls "fit."
+     up out of a one-word last line in the Start the Conversation paragraph.
+     The conversation track only needs 26rem for that, and giving it 27rem
+     starves the newsletter track near 1240px, so the two differ on purpose.
+     The gap cap comes down so both tracks can reach their max near 1280px;
+     above ~1300px space-between governs the visual gap, so the cap is inert
+     there. */
+  grid-template-columns: auto minmax(0, 26rem) minmax(0, 27rem);
   justify-content: space-between;
   gap: clamp(2rem, 3.5vw, 3.5rem);
   padding-block: clamp(2.5rem, 6.65vw, 6rem);

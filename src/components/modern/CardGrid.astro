@@ -8,6 +8,7 @@ interface CardItem {
   meta?: string;
   ctaLabel?: string;
   ctaHref?: string;
+  ctaNewTab?: boolean;
   icon?: string;
   image?: string;
   imageAlt?: string;
@@ -68,7 +69,7 @@ const {
           </div>
           {card.lead && <p class="modern-card__lead">{card.lead}</p>}
           {card.bodyHtml ? <div class="modern-card__body" set:html={card.bodyHtml} /> : <p class="modern-card__body">{card.body}</p>}
-          {card.ctaLabel && card.ctaHref && <a class="modern-card__cta" href={card.ctaHref}>{card.ctaLabel}</a>}
+            {card.ctaLabel && card.ctaHref && <a class="modern-card__cta" href={card.ctaHref} target={card.ctaNewTab ? '_blank' : undefined} rel={card.ctaNewTab ? 'noopener noreferrer' : undefined}>{card.ctaLabel}</a>}
         </article>
       ))}
     </div>

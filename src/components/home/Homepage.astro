@@ -187,7 +187,7 @@ const ecosystemTabs = homepage.ecosystem.tabs.map((tab) => ({
   <section class="home-cta-strip" aria-label="Contact Found Search Marketing">
     <div class="home-shell home-cta-strip__inner">
       <h2>{homepage.ctaStrip.headline}</h2>
-      {showCta(homepage.ctaStrip) && <a class="home-button" href={homepage.ctaStrip.ctaUrl}>{homepage.ctaStrip.ctaText}</a>}
+      {showCta(homepage.ctaStrip) && <a class="btn btn--primary btn--lg home-button" href={homepage.ctaStrip.ctaUrl}>{homepage.ctaStrip.ctaText}</a>}
     </div>
   </section>
 
@@ -222,7 +222,7 @@ const ecosystemTabs = homepage.ecosystem.tabs.map((tab) => ({
       <div class="home-outcomes__copy">
         <h2 id="home-outcomes-title">{homepage.outcomes.heading}</h2>
         <Fragment set:html={renderRichText(homepage.outcomes.body)} />
-        {showCta(homepage.outcomes) && <a class="home-button home-button--dark" href={homepage.outcomes.ctaUrl}>{homepage.outcomes.ctaText}</a>}
+        {showCta(homepage.outcomes) && <a class="btn btn--dark home-button" href={homepage.outcomes.ctaUrl}>{homepage.outcomes.ctaText}</a>}
       </div>
     </div>
   </section>
@@ -292,7 +292,7 @@ const ecosystemTabs = homepage.ecosystem.tabs.map((tab) => ({
           {homepage.metrics.employees.label && <p class="home-metric-card__label">{homepage.metrics.employees.label}</p>}
         </div>
         {showCta(homepage.metrics.ownershipCard) && (
-          <a class="home-button" href={homepage.metrics.ownershipCard.ctaUrl}>{homepage.metrics.ownershipCard.ctaText}</a>
+          <a class="btn btn--primary home-button" href={homepage.metrics.ownershipCard.ctaUrl}>{homepage.metrics.ownershipCard.ctaText}</a>
         )}
       </article>
 
@@ -319,7 +319,7 @@ const ecosystemTabs = homepage.ecosystem.tabs.map((tab) => ({
           ))}
         </div>
       )}
-      {showCta(homepage.partners) && <a class="home-button" href={homepage.partners.ctaUrl}>{homepage.partners.ctaText}</a>}
+      {showCta(homepage.partners) && <a class="btn btn--primary btn--lg home-button" href={homepage.partners.ctaUrl}>{homepage.partners.ctaText}</a>}
     </div>
   </section>
 
@@ -383,7 +383,7 @@ const ecosystemTabs = homepage.ecosystem.tabs.map((tab) => ({
                   )}
                   <div class="home-tabs__mobile-copy">
                     <Fragment set:html={renderRichText(tab.body)} />
-                    {showCta(tab) && <a class="home-button home-button--dark" href={tab.ctaUrl}>{tab.ctaText}</a>}
+                    {showCta(tab) && <a class="btn btn--dark home-button" href={tab.ctaUrl}>{tab.ctaText}</a>}
                   </div>
                 </article>
               </div>
@@ -403,7 +403,7 @@ const ecosystemTabs = homepage.ecosystem.tabs.map((tab) => ({
             >
               <div class="home-tabs__panel-copy">
                 <Fragment set:html={renderRichText(tab.body)} />
-                {showCta(tab) && <a class="home-button home-button--dark" href={tab.ctaUrl}>{tab.ctaText}</a>}
+                {showCta(tab) && <a class="btn btn--dark home-button" href={tab.ctaUrl}>{tab.ctaText}</a>}
               </div>
               {tab.media && (
                 <figure class="home-tabs__panel-media">

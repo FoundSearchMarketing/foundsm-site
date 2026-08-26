@@ -88,10 +88,10 @@ const heroStyle = mediaGridColumns ? `--modern-hero-grid-columns: ${mediaGridCol
       {(cta || secondaryCta) && (
         <div class="modern-hero__actions">
           {cta && (
-            <a class="modern-hero__button" href={cta.href}>{cta.label}</a>
+            <a class="btn btn--primary btn--lg" href={cta.href}>{cta.label}</a>
           )}
           {secondaryCta && (
-            <a class="modern-hero__button modern-hero__button--secondary" href={secondaryCta.href}>{secondaryCta.label}</a>
+            <a class={`btn btn--lg ${tone === 'dark' ? 'btn--secondary-white' : 'btn--secondary'}`} href={secondaryCta.href}>{secondaryCta.label}</a>
           )}
         </div>
       )}
@@ -159,9 +159,9 @@ const heroStyle = mediaGridColumns ? `--modern-hero-grid-columns: ${mediaGridCol
   }
 
   .modern-hero__eyebrow {
-    color: var(--color-primary);
-    font-size: 0.875rem;
-    font-weight: 700;
+    color: inherit;
+    font-size: 1.125rem;
+    font-weight: 300;
     letter-spacing: 0;
     line-height: 1.2;
     text-transform: uppercase;
@@ -203,49 +203,6 @@ const heroStyle = mediaGridColumns ? `--modern-hero-grid-columns: ${mediaGridCol
     align-items: center;
     justify-self: start;
     gap: 1rem;
-  }
-
-  .modern-hero__button {
-    display: inline-flex;
-    justify-content: center;
-    min-block-size: 3.75rem;
-    padding: 1.125rem 2.75rem;
-    border-radius: 999px;
-    background: var(--color-primary);
-    color: var(--color-dark);
-    font-size: 1.25rem;
-    font-weight: 500;
-    line-height: 1.2;
-    transition: background-color var(--transition-fast), transform var(--transition-fast);
-  }
-
-  .modern-hero__button:hover,
-  .modern-hero__button:focus-visible {
-    background: #b9dc89;
-    transform: translateY(-1px);
-  }
-
-  .modern-hero__button--secondary {
-    background: transparent;
-    color: var(--color-dark);
-    box-shadow: inset 0 0 0 0.125rem rgba(26, 26, 26, 0.24);
-  }
-
-  .modern-hero__button--secondary:hover,
-  .modern-hero__button--secondary:focus-visible {
-    background: rgba(26, 26, 26, 0.06);
-    box-shadow: inset 0 0 0 0.125rem rgba(26, 26, 26, 0.32);
-  }
-
-  .modern-hero--dark .modern-hero__button--secondary {
-    color: #ffffff;
-    box-shadow: inset 0 0 0 0.125rem rgba(255, 255, 255, 0.4);
-  }
-
-  .modern-hero--dark .modern-hero__button--secondary:hover,
-  .modern-hero--dark .modern-hero__button--secondary:focus-visible {
-    background: rgba(255, 255, 255, 0.1);
-    box-shadow: inset 0 0 0 0.125rem rgba(255, 255, 255, 0.6);
   }
 
   .modern-hero__media {
@@ -366,10 +323,5 @@ const heroStyle = mediaGridColumns ? `--modern-hero-grid-columns: ${mediaGridCol
       block-size: var(--modern-hero-media-height-mobile, 17.1875rem);
     }
 
-    .modern-hero__button {
-      min-block-size: 3.25rem;
-      padding: 0.9rem 1.75rem;
-      font-size: 1rem;
-    }
   }
 </style>

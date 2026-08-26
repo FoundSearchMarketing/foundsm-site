@@ -67,7 +67,7 @@ const formContainerId = page.form?.hubspotFormId ? `legacy-form-${page.form.hubs
           {page.cta.heading && <h2 class="cta-banner__headline">{page.cta.heading}</h2>}
           {ctaBodyHtml && <div class="cta-banner__text" set:html={ctaBodyHtml} />}
           <div class="cta-banner__action">
-            <a href={page.cta.href} class="btn btn--green btn--lg">{page.cta.label}</a>
+            <a href={page.cta.href} class="btn btn--primary btn--lg">{page.cta.label}</a>
           </div>
         </div>
       </section>
@@ -108,10 +108,10 @@ const formContainerId = page.form?.hubspotFormId ? `legacy-form-${page.form.hubs
   }
 
   .legacy-hero__eyebrow {
-    color: var(--color-primary);
-    font-size: var(--text-caption);
-    font-weight: 700;
-    letter-spacing: 0.08em;
+    color: var(--color-dark);
+    font-size: 1.125rem;
+    font-weight: 300;
+    letter-spacing: 0;
     margin-bottom: var(--space-sm);
     text-transform: uppercase;
   }

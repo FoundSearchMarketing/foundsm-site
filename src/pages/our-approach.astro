@@ -122,7 +122,7 @@ const schema = {
       <div class="approach-shell approach-callout__grid">
         <h2>{page.callout.heading}</h2>
         <div class="approach-callout__action">
-          {page.callout.cta?.label && page.callout.cta?.href && <a class="btn btn--green btn--lg" href={page.callout.cta.href}>{page.callout.cta.label}</a>}
+          {page.callout.cta?.label && page.callout.cta?.href && <a class="btn btn--primary btn--lg" href={page.callout.cta.href}>{page.callout.cta.label}</a>}
         </div>
       </div>
     </section>
@@ -259,7 +259,7 @@ const schema = {
               ))}
             </h3>
             <span aria-hidden="true"></span>
-            {page.partnerships.cta?.label && page.partnerships.cta?.href && <a class="btn btn--green btn--lg" href={page.partnerships.cta.href}>{page.partnerships.cta.label}</a>}
+            {page.partnerships.cta?.label && page.partnerships.cta?.href && <a class="btn btn--primary btn--lg" href={page.partnerships.cta.href}>{page.partnerships.cta.label}</a>}
           </div>
         </div>
       </div>
@@ -484,7 +484,7 @@ const schema = {
       --approach-h3-line-height: 2.75rem;
       --approach-callout-size: 1.5rem;
       --approach-callout-line-height: 2rem;
-      --approach-eyebrow-size: 1.25rem;
+      --approach-eyebrow-size: 1.125rem;
       --approach-eyebrow-line-height: 1.75rem;
       --approach-body-size: 1.25rem;
       --approach-body-line-height: 1.8;
@@ -725,22 +725,6 @@ const schema = {
     .approach-callout__action {
       display: flex;
       justify-content: flex-end;
-    }
-
-    .approach-callout .btn,
-    .approach-partnerships__cta .btn {
-      border-radius: 2.1875rem;
-      background: var(--approach-color-green);
-      color: var(--approach-color-text);
-      font-size: var(--approach-button-size);
-      font-weight: 500;
-      line-height: var(--approach-button-line-height);
-      padding: 1.125rem 2.8125rem;
-    }
-
-    .approach-callout .btn:hover,
-    .approach-partnerships__cta .btn:hover {
-      background: var(--approach-color-green-hover);
     }
 
     .approach-advantages {

@@ -253,7 +253,7 @@ const schema = {
           <h2 id="about-approach-heading">{page.approach.heading}</h2>
           <div set:html={aboutRichHtml(page.approach.body)} />
           {page.approach.cta?.label && page.approach.cta?.href && (
-            <a class="about-button" href={page.approach.cta.href}>{page.approach.cta.label}</a>
+            <a class="btn btn--dark btn--lg about-button" href={page.approach.cta.href}>{page.approach.cta.label}</a>
           )}
         </div>
       </div>
@@ -265,7 +265,7 @@ const schema = {
           <h2 id="about-team-heading">{page.team.heading}</h2>
           <div class="about-team__text" set:html={aboutRichHtml(page.teamCta.body)} />
           {page.teamCta.cta?.label && page.teamCta.cta?.href && (
-            <a class="about-button about-button--dark about-team__button" href={page.teamCta.cta.href}>{page.teamCta.cta.label}</a>
+            <a class="btn btn--dark btn--lg about-button about-team__button" href={page.teamCta.cta.href}>{page.teamCta.cta.label}</a>
           )}
         </div>
 
@@ -430,7 +430,6 @@ const schema = {
       text-transform: uppercase;
     }
 
-    .about-button,
     .about-link {
       display: inline-flex;
       align-items: center;
@@ -446,26 +445,6 @@ const schema = {
 
     .about-button {
       justify-self: start;
-      padding: 0.95rem 2rem;
-      background: var(--about-ink);
-      color: #ffffff;
-    }
-
-    .about-button:hover,
-    .about-button:focus-visible {
-      background: #414042;
-      color: #ffffff;
-      transform: translateY(-1px);
-    }
-
-    .about-button--dark {
-      background: var(--about-ink);
-      color: #ffffff;
-    }
-
-    .about-button--dark:hover,
-    .about-button--dark:focus-visible {
-      background: #414042;
     }
 
     .about-link {

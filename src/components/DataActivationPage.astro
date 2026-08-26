@@ -79,7 +79,7 @@ const secondActionColumn = actionItems.slice(3);
       <div class="da-cta__inner">
         {page.cta.title && <h2>{page.cta.title}</h2>}
         {page.cta.cta?.label && page.cta.cta?.href && (
-          <a class="da-cta__button" href={page.cta.cta.href}>{page.cta.cta.label}</a>
+          <a class="btn btn--dark btn--lg da-cta__button" href={page.cta.cta.href}>{page.cta.cta.label}</a>
         )}
         <div class="da-cta__body" set:html={richHtml(page.cta.body)} />
       </div>
@@ -254,29 +254,6 @@ const secondActionColumn = actionItems.slice(3);
     line-height: 0.88;
   }
 
-  .da-cta__button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-block-size: 3.9375rem;
-    padding: 1.25rem 3.125rem;
-    border-radius: 999px;
-    background: #231f20;
-    color: #ffffff;
-    font-size: 1.125rem;
-    font-weight: 700;
-    line-height: 1.2;
-    text-align: center;
-    transition: background-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
-  }
-
-  .da-cta__button:hover,
-  .da-cta__button:focus-visible {
-    background: #b9dc89;
-    color: #231f20;
-    transform: translateY(-1px);
-  }
-
   .da-cta__body {
     grid-column: 1 / -1;
     color: #231f20;
@@ -367,14 +344,6 @@ const secondActionColumn = actionItems.slice(3);
       grid-template-columns: minmax(0, 1fr) auto;
       min-block-size: 14rem;
       padding-block: 1.875rem;
-    }
-
-    .da-cta__button {
-      inline-size: 5rem;
-      min-block-size: 4rem;
-      padding: 0.65rem 0.75rem;
-      font-size: 0.75rem;
-      white-space: normal;
     }
 
     .da-cta__body {

@@ -176,12 +176,14 @@ const metricTones = ['green', 'red', 'orange', 'blue'];
     --proof-blue: #28aee4;
     align-content: center;
     justify-items: center;
-    gap: 0.35rem;
-    min-block-size: 12.4rem;
-    padding: 1.35rem 2.25rem;
+    gap: 0.3rem;
+    min-block-size: 9.4rem;
+    padding: 1.05rem 1.85rem;
     border: 4px solid var(--card-tone);
     border-radius: 999px;
-    background: #9e9e9f;
+    /* White field so the tone reads as an outline at rest. The tone fills the
+       pill on hover, which is what the background-color transition is for. */
+    background: var(--color-white);
     color: var(--proof-dark);
     text-align: center;
     transition:
@@ -201,18 +203,23 @@ const metricTones = ['green', 'red', 'orange', 'blue'];
 
   .proof-mosaic--dark .proof-card--metric {
     border-color: var(--card-tone);
-    background: #9e9e9f;
+    background: var(--color-white);
   }
 
   .proof-card--metric .proof-card__value {
     justify-content: center;
+    /* Scaled down with the pill so the number still fills it. */
+    font-size: clamp(2rem, 3.2vw, 3.1rem);
     color: inherit;
   }
 
+  /* The number carries the weight; the label under it stays regular. */
   .proof-mosaic--dark .proof-card--metric .proof-card__label,
   .proof-card--metric .proof-card__label {
     color: inherit;
-    font-weight: 800;
+    font-size: 0.95rem;
+    font-weight: 400;
+    line-height: 1.45;
   }
 
   .proof-mosaic--dark .proof-card--metric .proof-card__eyebrow,
@@ -327,17 +334,18 @@ const metricTones = ['green', 'red', 'orange', 'blue'];
     }
 
     .proof-card--metric {
-      min-block-size: 11rem;
-      padding: 1.5rem 2rem;
+      min-block-size: 8.6rem;
+      padding: 1.15rem 1.7rem;
       border-radius: 5rem;
     }
 
     .proof-card--metric .proof-card__value {
-      font-size: clamp(2.2rem, 12vw, 3rem);
+      font-size: clamp(2rem, 10vw, 2.6rem);
     }
 
     .proof-card--metric .proof-card__label {
-      font-size: 0.9rem;
+      font-size: 0.875rem;
+      font-weight: 400;
       line-height: 1.4;
     }
 

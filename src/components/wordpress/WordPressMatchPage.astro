@@ -790,7 +790,10 @@ const firstPartyBullets = [
   .wp-first-party-hero h1 {
     align-self: start;
     margin: 0;
-    margin-block-start: 7.6rem;
+    /* Standard hero text offset: the section keeps 3.75rem of padding (the
+       download card is anchored to it), so the h1 makes up the difference
+       to the shared split-hero start position. */
+    margin-block-start: calc(var(--split-hero-padding-block-start) + var(--split-hero-copy-padding-block-start) - 3.75rem);
     color: #fff;
     font-size: clamp(3rem, 4vw, 3.55rem);
     line-height: 1.16;

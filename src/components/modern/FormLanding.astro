@@ -205,7 +205,7 @@ const sectionId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-
     margin-block-end: 1.25rem;
   }
 
-  .form-landing__copy > p,
+  .form-landing__copy > p:not(.form-landing__eyebrow),
   .form-landing__intro {
     max-inline-size: 40rem;
     color: rgba(26, 26, 26, 0.78);
@@ -229,16 +229,16 @@ const sectionId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-
     line-height: 1.8;
   }
 
-  .form-landing--theme-dark .form-landing__copy > p,
+  .form-landing--theme-dark .form-landing__copy > p:not(.form-landing__eyebrow),
   .form-landing--theme-dark .form-landing__intro,
-  .form-landing--contact .form-landing__copy > p,
+  .form-landing--contact .form-landing__copy > p:not(.form-landing__eyebrow),
   .form-landing--contact .form-landing__intro,
-  .form-landing--dataconnect .form-landing__copy > p,
+  .form-landing--dataconnect .form-landing__copy > p:not(.form-landing__eyebrow),
   .form-landing--dataconnect .form-landing__intro {
     color: #ffffff;
   }
 
-  .form-landing--dataconnect .form-landing__copy > p,
+  .form-landing--dataconnect .form-landing__copy > p:not(.form-landing__eyebrow),
   .form-landing--dataconnect .form-landing__intro {
     max-inline-size: none;
     font-size: 1.25rem;
@@ -483,7 +483,7 @@ const sectionId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-
     }
 
     .form-landing--dataconnect .form-landing__lead,
-    .form-landing--dataconnect .form-landing__copy > p {
+    .form-landing--dataconnect .form-landing__copy > p:not(.form-landing__eyebrow) {
       font-size: 1.125rem;
       line-height: 1.667;
     }

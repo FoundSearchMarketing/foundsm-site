@@ -5,7 +5,15 @@ import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
 export const sanityClient = createClient({
   projectId: import.meta.env.SANITY_PROJECT_ID || 'vzneqxsx',
   dataset: import.meta.env.SANITY_DATASET || 'staging',
-  useCdn: true,
+  /* Must stay false. astro.config.mjs is output: 'static', so every query in
+     this file runs once at BUILD time and none at runtime. The API CDN exists
+     to absorb high-volume runtime traffic, so it buys us nothing here and
+     actively breaks publishing: it serves content up to ~60s stale, and the
+     Sanity webhook fires a Vercel rebuild within seconds of a publish. The
+     rebuild therefore read the pre-publish content and redeployed the old
+     page, which is why edits made in Studio appeared not to reach staging
+     until something triggered a second build minutes later. */
+  useCdn: false,
   apiVersion: '2024-01-01',
 });
 

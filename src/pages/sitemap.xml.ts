@@ -25,7 +25,7 @@ const staticRoutes = [
   '/about-us/',
   '/capabilities/',
   '/capabilities/data-activation/',
-  '/capabilities/data-intelligence/',
+  '/capabilities/data-analytics/',
   '/capabilities/paid-media/',
   '/capabilities/performance-creative/',
   '/contact-us/',

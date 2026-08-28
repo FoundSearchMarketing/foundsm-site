@@ -71,7 +71,7 @@ export const pageBuilderDemoData = {
           _key: 'tab-data',
           title: 'Data Activation',
           body: [block('Connect first-party data to campaigns, reporting, and optimization loops.')],
-          cta: { label: 'Explore Data', href: '/capabilities/data-intelligence/' },
+          cta: { label: 'Explore Data', href: '/capabilities/data-analytics/' },
           videoUrl: 'https://placehold.co/826x1070?text=Image+goes+here+-+826x1070',
           imageAlt: 'Image goes here - replace with a data activation visual, 826x1070.',
         },

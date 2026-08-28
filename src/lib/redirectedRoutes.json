@@ -73,5 +73,15 @@
     "source": "/whitepapers/",
     "destination": "/whitepapers/first-party-data/",
     "permanent": true
+  },
+  {
+    "source": "/capabilities/data-intelligence/",
+    "destination": "/capabilities/data-analytics/",
+    "permanent": true
+  },
+  {
+    "source": "/capabilities/data-intelligence/server-side-tracking/",
+    "destination": "/capabilities/data-analytics/server-side-tracking/",
+    "permanent": true
   }
 ]

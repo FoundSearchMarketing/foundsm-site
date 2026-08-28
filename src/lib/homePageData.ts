@@ -254,7 +254,7 @@ export const defaultHomePageData: HomePageData = {
           block("What's your CPL? Are you using first-party data to inform your campaigns? Do you have a clear line of sight from dollars spent to results? We turn your first party data into powerful audience models and unified insights - then activate it through precision paid media that converts."),
         ],
         ctaText: 'See How We Leverage Data',
-        ctaUrl: '/capabilities/data-intelligence/',
+        ctaUrl: '/capabilities/data-analytics/',
         icon: '/images/imported/home/340807e8-icon-home-tab1.svg',
         image: '/images/imported/home/edb69832-home-tab1.webp',
         imageAlt: 'Data, Reporting, & Analytics',

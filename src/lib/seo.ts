@@ -90,7 +90,7 @@ export const SEO_COPY_OVERRIDES: Record<string, SeoCopyOverride> = {
   '/capabilities/data-activation/': {
     description: 'Activate first-party customer data across ad platforms to improve targeting, reduce wasted spend, and scale qualified lead generation.',
   },
-  '/capabilities/data-intelligence/': {
+  '/capabilities/data-analytics/': {
     description: 'Unify data across platforms, APIs, and teams so marketing decisions are clearer, faster, and tied to measurable growth.',
   },
   '/privacy-policy/': {

@@ -17,6 +17,7 @@ const megaMenus = [
       { label: 'Data & Analytics', href: '/capabilities/data-analytics/', desc: 'Unified data so marketing decisions are clearer, faster, and measurable.', children: [
         { label: 'Discovery, Audit & Analysis', href: '/capabilities/data-analytics/discovery-audit/' },
         { label: 'Server-Side Tracking', href: '/capabilities/data-analytics/server-side-tracking/' },
+        { label: 'Attribution & Measurement', href: '/capabilities/data-analytics/attribution/' },
         { label: 'Audience Modeling', href: '/capabilities/data-analytics/audience-modeling/' },
         { label: 'Customized Reporting', href: '/capabilities/data-analytics/reporting/' },
         { label: 'Privacy, Security & Governance', href: '/capabilities/data-analytics/privacy-governance/' },
@@ -30,12 +31,32 @@ const megaMenus = [
         { label: 'Custom Builds', href: '/resources/tools/custom-builds/' },
         { label: 'AI & Automation', href: '/capabilities/ai-automation/' },
         { label: 'Ad Account Migration', href: '/capabilities/ad-account-migration/' },
-        { label: 'Home Services Lead Gen', href: '/industry/home-services/' },
       ],
     },
   },
-  { id: 'approach', label: 'Our Approach', href: '/our-approach/', match: 'exact', simple: true },
-  { id: 'insights', label: 'Insights', href: '/insights/', match: 'section:/insights/', simple: true },
+  {
+    id: 'approach',
+    label: 'Our Approach',
+    href: '/our-approach/',
+    match: 'exact',
+    compact: true,
+    pillars: [
+      { label: 'How We Work', href: '/our-approach/', desc: 'The custom playbook and the self-reinforcing optimization cycle behind every account.' },
+      { label: 'By Industry', href: '/industry/', desc: 'The same approach, shaped by the constraints of your market.', children: [
+        { label: 'Home Services', href: '/industry/home-services/' },
+        { label: 'Healthcare & Pharma', href: '/industry/healthcare-pharma/' },
+        { label: 'Higher Education', href: '/industry/higher-education/' },
+      ] },
+    ],
+    panel: {
+      title: 'Run Your Own Numbers',
+      desc: 'Before you take our word for any of it.',
+      links: [
+        { label: 'Server-Side ROAS Calculator', href: 'https://sst-roas.foundsm.com/', newTab: true },
+        { label: 'Signal Quality Assessment', href: '/signal-quiz/', newTab: true },
+      ],
+    },
+  },
   {
     id: 'resources',
     label: 'Resources',

@@ -39,7 +39,6 @@ const megaMenus = [
     label: 'Our Approach',
     href: '/our-approach/',
     match: 'exact',
-    compact: true,
     pillars: [
       { label: 'How We Work', href: '/our-approach/', desc: 'The custom playbook and the self-reinforcing optimization cycle behind every account.' },
       { label: 'By Industry', href: '/industry/', desc: 'The same approach, shaped by the constraints of your market.', children: [
@@ -48,14 +47,6 @@ const megaMenus = [
         { label: 'Higher Education', href: '/industry/higher-education/' },
       ] },
     ],
-    panel: {
-      title: 'Run Your Own Numbers',
-      desc: 'Before you take our word for any of it.',
-      links: [
-        { label: 'Server-Side ROAS Calculator', href: 'https://sst-roas.foundsm.com/', newTab: true },
-        { label: 'Signal Quality Assessment', href: '/signal-quiz/', newTab: true },
-      ],
-    },
   },
   {
     id: 'resources',
@@ -130,7 +121,7 @@ const megaMenus = [
             <button class="site-header__submenu-toggle" type="button" aria-label={`Toggle ${menu.label} submenu`} aria-expanded="false" aria-controls={`submenu-${menu.id}`}>
               <span class="site-header__sr-only">Toggle {menu.label} submenu</span>
             </button>
-            <div class={`site-header__submenu site-header__mega${menu.compact ? ' site-header__mega--compact' : ''}`} id={`submenu-${menu.id}`} aria-hidden="true">
+            <div class={`site-header__submenu site-header__mega${menu.compact ? ' site-header__mega--compact' : ''}${menu.panel ? '' : ' site-header__mega--no-panel'}`} id={`submenu-${menu.id}`} aria-hidden="true">
               <div class="site-header__mega-inner">
                 <div class="site-header__mega-pillars">
                   {menu.pillars.map((p) => (
@@ -145,6 +136,7 @@ const megaMenus = [
                     </div>
                   ))}
                 </div>
+                {menu.panel && (
                 <div class="site-header__mega-panel">
                   <p class="site-header__mega-panel-title">{menu.panel.title}</p>
                   <p class="site-header__mega-panel-desc">{menu.panel.desc}</p>
@@ -154,6 +146,7 @@ const megaMenus = [
                     ))}
                   </ul>
                 </div>
+                )}
               </div>
             </div>
           </li>
@@ -249,6 +242,10 @@ const megaMenus = [
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 2rem 3rem;
   align-content: start;
+}
+
+.site-header__mega--no-panel .site-header__mega-inner {
+  grid-template-columns: minmax(0, 1fr);
 }
 
 .site-header__mega--compact .site-header__mega-pillars {

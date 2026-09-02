@@ -15,7 +15,9 @@ pnpm-lock.yaml
 
 # Sanity
 studio/node_modules/
-studio/bun.lock
+# Committed so CI (bun install --frozen-lockfile) installs the exact
+# Studio dependency tree that was verified locally.
+!studio/bun.lock
 studio/.sanity/
 studio/dist/
 

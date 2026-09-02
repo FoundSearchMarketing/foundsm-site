@@ -12,7 +12,12 @@ const megaMenus = [
     href: '/capabilities/',
     match: 'exact',
     pillars: [
-      { label: 'Paid Media', href: '/capabilities/paid-media/', desc: 'Search, social, display, and programmatic engineered as one system.' },
+      { label: 'Paid Media', href: '/capabilities/paid-media/', desc: 'Search, social, display, and programmatic engineered as one system.', children: [
+        { label: 'Paid Search', href: '/capabilities/paid-media/paid-search/' },
+        { label: 'Paid Social', href: '/capabilities/paid-media/paid-social/' },
+        { label: 'Programmatic & Display', href: '/capabilities/paid-media/programmatic/' },
+        { label: 'Competitive Intelligence', href: '/capabilities/paid-media/competitive-intelligence/' },
+      ] },
       { label: 'Data Activation', href: '/capabilities/data-activation/', desc: 'Your first-party data, connected to the platforms where growth happens.' },
       { label: 'Data & Analytics', href: '/capabilities/data-analytics/', desc: 'Unified data so marketing decisions are clearer, faster, and measurable.', children: [
         { label: 'Discovery, Audit & Analysis', href: '/capabilities/data-analytics/discovery-audit/' },

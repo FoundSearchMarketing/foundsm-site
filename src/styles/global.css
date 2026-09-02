@@ -1539,6 +1539,21 @@ p + p {
   background: var(--color-primary-hover) !important;
 }
 
+/* The newsletter form sits on the dark contact-page field, so its labels and
+   helper text go white. Inputs keep the embed's light fill. */
+#newsletter-ac-form ._form-content,
+#newsletter-ac-form ._form-label,
+#newsletter-ac-form ._form_element ._form-label {
+  color: var(--color-white) !important;
+}
+
+#newsletter-ac-form ._form_element input[type='text'],
+#newsletter-ac-form ._form_element input[type='email'],
+#newsletter-ac-form ._form_element input[type='tel'] {
+  background: var(--color-white) !important;
+  border-color: rgba(255, 255, 255, 0.35) !important;
+}
+
 /* The ActiveCampaign embed renders inline and sizes itself, so this only has
    to set the width. Everything else here was scaffolding for the HubSpot
    iframe this replaced: a --footer-newsletter-form-inset that widened the

@@ -148,19 +148,17 @@ const firstPartyBullets = [
 
 {variant === 'newsletter' && (
   <>
-    <section class="wp-newsletter-hero" aria-labelledby="newsletter-title">
+    <section class="wp-newsletter-hero dark-band" aria-labelledby="newsletter-title">
       <div class="wp-shell wp-newsletter-hero__grid">
         <div class="wp-newsletter-copy">
           <h1 id="newsletter-title">Sign Up for Our<br class="desktop-break" /> Newsletter</h1>
-          <p class="wp-newsletter-hero__intro">Get Found in your inbox: monthly insights, real-world strategies, and expert takes from the Found team.</p>
+          <p class="wp-newsletter-hero__intro">Problem-first strategy from the Found team, the platform changes that actually move your budget, and first invites to our events — plus recaps of the ones you missed.</p>
         </div>
         <aside class="wp-newsletter-form" aria-label="Newsletter signup form">
-          <div class="hs-form-frame" data-region="na1" data-form-id="f757bd34-b8c5-4f2a-a1ef-19c3a364683b" data-portal-id="5045186"></div>
+          <div class="_form_4" id="newsletter-ac-form"></div>
+          <p class="wp-newsletter-consent">By subscribing, you agree to receive marketing emails from Found Search Marketing. You can unsubscribe anytime.</p>
         </aside>
       </div>
-    </section>
-    <section class="wp-dark-strip wp-newsletter-summary dark-band">
-      <p>Get monthly insights, real-world strategies, and expert takes from the Found team — plus the latest on upcoming events and recaps on any you missed.</p>
     </section>
   </>
 )}
@@ -328,7 +326,7 @@ const firstPartyBullets = [
 )}
 
 {variant === 'newsletter' && (
-  <script is:inline src="https://js.hsforms.net/forms/embed/5045186.js" defer></script>
+  <script is:inline src="https://foundsm.activehosted.com/f/embed.php?id=4" charset="utf-8" defer></script>
 )}
 
 {variant === 'first-party-data' && (
@@ -393,9 +391,10 @@ const firstPartyBullets = [
     display: block;
   }
 
+  /* Same dark field + street-map art as the contact hero, so the two
+     form pages read as one pair. Both come from .dark-band. */
   .wp-newsletter-hero {
-    padding-block: var(--split-hero-padding-block);
-    background: #fff;
+    padding-block: 4rem 3.5rem;
   }
 
   .wp-newsletter-hero__grid {
@@ -412,7 +411,7 @@ const firstPartyBullets = [
   .wp-newsletter-hero__intro {
     max-inline-size: var(--split-hero-body-max-width);
     margin: 1.35rem 0 0;
-    color: rgba(26, 26, 26, 0.82);
+    color: rgba(255, 255, 255, 0.82);
     font-size: var(--split-hero-body-size);
     line-height: var(--split-hero-body-line-height);
   }
@@ -420,20 +419,27 @@ const firstPartyBullets = [
   .wp-newsletter-hero h1 {
     max-inline-size: var(--split-hero-copy-max-width);
     margin: 0;
-    color: #231f20;
+    color: #ffffff;
     font-size: var(--split-hero-title-size);
     line-height: var(--split-hero-title-line-height);
     letter-spacing: 0;
   }
 
   .wp-newsletter-form {
-    min-block-size: 34rem;
+    min-block-size: 25rem;
     padding-block-start: 1rem;
   }
 
   .wp-newsletter-form .hs-form-frame {
     inline-size: 100%;
-    min-block-size: 34rem;
+    min-block-size: 21rem;
+  }
+
+  .wp-newsletter-consent {
+    margin-block-start: 1rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.7);
   }
 
   /* Field + street-map artwork come from .dark-band in global.css. */
@@ -441,17 +447,6 @@ const firstPartyBullets = [
     isolation: isolate;
   }
 
-  .wp-newsletter-summary {
-    padding: 5rem var(--gutter);
-    text-align: center;
-  }
-
-  .wp-newsletter-summary p {
-    max-inline-size: 62rem;
-    margin: 0 auto;
-    font-size: 1.25rem;
-    line-height: 1.8;
-  }
 
   .wp-title-page {
     min-block-size: 7.75rem;

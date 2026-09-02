@@ -19,13 +19,20 @@ interface Props {
   idPrefix: string;
   theme?: 'light' | 'muted';
   layoutPreset?: 'mediaPanel' | 'badgePanel' | 'ecosystem';
+  pattern?: boolean;
   autoRotate?: boolean;
 }
 
-const { title, subtitle, tabs, idPrefix, theme = 'muted', layoutPreset = 'mediaPanel', autoRotate = false } = Astro.props;
+const { title, subtitle, tabs, idPrefix, theme = 'muted', layoutPreset = 'mediaPanel', pattern = false, autoRotate = false } = Astro.props;
+const sectionClass = [
+  'feature-tabs',
+  `feature-tabs--${theme}`,
+  `feature-tabs--${layoutPreset}`,
+  pattern ? 'feature-tabs--pattern' : '',
+].filter(Boolean).join(' ');
 ---
 
-<section class={`feature-tabs feature-tabs--${theme} feature-tabs--${layoutPreset}`} aria-labelledby={title ? `${idPrefix}-heading` : undefined}>
+<section class={sectionClass} aria-labelledby={title ? `${idPrefix}-heading` : undefined}>
   <div class="feature-tabs__outer">
     {(title || subtitle) && (
       <div class="feature-tabs__header">
@@ -202,6 +209,18 @@ const { title, subtitle, tabs, idPrefix, theme = 'muted', layoutPreset = 'mediaP
 
   .feature-tabs--badgePanel .feature-tabs__inner {
     align-items: center;
+  }
+
+  /* Topography artwork is the site's light-section texture; on a patterned
+     tab panel it sits behind the copy the same way it does on the approach
+     and capabilities pages. The ecosystem preset keeps its dark field. */
+  .feature-tabs--pattern:not(.feature-tabs--ecosystem) .feature-tabs__inner {
+    position: relative;
+    isolation: isolate;
+    background-image: url('/images/pages/our-approach/topography-light.svg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
   }
 
   .feature-tabs__nav {

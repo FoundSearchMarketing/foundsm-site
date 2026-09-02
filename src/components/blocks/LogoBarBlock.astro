@@ -14,7 +14,7 @@ interface Props {
   heading?: string;
   logos?: Logo[];
   displayMode?: 'static' | 'marquee';
-  theme?: 'light' | 'muted';
+  theme?: 'light' | 'muted' | 'dark';
   density?: 'compact' | 'standard';
 }
 
@@ -26,12 +26,16 @@ const normalizedLogos = logos
   }))
   .filter((logo): logo is { src: string; alt: string } => Boolean(logo.src));
 const marqueeLogos = normalizedLogos;
+const isDark = theme === 'dark';
 ---
 
 {displayMode === 'marquee' ? (
   <LogoMarquee title={heading} logos={marqueeLogos} theme={theme} />
 ) : (
-  <section class={`section lp-logo-bar lp-logo-bar--${theme} lp-logo-bar--${density}`} aria-label={heading || 'Partners'}>
+  <section
+    class={`section lp-logo-bar lp-logo-bar--${theme} lp-logo-bar--${density}${isDark ? ' dark-band' : ''}`}
+    aria-label={heading || 'Partners'}
+  >
     <div class="container">
       {heading && <h2 class="logo-marquee__heading fade-in-up">{heading}</h2>}
       <div class="partners__grid fade-in-up">
@@ -52,5 +56,36 @@ const marqueeLogos = normalizedLogos;
 
   .lp-logo-bar--compact {
     padding-block: 2.5rem;
+  }
+
+  /* Dark logo bar: the canonical black band from global.css carries the
+     background, and the logos stay full colour the way they do on the home
+     page instead of the grayscale treatment .partners__badge applies. */
+  .lp-logo-bar--dark :global(.logo-marquee__heading) {
+    color: var(--color-white);
+  }
+
+  .lp-logo-bar--dark :global(.partners__grid) {
+    gap: var(--space-lg) var(--space-2xl);
+  }
+
+  .lp-logo-bar--dark :global(.partners__badge) {
+    height: auto;
+    opacity: 1;
+    filter: none;
+    border-radius: 12px;
+    background: var(--color-white);
+    padding: 0.875rem 1.25rem;
+  }
+
+  .lp-logo-bar--dark :global(.partners__badge:hover) {
+    opacity: 1;
+    filter: none;
+  }
+
+  .lp-logo-bar--dark :global(.partners__badge img) {
+    display: block;
+    height: 2.5rem;
+    width: auto;
   }
 </style>

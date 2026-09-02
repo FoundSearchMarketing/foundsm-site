@@ -65,6 +65,13 @@ export default defineType({
       initialValue: 'mediaPanel',
     }),
     defineField({
+      name: 'pattern',
+      title: 'Use Pattern Background',
+      type: 'boolean',
+      description: 'Lays the site topography artwork behind the tab panel.',
+      initialValue: false,
+    }),
+    defineField({
       name: 'autoRotate',
       title: 'Auto Rotate',
       type: 'boolean',

@@ -9,10 +9,11 @@ interface Props {
   tabs?: any[];
   theme?: 'light' | 'muted';
   layoutPreset?: 'mediaPanel' | 'badgePanel' | 'ecosystem';
+  pattern?: boolean;
   autoRotate?: boolean;
 }
 
-const { title, subtitle, idPrefix, tabs = [], theme = 'muted', layoutPreset = 'mediaPanel', autoRotate = false } = Astro.props;
+const { title, subtitle, idPrefix, tabs = [], theme = 'muted', layoutPreset = 'mediaPanel', pattern = false, autoRotate = false } = Astro.props;
 const safeIdPrefix = idPrefix || (title || 'feature-tabs').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'feature-tabs';
 const preparedTabs = tabsFor(tabs).filter((tab) => tab.title);
 ---
@@ -25,6 +26,7 @@ const preparedTabs = tabsFor(tabs).filter((tab) => tab.title);
     idPrefix={safeIdPrefix}
     theme={theme}
     layoutPreset={layoutPreset}
+    pattern={pattern}
     autoRotate={autoRotate}
   />
 )}

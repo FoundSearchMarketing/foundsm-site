@@ -138,14 +138,8 @@ const sectionId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-
   .form-landing--dataconnect {
     min-block-size: 30.1875rem;
     padding: 0 1.5625rem;
-    background-color: #231f20;
-    background-image:
-      linear-gradient(rgba(35, 31, 32, 0.9), rgba(35, 31, 32, 0.9)),
-      url("/images/pages/performance-creative/map.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    color: #ffffff;
+    background: #f2f3f2;
+    color: #231f20;
   }
 
   .form-landing__inner {
@@ -200,9 +194,12 @@ const sectionId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-
   }
 
   .form-landing--theme-dark h1,
-  .form-landing--contact h1,
-  .form-landing--dataconnect h1 {
+  .form-landing--contact h1 {
     color: #ffffff;
+  }
+
+  .form-landing--dataconnect h1 {
+    color: #231f20;
   }
 
   .form-landing--contact .form-landing__copy {
@@ -235,7 +232,7 @@ const sectionId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-
 
   .form-landing--dataconnect .form-landing__lead {
     margin: 0;
-    color: #ffffff;
+    color: #231f20;
     font-size: 1.25rem;
     font-weight: 700;
     line-height: 1.8;
@@ -244,10 +241,13 @@ const sectionId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-
   .form-landing--theme-dark .form-landing__copy > p:not(.form-landing__eyebrow),
   .form-landing--theme-dark .form-landing__intro,
   .form-landing--contact .form-landing__copy > p:not(.form-landing__eyebrow),
-  .form-landing--contact .form-landing__intro,
+  .form-landing--contact .form-landing__intro {
+    color: #ffffff;
+  }
+
   .form-landing--dataconnect .form-landing__copy > p:not(.form-landing__eyebrow),
   .form-landing--dataconnect .form-landing__intro {
-    color: #ffffff;
+    color: #231f20;
   }
 
   .form-landing--dataconnect .form-landing__copy > p:not(.form-landing__eyebrow),
@@ -378,6 +378,22 @@ const sectionId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-
   #form-landing-ac :global(._form_8 ._form-thank-you) {
     color: #ffffff !important;
     font-family: var(--font-body) !important;
+  }
+
+  /* Same AC form 8 embed as the contact hero, but the dataconnect band is light:
+     repaint the label/helper/confirmation copy in Found black and outline the
+     inputs so white fields still read against #f2f3f2. */
+  .form-landing--dataconnect #form-landing-ac :global(._form_8 ._form-label),
+  .form-landing--dataconnect #form-landing-ac :global(._form_8 ._form_element label),
+  .form-landing--dataconnect #form-landing-ac :global(._form_8 ._field_html p),
+  .form-landing--dataconnect #form-landing-ac :global(._form_8 ._form-thank-you) {
+    color: #231f20 !important;
+  }
+
+  .form-landing--dataconnect #form-landing-ac :global(._form_8 input[type='text']),
+  .form-landing--dataconnect #form-landing-ac :global(._form_8 input[type='email']),
+  .form-landing--dataconnect #form-landing-ac :global(._form_8 textarea) {
+    border: 1px solid rgba(35, 31, 32, 0.18) !important;
   }
 
   .form-landing__frame {

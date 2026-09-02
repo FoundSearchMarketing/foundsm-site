@@ -47,6 +47,8 @@ export interface LegacyPageForm {
   heading?: string;
   body?: SimplePortableTextBlock[];
   hubspotFormId?: string;
+  /** ActiveCampaign form id. When set, the AC embed replaces the HubSpot frame. */
+  acFormId?: string;
 }
 
 export interface LegacyPageData {
@@ -702,6 +704,7 @@ function buildDefaultLegacyPageData(definition: LegacyPageDefinition): LegacyPag
       body: [block(summary)],
       form: {
         hubspotFormId: '77ee07f7-2567-46d2-9255-ff9e410fdf6a',
+        acFormId: '8',
       },
     };
   }

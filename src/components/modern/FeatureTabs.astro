@@ -306,6 +306,15 @@ const sectionClass = [
     display: none;
   }
 
+  /* Keep the panel media to a landscape crop so the tab section stays about
+     as tall as the copy beside it, matching the home page tabs. */
+  .feature-tabs__panel-media {
+    --media-asset-inline-size: 100%;
+    --media-asset-aspect-ratio: 4 / 3;
+    --media-asset-fit: cover;
+    --media-asset-max-block-size: 20rem;
+  }
+
   .feature-tabs__panel-copy {
     display: grid;
     gap: 0.75rem;

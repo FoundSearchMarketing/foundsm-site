@@ -77,6 +77,13 @@ export default defineType({
       initialValue: 'standard',
     }),
     themeField('theme', 'Theme', 'light'),
+    defineField({
+      name: 'pattern',
+      title: 'Use Pattern Background',
+      type: 'boolean',
+      description: 'Lays the site topography artwork over the section field.',
+      initialValue: false,
+    }),
   ],
   preview: {
     select: { title: 'title', cards: 'cards' },

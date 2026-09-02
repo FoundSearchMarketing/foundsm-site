@@ -58,9 +58,17 @@ const isDark = theme === 'dark';
     padding-block: 2.5rem;
   }
 
+  /* Client logos read in full colour here, the way they do on the home page
+     marquee, rather than taking the grayscale partner-badge treatment. */
+  .lp-logo-bar :global(.partners__badge),
+  .lp-logo-bar :global(.partners__badge:hover) {
+    opacity: 1;
+    filter: none;
+  }
+
   /* Dark logo bar: the canonical black band from global.css carries the
-     background, and the logos stay full colour the way they do on the home
-     page instead of the grayscale treatment .partners__badge applies. */
+     background, and each logo sits on a white tile so dark-inked marks stay
+     legible against it. */
   .lp-logo-bar--dark :global(.logo-marquee__heading) {
     color: var(--color-white);
   }
@@ -71,16 +79,9 @@ const isDark = theme === 'dark';
 
   .lp-logo-bar--dark :global(.partners__badge) {
     height: auto;
-    opacity: 1;
-    filter: none;
     border-radius: 12px;
     background: var(--color-white);
     padding: 0.875rem 1.25rem;
-  }
-
-  .lp-logo-bar--dark :global(.partners__badge:hover) {
-    opacity: 1;
-    filter: none;
   }
 
   .lp-logo-bar--dark :global(.partners__badge img) {

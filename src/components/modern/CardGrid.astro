@@ -19,6 +19,7 @@ interface Props {
   cards: CardItem[];
   columns?: 2 | 3 | 4;
   theme?: 'light' | 'muted' | 'dark';
+  pattern?: boolean;
   variant?: 'standard' | 'icon' | 'numbered' | 'credential' | 'topic' | 'benefit';
   density?: 'compact' | 'standard';
 }
@@ -29,12 +30,21 @@ const {
   cards,
   columns = 3,
   theme = 'light',
+  pattern = false,
   variant = 'standard',
   density = 'standard',
 } = Astro.props;
+const sectionClass = [
+  'card-grid-section',
+  `card-grid-section--${theme}`,
+  `card-grid-section--${density}`,
+  `card-grid-section--${variant}`,
+  pattern ? 'card-grid-section--pattern' : '',
+  pattern && theme === 'dark' ? 'dark-band' : '',
+].filter(Boolean).join(' ');
 ---
 
-<section class={`card-grid-section card-grid-section--${theme} card-grid-section--${density} card-grid-section--${variant}`} aria-labelledby={title ? `${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-heading` : undefined}>
+<section class={sectionClass} aria-labelledby={title ? `${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-heading` : undefined}>
   <div class="card-grid-section__inner">
     {(title || subtitle) && (
       <div class="card-grid-section__header">
@@ -86,6 +96,16 @@ const {
   .card-grid-section--dark {
     background: #1a1a1a;
     color: #ffffff;
+  }
+
+  /* Topography is the site's light-section artwork; it sits over the grey
+     field the same way it does on the approach and capabilities pages. A
+     patterned dark section takes .dark-band from global.css instead. */
+  .card-grid-section--pattern:not(.dark-band) {
+    background-image: url('/images/pages/our-approach/topography-light.svg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
   }
 
   .card-grid-section__inner {

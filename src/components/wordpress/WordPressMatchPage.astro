@@ -279,7 +279,7 @@ const firstPartyBullets = [
         <h1 id="first-party-title">Why First-Party Data Is<br />Your Most Valuable<br />Profit Lever</h1>
         <aside class="wp-download-card" id="wp-download-card" aria-labelledby="download-title">
           <h2 id="download-title">Download Now</h2>
-          <div class="hs-form-frame" data-region="na1" data-form-id="2c65e995-aba0-4239-955c-9beb15b0791d" data-portal-id="5045186"></div>
+          <div class="_form_6"></div>
         </aside>
       </div>
     </section>
@@ -330,7 +330,18 @@ const firstPartyBullets = [
 )}
 
 {variant === 'first-party-data' && (
-  <script is:inline src="https://js.hsforms.net/forms/embed/5045186.js" defer></script>
+  <>
+    <script is:inline src="https://foundsm.activehosted.com/f/embed.php?id=6" charset="utf-8" defer></script>
+    <script is:inline>
+      // The HubSpot original shipped the marketing-consent box pre-checked;
+      // AC forms can't do that, so check it once the embed renders.
+      (function precheckConsent(tries) {
+        var box = document.querySelector('._form_6 input[type="checkbox"]');
+        if (box) box.checked = true;
+        else if (tries < 40) setTimeout(function () { precheckConsent(tries + 1); }, 300);
+      })(0);
+    </script>
+  </>
 )}
 
 {variant === 'privacy' && (
@@ -787,18 +798,116 @@ const firstPartyBullets = [
     min-block-size: 30rem;
     margin-block-start: 0.55rem;
     padding: 2rem;
-    background: #231f20;
-    color: #fff;
+    background: var(--color-primary);
+    color: var(--color-dark);
   }
 
   .wp-download-card h2 {
     margin: 0;
-    color: var(--color-primary);
+    color: var(--color-dark);
     font-family: var(--font-body);
     font-size: 2.5rem;
     font-weight: 900;
     line-height: 1.1;
     text-align: center;
+  }
+
+  /* Restyle the injected ActiveCampaign form to match the HubSpot original:
+     placeholder-only white inputs, First/Last side by side, green Download
+     button. The embed ships its own #_form_6…_ id-scoped styles, so overrides
+     need !important. Selectors stick to stable names (input[name], structural
+     classes) — the per-field _x-hash classes change whenever fields change. */
+  #wp-download-card :global(form._form_6) {
+    inline-size: 100% !important;
+    max-inline-size: none !important;
+    margin: 0 !important;
+    padding: 1.6rem 0 0 !important;
+    background: transparent !important;
+    font-family: var(--font-body) !important;
+  }
+
+  #wp-download-card :global(._form_6 ._form-title),
+  #wp-download-card :global(._form_6 ._field_html),
+  #wp-download-card :global(._form_6 ._form-label),
+  #wp-download-card :global(._form_6 ._form-branding) {
+    display: none !important;
+  }
+
+  #wp-download-card :global(._form_6 ._form-content) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.1rem 1rem;
+  }
+
+  #wp-download-card :global(._form_6 ._form_element),
+  #wp-download-card :global(._form_6 ._button-wrapper) {
+    inline-size: 100%;
+    margin: 0 !important;
+  }
+
+  #wp-download-card :global(._form_6 ._form_element:has(input[name='firstname'])),
+  #wp-download-card :global(._form_6 ._form_element:has(input[name='lastname'])) {
+    inline-size: calc(50% - 0.5rem);
+  }
+
+  #wp-download-card :global(._form_6 input[type='text']),
+  #wp-download-card :global(._form_6 input[type='email']) {
+    inline-size: 100% !important;
+    block-size: 2.75rem !important;
+    padding: 0 0.9rem !important;
+    border: 0 !important;
+    border-radius: 0.375rem !important;
+    background: #fff !important;
+    color: #142341 !important;
+    font-family: var(--font-body) !important;
+    font-size: 0.875rem !important;
+  }
+
+  #wp-download-card :global(._form_6 input::placeholder) {
+    color: #7a7a7a !important;
+    font-family: var(--font-body) !important;
+  }
+
+  #wp-download-card :global(._form_6 input[type='checkbox']) {
+    accent-color: var(--color-dark);
+  }
+
+  #wp-download-card :global(._form_6 ._form_element label),
+  #wp-download-card :global(._form_6 ._form_element span) {
+    color: var(--color-dark) !important;
+    font-family: var(--font-body) !important;
+    font-size: 0.72rem !important;
+    line-height: 1.45 !important;
+  }
+
+  #wp-download-card :global(._form_6 ._field_html a),
+  #wp-download-card :global(._form_6 ._form_element a) {
+    color: var(--color-dark) !important;
+    text-decoration: underline !important;
+  }
+
+  #wp-download-card :global(._form_6 ._submit) {
+    min-block-size: 3.25rem;
+    margin-block-start: 0.35rem !important;
+    padding: 0.9rem 1.75rem !important;
+    border: 0 !important;
+    border-radius: var(--radius-pill) !important;
+    background: var(--color-dark) !important;
+    color: #ffffff !important;
+    font-family: var(--font-body) !important;
+    font-size: var(--text-btn) !important;
+    font-weight: 500 !important;
+    line-height: 1.2 !important;
+    cursor: pointer;
+  }
+
+  #wp-download-card :global(._form_6 ._submit:hover) {
+    background: #333333 !important;
+  }
+
+  #wp-download-card :global(._form_6 ._form-thank-you) {
+    color: var(--color-dark) !important;
+    font-family: var(--font-body) !important;
   }
 
   .wp-first-party-body {
@@ -838,58 +947,14 @@ const firstPartyBullets = [
     gap: 0.9rem;
   }
 
+  /* Page 1 of the PDF, rendered as the cover preview */
   .wp-paper-preview__cover {
-    display: grid;
-    align-content: start;
-    gap: 0.85rem;
-    inline-size: 100%;
-    aspect-ratio: 8.5 / 11;
-    padding: 2.25rem 1.75rem;
-    border-radius: 0.25rem;
-    background: #231f20;
-    box-shadow: 0 18px 42px rgba(26, 26, 26, 0.22);
-    color: #ffffff;
-  }
-
-  .wp-paper-preview__kicker {
-    margin: 0;
-    color: var(--color-primary);
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    line-height: 1.2;
-    text-transform: uppercase;
-  }
-
-  .wp-paper-preview__title {
-    margin: 0;
-    font-family: 'Fraunces', Georgia, serif;
-    font-size: 1.5rem;
-    font-weight: 900;
-    line-height: 1.15;
-  }
-
-  .wp-paper-preview__meta {
-    margin: 0;
-    color: rgba(255, 255, 255, 0.72);
-    font-size: 0.9rem;
-    line-height: 1.45;
-  }
-
-  .wp-paper-preview__rule {
     display: block;
-    inline-size: 3.5rem;
-    block-size: 0.25rem;
-    margin-block-start: 0.4rem;
-    background: var(--color-primary);
-  }
-
-  .wp-paper-preview__logo {
-    align-self: end;
-    inline-size: 7.5rem;
+    inline-size: 100%;
     block-size: auto;
-    margin-block-start: auto;
-    filter: brightness(0) invert(1);
+    aspect-ratio: 1100 / 1423;
+    border-radius: 0.25rem;
+    box-shadow: 0 18px 42px rgba(26, 26, 26, 0.22);
   }
 
   .wp-paper-preview__caption {

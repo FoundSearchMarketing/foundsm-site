@@ -99,25 +99,53 @@ const seo = resolveSeo(Astro.url.pathname, seoProps);
 
   <script is:inline src="/scripts/main.js"></script>
 
-  <!-- HubSpot Tracking Code — injected on first interaction (5s fallback) to keep its ~1.4s of JS execution off the critical rendering path on mobile -->
+  <!--
+    Site tracking: ActiveCampaign and HubSpot run side by side on purpose.
+    HubSpot stays until the AC migration is finished and the HubSpot portal is
+    deactivated, so we do not lose continuity of production tracking data in
+    the meantime. Both are injected on the first interaction (5s fallback) from
+    a single listener set, to keep their JS off the critical rendering path on
+    mobile. When HubSpot is switched off, delete only the loadHubSpot call and
+    its function; the rest of this block stands on its own.
+  -->
   {enableThirdPartyScripts && (
     <script is:inline>
       (function () {
         var events = ['scroll', 'pointerdown', 'keydown', 'touchstart'];
         var loaded = false;
+
+        function loadActiveCampaign() {
+          window.visitorGlobalObjectAlias = 'vgo';
+          window.vgo = window.vgo || function () { (window.vgo.q = window.vgo.q || []).push(arguments); };
+          window.vgo.l = new Date().getTime();
+          var s = document.createElement('script');
+          s.async = true;
+          s.src = 'https://diffuser-cdn.app-us1.com/diffuser/diffuser.js';
+          document.body.appendChild(s);
+          window.vgo('setAccount', '227250883');
+          window.vgo('setTrackByDefault', true);
+          window.vgo('process');
+        }
+
         function loadHubSpot() {
-          if (loaded) return;
-          loaded = true;
           var s = document.createElement('script');
           s.id = 'hs-script-loader';
           s.async = true;
           s.defer = true;
           s.src = '//js.hs-scripts.com/5045186.js';
           document.body.appendChild(s);
-          events.forEach(function (e) { window.removeEventListener(e, loadHubSpot); });
         }
-        events.forEach(function (e) { window.addEventListener(e, loadHubSpot, { passive: true }); });
-        setTimeout(loadHubSpot, 5000);
+
+        function loadTrackers() {
+          if (loaded) return;
+          loaded = true;
+          loadActiveCampaign();
+          loadHubSpot();
+          events.forEach(function (e) { window.removeEventListener(e, loadTrackers); });
+        }
+
+        events.forEach(function (e) { window.addEventListener(e, loadTrackers, { passive: true }); });
+        setTimeout(loadTrackers, 5000);
       })();
     </script>
   )}

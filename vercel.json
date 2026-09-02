@@ -2019,7 +2019,17 @@
     },
     {
       "source": "/capabilities/data-intelligence/server-side-tracking/",
-      "destination": "/capabilities/data-analytics/server-side-tracking/",
+      "destination": "/capabilities/data-activation/server-side-tracking/",
+      "permanent": true
+    },
+    {
+      "source": "/capabilities/data-analytics/server-side-tracking/",
+      "destination": "/capabilities/data-activation/server-side-tracking/",
+      "permanent": true
+    },
+    {
+      "source": "/capabilities/data-analytics/privacy-governance/",
+      "destination": "/capabilities/data-activation/privacy-governance/",
       "permanent": true
     }
   ]

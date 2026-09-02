@@ -6,7 +6,7 @@ import { sanityClient, landingPageBySlugQuery, allLandingPagesQuery } from '../.
 export async function getStaticPaths() {
   const pages = await sanityClient.fetch(allLandingPagesQuery);
   return pages
-    .filter((page: any) => !page.slug?.current?.includes('/') && !['events', 'industry'].includes(page.slug?.current))
+    .filter((page: any) => !page.slug?.current?.includes('/') && !['events', 'industry', 'results'].includes(page.slug?.current))
     .map((page: any) => ({
       params: { slug: page.slug.current },
     }));

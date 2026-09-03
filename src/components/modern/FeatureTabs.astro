@@ -20,12 +20,13 @@ interface Props {
   theme?: 'light' | 'muted';
   layoutPreset?: 'mediaPanel' | 'badgePanel' | 'ecosystem';
   autoRotate?: boolean;
+  pattern?: boolean;
 }
 
-const { title, subtitle, tabs, idPrefix, theme = 'muted', layoutPreset = 'mediaPanel', autoRotate = false } = Astro.props;
+const { title, subtitle, tabs, idPrefix, theme = 'muted', layoutPreset = 'mediaPanel', autoRotate = false, pattern = false } = Astro.props;
 ---
 
-<section class={`feature-tabs feature-tabs--${theme} feature-tabs--${layoutPreset}`} aria-labelledby={title ? `${idPrefix}-heading` : undefined}>
+<section class={`feature-tabs feature-tabs--${theme} feature-tabs--${layoutPreset}${pattern ? ' feature-tabs--pattern' : ''}`} aria-labelledby={title ? `${idPrefix}-heading` : undefined}>
   <div class="feature-tabs__outer">
     {(title || subtitle) && (
       <div class="feature-tabs__header">
@@ -192,6 +193,14 @@ const { title, subtitle, tabs, idPrefix, theme = 'muted', layoutPreset = 'mediaP
     padding: 5rem 3.125rem;
     border-radius: 2.5rem;
     background: #f2f3f2;
+  }
+
+  /* Same panel artwork as the Paid Media capabilities tabs. */
+  .feature-tabs--pattern .feature-tabs__inner {
+    background-color: #eef0ed;
+    background-image: url('/images/pages/paid-media/topography-light.svg');
+    background-position: center;
+    background-size: cover;
   }
 
   .feature-tabs--ecosystem .feature-tabs__inner {

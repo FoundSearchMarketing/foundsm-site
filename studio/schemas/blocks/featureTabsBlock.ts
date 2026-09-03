@@ -70,6 +70,13 @@ export default defineType({
       type: 'boolean',
       initialValue: false,
     }),
+    defineField({
+      name: 'pattern',
+      title: 'Topography Background',
+      description: 'Adds the light topography artwork behind the tabs panel, matching the Paid Media capabilities tabs.',
+      type: 'boolean',
+      initialValue: false,
+    }),
   ],
   preview: {
     select: { title: 'title', tabs: 'tabs' },

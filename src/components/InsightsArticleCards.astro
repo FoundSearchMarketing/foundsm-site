@@ -24,6 +24,7 @@ interface ArticleCard {
   dateLabel: string;
   datetime: string;
   excerpt: string;
+  ctaLabel?: string;
   image: ArticleImage;
   videoSrc?: string;
 }
@@ -131,8 +132,13 @@ const normalizedArticles = articles.map((article) => ({
                   {article.excerpt}
                 </p>
 
-                <a class="insights-article-card__button" href={article.url} data-source-widget="841dbf1">
-                  <span class="insights-article-card__button-text">Read Article →</span>
+                <a
+                  class="insights-article-card__button"
+                  href={article.url}
+                  data-source-widget="841dbf1"
+                  aria-label={`${article.ctaLabel || 'Read the Article'}: ${article.title}`}
+                >
+                  <span class="insights-article-card__button-text">{article.ctaLabel || 'Read the Article'} →</span>
                 </a>
               </div>
             </article>
@@ -335,10 +341,10 @@ const normalizedArticles = articles.map((article) => ({
     --article-cards-columns: 3;
     --article-cards-column-gap: 30px;
     --article-cards-row-gap: 60px;
-    --article-card-title-size: 30px;
-    --article-card-title-line-height: 38px;
-    --article-card-copy-size: 20px;
-    --article-card-copy-line-height: 36px;
+    --article-card-title-size: 22px;
+    --article-card-title-line-height: 30px;
+    --article-card-copy-size: 16px;
+    --article-card-copy-line-height: 26px;
     --article-card-button-size: 16px;
     --article-card-button-line-height: 24px;
     --article-cards-max-width: 1260px;
@@ -440,13 +446,10 @@ const normalizedArticles = articles.map((article) => ({
     content: ', ';
   }
 
+  /* Titles render in full: no line clamp, so long headlines are never cut off. */
   .insights-article-card__title {
     margin: 0;
-    display: -webkit-box;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
+    overflow-wrap: anywhere;
   }
 
   .insights-article-card__title-link {
@@ -475,9 +478,9 @@ const normalizedArticles = articles.map((article) => ({
     font-family: var(--font-body, 'Poppins', sans-serif);
     font-size: var(--article-card-copy-size);
     font-weight: 400;
-    line-height: 29px;
+    line-height: var(--article-card-copy-line-height);
     text-overflow: ellipsis;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
   }
 
@@ -526,10 +529,10 @@ const normalizedArticles = articles.map((article) => ({
   @media (max-width: 1024px) {
     .insights-article-cards {
       --article-cards-columns: 2;
-      --article-card-title-size: 24px;
-      --article-card-title-line-height: 32px;
-      --article-card-copy-size: 18px;
-      --article-card-copy-line-height: 30px;
+      --article-card-title-size: 20px;
+      --article-card-title-line-height: 28px;
+      --article-card-copy-size: 15px;
+      --article-card-copy-line-height: 24px;
       --article-card-button-size: 16px;
       --article-card-button-line-height: 20px;
 
@@ -546,17 +549,12 @@ const normalizedArticles = articles.map((article) => ({
       line-height: 22px;
     }
 
-    .insights-article-card__title {
-      -webkit-line-clamp: 3;
-    }
-
     .insights-article-card__title-link {
-      letter-spacing: -0.5px;
+      letter-spacing: -0.3px;
     }
 
     .insights-article-card__excerpt {
-      line-height: var(--article-card-copy-line-height);
-      -webkit-line-clamp: 3;
+      -webkit-line-clamp: 4;
     }
   }
 

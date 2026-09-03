@@ -53,7 +53,7 @@ const normalizedPosts = posts.map((post) => ({
               )}
               <p class="meta-line">{post.date}</p>
               <p class="excerpt">{post.excerpt}</p>
-              <span class="button">{post.ctaLabel ?? 'Keep Reading'} <span aria-hidden="true">&rarr;</span></span>
+              <span class="button">{post.ctaLabel || 'Keep Reading'} <span aria-hidden="true">&rarr;</span></span>
             </div>
           </a>
         ))

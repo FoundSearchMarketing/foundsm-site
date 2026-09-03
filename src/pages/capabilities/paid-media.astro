@@ -224,17 +224,6 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
       </div>
     </section>
 
-    <section class="paid-media-cta dark-band" aria-label={page.cta?.cta?.label || 'Paid media call to action'}>
-      <div class="paid-media-cta__inner">
-        <div class="paid-media-rich-text dark-band__body" set:html={sectionHtml(page.cta?.body, 'CTA copy')} />
-        {page.cta?.cta?.label && page.cta?.cta?.href ? (
-          <a class="btn btn--primary btn--lg paid-media-cta__button" href={page.cta.cta.href}>{page.cta.cta.label}</a>
-        ) : (
-          <span class="paid-media-placeholder">Missing CTA link</span>
-        )}
-      </div>
-    </section>
-
     {logos.some((logo) => logo.src) ? (
       <section class="paid-media-logos" aria-label={page.logoMarquee?.title || 'Google Ads logos'}>
         <div class="paid-media-logos__track">
@@ -252,6 +241,20 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
     ) : (
       <section class="paid-media-logos"><p class="paid-media-placeholder">Missing logo marquee images</p></section>
     )}
+
+    <section class="paid-media-cta green-band" aria-label={page.cta?.title || page.cta?.cta?.label || 'Paid media call to action'}>
+      <div class="paid-media-cta__inner">
+        <div class="paid-media-cta__copy">
+          {page.cta?.title && <h2>{page.cta.title}</h2>}
+          <div class="paid-media-cta__body green-band__body" set:html={sectionHtml(page.cta?.body, 'CTA copy')} />
+        </div>
+        {page.cta?.cta?.label && page.cta?.cta?.href ? (
+          <a class="btn btn--dark paid-media-cta__button" href={page.cta.cta.href}>{page.cta.cta.label}</a>
+        ) : (
+          <span class="paid-media-placeholder">Missing CTA link</span>
+        )}
+      </div>
+    </section>
   </div>
 </BaseLayout>
 
@@ -393,10 +396,10 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
 
   .paid-media-rich-text {
     display: grid;
-    gap: 1.45rem;
+    gap: 1rem;
     color: #1a1a1a;
-    font-size: 1.45rem;
-    line-height: 1.65;
+    font-size: var(--split-hero-body-size);
+    line-height: var(--split-hero-body-line-height);
   }
 
   .paid-media-rich-text :global(p) {
@@ -450,8 +453,8 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
   .paid-media-work h2,
   .paid-media-section-heading h2 {
     margin: 0;
-    font-size: clamp(3rem, 4.6vw, 4.8rem);
-    line-height: 1.02;
+    font-size: var(--split-hero-title-size);
+    line-height: var(--split-hero-title-line-height);
     letter-spacing: 0;
   }
 
@@ -580,7 +583,6 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
 
   .paid-media-section-heading--dark h2 {
     color: #ffffff;
-    font-size: clamp(2.85rem, 3.2vw, 3.6rem);
   }
 
   .paid-media-section-heading p {
@@ -711,28 +713,37 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
     line-height: 1.55;
   }
 
+  /* Closing band matches the other capability pages: green field, headline,
+     supporting copy, dark pill button. Field and texture come from .green-band. */
   .paid-media-cta {
-    padding: clamp(3.5rem, 5vw, 4.75rem) var(--gutter);
+    padding-block: 1rem;
   }
 
   .paid-media-cta__inner {
     display: grid;
-    grid-template-columns: minmax(0, 0.72fr) auto;
+    grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
-    gap: 3rem;
+    gap: 2rem;
+    padding: 2.5rem;
   }
 
-  .paid-media-cta .paid-media-rich-text {
-    max-inline-size: 42rem;
-    color: #ffffff;
-    font-size: 1.25rem;
-    line-height: 1.55;
+  .paid-media-cta__copy {
+    display: grid;
+    gap: 0.85rem;
+    max-inline-size: 64rem;
   }
 
-  /* The auto track absorbs the leftover space, which stretched the pill to
-     twice its natural width. Pin it to the right edge instead. */
+  .paid-media-cta h2 {
+    color: var(--color-dark);
+    font-weight: 600;
+  }
+
+  .paid-media-cta__body :global(p) {
+    margin: 0;
+  }
+
   .paid-media-cta__button {
-    justify-self: end;
+    white-space: nowrap;
   }
 
   .paid-media-logos {
@@ -859,11 +870,6 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
     }
 
     .paid-media-rich-text {
-      font-size: 1.13rem;
-      line-height: 1.7;
-    }
-
-    .paid-media-hero .paid-media-rich-text {
       font-size: var(--split-hero-body-size);
       line-height: var(--split-hero-body-line-height);
     }

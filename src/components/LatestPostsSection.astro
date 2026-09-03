@@ -144,6 +144,7 @@ const normalizedPosts = posts.map((post) => ({
 
   .featured-card__inner {
     display: flex;
+    height: 100%;
     min-height: 100%;
     flex-direction: column;
     gap: 20px 10px;
@@ -183,18 +184,16 @@ const normalizedPosts = posts.map((post) => ({
     text-transform: uppercase;
   }
 
+  /* Titles render in full: no line clamp, so long headlines are never cut off. */
   .featured-card__title {
-    display: -webkit-box;
-    overflow: hidden;
     margin: 0;
     color: var(--found-black);
     font-family: var(--font-body);
-    font-size: 30px;
+    font-size: 26px;
     font-weight: 700;
     letter-spacing: 0;
-    line-height: 38px;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
+    line-height: 34px;
+    overflow-wrap: anywhere;
   }
 
   .featured-card__image {
@@ -233,20 +232,18 @@ const normalizedPosts = posts.map((post) => ({
   }
 
   .excerpt {
-    display: -webkit-box;
-    overflow: hidden;
     margin: 0;
     color: var(--found-black);
     font-family: var(--font-body);
-    font-size: 20px;
+    font-size: 17px;
     font-weight: 400;
-    line-height: 29px;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
+    line-height: 28px;
   }
 
   .button {
     align-self: flex-start;
+    /* Pin the button to the bottom so both featured cards line up. */
+    margin-block-start: auto;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -283,10 +280,9 @@ const normalizedPosts = posts.map((post) => ({
     }
 
     .featured-card__title {
-      font-size: 24px;
-      line-height: 32px;
+      font-size: 22px;
+      line-height: 30px;
       letter-spacing: 0;
-      -webkit-line-clamp: 3;
     }
 
     .featured-card__image,
@@ -296,9 +292,8 @@ const normalizedPosts = posts.map((post) => ({
     }
 
     .excerpt {
-      font-size: 18px;
-      line-height: 30px;
-      -webkit-line-clamp: 3;
+      font-size: 16px;
+      line-height: 26px;
     }
 
     .button {
@@ -319,13 +314,6 @@ const normalizedPosts = posts.map((post) => ({
     .latest-posts__grid {
       grid-template-columns: 1fr;
       gap: 30px;
-    }
-
-    .featured-card__title,
-    .excerpt {
-      display: block;
-      overflow: visible;
-      -webkit-line-clamp: unset;
     }
 
     .button {

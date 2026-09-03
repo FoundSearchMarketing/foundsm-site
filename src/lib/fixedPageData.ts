@@ -334,7 +334,7 @@ export const defaultCapabilityDetailPages: Record<string, CapabilityDetailPageDa
       { title: 'AI-Driven Optimization', body: [block('We use AI-driven optimization to detect outliers in CPC and conversion rate, triggering automated bid adjustments before costs spiral.')], icon: '/images/pages/paid-media/icon-optimization.svg' },
       { title: 'Predictive Forecasting', body: [block('Our projections help you anticipate spend pacing and ROI, so you can hit targets without guesswork.')], icon: '/images/pages/paid-media/icon-forecasting.svg' },
     ] },
-    cta: { body: [block("With our paid media expertise, you'll never wonder if your budget is working optimally, because you'll see exactly how every dollar is being spent and driving growth.")], cta: { label: "Let's Talk Paid Media", href: '/contact-us/' } },
+    cta: { title: 'Make every paid media dollar count.', body: [block("With our paid media expertise, you'll never wonder if your budget is working optimally, because you'll see exactly how every dollar is being spent and driving growth.")], cta: { label: "Let's Talk Paid Media", href: '/contact-us/' } },
     logoMarquee: { logos: [
       { image: '/images/pages/paid-media/google-ads-4.png', alt: 'Google Ads partner badge' },
       { image: '/images/pages/paid-media/google-ads-1.png', alt: 'Google Ads logo' },

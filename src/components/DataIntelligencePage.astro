@@ -1,7 +1,7 @@
 ---
 import MediaAsset from './MediaAsset.astro';
 import type { CapabilityDetailPageData } from '../lib/fixedPageData';
-import { cardsFor, imageProps, logosFor, richHtml, richText } from '../lib/fixedPageRender';
+import { cardsFor, imageProps, logosFor, richHtml } from '../lib/fixedPageRender';
 
 interface Props {
   page: CapabilityDetailPageData;
@@ -37,8 +37,6 @@ const stripDuplicateTitle = (title: string, body: string) => {
     .trim();
 };
 
-const ctaBody = richText(page.cta?.body);
-const ctaText = [page.cta?.title, ctaBody].filter(Boolean).join(' ');
 ---
 
 <div class="di-page">
@@ -151,11 +149,14 @@ const ctaText = [page.cta?.title, ctaBody].filter(Boolean).join(' ');
     </div>
   </section>
 
-  <section class="di-cta dark-band" aria-label={page.cta?.cta?.label || 'Contact Found Search Marketing'}>
+  <section class="di-cta green-band" aria-label={page.cta?.title || page.cta?.cta?.label || 'Contact Found Search Marketing'}>
     <div class="di-cta__inner">
-      {ctaText && <h2>{ctaText}</h2>}
+      <div class="di-cta__copy">
+        {page.cta?.title && <h2>{page.cta.title}</h2>}
+        <div class="di-cta__body green-band__body" set:html={richHtml(page.cta?.body)} />
+      </div>
       {page.cta?.cta?.label && page.cta?.cta?.href && (
-        <a class="btn btn--primary btn--lg di-cta__button" href={page.cta.cta.href}>{page.cta.cta.label}</a>
+        <a class="btn btn--dark di-cta__button" href={page.cta.cta.href}>{page.cta.cta.label}</a>
       )}
     </div>
   </section>
@@ -305,10 +306,8 @@ const ctaText = [page.cta?.title, ctaBody].filter(Boolean).join(' ');
   .di-intelligence__header h2 {
     margin: 0;
     color: #ffffff;
-    font-family: var(--font-body);
-    font-size: 2.5rem;
-    font-weight: 700;
-    line-height: 1.1;
+    font-size: 3.75rem;
+    line-height: 1.083;
   }
 
   .di-intelligence__header p {
@@ -466,33 +465,39 @@ const ctaText = [page.cta?.title, ctaBody].filter(Boolean).join(' ');
     --media-asset-radius: var(--split-hero-media-radius);
   }
 
-  /* Field + street-map artwork come from .dark-band in global.css. */
+  /* Closing band matches the other capability pages: green field, headline,
+     supporting copy, dark pill button. Field and texture come from .green-band. */
   .di-cta {
-    padding: 3.125rem 1.5625rem;
+    padding-block: 1rem;
   }
 
   .di-cta__inner {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(17.5rem, 0.5fr);
+    grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
-    gap: 3.125rem;
-    width: min(100%, 86.875rem);
-    min-height: 9.875rem;
+    gap: 2rem;
+    width: min(100%, var(--content-max-width));
     margin-inline: auto;
+    padding: 2.5rem;
+  }
+
+  .di-cta__copy {
+    display: grid;
+    gap: 0.85rem;
+    max-inline-size: 64rem;
   }
 
   .di-cta h2 {
-    max-width: 40.625rem;
+    color: var(--color-dark);
+    font-weight: 600;
+  }
+
+  .di-cta__body :global(p) {
     margin: 0;
-    color: #ffffff;
-    font-family: var(--font-body);
-    font-size: 1.5rem;
-    font-weight: 700;
-    line-height: 1.333;
   }
 
   .di-cta__button {
-    justify-self: start;
+    white-space: nowrap;
   }
 
   @media (min-width: 1025px) {
@@ -657,19 +662,9 @@ const ctaText = [page.cta?.title, ctaBody].filter(Boolean).join(' ');
       line-height: 1.667;
     }
 
-    .di-cta {
-      padding: 3.125rem 1.5625rem;
-    }
-
     .di-cta__inner {
       grid-template-columns: 1fr;
-      gap: 1.875rem;
-      min-height: 0;
-    }
-
-    .di-cta h2 {
-      font-size: 1.25rem;
-      line-height: 1.3;
+      gap: 1.5rem;
     }
 
     .di-cta__button {

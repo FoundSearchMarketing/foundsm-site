@@ -1,0 +1,1204 @@
+[
+  {
+    "_key": "ctl0006",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl0005",
+        "_type": "span",
+        "marks": [
+          "strong"
+        ],
+        "text": "Many businesses are sitting on a reservoir of unused potential: DATA."
+      }
+    ],
+    "markDefs": [],
+    "style": "normal"
+  },
+  {
+    "_key": "ctl0004",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl0001",
+        "_type": "span",
+        "marks": [],
+        "text": "When stored, it is static. But "
+      },
+      {
+        "_key": "ctl0002",
+        "_type": "span",
+        "marks": [
+          "link-ctl-data-activation"
+        ],
+        "text": "when activated"
+      },
+      {
+        "_key": "ctl0003",
+        "_type": "span",
+        "marks": [],
+        "text": ", it becomes the kinetic energy that fuels advertising performance. If you haven’t already, 2026 is the year to move beyond just collecting conversions. This article helps explain how to close the loop, and send the truth of what actually happened back to the ad platforms so algorithms can bid more intelligently."
+      }
+    ],
+    "markDefs": [
+      {
+        "_key": "link-ctl-data-activation",
+        "_type": "link",
+        "href": "/capabilities/data-activation/"
+      }
+    ],
+    "style": "normal"
+  },
+  {
+    "_key": "ctl0008",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl0007",
+        "_type": "span",
+        "marks": [],
+        "text": "1. Why Revenue-Focused Businesses Move from Online Conversion Tracking (Pixels) to Conversion API (CAPI)"
+      }
+    ],
+    "markDefs": [],
+    "style": "h2"
+  },
+  {
+    "_key": "ctl000a",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl0009",
+        "_type": "span",
+        "marks": [],
+        "text": "Pixels = “Traffic” events.\nAPIs = “Truth” events."
+      }
+    ],
+    "markDefs": [],
+    "style": "normal"
+  },
+  {
+    "_key": "ctl000c",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl000b",
+        "_type": "span",
+        "marks": [],
+        "text": "Pixels reliably capture lightweight, on-site behaviors like page views or basic lead submissions. But the events that truly matter (qualified leads, SQLs, revenue, LTV) rarely occur in a browser session. They happen offline, inside CRMs, on sales calls, or post-purchase."
+      }
+    ],
+    "markDefs": [],
+    "style": "normal"
+  },
+  {
+    "_key": "ctl000e",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl000d",
+        "_type": "span",
+        "marks": [],
+        "text": "That’s why every major ad platform now prioritizes server-to-server (S2S) conversion APIs."
+      }
+    ],
+    "markDefs": [],
+    "style": "normal"
+  },
+  {
+    "_key": "ctl000g",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl000f",
+        "_type": "span",
+        "marks": [],
+        "text": "2. How does CAPI help improve signal capture?"
+      }
+    ],
+    "markDefs": [],
+    "style": "h2"
+  },
+  {
+    "_key": "ctl000i",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl000h",
+        "_type": "span",
+        "marks": [],
+        "text": "By creating a direct server-side connection to Meta’s ad optimization systems, the Conversion API improves the quality and reliability of conversion data, supporting more efficient ad delivery, stronger targeting signals, and clearer performance measurement across Meta technologies."
+      }
+    ],
+    "markDefs": [],
+    "style": "normal"
+  },
+  {
+    "_key": "ctl000k",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl000j",
+        "_type": "span",
+        "marks": [],
+        "text": "Browser pixels were built for a world that no longer exists. Signal loss, iOS tracking restrictions, and privacy-driven platform changes have weakened them to the point where pixel-only setups are now traffic trackers, not truth tellers. CAPI is the bridge that repairs the feedback loop. CAPI is designed to:"
+      }
+    ],
+    "markDefs": [],
+    "style": "normal"
+  },
+  {
+    "_key": "ctl000m",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl000l",
+        "_type": "span",
+        "marks": [],
+        "text": "Serve as a parallel source to capture web events that the Pixel may lose due to connectivity or page loading errors"
+      }
+    ],
+    "markDefs": [],
+    "style": "normal",
+    "level": 1,
+    "listItem": "bullet"
+  },
+  {
+    "_key": "ctl000o",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl000n",
+        "_type": "span",
+        "marks": [],
+        "text": "Create a direct and more reliable connection between your offline events and Meta"
+      }
+    ],
+    "markDefs": [],
+    "style": "normal",
+    "level": 1,
+    "listItem": "bullet"
+  },
+  {
+    "_key": "ctl000q",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl000p",
+        "_type": "span",
+        "marks": [],
+        "text": "Caveat: Event Deduplication is Critical"
+      }
+    ],
+    "markDefs": [],
+    "style": "h3"
+  },
+  {
+    "_key": "ctl000u",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl000r",
+        "_type": "span",
+        "marks": [],
+        "text": "Running Pixel + CAPI in parallel is powerful, but without deduplication, you’ll risk double counting conversions. That inflates CPA, misleads the platform, and degrades bidding performance. "
+      },
+      {
+        "_key": "ctl000s",
+        "_type": "span",
+        "marks": [
+          "strong"
+        ],
+        "text": "The fix is simple and universal:"
+      },
+      {
+        "_key": "ctl000t",
+        "_type": "span",
+        "marks": [],
+        "text": " Generate a unique event_id at form submission."
+      }
+    ],
+    "markDefs": [],
+    "style": "normal"
+  },
+  {
+    "_key": "ctl000w",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl000v",
+        "_type": "span",
+        "marks": [],
+        "text": "Browser Pixel: Sends event with event_id = abc123"
+      }
+    ],
+    "markDefs": [],
+    "style": "normal",
+    "level": 1,
+    "listItem": "bullet"
+  },
+  {
+    "_key": "ctl000y",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl000x",
+        "_type": "span",
+        "marks": [],
+        "text": "Server API: Sends event with the same event_id = abc123 (from your CRM)"
+      }
+    ],
+    "markDefs": [],
+    "style": "normal",
+    "level": 1,
+    "listItem": "bullet"
+  },
+  {
+    "_key": "ctl0010",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl000z",
+        "_type": "span",
+        "marks": [],
+        "text": "Platforms: Typically keep the first event received if no significant differences exist between them."
+      }
+    ],
+    "markDefs": [],
+    "style": "normal",
+    "level": 1,
+    "listItem": "bullet"
+  },
+  {
+    "_key": "ctl0012",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl0011",
+        "_type": "span",
+        "marks": [],
+        "text": "This gives you the best of both worlds: real-time pixel reporting + high-quality server truth."
+      }
+    ],
+    "markDefs": [],
+    "style": "normal"
+  },
+  {
+    "_key": "ctl0014",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl0013",
+        "_type": "span",
+        "marks": [],
+        "text": "Google Ads — Offline Conversion Import (OCI)"
+      }
+    ],
+    "markDefs": [],
+    "style": "h3"
+  },
+  {
+    "_key": "ctl0016",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl0015",
+        "_type": "span",
+        "marks": [],
+        "text": "Mechanism: gRPC or REST API"
+      }
+    ],
+    "markDefs": [],
+    "style": "normal",
+    "level": 1,
+    "listItem": "bullet"
+  },
+  {
+    "_key": "ctl0018",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl0017",
+        "_type": "span",
+        "marks": [],
+        "text": "Required keys: gclid, conversion_name, conversion_time"
+      }
+    ],
+    "markDefs": [],
+    "style": "normal",
+    "level": 1,
+    "listItem": "bullet"
+  },
+  {
+    "_key": "ctl001a",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl0019",
+        "_type": "span",
+        "marks": [],
+        "text": "Time constraint: Upload within 90 days of the click"
+      }
+    ],
+    "markDefs": [],
+    "style": "normal",
+    "level": 1,
+    "listItem": "bullet"
+  },
+  {
+    "_key": "ctl001c",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl001b",
+        "_type": "span",
+        "marks": [],
+        "text": "Best practice: Daily uploads or more frequent so Smart Bidding can react to recent auction patterns"
+      }
+    ],
+    "markDefs": [],
+    "style": "normal",
+    "level": 1,
+    "listItem": "bullet"
+  },
+  {
+    "_key": "ctl001e",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl001d",
+        "_type": "span",
+        "marks": [],
+        "text": "Meta (Facebook) Conversions API"
+      }
+    ],
+    "markDefs": [],
+    "style": "h3"
+  },
+  {
+    "_key": "ctl001g",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl001f",
+        "_type": "span",
+        "marks": [],
+        "text": "Mechanism: POST request to the Graph API"
+      }
+    ],
+    "markDefs": [],
+    "style": "normal",
+    "level": 1,
+    "listItem": "bullet"
+  },
+  {
+    "_key": "ctl001i",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl001h",
+        "_type": "span",
+        "marks": [],
+        "text": "Identifiers: fbp, fbc (if available), user agent, user IP address"
+      }
+    ],
+    "markDefs": [],
+    "style": "normal",
+    "level": 1,
+    "listItem": "bullet"
+  },
+  {
+    "_key": "ctl001k",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl001j",
+        "_type": "span",
+        "marks": [],
+        "text": "PII: Hashed personal data (name, email, phone) via SHA-256"
+      }
+    ],
+    "markDefs": [],
+    "style": "normal",
+    "level": 1,
+    "listItem": "bullet"
+  },
+  {
+    "_key": "ctl001m",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl001l",
+        "_type": "span",
+        "marks": [],
+        "text": "Event Match Quality (EMQ): Score from 1–10. To exceed 6, send at least three customer parameters (email, IP, user agent, etc.)"
+      }
+    ],
+    "markDefs": [],
+    "style": "normal",
+    "level": 1,
+    "listItem": "bullet"
+  },
+  {
+    "_key": "ctl001o",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl001n",
+        "_type": "span",
+        "marks": [
+          "strong"
+        ],
+        "text": "Meta and Google don’t just prefer API events, they reward them with better match rates, more stable optimization, and more durable attribution."
+      }
+    ],
+    "markDefs": [],
+    "style": "normal"
+  },
+  {
+    "_key": "ctl001q",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl001p",
+        "_type": "span",
+        "marks": [],
+        "text": "3. Data Latency Can Impact Algorithmic Learning and Effectiveness"
+      }
+    ],
+    "markDefs": [],
+    "style": "h2"
+  },
+  {
+    "_key": "ctl001s",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl001r",
+        "_type": "span",
+        "marks": [],
+        "text": "Algorithms need to connect a conversion to the action that created it. Delay the signal too long, and the learning loop breaks. This is why manual uploads or propensity models with long delay times can negatively impact algorithm performance. We recommend providing downstream conversion data as close to real-time as feasible as a best practice."
+      }
+    ],
+    "markDefs": [],
+    "style": "normal"
+  },
+  {
+    "_key": "ctl001u",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl001t",
+        "_type": "span",
+        "marks": [],
+        "text": "High velocity (e-commerce): Sync within 1 hour"
+      }
+    ],
+    "markDefs": [],
+    "style": "normal",
+    "level": 1,
+    "listItem": "bullet"
+  },
+  {
+    "_key": "ctl001w",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl001v",
+        "_type": "span",
+        "marks": [],
+        "text": "Low velocity (B2B, Lead Gen): Sync at least every 24 hours"
+      }
+    ],
+    "markDefs": [],
+    "style": "normal",
+    "level": 1,
+    "listItem": "bullet"
+  },
+  {
+    "_key": "ctl001y",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl001x",
+        "_type": "span",
+        "marks": [],
+        "text": "Critical rule: Delays beyond 48 hours materially reduce optimization accuracy"
+      }
+    ],
+    "markDefs": [],
+    "style": "normal",
+    "level": 1,
+    "listItem": "bullet"
+  },
+  {
+    "_key": "ctl0020",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl001z",
+        "_type": "span",
+        "marks": [],
+        "text": "Once your data pipeline is activated, the next phase isn’t technical, it’s strategic."
+      }
+    ],
+    "markDefs": [],
+    "style": "normal"
+  },
+  {
+    "_key": "ctl0022",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl0021",
+        "_type": "span",
+        "marks": [],
+        "text": "Most advertisers still optimize for Cost Per Acquisition (CPA). But CPA only measures volume, not value. And for B2B or high-ticket lead generation, “Closed Deals” are too rare to give algorithms the 30–50 monthly conversions they need to learn effectively."
+      }
+    ],
+    "markDefs": [],
+    "style": "normal"
+  },
+  {
+    "_key": "ctl0026",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl0023",
+        "_type": "span",
+        "marks": [],
+        "text": "The solution is Value-Based Bidding (VBB): powering tROAS with intelligently engineered proxy values. Using AI and conversion data, VBB optimizes ad spend toward the monetary value of conversions, not just the "
+      },
+      {
+        "_key": "ctl0024",
+        "_type": "span",
+        "marks": [
+          "em"
+        ],
+        "text": "number"
+      },
+      {
+        "_key": "ctl0025",
+        "_type": "span",
+        "marks": [],
+        "text": ". It prioritizes maximizing revenue and ROI by bidding higher for users likely to bring high-value transactions, rather than another conversion. It is the shift from quantity to quality, while telling the platforms what qualifies as a high-value action (ie, revenue, profit margins, CLTV, etc.)."
+      }
+    ],
+    "markDefs": [],
+    "style": "normal"
+  },
+  {
+    "_key": "ctl0028",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl0027",
+        "_type": "span",
+        "marks": [],
+        "text": "Option 1: The Progressive Funnel Model (Milestone-Based Proxy Values)"
+      }
+    ],
+    "markDefs": [],
+    "style": "h2"
+  },
+  {
+    "_key": "ctl002a",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl0029",
+        "_type": "span",
+        "marks": [],
+        "text": "Instead of waiting for a deal to close, you assign values to key stages in your sales funnel."
+      }
+    ],
+    "markDefs": [],
+    "style": "normal"
+  },
+  {
+    "_key": "ctl002c",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl002b",
+        "_type": "span",
+        "marks": [
+          "strong"
+        ],
+        "text": "An example would look like:"
+      }
+    ],
+    "markDefs": [],
+    "style": "normal"
+  },
+  {
+    "_key": "ctl002f",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl002d",
+        "_type": "span",
+        "marks": [
+          "strong"
+        ],
+        "text": "Raw Lead"
+      },
+      {
+        "_key": "ctl002e",
+        "_type": "span",
+        "marks": [],
+        "text": " — Name/Email submitted — $10"
+      }
+    ],
+    "markDefs": [],
+    "style": "normal",
+    "level": 1,
+    "listItem": "bullet"
+  },
+  {
+    "_key": "ctl002i",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl002g",
+        "_type": "span",
+        "marks": [
+          "strong"
+        ],
+        "text": "MQL"
+      },
+      {
+        "_key": "ctl002h",
+        "_type": "span",
+        "marks": [],
+        "text": " — Fits ICP (company size, geo, etc.) — $50"
+      }
+    ],
+    "markDefs": [],
+    "style": "normal",
+    "level": 1,
+    "listItem": "bullet"
+  },
+  {
+    "_key": "ctl002l",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl002j",
+        "_type": "span",
+        "marks": [
+          "strong"
+        ],
+        "text": "SQL"
+      },
+      {
+        "_key": "ctl002k",
+        "_type": "span",
+        "marks": [],
+        "text": " — Sales accepts meeting — $350"
+      }
+    ],
+    "markDefs": [],
+    "style": "normal",
+    "level": 1,
+    "listItem": "bullet"
+  },
+  {
+    "_key": "ctl002o",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl002m",
+        "_type": "span",
+        "marks": [
+          "strong"
+        ],
+        "text": "Deal Created"
+      },
+      {
+        "_key": "ctl002n",
+        "_type": "span",
+        "marks": [],
+        "text": " — Proposal sent — $1,500"
+      }
+    ],
+    "markDefs": [],
+    "style": "normal",
+    "level": 1,
+    "listItem": "bullet"
+  },
+  {
+    "_key": "ctl002r",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl002p",
+        "_type": "span",
+        "marks": [
+          "strong"
+        ],
+        "text": "Closed Won"
+      },
+      {
+        "_key": "ctl002q",
+        "_type": "span",
+        "marks": [],
+        "text": " — True revenue — $10,000+"
+      }
+    ],
+    "markDefs": [],
+    "style": "normal",
+    "level": 1,
+    "listItem": "bullet"
+  },
+  {
+    "_key": "ctl002u",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl002s",
+        "_type": "span",
+        "marks": [
+          "strong"
+        ],
+        "text": "Execution:"
+      },
+      {
+        "_key": "ctl002t",
+        "_type": "span",
+        "marks": [],
+        "text": " Send these values through the value parameter in your CAPI payloads. Switch campaigns to bid to value instead of volume (tROAS, value bidding, etc)"
+      }
+    ],
+    "markDefs": [],
+    "style": "normal"
+  },
+  {
+    "_key": "ctl002w",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl002v",
+        "_type": "span",
+        "marks": [],
+        "text": "The AI will now prioritize leads that progress deeper down the funnel, not just the ones who filled out the form fastest."
+      }
+    ],
+    "markDefs": [],
+    "style": "normal"
+  },
+  {
+    "_key": "ctl002y",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl002x",
+        "_type": "span",
+        "marks": [],
+        "text": "Option 2: The Propensity Model (Real-Time Attribute Scoring)"
+      }
+    ],
+    "markDefs": [],
+    "style": "h2"
+  },
+  {
+    "_key": "ctl0030",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl002z",
+        "_type": "span",
+        "marks": [],
+        "text": "More advanced organizations score leads based on who the user is (job title, credit score), rather than what they’ve done. This helps the AI to distinguish between a low-value browser and a high-value prospect."
+      }
+    ],
+    "markDefs": [],
+    "style": "normal"
+  },
+  {
+    "_key": "ctl0032",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl0031",
+        "_type": "span",
+        "marks": [],
+        "text": "Using tools like Clearbit, ZoomInfo, or internal enrichment:"
+      }
+    ],
+    "markDefs": [],
+    "style": "normal"
+  },
+  {
+    "_key": "ctl0034",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl0033",
+        "_type": "span",
+        "marks": [],
+        "text": "Scenario A"
+      }
+    ],
+    "markDefs": [],
+    "style": "h3"
+  },
+  {
+    "_key": "ctl0036",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl0035",
+        "_type": "span",
+        "marks": [],
+        "text": "Email: janedoe@gmail.com"
+      }
+    ],
+    "markDefs": [],
+    "style": "normal",
+    "level": 1,
+    "listItem": "bullet"
+  },
+  {
+    "_key": "ctl0038",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl0037",
+        "_type": "span",
+        "marks": [],
+        "text": "Company: Freelancer"
+      }
+    ],
+    "markDefs": [],
+    "style": "normal",
+    "level": 1,
+    "listItem": "bullet"
+  },
+  {
+    "_key": "ctl003a",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl0039",
+        "_type": "span",
+        "marks": [],
+        "text": "Predicted Sale LTV: $5,000"
+      }
+    ],
+    "markDefs": [],
+    "style": "normal",
+    "level": 1,
+    "listItem": "bullet"
+  },
+  {
+    "_key": "ctl003c",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl003b",
+        "_type": "span",
+        "marks": [],
+        "text": "Lead Signal Sent: value = $20"
+      }
+    ],
+    "markDefs": [],
+    "style": "normal",
+    "level": 1,
+    "listItem": "bullet"
+  },
+  {
+    "_key": "ctl003e",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl003d",
+        "_type": "span",
+        "marks": [],
+        "text": "Outcome: Algorithm downweights this audience"
+      }
+    ],
+    "markDefs": [],
+    "style": "normal",
+    "level": 1,
+    "listItem": "bullet"
+  },
+  {
+    "_key": "ctl003g",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl003f",
+        "_type": "span",
+        "marks": [],
+        "text": "Scenario B"
+      }
+    ],
+    "markDefs": [],
+    "style": "h3"
+  },
+  {
+    "_key": "ctl003i",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl003h",
+        "_type": "span",
+        "marks": [],
+        "text": "Email: jane@fortune500.com"
+      }
+    ],
+    "markDefs": [],
+    "style": "normal",
+    "level": 1,
+    "listItem": "bullet"
+  },
+  {
+    "_key": "ctl003k",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl003j",
+        "_type": "span",
+        "marks": [],
+        "text": "Title: VP of Engineering"
+      }
+    ],
+    "markDefs": [],
+    "style": "normal",
+    "level": 1,
+    "listItem": "bullet"
+  },
+  {
+    "_key": "ctl003m",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl003l",
+        "_type": "span",
+        "marks": [],
+        "text": "Predicted Sale LTV: $50,000"
+      }
+    ],
+    "markDefs": [],
+    "style": "normal",
+    "level": 1,
+    "listItem": "bullet"
+  },
+  {
+    "_key": "ctl003o",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl003n",
+        "_type": "span",
+        "marks": [],
+        "text": "Lead Signal Sent: value = $300"
+      }
+    ],
+    "markDefs": [],
+    "style": "normal",
+    "level": 1,
+    "listItem": "bullet"
+  },
+  {
+    "_key": "ctl003q",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl003p",
+        "_type": "span",
+        "marks": [],
+        "text": "Outcome: Algorithm aggressively bids for similar profiles"
+      }
+    ],
+    "markDefs": [],
+    "style": "normal",
+    "level": 1,
+    "listItem": "bullet"
+  },
+  {
+    "_key": "ctl003s",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl003r",
+        "_type": "span",
+        "marks": [],
+        "text": "This approach trains the system on what quality looks like at the moment the lead is created."
+      }
+    ],
+    "markDefs": [],
+    "style": "normal"
+  },
+  {
+    "_key": "ctl003u",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl003t",
+        "_type": "span",
+        "marks": [],
+        "text": "The Value Curve: Why This Works"
+      }
+    ],
+    "markDefs": [],
+    "style": "h2"
+  },
+  {
+    "_key": "ctl003w",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl003v",
+        "_type": "span",
+        "marks": [],
+        "text": "It teaches AI that not all leads are equal. As the AI learns which specific signals result in high proxy values, targeting becomes more advanced and quality of leads becomes more valuable. This allows your data pipeline to move from “more leads” to “better leads.”"
+      }
+    ],
+    "markDefs": [],
+    "style": "normal"
+  },
+  {
+    "_key": "ctl003z",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl003x",
+        "_type": "span",
+        "marks": [
+          "strong"
+        ],
+        "text": "Bidding for Lead Volume (tCPA/Max Conversions)"
+      },
+      {
+        "_key": "ctl003y",
+        "_type": "span",
+        "marks": [],
+        "text": ": This strategy creates a “race to the bottom.” The algorithm is incentivized to find the cheapest possible leads regardless of quality. As you try to scale, the system scrapes the bottom of the barrel for low-intent users just to hit your cost target. The result is that volume goes up, but lead quality and ROAS goes down."
+      }
+    ],
+    "markDefs": [],
+    "style": "normal",
+    "level": 1,
+    "listItem": "bullet"
+  },
+  {
+    "_key": "ctl0042",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl0040",
+        "_type": "span",
+        "marks": [
+          "strong"
+        ],
+        "text": "Bidding for Value: Value-Based Bidding (tROAS/Max Conversion Value)"
+      },
+      {
+        "_key": "ctl0041",
+        "_type": "span",
+        "marks": [],
+        "text": ": This strategy teaches the algorithm to find your most valuable users. As you give the system more information, it goes out and hunts for more value. When you scale, ROAS remains high because the algorithm uses that increased volume to learn which signals correlate with high-value outcomes."
+      }
+    ],
+    "markDefs": [],
+    "style": "normal",
+    "level": 1,
+    "listItem": "bullet"
+  },
+  {
+    "_key": "ctl0045",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl0043",
+        "_type": "span",
+        "marks": [],
+        "text": "Conclusion: "
+      },
+      {
+        "_key": "ctl0044",
+        "_type": "span",
+        "marks": [
+          "em"
+        ],
+        "text": "Data Doesn’t Win. Activated Data Wins."
+      }
+    ],
+    "markDefs": [],
+    "style": "h2"
+  },
+  {
+    "_key": "ctl0047",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl0046",
+        "_type": "span",
+        "marks": [],
+        "text": "If pixels were the start of performance marketing, CAPI is the upgrade that keeps it alive. But CAPI alone only closes the loop; value-based bidding transforms it."
+      }
+    ],
+    "markDefs": [],
+    "style": "normal"
+  },
+  {
+    "_key": "ctl0049",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl0048",
+        "_type": "span",
+        "marks": [],
+        "text": "When you send richer, faster, more accurate truth back to the platforms, and pair it with engineered proxy values, you unlock a level of algorithmic performance that simply isn’t possible with legacy CPA models."
+      }
+    ],
+    "markDefs": [],
+    "style": "normal"
+  },
+  {
+    "_key": "ctl004b",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl004a",
+        "_type": "span",
+        "marks": [
+          "strong"
+        ],
+        "text": "This is the new playbook:"
+      }
+    ],
+    "markDefs": [],
+    "style": "normal"
+  },
+  {
+    "_key": "ctl004d",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl004c",
+        "_type": "span",
+        "marks": [],
+        "text": "Build the pipes → Deduplicate → Reduce latency → Train on value, not volume."
+      }
+    ],
+    "markDefs": [],
+    "style": "normal"
+  },
+  {
+    "_key": "ctl004f",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "ctl004e",
+        "_type": "span",
+        "marks": [],
+        "text": "If your ad platforms can’t see qualified leads or revenue, they can’t optimize for growth. Found helps organizations audit their first-party data, CRM integrations, and signal flow to uncover gaps holding revenue back."
+      }
+    ],
+    "markDefs": [],
+    "style": "normal"
+  }
+]

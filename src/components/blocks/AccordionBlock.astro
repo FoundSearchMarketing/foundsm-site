@@ -156,6 +156,12 @@ const sectionId = title ? title.toLowerCase().replace(/[^a-z0-9]+/g, '-') : 'acc
     line-height: 1.7;
   }
 
+  /* Supporting copy under the heading matches the Split Feature body scale. */
+  .lp-accordion__body {
+    font-size: 1.25rem;
+    line-height: 1.8;
+  }
+
   .lp-accordion--dark .lp-accordion__body,
   .lp-accordion--dark .lp-accordion__item div {
     color: rgba(255, 255, 255, 0.76);

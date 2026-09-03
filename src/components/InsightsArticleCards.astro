@@ -376,9 +376,10 @@ const normalizedArticles = articles.map((article) => ({
     box-shadow: none;
   }
 
+  /* Every row shares the height of the tallest card, so all cards match. */
   .insights-article-cards__grid {
     display: grid;
-    grid-auto-rows: 0.5fr;
+    grid-auto-rows: 1fr;
     grid-template-columns: repeat(var(--article-cards-columns), minmax(0, 1fr));
     column-gap: var(--article-cards-column-gap);
     row-gap: var(--article-cards-row-gap);
@@ -400,7 +401,7 @@ const normalizedArticles = articles.map((article) => ({
     flex-direction: column;
     gap: 20px 10px;
     height: 100%;
-    margin-block-start: 25px;
+    padding-block-start: 25px;
     padding-inline: 10px;
   }
 
@@ -489,6 +490,8 @@ const normalizedArticles = articles.map((article) => ({
     align-items: center;
     justify-content: center;
     align-self: flex-start;
+    /* Pin the button to the bottom so buttons line up across cards. */
+    margin-block-start: auto;
     min-width: 170px;
     padding: 18px 36px;
     border-style: none;
@@ -570,8 +573,13 @@ const normalizedArticles = articles.map((article) => ({
       padding: 0 0 50px 0;
     }
 
+    /* Single column: let each card size to its own content instead of the tallest. */
+    .insights-article-cards__grid {
+      grid-auto-rows: auto;
+    }
+
     .insights-article-card__inner {
-      margin: 10px;
+      padding: 10px;
     }
 
     .insights-article-card__title,

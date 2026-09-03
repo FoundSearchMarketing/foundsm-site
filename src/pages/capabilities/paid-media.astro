@@ -199,6 +199,24 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
             </article>
           ))}
         </div>
+
+        {logos.some((logo) => logo.src) ? (
+          <div class="paid-media-logos" aria-label={page.logoMarquee?.title || 'Google Ads logos'}>
+            <div class="paid-media-logos__track">
+              {logoTracks.map((logo, index) => (
+                <figure class="paid-media-logos__item" aria-hidden={index >= logos.length ? 'true' : undefined}>
+                  {logo.src ? (
+                    <img src={logo.src} alt={logo.alt || page.logoMarquee?.title || 'Paid media partner logo'} loading="eager" decoding="async" />
+                  ) : (
+                    <span class="paid-media-placeholder paid-media-placeholder--logo">Missing logo image</span>
+                  )}
+                </figure>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <div class="paid-media-logos"><p class="paid-media-placeholder">Missing logo marquee images</p></div>
+        )}
       </div>
     </section>
 
@@ -223,24 +241,6 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
         </div>
       </div>
     </section>
-
-    {logos.some((logo) => logo.src) ? (
-      <section class="paid-media-logos" aria-label={page.logoMarquee?.title || 'Google Ads logos'}>
-        <div class="paid-media-logos__track">
-          {logoTracks.map((logo, index) => (
-            <figure class="paid-media-logos__item" aria-hidden={index >= logos.length ? 'true' : undefined}>
-              {logo.src ? (
-                <img src={logo.src} alt={logo.alt || page.logoMarquee?.title || 'Paid media partner logo'} loading="eager" decoding="async" />
-              ) : (
-                <span class="paid-media-placeholder paid-media-placeholder--logo">Missing logo image</span>
-              )}
-            </figure>
-          ))}
-        </div>
-      </section>
-    ) : (
-      <section class="paid-media-logos"><p class="paid-media-placeholder">Missing logo marquee images</p></section>
-    )}
 
     <section class="paid-media-cta green-band" aria-label={page.cta?.title || page.cta?.cta?.label || 'Paid media call to action'}>
       <div class="paid-media-cta__inner">
@@ -345,8 +345,7 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
   .paid-media-hero,
   .paid-media-work,
   .paid-media-tabs,
-  .paid-media-analytics,
-  .paid-media-logos {
+  .paid-media-analytics {
     background: #ffffff;
   }
 
@@ -746,9 +745,16 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
     white-space: nowrap;
   }
 
+  /* The logo strip sits inside the dark band as a white pill, matching the
+     Data Intelligence page. */
   .paid-media-logos {
+    display: flex;
+    align-items: center;
     overflow: hidden;
-    padding: 2.5rem 0;
+    min-block-size: 12.5rem;
+    margin-block-start: clamp(3rem, 4vw, 4.5rem);
+    border-radius: 4.375rem;
+    background: #ffffff;
   }
 
   .paid-media-logos__track {
@@ -1004,6 +1010,11 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
 
     .paid-media-cta__button {
       justify-self: center;
+    }
+
+    .paid-media-logos {
+      min-block-size: 8rem;
+      border-radius: 2.5rem;
     }
 
     .paid-media-logos__item {

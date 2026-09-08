@@ -1,6 +1,8 @@
 import { sanityClient, urlFor } from './sanity';
 import { getStaleness } from './staleness';
 import { normalizeLegacyAssetUrl } from './legacyAssets';
+import { resolveCtaLabels } from './blogPostCtaLabels';
+import { shouldCropToHeroFrame } from './sanityImageDimensions';
 
 export interface BlogPostCategory {
   label: string;
@@ -31,6 +33,8 @@ export interface BlogPost {
   twitterImage?: string;
   schemaJson?: string;
   excerpt: string;
+  /** Article-specific CTA button label shown on insights cards (without the arrow). */
+  ctaLabel: string;
   publishedAt: string;
   modifiedAt?: string;
   lastReviewed?: string;
@@ -97,6 +101,7 @@ type SanityBlogPost = {
   lastReviewed?: string;
   evergreen?: boolean;
   excerpt?: string;
+  ctaLabel?: string;
   body?: SanityBlock[];
   featuredImage?: SanityBlock;
   featuredVideo?: string;
@@ -136,6 +141,7 @@ const sanityBlogPostsQuery = `*[_type == "blogPost"] | order(publishedAt desc) {
   lastReviewed,
   evergreen,
   excerpt,
+  ctaLabel,
   body[]{
     ...,
     _type == "file" => {
@@ -219,7 +225,7 @@ export function toLatestPostCards(posts: BlogPost[], limit = 2) {
     videoSrc: normalizeLegacyAssetUrl(post.featuredVideo),
     date: post.publishedLabel,
     excerpt: post.excerpt,
-    ctaLabel: 'Keep Reading',
+    ctaLabel: post.ctaLabel,
   }));
 }
 
@@ -232,6 +238,7 @@ export function toInsightsArticleCards(posts: BlogPost[]) {
     dateLabel: post.publishedLabel,
     datetime: post.publishedAt,
     excerpt: post.excerpt,
+    ctaLabel: post.ctaLabel,
     image: {
       src: normalizeLegacyAssetUrl(post.cardImage || post.heroImage),
       width: 1200,
@@ -268,7 +275,12 @@ async function loadSanityBlogPosts(): Promise<BlogPost[]> {
     throw new Error(`Unable to load Sanity blog posts: Sanity returned ${sanityPosts.length} records, but none had a usable slug and title.`);
   }
 
-  return attachRelatedPosts(posts.sort((a, b) => b.publishedAt.localeCompare(a.publishedAt)));
+  return attachRelatedPosts(attachCtaLabels(posts.sort((a, b) => b.publishedAt.localeCompare(a.publishedAt))));
+}
+
+function attachCtaLabels(posts: BlogPost[]): BlogPost[] {
+  const labels = resolveCtaLabels(posts);
+  return posts.map((post) => ({ ...post, ctaLabel: labels.get(post.slug) ?? post.ctaLabel }));
 }
 
 // Bylines for these authors render as plain text instead of linking to an author page.
@@ -292,7 +304,8 @@ function mapSanityPost(post: SanityBlogPost, slugs: Set<string>, quoteAuthors: Q
   const publishedAt = normalizeDate(post.publishedAt);
   const categories = normalizeCategories(post.categories, post.category);
 
-  const heroImage = imageUrl(post.featuredImage, 1200, 801);
+  // Standard images are cropped to the 3:2 hero frame; panoramic banners are served whole.
+  const heroImage = imageUrl(post.featuredImage, 1200, shouldCropToHeroFrame(post.featuredImage?.asset?._ref) ? 801 : undefined);
   const cardImage = imageUrl(post.featuredImage, 1200, undefined, { ignoreImageParams: true });
   const featuredVideo = normalizeLegacyAssetUrl(post.featuredVideo);
   const canonicalUrl = post.canonicalUrl || `https://foundsm.com/insights/${slug}/`;
@@ -315,6 +328,8 @@ function mapSanityPost(post: SanityBlogPost, slugs: Set<string>, quoteAuthors: Q
     twitterImage: imageUrl(post.twitterImage, 1200, 630),
     schemaJson: post.schemaJson,
     excerpt: post.excerpt || post.seoDescription || '',
+    // Raw editorial value; the final per-article label is resolved in attachCtaLabels.
+    ctaLabel: post.ctaLabel || '',
     publishedAt,
     modifiedAt: lastReviewed || publishedAt,
     lastReviewed,

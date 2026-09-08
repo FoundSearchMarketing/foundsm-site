@@ -84,6 +84,14 @@ export default defineType({
       rows: 3,
     }),
     defineField({
+      name: 'ctaLabel',
+      title: 'Card Button Label',
+      type: 'string',
+      description:
+        'Optional. Short, article-specific button text for insights cards, e.g. "Get the 7 SEO Tips". Leave off the arrow; it is added automatically. When empty, a label is generated from the title.',
+      validation: (rule) => rule.max(30).warning('Keep button labels under 30 characters so they fit on one line.'),
+    }),
+    defineField({
       name: 'body',
       title: 'Body',
       type: 'array',

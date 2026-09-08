@@ -2,6 +2,7 @@ import { sanityClient, urlFor } from './sanity';
 import { getStaleness } from './staleness';
 import { normalizeLegacyAssetUrl } from './legacyAssets';
 import { resolveCtaLabels } from './blogPostCtaLabels';
+import { shouldCropToHeroFrame } from './sanityImageDimensions';
 
 export interface BlogPostCategory {
   label: string;
@@ -303,7 +304,8 @@ function mapSanityPost(post: SanityBlogPost, slugs: Set<string>, quoteAuthors: Q
   const publishedAt = normalizeDate(post.publishedAt);
   const categories = normalizeCategories(post.categories, post.category);
 
-  const heroImage = imageUrl(post.featuredImage, 1200, 801);
+  // Standard images are cropped to the 3:2 hero frame; panoramic banners are served whole.
+  const heroImage = imageUrl(post.featuredImage, 1200, shouldCropToHeroFrame(post.featuredImage?.asset?._ref) ? 801 : undefined);
   const cardImage = imageUrl(post.featuredImage, 1200, undefined, { ignoreImageParams: true });
   const featuredVideo = normalizeLegacyAssetUrl(post.featuredVideo);
   const canonicalUrl = post.canonicalUrl || `https://foundsm.com/insights/${slug}/`;

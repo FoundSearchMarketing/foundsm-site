@@ -14,15 +14,19 @@ interface Props {
   items?: AccordionItem[];
   theme?: 'light' | 'muted' | 'dark';
   layoutPreset?: 'singleColumn' | 'twoColumn';
+  pattern?: boolean;
 }
 
-const { eyebrow, title, body = [], items = [], theme = 'light', layoutPreset = 'twoColumn' } = Astro.props;
+const { eyebrow, title, body = [], items = [], theme = 'light', layoutPreset = 'twoColumn', pattern = false } = Astro.props;
 const visibleItems = items.filter((item) => item.title);
 const sectionId = title ? title.toLowerCase().replace(/[^a-z0-9]+/g, '-') : 'accordion';
+const sectionClasses = ['lp-accordion', `lp-accordion--${theme}`, `lp-accordion--${layoutPreset}`, pattern ? 'lp-accordion--pattern' : '']
+  .filter(Boolean)
+  .join(' ');
 ---
 
 {visibleItems.length > 0 && (
-  <section class={`lp-accordion lp-accordion--${theme} lp-accordion--${layoutPreset}`} aria-labelledby={`${sectionId}-heading`} data-lp-accordion>
+  <section class={sectionClasses} aria-labelledby={`${sectionId}-heading`} data-lp-accordion>
     <div class="lp-accordion__inner">
       <div class="lp-accordion__header">
         {eyebrow && <p class="lp-accordion__eyebrow">{eyebrow}</p>}
@@ -109,6 +113,23 @@ const sectionId = title ? title.toLowerCase().replace(/[^a-z0-9]+/g, '-') : 'acc
   .lp-accordion--dark {
     background: #1a1a1a;
     color: #ffffff;
+  }
+
+  /* Topography background: the same field and artwork as the muted card grid,
+     so a patterned accordion can sit next to (or swap with) a muted grid. */
+  .lp-accordion--pattern:not(.lp-accordion--dark) {
+    background-color: #f2f3f2;
+    background-image: url('/images/pages/our-approach/topography-light.svg');
+    background-position: center;
+    background-size: cover;
+  }
+
+  /* Dark theme uses the canonical .dark-band field and artwork from global.css. */
+  .lp-accordion--pattern.lp-accordion--dark {
+    background-color: #231f20;
+    background-image: url('/images/pages/our-approach/contact-bg-fc.svg');
+    background-position: center;
+    background-size: cover;
   }
 
   .lp-accordion__inner {

@@ -77,6 +77,7 @@ const tokenRules = {
   },
   accordionBlock: {
     theme: { values: ['light', 'muted', 'dark'], defaultValue: 'light' },
+    pattern: { values: [true, false], defaultValue: false },
     layoutPreset: { values: ['singleColumn', 'twoColumn'], defaultValue: 'twoColumn' },
   },
   peopleGridBlock: {

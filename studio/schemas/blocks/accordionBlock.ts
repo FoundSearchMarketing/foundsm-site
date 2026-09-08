@@ -40,6 +40,14 @@ export default defineType({
       initialValue: 'light',
     }),
     defineField({
+      name: 'pattern',
+      title: 'Topography Background',
+      description:
+        'Adds the topography artwork behind the section. Light and Muted themes get the light artwork used by muted card grids; Dark gets the dark band artwork.',
+      type: 'boolean',
+      initialValue: false,
+    }),
+    defineField({
       name: 'layoutPreset',
       title: 'Layout Preset',
       type: 'string',

@@ -13,7 +13,7 @@ Use these approved Sanity `landingPage.sections` blocks for AI-assisted landing 
 | `statementBandBlock` | Emphasized principle, short proof statement, POV break | `lead`, `body` | `theme`, `pattern`, `width` |
 | `proofMosaicBlock` | Mixed proof with metrics, testimonial, trust card, optional media | `title` | `metrics`, `quote`, `featureCard`, media, `theme`, `layoutPreset` |
 | `formLandingBlock` | Contact, newsletter, resource, and event lead-capture pages | `title`, `intro`, `hubspotFormId` | `eyebrow`, `lead`, `portalId`, `summary`, `variant`, `theme`, `showFormCard` |
-| `accordionBlock` | Dense advantages, why-us detail, process detail, FAQ-adjacent content | `title`, `items[].title`, `items[].body` | `eyebrow`, `body`, `items[].icon`, `theme`, `layoutPreset` |
+| `accordionBlock` | Dense advantages, why-us detail, process detail, FAQ-adjacent content | `title`, `items[].title`, `items[].body` | `eyebrow`, `body`, `items[].icon`, `theme`, `pattern`, `layoutPreset` |
 | `peopleGridBlock` | Leadership, speaker, author, advisor, or team sections | `title`, `people[].name`, `people[].role` | `intro`, person image/video, `layout`, `showImages` |
 | `eventHeroBlock` | Campaign or event opener with metadata, stats, chips, and dual CTAs | `titleLines`, `description`, `primaryCta` | `eyebrow`, `accentLine`, `meta`, `secondaryCta`, `cardTitle`, `stats`, `chips`, `theme` |
 | `modernCtaBlock` | Final or mid-page next action | `title`, `cta` | `body`, `theme`, `align`, `layoutPreset` |
@@ -67,6 +67,7 @@ Use these approved Sanity `landingPage.sections` blocks for AI-assisted landing 
   },
   "accordionBlock": {
     "theme": ["light", "muted", "dark"],
+    "pattern": [true, false],
     "layoutPreset": ["singleColumn", "twoColumn"]
   },
   "peopleGridBlock": {

@@ -30,8 +30,10 @@ interface Props {
   imageAlt?: string;
   videoFile?: any;
   videoUrl?: string;
-  theme?: 'light' | 'dark';
+  theme?: 'light' | 'muted' | 'dark';
   layoutPreset?: 'mosaic' | 'compact';
+  /** Muted theme only: topography artwork on the gray field (on by default). */
+  pattern?: boolean;
 }
 
 const {
@@ -41,7 +43,11 @@ const {
   featureCard,
   theme = 'light',
   layoutPreset = 'mosaic',
+  pattern = true,
 } = Astro.props;
+const sectionClasses = ['proof-mosaic', `proof-mosaic--${theme}`, `proof-mosaic--${layoutPreset}`, pattern === false ? 'proof-mosaic--no-pattern' : '']
+  .filter(Boolean)
+  .join(' ');
 const media = imageProps(Astro.props);
 const visibleMetrics = metrics.filter((metric) => metric.value && metric.label);
 const quoteRole = [quote?.authorTitle, quote?.authorCompany].filter(Boolean).join(' - ');
@@ -50,7 +56,7 @@ const metricTones = ['green', 'red', 'orange', 'blue'];
 ---
 
 {(title || visibleMetrics.length > 0 || quote?.text || featureCard?.title || media) && (
-  <section class={`proof-mosaic proof-mosaic--${theme} proof-mosaic--${layoutPreset}`} aria-labelledby={title ? 'proof-mosaic-title' : undefined}>
+  <section class={sectionClasses} aria-labelledby={title ? 'proof-mosaic-title' : undefined}>
     <div class="proof-mosaic__inner">
       {title && <h2 id="proof-mosaic-title">{title}</h2>}
       <div class="proof-mosaic__grid">
@@ -111,6 +117,18 @@ const metricTones = ['green', 'red', 'orange', 'blue'];
   .proof-mosaic--dark {
     background: #1a1a1a;
     color: #ffffff;
+  }
+
+  /* Muted theme: the same gray field and topography artwork as muted card grids. */
+  .proof-mosaic--muted {
+    background-color: #f2f3f2;
+    background-image: url('/images/pages/our-approach/topography-light.svg');
+    background-position: center;
+    background-size: cover;
+  }
+
+  .proof-mosaic--muted.proof-mosaic--no-pattern {
+    background-image: none;
   }
 
   .proof-mosaic--compact {

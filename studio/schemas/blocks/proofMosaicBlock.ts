@@ -53,8 +53,15 @@ export default defineType({
       name: 'theme',
       title: 'Theme',
       type: 'string',
-      options: { list: [{ title: 'Light', value: 'light' }, { title: 'Dark', value: 'dark' }] },
+      options: { list: [{ title: 'Light', value: 'light' }, { title: 'Muted', value: 'muted' }, { title: 'Dark', value: 'dark' }] },
       initialValue: 'light',
+    }),
+    defineField({
+      name: 'pattern',
+      title: 'Topography Background',
+      description: 'Muted theme only. On by default; turn off for a flat gray section without the artwork.',
+      type: 'boolean',
+      initialValue: true,
     }),
     defineField({
       name: 'layoutPreset',

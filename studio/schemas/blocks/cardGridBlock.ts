@@ -89,6 +89,20 @@ export default defineType({
       },
       initialValue: 'default',
     }),
+    defineField({
+      name: 'spacingTop',
+      title: 'Top Spacing',
+      description:
+        'Flush removes this section\'s top padding. Use it when the section above shares the same background, so the gap between them stays at a single section spacing.',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Default', value: 'default' },
+          { title: 'Flush', value: 'flush' },
+        ],
+      },
+      initialValue: 'default',
+    }),
     themeField('theme', 'Theme', 'light'),
   ],
   preview: {

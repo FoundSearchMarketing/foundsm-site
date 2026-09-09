@@ -72,8 +72,9 @@ const tokenRules = {
     layoutPreset: { values: ['panel', 'strip', 'compact'], defaultValue: 'panel' },
   },
   proofMosaicBlock: {
-    theme: { values: ['light', 'dark'], defaultValue: 'light' },
+    theme: { values: ['light', 'muted', 'dark'], defaultValue: 'light' },
     layoutPreset: { values: ['mosaic', 'compact'], defaultValue: 'mosaic' },
+    pattern: { values: [true, false], defaultValue: true },
   },
   formLandingBlock: {
     variant: { values: ['contact', 'newsletter', 'resource', 'event'], defaultValue: 'contact' },

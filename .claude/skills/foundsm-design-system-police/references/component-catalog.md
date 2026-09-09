@@ -11,7 +11,7 @@ Use these approved Sanity `landingPage.sections` blocks for AI-assisted landing 
 | `featureTabsBlock` | Compare parallel ideas, methods, solutions, or audience paths | `title`, `tabs[].title`, `tabs[].body` | `subtitle`, `idPrefix`, tab icon/media/CTA, `theme`, `layoutPreset`, `autoRotate`, `pattern`, `titleWidth` |
 | `cardGridBlock` | Benefits, services, proof points, steps, topic cards, credentials | `title`, `cards[].title`, `cards[].body` | `subtitle`, card `lead`, `icon`, `number`, `meta`, media, `cta`, `columns`, `theme`, `variant`, `density`, `titleWidth`, `spacingTop`, `pattern` |
 | `statementBandBlock` | Emphasized principle, short proof statement, POV break | `lead`, `body` | `theme`, `pattern`, `width` |
-| `proofMosaicBlock` | Mixed proof with metrics, testimonial, trust card, optional media | `title` | `metrics`, `quote`, `featureCard`, media, `theme`, `layoutPreset` |
+| `proofMosaicBlock` | Mixed proof with metrics, testimonial, trust card, optional media | `title` | `metrics`, `quote`, `featureCard`, media, `theme`, `pattern`, `layoutPreset` |
 | `formLandingBlock` | Contact, newsletter, resource, and event lead-capture pages | `title`, `intro`, `hubspotFormId` | `eyebrow`, `lead`, `portalId`, `summary`, `variant`, `theme`, `showFormCard` |
 | `accordionBlock` | Dense advantages, why-us detail, process detail, FAQ-adjacent content | `title`, `items[].title`, `items[].body` | `eyebrow`, `body`, `items[].icon`, `theme`, `pattern`, `layoutPreset` |
 | `peopleGridBlock` | Leadership, speaker, author, advisor, or team sections | `title`, `people[].name`, `people[].role` | `intro`, person image/video, `layout`, `showImages` |
@@ -62,7 +62,8 @@ Use these approved Sanity `landingPage.sections` blocks for AI-assisted landing 
     "width": ["default", "narrow"]
   },
   "proofMosaicBlock": {
-    "theme": ["light", "dark"],
+    "theme": ["light", "muted", "dark"],
+    "pattern": [true, false],
     "layoutPreset": ["mosaic", "compact"]
   },
   "formLandingBlock": {

@@ -77,6 +77,19 @@ export default defineType({
       type: 'boolean',
       initialValue: false,
     }),
+    defineField({
+      name: 'titleWidth',
+      title: 'Title Width',
+      description: 'Wide lets a long section title run the full content width instead of wrapping at the standard heading measure.',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Default', value: 'default' },
+          { title: 'Wide', value: 'wide' },
+        ],
+      },
+      initialValue: 'default',
+    }),
   ],
   preview: {
     select: { title: 'title', tabs: 'tabs' },

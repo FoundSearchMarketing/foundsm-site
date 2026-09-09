@@ -22,6 +22,7 @@ interface Props {
   theme?: 'light' | 'muted' | 'dark';
   variant?: 'standard' | 'icon' | 'numbered' | 'credential' | 'topic' | 'benefit' | 'event';
   density?: 'compact' | 'standard';
+  titleWidth?: 'default' | 'wide';
 }
 
 const {
@@ -32,10 +33,20 @@ const {
   theme = 'light',
   variant = 'standard',
   density = 'standard',
+  titleWidth = 'default',
 } = Astro.props;
+const sectionClasses = [
+  'card-grid-section',
+  `card-grid-section--${theme}`,
+  `card-grid-section--${density}`,
+  `card-grid-section--${variant}`,
+  titleWidth === 'wide' ? 'card-grid-section--title-wide' : '',
+]
+  .filter(Boolean)
+  .join(' ');
 ---
 
-<section class={`card-grid-section card-grid-section--${theme} card-grid-section--${density} card-grid-section--${variant}`} aria-labelledby={title ? `${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-heading` : undefined}>
+<section class={sectionClasses} aria-labelledby={title ? `${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-heading` : undefined}>
   <div class="card-grid-section__inner">
     {(title || subtitle) && (
       <div class="card-grid-section__header">
@@ -155,6 +166,16 @@ const {
   .card-grid-section__header {
     max-inline-size: 48rem;
     margin-block-end: 2.25rem;
+  }
+
+  /* Wide title: let a long section title run the full content width instead of
+     wrapping at the standard heading measure. The subtitle keeps the readable measure. */
+  .card-grid-section--title-wide .card-grid-section__header {
+    max-inline-size: none;
+  }
+
+  .card-grid-section--title-wide .card-grid-section__header p {
+    max-inline-size: 48rem;
   }
 
   .card-grid-section__header h2 {

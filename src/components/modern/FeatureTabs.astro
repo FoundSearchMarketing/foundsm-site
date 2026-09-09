@@ -21,12 +21,22 @@ interface Props {
   layoutPreset?: 'mediaPanel' | 'badgePanel' | 'ecosystem';
   autoRotate?: boolean;
   pattern?: boolean;
+  titleWidth?: 'default' | 'wide';
 }
 
-const { title, subtitle, tabs, idPrefix, theme = 'muted', layoutPreset = 'mediaPanel', autoRotate = false, pattern = false } = Astro.props;
+const { title, subtitle, tabs, idPrefix, theme = 'muted', layoutPreset = 'mediaPanel', autoRotate = false, pattern = false, titleWidth = 'default' } = Astro.props;
+const sectionClasses = [
+  'feature-tabs',
+  `feature-tabs--${theme}`,
+  `feature-tabs--${layoutPreset}`,
+  pattern ? 'feature-tabs--pattern' : '',
+  titleWidth === 'wide' ? 'feature-tabs--title-wide' : '',
+]
+  .filter(Boolean)
+  .join(' ');
 ---
 
-<section class={`feature-tabs feature-tabs--${theme} feature-tabs--${layoutPreset}${pattern ? ' feature-tabs--pattern' : ''}`} aria-labelledby={title ? `${idPrefix}-heading` : undefined}>
+<section class={sectionClasses} aria-labelledby={title ? `${idPrefix}-heading` : undefined}>
   <div class="feature-tabs__outer">
     {(title || subtitle) && (
       <div class="feature-tabs__header">
@@ -184,6 +194,16 @@ const { title, subtitle, tabs, idPrefix, theme = 'muted', layoutPreset = 'mediaP
     color: rgba(26, 26, 26, 0.72);
     font-size: 1.05rem;
     line-height: 1.7;
+  }
+
+  /* Wide title: let a long section title run the full content width instead of
+     wrapping at the standard heading measure. The subtitle keeps the readable measure. */
+  .feature-tabs--title-wide .feature-tabs__header {
+    max-inline-size: none;
+  }
+
+  .feature-tabs--title-wide .feature-tabs__header p {
+    max-inline-size: 44rem;
   }
 
   .feature-tabs__inner {

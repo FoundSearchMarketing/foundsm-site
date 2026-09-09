@@ -8,8 +8,8 @@ Use these approved Sanity `landingPage.sections` blocks for AI-assisted landing 
 | --- | --- | --- | --- |
 | `modernHeroBlock` | First viewport, campaign promise, primary CTA | `title`, `intro`, `cta` | `layoutPreset`, `tone`, `titleScale`, `imageShape`, `imageFit`, `sizePreset`, media |
 | `splitFeatureBlock` | Explain one idea with supporting media | `title`, `body` | `eyebrow`, `cta`, media, `hubspotFormId`, `imagePosition`, `mediaHeight`, `theme` |
-| `featureTabsBlock` | Compare parallel ideas, methods, solutions, or audience paths | `title`, `tabs[].title`, `tabs[].body` | `subtitle`, `idPrefix`, tab icon/media/CTA, `theme`, `layoutPreset`, `autoRotate` |
-| `cardGridBlock` | Benefits, services, proof points, steps, topic cards, credentials | `title`, `cards[].title`, `cards[].body` | `subtitle`, card `lead`, `icon`, `number`, `meta`, media, `cta`, `columns`, `theme`, `variant`, `density` |
+| `featureTabsBlock` | Compare parallel ideas, methods, solutions, or audience paths | `title`, `tabs[].title`, `tabs[].body` | `subtitle`, `idPrefix`, tab icon/media/CTA, `theme`, `layoutPreset`, `autoRotate`, `pattern`, `titleWidth` |
+| `cardGridBlock` | Benefits, services, proof points, steps, topic cards, credentials | `title`, `cards[].title`, `cards[].body` | `subtitle`, card `lead`, `icon`, `number`, `meta`, media, `cta`, `columns`, `theme`, `variant`, `density`, `titleWidth` |
 | `statementBandBlock` | Emphasized principle, short proof statement, POV break | `lead`, `body` | `theme`, `pattern`, `width` |
 | `proofMosaicBlock` | Mixed proof with metrics, testimonial, trust card, optional media | `title` | `metrics`, `quote`, `featureCard`, media, `theme`, `layoutPreset` |
 | `formLandingBlock` | Contact, newsletter, resource, and event lead-capture pages | `title`, `intro`, `hubspotFormId` | `eyebrow`, `lead`, `portalId`, `summary`, `variant`, `theme`, `showFormCard` |
@@ -43,13 +43,16 @@ Use these approved Sanity `landingPage.sections` blocks for AI-assisted landing 
   "featureTabsBlock": {
     "theme": ["light", "muted"],
     "layoutPreset": ["mediaPanel", "badgePanel", "ecosystem"],
-    "autoRotate": [true, false]
+    "autoRotate": [true, false],
+    "pattern": [true, false],
+    "titleWidth": ["default", "wide"]
   },
   "cardGridBlock": {
     "columns": [2, 3, 4],
     "theme": ["light", "muted", "dark"],
     "variant": ["standard", "icon", "numbered", "credential", "topic", "benefit"],
-    "density": ["compact", "standard"]
+    "density": ["compact", "standard"],
+    "titleWidth": ["default", "wide"]
   },
   "statementBandBlock": {
     "theme": ["dark", "muted", "light"],

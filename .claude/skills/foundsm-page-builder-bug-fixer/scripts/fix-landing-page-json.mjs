@@ -46,6 +46,8 @@ const tokenRules = {
     theme: { values: ['light', 'muted'], defaultValue: 'muted' },
     layoutPreset: { values: ['mediaPanel', 'badgePanel', 'ecosystem'], defaultValue: 'mediaPanel' },
     autoRotate: { values: [true, false], defaultValue: false },
+    pattern: { values: [true, false], defaultValue: false },
+    titleWidth: { values: ['default', 'wide'], defaultValue: 'default' },
   },
   cardGridBlock: {
     columns: { values: [2, 3, 4], defaultValue: 3 },
@@ -55,6 +57,7 @@ const tokenRules = {
       defaultValue: 'standard',
     },
     density: { values: ['compact', 'standard'], defaultValue: 'standard' },
+    titleWidth: { values: ['default', 'wide'], defaultValue: 'default' },
   },
   statementBandBlock: {
     theme: { values: ['dark', 'muted', 'light'], defaultValue: 'dark' },

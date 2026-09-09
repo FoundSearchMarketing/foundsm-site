@@ -5,8 +5,10 @@ import { sanityClient, landingPageBySlugQuery, allLandingPagesQuery } from '../.
 
 export async function getStaticPaths() {
   const pages = await sanityClient.fetch(allLandingPagesQuery);
+  // Single-segment landing pages live under /lp/ unless the document is flagged to
+  // serve at the site root, in which case [...path].astro renders it at /slug/.
   return pages
-    .filter((page: any) => !page.slug?.current?.includes('/') && !['events', 'industry', 'results'].includes(page.slug?.current))
+    .filter((page: any) => !page.slug?.current?.includes('/') && !['events', 'industry', 'results'].includes(page.slug?.current) && !page.serveAtRoot)
     .map((page: any) => ({
       params: { slug: page.slug.current },
     }));

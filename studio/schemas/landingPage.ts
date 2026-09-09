@@ -73,6 +73,15 @@ export default defineType({
       initialValue: false,
     }),
     defineField({
+      name: 'serveAtRoot',
+      title: 'Serve at Site Root',
+      type: 'boolean',
+      group: 'settings',
+      initialValue: false,
+      description:
+        'Publish a single-segment slug at /slug/ instead of /lp/slug/. Use for permanent site pages built with the page builder (for example /life-at-found/).',
+    }),
+    defineField({
       name: 'abTestVariant',
       title: 'A/B Test Variant',
       type: 'string',

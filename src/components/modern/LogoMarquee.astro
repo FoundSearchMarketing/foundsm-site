@@ -10,13 +10,15 @@ interface Props {
   title?: string;
   logos: LogoItem[];
   theme?: 'light' | 'muted';
+  logoStyle?: 'grayscale' | 'color';
+  spacingTop?: 'default' | 'flush';
 }
 
-const { title, logos, theme = 'light' } = Astro.props;
+const { title, logos, theme = 'light', logoStyle = 'grayscale', spacingTop = 'default' } = Astro.props;
 const tracks = [...logos, ...logos];
 ---
 
-<section class={`modern-marquee modern-marquee--${theme}`} aria-label={title ?? 'Partner logos'}>
+<section class={`modern-marquee modern-marquee--${theme}${logoStyle === 'color' ? ' modern-marquee--color' : ''}${spacingTop === 'flush' ? ' modern-marquee--flush-top' : ''}`} aria-label={title ?? 'Partner logos'}>
   <div class="modern-marquee__inner">
     {title && <h2>{title}</h2>}
     <div class="modern-marquee__viewport">
@@ -86,6 +88,17 @@ const tracks = [...logos, ...logos];
     object-fit: contain;
     filter: grayscale(1);
     opacity: 0.72;
+  }
+
+  /* Color logo style: brand colors at full opacity. */
+  .modern-marquee--color .modern-marquee__item img {
+    filter: none;
+    opacity: 1;
+  }
+
+  /* Flush top: drop the marquee's own top padding after a same-background section. */
+  .modern-marquee.modern-marquee--flush-top {
+    padding-block-start: 0;
   }
 
   @keyframes modern-marquee-scroll {

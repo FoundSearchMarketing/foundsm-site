@@ -9,7 +9,7 @@ Use these approved Sanity `landingPage.sections` blocks for AI-assisted landing 
 | `modernHeroBlock` | First viewport, campaign promise, primary CTA | `title`, `intro`, `cta` | `secondaryCta`, `layoutPreset`, `tone`, `titleScale`, `imageShape`, `imageFit`, `sizePreset`, media |
 | `splitFeatureBlock` | Explain one idea with supporting media | `title`, `body` | `eyebrow`, `cta`, media, `hubspotFormId`, `imagePosition`, `mediaHeight`, `theme` |
 | `featureTabsBlock` | Compare parallel ideas, methods, solutions, or audience paths | `title`, `tabs[].title`, `tabs[].body` | `subtitle`, `idPrefix`, tab icon/media/CTA, `theme`, `layoutPreset`, `autoRotate`, `pattern`, `titleWidth` |
-| `cardGridBlock` | Benefits, services, proof points, steps, topic cards, credentials | `title`, `cards[].title`, `cards[].body` | `subtitle`, card `lead`, `icon`, `number`, `meta`, media, `cta`, `columns`, `theme`, `variant`, `density`, `titleWidth`, `spacingTop` |
+| `cardGridBlock` | Benefits, services, proof points, steps, topic cards, credentials | `title`, `cards[].title`, `cards[].body` | `subtitle`, card `lead`, `icon`, `number`, `meta`, media, `cta`, `columns`, `theme`, `variant`, `density`, `titleWidth`, `spacingTop`, `pattern` |
 | `statementBandBlock` | Emphasized principle, short proof statement, POV break | `lead`, `body` | `theme`, `pattern`, `width` |
 | `proofMosaicBlock` | Mixed proof with metrics, testimonial, trust card, optional media | `title` | `metrics`, `quote`, `featureCard`, media, `theme`, `layoutPreset` |
 | `formLandingBlock` | Contact, newsletter, resource, and event lead-capture pages | `title`, `intro`, `hubspotFormId` | `eyebrow`, `lead`, `portalId`, `summary`, `variant`, `theme`, `showFormCard` |
@@ -17,7 +17,7 @@ Use these approved Sanity `landingPage.sections` blocks for AI-assisted landing 
 | `peopleGridBlock` | Leadership, speaker, author, advisor, or team sections | `title`, `people[].name`, `people[].role` | `intro`, person image/video, `layout`, `showImages` |
 | `eventHeroBlock` | Campaign or event opener with metadata, stats, chips, and dual CTAs | `titleLines`, `description`, `primaryCta` | `eyebrow`, `accentLine`, `meta`, `secondaryCta`, `cardTitle`, `stats`, `chips`, `theme` |
 | `modernCtaBlock` | Final or mid-page next action | `title`, `cta` | `body`, `theme`, `align`, `layoutPreset` |
-| `logoBarBlock` | Client, partner, platform, press, or trust-logo band | `logos[].name` plus logo media when using logo objects, or legacy image logos with `alt` | `heading`, `displayMode`, `theme`, `density` |
+| `logoBarBlock` | Client, partner, platform, press, or trust-logo band | `logos[].name` plus logo media when using logo objects, or legacy image logos with `alt` | `heading`, `displayMode`, `theme`, `density`, `logoStyle`, `spacingTop` |
 
 ## Legacy Blocks
 
@@ -53,7 +53,8 @@ Use these approved Sanity `landingPage.sections` blocks for AI-assisted landing 
     "variant": ["standard", "icon", "numbered", "credential", "topic", "benefit"],
     "density": ["compact", "standard"],
     "titleWidth": ["default", "wide"],
-    "spacingTop": ["default", "flush"]
+    "spacingTop": ["default", "flush"],
+    "pattern": [true, false]
   },
   "statementBandBlock": {
     "theme": ["dark", "muted", "light"],
@@ -89,7 +90,9 @@ Use these approved Sanity `landingPage.sections` blocks for AI-assisted landing 
   "logoBarBlock": {
     "displayMode": ["static", "marquee"],
     "theme": ["light", "muted"],
-    "density": ["compact", "standard"]
+    "density": ["compact", "standard"],
+    "logoStyle": ["grayscale", "color"],
+    "spacingTop": ["default", "flush"]
   }
 }
 ```

@@ -58,6 +58,7 @@ const tokenRules = {
     },
     density: { values: ['compact', 'standard'], defaultValue: 'standard' },
     titleWidth: { values: ['default', 'wide'], defaultValue: 'default' },
+    spacingTop: { values: ['default', 'flush'], defaultValue: 'default' },
   },
   statementBandBlock: {
     theme: { values: ['dark', 'muted', 'light'], defaultValue: 'dark' },

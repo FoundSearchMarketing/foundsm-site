@@ -12,6 +12,14 @@ interface Props {
 
 const { title, body, bodyHtml, ctaLabel, ctaHref, theme = 'dark', align = 'split', layoutPreset = 'panel' } = Astro.props;
 const paragraphs = Array.isArray(body) ? body : body ? [body] : [];
+// Email CTAs are not written into the HTML as a plain address (address scrapers read the
+// static page). The user and domain ship as data attributes and the mailto link is
+// assembled in the browser; without JavaScript the button falls back to the contact form.
+const mailMatch = ctaHref?.match(/^mailto:([^@\s?]+)@([^?\s]+)(\?.*)?$/i);
+const mailUser = mailMatch?.[1];
+const mailDomain = mailMatch?.[2];
+const mailQuery = mailMatch?.[3] ?? '';
+const buttonHref = mailMatch ? '/contact-us/' : ctaHref;
 const buttonOnly = !title && paragraphs.length === 0 && !bodyHtml;
 // theme="green" / theme="dark" opt into the canonical band treatments in
 // global.css: green or dark field under the same street-map artwork, bold
@@ -35,7 +43,26 @@ const buttonSize = buttonOnly ? ' btn--lg' : '';
         </div>
       )}
     </div>
-    {ctaLabel && ctaHref && <a class={`btn ${buttonVariant}${buttonSize} modern-cta__button`} href={ctaHref}>{ctaLabel}</a>}
+    {ctaLabel && ctaHref && (
+      <a
+        class={`btn ${buttonVariant}${buttonSize} modern-cta__button`}
+        href={buttonHref}
+        data-mail-user={mailUser}
+        data-mail-domain={mailDomain}
+        data-mail-query={mailQuery || undefined}
+      >{ctaLabel}</a>
+    )}
+    <script>
+      // Assemble mailto links in the browser so the address never appears in the static HTML.
+      const assembleMailLinks = () => {
+        document.querySelectorAll<HTMLAnchorElement>('a[data-mail-user][data-mail-domain]').forEach((link) => {
+          const { mailUser, mailDomain, mailQuery = '' } = link.dataset;
+          if (mailUser && mailDomain) link.setAttribute('href', `mailto:${mailUser}@${mailDomain}${mailQuery}`);
+        });
+      };
+      assembleMailLinks();
+      document.addEventListener('astro:page-load', assembleMailLinks);
+    </script>
   </div>
 </section>
 

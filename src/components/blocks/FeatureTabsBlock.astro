@@ -11,9 +11,10 @@ interface Props {
   layoutPreset?: 'mediaPanel' | 'badgePanel' | 'ecosystem';
   autoRotate?: boolean;
   pattern?: boolean;
+  titleWidth?: 'default' | 'wide';
 }
 
-const { title, subtitle, idPrefix, tabs = [], theme = 'muted', layoutPreset = 'mediaPanel', autoRotate = false, pattern = false } = Astro.props;
+const { title, subtitle, idPrefix, tabs = [], theme = 'muted', layoutPreset = 'mediaPanel', autoRotate = false, pattern = false, titleWidth = 'default' } = Astro.props;
 const safeIdPrefix = idPrefix || (title || 'feature-tabs').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'feature-tabs';
 const preparedTabs = tabsFor(tabs).filter((tab) => tab.title);
 ---
@@ -28,5 +29,6 @@ const preparedTabs = tabsFor(tabs).filter((tab) => tab.title);
     layoutPreset={layoutPreset}
     autoRotate={autoRotate}
     pattern={pattern}
+    titleWidth={titleWidth}
   />
 )}

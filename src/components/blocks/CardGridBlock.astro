@@ -10,9 +10,10 @@ interface Props {
   theme?: 'light' | 'muted' | 'dark';
   variant?: 'standard' | 'icon' | 'numbered' | 'credential' | 'topic' | 'benefit' | 'event';
   density?: 'compact' | 'standard';
+  titleWidth?: 'default' | 'wide';
 }
 
-const { title, subtitle, cards = [], columns = 3, theme = 'light', variant = 'standard', density = 'standard' } = Astro.props;
+const { title, subtitle, cards = [], columns = 3, theme = 'light', variant = 'standard', density = 'standard', titleWidth = 'default' } = Astro.props;
 const preparedCards = cardsFor(cards).filter((card) => card.title);
 ---
 
@@ -25,5 +26,6 @@ const preparedCards = cardsFor(cards).filter((card) => card.title);
     theme={theme}
     variant={variant}
     density={density}
+    titleWidth={titleWidth}
   />
 )}

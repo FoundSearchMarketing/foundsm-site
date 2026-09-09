@@ -104,6 +104,13 @@ export default defineType({
       initialValue: 'default',
     }),
     themeField('theme', 'Theme', 'light'),
+    defineField({
+      name: 'pattern',
+      title: 'Topography Background',
+      description: 'Muted theme only. On by default; turn off for a flat gray section without the artwork.',
+      type: 'boolean',
+      initialValue: true,
+    }),
   ],
   preview: {
     select: { title: 'title', cards: 'cards' },

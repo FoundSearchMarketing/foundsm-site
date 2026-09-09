@@ -12,9 +12,10 @@ interface Props {
   density?: 'compact' | 'standard';
   titleWidth?: 'default' | 'wide';
   spacingTop?: 'default' | 'flush';
+  pattern?: boolean;
 }
 
-const { title, subtitle, cards = [], columns = 3, theme = 'light', variant = 'standard', density = 'standard', titleWidth = 'default', spacingTop = 'default' } = Astro.props;
+const { title, subtitle, cards = [], columns = 3, theme = 'light', variant = 'standard', density = 'standard', titleWidth = 'default', spacingTop = 'default', pattern = true } = Astro.props;
 const preparedCards = cardsFor(cards).filter((card) => card.title);
 ---
 
@@ -29,5 +30,6 @@ const preparedCards = cardsFor(cards).filter((card) => card.title);
     density={density}
     titleWidth={titleWidth}
     spacingTop={spacingTop}
+    pattern={pattern}
   />
 )}

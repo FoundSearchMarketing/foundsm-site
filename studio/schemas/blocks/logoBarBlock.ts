@@ -108,6 +108,32 @@ export default defineType({
       },
       initialValue: 'standard',
     }),
+    defineField({
+      name: 'logoStyle',
+      title: 'Logo Style',
+      description: 'Grayscale is the default muted treatment. Color shows the logos in their brand colors at full opacity.',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Grayscale', value: 'grayscale' },
+          { title: 'Color', value: 'color' },
+        ],
+      },
+      initialValue: 'grayscale',
+    }),
+    defineField({
+      name: 'spacingTop',
+      title: 'Top Spacing',
+      description: 'Flush removes the bar\'s top padding. Use it when the section above shares the same background.',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Default', value: 'default' },
+          { title: 'Flush', value: 'flush' },
+        ],
+      },
+      initialValue: 'default',
+    }),
   ],
   preview: {
     select: { title: 'heading', logos: 'logos' },

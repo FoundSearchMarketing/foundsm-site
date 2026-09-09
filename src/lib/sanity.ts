@@ -133,7 +133,8 @@ export const allLandingPagesQuery = `*[_type == "landingPage"] | order(_createdA
   seoTitle,
   seoDescription,
   canonicalUrl,
-  robots
+  robots,
+  serveAtRoot
 }`;
 
 export const homePageQuery = `*[_type == "homePage"][0] {

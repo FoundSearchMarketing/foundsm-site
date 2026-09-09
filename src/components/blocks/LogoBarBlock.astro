@@ -16,9 +16,11 @@ interface Props {
   displayMode?: 'static' | 'marquee';
   theme?: 'light' | 'muted';
   density?: 'compact' | 'standard';
+  logoStyle?: 'grayscale' | 'color';
+  spacingTop?: 'default' | 'flush';
 }
 
-const { heading, logos = [], displayMode = 'static', theme = 'light', density = 'standard' } = Astro.props;
+const { heading, logos = [], displayMode = 'static', theme = 'light', density = 'standard', logoStyle = 'grayscale', spacingTop = 'default' } = Astro.props;
 const normalizedLogos = logos
   .map((logo) => ({
     src: logo.url || logo.src || logo.videoUrl,
@@ -29,9 +31,9 @@ const marqueeLogos = normalizedLogos;
 ---
 
 {displayMode === 'marquee' ? (
-  <LogoMarquee title={heading} logos={marqueeLogos} theme={theme} />
+  <LogoMarquee title={heading} logos={marqueeLogos} theme={theme} logoStyle={logoStyle} spacingTop={spacingTop} />
 ) : (
-  <section class={`section lp-logo-bar lp-logo-bar--${theme} lp-logo-bar--${density}`} aria-label={heading || 'Partners'}>
+  <section class={`section lp-logo-bar lp-logo-bar--${theme} lp-logo-bar--${density}${logoStyle === 'color' ? ' lp-logo-bar--color' : ''}${spacingTop === 'flush' ? ' lp-logo-bar--flush-top' : ''}`} aria-label={heading || 'Partners'}>
     <div class="container">
       {heading && <h2 class="logo-marquee__heading fade-in-up">{heading}</h2>}
       <div class="partners__grid fade-in-up">
@@ -52,5 +54,16 @@ const marqueeLogos = normalizedLogos;
 
   .lp-logo-bar--compact {
     padding-block: 2.5rem;
+  }
+
+  /* Color logo style: show brand colors at full opacity instead of the muted grayscale treatment. */
+  .lp-logo-bar--color .partners__badge {
+    filter: none;
+    opacity: 1;
+  }
+
+  /* Flush top: drop the bar's own top padding after a same-background section. */
+  .lp-logo-bar.lp-logo-bar--flush-top {
+    padding-block-start: 0;
   }
 </style>

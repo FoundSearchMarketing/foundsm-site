@@ -59,6 +59,7 @@ const tokenRules = {
     density: { values: ['compact', 'standard'], defaultValue: 'standard' },
     titleWidth: { values: ['default', 'wide'], defaultValue: 'default' },
     spacingTop: { values: ['default', 'flush'], defaultValue: 'default' },
+    pattern: { values: [true, false], defaultValue: true },
   },
   statementBandBlock: {
     theme: { values: ['dark', 'muted', 'light'], defaultValue: 'dark' },
@@ -95,6 +96,8 @@ const tokenRules = {
     displayMode: { values: ['static', 'marquee'], defaultValue: 'static' },
     theme: { values: ['light', 'muted'], defaultValue: 'light' },
     density: { values: ['compact', 'standard'], defaultValue: 'standard' },
+    logoStyle: { values: ['grayscale', 'color'], defaultValue: 'grayscale' },
+    spacingTop: { values: ['default', 'flush'], defaultValue: 'default' },
   },
 };
 

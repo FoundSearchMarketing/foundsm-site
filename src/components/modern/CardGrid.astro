@@ -24,6 +24,8 @@ interface Props {
   density?: 'compact' | 'standard';
   titleWidth?: 'default' | 'wide';
   spacingTop?: 'default' | 'flush';
+  /** Muted theme only: topography artwork on the gray field (on by default). */
+  pattern?: boolean;
 }
 
 const {
@@ -36,6 +38,7 @@ const {
   density = 'standard',
   titleWidth = 'default',
   spacingTop = 'default',
+  pattern = true,
 } = Astro.props;
 const sectionClasses = [
   'card-grid-section',
@@ -44,6 +47,7 @@ const sectionClasses = [
   `card-grid-section--${variant}`,
   titleWidth === 'wide' ? 'card-grid-section--title-wide' : '',
   spacingTop === 'flush' ? 'card-grid-section--flush-top' : '',
+  pattern === false ? 'card-grid-section--no-pattern' : '',
 ]
   .filter(Boolean)
   .join(' ');
@@ -160,6 +164,11 @@ const sectionClasses = [
     background-image: url('/images/pages/our-approach/topography-light.svg');
     background-position: center;
     background-size: cover;
+  }
+
+  /* Muted theme with the topography artwork switched off: a flat gray field. */
+  .card-grid-section--muted.card-grid-section--no-pattern {
+    background-image: none;
   }
 
   .card-grid-section--dark {

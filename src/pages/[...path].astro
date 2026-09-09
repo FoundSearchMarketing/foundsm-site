@@ -4,12 +4,20 @@ import BlockRenderer from '../components/blocks/BlockRenderer.astro';
 import { sanityClient, landingPageBySlugQuery, allLandingPagesQuery } from '../lib/sanity';
 
 // Renders landingPage documents whose slug is a nested site path
-// (e.g. "capabilities/ad-account-migration"). Single-segment landing
-// pages continue to render under /lp/[slug].astro.
+// (e.g. "capabilities/ad-account-migration"), plus single-segment pages
+// flagged "Serve at Site Root" in Sanity (e.g. "life-at-found"). Other
+// single-segment landing pages continue to render under /lp/[slug].astro.
 export async function getStaticPaths() {
+  // getStaticPaths runs in isolation, so the reserved list lives inside it.
+  const RESERVED_ROOT_SLUGS = ['events', 'industry', 'results', 'lp', 'insights', 'capabilities'];
   const pages = await sanityClient.fetch(allLandingPagesQuery);
   return pages
-    .filter((page: any) => page.slug?.current?.includes('/'))
+    .filter((page: any) => {
+      const slug = page.slug?.current;
+      if (!slug) return false;
+      if (slug.includes('/')) return true;
+      return Boolean(page.serveAtRoot) && !RESERVED_ROOT_SLUGS.includes(slug);
+    })
     .map((page: any) => ({
       params: { path: page.slug.current },
     }));

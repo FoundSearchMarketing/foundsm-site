@@ -134,6 +134,19 @@ export default defineType({
       },
       initialValue: 'default',
     }),
+    defineField({
+      name: 'logoSize',
+      title: 'Logo Size',
+      description: 'Default is the small badge row. Large matches the client logo size used on the home page.',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Default', value: 'default' },
+          { title: 'Large', value: 'large' },
+        ],
+      },
+      initialValue: 'default',
+    }),
   ],
   preview: {
     select: { title: 'heading', logos: 'logos' },

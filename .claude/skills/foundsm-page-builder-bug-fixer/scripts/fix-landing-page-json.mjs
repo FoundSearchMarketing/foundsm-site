@@ -99,6 +99,7 @@ const tokenRules = {
     density: { values: ['compact', 'standard'], defaultValue: 'standard' },
     logoStyle: { values: ['grayscale', 'color'], defaultValue: 'grayscale' },
     spacingTop: { values: ['default', 'flush'], defaultValue: 'default' },
+    logoSize: { values: ['default', 'large'], defaultValue: 'default' },
   },
 };
 

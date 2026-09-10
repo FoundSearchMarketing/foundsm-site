@@ -18,9 +18,11 @@ interface Props {
   density?: 'compact' | 'standard';
   logoStyle?: 'grayscale' | 'color';
   spacingTop?: 'default' | 'flush';
+  /** default = 2rem badge height; large = the home page client logo size (10rem square, 6.25rem on small screens). */
+  logoSize?: 'default' | 'large';
 }
 
-const { heading, logos = [], displayMode = 'static', theme = 'light', density = 'standard', logoStyle = 'grayscale', spacingTop = 'default' } = Astro.props;
+const { heading, logos = [], displayMode = 'static', theme = 'light', density = 'standard', logoStyle = 'grayscale', spacingTop = 'default', logoSize = 'default' } = Astro.props;
 const normalizedLogos = logos
   .map((logo) => ({
     src: logo.url || logo.src || logo.videoUrl,
@@ -31,9 +33,9 @@ const marqueeLogos = normalizedLogos;
 ---
 
 {displayMode === 'marquee' ? (
-  <LogoMarquee title={heading} logos={marqueeLogos} theme={theme} logoStyle={logoStyle} spacingTop={spacingTop} />
+  <LogoMarquee title={heading} logos={marqueeLogos} theme={theme} logoStyle={logoStyle} spacingTop={spacingTop} logoSize={logoSize} />
 ) : (
-  <section class={`section lp-logo-bar lp-logo-bar--${theme} lp-logo-bar--${density}${logoStyle === 'color' ? ' lp-logo-bar--color' : ''}${spacingTop === 'flush' ? ' lp-logo-bar--flush-top' : ''}`} aria-label={heading || 'Partners'}>
+  <section class={`section lp-logo-bar lp-logo-bar--${theme} lp-logo-bar--${density}${logoStyle === 'color' ? ' lp-logo-bar--color' : ''}${spacingTop === 'flush' ? ' lp-logo-bar--flush-top' : ''}${logoSize === 'large' ? ' lp-logo-bar--large' : ''}`} aria-label={heading || 'Partners'}>
     <div class="container">
       {heading && <h2 class="logo-marquee__heading fade-in-up">{heading}</h2>}
       <div class="partners__grid fade-in-up">
@@ -65,5 +67,24 @@ const marqueeLogos = normalizedLogos;
   /* Flush top: drop the bar's own top padding after a same-background section. */
   .lp-logo-bar.lp-logo-bar--flush-top {
     padding-block-start: 0;
+  }
+
+  /* Large logos: the same footprint as the home page client marquee. */
+  .lp-logo-bar--large .partners__badge {
+    height: auto;
+  }
+
+  .lp-logo-bar--large .partners__badge img {
+    inline-size: 10rem;
+    block-size: auto;
+    max-block-size: 10rem;
+    object-fit: contain;
+  }
+
+  @media (max-width: 720px) {
+    .lp-logo-bar--large .partners__badge img {
+      inline-size: 6.25rem;
+      max-block-size: 6.25rem;
+    }
   }
 </style>

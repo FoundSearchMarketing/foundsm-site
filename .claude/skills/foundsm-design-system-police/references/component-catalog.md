@@ -17,7 +17,7 @@ Use these approved Sanity `landingPage.sections` blocks for AI-assisted landing 
 | `peopleGridBlock` | Leadership, speaker, author, advisor, or team sections | `title`, `people[].name`, `people[].role` | `intro`, person image/video, `layout`, `showImages` |
 | `eventHeroBlock` | Campaign or event opener with metadata, stats, chips, and dual CTAs | `titleLines`, `description`, `primaryCta` | `eyebrow`, `accentLine`, `meta`, `secondaryCta`, `cardTitle`, `stats`, `chips`, `theme` |
 | `modernCtaBlock` | Final or mid-page next action | `title`, `cta` | `body`, `theme`, `align`, `layoutPreset` |
-| `logoBarBlock` | Client, partner, platform, press, or trust-logo band | `logos[].name` plus logo media when using logo objects, or legacy image logos with `alt` | `heading`, `displayMode`, `theme`, `density`, `logoStyle`, `spacingTop` |
+| `logoBarBlock` | Client, partner, platform, press, or trust-logo band | `logos[].name` plus logo media when using logo objects, or legacy image logos with `alt` | `heading`, `displayMode`, `theme`, `density`, `logoStyle`, `spacingTop`, `logoSize` |
 
 ## Legacy Blocks
 
@@ -93,7 +93,8 @@ Use these approved Sanity `landingPage.sections` blocks for AI-assisted landing 
     "theme": ["light", "muted"],
     "density": ["compact", "standard"],
     "logoStyle": ["grayscale", "color"],
-    "spacingTop": ["default", "flush"]
+    "spacingTop": ["default", "flush"],
+    "logoSize": ["default", "large"]
   }
 }
 ```

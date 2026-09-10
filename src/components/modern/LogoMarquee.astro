@@ -12,13 +12,14 @@ interface Props {
   theme?: 'light' | 'muted';
   logoStyle?: 'grayscale' | 'color';
   spacingTop?: 'default' | 'flush';
+  logoSize?: 'default' | 'large';
 }
 
-const { title, logos, theme = 'light', logoStyle = 'grayscale', spacingTop = 'default' } = Astro.props;
+const { title, logos, theme = 'light', logoStyle = 'grayscale', spacingTop = 'default', logoSize = 'default' } = Astro.props;
 const tracks = [...logos, ...logos];
 ---
 
-<section class={`modern-marquee modern-marquee--${theme}${logoStyle === 'color' ? ' modern-marquee--color' : ''}${spacingTop === 'flush' ? ' modern-marquee--flush-top' : ''}`} aria-label={title ?? 'Partner logos'}>
+<section class={`modern-marquee modern-marquee--${theme}${logoStyle === 'color' ? ' modern-marquee--color' : ''}${spacingTop === 'flush' ? ' modern-marquee--flush-top' : ''}${logoSize === 'large' ? ' modern-marquee--large' : ''}`} aria-label={title ?? 'Partner logos'}>
   <div class="modern-marquee__inner">
     {title && <h2>{title}</h2>}
     <div class="modern-marquee__viewport">
@@ -99,6 +100,12 @@ const tracks = [...logos, ...logos];
   /* Flush top: drop the marquee's own top padding after a same-background section. */
   .modern-marquee.modern-marquee--flush-top {
     padding-block-start: 0;
+  }
+
+  /* Large logos: the same footprint as the home page client marquee. */
+  .modern-marquee--large .modern-marquee__item img {
+    max-inline-size: 10rem;
+    max-block-size: 10rem;
   }
 
   @keyframes modern-marquee-scroll {

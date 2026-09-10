@@ -186,14 +186,10 @@ const sectionClasses = [
     margin-block-end: 2.25rem;
   }
 
-  /* Wide title: let a long section title run the full content width instead of
-     wrapping at the standard heading measure. The subtitle keeps the readable measure. */
+  /* Wide title: the whole header (title and subtitle) runs the full content width
+     instead of wrapping at the standard heading measure. */
   .card-grid-section--title-wide .card-grid-section__header {
     max-inline-size: none;
-  }
-
-  .card-grid-section--title-wide .card-grid-section__header p {
-    max-inline-size: 48rem;
   }
 
   .card-grid-section__header h2 {

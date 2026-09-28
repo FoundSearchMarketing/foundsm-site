@@ -113,7 +113,8 @@ const sectionClasses = [
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .card-grid-section--event .modern-card {
+  /* Doubled class so a density preset (compact padding) can't take back the room left for the date block. */
+  .card-grid-section.card-grid-section--event .modern-card {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -391,6 +392,29 @@ const sectionClasses = [
 
     .card-grid-section__header h2 {
       font-size: 2.1rem;
+    }
+
+    /* Event cards: the date block becomes a strip across the top of the card so the
+       text gets the full card width instead of a narrow column beside it. */
+    .card-grid-section.card-grid-section--event .modern-card {
+      justify-content: flex-start;
+      min-block-size: 0;
+      padding: 1.25rem;
+    }
+
+    .card-grid-section--event .modern-card__date {
+      position: static;
+      inline-size: auto;
+      flex-direction: row;
+      align-items: baseline;
+      justify-content: flex-start;
+      gap: 0.5rem;
+      margin: -1.25rem -1.25rem 0.6rem;
+      padding: 0.7rem 1.25rem;
+    }
+
+    .card-grid-section--event .modern-card__date span:nth-child(2) {
+      font-size: 2rem;
     }
   }
 </style>

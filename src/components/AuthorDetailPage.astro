@@ -405,11 +405,15 @@ const normalizePost = (post: LegacyAuthorLatestPost) => ({
   }
 
   @media (max-width: 1024px) {
+    /* overflow-x: clip keeps the menu toggle's translateX(12px) from widening the
+       page. On phones the header grid has no column gap, so the shift pushes the
+       toggle 12px past the viewport; the clipped part is transparent button area. */
     :global(body.author-detail-page .site-header__inner) {
       inline-size: 100%;
       min-block-size: 65px;
       margin-inline: 0;
       padding: 6px 0 0 25px;
+      overflow-x: clip;
     }
 
     :global(body.author-detail-page .site-header__logo) {

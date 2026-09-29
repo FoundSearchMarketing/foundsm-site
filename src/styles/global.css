@@ -466,8 +466,20 @@ p + p {
   transition:
     background-color var(--transition-fast),
     border-color var(--transition-fast),
-    box-shadow var(--transition-fast),
-    backdrop-filter var(--transition-fast);
+    box-shadow var(--transition-fast);
+}
+
+/* The scrolled-state blur lives on this layer instead of the header itself. A
+   backdrop-filter on the header would make it the containing block for its
+   position: fixed children, so the mobile drawer and scrim would size to the
+   66px header instead of the viewport. */
+.site-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  transition: backdrop-filter var(--transition-fast);
 }
 
 .site-header__inner {
@@ -806,8 +818,11 @@ html.has-menu-open {
 .site-header.is-scrolled {
   border-color: rgba(26, 26, 26, 0.25);
   background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.site-header.is-scrolled::before {
+  backdrop-filter: blur(10px);
 }
 
 .site-header.is-scrolled .site-header__logo {

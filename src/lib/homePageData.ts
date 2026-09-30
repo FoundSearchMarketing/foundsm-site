@@ -121,9 +121,9 @@ export const block = (children: Span[] | string): PortableTextBlock => ({
 });
 
 export const defaultHomePageData: HomePageData = {
-  seoTitle: 'Found Search Marketing | An Enterprise Paid Media Agency',
+  seoTitle: 'FoundSM | An Enterprise Paid Media Agency',
   seoDescription:
-    'Trusted by leading brands, Found Search Marketing is an enterprise paid media agency delivering clarity, efficiency, and performance through advanced data-driven solutions.',
+    'Trusted by leading brands, FoundSM is an enterprise paid media agency delivering clarity, efficiency, and performance through advanced data-driven solutions.',
   canonicalUrl: 'https://foundsm.com/',
   hero: {
     headlineLines: ['Drive Profitable Growth.', 'Get Found.'],
@@ -141,12 +141,12 @@ export const defaultHomePageData: HomePageData = {
     body: [
       block("Unusually great performance takes a different kind of agency. One that's highly collaborative with a deep understanding of your business goals. One relentlessly focused on solving problems with forward-thinking, custom solutions. One that always prioritizes outcomes above hours."),
       block([
-        span('Found Search Marketing is that partner.', ['strong']),
+        span('FoundSM is that partner.', ['strong']),
         span(" We're experts at fitting into your internal workflows, bringing clarity, and optimizing your resources for stronger leads, better conversion rates, and smarter spend. Unlike traditional agencies, we are a data engineering firm that activates paid media strategies, not the other way around."),
       ]),
     ],
     image: '/images/imported/home/0b4041b9-hero-home-sm.webp',
-    imageAlt: 'Found Search Marketing team collaboration',
+    imageAlt: 'FoundSM team collaboration',
   },
   ctaStrip: {
     headline: "If you want to scale your paid media performance with strategic intention, let's talk.",

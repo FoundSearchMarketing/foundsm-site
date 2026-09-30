@@ -178,13 +178,13 @@ const ecosystemTabs = homepage.ecosystem.tabs.map((tab) => ({
       </div>
       {introMedia && (
         <figure class="home-intro__media">
-          <MediaAsset src={introMedia.src} alt={introMedia.alt || homepage.intro.heading || 'Found Search Marketing introduction image'} width="742" height="739" loading="eager" />
+          <MediaAsset src={introMedia.src} alt={introMedia.alt || homepage.intro.heading || 'FoundSM introduction image'} width="742" height="739" loading="eager" />
         </figure>
       )}
     </div>
   </section>
 
-  <section class="home-cta-strip dark-band" aria-label="Contact Found Search Marketing">
+  <section class="home-cta-strip dark-band" aria-label="Contact FoundSM">
     <div class="home-shell home-cta-strip__inner">
       <h2>{homepage.ctaStrip.headline}</h2>
       {showCta(homepage.ctaStrip) && <a class="btn btn--primary btn--lg home-button" href={homepage.ctaStrip.ctaUrl}>{homepage.ctaStrip.ctaText}</a>}
@@ -227,7 +227,7 @@ const ecosystemTabs = homepage.ecosystem.tabs.map((tab) => ({
     </div>
   </section>
 
-  <section class="home-metrics" aria-label="Found Search Marketing metrics">
+  <section class="home-metrics" aria-label="FoundSM metrics">
     <div class="home-shell home-metrics__grid">
       <article class="home-metric-card home-metric-card--spend">
         {homepage.metrics.spend.eyebrow && <p class="home-metric-card__eyebrow">{homepage.metrics.spend.eyebrow}</p>}

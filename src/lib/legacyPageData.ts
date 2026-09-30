@@ -255,7 +255,7 @@ export const legacyAuthorDefinitions: LegacyAuthorDefinition[] = [
     team: 'Executive Leadership',
     foundStartDate: '2006',
     expertise: 'Measurement Strategy, Operational Excellence, Strategic Growth',
-    bio: 'Julie Warnecke is the Founder and CEO of Found Search Marketing, a Midwest firm managing over $200M in annual media spend. An early Google employee instrumental in launching AdWords, she established Found in 2006. Today, she leads a team of 50+ that serves as a seamless extension of client teams.',
+    bio: 'Julie Warnecke is the Founder and CEO of FoundSM, a Midwest firm managing over $200M in annual media spend. An early Google employee instrumental in launching AdWords, she established Found in 2006. Today, she leads a team of 50+ that serves as a seamless extension of client teams.',
   },
   {
     slug: 'kelley',
@@ -291,7 +291,7 @@ export const legacyAuthorDefinitions: LegacyAuthorDefinition[] = [
     team: 'Innovation',
     foundStartDate: '2016',
     expertise: 'Strategic Media, Performance Forecasting, Channel Strategy',
-    bio: 'Adam joined Found Search Marketing in 2016, leveraging his media strategy background to drive client results through research and testing. A Brown University graduate in Cognitive Neuroscience and Economics, he began his career with the Indianapolis Colts. Outside the office, Adam stays active through CrossFit, backpacking, and various team sports.',
+    bio: 'Adam joined FoundSM in 2016, leveraging his media strategy background to drive client results through research and testing. A Brown University graduate in Cognitive Neuroscience and Economics, he began his career with the Indianapolis Colts. Outside the office, Adam stays active through CrossFit, backpacking, and various team sports.',
   },
   {
     slug: 'caroline',
@@ -742,7 +742,7 @@ function buildDefaultLegacyPageData(definition: LegacyPageDefinition): LegacyPag
   }
 
   if (definition.id === 'legacy-insights-authors') {
-    const heroBody = 'Meet Found Search Marketing: an agency where decades of expertise meet agile execution. With leadership grounded in foundational roles at Google and a team energized by complex problem-solving, we break down silos to offer fully integrated strategies.';
+    const heroBody = 'Meet FoundSM: an agency where decades of expertise meet agile execution. With leadership grounded in foundational roles at Google and a team energized by complex problem-solving, we break down silos to offer fully integrated strategies.';
     const introBody = 'Dive into the articles below to see how our hands-on, results-obsessed experts apply this deep technical knowledge to transform business challenges into breakthroughs.';
 
     return {
@@ -795,7 +795,7 @@ function eyebrowForGroup(group: LegacyPageGroup): string {
   if (group === 'insights') return 'Insights';
   if (group === 'authorIndex') return 'Insights';
   if (group === 'whitepapers') return 'Resources';
-  return 'Found Search Marketing';
+  return 'FoundSM';
 }
 
 function hasBlocks(blocks: unknown): blocks is SimplePortableTextBlock[] {

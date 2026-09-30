@@ -261,7 +261,7 @@ export function mergeEventLandingPageData(value?: Partial<EventLandingPageData> 
 
 export const defaultContactPageData: FormPageData = {
   variant: 'contact',
-  seoTitle: 'Contact Us - Found Search Marketing',
+  seoTitle: 'Contact Us | FoundSM',
   seoDescription: "Bring us your biggest challenge. We don't want to be your agency of record. We want to be your agency of results. Let's see what we can achieve together.",
   canonicalUrl: 'https://foundsm.com/contact-us/',
   heading: 'Bring Us Your Biggest Challenge.',
@@ -295,14 +295,14 @@ export const defaultNewsletterPageData: FormPageData = {
 };
 
 export const defaultTeamPageData: TeamPageData = {
-  seoTitle: 'Our Team | Found Search Marketing',
-  seoDescription: 'Meet the Found Search Marketing team — client-first strategists, analysts, and creatives who have powered enterprise growth for nearly two decades.',
+  seoTitle: 'Our Team | FoundSM',
+  seoDescription: 'Meet the FoundSM team — client-first strategists, analysts, and creatives who have powered enterprise growth for nearly two decades.',
   canonicalUrl: 'https://foundsm.com/team',
   hero: {
     heading: 'Together, We Solve.',
-    body: [block("In an industry that never stops evolving, Found Search Marketing stands out as an agency that knows exactly who we are. Grounded in a deep commitment to our clients, we combine precision with agility to thrive in a fast-moving world. We're proud cool nerds, energized by the pursuit of high-ceiling, complex problems that drive significant business impact.")],
+    body: [block("In an industry that never stops evolving, FoundSM stands out as an agency that knows exactly who we are. Grounded in a deep commitment to our clients, we combine precision with agility to thrive in a fast-moving world. We're proud cool nerds, energized by the pursuit of high-ceiling, complex problems that drive significant business impact.")],
     image: '/images/pages/team/tr-andy-ryan.webp',
-    imageAlt: 'Found Search Marketing team members collaborating',
+    imageAlt: 'FoundSM team members collaborating',
     cta: { label: 'Join Our Team', href: '/about-us/#careers' },
   },
   statement: {
@@ -353,13 +353,13 @@ export const defaultNotFoundPageData: NotFoundPageData = {
 };
 
 export const defaultApproachPageData: ApproachPageData = {
-  seoTitle: 'Our Proven Paid Media Approach | Found Search Marketing',
-  seoDescription: 'At Found Search Marketing, our proven paid media approach transforms complex data into actionable insights that fuel smarter strategy and measurable results.',
+  seoTitle: 'Our Proven Paid Media Approach | FoundSM',
+  seoDescription: 'At FoundSM, our proven paid media approach transforms complex data into actionable insights that fuel smarter strategy and measurable results.',
   canonicalUrl: 'https://foundsm.com/our-approach',
   hero: {
     heading: "It's Not What We Do.\nIt's How We Do It.",
     body: [
-      block('Found Search Marketing exists because we saw a need for a new kind of agency. One that not only had background in the industry with an expert understanding of paid media, but that could also serve as a true extension of client teams through creative problem solving and customized solutions.'),
+      block('FoundSM exists because we saw a need for a new kind of agency. One that not only had background in the industry with an expert understanding of paid media, but that could also serve as a true extension of client teams through creative problem solving and customized solutions.'),
       block("We've used that formula for nearly two decades to consistently build strategies and campaigns that convert, while driving maximum profitability for our clients."),
     ],
     imageAlt: '',
@@ -521,7 +521,7 @@ export const defaultEventLandingPageData: EventLandingPageData = {
     eyebrow: 'Upcoming Event',
     titleLines: ['Scale Smarter with', 'Paid Media'],
     accentLine: 'AI-Powered',
-    description: 'Join Found Search Marketing for an interactive session exploring how AI and automation are reshaping lead generation strategy across education, healthcare, and B2B verticals.',
+    description: 'Join FoundSM for an interactive session exploring how AI and automation are reshaping lead generation strategy across education, healthcare, and B2B verticals.',
     meta: [
       { icon: 'Date', label: 'Date', value: 'April 15, 2026' },
       { icon: 'Time', label: 'Time', value: '12:00 - 1:00 PM ET' },

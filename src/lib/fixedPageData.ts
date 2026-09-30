@@ -152,17 +152,17 @@ export function mergeCapabilityDetailPageData(
 }
 
 export const defaultAboutPageData: AboutPageData = {
-  seoTitle: 'About Found Search Marketing | An Enterprise Paid Media Agency',
-  seoDescription: 'Founded in 2006, Found Search Marketing helps enterprise brands achieve consistent, measurable growth through trusted partnerships and precision media execution.',
+  seoTitle: 'About FoundSM | An Enterprise Paid Media Agency',
+  seoDescription: 'Founded in 2006, FoundSM helps enterprise brands achieve consistent, measurable growth through trusted partnerships and precision media execution.',
   canonicalUrl: 'https://foundsm.com/about-us',
   hero: {
     heading: 'Built for Paid Media Performance',
     body: [
-      block('Found Search Marketing is a full-service data engineering agency that leverages advanced analytics to drive smart, paid media strategies. By integrating data-driven insights, strategy and paid media execution under one roof, we deliver customized solutions that generate high-intent leads and measurable results.'),
+      block('FoundSM is a full-service data engineering agency that leverages advanced analytics to drive smart, paid media strategies. By integrating data-driven insights, strategy and paid media execution under one roof, we deliver customized solutions that generate high-intent leads and measurable results.'),
       block("Our team values transparency, accountability, and innovative problem solving. That's why many of our clients have stuck with us for more than a decade."),
     ],
     image: '/images/pages/about-us/hero-about-1.webp',
-    imageAlt: 'Found Search Marketing team members',
+    imageAlt: 'FoundSM team members',
   },
   who: {
     eyebrow: 'EST. 2006',
@@ -208,7 +208,7 @@ export const defaultAboutPageData: AboutPageData = {
   team: {
     heading: 'Meet The Team',
     image: '/images/pages/about-us/about-team.webp',
-    imageAlt: 'The Found Search Marketing team',
+    imageAlt: 'The FoundSM team',
   },
   teamCta: {
     body: [
@@ -220,13 +220,13 @@ export const defaultAboutPageData: AboutPageData = {
 };
 
 export const defaultCapabilitiesPageData: CapabilitiesPageData = {
-  seoTitle: 'Capabilities | Found Search Marketing | Enterprise Paid Media Agency',
-  seoDescription: 'Found Search Marketing pairs deep channel expertise with advanced analytics and agile strategy — a growth system built around your business, not a service menu.',
+  seoTitle: 'Capabilities | FoundSM | Enterprise Paid Media Agency',
+  seoDescription: 'FoundSM pairs deep channel expertise with advanced analytics and agile strategy — a growth system built around your business, not a service menu.',
   canonicalUrl: 'https://foundsm.com/capabilities/',
   robots: 'index, follow',
   hero: {
     heading: 'Smart Data. Smarter Media. Scalable Growth.',
-    body: [block('Found Search Marketing is structured to be both strategic and agile, combining deep media channel expertise with expert talent and leading-edge tools.')],
+    body: [block('FoundSM is structured to be both strategic and agile, combining deep media channel expertise with expert talent and leading-edge tools.')],
     image: '/images/pages/capabilities/capi-eye.webp',
     imageAlt: 'Performance marketing strategy detail',
   },
@@ -238,7 +238,7 @@ export const defaultCapabilitiesPageData: CapabilitiesPageData = {
       block('We handle every aspect of your performance lead generation ecosystem, making sure strategy and execution are always aligned.'),
     ],
     image: '/images/pages/capabilities/capibilities-mary-jake.webp',
-    imageAlt: 'Found Search Marketing team members collaborating',
+    imageAlt: 'FoundSM team members collaborating',
   },
   workflow: {
     heading: 'How We Work',
@@ -259,7 +259,7 @@ export const defaultCapabilityDetailPages: Record<string, CapabilityDetailPageDa
     seoTitle: 'Data Activation | Found Search Marketing',
     seoDescription: 'Found Search Marketing brings your first-party customer data directly to the ad platforms where growth happens, creating a continuous feedback loop that improves targeting, reduces wasted spend, and scales qualified lead generation.',
     canonicalUrl: 'https://foundsm.com/capabilities/data-activation',
-    hero: { heading: 'Activate Your Customer Data To Actually Drive Revenue', body: [block("In today's AI marketing landscape, data is your most valuable asset yet many companies are not using it to its full potential. Found Search Marketing brings your first-party customer data directly to the ad platforms where growth happens, creating a continuous feedback loop that improves targeting, reduces wasted spend, and engineers revenue.")], image: '/images/pages/data-activation/kitchen-island_1250px.webp', imageAlt: 'Found Search Marketing team member in a meeting' },
+    hero: { heading: 'Activate Your Customer Data To Actually Drive Revenue', body: [block("In today's AI marketing landscape, data is your most valuable asset yet many companies are not using it to its full potential. FoundSM brings your first-party customer data directly to the ad platforms where growth happens, creating a continuous feedback loop that improves targeting, reduces wasted spend, and engineers revenue.")], image: '/images/pages/data-activation/kitchen-island_1250px.webp', imageAlt: 'Found Search Marketing team member in a meeting' },
     primaryCards: { title: "What we’ll do", cards: [
       { title: 'Connect your first party data to ad platforms' },
       { title: 'Transform your fragmented customer data into a single, actionable source that powers every campaign' },
@@ -316,7 +316,7 @@ export const defaultCapabilityDetailPages: Record<string, CapabilityDetailPageDa
     seoDescription: 'Paid search, social, display, and programmatic engineered as one system — Found blends your data with deep channel expertise to convert higher-quality leads.',
     canonicalUrl: 'https://foundsm.com/capabilities/paid-media',
     hero: { heading: 'Achieve the Perfect Mix of Paid Media', body: [block('Like a great cup of coffee, creating the ideal blend of paid media strategy requires true expertise. Our ability to engineer paid media solutions that convert higher-quality leads, eliminate waste, and drive consistent revenue growth is unmatched.'), block('Blending your data with our comprehensive understanding of the most effective paid media strategy delivers efficiency and continually improves your business outcomes.')], image: '/images/pages/paid-media/coffee-blend.webp', imageAlt: 'Coffee beans blended with Found Search Marketing paid media visuals' },
-    split: { heading: 'How We Work', body: [block("At Found Search Marketing, Paid Media is far more than campaign management. It's the strategic core of an integrated system that works in lockstep with Data Intelligence, Landing Pages, and Performance Creative. Together, this ecosystem informs bid strategies, engineers audience models, drives creative and landing page testing, and refines channel mix to optimize marketing spend and drive profitable growth.")], image: '/images/pages/paid-media/paid-media-ecosystem.webp', imageAlt: 'Found Search Marketing paid media ecosystem diagram' },
+    split: { heading: 'How We Work', body: [block("At FoundSM, Paid Media is far more than campaign management. It's the strategic core of an integrated system that works in lockstep with Data Intelligence, Landing Pages, and Performance Creative. Together, this ecosystem informs bid strategies, engineers audience models, drives creative and landing page testing, and refines channel mix to optimize marketing spend and drive profitable growth.")], image: '/images/pages/paid-media/paid-media-ecosystem.webp', imageAlt: 'Found Search Marketing paid media ecosystem diagram' },
     featureTabs: { idPrefix: 'paid-media-capabilities', tabs: [
       { title: 'Platform Mastery and Experimentation', body: [block("We don't just do what's worked in the past. Our team is always learning and testing every ad platform's latest features to find the best use cases.")], icon: '/images/pages/paid-media/tab-icon-platform.png', image: '/images/pages/paid-media/tab-art-platform.webp', imageAlt: 'Platform mastery and experimentation illustration' },
       { title: 'Data-Driven Bid Strategies', body: [block('From target-ROAS to Advantage+ bidding, strategies are intentionally crafted based on your specific business goals to balance volume with efficiency.')], icon: '/images/pages/paid-media/tab-icon-bid.png', image: '/images/pages/paid-media/tab-art-bid.webp', imageAlt: 'Data-driven bid strategy illustration' },

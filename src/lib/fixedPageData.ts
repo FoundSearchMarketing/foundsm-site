@@ -172,7 +172,7 @@ export const defaultAboutPageData: AboutPageData = {
     ],
     subheading: "We're Also:",
     image: '/images/pages/about-us/whoweare.webp',
-    imageAlt: 'FoundSM team members collaborating',
+    imageAlt: 'Found Search Marketing team members collaborating',
     credentials: [
       { image: '/images/pages/about-us/google-partner.png', alt: 'Google Partner badge', text: 'Certified in many Google marketing products' },
       { image: '/images/pages/about-us/ibj.png', alt: 'Indianapolis Business Journal Top 25 List 2026 badge', text: 'Named one of the largest Marketing Firms in Indianapolis' },
@@ -202,7 +202,7 @@ export const defaultAboutPageData: AboutPageData = {
     heading: 'Our Proven Approach',
     body: [block("First-party data. Custom playbooks. Automation. Innovative bid strategies. Bespoke dashboards. Our approach combines all of these things and more to create a self-reinforcing optimization cycle that gives us the complete picture of your paid media ecosystem. It's all about turning your data into better insights - and more clicks into more customers.")],
     image: '/images/pages/about-us/about-approach.webp',
-    imageAlt: 'FoundSM planning process',
+    imageAlt: 'Found Search Marketing planning process',
     cta: { label: 'See What Makes Us Unique', href: '/our-approach/' },
   },
   team: {

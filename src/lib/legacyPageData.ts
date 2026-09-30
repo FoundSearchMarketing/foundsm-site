@@ -756,7 +756,7 @@ function buildDefaultLegacyPageData(definition: LegacyPageDefinition): LegacyPag
         eyebrow: 'Authors',
         heading: 'From Google Roots\nto Agile Results',
         subheading: heroBody,
-        imageAlt: 'FoundSM team member',
+        imageAlt: 'Found Search Marketing team member',
       },
       body: [block(introBody)],
       listing: {

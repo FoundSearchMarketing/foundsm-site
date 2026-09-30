@@ -53,7 +53,7 @@ const tokenRules = {
     columns: { values: [2, 3, 4], defaultValue: 3 },
     theme: { values: ['light', 'muted', 'dark'], defaultValue: 'light' },
     variant: {
-      values: ['standard', 'icon', 'numbered', 'credential', 'topic', 'benefit'],
+      values: ['standard', 'icon', 'numbered', 'credential', 'topic', 'benefit', 'event'],
       defaultValue: 'standard',
     },
     density: { values: ['compact', 'standard'], defaultValue: 'standard' },

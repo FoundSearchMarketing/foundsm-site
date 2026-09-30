@@ -51,6 +51,8 @@ export default defineType({
     defineField({
       name: 'variant',
       title: 'Variant',
+      description:
+        'Event lists one dated card per row. Each card\'s Meta becomes its date block, written as month · day · detail (for example NOV · 6 · 9:30 AM ET).',
       type: 'string',
       options: {
         list: [
@@ -60,6 +62,7 @@ export default defineType({
           { title: 'Credential', value: 'credential' },
           { title: 'Topic', value: 'topic' },
           { title: 'Benefit', value: 'benefit' },
+          { title: 'Event', value: 'event' },
         ],
       },
       initialValue: 'standard',

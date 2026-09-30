@@ -6,8 +6,8 @@ import { mergeHomePageData } from '../lib/homePageData';
 
 const homePageData = await sanityClient.fetch(homePageQuery).catch(() => null);
 const homePage = mergeHomePageData(homePageData);
-const title = homePage.seoTitle || 'Found Search Marketing | An Enterprise Paid Media Agency';
-const description = homePage.seoDescription || 'Trusted by leading brands, Found Search Marketing is an enterprise paid media agency delivering clarity, efficiency, and performance through advanced data-driven solutions.';
+const title = homePage.seoTitle || 'FoundSM | An Enterprise Paid Media Agency';
+const description = homePage.seoDescription || 'Trusted by leading brands, FoundSM is an enterprise paid media agency delivering clarity, efficiency, and performance through advanced data-driven solutions.';
 const canonical = homePage.canonicalUrl || 'https://foundsm.com/';
 
 const schema = {
@@ -16,6 +16,7 @@ const schema = {
     {
       "@type": "Organization",
       "name": "Found Search Marketing",
+      "alternateName": "FoundSM",
       "url": "https://foundsm.com",
       "logo": "https://foundsm.com/images/logo.svg",
       "description": "An enterprise paid media agency that drives measurable growth.",

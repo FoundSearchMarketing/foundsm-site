@@ -2,7 +2,10 @@ import manifest from './seoManifest.generated.json';
 import { normalizeLegacyAssetUrl } from './legacyAssets';
 
 export const SITE_URL = 'https://foundsm.com';
-export const SITE_NAME = 'Found Search Marketing';
+export const SITE_NAME = 'FoundSM';
+// Legal entity name: kept for Organization/publisher structured data so the entity still matches
+// the Google Business Profile and LinkedIn page.
+export const ORGANIZATION_NAME = 'Found Search Marketing';
 export const DEFAULT_ROBOTS = 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
 const DEFAULT_OG_IMAGE = 'https://foundsm.com/images/og-image-1200x630.jpg';
 
@@ -81,11 +84,11 @@ type SeoCopyOverride = Pick<SeoInput, 'title' | 'description'>;
 
 export const SEO_COPY_OVERRIDES: Record<string, SeoCopyOverride> = {
   '/about-us/': {
-    title: 'About Found Search Marketing | Paid Media Agency',
+    title: 'About FoundSM | Paid Media Agency',
     description: 'Founded in 2006, Found helps enterprise brands drive measurable growth through trusted partnerships and precise paid media execution.',
   },
   '/capabilities/': {
-    title: 'Capabilities | Found Search Marketing',
+    title: 'Capabilities | FoundSM',
   },
   '/capabilities/data-activation/': {
     description: 'Activate first-party customer data across ad platforms to improve targeting, reduce wasted spend, and scale qualified lead generation.',
@@ -359,13 +362,15 @@ function createDefaultSchema(seo: {
       '@id': websiteId,
       url: `${SITE_URL}/`,
       name: SITE_NAME,
+      alternateName: ORGANIZATION_NAME,
       publisher: { '@id': organizationId },
       inLanguage: 'en-US',
     },
     {
       '@type': 'Organization',
       '@id': organizationId,
-      name: SITE_NAME,
+      name: ORGANIZATION_NAME,
+      alternateName: SITE_NAME,
       url: `${SITE_URL}/`,
       logo: {
         '@type': 'ImageObject',

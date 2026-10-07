@@ -183,7 +183,7 @@ export const homeV2Content = {
   },
   work: {
     logosHeading: 'Trusted by leading brands',
-    eyebrow: 'Work · Home services',
+    eyebrow: 'Work',
     heading: '46% higher ROAS in 60 days.',
     body:
       'Same budget, rebuilt account, verified from day one. The problem, what we changed and what improved, with the numbers attached. More case stories follow as they clear approval.',

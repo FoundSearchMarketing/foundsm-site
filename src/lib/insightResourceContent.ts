@@ -184,7 +184,7 @@ const blogCards: InsightResourceCard[] = [
 const webinarText = {
   paragraphs: [
     'Data privacy regulations are tightening. Browsers are limiting tracking. Ad platforms are evolving fast, and machine learning now depends on the quality of the data you feed it.',
-    'In this webinar, industry experts at Found Search Marketing and InfoTrust take a forward-looking, practical look at how these changes are impacting paid media performance today, and what media teams should be doing now to future-proof their data architecture, measurement and ROI.',
+    'In this webinar, industry experts at FoundSM and InfoTrust take a forward-looking, practical look at how these changes are impacting paid media performance today, and what media teams should be doing now to future-proof their data architecture, measurement and ROI.',
     'You’ll learn how to move beyond fragile tracking setups toward a more resilient, privacy-first foundation that supports better optimization, attribution, and long-term growth.',
   ],
   takeaways: [

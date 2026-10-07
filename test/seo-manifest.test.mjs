@@ -108,7 +108,7 @@ test('SEO copy overrides cover dashboard title and description findings', () => 
   const source = readFileSync(new URL('../src/lib/seo.ts', import.meta.url), 'utf8');
 
   assert.match(source, /SEO_COPY_OVERRIDES/);
-  assert.match(source, /About Found Search Marketing \| Paid Media Agency/);
+  assert.match(source, /About FoundSM \| Paid Media Agency/);
   assert.match(source, /Activate first-party customer data across ad platforms/);
   assert.match(source, /Unify data across platforms, APIs, and teams/);
   assert.match(source, /Learn how first-party data can strengthen measurement/);

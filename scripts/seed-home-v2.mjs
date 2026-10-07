@@ -129,7 +129,6 @@ const set = compact({
     heading: content.loop.heading,
     intro: content.loop.intro,
     stages: content.loop.stages.map(keyed('stage')),
-    strapline: content.loop.strapline,
   },
   ai: {
     eyebrow: content.ai.eyebrow,

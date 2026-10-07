@@ -461,31 +461,16 @@ a:hover > .home2-more {
   gap: 2.5rem;
 }
 
-/* Heading on the left with the AI strapline beside it on the heading's own
-   row, bottoms aligned, and the intro underneath: the same pairing as the
-   AI section that follows, where the intro sits beside the heading. */
+/* Heading on the left, intro on the right with bottoms aligned: the same
+   head layout as the AI section that follows. */
 .home2-loop__head {
   display: grid;
-  grid-template-areas:
-    'title'
-    'intro'
-    'strap';
   align-items: end;
-  gap: var(--h2-stack-gap) 4rem;
-}
-
-.home2-loop__title {
-  grid-area: title;
+  gap: 1.5rem 4rem;
 }
 
 .home2-loop__intro {
-  grid-area: intro;
-  max-width: 45rem;
-}
-
-.home2-loop__strapline {
-  grid-area: strap;
-  max-width: 26ch;
+  max-width: 29rem;
 }
 
 .home2-loop__stages {
@@ -526,9 +511,6 @@ a:hover > .home2-more {
 @media (min-width: 900px) {
   .home2-loop__head {
     grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-    grid-template-areas:
-      'title strap'
-      'intro .';
   }
 }
 

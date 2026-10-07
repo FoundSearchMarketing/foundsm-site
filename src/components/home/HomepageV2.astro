@@ -65,8 +65,21 @@ const proof = [
         </div>
         <div class="home2-hero__media">
           {heroVideo ? (
-            <div class="home2-video">
-              <video src={heroVideo} poster={content.hero.videoPoster || undefined} autoplay muted loop playsinline preload="metadata"></video>
+            <div class="home2-video home2-video--live">
+              <video
+                src={heroVideo}
+                poster={content.hero.videoPoster || undefined}
+                aria-label={content.hero.videoLabel}
+                autoplay
+                muted
+                loop
+                playsinline
+                preload="metadata"
+                data-home2-hero-video
+              ></video>
+              {content.hero.videoPoster && (
+                <img class="home2-video__poster" src={content.hero.videoPoster} alt={content.hero.videoLabel} width="1280" height="720" loading="eager" />
+              )}
             </div>
           ) : (
             <Fragment>
@@ -589,10 +602,28 @@ const proof = [
     });
   };
 
+  /* Hero film: browsers pause muted autoplay while the tab is hidden; nudge
+     it back when the page is visible again. Reduced motion hides it in CSS. */
+  const initHeroVideo = (root: HTMLElement) => {
+    const video = root.querySelector<HTMLVideoElement>('[data-home2-hero-video]');
+    if (!video) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      video.removeAttribute('autoplay');
+      video.pause();
+      return;
+    }
+    const resume = () => {
+      if (document.visibilityState === 'visible' && video.paused) video.play().catch(() => {});
+    };
+    document.addEventListener('visibilitychange', resume);
+    resume();
+  };
+
   const initHomepage = () => {
     document.querySelectorAll<HTMLElement>('[data-home2]').forEach((root) => {
       if (root.dataset.ready === 'true') return;
       root.dataset.ready = 'true';
+      initHeroVideo(root);
       initRoas(root);
       initContact(root);
       initBrief(root);

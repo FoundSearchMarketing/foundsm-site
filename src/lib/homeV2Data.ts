@@ -52,9 +52,11 @@ export const homeV2Content = {
     body:
       'FoundSM is a data engineering firm for paid media. We connect your signals, model the demand, activate the media and measure what moved. Accountable through proof, not hours.',
     cta: { label: 'Talk with us', href: '#home2-talk' },
-    /** Set when the hero film is produced; until then the slot shows a placeholder. */
-    videoUrl: '',
-    videoPoster: '',
+    /** "The Found Loop" site cut (silent, seamless loop). Empty strings fall back to the placeholder panel. */
+    videoUrl: 'https://cdn.sanity.io/files/vzneqxsx/staging/ce90c38a8670ddc1da91443d36eac6e77df41b2a.mp4',
+    videoPoster: 'https://cdn.sanity.io/images/vzneqxsx/staging/01fc386acea94a35ca848c0be1da7633a0f85433-1280x720.jpg',
+    videoLabel:
+      'The Found Loop: connect every signal, model decisions before dollars, activate media on the model, measure the result, then run it again.',
     placeholderLabel: 'Video placeholder · 16:9',
     placeholderNote: 'Hero video in production.',
   },

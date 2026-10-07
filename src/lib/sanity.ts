@@ -222,6 +222,14 @@ export const homePageQuery = `*[_type == "homePage"][0] {
   }
 }`;
 
+/* Published Found Signals for the homepage Research section (drafts never
+   reach the build, so the page falls back to its approved placeholders). */
+export const homeSignalsQuery = `*[_type == "blogPost" && references("category-found-signals") && defined(slug.current) && defined(publishedAt) && publishedAt <= now()] | order(publishedAt desc)[0...3] {
+  title,
+  "slug": slug.current,
+  publishedAt
+}`;
+
 export const aboutPageQuery = `*[_id == "aboutPage"][0] {
   ...,
   hero { ${editableMediaProjection} },

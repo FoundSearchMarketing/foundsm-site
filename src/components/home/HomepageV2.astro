@@ -1,0 +1,608 @@
+---
+/*
+  Homepage built on the October 2026 review decisions: hero, numbers band,
+  practices, The Found Loop, AI inside the Loop, Work (logos, the 46% case
+  story with its motion graphic, the client quote), How we engage, the team,
+  Research (The Found Brief + Found Signals), partnerships & recognition and
+  the contact form. Copy lives in src/lib/homeV2Data.ts; logos, testimonial,
+  headline numbers and the team image come from the Sanity `homePage` doc.
+*/
+import '../../styles/homepage-v2.css';
+import { mergeHomePageData, type HomePageData } from '../../lib/homePageData';
+import {
+  buildRoasDots,
+  formatMetric,
+  homeV2Content as content,
+  homeV2Forms,
+  selectClientLogos,
+  selectPartnerLogos,
+  type HomeV2Signal,
+} from '../../lib/homeV2Data';
+
+interface Props {
+  data?: Partial<HomePageData> | null;
+  /** Published Found Signals, newest first. Falls back to the approved drafts when empty. */
+  signals?: HomeV2Signal[];
+}
+
+const { data = null, signals = [] } = Astro.props;
+const sanity = mergeHomePageData(data);
+
+const clientLogos = selectClientLogos(sanity.clientLogos.logos);
+const partnerLogos = selectPartnerLogos(sanity.partners.logos);
+const testimonial = sanity.metrics.testimonial;
+const testimonialRole = [testimonial.authorTitle, testimonial.authorCompany].filter(Boolean).join(', ');
+const teamImage = sanity.intro.image;
+const signalItems = signals.length > 0 ? signals : content.research.signals.drafts;
+const roasDots = buildRoasDots(11);
+const heroVideo = content.hero.videoUrl.trim();
+
+const proof = [
+  { icon: 'chart', value: formatMetric(sanity.metrics.spend), label: content.proof.spendLabel },
+  { icon: 'people', value: formatMetric(sanity.metrics.leads), label: content.proof.leadsLabel },
+  { icon: 'clock', value: `${formatMetric(sanity.metrics.experience)} years`, label: content.proof.experienceLabel },
+];
+---
+
+<div class="home2" data-home2>
+  <section class="home2-hero" aria-labelledby="home2-hero-title">
+    <div class="home2-shell home2-hero__inner">
+      <p class="home2-eyebrow">{content.hero.eyebrow}</p>
+      <div class="home2-hero__grid">
+        <div class="home2-hero__copy">
+          <h1 id="home2-hero-title">
+            {content.hero.headlineLines.map((line, index) => (
+              <Fragment>
+                {line}
+                {index < content.hero.headlineLines.length - 1 && <br />}
+              </Fragment>
+            ))}
+          </h1>
+          <p class="home2-hero__body">{content.hero.body}</p>
+          <div class="home2-hero__actions">
+            <a class="btn btn--primary" href={content.hero.cta.href}>{content.hero.cta.label}</a>
+          </div>
+        </div>
+        <div class="home2-hero__media">
+          {heroVideo ? (
+            <div class="home2-video">
+              <video src={heroVideo} poster={content.hero.videoPoster || undefined} autoplay muted loop playsinline preload="metadata"></video>
+            </div>
+          ) : (
+            <Fragment>
+              <div class="home2-video" aria-hidden="true">
+                <span class="home2-video__play">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+                </span>
+                <span class="home2-video__label">{content.hero.placeholderLabel}</span>
+              </div>
+              <p class="home2-hero__note">{content.hero.placeholderNote}</p>
+            </Fragment>
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="home2-proof" aria-label="FoundSM at a glance">
+    <div class="home2-shell home2-proof__inner">
+      {proof.map((item) => (
+        <div class="home2-proof__item">
+          <span class="home2-proof__icon" aria-hidden="true">
+            {item.icon === 'chart' && (
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19h16" /><path d="M6 15l4-5 4 3 5-7" /></svg>
+            )}
+            {item.icon === 'people' && (
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5" /><path d="M2.5 19c0-3.3 2.9-5.5 6.5-5.5s6.5 2.2 6.5 5.5" /><path d="M16 5a3 3 0 0 1 0 6" /><path d="M18 13.5c2.2.6 3.5 2.3 3.5 4.5" /></svg>
+            )}
+            {item.icon === 'clock' && (
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5" /><path d="M12 7v5l3.5 2" /></svg>
+            )}
+          </span>
+          <div>
+            <p class="home2-display home2-proof__value">{item.value}</p>
+            <p class="home2-proof__label">{item.label}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="home2-section home2-practices" id="practices" aria-labelledby="home2-practices-title">
+    <div class="home2-shell home2-practices__inner">
+      <div class="home2-head">
+        <p class="home2-eyebrow">{content.practices.eyebrow}</p>
+        <h2 id="home2-practices-title">{content.practices.heading}</h2>
+        <p>{content.practices.intro}</p>
+      </div>
+      <div class="home2-practices__grid">
+        {content.practices.items.map((practice) => (
+          <a class="home2-card" href={practice.cta.href}>
+            <img
+              src={practice.image.src}
+              alt={practice.image.alt}
+              width={practice.image.width}
+              height={practice.image.height}
+              style={practice.image.position ? `object-position: ${practice.image.position}` : undefined}
+              loading="lazy"
+            />
+            <div class="home2-card__body">
+              <h3 class="home2-card__title">{practice.title}</h3>
+              <p class="home2-card__text">{practice.body}</p>
+              <span class="home2-more">{practice.cta.label}</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="home2-section home2-section--paper home2-loop" id="loop" aria-labelledby="home2-loop-title">
+    <div class="home2-shell home2-loop__inner">
+      <div class="home2-head">
+        <p class="home2-eyebrow">{content.loop.eyebrow}</p>
+        <h2 id="home2-loop-title">{content.loop.heading}</h2>
+        <p>{content.loop.intro}</p>
+      </div>
+      <ol class="home2-loop__stages">
+        {content.loop.stages.map((stage) => (
+          <li class="home2-stage">
+            <span class="home2-display home2-stage__number" aria-hidden="true">{stage.number}</span>
+            <h3>{stage.title}</h3>
+            <p>{stage.body}</p>
+          </li>
+        ))}
+      </ol>
+      <p class="home2-loop__strapline">{content.loop.strapline}</p>
+    </div>
+  </section>
+
+  <section class="home2-section home2-section--dark home2-ai" id="ai" aria-labelledby="home2-ai-title">
+    <div class="home2-shell home2-ai__inner">
+      <div class="home2-ai__head">
+        <div class="home2-head">
+          <p class="home2-eyebrow home2-eyebrow--light">{content.ai.eyebrow}</p>
+          <h2 id="home2-ai-title">{content.ai.heading}</h2>
+        </div>
+        <p class="home2-ai__intro">{content.ai.intro}</p>
+      </div>
+      <div class="home2-ai__columns">
+        {content.ai.columns.map((column) => (
+          <div class="home2-ai__col">
+            <h3>{column.title}</h3>
+            <p>{column.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="home2-section home2-work" id="work" aria-labelledby="home2-work-title">
+    <div class="home2-shell home2-work__inner">
+      {clientLogos.length > 0 && (
+        <div class="home2-logos">
+          <h2 id="home2-logos-title">{content.work.logosHeading}</h2>
+          <div class="home2-marquee" aria-label="Client logos">
+            <div class="home2-marquee__track">
+              {[...clientLogos, ...clientLogos].map((logo, index) => (
+                <figure class="home2-marquee__item" aria-hidden={index >= clientLogos.length ? 'true' : undefined}>
+                  <img src={logo.src} alt={index >= clientLogos.length ? '' : logo.alt} width={logo.width} height={logo.height} loading="lazy" />
+                </figure>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div class="home2-case">
+        <a class="home2-case__story" href={content.work.cta.href}>
+          <div class="home2-case__copy">
+            <p class="home2-eyebrow">{content.work.eyebrow}</p>
+            <h2 id="home2-work-title">{content.work.heading}</h2>
+            <p>{content.work.body}</p>
+            <span class="home2-more">{content.work.cta.label}</span>
+          </div>
+          <div class="home2-case__visual">
+            <div class="rx" data-home2-roas aria-hidden="true">
+              <div class="rx-stage">
+                <span class="rx-eyebrow">{content.work.chart.eyebrow}</span>
+                <span class="rx-key">{content.work.chart.key}</span>
+                <span class="rx-axis"></span>
+                <span class="rx-ceil"></span>
+                {roasDots.map((dot) => (
+                  <span class={dot.className} style={dot.style}></span>
+                ))}
+                <span class="rx-bracket"></span>
+                <span class="rx-num">+<span class="rx-count"></span>%</span>
+                <span class="rx-lbl rx-lbl--0">{content.work.chart.startLabel}</span>
+                <span class="rx-lbl rx-lbl--60">{content.work.chart.endLabel}</span>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        {testimonial.quote && (
+          <figure class="home2-quote">
+            <span class="home2-quote__disc" aria-hidden="true"></span>
+            <span class="home2-quote__ring" aria-hidden="true"></span>
+            <span class="home2-quote__mark" aria-hidden="true">&ldquo;</span>
+            <blockquote>&ldquo;{testimonial.quote}&rdquo;</blockquote>
+            <figcaption>
+              {testimonial.authorName && <strong>{testimonial.authorName}</strong>}
+              {testimonialRole && (
+                <Fragment>
+                  <br />
+                  {testimonialRole}
+                </Fragment>
+              )}
+            </figcaption>
+          </figure>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <section class="home2-section home2-section--paper home2-engage" id="engage" aria-labelledby="home2-engage-title">
+    <div class="home2-shell home2-engage__inner">
+      <div class="home2-engage__copy">
+        <p class="home2-eyebrow">{content.engage.eyebrow}</p>
+        <h2 id="home2-engage-title">{content.engage.heading}</h2>
+        <p class="home2-engage__outro">{content.engage.intro}</p>
+        <div class="home2-engage__tiles">
+          {content.engage.tiles.map((tile) => (
+            <div class="home2-tile">
+              <strong>{tile.title}</strong>
+              <p>{tile.body}</p>
+            </div>
+          ))}
+        </div>
+        <p class="home2-engage__outro">{content.engage.outro}</p>
+        <a class="btn btn--primary" href={content.engage.cta.href}>{content.engage.cta.label}</a>
+      </div>
+      <aside class="home2-panel" aria-label={content.engage.existing.eyebrow}>
+        <div class="home2-panel__copy">
+          <p class="home2-eyebrow home2-eyebrow--light">{content.engage.existing.eyebrow}</p>
+          <p class="home2-display home2-panel__title">{content.engage.existing.heading}</p>
+          <p>{content.engage.existing.body}</p>
+        </div>
+        <a class="home2-more home2-more--light" href={content.engage.existing.cta.href}>{content.engage.existing.cta.label}</a>
+      </aside>
+    </div>
+  </section>
+
+  <section class="home2-section home2-team" id="team" aria-labelledby="home2-team-title">
+    <div class="home2-shell home2-team__inner">
+      <div class="home2-team__copy">
+        <p class="home2-eyebrow">{content.team.eyebrow}</p>
+        <h2 id="home2-team-title">{content.team.heading}</h2>
+        <p class="home2-team__lead">{content.team.lead}</p>
+        <p class="home2-team__body">{content.team.body}</p>
+        <a class="btn btn--outline" href={content.team.cta.href}>{content.team.cta.label}</a>
+      </div>
+      {teamImage && (
+        <img class="home2-team__image" src={teamImage} alt={content.team.imageAlt} width="742" height="739" loading="lazy" />
+      )}
+    </div>
+  </section>
+
+  <section class="home2-section home2-section--dark home2-research" id="research" aria-labelledby="home2-brief-title">
+    <div class="home2-shell home2-research__inner">
+      <div class="home2-research__col">
+        <p class="home2-eyebrow home2-eyebrow--light">{content.research.eyebrow}</p>
+        <h2 id="home2-brief-title">{content.research.brief.heading}</h2>
+        <p class="home2-research__intro">{content.research.brief.intro}</p>
+        <a class="home2-brief" href={content.research.brief.cta.href}>
+          <span class="home2-brief__issue">{content.research.brief.issueLabel}</span>
+          <span class="home2-display home2-brief__title">{content.research.brief.title}</span>
+          <p class="home2-brief__dek">{content.research.brief.dek}</p>
+          <ul class="home2-brief__contents">
+            <li class="home2-brief__contents-heading">{content.research.brief.contentsHeading}</li>
+            {content.research.brief.contents.map((item) => <li>{item}</li>)}
+          </ul>
+          <span class="home2-more home2-more--light">{content.research.brief.cta.label}</span>
+        </a>
+        <form
+          class="home2-subscribe"
+          method="post"
+          action={content.research.brief.subscribeFallback.href}
+          data-home2-brief
+          data-portal={homeV2Forms.brief.portalId}
+          data-form={homeV2Forms.brief.formId}
+          data-success={content.research.brief.subscribeSuccess}
+          data-error={content.research.brief.subscribeError}
+          data-fallback-href={content.research.brief.subscribeFallback.href}
+          data-fallback-label={content.research.brief.subscribeFallback.label}
+        >
+          <div class="home2-subscribe__field">
+            <label for="home2-brief-email">{content.research.brief.subscribeLabel}</label>
+            <input class="home2-input" id="home2-brief-email" name="email" type="email" autocomplete="email" placeholder="you@company.com" required />
+          </div>
+          <button class="btn btn--primary" type="submit">{content.research.brief.subscribeButton}</button>
+          <p class="home2-form__status home2-form__status--light" role="status" aria-live="polite" hidden></p>
+        </form>
+      </div>
+
+      <div class="home2-research__col">
+        <h2 class="home2-eyebrow home2-eyebrow--light" id="home2-signals-title">{content.research.signals.heading}</h2>
+        <p class="home2-research__intro">{content.research.signals.intro}</p>
+        <ul class="home2-signals" aria-labelledby="home2-signals-title">
+          {signalItems.map((signal) => (
+            <li>
+              <a href={signal.href}>
+                <span class="home2-signals__label">{signal.label}</span>
+                <span class="home2-signals__title">{signal.title}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+        <a class="home2-more home2-more--light" href={content.research.signals.allLink.href}>{content.research.signals.allLink.label}</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="home2-recognition" id="recognition" aria-labelledby="home2-recognition-title">
+    <div class="home2-shell home2-recognition__inner">
+      <div class="home2-recognition__copy">
+        <p class="home2-eyebrow">{content.recognition.eyebrow}</p>
+        <h2 id="home2-recognition-title">{content.recognition.heading}</h2>
+        <p>{content.recognition.intro}</p>
+      </div>
+      <div class="home2-recognition__proof">
+        {partnerLogos.length > 0 && (
+          <div class="home2-partners" aria-label="Partner certifications">
+            {partnerLogos.map((logo) => (
+              <img src={logo.src} alt={logo.alt} width={logo.width} height={logo.height} loading="lazy" />
+            ))}
+          </div>
+        )}
+        <div class="home2-badges">
+          {content.recognition.cards.map((card) => (
+            <div class="home2-badge">
+              <span class="home2-badge__label">{card.title}</span>
+              <span class="home2-badge__text">{card.body}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="home2-section home2-section--paper home2-talk" id="home2-talk" aria-labelledby="home2-talk-title">
+    <div class="home2-shell home2-talk__inner">
+      <div class="home2-talk__copy">
+        <p class="home2-eyebrow">{content.talk.eyebrow}</p>
+        <h2 id="home2-talk-title">{content.talk.heading}</h2>
+        <p>{content.talk.intro}</p>
+      </div>
+      <form
+        class="home2-form"
+        method="post"
+        action={homeV2Forms.contact.action}
+        data-home2-contact
+        data-success={content.talk.success}
+        data-error={content.talk.error}
+        data-fallback-href={content.talk.fallback.href}
+        data-fallback-label={content.talk.fallback.label}
+      >
+        {Object.entries(homeV2Forms.contact.hidden).map(([name, value]) => (
+          <input type="hidden" name={name} value={value} />
+        ))}
+        <input type="hidden" name="firstname" value="" />
+        <input type="hidden" name="lastname" value="" />
+        <div class="home2-form__fields">
+          <div class="home2-form__field">
+            <label for="home2-talk-name">{content.talk.fields.name}</label>
+            <input id="home2-talk-name" name="fullname" type="text" autocomplete="name" required />
+          </div>
+          <div class="home2-form__field">
+            <label for="home2-talk-email">{content.talk.fields.email}</label>
+            <input id="home2-talk-email" name="email" type="email" autocomplete="email" required />
+          </div>
+          <div class="home2-form__field home2-form__field--wide">
+            <label for="home2-talk-notes">{content.talk.fields.notes}</label>
+            <textarea id="home2-talk-notes" name={homeV2Forms.contact.messageField} rows="3"></textarea>
+          </div>
+          <div class="home2-form__actions">
+            <button class="btn btn--primary" type="submit">{content.talk.button}</button>
+          </div>
+        </div>
+        <p class="home2-form__status" role="status" aria-live="polite" hidden></p>
+      </form>
+    </div>
+  </section>
+</div>
+
+<script>
+  type FormState = 'idle' | 'sending' | 'sent' | 'error';
+
+  const showStatus = (form: HTMLFormElement, message: string, fallback?: { href: string; label: string }) => {
+    const status = form.querySelector<HTMLElement>('.home2-form__status');
+    if (!status) return;
+    status.replaceChildren();
+    status.append(document.createTextNode(message));
+    if (fallback) {
+      status.append(document.createTextNode(' '));
+      const link = document.createElement('a');
+      link.href = fallback.href;
+      link.textContent = fallback.label;
+      status.append(link);
+    }
+    status.hidden = false;
+  };
+
+  const setState = (form: HTMLFormElement, state: FormState) => {
+    form.dataset.state = state;
+  };
+
+  const fallbackFor = (form: HTMLFormElement) =>
+    form.dataset.fallbackHref && form.dataset.fallbackLabel
+      ? { href: form.dataset.fallbackHref, label: form.dataset.fallbackLabel }
+      : undefined;
+
+  /* Work card: 'rest' shows the finished chart, 'armed' holds frame 0 while
+     off screen, 'play' runs the sequence once the panel is 55% visible. */
+  const initRoas = (root: HTMLElement) => {
+    const panel = root.querySelector<HTMLElement>('[data-home2-roas]');
+    if (!panel) return;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce || typeof IntersectionObserver !== 'function') return;
+
+    let state: 'rest' | 'armed' | 'play' = 'rest';
+    let seen = false;
+    let raf = 0;
+    let done = 0;
+
+    const set = (next: typeof state) => {
+      state = next;
+      panel.classList.toggle('is-armed', next === 'armed');
+      panel.classList.toggle('is-play', next === 'play');
+    };
+    const arm = () => {
+      window.clearTimeout(done);
+      window.cancelAnimationFrame(raf);
+      if (state === 'play') {
+        // One frame without animations so the browser drops them, then re-arm from frame 0.
+        set('rest');
+        raf = window.requestAnimationFrame(() => {
+          raf = window.requestAnimationFrame(() => set('armed'));
+        });
+      } else if (state === 'rest') {
+        set('armed');
+      }
+    };
+    const play = () => {
+      window.cancelAnimationFrame(raf);
+      window.clearTimeout(done);
+      if (state === 'play') {
+        set('rest');
+        void panel.offsetWidth;
+      }
+      set('play');
+      done = window.setTimeout(() => set('rest'), 5900);
+    };
+
+    new IntersectionObserver(
+      (entries) => {
+        const entry = entries[entries.length - 1];
+        if (entry.intersectionRatio >= 0.55) {
+          if (!seen) {
+            seen = true;
+            play();
+          }
+        } else if (!entry.isIntersecting || !seen) {
+          seen = false;
+          arm();
+        }
+      },
+      { threshold: [0, 0.55] },
+    ).observe(panel);
+  };
+
+  /* Talk with us: posts to the ActiveCampaign contact form the way its embed
+     does (multipart POST, JSON reply), so no-JS visitors still get a working
+     plain POST. The single "Full name" field is split for AC's first/last. */
+  const initContact = (root: HTMLElement) => {
+    const form = root.querySelector<HTMLFormElement>('[data-home2-contact]');
+    if (!form) return;
+    const fullName = form.elements.namedItem('fullname') as HTMLInputElement | null;
+    const firstName = form.elements.namedItem('firstname') as HTMLInputElement | null;
+    const lastName = form.elements.namedItem('lastname') as HTMLInputElement | null;
+    const fields = form.querySelector<HTMLElement>('.home2-form__fields');
+
+    const nameParts = () => (fullName?.value.trim() || '').split(/\s+/).filter(Boolean);
+    const validateName = () => {
+      if (!fullName) return;
+      fullName.setCustomValidity(fullName.value.trim() && nameParts().length < 2 ? 'Please enter your first and last name.' : '');
+    };
+    fullName?.addEventListener('input', validateName);
+    fullName?.addEventListener('blur', validateName);
+
+    form.addEventListener('submit', async (event) => {
+      validateName();
+      if (!form.checkValidity()) return;
+      event.preventDefault();
+
+      const parts = nameParts();
+      if (firstName) firstName.value = parts[0] || '';
+      if (lastName) lastName.value = parts.slice(1).join(' ');
+      const body = new FormData(form);
+      body.delete('fullname');
+
+      setState(form, 'sending');
+      try {
+        const response = await fetch(`${form.action}?jsonp=true`, {
+          method: 'POST',
+          body,
+          headers: { Accept: 'application/json' },
+        });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const payload = (await response.json().catch(() => ({}))) as { js?: string };
+        if (typeof payload.js === 'string' && payload.js.includes('_show_error')) throw new Error('rejected');
+        if (fields) fields.hidden = true;
+        setState(form, 'sent');
+        showStatus(form, form.dataset.success || 'Thanks, we will be in touch.');
+      } catch {
+        setState(form, 'error');
+        showStatus(form, form.dataset.error || 'That did not go through.', fallbackFor(form));
+      }
+    });
+  };
+
+  /* The Brief: email-only subscribe through the HubSpot forms endpoint the
+     newsletter page uses. The hutk cookie ties it to existing tracking. */
+  const initBrief = (root: HTMLElement) => {
+    const form = root.querySelector<HTMLFormElement>('[data-home2-brief]');
+    if (!form) return;
+    const email = form.elements.namedItem('email') as HTMLInputElement | null;
+    const portal = form.dataset.portal;
+    const formId = form.dataset.form;
+    if (!email || !portal || !formId) return;
+
+    form.addEventListener('submit', async (event) => {
+      if (!form.checkValidity()) return;
+      event.preventDefault();
+      const hutk = document.cookie.match(/(?:^|;\s*)hubspotutk=([^;]+)/)?.[1];
+      const payload = {
+        fields: [{ objectTypeId: '0-1', name: 'email', value: email.value.trim() }],
+        context: {
+          pageUri: window.location.href,
+          pageName: document.title,
+          ...(hutk ? { hutk } : {}),
+        },
+      };
+
+      setState(form, 'sending');
+      try {
+        const response = await fetch(`https://api.hsforms.com/submissions/v3/integration/submit/${portal}/${formId}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        setState(form, 'sent');
+        email.value = '';
+        showStatus(form, form.dataset.success || 'Thanks, you are on the list.');
+      } catch {
+        setState(form, 'error');
+        showStatus(form, form.dataset.error || 'That did not go through.', fallbackFor(form));
+      }
+    });
+  };
+
+  const initHomepage = () => {
+    document.querySelectorAll<HTMLElement>('[data-home2]').forEach((root) => {
+      if (root.dataset.ready === 'true') return;
+      root.dataset.ready = 'true';
+      initRoas(root);
+      initContact(root);
+      initBrief(root);
+    });
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initHomepage, { once: true });
+  } else {
+    initHomepage();
+  }
+  document.addEventListener('astro:page-load', initHomepage);
+</script>

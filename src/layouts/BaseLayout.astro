@@ -30,12 +30,15 @@ interface Props {
   hideNavigation?: boolean;
   hideFooter?: boolean;
   bodyClass?: string;
+  /** Google Fonts stylesheet URL; pages that need an extra face pass a superset of the default. */
+  fontHref?: string;
 }
 
 const {
   hideNavigation = false,
   hideFooter = false,
   bodyClass,
+  fontHref,
   ...seoProps
 } = Astro.props;
 const seo = resolveSeo(Astro.url.pathname, seoProps);
@@ -63,6 +66,7 @@ const seo = resolveSeo(Astro.url.pathname, seoProps);
     publishedAt={seo.publishedAt}
     modifiedAt={seo.modifiedAt}
     schema={seo.schema}
+    fontHref={fontHref}
   />
   <!-- A/B Test: push variants to GTM dataLayer -->
   <script is:inline>

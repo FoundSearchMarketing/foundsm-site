@@ -1,11 +1,34 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Homepage from '../components/home/Homepage.astro';
-import { homePageQuery, sanityClient } from '../lib/sanity';
+import HomepageV2 from '../components/home/HomepageV2.astro';
+import { homePageQuery, homeSignalsQuery, sanityClient } from '../lib/sanity';
 import { mergeHomePageData } from '../lib/homePageData';
+import type { HomeV2Signal } from '../lib/homeV2Data';
 
-const homePageData = await sanityClient.fetch(homePageQuery).catch(() => null);
+type SignalPost = { title?: string; slug?: string; publishedAt?: string };
+
+const [homePageData, signalPosts] = await Promise.all([
+  sanityClient.fetch(homePageQuery).catch(() => null),
+  sanityClient.fetch<SignalPost[]>(homeSignalsQuery).catch(() => [] as SignalPost[]),
+]);
 const homePage = mergeHomePageData(homePageData);
+const signalDate = (value?: string) => {
+  const date = value ? new Date(value) : null;
+  return date && !Number.isNaN(date.getTime())
+    ? date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' })
+    : '';
+};
+const signals: HomeV2Signal[] = (signalPosts || [])
+  .filter((post) => post.title && post.slug)
+  .map((post) => ({
+    label: ['Signal', signalDate(post.publishedAt)].filter(Boolean).join(' · '),
+    title: post.title as string,
+    href: `/insights/${post.slug}/`,
+  }));
+
+// The homepage sets its display type in Archivo; the rest of the site stays on Fraunces.
+const homeFontHref =
+  'https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,900&family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,900&family=Poppins:wght@300;400;500;600;700&display=swap';
 const title = homePage.seoTitle || 'FoundSM | An Enterprise Paid Media Agency';
 const description = homePage.seoDescription || 'Trusted by leading brands, FoundSM is an enterprise paid media agency delivering clarity, efficiency, and performance through advanced data-driven solutions.';
 const canonical = homePage.canonicalUrl || 'https://foundsm.com/';
@@ -70,6 +93,7 @@ const schema = {
   schema={schema}
   schemaJson={homePage.schemaJson}
   bodyClass="home-page"
+  fontHref={homeFontHref}
 >
-  <Homepage data={homePage} />
+  <HomepageV2 data={homePage} signals={signals} />
 </BaseLayout>

@@ -221,7 +221,6 @@ const homeSectionFields = [
           }),
         ],
       }),
-      defineField({ name: 'strapline', title: 'Strapline', type: 'string' }),
     ],
   }),
   defineField({

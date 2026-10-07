@@ -66,7 +66,7 @@ export type HomeV2Content = {
   };
   proof: { spendLabel: string; leadsLabel: string; experienceLabel: string };
   practices: { eyebrow: string; heading: string; intro: string; items: HomeV2Practice[] };
-  loop: { eyebrow: string; heading: string; intro: string; stages: HomeV2Stage[]; strapline: string };
+  loop: { eyebrow: string; heading: string; intro: string; stages: HomeV2Stage[] };
   ai: { eyebrow: string; heading: string; intro: string; columns: HomeV2Column[] };
   work: {
     logosHeading: string;
@@ -237,7 +237,6 @@ export const homeV2Content: HomeV2Content = {
           'Verification systems and reporting prove what moved and what did not, surface anomalies daily, then hand every answer back to Connect.',
       },
     ],
-    strapline: 'AI runs the watching. People run the decisions.',
   },
   ai: {
     eyebrow: 'AI, inside the Loop',
@@ -505,7 +504,7 @@ export type HomeV2SanityDoc = {
     experience?: Metric | null;
   } | null;
   practices?: Head & { items?: Array<Column & Cta & { image?: SanityImageField; imageAlt?: string | null }> | null };
-  loop?: Head & { stages?: Array<Column & { number?: string | null }> | null; strapline?: string | null };
+  loop?: Head & { stages?: Array<Column & { number?: string | null }> | null };
   ai?: Head & { columns?: Column[] | null };
   work?: { eyebrow?: string | null; heading?: string | null; body?: string | null } & Cta;
   engage?: Head & {
@@ -634,7 +633,6 @@ export function mergeHomeV2Content(doc: HomeV2SanityDoc | null | undefined, imag
         number: text(item.number, fallback?.number || String(index + 1).padStart(2, '0')),
         ...column(item, fallback),
       })),
-      strapline: text(page.loop?.strapline, d.loop.strapline),
     },
     ai: {
       eyebrow: text(page.ai?.eyebrow, d.ai.eyebrow),

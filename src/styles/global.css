@@ -1430,10 +1430,11 @@ html.has-menu-open {
   margin: 0;
   color: var(--color-dark);
   font-family: var(--font-body);
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   font-weight: 600;
-  letter-spacing: 0;
+  letter-spacing: 0.08em;
   line-height: 1.4;
+  text-transform: uppercase;
 }
 
 .site-footer__links {

@@ -129,6 +129,254 @@ const imageWithAltFields = [
   }),
 ];
 
+/* ---- October 2026 homepage sections ------------------------------------
+   Each section is a plain object of strings and small arrays. Logos, the
+   testimonial and the headline numbers stay on their existing fields below,
+   which the new page reads as well. */
+
+const textField = (name: string, title: string, rows = 3) =>
+  defineField({ name, title, type: 'text', rows });
+
+const sectionHeadFields = (extra: { intro?: boolean } = { intro: true }) => [
+  defineField({ name: 'eyebrow', title: 'Eyebrow', type: 'string' }),
+  defineField({ name: 'heading', title: 'Heading', type: 'string' }),
+  ...(extra.intro === false ? [] : [textField('intro', 'Intro', 3)]),
+];
+
+const titledColumnMember = (subtitle: string) =>
+  defineArrayMember({
+    type: 'object',
+    fields: [
+      defineField({ name: 'title', title: 'Title', type: 'string', validation: (Rule) => Rule.required() }),
+      textField('body', 'Body', 3),
+    ],
+    preview: {
+      select: { title: 'title' },
+      prepare({ title }) {
+        return { title: title || 'Untitled', subtitle };
+      },
+    },
+  });
+
+const homeSectionFields = [
+  defineField({
+    name: 'practices',
+    title: 'Practices',
+    type: 'object',
+    group: 'page',
+    options: { collapsible: true, collapsed: true },
+    fields: [
+      ...sectionHeadFields(),
+      defineField({
+        name: 'items',
+        title: 'Practice cards',
+        type: 'array',
+        of: [
+          defineArrayMember({
+            type: 'object',
+            fields: [
+              defineField({ name: 'title', title: 'Title', type: 'string', validation: (Rule) => Rule.required() }),
+              textField('body', 'Body', 3),
+              ...ctaFields,
+              defineField({ name: 'image', title: 'Image', type: 'image', options: { hotspot: true } }),
+              defineField({ name: 'imageAlt', title: 'Image Alt Text', type: 'string' }),
+            ],
+            preview: {
+              select: { title: 'title', media: 'image' },
+              prepare({ title, media }) {
+                return { title: title || 'Practice', subtitle: 'Practice card', media };
+              },
+            },
+          }),
+        ],
+      }),
+    ],
+  }),
+  defineField({
+    name: 'loop',
+    title: 'The Found Loop',
+    type: 'object',
+    group: 'page',
+    options: { collapsible: true, collapsed: true },
+    fields: [
+      ...sectionHeadFields(),
+      defineField({
+        name: 'stages',
+        title: 'Stages',
+        type: 'array',
+        of: [
+          defineArrayMember({
+            type: 'object',
+            fields: [
+              defineField({ name: 'number', title: 'Number', type: 'string', description: 'For example 01.' }),
+              defineField({ name: 'title', title: 'Title', type: 'string', validation: (Rule) => Rule.required() }),
+              textField('body', 'Body', 3),
+            ],
+            preview: {
+              select: { title: 'title', number: 'number' },
+              prepare({ title, number }) {
+                return { title: [number, title].filter(Boolean).join(' · ') || 'Stage', subtitle: 'Loop stage' };
+              },
+            },
+          }),
+        ],
+      }),
+      defineField({ name: 'strapline', title: 'Strapline', type: 'string' }),
+    ],
+  }),
+  defineField({
+    name: 'ai',
+    title: 'AI inside the Loop',
+    type: 'object',
+    group: 'page',
+    options: { collapsible: true, collapsed: true },
+    fields: [
+      ...sectionHeadFields(),
+      defineField({ name: 'columns', title: 'Columns', type: 'array', of: [titledColumnMember('AI column')] }),
+    ],
+  }),
+  defineField({
+    name: 'work',
+    title: 'Work (case story)',
+    type: 'object',
+    group: 'page',
+    options: { collapsible: true, collapsed: true },
+    description: 'The logo row above it uses the Client Logo Marquee heading and logos.',
+    fields: [
+      defineField({ name: 'eyebrow', title: 'Eyebrow', type: 'string' }),
+      defineField({ name: 'heading', title: 'Heading', type: 'string' }),
+      textField('body', 'Body', 3),
+      ...ctaFields,
+    ],
+  }),
+  defineField({
+    name: 'engage',
+    title: 'How we engage',
+    type: 'object',
+    group: 'page',
+    options: { collapsible: true, collapsed: true },
+    fields: [
+      ...sectionHeadFields(),
+      defineField({ name: 'tiles', title: 'Deployment tiles', type: 'array', of: [titledColumnMember('Deployment tile')] }),
+      textField('outro', 'Closing line', 3),
+      ...ctaFields,
+      defineField({
+        name: 'existing',
+        title: 'Existing-client panel',
+        type: 'object',
+        fields: [
+          defineField({ name: 'eyebrow', title: 'Eyebrow', type: 'string' }),
+          defineField({ name: 'heading', title: 'Heading', type: 'string' }),
+          textField('body', 'Body', 3),
+          ...ctaFields,
+        ],
+      }),
+    ],
+  }),
+  defineField({
+    name: 'team',
+    title: 'Who you will work with',
+    type: 'object',
+    group: 'page',
+    options: { collapsible: true, collapsed: true },
+    fields: [
+      ...sectionHeadFields({ intro: false }),
+      textField('lead', 'Lead paragraph', 4),
+      textField('body', 'Second paragraph', 4),
+      ...ctaFields,
+      defineField({ name: 'image', title: 'Image', type: 'image', options: { hotspot: true } }),
+      defineField({ name: 'imageAlt', title: 'Image Alt Text', type: 'string' }),
+    ],
+  }),
+  defineField({
+    name: 'research',
+    title: 'Research',
+    type: 'object',
+    group: 'page',
+    options: { collapsible: true, collapsed: true },
+    fields: [
+      defineField({ name: 'eyebrow', title: 'Eyebrow', type: 'string' }),
+      defineField({
+        name: 'brief',
+        title: 'The Found Brief',
+        type: 'object',
+        fields: [
+          defineField({ name: 'heading', title: 'Heading', type: 'string' }),
+          textField('intro', 'Intro', 3),
+          defineField({ name: 'issueLabel', title: 'Issue label', type: 'string', description: 'For example "Issue 01 · October 2026".' }),
+          defineField({ name: 'title', title: 'Issue title', type: 'string' }),
+          textField('dek', 'Issue summary', 3),
+          defineField({ name: 'contentsHeading', title: 'Contents heading', type: 'string' }),
+          defineField({ name: 'contents', title: 'Contents', type: 'array', of: [defineArrayMember({ type: 'string' })] }),
+          ...ctaFields,
+          defineField({ name: 'subscribeLabel', title: 'Subscribe label', type: 'string' }),
+          defineField({ name: 'subscribeButton', title: 'Subscribe button', type: 'string' }),
+          defineField({ name: 'subscribeSuccess', title: 'Subscribe success message', type: 'string' }),
+          defineField({ name: 'subscribeError', title: 'Subscribe error message', type: 'string' }),
+        ],
+      }),
+      defineField({
+        name: 'signals',
+        title: 'Found Signals',
+        type: 'object',
+        description: 'Published posts in the Found Signals category replace the placeholder list automatically.',
+        fields: [
+          defineField({ name: 'heading', title: 'Heading', type: 'string' }),
+          textField('intro', 'Intro', 3),
+          defineField({ name: 'allLinkText', title: 'All Signals link text', type: 'string' }),
+          defineField({ name: 'allLinkUrl', title: 'All Signals link URL', type: 'string' }),
+          defineField({
+            name: 'drafts',
+            title: 'Placeholder Signals',
+            type: 'array',
+            of: [
+              defineArrayMember({
+                type: 'object',
+                fields: [
+                  defineField({ name: 'label', title: 'Label', type: 'string' }),
+                  defineField({ name: 'title', title: 'Title', type: 'string', validation: (Rule) => Rule.required() }),
+                  defineField({ name: 'url', title: 'URL', type: 'string' }),
+                ],
+                preview: {
+                  select: { title: 'title', subtitle: 'label' },
+                },
+              }),
+            ],
+          }),
+        ],
+      }),
+    ],
+  }),
+  defineField({
+    name: 'recognition',
+    title: 'Partnerships & recognition',
+    type: 'object',
+    group: 'page',
+    options: { collapsible: true, collapsed: true },
+    description: 'The partner logos come from the Partner Section logos.',
+    fields: [
+      ...sectionHeadFields(),
+      defineField({ name: 'cards', title: 'Recognition cards', type: 'array', of: [titledColumnMember('Recognition card')] }),
+    ],
+  }),
+  defineField({
+    name: 'talk',
+    title: 'Talk with us (form)',
+    type: 'object',
+    group: 'page',
+    options: { collapsible: true, collapsed: true },
+    fields: [
+      ...sectionHeadFields(),
+      defineField({ name: 'nameLabel', title: 'Name field label', type: 'string' }),
+      defineField({ name: 'emailLabel', title: 'Email field label', type: 'string' }),
+      defineField({ name: 'notesLabel', title: 'Notes field label', type: 'string' }),
+      defineField({ name: 'button', title: 'Button label', type: 'string' }),
+      defineField({ name: 'success', title: 'Success message', type: 'string' }),
+      defineField({ name: 'error', title: 'Error message', type: 'string' }),
+    ],
+  }),
+];
+
 const withoutImageValues = {
   ...defaultHomePageData,
   ogImage: undefined,
@@ -191,38 +439,53 @@ export default defineType({
   type: 'document',
   groups: [
     { name: 'seo', title: 'SEO' },
-    { name: 'content', title: 'Content', default: true },
+    { name: 'page', title: 'Homepage', default: true },
+    { name: 'legacy', title: 'Previous homepage' },
   ],
   fields: [
     ...createSeoFields({ descriptionMax: 180 }),
     defineField({
       name: 'hero',
-      title: 'Hero/Search',
+      title: 'Hero',
       type: 'object',
-      group: 'content',
+      group: 'page',
+      options: { collapsible: true, collapsed: false },
       fields: [
+        defineField({ name: 'eyebrow', title: 'Eyebrow', type: 'string' }),
         defineField({
           name: 'headlineLines',
           title: 'Headline Lines',
           type: 'array',
+          description: 'One line per entry.',
           of: [defineArrayMember({ type: 'string', validation: (Rule) => Rule.required() })],
           validation: (Rule) => Rule.required().min(1),
         }),
-        defineField({ name: 'subheadline', title: 'Subheadline', type: 'text', rows: 2 }),
+        defineField({ name: 'subheadline', title: 'Paragraph', type: 'text', rows: 3 }),
+        ...ctaFields,
+        defineField({
+          name: 'videoFile',
+          title: 'Hero video',
+          type: 'file',
+          options: { accept: 'video/mp4,video/webm,video/quicktime' },
+          description: 'Silent loop played in the hero. Takes precedence over Video URL.',
+        }),
+        defineField({ name: 'videoUrl', title: 'Hero video URL', type: 'url' }),
+        defineField({ name: 'videoPoster', title: 'Hero video poster', type: 'image', options: { hotspot: false } }),
+        defineField({ name: 'videoLabel', title: 'Hero video description', type: 'string', description: 'Read by screen readers; also the poster alt text.' }),
         defineField({
           name: 'searchPrompts',
-          title: 'Search Prompts',
+          title: 'Search Prompts (previous homepage)',
           type: 'array',
-          of: [defineArrayMember({ type: 'string', validation: (Rule) => Rule.required() })],
-          validation: (Rule) => Rule.required().min(1),
+          of: [defineArrayMember({ type: 'string' })],
         }),
       ],
     }),
+    ...homeSectionFields,
     defineField({
       name: 'intro',
       title: 'Intro',
       type: 'object',
-      group: 'content',
+      group: 'legacy',
       fields: [
         defineField({ name: 'heading', title: 'Heading', type: 'string', validation: (Rule) => Rule.required() }),
         richTextField('body', 'Body'),
@@ -233,7 +496,7 @@ export default defineType({
       name: 'ctaStrip',
       title: 'CTA Strip',
       type: 'object',
-      group: 'content',
+      group: 'legacy',
       fields: [
         defineField({ name: 'headline', title: 'Headline', type: 'string', validation: (Rule) => Rule.required() }),
         ...ctaFields,
@@ -241,9 +504,10 @@ export default defineType({
     }),
     defineField({
       name: 'clientLogos',
-      title: 'Client Logo Marquee',
+      title: 'Client Logo Marquee (Work section)',
       type: 'object',
-      group: 'content',
+      group: 'page',
+      options: { collapsible: true, collapsed: true },
       fields: [
         defineField({ name: 'heading', title: 'Heading', type: 'string', validation: (Rule) => Rule.required() }),
         logoArrayField('logos', 'Logos'),
@@ -253,7 +517,7 @@ export default defineType({
       name: 'outcomes',
       title: 'Outcomes',
       type: 'object',
-      group: 'content',
+      group: 'legacy',
       fields: [
         ...imageWithAltFields,
         defineField({ name: 'heading', title: 'Heading', type: 'string', validation: (Rule) => Rule.required() }),
@@ -263,14 +527,16 @@ export default defineType({
     }),
     defineField({
       name: 'metrics',
-      title: 'Metrics/Testimonial',
+      title: 'Numbers band & testimonial',
       type: 'object',
-      group: 'content',
+      group: 'page',
+      options: { collapsible: true, collapsed: true },
+      description: 'Spend, leads and experience feed the band under the hero; the testimonial sits in the Work section. Employees, the ownership card and the image belong to the previous homepage.',
       fields: [
-        metricObject('spend', 'Paid Media Spend'),
-        metricObject('leads', 'Leads Generated'),
+        metricObject('spend', 'Paid media managed'),
+        metricObject('leads', 'Leads generated'),
         metricObject('experience', 'Experience'),
-        metricObject('employees', 'Employees'),
+        metricObject('employees', 'Employees (previous homepage)'),
         defineField({
           name: 'testimonial',
           title: 'Testimonial',
@@ -298,9 +564,10 @@ export default defineType({
     }),
     defineField({
       name: 'partners',
-      title: 'Partner Section',
+      title: 'Partner logos (Recognition section)',
       type: 'object',
-      group: 'content',
+      group: 'page',
+      options: { collapsible: true, collapsed: true },
       fields: [
         defineField({ name: 'heading', title: 'Heading', type: 'string', validation: (Rule) => Rule.required() }),
         richTextField('body', 'Body'),
@@ -312,7 +579,7 @@ export default defineType({
       name: 'ecosystem',
       title: 'Ecosystem Tabs',
       type: 'object',
-      group: 'content',
+      group: 'legacy',
       fields: [
         defineField({
           name: 'headingLines',

@@ -12,27 +12,30 @@ import { mergeHomePageData, type HomePageData } from '../../lib/homePageData';
 import {
   buildRoasDots,
   formatMetric,
-  homeV2Content as content,
   homeV2Forms,
+  mergeHomeV2Content,
   selectClientLogos,
   selectPartnerLogos,
+  type HomeV2SanityDoc,
   type HomeV2Signal,
 } from '../../lib/homeV2Data';
 
 interface Props {
-  data?: Partial<HomePageData> | null;
+  data?: (Partial<HomePageData> & HomeV2SanityDoc) | null;
   /** Published Found Signals, newest first. Falls back to the approved drafts when empty. */
   signals?: HomeV2Signal[];
 }
 
 const { data = null, signals = [] } = Astro.props;
 const sanity = mergeHomePageData(data);
+// Section copy: the Sanity homePage document over the code defaults, field by field.
+const content = mergeHomeV2Content(data);
 
 const clientLogos = selectClientLogos(sanity.clientLogos.logos);
 const partnerLogos = selectPartnerLogos(sanity.partners.logos);
 const testimonial = sanity.metrics.testimonial;
 const testimonialRole = [testimonial.authorTitle, testimonial.authorCompany].filter(Boolean).join(', ');
-const teamImage = sanity.intro.image;
+const teamImage = content.team.imageUrl || sanity.intro.image;
 const signalItems = signals.length > 0 ? signals : content.research.signals.drafts;
 const roasDots = buildRoasDots(11);
 const heroVideo = content.hero.videoUrl.trim();
@@ -40,7 +43,7 @@ const heroVideo = content.hero.videoUrl.trim();
 const proof = [
   { icon: 'chart', value: formatMetric(sanity.metrics.spend), label: content.proof.spendLabel },
   { icon: 'people', value: formatMetric(sanity.metrics.leads), label: content.proof.leadsLabel },
-  { icon: 'clock', value: `${formatMetric(sanity.metrics.experience)} years`, label: content.proof.experienceLabel },
+  { icon: 'clock', value: formatMetric(sanity.metrics.experience), label: content.proof.experienceLabel },
 ];
 ---
 

@@ -151,7 +151,20 @@ export const homePageQuery = `*[_type == "homePage"][0] {
   twitterDescription,
   "twitterImage": twitterImage.asset->url,
   schemaJson,
-  hero,
+  hero {
+    ...,
+    "videoUrl": coalesce(videoFile.asset->url, videoUrl),
+    "videoPoster": videoPoster.asset->url
+  },
+  practices,
+  loop,
+  ai,
+  work,
+  engage,
+  team,
+  research,
+  recognition,
+  talk,
   intro {
     heading,
     body,

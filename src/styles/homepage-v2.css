@@ -36,7 +36,9 @@ html:has(.home2) {
   --h2-light: #c9cec4;
   --h2-soft: #d6ecba;
   --h2-green: var(--color-primary, #8dc63f);
-  --h2-deep: #4f7a16;
+  /* Small green text uses the brand green as well (Megan, 2026-10-07). On
+     white it sits near 2:1 contrast, so eyebrows stay short and bold. */
+  --h2-deep: var(--color-primary, #8dc63f);
   --h2-display: 'Archivo', 'Arial Narrow', 'Helvetica Neue', Arial, sans-serif;
   --h2-shell: min(84.375rem, calc(100% - 2 * var(--gutter)));
   --h2-section: clamp(3.5rem, 7vw, 5.5rem);
@@ -99,8 +101,12 @@ html:has(.home2) {
 }
 
 .home2 :focus-visible {
-  outline: 2px solid var(--h2-deep);
+  outline: 2px solid var(--h2-ink);
   outline-offset: 3px;
+}
+
+.home2-section--dark :focus-visible {
+  outline-color: var(--h2-green);
 }
 
 .home2-shell {
@@ -509,11 +515,6 @@ a:hover > .home2-more {
   .home2-loop__head {
     grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
   }
-
-  .home2-loop__strapline {
-    justify-self: end;
-    text-align: right;
-  }
 }
 
 @media (min-width: 1024px) {
@@ -775,7 +776,7 @@ a:hover > .home2-more {
   --rx-line: rgba(35, 31, 32, 0.5);
   --rx-label: #4a4547;
   --rx-num: #231f20;
-  --rx-bracket: #4f7a16;
+  --rx-bracket: var(--rx-lift);
   --rx-axis: #231f20;
 
   position: relative;

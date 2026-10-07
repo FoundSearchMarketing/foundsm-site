@@ -368,7 +368,7 @@ export const homeV2Content: HomeV2Content = {
     eyebrow: 'Partnerships & recognition',
     heading: 'Certified by the platforms. Recognized at home.',
     intro:
-      "Partner status with every platform we buy on. Google, Microsoft and Meta certify the people who run your account and recertify them as the platforms change. That standing brings early access to alpha and beta programs, a direct line into platform roadmaps, and the credentials buyers ask about before the first call. The recognition beside it comes from the industry and from home: a Microsoft Advertising Partner of the Year finalist, a certified women-owned business, and three straight years on the Indianapolis Business Journal's Top 25 agency list.",
+      'Partner status with every platform we buy on. Google, Microsoft and Meta certify the people who run your account and recertify them as the platforms change, which brings early access to alpha and beta programs, a direct line into platform roadmaps, and the credentials buyers ask about before the first call.',
     cards: [
       { title: 'Microsoft Advertising', body: 'Partner of the Year finalist, 2026' },
       { title: 'Certification', body: 'Certified women-owned business' },
@@ -379,7 +379,7 @@ export const homeV2Content: HomeV2Content = {
     eyebrow: 'Talk with us',
     heading: "Let's look at your account.",
     intro:
-      'Thirty minutes with the people who would do the work, not a sales team. Bring your account, your tracking setup or the question that has been nagging you, and we will walk through how your signals, models and media connect today. You will hear what we see and what we would change first. If a deployment makes sense, we will say so and what it would involve. If it does not, you still leave with a clearer read on your own system. Someone replies within one business day.',
+      'Thirty minutes with the people who would do the work, not a sales team. Bring your account, your tracking setup or the question that has been nagging you, and we will walk through how your signals, models and media connect today. You will hear what we see and what we would change first. If a deployment makes sense, we will say so and what it would involve. If it does not, you still leave with a clearer read on your own system.',
     fields: {
       name: 'Full name',
       email: 'Business email',

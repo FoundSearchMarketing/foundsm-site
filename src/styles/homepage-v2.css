@@ -2,6 +2,15 @@
   Homepage (October 2026 build). Scoped under .home2 so the display type
   (Archivo Black, 82% width, all caps) stays on this page while the rest of
   the site keeps Fraunces. Poppins remains the supporting face.
+
+  Type scale, used by every section:
+    eyebrow   0.8125rem / 600 / .12em caps        (--h2-text-eyebrow)
+    h2        clamp(2rem, 3.4vw, 2.75rem) / 1.05  (--h2-size-h2)
+    h3        1.5rem / 1.1                        (--h2-size-h3)
+    lead      1.1875rem / 1.6, hero only          (--h2-text-lead)
+    body      1.0625rem / 1.6, section copy       (--h2-text-body)
+    small     0.9375rem / 1.55, card + column copy(--h2-text-small)
+    label     0.75rem / 600 / .08em caps          (--h2-text-label)
 */
 
 body.home-page {
@@ -33,12 +42,24 @@ html:has(.home2) {
   --h2-section: clamp(3.5rem, 7vw, 5.5rem);
   --h2-radius: 1rem;
 
+  --h2-text-eyebrow: 0.8125rem;
+  --h2-text-lead: 1.1875rem;
+  --h2-text-body: 1.0625rem;
+  --h2-text-small: 0.9375rem;
+  --h2-text-label: 0.75rem;
+  --h2-size-h2: clamp(2rem, 3.4vw, 2.75rem);
+  --h2-size-h3: 1.5rem;
+  --h2-lh-body: 1.6;
+  --h2-lh-small: 1.55;
+  --h2-stack-gap: 0.875rem;
+
   overflow: clip;
   background: #fff;
   color: var(--h2-ink);
   font-family: var(--font-body);
+  font-size: var(--h2-text-body);
   font-weight: 400;
-  line-height: 1.55;
+  line-height: var(--h2-lh-body);
 }
 
 .home2 h1,
@@ -57,7 +78,16 @@ html:has(.home2) {
 }
 
 .home2 h2 {
-  font-size: clamp(2rem, 3.4vw, 2.75rem);
+  font-size: var(--h2-size-h2);
+}
+
+.home2 h3 {
+  font-size: var(--h2-size-h3);
+  line-height: 1.1;
+}
+
+.home2 p {
+  margin: 0;
 }
 
 .home2 a {
@@ -91,11 +121,30 @@ html:has(.home2) {
   color: #fff;
 }
 
+/* Eyebrow, heading and intro share one stack in every section. */
+.home2-head {
+  display: grid;
+  gap: var(--h2-stack-gap);
+  max-width: 45rem;
+}
+
+.home2-head p,
+.home2-body {
+  color: var(--h2-muted);
+  font-size: var(--h2-text-body);
+  line-height: var(--h2-lh-body);
+}
+
+.home2-section--dark .home2-head p,
+.home2-section--dark .home2-body {
+  color: var(--h2-light);
+}
+
 .home2 .home2-eyebrow {
   margin: 0;
   color: var(--h2-deep);
   font-family: var(--font-body);
-  font-size: 0.8125rem;
+  font-size: var(--h2-text-eyebrow);
   font-stretch: normal;
   font-variation-settings: normal;
   font-weight: 600;
@@ -108,23 +157,12 @@ html:has(.home2) {
   color: var(--h2-green);
 }
 
-.home2-head {
-  display: grid;
-  gap: 0.875rem;
-  max-width: 45rem;
-}
-
-.home2-head p {
-  margin: 0;
-  color: var(--h2-muted);
-  font-size: 1.0625rem;
-}
-
 .home2-more {
   color: var(--h2-deep);
-  font-size: 0.75rem;
+  font-size: var(--h2-text-label);
   font-weight: 600;
   letter-spacing: 0.08em;
+  line-height: 1.4;
   text-decoration: none;
   text-transform: uppercase;
 }
@@ -141,6 +179,15 @@ a.home2-more:hover,
 a:hover > .home2-more {
   text-decoration: underline;
   text-underline-offset: 0.2em;
+}
+
+/* Small caps labels inside cards. */
+.home2-label {
+  font-size: var(--h2-text-label);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  line-height: 1.4;
+  text-transform: uppercase;
 }
 
 /* Buttons share the site's .btn system; the homepage sets them in caps. */
@@ -192,12 +239,10 @@ a:hover > .home2-more {
 }
 
 .home2-hero__body {
-  margin: 0;
   max-width: 36.25rem;
   color: var(--h2-muted);
-  font-size: clamp(1.0625rem, 1.3vw, 1.1875rem);
-  font-weight: 300;
-  line-height: 1.6;
+  font-size: var(--h2-text-lead);
+  line-height: var(--h2-lh-body);
 }
 
 .home2-hero__actions {
@@ -239,16 +284,6 @@ a:hover > .home2-more {
   display: none;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .home2-video--live video {
-    display: none;
-  }
-
-  .home2-video__poster {
-    display: block;
-  }
-}
-
 .home2-video__play {
   display: grid;
   place-items: center;
@@ -264,16 +299,15 @@ a:hover > .home2-more {
   left: 1.25rem;
   bottom: 1rem;
   color: var(--h2-light);
-  font-size: 0.75rem;
+  font-size: var(--h2-text-label);
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
 .home2-hero__note {
-  margin: 0;
   color: var(--h2-muted);
-  font-size: 0.8125rem;
+  font-size: var(--h2-text-eyebrow);
 }
 
 @media (min-width: 900px) {
@@ -289,6 +323,16 @@ a:hover > .home2-more {
 @media (min-width: 1100px) {
   .home2-hero h1 {
     white-space: nowrap;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home2-video--live video {
+    display: none;
+  }
+
+  .home2-video__poster {
+    display: block;
   }
 }
 
@@ -331,9 +375,10 @@ a:hover > .home2-more {
 }
 
 .home2-proof__label {
-  margin: 0.25rem 0 0;
+  margin-top: 0.25rem;
   color: var(--h2-light);
-  font-size: 0.8125rem;
+  font-size: var(--h2-text-eyebrow);
+  line-height: 1.4;
 }
 
 /* ------------------------------------------------------------ practices */
@@ -381,15 +426,10 @@ a:hover > .home2-more {
   padding: 1.375rem 1.5rem 1.625rem;
 }
 
-.home2-card__title {
-  font-size: 1.5rem;
-  line-height: 1.1;
-}
-
 .home2-card__text {
-  margin: 0;
   color: var(--h2-muted);
-  font-size: 0.9375rem;
+  font-size: var(--h2-text-small);
+  line-height: var(--h2-lh-small);
 }
 
 .home2-card .home2-more {
@@ -438,20 +478,14 @@ a:hover > .home2-more {
   line-height: 1;
 }
 
-.home2-stage h3 {
-  font-size: 1.625rem;
-  line-height: 1.1;
-}
-
 .home2-stage p {
-  margin: 0;
   color: var(--h2-muted);
-  font-size: 0.9375rem;
+  font-size: var(--h2-text-small);
+  line-height: var(--h2-lh-small);
 }
 
 .home2-loop__strapline {
-  margin: 0;
-  font-size: 1.0625rem;
+  font-size: var(--h2-text-body);
   font-weight: 500;
 }
 
@@ -481,11 +515,10 @@ a:hover > .home2-more {
 }
 
 .home2-ai__intro {
-  margin: 0;
   max-width: 29rem;
   color: var(--h2-light);
-  font-size: 1rem;
-  line-height: 1.6;
+  font-size: var(--h2-text-body);
+  line-height: var(--h2-lh-body);
 }
 
 .home2-ai__columns {
@@ -502,16 +535,10 @@ a:hover > .home2-more {
   border-top: 1px solid var(--h2-dark-line);
 }
 
-.home2-ai__col h3 {
-  font-size: 1.5rem;
-  line-height: 1.1;
-}
-
 .home2-ai__col p {
-  margin: 0;
   color: var(--h2-light);
-  font-size: 0.9375rem;
-  line-height: 1.55;
+  font-size: var(--h2-text-small);
+  line-height: var(--h2-lh-small);
 }
 
 @media (min-width: 900px) {
@@ -539,10 +566,11 @@ a:hover > .home2-more {
 }
 
 .home2-logos h2 {
-  font-size: clamp(1.625rem, 2.4vw, 2rem);
   text-align: center;
 }
 
+/* Same logo size and spacing as the previous homepage marquee (160px tiles,
+   20px apart); the spacing sits inside each tile so the -50% loop stays exact. */
 .home2-marquee {
   overflow: hidden;
   mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
@@ -552,7 +580,7 @@ a:hover > .home2-more {
   display: flex;
   align-items: center;
   width: max-content;
-  animation: home2-marquee 40s linear infinite;
+  animation: home2-marquee 26s linear infinite;
 }
 
 .home2-marquee:hover .home2-marquee__track {
@@ -563,18 +591,18 @@ a:hover > .home2-more {
   display: grid;
   flex: none;
   place-items: center;
-  width: 9rem;
-  height: 5rem;
+  width: 10rem;
+  height: 10rem;
   margin: 0;
-  padding-inline: clamp(1rem, 2vw, 1.75rem);
+  padding-inline: 0.625rem;
   box-sizing: content-box;
 }
 
 .home2-marquee__item img {
-  width: auto;
+  width: 10rem;
   max-width: 100%;
   height: auto;
-  max-height: 4rem;
+  max-height: 10rem;
   object-fit: contain;
 }
 
@@ -604,15 +632,18 @@ a:hover > .home2-more {
 
 .home2-case__copy {
   display: grid;
-  gap: 1rem;
+  gap: var(--h2-stack-gap);
 }
 
 .home2-case__copy p {
-  margin: 0;
   max-width: 52ch;
   color: var(--h2-muted);
-  font-size: 1.0625rem;
-  line-height: 1.6;
+  font-size: var(--h2-text-body);
+  line-height: var(--h2-lh-body);
+}
+
+.home2-case__copy .home2-more {
+  margin-top: 0.25rem;
 }
 
 .home2-case__visual {
@@ -677,15 +708,16 @@ a:hover > .home2-more {
   position: relative;
   margin: 0;
   padding-top: 3rem;
-  font-size: 1.1875rem;
+  font-size: 1.125rem;
   font-weight: 500;
-  line-height: 1.45;
+  line-height: 1.5;
 }
 
 .home2-quote figcaption {
   position: relative;
   color: var(--h2-light);
-  font-size: 0.8125rem;
+  font-size: var(--h2-text-eyebrow);
+  line-height: 1.5;
 }
 
 .home2-quote figcaption strong {
@@ -1038,13 +1070,14 @@ a:hover > .home2-more {
 .home2-engage__copy {
   display: grid;
   align-content: start;
-  gap: 1.25rem;
+  gap: var(--h2-stack-gap);
 }
 
 .home2-engage__tiles {
   display: grid;
   grid-template-columns: 1fr;
   gap: 0.75rem;
+  margin-block: 0.5rem;
 }
 
 .home2-tile {
@@ -1055,52 +1088,110 @@ a:hover > .home2-more {
 
 .home2-tile strong {
   display: block;
-  font-size: 0.9375rem;
+  font-size: 1rem;
   font-weight: 600;
+  line-height: 1.4;
 }
 
 .home2-tile p {
-  margin: 0.25rem 0 0;
+  margin-top: 0.25rem;
   color: var(--h2-muted);
-  font-size: 0.875rem;
-}
-
-.home2-engage__outro {
-  margin: 0;
-  max-width: 60ch;
-  color: var(--h2-muted);
-  font-size: 1rem;
+  font-size: var(--h2-text-small);
+  line-height: var(--h2-lh-small);
 }
 
 .home2-engage__copy .btn {
   justify-self: start;
+  margin-top: 0.5rem;
 }
 
+/* "Already with FoundSM?": the Loop as a slow orbit in the corner, one lit
+   node moving while the account keeps running. */
 .home2-panel {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 1.25rem;
-  padding: 2rem;
+  gap: 1.75rem;
+  padding: 2.25rem 2rem 2rem;
+  overflow: hidden;
   border-radius: var(--h2-radius);
-  background: var(--h2-ink);
+  background:
+    radial-gradient(circle at 88% 12%, rgba(141, 198, 63, 0.22), transparent 58%),
+    var(--h2-ink);
   color: #fff;
+  isolation: isolate;
+}
+
+.home2-panel__loop {
+  position: absolute;
+  right: -5.5rem;
+  bottom: -5.5rem;
+  width: 19rem;
+  height: 19rem;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.home2-panel__ring {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.16);
+  stroke-width: 2;
+}
+
+.home2-panel__orbit {
+  transform-origin: 160px 160px;
+  animation: home2-orbit 28s linear infinite;
+}
+
+.home2-panel__arc {
+  fill: none;
+  stroke: var(--h2-green);
+  stroke-width: 6;
+  stroke-linecap: round;
+}
+
+.home2-panel__node {
+  fill: rgba(255, 255, 255, 0.35);
+}
+
+.home2-panel__node--lit {
+  fill: var(--h2-green);
+}
+
+.home2-panel__core {
+  fill: var(--h2-green);
+}
+
+@keyframes home2-orbit {
+  to {
+    transform: rotate(1turn);
+  }
 }
 
 .home2-panel__copy {
+  position: relative;
+  z-index: 1;
   display: grid;
-  gap: 0.75rem;
+  gap: var(--h2-stack-gap);
+  max-width: 24rem;
 }
 
 .home2-panel__title {
-  font-size: 1.625rem;
-  line-height: 1.15;
+  font-size: 1.75rem;
+  line-height: 1.08;
 }
 
 .home2-panel p {
-  margin: 0;
   color: var(--h2-light);
-  font-size: 0.9375rem;
+  font-size: var(--h2-text-small);
+  line-height: var(--h2-lh-small);
+}
+
+.home2-panel__cta {
+  position: relative;
+  z-index: 1;
+  align-self: flex-start;
 }
 
 @media (min-width: 640px) {
@@ -1125,28 +1216,15 @@ a:hover > .home2-more {
 
 .home2-team__copy {
   display: grid;
-  gap: 1.25rem;
-}
-
-.home2-team h2 {
-  font-size: clamp(2.125rem, 3.8vw, 3rem);
-  line-height: 1.02;
+  gap: var(--h2-stack-gap);
 }
 
 .home2-team__lead,
 .home2-team__body {
-  margin: 0;
   max-width: 48ch;
   color: var(--h2-muted);
-  line-height: 1.6;
-}
-
-.home2-team__lead {
-  font-size: 1.125rem;
-}
-
-.home2-team__body {
-  font-size: 1rem;
+  font-size: var(--h2-text-body);
+  line-height: var(--h2-lh-body);
 }
 
 .home2-team__copy .btn {
@@ -1180,23 +1258,20 @@ a:hover > .home2-more {
 .home2-research__col {
   display: grid;
   align-content: start;
-  gap: 1.125rem;
-}
-
-.home2-research h2 {
-  font-size: clamp(2rem, 3.2vw, 2.5rem);
+  gap: var(--h2-stack-gap);
 }
 
 .home2-research__intro {
-  margin: 0;
   max-width: 50ch;
   color: var(--h2-light);
-  font-size: 1rem;
+  font-size: var(--h2-text-body);
+  line-height: var(--h2-lh-body);
 }
 
 .home2-brief {
   display: grid;
   gap: 0.625rem;
+  margin-top: 0.5rem;
   padding: 1.625rem 1.75rem;
   border: 1px solid var(--h2-dark-line);
   border-radius: 0.875rem;
@@ -1207,20 +1282,20 @@ a:hover > .home2-more {
 
 .home2-brief__issue {
   color: var(--h2-green);
-  font-size: 0.8125rem;
+  font-size: var(--h2-text-eyebrow);
   font-weight: 600;
+  line-height: 1.4;
 }
 
 .home2-brief__title {
-  font-size: 1.5rem;
-  line-height: 1.2;
+  font-size: var(--h2-size-h3);
+  line-height: 1.1;
 }
 
 .home2-brief__dek {
-  margin: 0;
   color: var(--h2-light);
-  font-size: 0.875rem;
-  line-height: 1.55;
+  font-size: var(--h2-text-small);
+  line-height: var(--h2-lh-small);
 }
 
 .home2-brief__contents {
@@ -1230,15 +1305,12 @@ a:hover > .home2-more {
   padding: 0.875rem 0 0;
   border-top: 1px solid var(--h2-dark-line);
   list-style: none;
-  font-size: 0.875rem;
+  font-size: var(--h2-text-small);
+  line-height: var(--h2-lh-small);
 }
 
 .home2-brief__contents-heading {
   color: var(--h2-light);
-  font-size: 0.6875rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
 }
 
 .home2-subscribe {
@@ -1257,7 +1329,8 @@ a:hover > .home2-more {
 
 .home2-subscribe label {
   color: var(--h2-light);
-  font-size: 0.8125rem;
+  font-size: var(--h2-text-eyebrow);
+  line-height: 1.4;
 }
 
 .home2-input {
@@ -1269,7 +1342,7 @@ a:hover > .home2-more {
   background: #fff;
   color: var(--h2-ink);
   font: inherit;
-  font-size: 0.9375rem;
+  font-size: var(--h2-text-small);
 }
 
 .home2-subscribe .btn {
@@ -1279,8 +1352,8 @@ a:hover > .home2-more {
 
 .home2-form__status {
   flex-basis: 100%;
-  margin: 0;
-  font-size: 0.875rem;
+  font-size: var(--h2-text-small);
+  line-height: var(--h2-lh-small);
 }
 
 .home2-form__status a {
@@ -1298,7 +1371,7 @@ a:hover > .home2-more {
 
 .home2-signals {
   display: grid;
-  margin: 0;
+  margin: 0.5rem 0 0;
   padding: 0;
   list-style: none;
 }
@@ -1325,12 +1398,14 @@ a:hover > .home2-more {
 
 .home2-signals__label {
   color: var(--h2-light);
-  font-size: 0.75rem;
+  font-size: var(--h2-text-label);
+  line-height: 1.4;
 }
 
 .home2-signals__title {
-  font-size: 1.0625rem;
+  font-size: var(--h2-text-body);
   font-weight: 500;
+  line-height: 1.45;
 }
 
 @media (min-width: 900px) {
@@ -1342,7 +1417,6 @@ a:hover > .home2-more {
 /* ---------------------------------------------------------- recognition */
 
 .home2-recognition {
-  padding-block: clamp(3rem, 6vw, 5rem);
   border-bottom: 1px solid var(--h2-line);
 }
 
@@ -1353,20 +1427,7 @@ a:hover > .home2-more {
 }
 
 .home2-recognition__copy {
-  display: grid;
-  gap: 0.875rem;
   max-width: 27.5rem;
-}
-
-.home2-recognition h2 {
-  font-size: clamp(1.75rem, 2.6vw, 2.125rem);
-}
-
-.home2-recognition__copy p {
-  margin: 0;
-  color: var(--h2-muted);
-  font-size: 0.9375rem;
-  line-height: 1.6;
 }
 
 .home2-recognition__proof {
@@ -1408,16 +1469,12 @@ a:hover > .home2-more {
 
 .home2-badge__label {
   color: var(--h2-deep);
-  font-size: 0.6875rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
 }
 
 .home2-badge__text {
-  font-size: 0.9375rem;
+  font-size: var(--h2-text-small);
   font-weight: 600;
-  line-height: 1.35;
+  line-height: 1.4;
 }
 
 @media (min-width: 640px) {
@@ -1444,17 +1501,8 @@ a:hover > .home2-more {
   gap: 3rem 4rem;
 }
 
-.home2-talk__copy {
-  display: grid;
-  gap: 1rem;
-}
-
 .home2-talk__copy p {
-  margin: 0;
   max-width: 46ch;
-  color: var(--h2-muted);
-  font-size: 1.0625rem;
-  line-height: 1.6;
 }
 
 .home2-form {
@@ -1483,8 +1531,9 @@ a:hover > .home2-more {
 
 .home2-form label {
   color: var(--h2-muted);
-  font-size: 0.8125rem;
+  font-size: var(--h2-text-eyebrow);
   font-weight: 500;
+  line-height: 1.4;
 }
 
 .home2-form input,
@@ -1496,7 +1545,8 @@ a:hover > .home2-more {
   background: #fff;
   color: var(--h2-ink);
   font: inherit;
-  font-size: 0.9375rem;
+  font-size: var(--h2-text-small);
+  line-height: var(--h2-lh-small);
 }
 
 .home2-form input {
@@ -1551,6 +1601,10 @@ a:hover > .home2-more {
 
   .home2-marquee__item[aria-hidden='true'] {
     display: none;
+  }
+
+  .home2-panel__orbit {
+    animation: none;
   }
 
   .home2-card,

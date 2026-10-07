@@ -260,7 +260,7 @@ const proof = [
       <div class="home2-engage__copy">
         <p class="home2-eyebrow">{content.engage.eyebrow}</p>
         <h2 id="home2-engage-title">{content.engage.heading}</h2>
-        <p class="home2-engage__outro">{content.engage.intro}</p>
+        <p class="home2-body">{content.engage.intro}</p>
         <div class="home2-engage__tiles">
           {content.engage.tiles.map((tile) => (
             <div class="home2-tile">
@@ -269,16 +269,27 @@ const proof = [
             </div>
           ))}
         </div>
-        <p class="home2-engage__outro">{content.engage.outro}</p>
+        <p class="home2-body">{content.engage.outro}</p>
         <a class="btn btn--primary" href={content.engage.cta.href}>{content.engage.cta.label}</a>
       </div>
       <aside class="home2-panel" aria-label={content.engage.existing.eyebrow}>
+        <svg class="home2-panel__loop" viewBox="0 0 320 320" aria-hidden="true" focusable="false">
+          <circle class="home2-panel__ring" cx="160" cy="160" r="118" />
+          <g class="home2-panel__orbit">
+            <path class="home2-panel__arc" d="M160 42A118 118 0 0 1 278 160" />
+            <circle class="home2-panel__node home2-panel__node--lit" cx="278" cy="160" r="9" />
+            <circle class="home2-panel__node" cx="160" cy="278" r="6" />
+            <circle class="home2-panel__node" cx="42" cy="160" r="6" />
+            <circle class="home2-panel__node" cx="160" cy="42" r="6" />
+          </g>
+          <circle class="home2-panel__core" cx="160" cy="160" r="7" />
+        </svg>
         <div class="home2-panel__copy">
           <p class="home2-eyebrow home2-eyebrow--light">{content.engage.existing.eyebrow}</p>
           <p class="home2-display home2-panel__title">{content.engage.existing.heading}</p>
           <p>{content.engage.existing.body}</p>
         </div>
-        <a class="home2-more home2-more--light" href={content.engage.existing.cta.href}>{content.engage.existing.cta.label}</a>
+        <a class="btn btn--secondary-white btn--sm home2-panel__cta" href={content.engage.existing.cta.href}>{content.engage.existing.cta.label}</a>
       </aside>
     </div>
   </section>
@@ -309,7 +320,7 @@ const proof = [
           <span class="home2-display home2-brief__title">{content.research.brief.title}</span>
           <p class="home2-brief__dek">{content.research.brief.dek}</p>
           <ul class="home2-brief__contents">
-            <li class="home2-brief__contents-heading">{content.research.brief.contentsHeading}</li>
+            <li class="home2-label home2-brief__contents-heading">{content.research.brief.contentsHeading}</li>
             {content.research.brief.contents.map((item) => <li>{item}</li>)}
           </ul>
           <span class="home2-more home2-more--light">{content.research.brief.cta.label}</span>
@@ -355,7 +366,7 @@ const proof = [
 
   <section class="home2-recognition" id="recognition" aria-labelledby="home2-recognition-title">
     <div class="home2-shell home2-recognition__inner">
-      <div class="home2-recognition__copy">
+      <div class="home2-head home2-recognition__copy">
         <p class="home2-eyebrow">{content.recognition.eyebrow}</p>
         <h2 id="home2-recognition-title">{content.recognition.heading}</h2>
         <p>{content.recognition.intro}</p>
@@ -371,7 +382,7 @@ const proof = [
         <div class="home2-badges">
           {content.recognition.cards.map((card) => (
             <div class="home2-badge">
-              <span class="home2-badge__label">{card.title}</span>
+              <span class="home2-label home2-badge__label">{card.title}</span>
               <span class="home2-badge__text">{card.body}</span>
             </div>
           ))}
@@ -382,7 +393,7 @@ const proof = [
 
   <section class="home2-section home2-section--paper home2-talk" id="home2-talk" aria-labelledby="home2-talk-title">
     <div class="home2-shell home2-talk__inner">
-      <div class="home2-talk__copy">
+      <div class="home2-head home2-talk__copy">
         <p class="home2-eyebrow">{content.talk.eyebrow}</p>
         <h2 id="home2-talk-title">{content.talk.heading}</h2>
         <p>{content.talk.intro}</p>

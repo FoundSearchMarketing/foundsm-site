@@ -129,7 +129,7 @@ export const homeV2Content: HomeV2Content = {
     eyebrow: 'Your Agency of Results',
     headlineLines: ['We build', 'data-engineered', 'media systems.'],
     body:
-      'FoundSM is a data engineering firm for paid media. We connect your signals, model the demand, activate the media and measure what moved. Accountable through proof, not hours.',
+      'FoundSM is a data engineering firm for paid media. We build with AI: systems that connect your signals, model the demand, activate the media and measure what moved. Accountable through proof, not hours.',
     cta: { label: 'Talk with us', href: '#home2-talk' },
     /** "The Found Loop" site cut (silent, seamless loop). Empty strings fall back to the placeholder panel. */
     videoUrl: 'https://cdn.sanity.io/files/vzneqxsx/staging/628ec3f19c7354550b871be98a529500452323dc.mp4',

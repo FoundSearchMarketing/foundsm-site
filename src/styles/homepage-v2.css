@@ -1208,10 +1208,13 @@ a:hover > .home2-more {
 
 /* ----------------------------------------------------------------- team */
 
+/* Copy and image sit side by side from 900px up: the copy fills up to a
+   readable measure, the image follows it at a fixed gap and is sized to the
+   copy block (about 28rem on wide screens, scaling down with the viewport),
+   so it neither dominates the row nor drifts to the far edge. */
 .home2-team__inner {
   display: grid;
-  align-items: center;
-  gap: 3rem 5rem;
+  gap: 3rem;
 }
 
 .home2-team__copy {
@@ -1221,7 +1224,6 @@ a:hover > .home2-more {
 
 .home2-team__lead,
 .home2-team__body {
-  max-width: 48ch;
   color: var(--h2-muted);
   font-size: var(--h2-text-body);
   line-height: var(--h2-lh-body);
@@ -1232,12 +1234,10 @@ a:hover > .home2-more {
   margin-top: 0.5rem;
 }
 
-/* The lattice image is an accent beside the copy, not a second hero. The
-   selector carries .home2 so it outranks the generic .home2 img max-width. */
+/* The selector carries .home2 so it outranks the generic .home2 img max-width. */
 .home2 .home2-team__image {
   display: block;
-  width: 100%;
-  max-width: 18rem;
+  width: min(100%, 22rem);
   aspect-ratio: 1;
   object-fit: cover;
   border-radius: var(--h2-radius);
@@ -1245,12 +1245,21 @@ a:hover > .home2-more {
 
 @media (min-width: 900px) {
   .home2-team__inner {
-    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    display: flex;
+    align-items: center;
+    gap: clamp(3rem, 6vw, 5rem);
+  }
+
+  .home2-team__copy {
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: 62ch;
   }
 
   .home2 .home2-team__image {
-    max-width: 24rem;
-    justify-self: end;
+    --h2-team-image: clamp(18rem, 36vw, 28rem);
+    flex: 0 0 var(--h2-team-image);
+    width: var(--h2-team-image);
   }
 }
 

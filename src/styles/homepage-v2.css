@@ -1239,11 +1239,13 @@ a:hover > .home2-more {
 .home2-team__copy {
   display: grid;
   gap: var(--h2-stack-gap);
-  max-width: 62ch;
 }
 
+/* Paragraphs keep a reading measure; the heading may run the full column so
+   "your" stays on the first line at desktop widths. */
 .home2-team__lead,
 .home2-team__body {
+  max-width: 62ch;
   color: var(--h2-muted);
   font-size: var(--h2-text-body);
   line-height: var(--h2-lh-body);

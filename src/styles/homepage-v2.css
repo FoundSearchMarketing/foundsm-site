@@ -222,11 +222,31 @@ a:hover > .home2-more {
   background: var(--h2-ink);
 }
 
-.home2-video video {
+.home2-video video,
+.home2-video__poster {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.home2-video--live {
+  display: block;
+}
+
+/* Reduced motion: the still stands in for the loop. */
+.home2-video__poster {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home2-video--live video {
+    display: none;
+  }
+
+  .home2-video__poster {
+    display: block;
+  }
 }
 
 .home2-video__play {

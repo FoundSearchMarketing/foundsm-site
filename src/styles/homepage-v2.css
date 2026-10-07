@@ -1241,11 +1241,10 @@ a:hover > .home2-more {
   gap: var(--h2-stack-gap);
 }
 
-/* Paragraphs keep a reading measure; the heading may run the full column so
-   "your" stays on the first line at desktop widths. */
+/* Heading and paragraphs run the full copy column, the same right edge as
+   the How we engage text above. */
 .home2-team__lead,
 .home2-team__body {
-  max-width: 62ch;
   color: var(--h2-muted);
   font-size: var(--h2-text-body);
   line-height: var(--h2-lh-body);

@@ -1358,8 +1358,12 @@ html.has-menu-open {
 /* --------------------------------------------------------------------------
    8. Footer
    -------------------------------------------------------------------------- */
+/* Wordmark and address, four link columns mirroring the primary navigation,
+   and a legal row. White, quiet, same width as the header. */
 .site-footer {
+  background: var(--color-white);
   color: var(--color-dark);
+  border-block-start: 1px solid rgba(26, 26, 26, 0.12);
 }
 
 .site-footer__inner {
@@ -1367,333 +1371,137 @@ html.has-menu-open {
   margin-inline: auto;
 }
 
-.site-footer__upper {
-  background: var(--color-surface-muted);
+/* Phones: brand on top, link columns two by two; desktop: brand plus four. */
+.site-footer__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2.5rem 2rem;
+  padding-block: 3.5rem 2.5rem;
 }
 
-.site-footer__columns {
+.site-footer__brand {
   display: grid;
-  /* Content-sized tracks + space-between keeps the visual gap between
-     sections equal even though the brand column is narrower.
+  grid-column: 1 / -1;
+  align-content: start;
+  gap: 0.875rem;
+}
 
-     At 25rem each text column had 380px of usable width after its 10px side
-     padding. That was ~16px short of the 396px "Sign Up for Our Newsletter"
-     needs to stay on one line, and ~9px short of the 389px that pulls "fit."
-     up out of a one-word last line in the Start the Conversation paragraph.
-     The conversation track only needs 26rem for that, and giving it 27rem
-     starves the newsletter track near 1240px, so the two differ on purpose.
-     The gap cap comes down so both tracks can reach their max near 1280px;
-     above ~1300px space-between governs the visual gap, so the cap is inert
-     there. */
-  grid-template-columns: auto minmax(0, 26rem) minmax(0, 27rem);
-  justify-content: space-between;
-  gap: clamp(2rem, 3.5vw, 3.5rem);
-  padding-block: clamp(2.5rem, 6.65vw, 6rem);
+.site-footer__wordmark {
+  display: inline-block;
+  color: var(--color-dark);
+  font-family: 'Archivo', 'Arial Narrow', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 1.625rem;
+  font-stretch: 82%;
+  font-variation-settings: 'wdth' 82;
+  font-weight: 900;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.site-footer__wordmark span {
+  color: var(--color-primary);
+}
+
+.site-footer__address {
+  color: #4a4547;
+  font-size: 0.875rem;
+  font-style: normal;
+  line-height: 1.6;
+}
+
+.site-footer__address a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.site-footer__address a:hover,
+.site-footer__address a:focus-visible {
+  color: #4f7a16;
 }
 
 .site-footer__column {
   display: grid;
   align-content: start;
-  justify-items: start;
-  gap: 1rem;
+  gap: 0.75rem;
 }
 
-.site-footer__brand {
-  display: inline-flex;
-  align-items: center;
-}
-
-.site-footer__logo {
-  inline-size: 15.625rem;
-  block-size: auto;
-}
-
-.site-footer__socials {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.3125rem;
-  list-style: none;
-  padding: 0;
+.site-footer__title {
   margin: 0;
+  color: var(--color-dark);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.4;
 }
 
-.site-footer__social-link {
+.site-footer__links {
   display: grid;
-  place-items: center;
-  inline-size: 2.5rem;
-  block-size: 2.5rem;
-  border-radius: 50%;
+  gap: 0.625rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-footer__links a {
   color: var(--color-dark);
-  transition:
-    color var(--transition-fast),
-    background-color var(--transition-fast),
-    transform var(--transition-fast);
-}
-
-.site-footer__social-link:hover {
-  background: rgba(139, 197, 63, 0.16);
-  color: var(--color-primary);
-  transform: translateY(-1px);
-}
-
-.site-footer__social-link svg {
-  inline-size: 1.125rem;
-  block-size: 1.125rem;
-  fill: currentColor;
-}
-
-.site-footer__address {
-  color: var(--color-dark);
-  font-size: 1.25rem;
-  font-style: normal;
-  line-height: 2.25rem;
-}
-
-.site-footer__address a {
-  color: var(--color-primary);
+  font-size: 0.875rem;
+  line-height: 1.4;
+  text-decoration: none;
   transition: color var(--transition-fast);
 }
 
-.site-footer__address a:hover {
-  color: var(--color-dark);
-}
-
-.site-footer__heading {
-  font-family: var(--font-body);
-  font-size: 1.875rem;
-  font-weight: 700;
-  letter-spacing: -0.0125rem;
-  line-height: 2.5rem;
-  color: var(--color-dark);
-}
-
-.site-footer__copy {
-  max-inline-size: 100%;
-  color: var(--color-dark);
-  font-size: 1.25rem;
-  line-height: 2.25rem;
-}
-
-.site-footer__button,
-.site-footer__newsletter-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-block-size: 3.75rem;
-  padding-inline: 2.25rem;
-  border-radius: var(--radius-pill);
-  background: var(--color-dark);
-  color: var(--color-white);
-  font-size: 1.125rem;
-  font-weight: 500;
-  line-height: 1.5rem;
-  cursor: pointer;
-  transition:
-    background-color var(--transition-fast),
-    transform var(--transition-fast);
-}
-
-.site-footer__button:hover,
-.site-footer__newsletter-button:hover {
-  background: #3a3536;
-  transform: translateY(-1px);
-}
-
-.site-footer__newsletter-card {
-  display: grid;
-  gap: 1rem;
-  inline-size: min(100%, 28rem);
-  padding: 1.5rem;
-  border: 1px solid var(--color-border-subtle);
-  border-radius: 1.75rem;
-  background: rgba(255, 255, 255, 0.78);
-  box-shadow: 0 14px 32px rgba(26, 26, 26, 0.06);
-  backdrop-filter: blur(10px);
-}
-
-.site-footer__newsletter-form {
-  display: grid;
-  gap: 0.75rem;
-}
-
-.site-footer__label {
-  color: var(--color-mid);
-  font-size: 0.875rem;
-  font-weight: 500;
-  line-height: 1.2;
-}
-
-.site-footer__field-row {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 0.75rem;
-}
-
-.site-footer__input {
-  min-block-size: 3.75rem;
-  padding-inline: 1.25rem;
-  border: 1px solid rgba(26, 26, 26, 0.18);
-  border-radius: 1.25rem;
-  background: var(--color-white);
-  color: var(--color-dark);
-  font: inherit;
-}
-
-.site-footer__input::placeholder {
-  color: rgba(26, 26, 26, 0.65);
-}
-
-.site-footer__note {
-  color: var(--color-mid);
-  font-size: 0.875rem;
-  line-height: 1.5;
-}
-
-/* The embed's own #_form_<hash>_ rule sets margin: 25px auto 0 and
-   padding: 15px 20px. The 20px inset the fields from the column edge while the
-   heading above sat flush; the 15px pushed the first field a matching 15px
-   below where the Start the Conversation copy starts. Zeroing both, plus the
-   margin the old -1.5625rem hack used to cancel, puts the label, inputs and
-   submit flush left and on the same baseline as the copy in the next column.
-   Scoped to the wrapper id because the embed's own id hash changes per build. */
-#footer-ac-form form {
-  margin-block-start: 0 !important;
-  padding: 0 !important;
-}
-
-/* ActiveCampaign form embeds: submit buttons follow the canonical .btn pill.
-   Scoped under owned wrapper ids to out-specify the embeds' own
-   #_form_<hash>_ !important rules (the hash changes between embed builds). */
-#footer-ac-form form ._submit,
-#newsletter-ac-form form ._submit {
-  min-block-size: 3.25rem;
-  padding: 0.9rem 1.75rem !important;
-  border: 0 !important;
-  border-radius: var(--radius-pill) !important;
-  font-family: var(--font-body) !important;
-  font-size: var(--text-btn) !important;
-  font-weight: 500 !important;
-  line-height: 1.2 !important;
-  cursor: pointer;
-}
-
-#footer-ac-form form ._submit,
-#newsletter-ac-form form ._submit {
-  background: var(--color-primary) !important;
-  color: var(--color-dark) !important;
-}
-
-#footer-ac-form form ._submit:hover,
-#newsletter-ac-form form ._submit:hover {
-  background: var(--color-primary-hover) !important;
-}
-
-/* The newsletter form sits on the dark contact-page field, so its labels and
-   helper text go white. Inputs keep the embed's light fill. */
-#newsletter-ac-form ._form-content,
-#newsletter-ac-form ._form-label,
-#newsletter-ac-form ._form_element ._form-label {
-  color: var(--color-white) !important;
-}
-
-#newsletter-ac-form ._form_element input[type='text'],
-#newsletter-ac-form ._form_element input[type='email'],
-#newsletter-ac-form ._form_element input[type='tel'] {
-  background: var(--color-white) !important;
-  border-color: rgba(255, 255, 255, 0.35) !important;
-}
-
-/* The ActiveCampaign embed renders inline and sizes itself, so this only has
-   to set the width. Everything else here was scaffolding for the HubSpot
-   iframe this replaced: a --footer-newsletter-form-inset that widened the
-   iframe past the column and shifted it back to hide its internal padding,
-   an 18rem reservation for the iframe's height, overflow: hidden to clip the
-   overhang, and a -1.5625rem margin cancelling the embed's own 25px. None of
-   it matched anything after the AC swap except the reservation and the
-   margin, which between them left 60px of dead space and pulled the form off
-   the baseline its neighbouring column sits on. */
-.site-footer__newsletter-embed {
-  inline-size: 100%;
+.site-footer__links a:hover,
+.site-footer__links a:focus-visible {
+  color: #4f7a16;
 }
 
 .site-footer__lower {
-  background: var(--color-dark);
-}
-
-.site-footer__lower-inner {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 1.5rem;
-  padding-block: 1.25rem;
+  gap: 0.75rem 1.5rem;
+  padding-block: 0 2.5rem;
+  color: #4a4547;
+  font-size: 0.8125rem;
+  line-height: 1.5;
 }
 
 .site-footer__copyright {
-  color: var(--color-white);
-  font-size: 1rem;
-  line-height: 1.25rem;
+  margin: 0;
 }
 
 .site-footer__legal {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: flex-end;
-  gap: 0;
-  list-style: none;
-  padding: 0;
+  gap: 0.75rem 1.25rem;
   margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.site-footer__legal-item {
-  display: flex;
-  align-items: center;
-}
-
-.site-footer__legal-item + .site-footer__legal-item {
-  margin-inline-start: 1rem;
-  padding-inline-start: 1rem;
-  border-inline-start: 1px solid rgba(255, 255, 255, 0.38);
-}
-
-.site-footer__legal-link {
-  color: var(--color-white);
-  font-size: 1rem;
-  line-height: 2rem;
+.site-footer__legal a,
+.site-footer__cookie {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #4a4547;
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
   transition: color var(--transition-fast);
 }
 
-.site-footer__legal-link:hover {
-  color: var(--color-primary);
-}
-
-.site-footer__cookie {
-  padding: 0.5rem 1rem;
-  border: 0;
-  border-radius: 999px;
-  background: var(--color-white);
-  color: var(--color-dark);
-  font: inherit;
-  font-size: 0.875rem;
-  line-height: 1rem;
-  cursor: pointer;
-  transition:
-    background-color var(--transition-fast),
-    color var(--transition-fast);
-}
-
-.site-footer__cookie:hover {
-  background: var(--color-primary);
-  color: var(--color-dark);
-}
-
-.site-footer__sr-only {
-  position: absolute;
-  inline-size: 1px;
-  block-size: 1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
+.site-footer__legal a:hover,
+.site-footer__legal a:focus-visible,
+.site-footer__cookie:hover,
+.site-footer__cookie:focus-visible {
+  color: #4f7a16;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
 }
 
 @media (min-width: 1025px) {
@@ -1701,111 +1509,13 @@ html.has-menu-open {
     inline-size: var(--header-content-width);
   }
 
-  .site-footer__column {
-    padding-inline: 0.625rem;
+  .site-footer__grid {
+    grid-template-columns: minmax(15rem, 1.5fr) repeat(4, minmax(0, 1fr));
+    gap: 2.5rem 4rem;
   }
 
-  .site-footer__lower-inner {
-    padding-inline: 1.25rem;
-  }
-}
-
-@media (max-width: 1024px) {
-  .site-footer__columns {
-    grid-template-columns: 1fr;
-    justify-items: start;
-    text-align: left;
-    gap: 2.5rem;
-  }
-
-  .site-footer__column {
-    justify-items: start;
-  }
-
-  .site-footer__copy,
-  .site-footer__newsletter-card {
-    max-inline-size: 34rem;
-  }
-
-  .site-footer__heading {
-    font-size: 1.5rem;
-    line-height: 2rem;
-    letter-spacing: -0.03125rem;
-  }
-
-  .site-footer__copy,
-  .site-footer__address {
-    font-size: 1.125rem;
-    line-height: 1.875rem;
-  }
-
-  .site-footer__button,
-  .site-footer__newsletter-button {
-    font-size: 1rem;
-    line-height: 1.25rem;
-  }
-
-  .site-footer__lower-inner {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .site-footer__legal {
-    justify-content: center;
-  }
-}
-
-@media (max-width: 767px) {
-  .site-footer__columns {
-    justify-items: start;
-    text-align: left;
-  }
-
-  .site-footer__column {
-    justify-items: start;
-  }
-
-  .site-footer__heading {
-    font-size: 1.5rem;
-    line-height: 2rem;
-  }
-
-  .site-footer__copy,
-  .site-footer__address {
-    font-size: 1.125rem;
-    line-height: 1.875rem;
-  }
-
-  .site-footer__field-row {
-    grid-template-columns: 1fr;
-  }
-
-  .site-footer__newsletter-button {
-    inline-size: 100%;
-  }
-
-  .site-footer__newsletter-embed {
-    inline-size: min(21.875rem, calc(100vw - 2.5rem));
-  }
-
-  .site-footer__legal {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-  }
-
-  .site-footer__legal-item + .site-footer__legal-item {
-    margin-inline-start: 0;
-    padding-inline-start: 0.75rem;
-    border-inline-start: 1px solid rgba(255, 255, 255, 0.35);
-  }
-
-  .site-footer__legal-item:last-child {
-    flex-basis: 100%;
-    display: flex;
-    justify-content: center;
-    padding-inline-start: 0;
-    border-inline-start: 0;
+  .site-footer__brand {
+    grid-column: auto;
   }
 }
 

@@ -5,7 +5,7 @@ import { homePageQuery, homeSignalsQuery, sanityClient } from '../lib/sanity';
 import { mergeHomePageData } from '../lib/homePageData';
 import type { HomeV2Signal } from '../lib/homeV2Data';
 
-type SignalPost = { title?: string; slug?: string; publishedAt?: string };
+type SignalPost = { title?: string; slug?: string; publishedAt?: string; excerpt?: string };
 
 const [homePageData, signalPosts] = await Promise.all([
   sanityClient.fetch(homePageQuery).catch(() => null),
@@ -23,6 +23,7 @@ const signals: HomeV2Signal[] = (signalPosts || [])
   .map((post) => ({
     label: ['Signal', signalDate(post.publishedAt)].filter(Boolean).join(' · '),
     title: post.title as string,
+    summary: post.excerpt?.trim() || undefined,
     href: `/insights/${post.slug}/`,
   }));
 

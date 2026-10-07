@@ -41,6 +41,8 @@ export type HomeV2Signal = {
   label: string;
   title: string;
   href: string;
+  /** One line under the title; the post excerpt once a Signal is published. */
+  summary?: string;
 };
 
 export type HomeV2Logo = {
@@ -109,7 +111,7 @@ export type HomeV2Content = {
       subscribeError: string;
       subscribeFallback: HomeV2Link;
     };
-    signals: { heading: string; intro: string; allLink: HomeV2Link; drafts: HomeV2Signal[] };
+    signals: { heading: string; intro: string; note: string; allLink: HomeV2Link; drafts: HomeV2Signal[] };
   };
   recognition: { eyebrow: string; heading: string; intro: string; cards: HomeV2Column[] };
   talk: {
@@ -337,22 +339,26 @@ export const homeV2Content: HomeV2Content = {
       heading: 'Found Signals',
       intro:
         'Short, frequent notes on what we are testing, what new models and tools actually produce, and what we find interesting.',
+      note: 'Each Signal is one finding in 150 to 300 words: what we saw, what we did about it, published the week we found it.',
       allLink: { label: 'All Signals', href: '/insights/' },
       /** Shown until the first Signals are published in Sanity. */
       drafts: [
         {
           label: 'Draft · Paid search',
           title: 'AI Max rewrote the ad copy. Nobody got a notification.',
+          summary: 'What the rewritten ads said, how we caught it, and the guardrail now on every account.',
           href: '/insights/',
         },
         {
           label: 'Draft · Landing pages',
           title: 'We deleted the top of the page. Mobile conversions went up a third.',
+          summary: 'One landing-page test with a result we did not expect, and what it changed in how we build mobile pages.',
           href: '/insights/',
         },
         {
           label: 'Draft · Brand safety',
           title: "Half your PMax budget runs where you can't see it. One setting takes it back.",
+          summary: 'Where Performance Max spends when nobody is looking, and the account-level exclusion that takes it back.',
           href: '/insights/',
         },
       ],
@@ -362,7 +368,7 @@ export const homeV2Content: HomeV2Content = {
     eyebrow: 'Partnerships & recognition',
     heading: 'Certified by the platforms. Recognized at home.',
     intro:
-      'Partner status with every platform we buy on, and the credentials buyers ask about before the first call.',
+      "Partner status with every platform we buy on. Google, Microsoft and Meta certify the people who run your account and recertify them as the platforms change. That standing brings early access to alpha and beta programs, a direct line into platform roadmaps, and the credentials buyers ask about before the first call. The recognition beside it comes from the industry and from home: a Microsoft Advertising Partner of the Year finalist, a certified women-owned business, and three straight years on the Indianapolis Business Journal's Top 25 agency list.",
     cards: [
       { title: 'Microsoft Advertising', body: 'Partner of the Year finalist, 2026' },
       { title: 'Certification', body: 'Certified women-owned business' },
@@ -373,7 +379,7 @@ export const homeV2Content: HomeV2Content = {
     eyebrow: 'Talk with us',
     heading: "Let's look at your account.",
     intro:
-      'Thirty minutes with the people who would do the work. We will tell you what we see, whether or not it leads to a deployment.',
+      'Thirty minutes with the people who would do the work, not a sales team. Bring your account, your tracking setup or the question that has been nagging you, and we will walk through how your signals, models and media connect today. You will hear what we see and what we would change first. If a deployment makes sense, we will say so and what it would involve. If it does not, you still leave with a clearer read on your own system. Someone replies within one business day.',
     fields: {
       name: 'Full name',
       email: 'Business email',
@@ -533,9 +539,10 @@ export type HomeV2SanityDoc = {
     signals?: {
       heading?: string | null;
       intro?: string | null;
+      note?: string | null;
       allLinkText?: string | null;
       allLinkUrl?: string | null;
-      drafts?: Array<{ label?: string | null; title?: string | null; url?: string | null }> | null;
+      drafts?: Array<{ label?: string | null; title?: string | null; summary?: string | null; url?: string | null }> | null;
     } | null;
   } | null;
   recognition?: Head & { cards?: Column[] | null };
@@ -686,6 +693,7 @@ export function mergeHomeV2Content(doc: HomeV2SanityDoc | null | undefined, imag
       signals: {
         heading: text(page.research?.signals?.heading, d.research.signals.heading),
         intro: text(page.research?.signals?.intro, d.research.signals.intro),
+        note: text(page.research?.signals?.note, d.research.signals.note),
         allLink: {
           label: text(page.research?.signals?.allLinkText, d.research.signals.allLink.label),
           href: text(page.research?.signals?.allLinkUrl, d.research.signals.allLink.href),
@@ -693,6 +701,7 @@ export function mergeHomeV2Content(doc: HomeV2SanityDoc | null | undefined, imag
         drafts: list(page.research?.signals?.drafts, d.research.signals.drafts, (item, fallback) => ({
           label: optionalText(item.label, fallback?.label || ''),
           title: text(item.title, fallback?.title || ''),
+          summary: optionalText(item.summary, fallback?.summary || ''),
           href: text(item.url, fallback?.href || '/insights/'),
         })),
       },

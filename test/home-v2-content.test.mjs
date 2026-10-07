@@ -49,7 +49,12 @@ test('merge fills arrays from the defaults at the same index and keeps default a
   assert.deepEqual(merged.loop.stages[1], { number: '2', title: homeV2Content.loop.stages[1].title, body: 'Second body' });
   assert.deepEqual(merged.ai.columns, homeV2Content.ai.columns);
   assert.deepEqual(merged.research.signals.drafts, [
-    { label: homeV2Content.research.signals.drafts[0].label, title: 'A real draft', href: '/insights/a-real-draft/' },
+    {
+      label: homeV2Content.research.signals.drafts[0].label,
+      title: 'A real draft',
+      summary: homeV2Content.research.signals.drafts[0].summary,
+      href: '/insights/a-real-draft/',
+    },
   ]);
 });
 

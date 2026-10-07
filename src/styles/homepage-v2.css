@@ -1265,7 +1265,14 @@ a:hover > .home2-more {
 
 /* ------------------------------------------------------------- research */
 
+/* One "Research" eyebrow over the section, then the Brief and Signals columns
+   with matching headings. */
 .home2-research__inner {
+  display: grid;
+  gap: 1.75rem;
+}
+
+.home2-research__grid {
   display: grid;
   gap: 3rem;
 }
@@ -1384,14 +1391,26 @@ a:hover > .home2-more {
   color: var(--h2-soft);
 }
 
+/* The Signals column stretches to the Brief column's height: the list takes
+   the spare room and each row centers its text inside its share. */
+.home2-research__col--signals {
+  display: flex;
+  flex-direction: column;
+  gap: var(--h2-stack-gap);
+}
+
 .home2-signals {
-  display: grid;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
   margin: 0.5rem 0 0;
   padding: 0;
   list-style: none;
 }
 
 .home2-signals li {
+  display: flex;
+  flex: 1;
   border-top: 1px solid var(--h2-dark-line);
 }
 
@@ -1401,10 +1420,23 @@ a:hover > .home2-more {
 
 .home2-signals a {
   display: grid;
+  flex: 1;
+  align-content: center;
   gap: 0.25rem;
   padding: 1.125rem 0;
   color: #fff;
   text-decoration: none;
+}
+
+.home2-signals__summary,
+.home2-signals__note {
+  color: var(--h2-light);
+  font-size: var(--h2-text-small);
+  line-height: var(--h2-lh-small);
+}
+
+.home2-signals__summary {
+  margin-top: 0.125rem;
 }
 
 .home2-signals a:hover .home2-signals__title {
@@ -1424,7 +1456,7 @@ a:hover > .home2-more {
 }
 
 @media (min-width: 900px) {
-  .home2-research__inner {
+  .home2-research__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }

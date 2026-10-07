@@ -156,12 +156,12 @@ const proof = [
   <section class="home2-section home2-section--paper home2-loop" id="loop" aria-labelledby="home2-loop-title">
     <div class="home2-shell home2-loop__inner">
       <div class="home2-loop__head">
-        <div class="home2-head">
+        <div class="home2-head home2-loop__title">
           <p class="home2-eyebrow">{content.loop.eyebrow}</p>
           <h2 id="home2-loop-title">{content.loop.heading}</h2>
-          <p>{content.loop.intro}</p>
         </div>
-        {content.loop.strapline && <p class="home2-loop__strapline">{content.loop.strapline}</p>}
+        {content.loop.strapline && <p class="home2-body home2-loop__strapline">{content.loop.strapline}</p>}
+        <p class="home2-body home2-loop__intro">{content.loop.intro}</p>
       </div>
       <ol class="home2-loop__stages">
         {content.loop.stages.map((stage) => (

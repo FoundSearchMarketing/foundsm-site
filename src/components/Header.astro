@@ -5,10 +5,18 @@ const isPathSection = (href: string) => {
   const normalizedHref = href.replace(/\/$/, '') || '/';
   return currentPath === normalizedHref || currentPath.startsWith(`${normalizedHref}/`);
 };
+// `match` is 'exact' (the menu's own href only) or 'section:' followed by one or more
+// path prefixes separated by '|', so a menu can own several URL sections at once.
+const isMenuCurrent = (menu: { href: string; match: string }) =>
+  menu.match === 'exact'
+    ? isExactPath(menu.href)
+    : menu.match.replace('section:', '').split('|').some(isPathSection);
+// Labels follow the Oct 2026 restructure: Expertise, Work, Research, Company, Talk with us.
+// Every page that was reachable from the old menu is still linked below.
 const megaMenus = [
   {
-    id: 'capabilities',
-    label: 'Capabilities',
+    id: 'expertise',
+    label: 'Expertise',
     href: '/capabilities/',
     match: 'exact',
     pillars: [
@@ -37,22 +45,22 @@ const megaMenus = [
       ] },
     ],
     panel: {
-      title: 'Specialized Services',
-      desc: 'Engagements built for a specific moment in your business.',
+      title: 'How We Engage',
+      desc: 'The method behind every account, and the engagements built for a specific moment in your business.',
       links: [
-        { label: 'Custom Builds', href: '/resources/tools/custom-builds/' },
-        { label: 'AI & Automation', href: '/capabilities/ai-automation/' },
+        { label: 'How We Work', href: '/our-approach/' },
         { label: 'Ad Account Migration', href: '/capabilities/ad-account-migration/' },
+        { label: 'AI & Automation', href: '/capabilities/ai-automation/' },
+        { label: 'Custom Builds', href: '/resources/tools/custom-builds/' },
       ],
     },
   },
   {
-    id: 'approach',
-    label: 'Our Approach',
-    href: '/our-approach/',
-    match: 'exact',
+    id: 'work',
+    label: 'Work',
+    href: '/results/',
+    match: 'section:/results/|/industry/',
     pillars: [
-      { label: 'How We Work', href: '/our-approach/', desc: 'The custom playbook and the self-reinforcing optimization cycle behind every account.' },
       { label: 'Results', href: '/results/', desc: 'Twenty years, $210M in media, and the numbers behind the work.' },
       { label: 'By Industry', href: '/industry/', desc: 'The same approach, shaped by the constraints of your market.', children: [
         { label: 'Home Services', href: '/industry/home-services/' },
@@ -69,17 +77,17 @@ const megaMenus = [
     },
   },
   {
-    id: 'resources',
-    label: 'Resources',
-    href: '/resources/tools/',
-    match: 'section:/resources/',
+    id: 'research',
+    label: 'Research',
+    href: '/insights/',
+    match: 'section:/insights/|/events/|/whitepapers/|/resources/',
     pillars: [
+      { label: 'Insights', href: '/insights/', desc: 'Problem-first thinking on paid media, data, and AI.' },
+      { label: 'Events', href: '/events/', desc: 'Where we have been, and where we are headed next.' },
+      { label: 'Whitepapers', href: '/whitepapers/first-party-data/', desc: 'Long-form research on the data problems costing you revenue.' },
       { label: 'Tools & Custom Builds', href: '/resources/tools/', desc: 'The systems we built because nothing off the shelf worked.', children: [
         { label: 'The Found Build Library', href: '/resources/tools/custom-builds/' },
       ] },
-      { label: 'Whitepapers', href: '/whitepapers/first-party-data/', desc: 'Long-form research on the data problems costing you revenue.' },
-      { label: 'Events', href: '/events/', desc: 'Where we have been, and where we are headed next.' },
-      { label: 'Insights', href: '/insights/', desc: 'Problem-first thinking on paid media, data, and AI.' },
     ],
     panel: {
       title: 'Free Tools',
@@ -91,13 +99,13 @@ const megaMenus = [
     },
   },
   {
-    id: 'about',
-    label: 'About Us',
+    id: 'company',
+    label: 'Company',
     href: '/about-us/',
     match: 'exact',
     compact: true,
     pillars: [
-      { label: 'Who We Are', href: '/about-us/', desc: 'A data engineering firm that activates paid media.' },
+      { label: 'About', href: '/about-us/', desc: 'A data engineering firm for paid media.' },
       { label: 'Team', href: '/team/', desc: 'The people doing the work on your account.' },
       { label: 'Newsletter', href: '/newsletter/', desc: 'Strategy, platform changes, and first invites to our events.' },
     ],
@@ -133,11 +141,11 @@ const megaMenus = [
         {megaMenus.map((menu) => (
           menu.simple ? (
           <li class="site-header__item">
-            <a class="site-header__link" href={menu.href} aria-current={(menu.match === 'exact' ? isExactPath(menu.href) : isPathSection(menu.match.replace('section:',''))) ? 'page' : undefined}>{menu.label}</a>
+            <a class="site-header__link" href={menu.href} aria-current={isMenuCurrent(menu) ? 'page' : undefined}>{menu.label}</a>
           </li>
           ) : (
           <li class="site-header__item site-header__item--has-submenu site-header__item--mega">
-            <a class="site-header__link" href={menu.href} aria-current={(menu.match === 'exact' ? isExactPath(menu.href) : isPathSection(menu.match.replace('section:',''))) ? 'page' : undefined}>{menu.label}</a>
+            <a class="site-header__link" href={menu.href} aria-current={isMenuCurrent(menu) ? 'page' : undefined}>{menu.label}</a>
             <button class="site-header__submenu-toggle" type="button" aria-label={`Toggle ${menu.label} submenu`} aria-expanded="false" aria-controls={`submenu-${menu.id}`}>
               <span class="site-header__sr-only">Toggle {menu.label} submenu</span>
             </button>
@@ -173,7 +181,7 @@ const megaMenus = [
           )
         ))}
         <li class="site-header__item site-header__item--cta">
-          <a class="site-header__link site-header__cta site-header__cta--primary" href="/contact-us/">Contact Us</a>
+          <a class="site-header__link site-header__cta site-header__cta--primary" href="/contact-us/">Talk with us</a>
         </li>
         <li class="site-header__item site-header__item--cta">
           <a class="site-header__link site-header__cta site-header__cta--secondary" href="/about-us/#careers">Join Us</a>

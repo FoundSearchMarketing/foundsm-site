@@ -300,12 +300,12 @@ export const homeV2Content: HomeV2Content = {
   },
   team: {
     eyebrow: "Who you'll work with",
-    heading: 'A seamless extension of your team.',
+    heading: 'A seamless extension of your marketing team.',
     lead:
       'Unusually good performance takes a different kind of agency. One that is highly collaborative, with a deep understanding of your business goals. FoundSM is that partner: we fit into your internal workflows, bring clarity, and treat your budget as if it were our own.',
     body:
-      'The people on your account are senior, named and reachable, backed by automation that does the watching. AI buys you more of their attention, not a smaller invoice, and they report on what moved, not on hours billed.',
-    cta: { label: 'Meet the team', href: '/team/' },
+      'The people on your account are senior, named and reachable, backed by automation that does the watching. We sit on your side of the table: in every meeting with Google, Meta or LinkedIn, we represent your account as if it were our own. AI buys you more of that attention, and we report on what moved, not on hours billed.',
+    cta: { label: 'Meet the senior team', href: '/team/' },
     /** Falls back to the Sanity intro image (the lattice) when the team section has no image of its own. */
     imageUrl: '',
     imageAlt: 'One green strand woven through a white lattice',

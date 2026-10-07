@@ -240,7 +240,8 @@ export const homePageQuery = `*[_type == "homePage"][0] {
 export const homeSignalsQuery = `*[_type == "blogPost" && references("category-found-signals") && defined(slug.current) && defined(publishedAt) && publishedAt <= now()] | order(publishedAt desc)[0...3] {
   title,
   "slug": slug.current,
-  publishedAt
+  publishedAt,
+  excerpt
 }`;
 
 export const aboutPageQuery = `*[_id == "aboutPage"][0] {

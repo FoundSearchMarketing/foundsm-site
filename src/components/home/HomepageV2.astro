@@ -312,10 +312,11 @@ const proof = [
     </div>
   </section>
 
-  <section class="home2-section home2-section--dark home2-research" id="research" aria-labelledby="home2-brief-title">
+  <section class="home2-section home2-section--dark home2-research" id="research" aria-labelledby="home2-research-eyebrow">
     <div class="home2-shell home2-research__inner">
+      <p class="home2-eyebrow home2-eyebrow--light" id="home2-research-eyebrow">{content.research.eyebrow}</p>
+      <div class="home2-research__grid">
       <div class="home2-research__col">
-        <p class="home2-eyebrow home2-eyebrow--light">{content.research.eyebrow}</p>
         <h2 id="home2-brief-title">{content.research.brief.heading}</h2>
         <p class="home2-research__intro">{content.research.brief.intro}</p>
         <a class="home2-brief" href={content.research.brief.cta.href}>
@@ -349,8 +350,8 @@ const proof = [
         </form>
       </div>
 
-      <div class="home2-research__col">
-        <h2 class="home2-eyebrow home2-eyebrow--light" id="home2-signals-title">{content.research.signals.heading}</h2>
+      <div class="home2-research__col home2-research__col--signals">
+        <h2 id="home2-signals-title">{content.research.signals.heading}</h2>
         <p class="home2-research__intro">{content.research.signals.intro}</p>
         <ul class="home2-signals" aria-labelledby="home2-signals-title">
           {signalItems.map((signal) => (
@@ -358,11 +359,14 @@ const proof = [
               <a href={signal.href}>
                 <span class="home2-signals__label">{signal.label}</span>
                 <span class="home2-signals__title">{signal.title}</span>
+                {signal.summary && <span class="home2-signals__summary">{signal.summary}</span>}
               </a>
             </li>
           ))}
         </ul>
+        {content.research.signals.note && <p class="home2-signals__note">{content.research.signals.note}</p>}
         <a class="home2-more home2-more--light" href={content.research.signals.allLink.href}>{content.research.signals.allLink.label}</a>
+      </div>
       </div>
     </div>
   </section>

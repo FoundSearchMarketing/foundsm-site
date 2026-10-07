@@ -323,6 +323,7 @@ const homeSectionFields = [
         fields: [
           defineField({ name: 'heading', title: 'Heading', type: 'string' }),
           textField('intro', 'Intro', 3),
+          textField('note', 'Format note', 2),
           defineField({ name: 'allLinkText', title: 'All Signals link text', type: 'string' }),
           defineField({ name: 'allLinkUrl', title: 'All Signals link URL', type: 'string' }),
           defineField({
@@ -335,6 +336,7 @@ const homeSectionFields = [
                 fields: [
                   defineField({ name: 'label', title: 'Label', type: 'string' }),
                   defineField({ name: 'title', title: 'Title', type: 'string', validation: (Rule) => Rule.required() }),
+                  textField('summary', 'One-line summary', 2),
                   defineField({ name: 'url', title: 'URL', type: 'string' }),
                 ],
                 preview: {

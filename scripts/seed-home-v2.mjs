@@ -185,10 +185,11 @@ const set = compact({
     signals: {
       heading: content.research.signals.heading,
       intro: content.research.signals.intro,
+      note: content.research.signals.note,
       allLinkText: content.research.signals.allLink.label,
       allLinkUrl: content.research.signals.allLink.href,
       drafts: content.research.signals.drafts.map((item, index) =>
-        keyed('signal')({ label: item.label, title: item.title, url: item.href }, index),
+        keyed('signal')(compact({ label: item.label, title: item.title, summary: item.summary, url: item.href }), index),
       ),
     },
   },

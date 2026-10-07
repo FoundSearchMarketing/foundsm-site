@@ -558,10 +558,10 @@ p + p {
   padding-block: 0.8125rem;
   padding-inline: 1.1875rem;
   color: var(--color-dark);
-  font-size: 0.9375rem;
+  font-size: 1.0625rem;
   font-weight: 500;
   line-height: 1.8;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
@@ -722,11 +722,11 @@ p + p {
   min-block-size: 3.25rem;
   border: 2px solid transparent;
   border-radius: var(--radius-pill);
-  padding-inline: 1.0625rem;
-  font-size: 0.875rem;
+  padding-inline: 1.25rem;
+  font-size: 1rem;
   font-weight: 600;
   line-height: 1.22;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   justify-content: center;
 }

@@ -549,6 +549,7 @@ p + p {
     opacity var(--transition-fast);
 }
 
+/* Primary navigation reads in caps site-wide (October 2026 direction). */
 .site-header__link {
   position: relative;
   display: inline-flex;
@@ -557,10 +558,11 @@ p + p {
   padding-block: 0.8125rem;
   padding-inline: 1.1875rem;
   color: var(--color-dark);
-  font-size: 1.125rem;
-  font-weight: 400;
+  font-size: 0.9375rem;
+  font-weight: 500;
   line-height: 1.8;
-  letter-spacing: 0;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .site-header__item--has-submenu > .site-header__link {
@@ -721,9 +723,11 @@ p + p {
   border: 2px solid transparent;
   border-radius: var(--radius-pill);
   padding-inline: 1.0625rem;
-  font-size: 1.125rem;
-  font-weight: 500;
+  font-size: 0.875rem;
+  font-weight: 600;
   line-height: 1.22;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   justify-content: center;
 }
 

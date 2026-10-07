@@ -1417,7 +1417,7 @@ html.has-menu-open {
 
 .site-footer__address a:hover,
 .site-footer__address a:focus-visible {
-  color: #4f7a16;
+  color: var(--color-primary);
 }
 
 .site-footer__column {
@@ -1455,7 +1455,7 @@ html.has-menu-open {
 
 .site-footer__links a:hover,
 .site-footer__links a:focus-visible {
-  color: #4f7a16;
+  color: var(--color-primary);
 }
 
 .site-footer__lower {
@@ -1500,7 +1500,7 @@ html.has-menu-open {
 .site-footer__legal a:focus-visible,
 .site-footer__cookie:hover,
 .site-footer__cookie:focus-visible {
-  color: #4f7a16;
+  color: var(--color-primary);
   text-decoration: underline;
   text-underline-offset: 0.2em;
 }

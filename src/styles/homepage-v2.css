@@ -1227,18 +1227,19 @@ a:hover > .home2-more {
 
 /* ----------------------------------------------------------------- team */
 
-/* Copy and image sit side by side from 900px up: the copy fills up to a
-   readable measure, the image follows it at a fixed gap and is sized to the
-   copy block (about 28rem on wide screens, scaling down with the viewport),
-   so it neither dominates the row nor drifts to the far edge. */
+/* Same grid as the How we engage section above, so the image takes the
+   column the dark panel occupies there: same left edge, same right edge,
+   tops aligned with the copy. */
 .home2-team__inner {
   display: grid;
+  align-items: start;
   gap: 3rem;
 }
 
 .home2-team__copy {
   display: grid;
   gap: var(--h2-stack-gap);
+  max-width: 62ch;
 }
 
 .home2-team__lead,
@@ -1262,23 +1263,14 @@ a:hover > .home2-more {
   border-radius: var(--h2-radius);
 }
 
-@media (min-width: 900px) {
+@media (min-width: 1024px) {
   .home2-team__inner {
-    display: flex;
-    align-items: center;
-    gap: clamp(3rem, 6vw, 5rem);
-  }
-
-  .home2-team__copy {
-    flex: 1 1 0;
-    min-width: 0;
-    max-width: 62ch;
+    grid-template-columns: minmax(0, 1.8fr) minmax(18rem, 1fr);
   }
 
   .home2 .home2-team__image {
-    --h2-team-image: clamp(18rem, 36vw, 28rem);
-    flex: 0 0 var(--h2-team-image);
-    width: var(--h2-team-image);
+    width: 100%;
+    max-width: none;
   }
 }
 

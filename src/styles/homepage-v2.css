@@ -455,6 +455,21 @@ a:hover > .home2-more {
   gap: 2.5rem;
 }
 
+/* Heading on the left, the AI strapline on the right, both sitting on the
+   same baseline: the same head layout as the AI section that follows. */
+.home2-loop__head {
+  display: grid;
+  align-items: end;
+  gap: 1.5rem 4rem;
+}
+
+.home2-loop__strapline {
+  max-width: 22ch;
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
 .home2-loop__stages {
   display: grid;
   grid-template-columns: 1fr;
@@ -484,14 +499,20 @@ a:hover > .home2-more {
   line-height: var(--h2-lh-small);
 }
 
-.home2-loop__strapline {
-  font-size: var(--h2-text-body);
-  font-weight: 500;
-}
-
 @media (min-width: 600px) {
   .home2-loop__stages {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 900px) {
+  .home2-loop__head {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  }
+
+  .home2-loop__strapline {
+    justify-self: end;
+    text-align: right;
   }
 }
 

@@ -224,6 +224,34 @@ export const capabilitiesPage = defineType({
         }),
       ],
     }),
+    defineField({
+      name: 'ai',
+      title: 'AI inside the Loop',
+      type: 'object',
+      group: 'content',
+      options: { collapsible: true, collapsed: true },
+      description: 'The dark AI band at the end of the page. Same shape as the homepage section.',
+      fields: [
+        defineField({ name: 'eyebrow', title: 'Eyebrow', type: 'string' }),
+        defineField({ name: 'heading', title: 'Heading', type: 'string' }),
+        defineField({ name: 'intro', title: 'Intro', type: 'text', rows: 3 }),
+        defineField({
+          name: 'columns',
+          title: 'Columns',
+          type: 'array',
+          of: [
+            defineArrayMember({
+              type: 'object',
+              fields: [
+                defineField({ name: 'title', title: 'Title', type: 'string', validation: (Rule) => Rule.required() }),
+                defineField({ name: 'body', title: 'Body', type: 'text', rows: 3 }),
+              ],
+              preview: { select: { title: 'title' } },
+            }),
+          ],
+        }),
+      ],
+    }),
   ],
   initialValue: defaultCapabilitiesPageData,
 });

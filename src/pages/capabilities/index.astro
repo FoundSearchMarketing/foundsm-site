@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import MediaAsset from '../../components/MediaAsset.astro';
+import AiLoopBand from '../../components/AiLoopBand.astro';
 import { capabilitiesPageQuery, sanityClient } from '../../lib/sanity';
 import { defaultCapabilitiesPageData, mergeCapabilitiesPageData } from '../../lib/fixedPageData';
 import { imageProps, richHtml } from '../../lib/fixedPageRender';
@@ -28,6 +29,10 @@ const workflowImageAlt = page.workflow.imageAlt || '';
 const dataImageAlt = dataDetail?.imageAlt || '';
 const paidImageAlt = paidDetail?.imageAlt || '';
 const creativeImageAlt = creativeDetail?.imageAlt || '';
+const ai = page.ai;
+const aiColumns = ai.columns
+  .filter((column) => column.title && column.body)
+  .map((column) => ({ title: column.title as string, body: column.body as string }));
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'WebPage',
@@ -43,7 +48,7 @@ const schema = {
 };
 ---
 
-<BaseLayout title={title} description={description} canonical={canonical} robots={robots} schema={schema}>
+<BaseLayout title={title} description={description} canonical={canonical} robots={robots} schema={schema} bodyClass="site-2026">
   <div class="capabilities-page">
     <section class="capabilities-hero" aria-labelledby="capabilities-hero-title">
       <div class:list={['capabilities-hero__inner', { 'capabilities-hero__inner--text-only': !heroMedia }]}>
@@ -69,7 +74,7 @@ const schema = {
 
     <section class="outcomes-section" aria-labelledby="outcomes-title">
       <div class="outcomes-section__heading">
-        {page.outcomes.eyebrow && <p class="outcomes-section__eyebrow">{page.outcomes.eyebrow}</p>}
+        {page.outcomes.eyebrow && <p class="eyebrow-2026">{page.outcomes.eyebrow}</p>}
         <h2 id="outcomes-title" class="outcomes-section__title">{page.outcomes.heading}</h2>
       </div>
 
@@ -96,7 +101,7 @@ const schema = {
         <div class="workflow-section__copy">
           <h2 id="workflow-title" class="workflow-section__title">{page.workflow.heading}</h2>
           <div class="workflow-section__text" set:html={richHtml(page.workflow.body)} />
-          {page.workflow.prompt && <p class="workflow-section__prompt">{page.workflow.prompt}</p>}
+          {page.workflow.prompt && <p class="workflow-section__prompt more-2026">{page.workflow.prompt}</p>}
         </div>
 
         {workflowMedia && (
@@ -120,7 +125,7 @@ const schema = {
           <h2 id="capability-data-title" class="capability-detail__title">{dataDetail?.heading}</h2>
           <div class="capability-detail__text" set:html={richHtml(dataDetail?.body)} />
           {dataDetail?.cta?.label && dataDetail?.cta?.href && (
-            <a class="btn btn--primary btn--lg capability-detail__button" href={dataDetail.cta.href}>{dataDetail.cta.label}</a>
+            <a class="btn btn--primary capability-detail__button" href={dataDetail.cta.href}>{dataDetail.cta.label}</a>
           )}
         </div>
 
@@ -158,7 +163,7 @@ const schema = {
           <h2 id="capability-paid-title" class="capability-detail__title">{paidDetail?.heading}</h2>
           <div class="capability-detail__text" set:html={richHtml(paidDetail?.body)} />
           {paidDetail?.cta?.label && paidDetail?.cta?.href && (
-            <a class="btn btn--primary btn--lg capability-detail__button" href={paidDetail.cta.href}>{paidDetail.cta.label}</a>
+            <a class="btn btn--primary capability-detail__button" href={paidDetail.cta.href}>{paidDetail.cta.label}</a>
           )}
         </div>
       </div>
@@ -170,7 +175,7 @@ const schema = {
           <h2 id="capability-creative-title" class="capability-detail__title">{creativeDetail?.heading}</h2>
           <div class="capability-detail__text" set:html={richHtml(creativeDetail?.body)} />
           {creativeDetail?.cta?.label && creativeDetail?.cta?.href && (
-            <a class="btn btn--primary btn--lg capability-detail__button" href={creativeDetail.cta.href}>{creativeDetail.cta.label}</a>
+            <a class="btn btn--primary capability-detail__button" href={creativeDetail.cta.href}>{creativeDetail.cta.label}</a>
           )}
         </div>
 
@@ -188,27 +193,29 @@ const schema = {
         )}
       </div>
     </section>
+
+    {ai.eyebrow && ai.heading && ai.intro && aiColumns.length > 0 && (
+      <AiLoopBand id="capabilities-ai" eyebrow={ai.eyebrow} heading={ai.heading} intro={ai.intro} columns={aiColumns} />
+    )}
   </div>
 </BaseLayout>
 
 <style>
+  /* Capabilities page on the 2026 type system: tokens come from site-2026.css. */
   .capabilities-page {
-    --capabilities-dark: #231f20;
-    --capabilities-muted: #414042;
-    --capabilities-light: #f2f3f2;
-    --capabilities-green: #8dc63f;
-    --capabilities-blue: #0aadef;
-    --capabilities-orange: #fa9828;
-    --capabilities-red: #f05660;
-    --capabilities-image-radius: 2.5rem;
-    color: var(--capabilities-dark);
+    color: var(--s26-ink);
     background: #ffffff;
     font-family: var(--font-body);
     overflow: hidden;
   }
 
+  .capabilities-page :is(h1, h2) {
+    margin: 0;
+    color: var(--s26-ink);
+  }
+
   .capabilities-hero {
-    padding-block: var(--split-hero-padding-block);
+    padding-block: clamp(3rem, 6vw, 4.5rem) clamp(3rem, 6vw, 4rem);
     background: #ffffff;
   }
 
@@ -216,131 +223,100 @@ const schema = {
   .outcomes-section__inner,
   .workflow-section__inner,
   .capability-detail__inner {
-    inline-size: var(--split-hero-content-width);
+    inline-size: var(--s26-shell);
     margin-inline: auto;
   }
 
   .capabilities-hero__inner {
     display: grid;
-    grid-template-columns: var(--split-hero-grid-columns);
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
     align-items: start;
-    gap: var(--split-hero-gap);
+    gap: 2.5rem 3rem;
   }
 
   .capabilities-hero__copy {
-    padding-block-start: var(--split-hero-copy-padding-block-start);
-    padding-inline-start: var(--split-hero-copy-padding-inline-start);
+    display: grid;
+    gap: 1.5rem;
   }
 
   .capabilities-hero__inner--text-only {
-    grid-template-columns: minmax(0, var(--split-hero-copy-max-width));
-  }
-
-  .capabilities-hero__title,
-  .workflow-section__title {
-    margin: 0 0 1.25rem;
-    color: var(--capabilities-dark);
-    font-family: var(--font-heading);
-    font-weight: 900;
-    line-height: 1.083;
-    letter-spacing: 0;
+    grid-template-columns: minmax(0, 46rem);
   }
 
   .capabilities-hero__title {
-    font-size: var(--split-hero-title-size);
-    line-height: var(--split-hero-title-line-height);
-  }
-
-  .workflow-section__title {
-    font-size: 3.75rem;
-  }
-
-  .capabilities-hero__text,
-  .outcomes-section__copy,
-  .workflow-section__text,
-  .capability-detail__text {
-    color: var(--capabilities-dark);
-    font-size: var(--split-hero-body-size);
-    font-weight: 400;
-    line-height: var(--split-hero-body-line-height);
+    font-size: var(--s26-size-h1);
+    line-height: 0.94;
   }
 
   .capabilities-hero__text {
-    max-width: var(--split-hero-body-max-width);
+    max-width: 36.25rem;
+    color: var(--s26-muted);
+    font-size: var(--s26-text-lead);
+    line-height: var(--s26-lh-body);
+  }
+
+  .outcomes-section__copy,
+  .workflow-section__text,
+  .capability-detail__text {
+    color: var(--s26-muted);
+    font-size: var(--s26-text-body);
+    line-height: var(--s26-lh-body);
+  }
+
+  .capabilities-hero__text :global(p),
+  .outcomes-section__copy :global(p),
+  .workflow-section__text :global(p),
+  .capability-detail__text :global(p) {
+    margin: 0;
+  }
+
+  .capabilities-hero__text :global(p + p),
+  .outcomes-section__copy :global(p + p),
+  .workflow-section__text :global(p + p),
+  .capability-detail__text :global(p + p) {
+    margin-top: 1rem;
   }
 
   .capabilities-hero__media {
     overflow: hidden;
-    margin-block-start: var(--split-hero-media-margin-block-start);
-    aspect-ratio: var(--split-hero-media-aspect-ratio);
-    border-radius: var(--split-hero-media-radius);
-    --media-asset-radius: var(--split-hero-media-radius);
+    aspect-ratio: 3 / 2;
+    border-radius: var(--s26-radius);
+    --media-asset-radius: var(--s26-radius);
     --media-asset-fit: cover;
   }
 
   .capabilities-hero__media :global(.capabilities-hero__image) {
     inline-size: 100%;
-    aspect-ratio: var(--split-hero-media-aspect-ratio);
-    border-radius: var(--split-hero-media-radius);
+    aspect-ratio: 3 / 2;
+    border-radius: var(--s26-radius);
     object-fit: cover;
   }
 
   .outcomes-section {
-    position: relative;
-    margin-top: 1.25rem;
-    margin-bottom: 0;
-    padding: 5rem 0 7.5rem;
-    background: var(--capabilities-light);
-  }
-
-  .outcomes-section::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image: url("/images/pages/our-approach/topography-light.svg");
-    background-position: center top;
-    background-size: 130rem auto;
-    opacity: 0.75;
-    pointer-events: none;
-  }
-
-  .outcomes-section__heading,
-  .outcomes-section__inner {
-    position: relative;
-    z-index: 1;
+    padding-block: var(--s26-section);
+    background: var(--s26-paper);
   }
 
   .outcomes-section__heading {
-    inline-size: min(calc(100% - (2 * var(--page-gutter))), var(--content-max-width));
-    margin: 0 auto 3.75rem;
+    display: grid;
+    justify-items: center;
+    gap: 0.875rem;
+    inline-size: var(--s26-shell);
+    margin: 0 auto 2.5rem;
     text-align: center;
   }
 
-  .outcomes-section__eyebrow {
-    margin: 0 0 0.25rem;
-    color: var(--capabilities-dark);
-    font-size: 1.125rem;
-    font-weight: 300;
-    line-height: 1.4;
-    letter-spacing: 0;
-    text-transform: uppercase;
-  }
-
   .outcomes-section__title {
-    margin: 0;
-    color: var(--capabilities-dark);
-    font-family: var(--font-heading);
-    font-size: 2.5rem;
-    font-weight: 900;
-    line-height: 1.1;
-    letter-spacing: 0;
+    font-size: var(--s26-size-h2);
+    line-height: 1.05;
+    text-wrap: balance;
   }
 
   .outcomes-section__inner {
     display: grid;
     grid-template-columns: minmax(20rem, 37%) minmax(0, 1fr);
-    align-items: start;
-    gap: 5.625rem;
+    align-items: center;
+    gap: 4rem;
   }
 
   .outcomes-section__inner--text-only {
@@ -349,69 +325,22 @@ const schema = {
   }
 
   .outcomes-section__media {
-    --media-asset-radius: var(--capabilities-image-radius);
+    --media-asset-radius: var(--s26-radius);
   }
 
   .outcomes-section__media :global(.outcomes-section__image) {
     inline-size: 100%;
     max-inline-size: 32.75rem;
-    border-radius: var(--capabilities-image-radius);
-  }
-
-  @media (min-width: 1441px) {
-    .outcomes-section {
-      padding-bottom: 13.5rem;
-    }
-
-    .outcomes-section__heading {
-      margin-bottom: 4rem;
-    }
-
-    .outcomes-section__inner {
-      align-items: stretch;
-    }
-
-    .outcomes-section__media {
-      position: relative;
-      align-self: stretch;
-      overflow: visible;
-      border-radius: var(--capabilities-image-radius);
-    }
-
-    .outcomes-section__media :global(.outcomes-section__image) {
-      position: absolute;
-      inset-inline: 0;
-      inset-block-start: 50%;
-      inline-size: 100%;
-      block-size: 120%;
-      max-inline-size: none;
-      border-radius: var(--capabilities-image-radius);
-      object-fit: cover;
-      object-position: top center;
-      transform: translateY(-50%);
-    }
+    border-radius: var(--s26-radius);
   }
 
   .outcomes-section__copy {
-    padding-top: 1.25rem;
-  }
-
-  @media (min-width: 1441px) {
-    .outcomes-section__copy {
-      align-self: center;
-      padding-top: 0;
-    }
-  }
-
-  .outcomes-section__copy p + p,
-  .capability-detail__text p + p {
-    margin-top: 1rem;
+    max-width: 62ch;
   }
 
   .workflow-section {
-    min-height: 35.9375rem;
-    padding-block: clamp(3rem, 5vw, 5rem);
-    background: linear-gradient(180deg, #ffffff 0%, var(--capabilities-light) 100%);
+    padding-block: var(--s26-section);
+    background: #ffffff;
   }
 
   .workflow-section__inner {
@@ -426,45 +355,44 @@ const schema = {
   }
 
   .workflow-section__copy {
-    padding: 5rem 0;
+    display: grid;
+    gap: 0.875rem;
+    max-width: 62ch;
+  }
+
+  .workflow-section__title {
+    font-size: var(--s26-size-h2);
+    line-height: 1.05;
   }
 
   .workflow-section__prompt {
-    display: inline-block;
-    margin: 1.875rem 0 0;
-    padding: 0.3125rem 0.625rem;
-    border-left: 0.25rem solid var(--capabilities-green);
-    color: var(--capabilities-dark);
-    font-size: 1.25rem;
-    font-weight: 700;
-    line-height: 1.6;
+    margin-top: 0.5rem;
   }
 
   .workflow-section__media {
-    --media-asset-radius: var(--capabilities-image-radius);
+    --media-asset-radius: var(--s26-radius);
   }
 
   .workflow-section__media :global(.workflow-section__image) {
     inline-size: min(100%, 31.25rem);
     margin-inline: auto 0;
-    border-radius: var(--capabilities-image-radius);
+    border-radius: var(--s26-radius);
   }
 
   .capability-detail {
     background: #ffffff;
   }
 
-  .capability-detail--data {
-    margin-top: 3.125rem;
-  }
-
   .capability-detail__inner {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(20rem, 1fr);
     align-items: center;
-    gap: 3.125rem;
-    min-height: 39rem;
-    padding-block: 2rem;
+    gap: 3rem;
+    padding-block: clamp(2rem, 4vw, 3rem);
+  }
+
+  .capability-detail--creative .capability-detail__inner {
+    padding-block-end: var(--s26-section);
   }
 
   .capability-detail__inner--reverse {
@@ -476,53 +404,37 @@ const schema = {
     grid-template-columns: minmax(0, 54rem);
   }
 
-  @media (min-width: 1025px) {
-    .outcomes-section__inner,
-    .workflow-section__inner,
-    .capability-detail__inner {
-      inline-size: var(--page-visual-content-width);
-    }
+  .capability-detail__copy {
+    display: grid;
+    gap: 0.875rem;
+    max-width: 62ch;
   }
 
   .capability-detail__title {
-    margin: 0 0 0.9375rem;
-    color: var(--capabilities-dark);
-    font-family: var(--font-body);
-    font-size: 2.5rem;
-    font-weight: 700;
-    line-height: 1.1;
-    letter-spacing: 0;
-  }
-
-  .capability-detail__text {
-    padding: 1.5rem 1.25rem 0 0;
+    font-size: var(--s26-size-h2);
+    line-height: 1.05;
   }
 
   .capability-detail__button {
-    margin-top: 1.875rem;
+    justify-self: start;
+    margin-top: 0.5rem;
   }
 
   .capability-detail__media {
-    --media-asset-radius: var(--capabilities-image-radius);
-    /* Cap media height below the 39rem section min-height so copy, not the
-       image, determines how tall each capability detail section is */
-    --media-asset-max-block-size: 34rem;
+    --media-asset-radius: var(--s26-radius);
+    --media-asset-max-block-size: 32rem;
     --media-asset-fit: cover;
   }
 
   .capability-detail__media :global(.capability-detail__image) {
     inline-size: 100%;
     height: auto;
-    max-block-size: 34rem;
+    max-block-size: 32rem;
     object-fit: cover;
-    border-radius: var(--capabilities-image-radius);
+    border-radius: var(--s26-radius);
   }
 
   @media (max-width: 1024px) {
-    .capabilities-hero {
-      padding-block: var(--split-hero-padding-block);
-    }
-
     .capabilities-hero__inner,
     .outcomes-section__inner,
     .workflow-section__inner,
@@ -531,54 +443,19 @@ const schema = {
       display: block;
     }
 
-    .capabilities-hero__title,
-    .workflow-section__title {
-      font-size: var(--split-hero-title-size);
-      line-height: var(--split-hero-title-line-height);
-    }
-
-    .capabilities-hero__text,
-    .outcomes-section__copy,
-    .workflow-section__text,
-    .capability-detail__text {
-      font-size: var(--split-hero-body-size);
-      line-height: var(--split-hero-body-line-height);
-    }
-
     .capabilities-hero__media,
     .outcomes-section__media,
     .capability-detail__media {
       display: none;
     }
 
-    .outcomes-section {
-      margin-top: 0;
-      margin-bottom: 0;
-      padding: 3rem 0 5rem;
-    }
-
     .outcomes-section__heading {
       margin-bottom: 2rem;
     }
 
-    .outcomes-section__eyebrow {
-      font-size: 1.125rem;
-      line-height: 1.22;
-    }
-
-    .outcomes-section__title {
-      font-size: 2.125rem;
-      line-height: 1.15;
-    }
-
     .outcomes-section__copy {
-      padding: 0;
+      margin-inline: auto;
       text-align: center;
-    }
-
-    .workflow-section {
-      min-height: 0;
-      padding-block: 3rem;
     }
 
     .workflow-section__inner {
@@ -586,45 +463,13 @@ const schema = {
       flex-direction: column-reverse;
     }
 
-    .workflow-section__copy {
-      padding: 4.6875rem 0 3.75rem;
-    }
-
     .workflow-section__media {
       max-width: 28rem;
-      margin: 0 auto;
-      padding-bottom: 2.5rem;
-    }
-
-    .workflow-section__prompt {
-      font-size: 1.125rem;
-      line-height: 1.78;
-    }
-
-    .capability-detail--data {
-      margin-top: 2rem;
+      margin: 0 auto 2.5rem;
     }
 
     .capability-detail__inner {
-      min-height: 0;
       padding-block: 2.5rem;
-    }
-
-    .capability-detail__title {
-      font-size: 2.125rem;
-      line-height: 1.24;
-    }
-
-    .capability-detail__text {
-      padding: 1.5rem 0 0;
-    }
-
-    .capability-detail__button {
-      min-height: 3.875rem;
-      margin-top: 1.875rem;
-      padding-inline: 0.9375rem;
-      font-size: 1.125rem;
-      line-height: 1.78;
     }
   }
 </style>

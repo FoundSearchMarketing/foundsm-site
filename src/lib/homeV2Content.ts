@@ -129,7 +129,7 @@ export type HomeV2Content = {
 export const homeV2Content: HomeV2Content = {
   hero: {
     eyebrow: 'Your Agency of Results',
-    headlineLines: ['We build', 'data-engineered', 'media systems.'],
+    headlineLines: ['Your paid media,', 'engineered', 'as a system.'],
     body:
       'FoundSM is a data engineering firm for paid media. We build with AI: systems that connect your signals, model the demand, activate the media and measure what moved. Accountable through proof, not hours.',
     cta: { label: 'Talk with us', href: '#home2-talk' },
@@ -148,7 +148,7 @@ export const homeV2Content: HomeV2Content = {
   },
   practices: {
     eyebrow: 'Practices',
-    heading: 'Proof of capability.',
+    heading: 'The practice in action.',
     intro:
       'Four practices, one team, all running inside the Loop. Each one is a place we have done the work and can show it.',
     items: [

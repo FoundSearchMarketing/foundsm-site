@@ -1264,6 +1264,13 @@ a:hover > .home2-more {
   border-radius: var(--h2-radius);
 }
 
+/* Phones skip the image; the copy carries the section there. */
+@media (max-width: 767px) {
+  .home2 .home2-team__image {
+    display: none;
+  }
+}
+
 @media (min-width: 1024px) {
   .home2-team__inner {
     grid-template-columns: minmax(0, 1.8fr) minmax(18rem, 1fr);

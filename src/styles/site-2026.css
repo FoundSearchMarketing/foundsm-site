@@ -1,0 +1,109 @@
+/*
+  Site type system from the October 2026 homepage, for pages that opt in with
+  `bodyClass="site-2026"` on BaseLayout. It swaps the heading face to Archivo
+  Black at 82% width in caps, sets caps buttons, and provides the eyebrow and
+  text-link utilities. Page stylesheets still own their layouts and sizes; the
+  tokens below give them the shared values.
+
+  Type scale (same as the homepage):
+    eyebrow   0.8125rem / 600 / .12em caps
+    h1        clamp(2.5rem, 5.4vw, 4.625rem) / .94
+    h2        clamp(2rem, 3.4vw, 2.75rem) / 1.05
+    h3        1.5rem / 1.1
+    lead      1.1875rem / 1.6
+    body      1.0625rem / 1.6
+    small     0.9375rem / 1.55
+    label     0.75rem / 600 / .08em caps
+*/
+
+body.site-2026 {
+  --font-heading: 'Archivo', 'Arial Narrow', 'Helvetica Neue', Arial, sans-serif;
+
+  --s26-ink: #231f20;
+  --s26-paper: #eef1ec;
+  --s26-muted: #4a4547;
+  --s26-line: #e3e6e1;
+  --s26-dark-line: #4a4546;
+  --s26-light: #c9cec4;
+  --s26-soft: #d6ecba;
+  --s26-green: var(--color-primary, #8dc63f);
+  --s26-radius: 1rem;
+  --s26-section: clamp(3.5rem, 7vw, 5.5rem);
+  --s26-shell: min(84.375rem, calc(100% - 2 * var(--gutter)));
+
+  --s26-text-eyebrow: 0.8125rem;
+  --s26-text-lead: 1.1875rem;
+  --s26-text-body: 1.0625rem;
+  --s26-text-small: 0.9375rem;
+  --s26-text-label: 0.75rem;
+  --s26-size-h1: clamp(2.5rem, 5.4vw, 4.625rem);
+  --s26-size-h2: clamp(2rem, 3.4vw, 2.75rem);
+  --s26-size-h3: 1.5rem;
+  --s26-lh-body: 1.6;
+  --s26-lh-small: 1.55;
+}
+
+body.site-2026 :is(h1, h2, h3) {
+  font-family: var(--font-heading);
+  font-weight: 900;
+  font-stretch: 82%;
+  font-variation-settings: 'wdth' 82;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
+}
+
+/* Buttons share the site's .btn system; these pages set them in caps. */
+body.site-2026 .btn {
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+body.site-2026 .btn--outline {
+  background: transparent;
+  color: var(--s26-ink);
+  box-shadow: inset 0 0 0 1.5px var(--s26-ink);
+}
+
+body.site-2026 .btn--outline:hover,
+body.site-2026 .btn--outline:focus-visible {
+  background: rgba(35, 31, 32, 0.06);
+}
+
+/* Eyebrow: the small caps label above a heading. */
+body.site-2026 .eyebrow-2026 {
+  margin: 0;
+  color: var(--s26-green);
+  font-family: var(--font-body);
+  font-size: var(--s26-text-eyebrow);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+/* Text link with the › mark. */
+body.site-2026 .more-2026 {
+  color: var(--s26-green);
+  font-size: var(--s26-text-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1.4;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+body.site-2026 .more-2026::after {
+  content: ' \203A';
+}
+
+body.site-2026 .more-2026--light {
+  color: var(--s26-soft);
+}
+
+body.site-2026 a.more-2026:hover,
+body.site-2026 a:hover > .more-2026 {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}

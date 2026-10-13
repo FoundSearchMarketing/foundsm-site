@@ -47,7 +47,8 @@ export type AboutPageData = SeoFields & {
 export type CapabilitiesPageData = SeoFields & {
   hero: RichSection & ImageField;
   outcomes: RichSection & ImageField & { eyebrow?: string };
-  workflow: RichSection & ImageField & { prompt?: string };
+  /** Closing section on how the practices work together. `prompt` belonged to the previous layout. */
+  workflow: RichSection & ImageField & { prompt?: string; cta?: Cta };
   /** One split section per entry, image side alternating; the AI entry closes the list. */
   details: Array<RichSection & ImageField & { id?: string; cta?: Cta }>;
 };
@@ -122,7 +123,11 @@ export function mergeCapabilitiesPageData(value?: Partial<CapabilitiesPageData> 
     ...page,
     hero: { ...keepImageField(defaults.hero, page.hero), body: keepBlocks(page.hero?.body, defaults.hero.body) },
     outcomes: { ...keepImageField(defaults.outcomes, page.outcomes), body: keepBlocks(page.outcomes?.body, defaults.outcomes.body) },
-    workflow: { ...keepImageField(defaults.workflow, page.workflow), body: keepBlocks(page.workflow?.body, defaults.workflow.body) },
+    workflow: {
+      ...keepImageField(defaults.workflow, page.workflow),
+      body: keepBlocks(page.workflow?.body, defaults.workflow.body),
+      cta: page.workflow?.cta?.label && page.workflow?.cta?.href ? page.workflow.cta : defaults.workflow.cta,
+    },
     details: mergeList(defaults.details, page.details).map((detail, index) => ({
       ...detail,
       body: keepBlocks(detail.body, defaults.details[index]?.body),
@@ -244,7 +249,7 @@ export const defaultCapabilitiesPageData: CapabilitiesPageData = {
   workflow: {
     heading: 'How We Work',
     body: [block("There are no silos here. Our Paid Media, Data Intelligence, and Performance Creative teams are deeply integrated with each other, creating a connected ecosystem designed to drive smarter decisions and stronger results. This collaboration extends far beyond our walls, as we aim to be a true extension of our clients' teams, partnering across their functional teams, and integrating within existing systems and workflows to ensure alignment, agility, and shared success.")],
-    prompt: 'Explore Our Capabilities Below',
+    cta: { label: 'Talk with us', href: '/contact-us/' },
     image: '/images/pages/capabilities/performance-media-ecosystem.webp',
     imageAlt: 'Found Performance Media Ecosystem',
   },

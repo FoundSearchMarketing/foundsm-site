@@ -1,14 +1,16 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import MediaAsset from '../../components/MediaAsset.astro';
+import StatementBand from '../../components/modern/StatementBand.astro';
 import { capabilitiesPageQuery, sanityClient } from '../../lib/sanity';
 import { defaultCapabilitiesPageData, mergeCapabilitiesPageData } from '../../lib/fixedPageData';
 import { imageProps, richHtml } from '../../lib/fixedPageRender';
 
 /*
-  Flow: hero → how the practices work together → the capabilities (intro,
-  then one split per practice). Every heading is left-aligned, as on the
-  homepage.
+  Flow: hero → callout band (how the practices work together, linking to the
+  method page) → the capabilities (intro, then one split per practice).
+  The band is the same dark statement band the capability sub pages open
+  with. Every heading is left-aligned, as on the homepage.
 */
 
 const sanityPage = await sanityClient.fetch(capabilitiesPageQuery).catch(() => null);
@@ -19,10 +21,18 @@ const canonical = page.canonicalUrl || defaultCapabilitiesPageData.canonicalUrl;
 const robots = page.robots || defaultCapabilitiesPageData.robots;
 
 const heroMedia = imageProps(page.hero, 'eager');
-const workflowMedia = imageProps(page.workflow);
 const heroImageAlt = page.hero.imageAlt || '';
-const workflowImageAlt = page.workflow.imageAlt || '';
-const workflowCta = page.workflow.cta?.label && page.workflow.cta?.href ? page.workflow.cta : null;
+
+// Callout band: the How We Work statement, condensed, with a link to the method page.
+const escapeHtml = (value: string) =>
+  value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+const calloutLead = page.workflow.heading || '';
+const calloutCta = page.workflow.cta?.label && page.workflow.cta?.href ? page.workflow.cta : null;
+const calloutHtml =
+  richHtml(page.workflow.body) +
+  (calloutCta
+    ? `<p class="capabilities-callout__link"><a class="more-2026 more-2026--light" href="${escapeHtml(calloutCta.href as string)}">${escapeHtml(calloutCta.label as string)}</a></p>`
+    : '');
 
 // Anchors other pages may already point at keep their ids; new entries get one from their stable id.
 const detailAnchors: Record<string, string> = {
@@ -84,28 +94,12 @@ const schema = {
       </div>
     </section>
 
-    <section class="workflow-section" aria-labelledby="workflow-title">
-      <div class:list={['workflow-section__inner', { 'workflow-section__inner--text-only': !workflowMedia }]}>
-        <div class="workflow-section__copy">
-          <h2 id="workflow-title" class="workflow-section__title">{page.workflow.heading}</h2>
-          <div class="workflow-section__text" set:html={richHtml(page.workflow.body)} />
-          {workflowCta && <a class="more-2026 workflow-section__link" href={workflowCta.href}>{workflowCta.label}</a>}
-        </div>
 
-        {workflowMedia && (
-          <div class="workflow-section__media">
-            <MediaAsset
-              class="workflow-section__image"
-              src={workflowMedia.src}
-              width="500"
-              height="500"
-              alt={workflowImageAlt}
-              loading="lazy"
-            />
-          </div>
-        )}
+    {calloutLead && (
+      <div class="capabilities-callout">
+        <StatementBand lead={calloutLead} body="" bodyHtml={calloutHtml} theme="dark" pattern />
       </div>
-    </section>
+    )}
 
     <section class="practices-section" id="practices" aria-labelledby="practices-title">
       <div class="practices-section__head">
@@ -160,8 +154,7 @@ const schema = {
 
   .capabilities-hero__inner,
   .practices-section__head,
-  .capability-detail__inner,
-  .workflow-section__inner {
+  .capability-detail__inner {
     inline-size: var(--s26-shell);
     margin-inline: auto;
   }
@@ -238,8 +231,7 @@ const schema = {
   }
 
   .practices-section__intro,
-  .capability-detail__text,
-  .workflow-section__text {
+  .capability-detail__text {
     color: var(--s26-muted);
     font-size: var(--s26-text-body);
     line-height: var(--s26-lh-body);
@@ -251,15 +243,13 @@ const schema = {
 
   .capabilities-hero__text :global(p),
   .practices-section__intro :global(p),
-  .capability-detail__text :global(p),
-  .workflow-section__text :global(p) {
+  .capability-detail__text :global(p) {
     margin: 0;
   }
 
   .capabilities-hero__text :global(p + p),
   .practices-section__intro :global(p + p),
-  .capability-detail__text :global(p + p),
-  .workflow-section__text :global(p + p) {
+  .capability-detail__text :global(p + p) {
     margin-top: 1rem;
   }
 
@@ -316,55 +306,22 @@ const schema = {
     border-radius: var(--s26-radius);
   }
 
-  /* ------------------------------------------------------------- workflow */
+  /* -------------------------------------------------------------- callout */
 
-  .workflow-section {
-    padding-block: var(--s26-section);
-    background: var(--s26-paper);
+  /* Same band as the capability sub pages; its text edges line up with this
+     page's shell. */
+  .capabilities-callout :global(.statement-band__inner) {
+    inline-size: min(84.375rem, 100%);
   }
 
-  .workflow-section__inner {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(18rem, 34%);
-    align-items: center;
-    gap: 3rem;
-  }
-
-  .workflow-section__inner--text-only {
-    grid-template-columns: minmax(0, 54rem);
-  }
-
-  .workflow-section__copy {
-    display: grid;
-    gap: 0.875rem;
-    max-width: 62ch;
-  }
-
-  .workflow-section__title {
-    font-size: var(--s26-size-h2);
-    line-height: 1.05;
-  }
-
-  .workflow-section__link {
-    justify-self: start;
-    margin-top: 0.5rem;
-  }
-
-  .workflow-section__media {
-    --media-asset-radius: var(--s26-radius);
-  }
-
-  .workflow-section__media :global(.workflow-section__image) {
-    inline-size: min(100%, 22rem);
-    margin-inline: auto 0;
-    border-radius: var(--s26-radius);
+  .capabilities-callout :global(.capabilities-callout__link) {
+    margin-top: 0.25rem;
   }
 
   @media (max-width: 1024px) {
     .capabilities-hero__inner,
     .capability-detail__inner,
-    .capability-detail__inner--reverse,
-    .workflow-section__inner {
+    .capability-detail__inner--reverse {
       display: block;
     }
 
@@ -377,13 +334,5 @@ const schema = {
       padding-block: 2rem;
     }
 
-    .workflow-section__media {
-      max-width: 18rem;
-      margin-block-start: 2.5rem;
-    }
-
-    .workflow-section__media :global(.workflow-section__image) {
-      margin-inline: 0;
-    }
   }
 </style>

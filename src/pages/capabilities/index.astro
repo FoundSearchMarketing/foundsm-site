@@ -6,9 +6,9 @@ import { defaultCapabilitiesPageData, mergeCapabilitiesPageData } from '../../li
 import { imageProps, richHtml } from '../../lib/fixedPageRender';
 
 /*
-  Flow: hero → the capabilities (intro, then one split per practice) → how
-  the practices work together, ending on a next step. Every heading is
-  left-aligned, as on the homepage.
+  Flow: hero → how the practices work together → the capabilities (intro,
+  then one split per practice). Every heading is left-aligned, as on the
+  homepage.
 */
 
 const sanityPage = await sanityClient.fetch(capabilitiesPageQuery).catch(() => null);
@@ -84,7 +84,30 @@ const schema = {
       </div>
     </section>
 
-    <section class="practices-section" aria-labelledby="practices-title">
+    <section class="workflow-section" aria-labelledby="workflow-title">
+      <div class:list={['workflow-section__inner', { 'workflow-section__inner--text-only': !workflowMedia }]}>
+        <div class="workflow-section__copy">
+          <h2 id="workflow-title" class="workflow-section__title">{page.workflow.heading}</h2>
+          <div class="workflow-section__text" set:html={richHtml(page.workflow.body)} />
+          {workflowCta && <a class="more-2026 workflow-section__link" href={workflowCta.href}>{workflowCta.label}</a>}
+        </div>
+
+        {workflowMedia && (
+          <div class="workflow-section__media">
+            <MediaAsset
+              class="workflow-section__image"
+              src={workflowMedia.src}
+              width="500"
+              height="500"
+              alt={workflowImageAlt}
+              loading="lazy"
+            />
+          </div>
+        )}
+      </div>
+    </section>
+
+    <section class="practices-section" id="practices" aria-labelledby="practices-title">
       <div class="practices-section__head">
         {page.outcomes.eyebrow && <p class="eyebrow-2026">{page.outcomes.eyebrow}</p>}
         <h2 id="practices-title" class="practices-section__title">{page.outcomes.heading}</h2>
@@ -118,28 +141,6 @@ const schema = {
       ))}
     </section>
 
-    <section class="workflow-section" aria-labelledby="workflow-title">
-      <div class:list={['workflow-section__inner', { 'workflow-section__inner--text-only': !workflowMedia }]}>
-        <div class="workflow-section__copy">
-          <h2 id="workflow-title" class="workflow-section__title">{page.workflow.heading}</h2>
-          <div class="workflow-section__text" set:html={richHtml(page.workflow.body)} />
-          {workflowCta && <a class="btn btn--primary workflow-section__button" href={workflowCta.href}>{workflowCta.label}</a>}
-        </div>
-
-        {workflowMedia && (
-          <div class="workflow-section__media">
-            <MediaAsset
-              class="workflow-section__image"
-              src={workflowMedia.src}
-              width="500"
-              height="500"
-              alt={workflowImageAlt}
-              loading="lazy"
-            />
-          </div>
-        )}
-      </div>
-    </section>
   </div>
 </BaseLayout>
 
@@ -219,7 +220,6 @@ const schema = {
 
   .practices-section {
     padding-block: var(--s26-section);
-    border-block-start: 1px solid var(--s26-line);
   }
 
   .practices-section__head {
@@ -345,7 +345,7 @@ const schema = {
     line-height: 1.05;
   }
 
-  .workflow-section__button {
+  .workflow-section__link {
     justify-self: start;
     margin-top: 0.5rem;
   }

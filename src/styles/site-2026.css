@@ -107,3 +107,14 @@ body.site-2026 a:hover > .more-2026 {
   text-decoration: underline;
   text-underline-offset: 0.2em;
 }
+
+/* In-page links (for example "Explore our capabilities") glide on opted-in pages. */
+html:has(body.site-2026) {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:has(body.site-2026) {
+    scroll-behavior: auto;
+  }
+}

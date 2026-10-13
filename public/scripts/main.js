@@ -393,14 +393,11 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!target) return;
 
       e.preventDefault();
-      const navHeight = document.querySelector('.site-header')?.offsetHeight || 0;
 
+      // The sticky-header offset comes from `scroll-padding-top` on <html>
+      // (global.css), which scrollIntoView honours. A follow-up instant
+      // scrollBy here used to cancel the smooth scroll, so links never moved.
       target.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' });
-
-      // Offset for sticky nav
-      if (navHeight) {
-        window.scrollBy({ top: -navHeight, behavior: 'instant' });
-      }
 
       // Update URL without jumping
       history.pushState(null, '', id);

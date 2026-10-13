@@ -1576,10 +1576,6 @@ a:hover > .home2-more {
 
 /* ----------------------------------------------------------------- talk */
 
-.home2-talk {
-  scroll-margin-top: var(--header-height, 5.3125rem);
-}
-
 .home2-talk__inner {
   display: grid;
   align-items: start;

@@ -268,6 +268,17 @@ export const defaultCapabilitiesPageData: CapabilitiesPageData = {
       image: '/images/pages/paid-media/tab-art-bid.webp',
       imageAlt: 'Circuit board with the Found magnifier mark',
     },
+    {
+      id: 'ai-systems',
+      heading: 'AI Systems Beyond Paid Media',
+      body: [
+        block('FoundSM is a leading agency in applied AI, and that work goes well past ad accounts. We build AI systems for operations, accounting and finance, HR and people workflows, and reporting across the tools a business already runs on.'),
+        block("We research and test the major models side by side on real work, so we know which one is best for which job, and we build each system on the right model instead of one model for everything. You don't need to run media with us to build with us."),
+      ],
+      cta: { label: 'Talk about an AI build', href: '/contact-us/' },
+      image: 'https://cdn.sanity.io/images/vzneqxsx/staging/afd189b45441db4ce15fcf603345e7af4b0ed1df-1250x785.jpg',
+      imageAlt: 'Code from a custom tool build at Found',
+    },
   ],
 };
 

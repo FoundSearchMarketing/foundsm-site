@@ -244,6 +244,9 @@ export const homeSignalsQuery = `*[_type == "blogPost" && references("category-f
   excerpt
 }`;
 
+/* The AI hub singleton (/ai/); images come through as references for the image builder. */
+export const aiPageQuery = `*[_id == "aiPage"][0]`;
+
 export const aboutPageQuery = `*[_id == "aboutPage"][0] {
   ...,
   hero { ${editableMediaProjection} },

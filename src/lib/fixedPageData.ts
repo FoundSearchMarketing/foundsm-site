@@ -47,7 +47,7 @@ export type AboutPageData = SeoFields & {
 export type CapabilitiesPageData = SeoFields & {
   hero: RichSection & ImageField;
   outcomes: RichSection & ImageField & { eyebrow?: string };
-  /** How the practices work together; sits after the hero and links down to the list. `prompt` belonged to the previous layout. */
+  /** The callout band under the hero: `heading` is the statement, `body` the supporting text, `cta` the link. Image and `prompt` belong to earlier layouts. */
   workflow: RichSection & ImageField & { prompt?: string; cta?: Cta };
   /** One split section per entry, image side alternating; the AI entry closes the list. */
   details: Array<RichSection & ImageField & { id?: string; cta?: Cta }>;
@@ -247,9 +247,9 @@ export const defaultCapabilitiesPageData: CapabilitiesPageData = {
     imageAlt: 'FoundSM team members collaborating',
   },
   workflow: {
-    heading: 'How We Work',
-    body: [block("There are no silos here. Our Paid Media, Data Intelligence, and Performance Creative teams are deeply integrated with each other, creating a connected ecosystem designed to drive smarter decisions and stronger results. This collaboration extends far beyond our walls, as we aim to be a true extension of our clients' teams, partnering across their functional teams, and integrating within existing systems and workflows to ensure alignment, agility, and shared success.")],
-    cta: { label: 'Explore our capabilities', href: '#practices' },
+    heading: 'There are no silos here. Every practice runs as one connected system.',
+    body: [block('Paid media, data intelligence and performance creative work as one team, and that team works inside yours: across your functions, your systems and your workflows, so strategy and execution stay aligned.')],
+    cta: { label: 'See how we work', href: '/our-approach/' },
     image: '/images/pages/capabilities/performance-media-ecosystem.webp',
     imageAlt: 'Found Performance Media Ecosystem',
   },

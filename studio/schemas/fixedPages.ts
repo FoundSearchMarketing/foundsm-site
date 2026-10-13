@@ -212,12 +212,12 @@ export const capabilitiesPage = defineType({
     defineField({ name: 'outcomes', title: 'Capabilities intro', type: 'object', group: 'content', description: 'Eyebrow, heading and intro above the capability sections. The image is not shown in the current layout.', fields: [defineField({ name: 'eyebrow', title: 'Eyebrow', type: 'string' }), ...richSectionFields, ...imageFields] }),
     defineField({
       name: 'workflow',
-      title: 'How We Work (closing section)',
+      title: 'How We Work',
       type: 'object',
       group: 'content',
       fields: [
         ...richSectionFields,
-        defineField({ name: 'cta', title: 'CTA', type: 'object', fields: ctaFields }),
+        defineField({ name: 'cta', title: 'Link', type: 'object', fields: ctaFields, description: 'Text link under the section. #practices jumps to the capability list.' }),
         defineField({ name: 'prompt', title: 'Prompt (previous layout)', type: 'string', hidden: true }),
         ...imageFields,
       ],

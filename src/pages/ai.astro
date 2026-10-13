@@ -1,0 +1,457 @@
+---
+/*
+  AI hub (/ai/): the full AI story, of which paid media is one part. Flow:
+  hero → callout band (model research, the same statement band the sub
+  pages open with) → where we build → how a build works → AI in paid media
+  → closing band. Content: the Sanity `aiPage` singleton over the defaults
+  in src/lib/aiPageData.ts.
+*/
+import BaseLayout from '../layouts/BaseLayout.astro';
+import MediaAsset from '../components/MediaAsset.astro';
+import StatementBand from '../components/modern/StatementBand.astro';
+import { aiPageQuery, sanityClient } from '../lib/sanity';
+import { mergeAiPageData } from '../lib/aiPageData';
+import { imageProps, richHtml } from '../lib/fixedPageRender';
+
+const sanityPage = await sanityClient.fetch(aiPageQuery).catch(() => null);
+const page = mergeAiPageData(sanityPage);
+const title = page.seoTitle as string;
+const description = page.seoDescription as string;
+const canonical = page.canonicalUrl as string;
+const robots = page.robots as string;
+
+const heroMedia = imageProps(page.hero, 'eager');
+const paidMedia = imageProps(page.paidMedia);
+
+const escapeHtml = (value: string) =>
+  value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+const calloutHtml =
+  richHtml(page.callout.body) +
+  (page.callout.cta?.label && page.callout.cta?.href
+    ? `<p class="ai-callout__link"><a class="more-2026 more-2026--light" href="${escapeHtml(page.callout.cta.href)}">${escapeHtml(page.callout.cta.label)}</a></p>`
+    : '');
+
+const steps = page.process.steps.filter((step) => step.title);
+const systems = page.systems.items.filter((item) => item.title);
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: title,
+  url: canonical,
+  description,
+  publisher: {
+    '@type': 'Organization',
+    name: 'Found Search Marketing',
+    url: 'https://foundsm.com',
+    logo: 'https://foundsm.com/images/logo.svg',
+  },
+};
+---
+
+<BaseLayout title={title} description={description} canonical={canonical} robots={robots} schema={schema} bodyClass="site-2026">
+  <div class="ai-page">
+    <section class="ai-hero" aria-labelledby="ai-hero-title">
+      <div class:list={['ai-hero__inner', { 'ai-hero__inner--text-only': !heroMedia }]}>
+        <div class="ai-hero__copy">
+          {page.hero.eyebrow && <p class="eyebrow-2026">{page.hero.eyebrow}</p>}
+          <h1 id="ai-hero-title" class="ai-hero__title">{page.hero.heading}</h1>
+          <div class="ai-hero__text" set:html={richHtml(page.hero.body)} />
+          {page.hero.cta?.label && page.hero.cta?.href && (
+            <a class="btn btn--primary ai-hero__button" href={page.hero.cta.href}>{page.hero.cta.label}</a>
+          )}
+        </div>
+        {heroMedia && (
+          <div class="ai-hero__media" aria-hidden={page.hero.imageAlt ? undefined : 'true'}>
+            <MediaAsset class="ai-hero__image" src={heroMedia.src} width="800" height="1000" alt={page.hero.imageAlt || ''} loading="eager" />
+          </div>
+        )}
+      </div>
+    </section>
+
+    {page.callout.lead && (
+      <div class="ai-callout">
+        <StatementBand lead={page.callout.lead} body="" bodyHtml={calloutHtml} theme="dark" pattern />
+      </div>
+    )}
+
+    {systems.length > 0 && (
+      <section class="ai-systems" id="systems" aria-labelledby="ai-systems-title">
+        <div class="ai-shell ai-systems__inner">
+          <div class="ai-head">
+            {page.systems.eyebrow && <p class="eyebrow-2026">{page.systems.eyebrow}</p>}
+            <h2 id="ai-systems-title">{page.systems.heading}</h2>
+            {page.systems.intro && <p class="ai-head__intro">{page.systems.intro}</p>}
+          </div>
+          <ul class="ai-systems__grid" role="list">
+            {systems.map((item) => (
+              <li class="ai-system">
+                <h3>{item.title}</h3>
+                {item.body && <p>{item.body}</p>}
+                {item.cta?.label && item.cta?.href && <a class="more-2026" href={item.cta.href}>{item.cta.label}</a>}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )}
+
+    {steps.length > 0 && (
+      <section class="ai-process" aria-labelledby="ai-process-title">
+        <div class="ai-shell ai-process__inner">
+          <div class="ai-head">
+            {page.process.eyebrow && <p class="eyebrow-2026">{page.process.eyebrow}</p>}
+            <h2 id="ai-process-title">{page.process.heading}</h2>
+          </div>
+          <ol class="ai-process__steps">
+            {steps.map((step, index) => (
+              <li class="ai-step">
+                <span class="ai-step__number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+                <h3>{step.title}</h3>
+                {step.body && <p>{step.body}</p>}
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+    )}
+
+    {page.paidMedia.heading && (
+      <section class="ai-paid" aria-labelledby="ai-paid-title">
+        <div class:list={['ai-shell', 'ai-paid__inner', { 'ai-paid__inner--text-only': !paidMedia }]}>
+          {paidMedia && (
+            <div class="ai-paid__media" aria-hidden={page.paidMedia.imageAlt ? undefined : 'true'}>
+              <MediaAsset class="ai-paid__image" src={paidMedia.src} width="900" height="675" alt={page.paidMedia.imageAlt || ''} loading="lazy" />
+            </div>
+          )}
+          <div class="ai-paid__copy">
+            {page.paidMedia.eyebrow && <p class="eyebrow-2026">{page.paidMedia.eyebrow}</p>}
+            <h2 id="ai-paid-title">{page.paidMedia.heading}</h2>
+            <div class="ai-paid__text" set:html={richHtml(page.paidMedia.body)} />
+            <div class="ai-actions">
+              {page.paidMedia.cta?.label && page.paidMedia.cta?.href && (
+                <a class="btn btn--primary" href={page.paidMedia.cta.href}>{page.paidMedia.cta.label}</a>
+              )}
+              {page.paidMedia.secondaryCta?.label && page.paidMedia.secondaryCta?.href && (
+                <a class="more-2026" href={page.paidMedia.secondaryCta.href}>{page.paidMedia.secondaryCta.label}</a>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+    )}
+
+    {page.closing.heading && (
+      <section class="ai-closing" aria-labelledby="ai-closing-title">
+        <div class="ai-shell ai-closing__inner">
+          <h2 id="ai-closing-title">{page.closing.heading}</h2>
+          {page.closing.body && <p class="ai-closing__text">{page.closing.body}</p>}
+          <div class="ai-actions">
+            {page.closing.cta?.label && page.closing.cta?.href && (
+              <a class="btn btn--primary" href={page.closing.cta.href}>{page.closing.cta.label}</a>
+            )}
+            {page.closing.secondaryCta?.label && page.closing.secondaryCta?.href && (
+              <a class="more-2026 more-2026--light" href={page.closing.secondaryCta.href}>{page.closing.secondaryCta.label}</a>
+            )}
+          </div>
+        </div>
+      </section>
+    )}
+  </div>
+</BaseLayout>
+
+<style>
+  /* AI hub on the 2026 type system: tokens come from site-2026.css. */
+  .ai-page {
+    color: var(--s26-ink);
+    background: #ffffff;
+    font-family: var(--font-body);
+    overflow: clip;
+  }
+
+  .ai-page :is(h1, h2, h3) {
+    margin: 0;
+    color: inherit;
+  }
+
+  .ai-page h2 {
+    font-size: var(--s26-size-h2);
+    line-height: 1.05;
+    text-wrap: balance;
+  }
+
+  .ai-page h3 {
+    font-size: var(--s26-size-h3);
+    line-height: 1.1;
+  }
+
+  .ai-page :global(p) {
+    margin: 0;
+  }
+
+  .ai-shell,
+  .ai-hero__inner {
+    inline-size: var(--s26-shell);
+    margin-inline: auto;
+  }
+
+  .ai-head {
+    display: grid;
+    gap: 0.875rem;
+    max-width: 45rem;
+  }
+
+  .ai-head__intro {
+    color: var(--s26-muted);
+    font-size: var(--s26-text-body);
+    line-height: var(--s26-lh-body);
+  }
+
+  .ai-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.5rem;
+    margin-top: 0.5rem;
+  }
+
+  /* ---------------------------------------------------------------- hero */
+
+  .ai-hero {
+    padding-block: clamp(3rem, 6vw, 4.5rem) clamp(3rem, 6vw, 4rem);
+  }
+
+  .ai-hero__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    align-items: start;
+    gap: 2.5rem 3rem;
+  }
+
+  .ai-hero__inner--text-only {
+    grid-template-columns: minmax(0, 46rem);
+  }
+
+  .ai-hero__copy {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .ai-hero__title {
+    font-size: var(--s26-size-h1);
+    line-height: 0.94;
+    text-wrap: balance;
+  }
+
+  .ai-hero__text {
+    max-width: 36.25rem;
+    color: var(--s26-muted);
+    font-size: var(--s26-text-lead);
+    line-height: var(--s26-lh-body);
+  }
+
+  .ai-hero__button {
+    justify-self: start;
+    margin-top: 0.5rem;
+  }
+
+  .ai-hero__media {
+    overflow: hidden;
+    aspect-ratio: 3 / 2;
+    max-block-size: 24rem;
+    border-radius: var(--s26-radius);
+    background: var(--s26-ink);
+    --media-asset-radius: var(--s26-radius);
+    --media-asset-fit: cover;
+  }
+
+  .ai-hero__media :global(.ai-hero__image) {
+    inline-size: 100%;
+    block-size: 100%;
+    border-radius: var(--s26-radius);
+    object-fit: cover;
+    object-position: center 45%;
+  }
+
+  /* ------------------------------------------------------------- callout */
+
+  .ai-callout :global(.statement-band__inner) {
+    inline-size: min(84.375rem, 100%);
+  }
+
+  .ai-callout :global(.ai-callout__link) {
+    margin-top: 0.25rem;
+  }
+
+  /* ------------------------------------------------------------- systems */
+
+  .ai-systems {
+    padding-block: var(--s26-section);
+  }
+
+  .ai-systems__inner {
+    display: grid;
+    gap: 2.5rem;
+  }
+
+  .ai-systems__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.25rem 2.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .ai-system {
+    display: grid;
+    align-content: start;
+    gap: 0.75rem;
+    padding-top: 1.375rem;
+    border-top: 1px solid var(--s26-ink);
+  }
+
+  .ai-system p,
+  .ai-step p {
+    color: var(--s26-muted);
+    font-size: var(--s26-text-small);
+    line-height: var(--s26-lh-small);
+  }
+
+  .ai-system .more-2026 {
+    justify-self: start;
+  }
+
+  /* ------------------------------------------------------------- process */
+
+  .ai-process {
+    padding-block: var(--s26-section);
+    background: var(--s26-paper);
+  }
+
+  .ai-process__inner {
+    display: grid;
+    gap: 2.5rem;
+  }
+
+  .ai-process__steps {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .ai-step {
+    display: grid;
+    align-content: start;
+    gap: 0.75rem;
+    padding-top: 1.375rem;
+    border-top: 1px solid var(--s26-ink);
+  }
+
+  .ai-step__number {
+    color: var(--s26-green);
+    font-family: var(--font-heading);
+    font-size: 3rem;
+    font-stretch: 82%;
+    font-variation-settings: 'wdth' 82;
+    font-weight: 900;
+    line-height: 1;
+  }
+
+  /* -------------------------------------------------------- paid media */
+
+  .ai-paid {
+    padding-block: var(--s26-section);
+  }
+
+  .ai-paid__inner {
+    display: grid;
+    grid-template-columns: minmax(18rem, 42%) minmax(0, 1fr);
+    align-items: center;
+    gap: 3rem;
+  }
+
+  .ai-paid__inner--text-only {
+    grid-template-columns: minmax(0, 54rem);
+  }
+
+  .ai-paid__copy {
+    display: grid;
+    gap: 0.875rem;
+    max-width: 62ch;
+  }
+
+  .ai-paid__text {
+    color: var(--s26-muted);
+    font-size: var(--s26-text-body);
+    line-height: var(--s26-lh-body);
+  }
+
+  .ai-paid__media {
+    --media-asset-radius: var(--s26-radius);
+    --media-asset-fit: cover;
+  }
+
+  .ai-paid__media :global(.ai-paid__image) {
+    inline-size: 100%;
+    aspect-ratio: 4 / 3;
+    max-block-size: 22rem;
+    object-fit: cover;
+    border-radius: var(--s26-radius);
+  }
+
+  /* ------------------------------------------------------------- closing */
+
+  .ai-closing {
+    padding-block: var(--s26-section);
+    background: var(--s26-ink);
+    color: #ffffff;
+  }
+
+  .ai-closing__inner {
+    display: grid;
+    gap: 0.875rem;
+  }
+
+  .ai-closing__inner > * {
+    max-width: 45rem;
+  }
+
+  .ai-closing__text {
+    color: var(--s26-light);
+    font-size: var(--s26-text-body);
+    line-height: var(--s26-lh-body);
+  }
+
+  @media (min-width: 640px) {
+    .ai-systems__grid,
+    .ai-process__steps {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .ai-systems__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .ai-process__steps {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .ai-hero__inner,
+    .ai-paid__inner {
+      display: block;
+    }
+
+    .ai-hero__media,
+    .ai-paid__media {
+      display: none;
+    }
+  }
+</style>

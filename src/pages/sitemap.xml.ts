@@ -23,6 +23,7 @@ type ManifestRedirect = {
 const staticRoutes = [
   '/',
   '/about-us/',
+  '/ai/',
   '/capabilities/',
   '/capabilities/data-activation/',
   '/capabilities/data-analytics/',

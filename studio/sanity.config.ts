@@ -12,6 +12,7 @@ const singletonTypes = new Set([
   'insightsPage',
   'aboutPage',
   'capabilitiesPage',
+  'aiPage',
   'capabilityDetailPage',
   'formPage',
   'teamPage',
@@ -96,6 +97,10 @@ const structure = (S: any) =>
         .title('Capabilities Page')
         .id('capabilitiesPage')
         .child(S.document().schemaType('capabilitiesPage').documentId('capabilitiesPage').title('Capabilities Page')),
+      S.listItem()
+        .title('AI Page')
+        .id('aiPage')
+        .child(S.document().schemaType('aiPage').documentId('aiPage').title('AI Page')),
       S.listItem()
         .title('Contact Page')
         .id('contactPage')

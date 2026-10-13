@@ -1505,14 +1505,22 @@ html.has-menu-open {
   text-underline-offset: 0.2em;
 }
 
+/* Five link columns mirror the nav. Below 1280px the brand takes its own row. */
 @media (min-width: 1025px) {
   .site-footer__inner {
     inline-size: var(--header-content-width);
   }
 
   .site-footer__grid {
-    grid-template-columns: minmax(15rem, 1.5fr) repeat(4, minmax(0, 1fr));
-    gap: 2.5rem 4rem;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 2.5rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .site-footer__grid {
+    grid-template-columns: minmax(14rem, 1.4fr) repeat(5, minmax(0, 1fr));
+    gap: 2.5rem 3rem;
   }
 
   .site-footer__brand {

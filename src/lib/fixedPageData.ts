@@ -44,62 +44,13 @@ export type AboutPageData = SeoFields & {
   teamCta: { body?: SimplePortableTextBlock[]; cta?: Cta };
 };
 
-export type AiBandData = {
-  eyebrow?: string;
-  heading?: string;
-  intro?: string;
-  columns: Array<{ title?: string; body?: string }>;
-};
-
 export type CapabilitiesPageData = SeoFields & {
   hero: RichSection & ImageField;
   outcomes: RichSection & ImageField & { eyebrow?: string };
   workflow: RichSection & ImageField & { prompt?: string };
+  /** One split section per entry, image side alternating; the AI entry closes the list. */
   details: Array<RichSection & ImageField & { id?: string; cta?: Cta }>;
-  /** The dark "AI, inside the Loop" band, same copy as the homepage by default. */
-  ai: AiBandData;
 };
-
-export const defaultAiBandData: AiBandData = {
-  eyebrow: 'AI, inside the Loop',
-  heading: "We build with AI. We don't hide behind it.",
-  intro:
-    'AI does the watching across every account we run: the checks, the classifications, the first draft of every review. People make the calls, and their names are on the work.',
-  columns: [
-    {
-      title: 'Platform AI, steered',
-      body:
-        'AI Max, Performance Max and ChatGPT Ads run on real accounts with guardrails on your copy, your spend and your brand, and get judged on qualified outcomes, not cost per lead.',
-    },
-    {
-      title: 'Systems we build',
-      body:
-        'Automated performance reviews, anomaly reporting, creative classification and keyword diagnosis, running daily so problems surface before the monthly report does.',
-    },
-    {
-      title: 'The principle',
-      body:
-        'AI buys you more senior attention, not a smaller invoice from the same work done faster. What we automate, we automate so the people on your account can think.',
-    },
-  ],
-};
-
-export function mergeAiBandData(value?: Partial<AiBandData> | null, defaults: AiBandData = defaultAiBandData): AiBandData {
-  const page = value || {};
-  const text = (v: string | undefined | null, fallback: string | undefined) => (v && v.trim() ? v : fallback);
-  return {
-    eyebrow: text(page.eyebrow, defaults.eyebrow),
-    heading: text(page.heading, defaults.heading),
-    intro: text(page.intro, defaults.intro),
-    columns:
-      Array.isArray(page.columns) && page.columns.length > 0
-        ? page.columns.map((column, index) => ({
-            title: text(column?.title, defaults.columns[index]?.title),
-            body: text(column?.body, defaults.columns[index]?.body),
-          }))
-        : defaults.columns,
-  };
-}
 
 export type CapabilityDetailPageData = SeoFields & {
   hero: RichSection & ImageField;
@@ -178,7 +129,6 @@ export function mergeCapabilitiesPageData(value?: Partial<CapabilitiesPageData> 
       image: detail.image ?? defaults.details[index]?.image,
       imageAlt: detail.imageAlt ?? defaults.details[index]?.imageAlt,
     })),
-    ai: mergeAiBandData(page.ai, defaults.ai),
   };
 }
 
@@ -302,8 +252,18 @@ export const defaultCapabilitiesPageData: CapabilitiesPageData = {
     { id: 'data', heading: 'Data, Reporting & Analytics', body: [block('Do you have multiple data sources to connect? Or multiple CRMs? No problem.'), block("For us, analytics and reporting go beyond tracking paid media, and everything we build is uniquely customized to your business goals, data, and workflows. No templates or generic dashboards. From attribution models to automated scripts, we help your team understand what's happening, why, and what to do next.")], cta: { label: 'Connect Data to Outcomes', href: '/capabilities/data-analytics/' }, image: '/images/pages/capabilities/capi-cactus.webp', imageAlt: 'Cactus detail' },
     { id: 'paid', heading: 'Paid Media', body: [block("We don't just manage campaigns. We engineer ecosystems.\nOur team brings 20+ years of performance experience and a clear view on how to structure, optimize, and scale lead gen across platforms, all while finding new channels for experimentation and growth. Whether you need to diversify your portfolio or double down on what's working, we'll help you reduce risk, maximize efficiency, and push performance further.")], cta: { label: "Let's Scale Smarter", href: '/capabilities/paid-media/' }, image: '/images/pages/capabilities/capi-typing.webp', imageAlt: 'Paid media work in progress' },
     { id: 'creative', heading: 'Performance Creative & CRO', body: [block("Performance creative bridges the gap between storytelling and sales. We design motion graphics, ad creative, and landing pages that don't just look good - they drive traffic and conversions. Everything we do is tested and built with intention: messaging tailored to your audience, strategic rapid experimentation, visuals designed specifically for the platform, and performance that keeps improving.")], cta: { label: 'Creative Ads That Convert', href: '/capabilities/performance-creative/' }, image: '/images/pages/capabilities/capi-uiux.webp', imageAlt: 'UI and UX design work' },
+    {
+      id: 'ai',
+      heading: 'AI, Inside Every Practice',
+      body: [
+        block('Every practice above runs with AI in it, and none of them is run by it. Platform automation earns budget only after it is tested on live accounts with guardrails on copy, spend and brand. Models review every account daily and flag what changed before anyone opens a report. Creative is classified and tested faster than a team could manage by hand.'),
+        block('What the automation surfaces, a named senior person decides on. That is where our time goes, and it is why the people on your account can think instead of watch.'),
+      ],
+      cta: { label: 'Explore AI & Automation', href: '/capabilities/ai-automation/' },
+      image: '/images/pages/paid-media/tab-art-bid.webp',
+      imageAlt: 'Circuit board with the Found magnifier mark',
+    },
   ],
-  ai: defaultAiBandData,
 };
 
 export const defaultCapabilityDetailPages: Record<string, CapabilityDetailPageData> = {

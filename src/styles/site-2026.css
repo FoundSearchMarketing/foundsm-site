@@ -43,7 +43,8 @@ body.site-2026 {
   --s26-lh-small: 1.55;
 }
 
-body.site-2026 :is(h1, h2, h3) {
+/* Page content only: the header and footer keep their own type on every page. */
+body.site-2026 main :is(h1, h2, h3) {
   font-family: var(--font-heading);
   font-weight: 900;
   font-stretch: 82%;

@@ -50,9 +50,25 @@ const megaMenus = [
       links: [
         { label: 'The Found Loop', href: '/our-approach/' },
         { label: 'Ad Account Migration', href: '/capabilities/ad-account-migration/' },
-        { label: 'AI & Automation', href: '/capabilities/ai-automation/' },
         { label: 'Custom Builds', href: '/resources/tools/custom-builds/' },
       ],
+    },
+  },
+  {
+    id: 'ai',
+    label: 'AI',
+    href: '/ai/',
+    match: 'section:/ai/|/capabilities/ai-automation/',
+    compact: true,
+    pillars: [
+      { label: 'AI at FoundSM', href: '/ai/', desc: 'Applied AI across the business, on the right model for each job.' },
+      { label: 'AI Systems', href: '/ai/#systems', desc: 'Operations, finance, people, reporting and content.' },
+      { label: 'AI in Paid Media', href: '/capabilities/ai-automation/', desc: 'Automation built on engineered data, judged on qualified outcomes.' },
+    ],
+    panel: {
+      title: 'The Found Build Library',
+      desc: 'Builds that started as a client problem and became a system.',
+      links: [{ label: 'See the builds', href: '/resources/tools/custom-builds/' }],
     },
   },
   {

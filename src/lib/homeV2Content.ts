@@ -392,14 +392,13 @@ export const homeV2Content: HomeV2Content = {
 };
 
 /*
-  Form plumbing. Both forms post to the systems the rest of the site already
-  uses, so submissions land where the team expects them.
+  Form plumbing. Both forms post to ActiveCampaign the way the embedded forms
+  on the rest of the site do, so submissions land on the same lists.
 
-  - Talk with us: the ActiveCampaign contact form (#8), the same one embedded
-    on /contact-us/. These are the public values from its embed script.
-  - The Brief: the HubSpot newsletter form behind /newsletter/, through the
-    client-side submissions endpoint. Swap to an ActiveCampaign form once the
-    newsletter list moves over.
+  - Talk with us: ActiveCampaign contact form 8, the same one on /contact-us/.
+  - The Brief: ActiveCampaign newsletter form 4, the same one on /newsletter/.
+    The homepage keeps its email field. Form 4 accepts that email without a
+    first name. These are the public values from its embed script.
 */
 export const homeV2Forms = {
   contact: {
@@ -417,8 +416,17 @@ export const homeV2Forms = {
     messageField: 'field[17]',
   },
   brief: {
-    portalId: '5045186',
-    formId: 'f757bd34-b8c5-4f2a-a1ef-19c3a364683b',
+    action: 'https://foundsm.activehosted.com/proc.php',
+    hidden: {
+      u: '6AE39650DA53D',
+      f: '4',
+      s: '',
+      c: '0',
+      m: '0',
+      act: 'sub',
+      v: '2',
+      or: '4d8c84ef-4d12-4b1f-a531-ad248f3dd0a4',
+    },
   },
 };
 

@@ -289,8 +289,7 @@ export const defaultNewsletterPageData: FormPageData = {
   eyebrow: 'Get Found in Your Inbox',
   heading: 'Sign Up for Our Newsletter',
   intro: [block('Get monthly insights, real-world strategies, and expert takes from the Found team.')],
-  formId: 'f757bd34-b8c5-4f2a-a1ef-19c3a364683b',
-  portalId: '5045186',
+  acFormId: '4',
   summary: [block('Get monthly insights, real-world strategies, and expert takes from the Found team - plus the latest on upcoming events and recaps on any you missed.')],
 };
 

@@ -17,6 +17,67 @@
   margin-top: var(--h2-stack-gap);
 }
 
+/* Split intro: copy on the left, playbook labels on the right. The rail
+   lines up with the heading, under the eyebrow. */
+.capabilities-outcomes__intro {
+  display: grid;
+  gap: var(--h2-stack-gap);
+}
+
+.capabilities-outcomes__split {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  align-items: start;
+  gap: clamp(1.5rem, 3vw, 2.75rem);
+}
+
+.capabilities-outcomes__split .home2-head {
+  max-width: none;
+}
+
+.capabilities-outcomes__rail {
+  margin: 0;
+  padding: 0.4rem 1.6rem;
+  list-style: none;
+  background: var(--h2-paper);
+  border-radius: var(--h2-radius);
+}
+
+.capabilities-outcomes__rail li {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin: 0;
+  padding: 1.05rem 0.15rem;
+  color: var(--h2-ink);
+  font-family: var(--h2-display);
+  font-size: clamp(1.15rem, 1.5vw, 1.45rem);
+  font-weight: 900;
+  font-stretch: 82%;
+  font-variation-settings: 'wdth' 82;
+  letter-spacing: 0.005em;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.capabilities-outcomes__rail li + li {
+  border-top: 1px solid rgba(35, 31, 32, 0.14);
+}
+
+.capabilities-outcomes__rail li::before {
+  content: '';
+  flex: none;
+  width: 0.7rem;
+  height: 0.7rem;
+  background: var(--h2-green);
+}
+
+@media (max-width: 1024px) {
+  .capabilities-outcomes__split {
+    grid-template-columns: 1fr;
+  }
+}
+
 .capabilities-hub__grid {
   display: grid;
   grid-template-columns: 1fr;

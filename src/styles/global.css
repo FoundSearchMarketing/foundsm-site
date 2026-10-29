@@ -1120,7 +1120,7 @@ html.has-menu-open {
 .hero__subtitle {
   margin-top: var(--space-sm);
   font-size: var(--text-body);
-  color: rgba(255, 255, 255, 0.85);
+  color: #ffffff;
   max-width: 36rem;
   line-height: 1.7;
 }
@@ -1176,7 +1176,7 @@ html.has-menu-open {
 
 .hero__typewriter {
   flex: 1;
-  color: rgba(255, 255, 255, 0.8);
+  color: #ffffff;
   font-size: var(--text-body);
 }
 
@@ -1257,7 +1257,7 @@ html.has-menu-open {
 
 .cta-banner__text {
   margin-top: var(--space-sm);
-  color: rgba(255, 255, 255, 0.8);
+  color: #ffffff;
   max-width: 36rem;
   margin-inline: auto;
 }
@@ -1295,9 +1295,9 @@ html.has-menu-open {
    weight, the copy stays quiet. */
 .dark-band__body,
 .dark-band__body p {
-  color: var(--color-white);
+  color: #ffffff;
   font-weight: 400;
-  opacity: 0.82;
+  opacity: 1;
 }
 
 /* --------------------------------------------------------------------------
@@ -1938,7 +1938,7 @@ html.has-menu-open {
 .stats__label {
   margin-top: 0.25rem;
   font-size: var(--text-caption);
-  color: rgba(255, 255, 255, 0.75);
+  color: #ffffff;
 }
 
 /* --------------------------------------------------------------------------

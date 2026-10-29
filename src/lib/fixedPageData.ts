@@ -295,6 +295,7 @@ export const defaultCapabilitiesPageData: CapabilitiesPageData = {
     body: [
       block('We build smart, custom systems for performance marketing by combining first-party data with our proven approach. That starts with a custom playbook where we map solutions tied directly to business outcomes. This includes development of initial KPIs and is our foundation for planning. We also create different versions for launch, expansion, and efficiency - always taking into account factors like brand strength, demand, revenue, profitability, and opportunity cost.'),
       block('We handle every aspect of your performance lead generation ecosystem, making sure strategy and execution are always aligned.'),
+      block('Every engagement starts with a custom playbook that maps solutions to business outcomes and sets the first KPIs. We build versions for launch, expansion and efficiency, weighing brand strength, demand, revenue, profitability and opportunity cost.'),
     ],
     image: '/images/pages/capabilities/capibilities-mary-jake.webp',
     imageAlt: 'FoundSM team members collaborating',

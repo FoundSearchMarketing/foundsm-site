@@ -8,7 +8,7 @@ import {
   type CapabilitiesPageData,
 } from './fixedPageData';
 
-export { defaultCapabilitiesPageData, mergeCapabilitiesPageData } from './fixedPageData';
+export { defaultCapabilitiesPageData, defaultCapabilityDetailPages, mergeCapabilitiesPageData } from './fixedPageData';
 import type { SimplePortableTextBlock } from './simplePortableTextCore';
 
 const LONG_INTRO_PREFIX = 'We build smart, custom systems for performance marketing';
@@ -26,6 +26,8 @@ export type PracticeCardModel = {
   anchor: string;
   heading: string;
   lead: string;
+  /** Full practice body from the hub document, or the code default when Sanity has none. */
+  body: SimplePortableTextBlock[];
   label: string;
   href: string;
   image?: CapabilitiesPageData['details'][number]['image'];
@@ -76,11 +78,13 @@ export function practiceCards(page: CapabilitiesPageData): PracticeCardModel[] {
   return CARD_SLOTS.map((slot) => {
     const detail = byId.get(slot.id) || defaults.get(slot.id);
     const fallback = defaults.get(slot.id);
+    const body = detail?.body?.length ? detail.body : fallback?.body || [];
     return {
       id: slot.id,
       anchor: slot.anchor,
       heading: detail?.heading || fallback?.heading || '',
       lead: detail?.lead?.trim() || fallback?.lead || '',
+      body,
       label: detail?.cta?.label?.trim() || fallback?.cta?.label || '',
       href: cardHref(detail?.cta?.href, slot.href),
       image: detail?.image ?? fallback?.image,

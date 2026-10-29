@@ -10,6 +10,7 @@
 import '../../styles/homepage-v2.css';
 import HomeProofStats from './HomeProofStats.astro';
 import HomeWorkResults from './HomeWorkResults.astro';
+import HomeTalk from './HomeTalk.astro';
 import { mergeHomePageData, type HomePageData } from '../../lib/homePageData';
 import {
   buildRoasDots,
@@ -323,49 +324,7 @@ const proof = [
     </div>
   </section>
 
-  <section class="home2-section home2-section--paper home2-talk" id="home2-talk" aria-labelledby="home2-talk-title">
-    <div class="home2-shell home2-talk__inner">
-      <div class="home2-head home2-talk__copy">
-        <p class="home2-eyebrow">{content.talk.eyebrow}</p>
-        <h2 id="home2-talk-title">{content.talk.heading}</h2>
-        <p>{content.talk.intro}</p>
-      </div>
-      <form
-        class="home2-form"
-        method="post"
-        action={homeV2Forms.contact.action}
-        data-home2-contact
-        data-success={content.talk.success}
-        data-error={content.talk.error}
-        data-fallback-href={content.talk.fallback.href}
-        data-fallback-label={content.talk.fallback.label}
-      >
-        {Object.entries(homeV2Forms.contact.hidden).map(([name, value]) => (
-          <input type="hidden" name={name} value={value} />
-        ))}
-        <input type="hidden" name="firstname" value="" />
-        <input type="hidden" name="lastname" value="" />
-        <div class="home2-form__fields">
-          <div class="home2-form__field">
-            <label for="home2-talk-name">{content.talk.fields.name}</label>
-            <input id="home2-talk-name" name="fullname" type="text" autocomplete="name" required />
-          </div>
-          <div class="home2-form__field">
-            <label for="home2-talk-email">{content.talk.fields.email}</label>
-            <input id="home2-talk-email" name="email" type="email" autocomplete="email" required />
-          </div>
-          <div class="home2-form__field home2-form__field--wide">
-            <label for="home2-talk-notes">{content.talk.fields.notes}</label>
-            <textarea id="home2-talk-notes" name={homeV2Forms.contact.messageField} rows="3"></textarea>
-          </div>
-          <div class="home2-form__actions">
-            <button class="btn btn--primary" type="submit">{content.talk.button}</button>
-          </div>
-        </div>
-        <p class="home2-form__status" role="status" aria-live="polite" hidden></p>
-      </form>
-    </div>
-  </section>
+  <HomeTalk talk={content.talk} />
 </div>
 
 <script>
@@ -460,7 +419,8 @@ const proof = [
      plain POST. The single "Full name" field is split for AC's first/last. */
   const initContact = (root: HTMLElement) => {
     const form = root.querySelector<HTMLFormElement>('[data-home2-contact]');
-    if (!form) return;
+    if (!form || form.dataset.contactBound === 'true') return;
+    form.dataset.contactBound = 'true';
     const fullName = form.elements.namedItem('fullname') as HTMLInputElement | null;
     const firstName = form.elements.namedItem('firstname') as HTMLInputElement | null;
     const lastName = form.elements.namedItem('lastname') as HTMLInputElement | null;

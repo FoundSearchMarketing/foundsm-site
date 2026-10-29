@@ -4,8 +4,7 @@
 */
 
 .capabilities-outcomes__inner,
-.capabilities-ai__copy,
-.capabilities-close {
+.capabilities-ai__copy {
   display: grid;
 }
 
@@ -19,10 +18,38 @@
   gap: 1.5rem;
 }
 
-/* Larger than the homepage's four-up cards: full-bleed 16:9 inside the same card. */
+/* Larger than the homepage's four-up cards: full-bleed 16:9 inside the same card.
+   Cards in a row share a height, and the text link sits at the bottom. */
+.capabilities-hub .home2-card {
+  height: 100%;
+}
+
 .capabilities-hub .home2-card img {
   height: auto;
   aspect-ratio: 16 / 9;
+}
+
+.capabilities-hub .home2-card__body {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.capabilities-hub .capabilities-card__copy {
+  display: grid;
+  gap: 0.75rem;
+  color: var(--h2-muted);
+  font-size: var(--h2-text-small);
+  line-height: var(--h2-lh-small);
+}
+
+.capabilities-hub .capabilities-card__copy :is(p) {
+  margin: 0;
+}
+
+.capabilities-hub .home2-card .home2-more {
+  margin-top: auto;
+  align-self: flex-start;
 }
 
 .capabilities-ai__inner {
@@ -44,8 +71,7 @@
   margin: 0;
 }
 
-.capabilities-ai__copy .btn,
-.capabilities-close .btn {
+.capabilities-ai__copy .btn {
   justify-self: start;
 }
 
@@ -65,11 +91,6 @@
 .capabilities-hub .btn--primary:hover,
 .capabilities-hub .btn--primary:focus-visible {
   color: var(--color-dark);
-}
-
-.capabilities-close {
-  justify-items: start;
-  gap: 1.75rem;
 }
 
 @media (min-width: 640px) {

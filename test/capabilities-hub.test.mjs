@@ -12,7 +12,7 @@ const LONG_INTRO = 'We build smart, custom systems for performance marketing by 
 const SHORT_INTRO = 'We handle every aspect of your performance lead generation ecosystem, making sure strategy and execution are always aligned.';
 
 test('hub defaults are the four cards, the short outcomes line, and /ai/', async () => {
-  const { defaultCapabilitiesPageData, mergeCapabilitiesPageData, practiceCards, outcomeIntroBlocks, aiSection, outcomesHeading } = await modulePromise;
+  const { defaultCapabilitiesPageData, defaultCapabilityDetailPages, mergeCapabilitiesPageData, practiceCards, outcomeIntroBlocks, aiSection, outcomesHeading } = await modulePromise;
   const page = mergeCapabilitiesPageData(null);
   const cards = practiceCards(page);
   const intro = outcomeIntroBlocks(page).map(textOf).join(' ');
@@ -54,6 +54,13 @@ test('hub defaults are the four cards, the short outcomes line, and /ai/', async
   assert.equal(aiSection(page).heading, 'AI, Inside Every Practice.');
   assert.equal(aiSection(page).anchor, 'capabilities-ai');
   assert.equal(defaultCapabilitiesPageData.details.some((detail) => detail.id === 'activation'), true);
+  assert.equal(cards.find((card) => card.id === 'data').body.map(textOf).join('\n\n').includes('For us, analytics and reporting go beyond tracking paid media'), true);
+  assert.equal(cards.find((card) => card.id === 'paid').body.map(textOf).join('\n').includes('Our team brings 20+ years of performance experience'), true);
+  assert.equal(cards.find((card) => card.id === 'creative').body.map(textOf).join('').includes("they drive traffic and conversions"), true);
+  const activationBody = cards.find((card) => card.id === 'activation').body.map(textOf).join('\n\n');
+  const heroBody = defaultCapabilityDetailPages.dataActivation.hero.body.map(textOf).join('\n\n');
+  assert.equal(activationBody, heroBody);
+  assert.equal(intro.includes('We build smart'), false);
 });
 
 test('an older four-item document still gets Data Activation and keeps card leads', async () => {

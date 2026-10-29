@@ -18,33 +18,33 @@ test('hub defaults are the four cards, the short outcomes line, and /ai/', async
   const intro = outcomeIntroBlocks(page).map(textOf).join(' ');
 
   assert.deepEqual(cards.map((card) => card.heading), [
-    'Data, Reporting & Analytics',
-    'Data Activation',
     'Paid Media',
+    'Data Activation',
+    'Data, Reporting & Analytics',
     'Performance Creative & CRO',
   ]);
   assert.deepEqual(cards.map((card) => card.lead), [
-    'Do you have multiple data sources to connect? Or multiple CRMs? No problem.',
-    "In today's AI marketing landscape, data is your most valuable asset yet many companies are not using it to its full potential.",
     "We don't just manage campaigns. We engineer ecosystems.",
+    "In today's AI marketing landscape, data is your most valuable asset yet many companies are not using it to its full potential.",
+    'Do you have multiple data sources to connect? Or multiple CRMs? No problem.',
     'Performance creative bridges the gap between storytelling and sales.',
   ]);
   assert.deepEqual(cards.map((card) => card.label), [
-    'Connect Data to Outcomes',
-    'Connect the data',
     "Let's Scale Smarter",
+    'Connect the data',
+    'Connect Data to Outcomes',
     'Creative Ads That Convert',
   ]);
   assert.deepEqual(cards.map((card) => card.href), [
-    '/capabilities/data-analytics/',
-    '/capabilities/data-activation/',
     '/capabilities/paid-media/',
+    '/capabilities/data-activation/',
+    '/capabilities/data-analytics/',
     '/capabilities/performance-creative/',
   ]);
   assert.deepEqual(cards.map((card) => card.anchor), [
-    'capabilities-data-reporting-analytics',
-    'capabilities-data-activation',
     'capabilities-paid-media',
+    'capabilities-data-activation',
+    'capabilities-data-reporting-analytics',
     'capabilities-performance-creative',
   ]);
   assert.equal(intro, SHORT_INTRO);

@@ -13,7 +13,7 @@ const insightResourcePage = getInsightResourcePage(page.path);
 const bodyHtml = renderSimplePortableText(page.body);
 const ctaBodyHtml = renderSimplePortableText(page.cta?.body);
 const formBodyHtml = renderSimplePortableText(page.form?.body);
-const formContainerId = page.form?.hubspotFormId ? `legacy-form-${page.form.hubspotFormId}` : undefined;
+const acFormId = page.form?.acFormId;
 ---
 
 {insightResourcePage ? (
@@ -35,7 +35,7 @@ const formContainerId = page.form?.hubspotFormId ? `legacy-form-${page.form.hubs
           <slot />
         </div>
 
-        {(page.cards?.length || page.form?.hubspotFormId) && (
+        {(page.cards?.length || acFormId) && (
           <aside class="legacy-page__aside">
             {page.cards?.map((card) => {
               const cardBodyHtml = renderSimplePortableText(card.body);
@@ -48,11 +48,11 @@ const formContainerId = page.form?.hubspotFormId ? `legacy-form-${page.form.hubs
               );
             })}
 
-            {page.form?.hubspotFormId && (
+            {acFormId && (
               <div class="legacy-form">
-                {page.form.heading && <h2>{page.form.heading}</h2>}
+                {page.form?.heading && <h2>{page.form.heading}</h2>}
                 {formBodyHtml && <div class="legacy-rich-text legacy-rich-text--small" set:html={formBodyHtml} />}
-                <div id={formContainerId} class="legacy-form__embed"></div>
+                <div class={`_form_${acFormId} legacy-form__embed`} id="legacy-ac-form"></div>
               </div>
             )}
           </aside>
@@ -73,25 +73,8 @@ const formContainerId = page.form?.hubspotFormId ? `legacy-form-${page.form.hubs
       </section>
     )}
 
-    {page.form?.hubspotFormId && formContainerId && (
-      <script is:inline define:vars={{ hubspotFormId: page.form.hubspotFormId, formContainerId }}>
-        (function() {
-          function loadForm() {
-            if (window.hbspt) {
-              window.hbspt.forms.create({
-                region: "na1",
-                portalId: "5045186",
-                formId: hubspotFormId,
-                target: "#" + formContainerId
-              });
-            } else {
-              setTimeout(loadForm, 500);
-            }
-          }
-          if (document.readyState === "complete") loadForm();
-          else window.addEventListener("load", loadForm);
-        })();
-      </script>
+    {acFormId && (
+      <script is:inline src={`https://foundsm.activehosted.com/f/embed.php?id=${acFormId}`} charset="utf-8" defer></script>
     )}
   </>
 )}

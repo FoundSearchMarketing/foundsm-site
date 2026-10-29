@@ -9,6 +9,7 @@ interface Props {
   intro?: any[];
   hubspotFormId?: string;
   portalId?: string;
+  acFormId?: string;
   summary?: any[];
   variant?: 'contact' | 'newsletter' | 'resource' | 'event';
   theme?: 'light' | 'dark' | 'muted';
@@ -22,6 +23,7 @@ const {
   intro = [],
   hubspotFormId,
   portalId,
+  acFormId,
   summary = [],
   variant = 'contact',
   theme = 'dark',
@@ -37,8 +39,9 @@ const shouldLoadFormScript = hubspotFormId !== '00000000-0000-0000-0000-00000000
     lead={lead}
     intro={richText(intro)}
     introHtml={richHtml(intro)}
-    formId={hubspotFormId}
+    formId={hubspotFormId || ''}
     portalId={portalId}
+    acFormId={acFormId}
     summary={richText(summary)}
     summaryHtml={richHtml(summary)}
     variant={variant}

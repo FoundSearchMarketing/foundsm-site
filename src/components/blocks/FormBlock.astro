@@ -3,12 +3,23 @@ interface Props {
   heading?: string;
   subheading?: string;
   hubspotFormId?: string;
+  /** ActiveCampaign form id. When set, this is the form the block embeds. */
+  acFormId?: string;
   theme?: 'light' | 'dark';
 }
 
-const { heading, subheading, hubspotFormId, theme = 'light' } = Astro.props;
+/*
+  The contact HubSpot form (test-route demo, and the old dataconnect fallback)
+  now submits through ActiveCampaign form 8, the same form as /contact-us/
+  and /dataconnect/. Any other HubSpot id renders nothing.
+*/
+const CONTACT_HUBSPOT_FORM_ID = '77ee07f7-2567-46d2-9255-ff9e410fdf6a';
+const CONTACT_AC_FORM_ID = '8';
+
+const { heading, subheading, hubspotFormId, acFormId, theme = 'light' } = Astro.props;
 const isDark = theme === 'dark';
-const containerId = `hs-form-${hubspotFormId || 'placeholder'}`;
+const resolvedAcFormId =
+  acFormId || (hubspotFormId === CONTACT_HUBSPOT_FORM_ID ? CONTACT_AC_FORM_ID : undefined);
 ---
 
 <section class={`section ${isDark ? 'section--dark' : 'section--light'}`} aria-label={heading || 'Form'}>
@@ -20,27 +31,12 @@ const containerId = `hs-form-${hubspotFormId || 'placeholder'}`;
           {subheading && <p class="section-header__text">{subheading}</p>}
         </div>
       )}
-      <div id={containerId} class="lp-form-block__container fade-in-up"></div>
+      {resolvedAcFormId && (
+        <div class={`_form_${resolvedAcFormId} lp-form-block__container fade-in-up`} id={`lp-ac-form-${resolvedAcFormId}`}></div>
+      )}
     </div>
   </div>
-  {hubspotFormId && (
-    <script is:inline define:vars={{ hubspotFormId, containerId }}>
-      (function() {
-        function loadForm() {
-          if (window.hbspt) {
-            window.hbspt.forms.create({
-              region: "na1",
-              portalId: "5045186",
-              formId: hubspotFormId,
-              target: "#" + containerId
-            });
-          } else {
-            setTimeout(loadForm, 500);
-          }
-        }
-        if (document.readyState === 'complete') { loadForm(); }
-        else { window.addEventListener('load', loadForm); }
-      })();
-    </script>
+  {resolvedAcFormId && (
+    <script is:inline src={`https://foundsm.activehosted.com/f/embed.php?id=${resolvedAcFormId}`} charset="utf-8" defer></script>
   )}
 </section>

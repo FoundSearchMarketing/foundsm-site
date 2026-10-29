@@ -1,16 +1,18 @@
 /*
-  Loads HubSpot site tracking only after the visitor has made a OneTrust
-  choice and both cookie groups that this script writes are allowed.
+  Loads HubSpot site tracking when OneTrust reports both cookie groups this
+  script writes as active. No separate "banner was clicked" check: opt-out
+  regions such as the US mark these groups active by default, and opt-in
+  regions such as the EU and UK leave them off until the visitor accepts.
 
   OneTrust on foundsm.com classifies the cookies this script sets as:
     C0002 Performance: __hstc, __hssc, __hssrc
     C0003 Functional:  hubspotutk
   Targeting (C0004) does not include these cookies.
 
-  The US template is opt-out, so OneTrust can mark C0002 active before anyone
-  clicks. This waits for an explicit banner or preference-center choice
-  (OptanonAlertBoxClosed, or OptanonConsent interactionCount > 0) so the
-  cookies are not set while the banner is still unanswered.
+  Global Privacy Control is handled by OneTrust (CookieV2GPC, and
+  IsGpcEnabled on C0002). When a GPC signal turns C0002 off, the active
+  groups no longer include the pair and this script does not load, and it
+  clears any HubSpot cookies already set.
 */
 (function () {
   var GROUPS = ['C0002', 'C0003'];
@@ -56,34 +58,22 @@
     return allowed;
   }
 
-  function hasInteracted() {
-    try {
-      if (window.OneTrust && typeof window.OneTrust.IsAlertBoxClosed === 'function' && window.OneTrust.IsAlertBoxClosed()) {
-        return true;
-      }
-    } catch (error) {
-      /* OneTrust not ready */
-    }
-    if (readCookie('OptanonAlertBoxClosed')) return true;
-    var consent = readCookie('OptanonConsent');
-    var count = consent.match(/(?:^|&)interactionCount=([^&]*)/);
-    if (!count) return false;
-    var parsed = parseInt(decodeGroups(count[1]), 10);
-    return parsed > 0;
-  }
-
   function allowedGroups() {
-    return allowedFromActiveGroups() || allowedFromConsentCookie() || [];
+    var active = allowedFromActiveGroups();
+    if (active) return active;
+    var fromCookie = allowedFromConsentCookie();
+    if (fromCookie) return fromCookie;
+    return null;
   }
 
   function hasConsent() {
-    if (!hasInteracted()) return false;
     var allowed = allowedGroups();
+    if (!allowed) return false;
     return GROUPS.every(function (id) { return allowed.indexOf(id) !== -1; });
   }
 
   function consentKnown() {
-    return allowedFromActiveGroups() !== null || allowedFromConsentCookie() !== null || hasInteracted();
+    return allowedGroups() !== null;
   }
 
   function clearHubSpotCookies() {

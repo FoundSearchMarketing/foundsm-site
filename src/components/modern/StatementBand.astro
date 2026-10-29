@@ -101,7 +101,14 @@ const classes = [
     color: currentColor;
     font-size: 1rem;
     line-height: 1.875;
-    opacity: 0.82;
+  }
+
+  /* The shared dark-band body rule fades copy to 82%. These three bands
+     (Capabilities, AI, Team) need the paragraph at full white. */
+  .statement-band--dark .statement-band__body,
+  .statement-band--dark .statement-band__body p {
+    color: #ffffff;
+    opacity: 1;
   }
 
   .statement-band__aside {

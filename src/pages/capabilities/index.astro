@@ -2,19 +2,38 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import MediaAsset from '../../components/MediaAsset.astro';
 import StatementBand from '../../components/modern/StatementBand.astro';
-import { capabilitiesPageQuery, sanityClient } from '../../lib/sanity';
+import PracticeCard from '../../components/capabilities/PracticeCard.astro';
+import HomeProofStats from '../../components/home/HomeProofStats.astro';
+import HomeWorkResults from '../../components/home/HomeWorkResults.astro';
+import { capabilitiesPageQuery, homePageQuery, sanityClient } from '../../lib/sanity';
 import { defaultCapabilitiesPageData, mergeCapabilitiesPageData } from '../../lib/fixedPageData';
 import { imageProps, richHtml } from '../../lib/fixedPageRender';
+import { aiSection, outcomeIntroBlocks, outcomesHeading, practiceCards } from '../../lib/capabilitiesHub';
+import { mergeHomePageData } from '../../lib/homePageData';
+import {
+  buildRoasDots,
+  formatMetric,
+  mergeHomeV2Content,
+  selectClientLogos,
+} from '../../lib/homeV2Data';
+import '../../styles/homepage-v2.css';
+import '../../styles/capabilities-hub.css';
 
 /*
-  Flow: hero → callout band (how the practices work together, linking to the
-  method page) → the capabilities (intro, then one split per practice).
-  The band is the same dark statement band the capability sub pages open
-  with. Every heading is left-aligned, as on the homepage.
+  Hub: hero, no-silos band, outcomes header + 2x2 practice cards, AI section,
+  homepage logo strip and 46% results, homepage stats, closing button.
+  Long practice copy stays in the data and on the child pages. It is not rendered here.
 */
 
-const sanityPage = await sanityClient.fetch(capabilitiesPageQuery).catch(() => null);
+const [sanityPage, homeDoc] = await Promise.all([
+  sanityClient.fetch(capabilitiesPageQuery).catch(() => null),
+  sanityClient.fetch(homePageQuery).catch(() => null),
+]);
 const page = mergeCapabilitiesPageData(sanityPage);
+const homePage = mergeHomePageData(homeDoc);
+const homeContent = mergeHomeV2Content(homePage);
+const homeSanity = mergeHomePageData(homePage);
+
 const title = page.seoTitle || defaultCapabilitiesPageData.seoTitle;
 const description = page.seoDescription || defaultCapabilitiesPageData.seoDescription;
 const canonical = page.canonicalUrl || defaultCapabilitiesPageData.canonicalUrl;
@@ -23,7 +42,6 @@ const robots = page.robots || defaultCapabilitiesPageData.robots;
 const heroMedia = imageProps(page.hero, 'eager');
 const heroImageAlt = page.hero.imageAlt || '';
 
-// Callout band: the How We Work statement, condensed, with a link to the method page.
 const escapeHtml = (value: string) =>
   value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const calloutLead = page.workflow.heading || '';
@@ -34,26 +52,23 @@ const calloutHtml =
     ? `<p class="capabilities-callout__link"><a class="more-2026 more-2026--light" href="${escapeHtml(calloutCta.href as string)}">${escapeHtml(calloutCta.label as string)}</a></p>`
     : '');
 
-// Anchors other pages may already point at keep their ids; new entries get one from their stable id.
-const detailAnchors: Record<string, string> = {
-  data: 'capabilities-data-reporting-analytics',
-  paid: 'capabilities-paid-media',
-  creative: 'capabilities-performance-creative',
-  ai: 'capabilities-ai',
-};
-const details = page.details
-  .filter((detail) => detail.heading)
-  .map((detail, index) => {
-    const key = detail.id || String(index);
-    return {
-      ...detail,
-      key,
-      anchor: detailAnchors[key] || `capabilities-${key}`,
-      media: imageProps(detail),
-      alt: detail.imageAlt || '',
-      reverse: index % 2 === 1,
-    };
-  });
+const outcomeIntro = richHtml(outcomeIntroBlocks(page));
+const cards = practiceCards(page).map((card) => ({
+  ...card,
+  src: imageProps({ image: card.image, imageAlt: card.imageAlt })?.src || '',
+}));
+const ai = aiSection(page);
+const aiMedia = imageProps({ image: ai.image, imageAlt: ai.imageAlt });
+
+const clientLogos = selectClientLogos(homeSanity.clientLogos.logos);
+const testimonial = homeSanity.metrics.testimonial;
+const testimonialRole = [testimonial.authorTitle, testimonial.authorCompany].filter(Boolean).join(', ');
+const roasDots = buildRoasDots(11);
+const proof = [
+  { icon: 'chart', value: formatMetric(homeSanity.metrics.spend), label: homeContent.proof.spendLabel },
+  { icon: 'people', value: formatMetric(homeSanity.metrics.leads), label: homeContent.proof.leadsLabel },
+  { icon: 'clock', value: formatMetric(homeSanity.metrics.experience), label: homeContent.proof.experienceLabel },
+];
 
 const schema = {
   '@context': 'https://schema.org',
@@ -94,52 +109,86 @@ const schema = {
       </div>
     </section>
 
-
     {calloutLead && (
       <div class="capabilities-callout">
         <StatementBand lead={calloutLead} body="" bodyHtml={calloutHtml} theme="dark" pattern />
       </div>
     )}
+  </div>
 
-    <section class="practices-section" id="practices" aria-labelledby="practices-title">
-      <div class="practices-section__head">
-        {page.outcomes.eyebrow && <p class="eyebrow-2026">{page.outcomes.eyebrow}</p>}
-        <h2 id="practices-title" class="practices-section__title">{page.outcomes.heading}</h2>
-        <div class="practices-section__intro" set:html={richHtml(page.outcomes.body)} />
+  <div class="home2 capabilities-hub">
+    <section class="home2-section capabilities-outcomes" id="practices" aria-labelledby="capabilities-outcomes-title">
+      <div class="home2-shell capabilities-outcomes__inner">
+        <div class="home2-head">
+          {page.outcomes.eyebrow && <p class="home2-eyebrow">{page.outcomes.eyebrow}</p>}
+          <h2 id="capabilities-outcomes-title">{outcomesHeading(page)}</h2>
+          <div set:html={outcomeIntro} />
+        </div>
+        <div class="capabilities-hub__grid">
+          {cards.map((card) => (
+            <PracticeCard
+              anchor={card.anchor}
+              href={card.href}
+              image={card.src}
+              imageAlt={card.imageAlt}
+              heading={card.heading}
+              lead={card.lead}
+              label={card.label}
+            />
+          ))}
+        </div>
       </div>
-
-      {details.map((detail) => (
-        <article class:list={['capability-detail', `capability-detail--${detail.key}`]} id={detail.anchor} aria-labelledby={`${detail.anchor}-title`}>
-          <div class:list={['capability-detail__inner', { 'capability-detail__inner--reverse': detail.reverse, 'capability-detail__inner--text-only': !detail.media }]}>
-            {detail.media && detail.reverse && (
-              <div class="capability-detail__media" aria-hidden={detail.alt ? undefined : 'true'}>
-                <MediaAsset class="capability-detail__image" src={detail.media.src} width="900" height="675" alt={detail.alt} loading="lazy" />
-              </div>
-            )}
-
-            <div class="capability-detail__copy">
-              <h3 id={`${detail.anchor}-title`} class="capability-detail__title">{detail.heading}</h3>
-              <div class="capability-detail__text" set:html={richHtml(detail.body)} />
-              {detail.cta?.label && detail.cta?.href && (
-                <a class="btn btn--primary capability-detail__button" href={detail.cta.href}>{detail.cta.label}</a>
-              )}
-            </div>
-
-            {detail.media && !detail.reverse && (
-              <div class="capability-detail__media" aria-hidden={detail.alt ? undefined : 'true'}>
-                <MediaAsset class="capability-detail__image" src={detail.media.src} width="900" height="675" alt={detail.alt} loading="lazy" />
-              </div>
-            )}
-          </div>
-        </article>
-      ))}
     </section>
 
+    <section class="home2-section home2-section--dark capabilities-ai" id={ai.anchor} aria-labelledby="capabilities-ai-title">
+      <div class="home2-shell capabilities-ai__inner">
+        <div class="capabilities-ai__copy">
+          <div class="home2-head">
+            <p class="home2-eyebrow home2-eyebrow--light">{homeContent.ai.eyebrow}</p>
+            <h2 id="capabilities-ai-title">{ai.heading}</h2>
+          </div>
+          <div class="capabilities-ai__text home2-body" set:html={richHtml(ai.body)} />
+          {ai.label && ai.href && (
+            <a class="btn btn--primary" href={ai.href}>{ai.label}</a>
+          )}
+        </div>
+        {aiMedia && (
+          <img
+            class="capabilities-ai__image"
+            src={aiMedia.src}
+            alt={ai.imageAlt}
+            width="850"
+            height="887"
+            loading="lazy"
+          />
+        )}
+      </div>
+    </section>
+
+    <HomeWorkResults
+      work={homeContent.work}
+      logos={clientLogos}
+      quote={testimonial.quote}
+      quoteName={testimonial.authorName}
+      quoteRole={testimonialRole}
+      dots={roasDots}
+    />
+
+    <HomeProofStats items={proof} />
+
+    <section class="home2-section home2-section--paper home2-talk" id="capabilities-talk" aria-labelledby="capabilities-talk-title">
+      <div class="home2-shell capabilities-close">
+        <div class="home2-head">
+          <p class="home2-eyebrow">{homeContent.talk.eyebrow}</p>
+          <h2 id="capabilities-talk-title">{homeContent.talk.heading}</h2>
+        </div>
+        <a class="btn btn--primary" href="/contact-us/">Talk with us</a>
+      </div>
+    </section>
   </div>
 </BaseLayout>
 
 <style>
-  /* Capabilities page on the 2026 type system: tokens come from site-2026.css. */
   .capabilities-page {
     color: var(--s26-ink);
     background: #ffffff;
@@ -152,14 +201,10 @@ const schema = {
     color: var(--s26-ink);
   }
 
-  .capabilities-hero__inner,
-  .practices-section__head,
-  .capability-detail__inner {
+  .capabilities-hero__inner {
     inline-size: var(--s26-shell);
     margin-inline: auto;
   }
-
-  /* ---------------------------------------------------------------- hero */
 
   .capabilities-hero {
     padding-block: clamp(3rem, 6vw, 4.5rem) clamp(3rem, 6vw, 4rem);
@@ -209,107 +254,14 @@ const schema = {
     object-fit: cover;
   }
 
-  /* ------------------------------------------------------------ practices */
-
-  .practices-section {
-    padding-block: var(--s26-section);
-  }
-
-  .practices-section__head {
-    display: grid;
-    gap: 0.875rem;
-    padding-block-end: clamp(0.5rem, 2vw, 1.5rem);
-  }
-
-  .practices-section__head > * {
-    max-width: 45rem;
-  }
-
-  .practices-section__title {
-    font-size: var(--s26-size-h2);
-    line-height: 1.05;
-  }
-
-  .practices-section__intro,
-  .capability-detail__text {
-    color: var(--s26-muted);
-    font-size: var(--s26-text-body);
-    line-height: var(--s26-lh-body);
-  }
-
-  .practices-section__intro {
-    max-width: 62ch;
-  }
-
-  .capabilities-hero__text :global(p),
-  .practices-section__intro :global(p),
-  .capability-detail__text :global(p) {
+  .capabilities-hero__text :global(p) {
     margin: 0;
   }
 
-  .capabilities-hero__text :global(p + p),
-  .practices-section__intro :global(p + p),
-  .capability-detail__text :global(p + p) {
+  .capabilities-hero__text :global(p + p) {
     margin-top: 1rem;
   }
 
-  /* Images: one aspect per slot and a hard height cap, so copy sets the
-     section height rather than the picture. */
-  .capability-detail__inner {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(18rem, 42%);
-    align-items: center;
-    gap: 3rem;
-    padding-block: clamp(2rem, 4vw, 3rem);
-  }
-
-  .capability-detail__inner--reverse {
-    grid-template-columns: minmax(18rem, 42%) minmax(0, 1fr);
-  }
-
-  .capability-detail__inner--text-only,
-  .capability-detail__inner--reverse.capability-detail__inner--text-only {
-    grid-template-columns: minmax(0, 54rem);
-  }
-
-  .capability-detail:last-child .capability-detail__inner {
-    padding-block-end: 0;
-  }
-
-  .capability-detail__copy {
-    display: grid;
-    gap: 0.875rem;
-    max-width: 62ch;
-  }
-
-  /* h3 in the outline, h2 on the scale: each practice reads as a peer section. */
-  .capability-detail__title {
-    font-size: var(--s26-size-h2);
-    line-height: 1.05;
-  }
-
-  .capability-detail__button {
-    justify-self: start;
-    margin-top: 0.5rem;
-  }
-
-  .capability-detail__media {
-    --media-asset-radius: var(--s26-radius);
-    --media-asset-fit: cover;
-  }
-
-  .capability-detail__media :global(.capability-detail__image) {
-    inline-size: 100%;
-    aspect-ratio: 4 / 3;
-    max-block-size: 22rem;
-    object-fit: cover;
-    border-radius: var(--s26-radius);
-  }
-
-  /* -------------------------------------------------------------- callout */
-
-  /* Same band as the capability sub pages; its text edges line up with this
-     page's shell. */
   .capabilities-callout :global(.statement-band__inner) {
     inline-size: min(84.375rem, 100%);
   }
@@ -319,20 +271,12 @@ const schema = {
   }
 
   @media (max-width: 1024px) {
-    .capabilities-hero__inner,
-    .capability-detail__inner,
-    .capability-detail__inner--reverse {
+    .capabilities-hero__inner {
       display: block;
     }
 
-    .capabilities-hero__media,
-    .capability-detail__media {
+    .capabilities-hero__media {
       display: none;
     }
-
-    .capability-detail__inner {
-      padding-block: 2rem;
-    }
-
   }
 </style>

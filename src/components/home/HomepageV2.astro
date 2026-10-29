@@ -8,6 +8,8 @@
   headline numbers and the team image come from the Sanity `homePage` doc.
 */
 import '../../styles/homepage-v2.css';
+import HomeProofStats from './HomeProofStats.astro';
+import HomeWorkResults from './HomeWorkResults.astro';
 import { mergeHomePageData, type HomePageData } from '../../lib/homePageData';
 import {
   buildRoasDots,
@@ -100,29 +102,7 @@ const proof = [
     </div>
   </section>
 
-  <section class="home2-proof" aria-label="FoundSM at a glance">
-    <div class="home2-shell home2-proof__inner">
-      {proof.map((item) => (
-        <div class="home2-proof__item">
-          <span class="home2-proof__icon" aria-hidden="true">
-            {item.icon === 'chart' && (
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19h16" /><path d="M6 15l4-5 4 3 5-7" /></svg>
-            )}
-            {item.icon === 'people' && (
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5" /><path d="M2.5 19c0-3.3 2.9-5.5 6.5-5.5s6.5 2.2 6.5 5.5" /><path d="M16 5a3 3 0 0 1 0 6" /><path d="M18 13.5c2.2.6 3.5 2.3 3.5 4.5" /></svg>
-            )}
-            {item.icon === 'clock' && (
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5" /><path d="M12 7v5l3.5 2" /></svg>
-            )}
-          </span>
-          <div>
-            <p class="home2-display home2-proof__value">{item.value}</p>
-            <p class="home2-proof__label">{item.label}</p>
-          </div>
-        </div>
-      ))}
-    </div>
-  </section>
+  <HomeProofStats items={proof} />
 
   <section class="home2-section home2-practices" id="practices" aria-labelledby="home2-practices-title">
     <div class="home2-shell home2-practices__inner">
@@ -194,70 +174,14 @@ const proof = [
     </div>
   </section>
 
-  <section class="home2-section home2-work" id="work" aria-labelledby="home2-work-title">
-    <div class="home2-shell home2-work__inner">
-      {clientLogos.length > 0 && (
-        <div class="home2-logos">
-          <h2 id="home2-logos-title">{content.work.logosHeading}</h2>
-          <div class="home2-marquee" aria-label="Client logos">
-            <div class="home2-marquee__track">
-              {[...clientLogos, ...clientLogos].map((logo, index) => (
-                <figure class="home2-marquee__item" aria-hidden={index >= clientLogos.length ? 'true' : undefined}>
-                  <img src={logo.src} alt={index >= clientLogos.length ? '' : logo.alt} width={logo.width} height={logo.height} loading="lazy" />
-                </figure>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
-
-      <div class="home2-case">
-        <a class="home2-case__story" href={content.work.cta.href}>
-          <div class="home2-case__copy">
-            <p class="home2-eyebrow">{content.work.eyebrow}</p>
-            <h2 id="home2-work-title">{content.work.heading}</h2>
-            <p>{content.work.body}</p>
-            <span class="home2-more">{content.work.cta.label}</span>
-          </div>
-          <div class="home2-case__visual">
-            <div class="rx" data-home2-roas aria-hidden="true">
-              <div class="rx-stage">
-                <span class="rx-eyebrow">{content.work.chart.eyebrow}</span>
-                <span class="rx-key">{content.work.chart.key}</span>
-                <span class="rx-axis"></span>
-                <span class="rx-ceil"></span>
-                {roasDots.map((dot) => (
-                  <span class={dot.className} style={dot.style}></span>
-                ))}
-                <span class="rx-bracket"></span>
-                <span class="rx-num">+<span class="rx-count"></span>%</span>
-                <span class="rx-lbl rx-lbl--0">{content.work.chart.startLabel}</span>
-                <span class="rx-lbl rx-lbl--60">{content.work.chart.endLabel}</span>
-              </div>
-            </div>
-          </div>
-        </a>
-
-        {testimonial.quote && (
-          <figure class="home2-quote">
-            <span class="home2-quote__disc" aria-hidden="true"></span>
-            <span class="home2-quote__ring" aria-hidden="true"></span>
-            <span class="home2-quote__mark" aria-hidden="true">&ldquo;</span>
-            <blockquote>&ldquo;{testimonial.quote}&rdquo;</blockquote>
-            <figcaption>
-              {testimonial.authorName && <strong>{testimonial.authorName}</strong>}
-              {testimonialRole && (
-                <Fragment>
-                  <br />
-                  {testimonialRole}
-                </Fragment>
-              )}
-            </figcaption>
-          </figure>
-        )}
-      </div>
-    </div>
-  </section>
+  <HomeWorkResults
+    work={content.work}
+    logos={clientLogos}
+    quote={testimonial.quote}
+    quoteName={testimonial.authorName}
+    quoteRole={testimonialRole}
+    dots={roasDots}
+  />
 
   <section class="home2-section home2-section--paper home2-engage" id="engage" aria-labelledby="home2-engage-title">
     <div class="home2-shell home2-engage__inner">
@@ -475,9 +399,10 @@ const proof = [
      off screen, 'play' runs the sequence once the panel is 55% visible. */
   const initRoas = (root: HTMLElement) => {
     const panel = root.querySelector<HTMLElement>('[data-home2-roas]');
-    if (!panel) return;
+    if (!panel || panel.dataset.roasBound === 'true') return;
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reduce || typeof IntersectionObserver !== 'function') return;
+    panel.dataset.roasBound = 'true';
 
     let state: 'rest' | 'armed' | 'play' = 'rest';
     let seen = false;

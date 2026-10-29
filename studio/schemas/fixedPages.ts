@@ -209,7 +209,14 @@ export const capabilitiesPage = defineType({
   fields: [
     ...seoFields,
     defineField({ name: 'hero', title: 'Hero', type: 'object', group: 'content', fields: [...richSectionFields, ...imageFields] }),
-    defineField({ name: 'outcomes', title: 'Capabilities intro', type: 'object', group: 'content', description: 'Eyebrow, heading and intro above the capability sections. The image is not shown in the current layout.', fields: [defineField({ name: 'eyebrow', title: 'Eyebrow', type: 'string' }), ...richSectionFields, ...imageFields] }),
+    defineField({
+      name: 'outcomes',
+      title: 'Capabilities intro',
+      type: 'object',
+      group: 'content',
+      description: 'Eyebrow and heading above the hub cards. The hub shows one supporting paragraph and skips the longer first paragraph (it stays in the body for later use). The image is not shown.',
+      fields: [defineField({ name: 'eyebrow', title: 'Eyebrow', type: 'string' }), ...richSectionFields, ...imageFields],
+    }),
     defineField({
       name: 'workflow',
       title: 'Callout band (under the hero)',
@@ -229,10 +236,23 @@ export const capabilitiesPage = defineType({
       title: 'Capability Details',
       type: 'array',
       group: 'content',
+      description: 'Hub cards use stable ids data, activation, paid and creative. The AI section uses id ai. Card lead is the one line on the hub. Body is kept for reference and is not shown on the hub.',
       of: [
         defineArrayMember({
           type: 'object',
-          fields: [defineField({ name: 'id', title: 'Stable ID', type: 'string' }), ...richSectionFields, ...imageFields, defineField({ name: 'cta', title: 'CTA', type: 'object', fields: ctaFields })],
+          fields: [
+            defineField({ name: 'id', title: 'Stable ID', type: 'string', description: 'data, activation, paid, creative, or ai.' }),
+            ...richSectionFields,
+            defineField({
+              name: 'lead',
+              title: 'Hub card lead',
+              type: 'text',
+              rows: 3,
+              description: 'One line under the practice name on the capabilities hub. Leave blank to use the code default. Not used for the AI section.',
+            }),
+            ...imageFields,
+            defineField({ name: 'cta', title: 'CTA', type: 'object', fields: ctaFields }),
+          ],
           preview: { select: { title: 'heading', media: 'image' } },
         }),
       ],

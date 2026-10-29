@@ -49,8 +49,11 @@ export type CapabilitiesPageData = SeoFields & {
   outcomes: RichSection & ImageField & { eyebrow?: string };
   /** The callout band under the hero: `heading` is the statement, `body` the supporting text, `cta` the link. Image and `prompt` belong to earlier layouts. */
   workflow: RichSection & ImageField & { prompt?: string; cta?: Cta };
-  /** One split section per entry, image side alternating; the AI entry closes the list. */
-  details: Array<RichSection & ImageField & { id?: string; cta?: Cta }>;
+  /**
+   * Hub practices plus the AI section. `lead` is the one line on a hub card.
+   * `body` stays in the data for editors and child-page reference; the hub does not render it.
+   */
+  details: Array<RichSection & ImageField & { id?: string; lead?: string; cta?: Cta }>;
 };
 
 export type CapabilityDetailPageData = SeoFields & {
@@ -128,13 +131,63 @@ export function mergeCapabilitiesPageData(value?: Partial<CapabilitiesPageData> 
       body: keepBlocks(page.workflow?.body, defaults.workflow.body),
       cta: page.workflow?.cta?.label && page.workflow?.cta?.href ? page.workflow.cta : defaults.workflow.cta,
     },
-    details: mergeList(defaults.details, page.details).map((detail, index) => ({
-      ...detail,
-      body: keepBlocks(detail.body, defaults.details[index]?.body),
-      image: detail.image ?? defaults.details[index]?.image,
-      imageAlt: detail.imageAlt ?? defaults.details[index]?.imageAlt,
-    })),
+    details: mergeCapabilityDetails(defaults.details, page.details),
   };
+}
+
+/**
+ * Match hub entries by stable id, then by heading, and keep every code default
+ * the document does not include. Index pairing would drop Data Activation when
+ * an older four-item document is still published.
+ */
+function mergeCapabilityDetails(
+  fallback: CapabilitiesPageData['details'],
+  value?: Partial<CapabilitiesPageData['details'][number]>[] | null,
+): CapabilitiesPageData['details'] {
+  const incoming = Array.isArray(value) ? value.filter((item) => item && typeof item === 'object') : [];
+  const used = new Set<number>();
+  const idOf = (item?: { id?: string } | null) => (item?.id || '').trim();
+  const matchIndex = (item: CapabilitiesPageData['details'][number]) => {
+    const id = idOf(item);
+    if (id) {
+      const byId = incoming.findIndex((candidate, index) => !used.has(index) && idOf(candidate) === id);
+      if (byId >= 0) return byId;
+    }
+    const heading = item.heading?.trim();
+    if (heading) {
+      const byHeading = incoming.findIndex((candidate, index) => !used.has(index) && candidate?.heading?.trim() === heading);
+      if (byHeading >= 0) return byHeading;
+    }
+    return -1;
+  };
+
+  const merged = fallback.map((item) => {
+    const index = matchIndex(item);
+    const match = index >= 0 ? incoming[index] : undefined;
+    if (index >= 0) used.add(index);
+    const lead = typeof match?.lead === 'string' ? match.lead.trim() : '';
+    return {
+      ...item,
+      ...(match || {}),
+      lead: lead || item.lead,
+      body: keepBlocks(match?.body, item.body),
+      image: match?.image ?? item.image,
+      imageAlt: match?.imageAlt ?? item.imageAlt,
+      cta: match?.cta?.label && match?.cta?.href ? { ...item.cta, ...match.cta } : item.cta,
+    };
+  });
+
+  incoming.forEach((item, index) => {
+    if (!item || used.has(index)) return;
+    const lead = typeof item.lead === 'string' ? item.lead.trim() : '';
+    merged.push({
+      ...item,
+      lead: lead || undefined,
+      body: keepBlocks(item.body, undefined),
+    });
+  });
+
+  return merged;
 }
 
 export function mergeCapabilityDetailPageData(
@@ -238,7 +291,7 @@ export const defaultCapabilitiesPageData: CapabilitiesPageData = {
   },
   outcomes: {
     eyebrow: 'Our Capabilities',
-    heading: 'Outcomes that Outperform',
+    heading: 'Outcomes that Outperform.',
     body: [
       block('We build smart, custom systems for performance marketing by combining first-party data with our proven approach. That starts with a custom playbook where we map solutions tied directly to business outcomes. This includes development of initial KPIs and is our foundation for planning. We also create different versions for launch, expansion, and efficiency - always taking into account factors like brand strength, demand, revenue, profitability, and opportunity cost.'),
       block('We handle every aspect of your performance lead generation ecosystem, making sure strategy and execution are always aligned.'),
@@ -254,17 +307,50 @@ export const defaultCapabilitiesPageData: CapabilitiesPageData = {
     imageAlt: 'Found Performance Media Ecosystem',
   },
   details: [
-    { id: 'data', heading: 'Data, Reporting & Analytics', body: [block('Do you have multiple data sources to connect? Or multiple CRMs? No problem.'), block("For us, analytics and reporting go beyond tracking paid media, and everything we build is uniquely customized to your business goals, data, and workflows. No templates or generic dashboards. From attribution models to automated scripts, we help your team understand what's happening, why, and what to do next.")], cta: { label: 'Connect Data to Outcomes', href: '/capabilities/data-analytics/' }, image: '/images/pages/capabilities/capi-cactus.webp', imageAlt: 'Cactus detail' },
-    { id: 'paid', heading: 'Paid Media', body: [block("We don't just manage campaigns. We engineer ecosystems.\nOur team brings 20+ years of performance experience and a clear view on how to structure, optimize, and scale lead gen across platforms, all while finding new channels for experimentation and growth. Whether you need to diversify your portfolio or double down on what's working, we'll help you reduce risk, maximize efficiency, and push performance further.")], cta: { label: "Let's Scale Smarter", href: '/capabilities/paid-media/' }, image: '/images/pages/capabilities/capi-typing.webp', imageAlt: 'Paid media work in progress' },
-    { id: 'creative', heading: 'Performance Creative & CRO', body: [block("Performance creative bridges the gap between storytelling and sales. We design motion graphics, ad creative, and landing pages that don't just look good - they drive traffic and conversions. Everything we do is tested and built with intention: messaging tailored to your audience, strategic rapid experimentation, visuals designed specifically for the platform, and performance that keeps improving.")], cta: { label: 'Creative Ads That Convert', href: '/capabilities/performance-creative/' }, image: '/images/pages/capabilities/capi-uiux.webp', imageAlt: 'UI and UX design work' },
+    {
+      id: 'data',
+      heading: 'Data, Reporting & Analytics',
+      lead: 'Do you have multiple data sources to connect? Or multiple CRMs? No problem.',
+      body: [block('Do you have multiple data sources to connect? Or multiple CRMs? No problem.'), block("For us, analytics and reporting go beyond tracking paid media, and everything we build is uniquely customized to your business goals, data, and workflows. No templates or generic dashboards. From attribution models to automated scripts, we help your team understand what's happening, why, and what to do next.")],
+      cta: { label: 'Connect Data to Outcomes', href: '/capabilities/data-analytics/' },
+      image: '/images/pages/capabilities/capi-cactus.webp',
+      imageAlt: 'Cactus detail',
+    },
+    {
+      id: 'activation',
+      heading: 'Data Activation',
+      lead: "In today's AI marketing landscape, data is your most valuable asset yet many companies are not using it to its full potential.",
+      body: [block("In today's AI marketing landscape, data is your most valuable asset yet many companies are not using it to its full potential. FoundSM brings your first-party customer data directly to the ad platforms where growth happens, creating a continuous feedback loop that improves targeting, reduces wasted spend, and engineers revenue.")],
+      cta: { label: 'Connect the data', href: '/capabilities/data-activation/' },
+      image: '/images/pages/data-activation/kitchen-island_1250px.webp',
+      imageAlt: 'Found Search Marketing team member in a meeting',
+    },
+    {
+      id: 'paid',
+      heading: 'Paid Media',
+      lead: "We don't just manage campaigns. We engineer ecosystems.",
+      body: [block("We don't just manage campaigns. We engineer ecosystems.\nOur team brings 20+ years of performance experience and a clear view on how to structure, optimize, and scale lead gen across platforms, all while finding new channels for experimentation and growth. Whether you need to diversify your portfolio or double down on what's working, we'll help you reduce risk, maximize efficiency, and push performance further.")],
+      cta: { label: "Let's Scale Smarter", href: '/capabilities/paid-media/' },
+      image: '/images/pages/capabilities/capi-typing.webp',
+      imageAlt: 'Paid media work in progress',
+    },
+    {
+      id: 'creative',
+      heading: 'Performance Creative & CRO',
+      lead: 'Performance creative bridges the gap between storytelling and sales.',
+      body: [block("Performance creative bridges the gap between storytelling and sales. We design motion graphics, ad creative, and landing pages that don't just look good - they drive traffic and conversions. Everything we do is tested and built with intention: messaging tailored to your audience, strategic rapid experimentation, visuals designed specifically for the platform, and performance that keeps improving.")],
+      cta: { label: 'Creative Ads That Convert', href: '/capabilities/performance-creative/' },
+      image: '/images/pages/capabilities/capi-uiux.webp',
+      imageAlt: 'UI and UX design work',
+    },
     {
       id: 'ai',
-      heading: 'AI, Inside Every Practice',
+      heading: 'AI, Inside Every Practice.',
       body: [
         block('Every practice above runs with AI in it, and none of them is run by it. Platform automation earns budget only after it is tested on live accounts with guardrails on copy, spend and brand. Models review every account daily and flag what changed before anyone opens a report. Creative is classified and tested faster than a team could manage by hand.'),
         block('What the automation surfaces, a named senior person decides on. That is where our time goes, and it is why the people on your account can think instead of watch.'),
       ],
-      cta: { label: 'Explore AI & Automation', href: '/capabilities/ai-automation/' },
+      cta: { label: 'Explore AI & Automation', href: '/ai/' },
       image: '/images/pages/paid-media/tab-art-bid.webp',
       imageAlt: 'Circuit board with the Found magnifier mark',
     },

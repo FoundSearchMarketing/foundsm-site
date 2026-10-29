@@ -1,0 +1,41 @@
+---
+/*
+  The homepage numbers band. Same markup the homepage renders, so other pages
+  can reuse the metrics without a second copy of the icons.
+*/
+interface Item {
+  icon: string;
+  value: string;
+  label: string;
+}
+
+interface Props {
+  items: Item[];
+}
+
+const { items } = Astro.props;
+---
+
+<section class="home2-proof" aria-label="FoundSM at a glance">
+  <div class="home2-shell home2-proof__inner">
+    {items.map((item) => (
+      <div class="home2-proof__item">
+        <span class="home2-proof__icon" aria-hidden="true">
+          {item.icon === 'chart' && (
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19h16" /><path d="M6 15l4-5 4 3 5-7" /></svg>
+          )}
+          {item.icon === 'people' && (
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5" /><path d="M2.5 19c0-3.3 2.9-5.5 6.5-5.5s6.5 2.2 6.5 5.5" /><path d="M16 5a3 3 0 0 1 0 6" /><path d="M18 13.5c2.2.6 3.5 2.3 3.5 4.5" /></svg>
+          )}
+          {item.icon === 'clock' && (
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5" /><path d="M12 7v5l3.5 2" /></svg>
+          )}
+        </span>
+        <div>
+          <p class="home2-display home2-proof__value">{item.value}</p>
+          <p class="home2-proof__label">{item.label}</p>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>

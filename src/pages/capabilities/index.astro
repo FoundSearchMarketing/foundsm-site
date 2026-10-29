@@ -47,6 +47,18 @@ const cards = practiceCards(page).map((card) => ({
 }));
 const ai = aiSection(page);
 const aiMedia = imageProps({ image: ai.image, imageAlt: ai.imageAlt });
+const talk = {
+  ...homeContent.talk,
+  eyebrow: 'Talk with us',
+  heading: 'Start where it matters most.',
+  intro:
+    "Tell us where the pressure is: paid media that has stalled, data that won't connect, reporting nobody trusts, or creative that isn't converting. You'll talk with the people who run that work, and we'll show you how it connects to the rest of your system.",
+  fields: {
+    ...homeContent.talk.fields,
+    notes: 'What should we look at first?',
+  },
+  button: 'Start the conversation',
+};
 
 const schema = {
   '@context': 'https://schema.org',
@@ -151,7 +163,7 @@ const schema = {
       </div>
     </section>
 
-    <HomeTalk talk={homeContent.talk} />
+    <HomeTalk talk={talk} />
   </div>
 </BaseLayout>
 

@@ -3,20 +3,19 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import MediaAsset from '../../components/MediaAsset.astro';
 import StatementBand from '../../components/modern/StatementBand.astro';
 import PracticeCard from '../../components/capabilities/PracticeCard.astro';
-import HomeProofStats from '../../components/home/HomeProofStats.astro';
 import HomeTalk from '../../components/home/HomeTalk.astro';
 import { capabilitiesPageQuery, homePageQuery, sanityClient } from '../../lib/sanity';
 import { defaultCapabilitiesPageData, mergeCapabilitiesPageData } from '../../lib/fixedPageData';
 import { imageProps, richHtml } from '../../lib/fixedPageRender';
 import { aiSection, outcomeIntroBlocks, outcomesHeading, practiceCards } from '../../lib/capabilitiesHub';
 import { mergeHomePageData } from '../../lib/homePageData';
-import { formatMetric, mergeHomeV2Content } from '../../lib/homeV2Data';
+import { mergeHomeV2Content } from '../../lib/homeV2Data';
 import '../../styles/homepage-v2.css';
 import '../../styles/capabilities-hub.css';
 
 /*
   Hub: hero, no-silos band, outcomes header + 2x2 practice cards, AI section,
-  homepage stats, and the homepage contact form.
+  and the homepage contact form. The homepage stats band stays on the homepage.
   The long Outcomes intro paragraph stays in the data and is not rendered here.
 */
 
@@ -27,7 +26,6 @@ const [sanityPage, homeDoc] = await Promise.all([
 const page = mergeCapabilitiesPageData(sanityPage);
 const homePage = mergeHomePageData(homeDoc);
 const homeContent = mergeHomeV2Content(homePage);
-const homeSanity = mergeHomePageData(homePage);
 
 const title = page.seoTitle || defaultCapabilitiesPageData.seoTitle;
 const description = page.seoDescription || defaultCapabilitiesPageData.seoDescription;
@@ -49,12 +47,18 @@ const cards = practiceCards(page).map((card) => ({
 }));
 const ai = aiSection(page);
 const aiMedia = imageProps({ image: ai.image, imageAlt: ai.imageAlt });
-
-const proof = [
-  { icon: 'chart', value: formatMetric(homeSanity.metrics.spend), label: homeContent.proof.spendLabel },
-  { icon: 'people', value: formatMetric(homeSanity.metrics.leads), label: homeContent.proof.leadsLabel },
-  { icon: 'clock', value: formatMetric(homeSanity.metrics.experience), label: homeContent.proof.experienceLabel },
-];
+const talk = {
+  ...homeContent.talk,
+  eyebrow: 'Talk with us',
+  heading: 'Start where it matters most.',
+  intro:
+    "Tell us where the pressure is: paid media that has stalled, data that won't connect, reporting nobody trusts, or creative that isn't converting. You'll talk with the people who run that work, and we'll show you how it connects to the rest of your system.",
+  fields: {
+    ...homeContent.talk.fields,
+    notes: 'What should we look at first?',
+  },
+  button: 'Start the conversation',
+};
 
 const schema = {
   '@context': 'https://schema.org',
@@ -159,9 +163,7 @@ const schema = {
       </div>
     </section>
 
-    <HomeProofStats items={proof} />
-
-    <HomeTalk talk={homeContent.talk} />
+    <HomeTalk talk={talk} />
   </div>
 </BaseLayout>
 

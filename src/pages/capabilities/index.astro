@@ -34,6 +34,11 @@ const robots = page.robots || defaultCapabilitiesPageData.robots;
 
 const heroMedia = imageProps(page.hero, 'eager');
 const heroImageAlt = page.hero.imageAlt || '';
+const heroHeading = page.hero.heading || '';
+const scalableMatch = heroHeading.match(/Scalable Growth\.?/);
+const heroBefore = scalableMatch ? heroHeading.slice(0, scalableMatch.index) : heroHeading;
+const heroKeep = scalableMatch ? scalableMatch[0] : '';
+const heroAfter = scalableMatch ? heroHeading.slice((scalableMatch.index || 0) + scalableMatch[0].length) : '';
 
 const calloutLead = page.workflow.heading || '';
 const calloutCta = page.workflow.cta?.label && page.workflow.cta?.href ? page.workflow.cta : null;
@@ -80,7 +85,15 @@ const schema = {
     <section class="capabilities-hero" aria-labelledby="capabilities-hero-title">
       <div class:list={['capabilities-hero__inner', { 'capabilities-hero__inner--text-only': !heroMedia }]}>
         <div class="capabilities-hero__copy">
-          <h1 id="capabilities-hero-title" class="capabilities-hero__title">{page.hero.heading}</h1>
+          <h1 id="capabilities-hero-title" class="capabilities-hero__title">
+            {heroKeep ? (
+              <>
+                {heroBefore}<span class="capabilities-hero__keep">{heroKeep}</span>{heroAfter}
+              </>
+            ) : (
+              heroHeading
+            )}
+          </h1>
           <div class="capabilities-hero__text" set:html={richHtml(page.hero.body)} />
         </div>
 
@@ -191,7 +204,9 @@ const schema = {
 
   .capabilities-hero__inner {
     display: grid;
-    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    /* Size the copy to "Scalable Growth." so that phrase stays on one line
+       without shrinking the type or eating the gap before the photo. */
+    grid-template-columns: min-content minmax(0, 1fr);
     align-items: start;
     gap: 2.5rem 3rem;
   }
@@ -208,6 +223,18 @@ const schema = {
   .capabilities-hero__title {
     font-size: var(--s26-size-h1);
     line-height: 0.94;
+  }
+
+  /* Keep the last two words on one line. At the 40px type floor the
+     phrase is wider than the shell below 420px, so it may wrap there. */
+  .capabilities-hero__keep {
+    white-space: nowrap;
+  }
+
+  @media (max-width: 420px) {
+    .capabilities-hero__keep {
+      white-space: normal;
+    }
   }
 
   .capabilities-hero__text {

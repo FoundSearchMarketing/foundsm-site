@@ -141,9 +141,9 @@ html:has(.home2) {
   line-height: var(--h2-lh-body);
 }
 
-.home2-section--dark .home2-head p,
+.home2-section--dark .home2-head p:not(.home2-eyebrow),
 .home2-section--dark .home2-body {
-  color: var(--h2-light);
+  color: #ffffff;
 }
 
 .home2 .home2-eyebrow {
@@ -304,7 +304,7 @@ a:hover > .home2-more {
   position: absolute;
   left: 1.25rem;
   bottom: 1rem;
-  color: var(--h2-light);
+  color: #ffffff;
   font-size: var(--h2-text-label);
   font-weight: 600;
   letter-spacing: 0.1em;
@@ -382,7 +382,7 @@ a:hover > .home2-more {
 
 .home2-proof__label {
   margin-top: 0.25rem;
-  color: var(--h2-light);
+  color: #ffffff;
   font-size: var(--h2-text-eyebrow);
   line-height: 1.4;
 }
@@ -535,7 +535,7 @@ a:hover > .home2-more {
 
 .home2-ai__intro {
   max-width: 29rem;
-  color: var(--h2-light);
+  color: #ffffff;
   font-size: var(--h2-text-body);
   line-height: var(--h2-lh-body);
 }
@@ -555,7 +555,7 @@ a:hover > .home2-more {
 }
 
 .home2-ai__col p {
-  color: var(--h2-light);
+  color: #ffffff;
   font-size: var(--h2-text-small);
   line-height: var(--h2-lh-small);
 }
@@ -734,7 +734,7 @@ a:hover > .home2-more {
 
 .home2-quote figcaption {
   position: relative;
-  color: var(--h2-light);
+  color: #ffffff;
   font-size: var(--h2-text-eyebrow);
   line-height: 1.5;
 }
@@ -1201,8 +1201,8 @@ a:hover > .home2-more {
   line-height: 1.08;
 }
 
-.home2-panel p {
-  color: var(--h2-light);
+.home2-panel p:not(.home2-eyebrow) {
+  color: #ffffff;
   font-size: var(--h2-text-small);
   line-height: var(--h2-lh-small);
 }
@@ -1304,7 +1304,7 @@ a:hover > .home2-more {
 
 .home2-research__intro {
   max-width: 50ch;
-  color: var(--h2-light);
+  color: #ffffff;
   font-size: var(--h2-text-body);
   line-height: var(--h2-lh-body);
 }
@@ -1334,7 +1334,7 @@ a:hover > .home2-more {
 }
 
 .home2-brief__dek {
-  color: var(--h2-light);
+  color: #ffffff;
   font-size: var(--h2-text-small);
   line-height: var(--h2-lh-small);
 }
@@ -1351,7 +1351,7 @@ a:hover > .home2-more {
 }
 
 .home2-brief__contents-heading {
-  color: var(--h2-light);
+  color: #ffffff;
 }
 
 .home2-subscribe {
@@ -1369,7 +1369,7 @@ a:hover > .home2-more {
 }
 
 .home2-subscribe label {
-  color: var(--h2-light);
+  color: #ffffff;
   font-size: var(--h2-text-eyebrow);
   line-height: 1.4;
 }
@@ -1403,7 +1403,7 @@ a:hover > .home2-more {
 }
 
 .home2-form__status--light {
-  color: var(--h2-light);
+  color: #ffffff;
 }
 
 .home2-form__status--light a {
@@ -1449,7 +1449,7 @@ a:hover > .home2-more {
 
 .home2-signals__summary,
 .home2-signals__note {
-  color: var(--h2-light);
+  color: #ffffff;
   font-size: var(--h2-text-small);
   line-height: var(--h2-lh-small);
 }
@@ -1463,7 +1463,7 @@ a:hover > .home2-more {
 }
 
 .home2-signals__label {
-  color: var(--h2-light);
+  color: #ffffff;
   font-size: var(--h2-text-label);
   line-height: 1.4;
 }

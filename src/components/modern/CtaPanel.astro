@@ -162,6 +162,12 @@ const buttonSize = buttonOnly ? ' btn--lg' : '';
     opacity: 0.84;
   }
 
+  /* Dark bands keep supporting copy at full white. Light and green bands keep their own type. */
+  .modern-cta--dark .modern-cta__body {
+    color: #ffffff;
+    opacity: 1;
+  }
+
   .modern-cta--centered .modern-cta__body {
     max-inline-size: 67rem;
   }

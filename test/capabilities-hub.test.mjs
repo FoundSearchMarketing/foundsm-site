@@ -54,12 +54,17 @@ test('hub defaults are the four cards, the short outcomes line, and /ai/', async
   assert.equal(aiSection(page).heading, 'AI, Inside Every Practice.');
   assert.equal(aiSection(page).anchor, 'capabilities-ai');
   assert.equal(defaultCapabilitiesPageData.details.some((detail) => detail.id === 'activation'), true);
+  for (const card of cards) {
+    const body = card.body.map(textOf).join('\n');
+    assert.equal(body.startsWith(card.lead), false, card.id);
+    assert.equal(body.includes(card.lead), false, card.id);
+  }
   assert.equal(cards.find((card) => card.id === 'data').body.map(textOf).join('\n\n').includes('For us, analytics and reporting go beyond tracking paid media'), true);
-  assert.equal(cards.find((card) => card.id === 'paid').body.map(textOf).join('\n').includes('Our team brings 20+ years of performance experience'), true);
-  assert.equal(cards.find((card) => card.id === 'creative').body.map(textOf).join('').includes("they drive traffic and conversions"), true);
-  const activationBody = cards.find((card) => card.id === 'activation').body.map(textOf).join('\n\n');
+  assert.equal(cards.find((card) => card.id === 'paid').body.map(textOf).join('\n').startsWith('Our team brings 20+ years of performance experience'), true);
+  assert.equal(cards.find((card) => card.id === 'creative').body.map(textOf).join('').startsWith('We design motion graphics'), true);
+  const activation = cards.find((card) => card.id === 'activation');
   const heroBody = defaultCapabilityDetailPages.dataActivation.hero.body.map(textOf).join('\n\n');
-  assert.equal(activationBody, heroBody);
+  assert.equal(activation.body.map(textOf).join('\n\n'), heroBody.slice(activation.lead.length).trim());
   assert.equal(intro.includes('We build smart'), false);
 });
 

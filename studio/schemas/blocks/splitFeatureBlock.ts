@@ -20,7 +20,13 @@ export default defineType({
       name: 'hubspotFormId',
       title: 'HubSpot Form ID',
       type: 'string',
-      description: 'Embed a HubSpot form in the media slot when no image is set',
+      description: 'Retired. HubSpot forms are no longer embedded.',
+    }),
+    defineField({
+      name: 'acFormId',
+      title: 'ActiveCampaign Form ID',
+      type: 'string',
+      description: 'ActiveCampaign form id to embed in the media slot when no image is set.',
     }),
     defineField({
       name: 'imagePosition',

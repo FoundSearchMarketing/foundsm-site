@@ -102,15 +102,5 @@ import { enableThirdPartyScripts } from '../lib/thirdPartyScripts';
       acScript.defer = true;
       document.body.appendChild(acScript);
     }
-
-    // HubSpot forms loader kept for pages still carrying legacy hs-form-frame
-    // embeds (InsightResourcePage, SplitFeature) — remove once those migrate.
-    var embedSrc = 'https://js.hsforms.net/forms/embed/5045186.js';
-    if (!document.querySelector('script[src="' + embedSrc + '"]')) {
-      var script = document.createElement('script');
-      script.src = embedSrc;
-      script.defer = true;
-      document.body.appendChild(script);
-    }
   })();
 </script>

@@ -20,7 +20,13 @@ export default defineType({
       name: 'hubspotFormId',
       title: 'HubSpot Form ID',
       type: 'string',
-      description: 'The HubSpot form ID to embed',
+      description: 'Retired. The site no longer embeds HubSpot forms. The old contact form id still renders ActiveCampaign form 8.',
+    }),
+    defineField({
+      name: 'acFormId',
+      title: 'ActiveCampaign Form ID',
+      type: 'string',
+      description: 'ActiveCampaign form id to embed, for example 8 for the contact form or 4 for the newsletter. When set, this is the form the page renders.',
     }),
     defineField({
       name: 'theme',

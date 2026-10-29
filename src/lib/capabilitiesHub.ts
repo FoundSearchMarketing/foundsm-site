@@ -37,6 +37,38 @@ export type PracticeCardModel = {
 const textOf = (block?: SimplePortableTextBlock) =>
   (block?.children || []).map((child) => child.text || '').join('').trim();
 
+/**
+ * The one-line lead is already shown above the body. Drop a first block that
+ * is only that sentence, or cut it off the start of the first block. Later
+ * sentences stay word for word.
+ */
+export function bodyWithoutRepeatedLead(lead: string, blocks: SimplePortableTextBlock[] = []): SimplePortableTextBlock[] {
+  const leadText = lead.trim();
+  const usable = blocks.filter((item) => item?._type === 'block');
+  if (!leadText || usable.length === 0) return usable;
+  const [first, ...rest] = usable;
+  const firstText = textOf(first);
+  if (firstText === leadText) return rest;
+  if (!firstText.startsWith(leadText)) return usable;
+
+  let remaining = leadText.length;
+  const children = (first.children || []).map((child) => ({ ...child, text: child.text || '' }));
+  for (const child of children) {
+    if (remaining <= 0) break;
+    if (child.text.length <= remaining) {
+      remaining -= child.text.length;
+      child.text = '';
+    } else {
+      child.text = child.text.slice(remaining);
+      remaining = 0;
+    }
+  }
+  const withText = children.filter((child) => child.text);
+  if (withText[0]) withText[0].text = withText[0].text.replace(/^[\s\n]+/, '');
+  const stripped = { ...first, children: withText.filter((child) => child.text) };
+  return textOf(stripped) ? [stripped, ...rest] : rest;
+}
+
 /** Homepage headings end with a period. Add one when an older string omitted it. */
 export function withTerminalPeriod(value?: string) {
   const trimmed = (value || '').trim();
@@ -78,13 +110,14 @@ export function practiceCards(page: CapabilitiesPageData): PracticeCardModel[] {
   return CARD_SLOTS.map((slot) => {
     const detail = byId.get(slot.id) || defaults.get(slot.id);
     const fallback = defaults.get(slot.id);
-    const body = detail?.body?.length ? detail.body : fallback?.body || [];
+    const lead = detail?.lead?.trim() || fallback?.lead || '';
+    const sourceBody = detail?.body?.length ? detail.body : fallback?.body || [];
     return {
       id: slot.id,
       anchor: slot.anchor,
       heading: detail?.heading || fallback?.heading || '',
-      lead: detail?.lead?.trim() || fallback?.lead || '',
-      body,
+      lead,
+      body: bodyWithoutRepeatedLead(lead, sourceBody),
       label: detail?.cta?.label?.trim() || fallback?.cta?.label || '',
       href: cardHref(detail?.cta?.href, slot.href),
       image: detail?.image ?? fallback?.image,

@@ -304,7 +304,7 @@ a:hover > .home2-more {
   position: absolute;
   left: 1.25rem;
   bottom: 1rem;
-  color: #ffffff;
+  color: rgba(255, 255, 255, 0.9);
   font-size: var(--h2-text-label);
   font-weight: 600;
   letter-spacing: 0.1em;
@@ -382,7 +382,7 @@ a:hover > .home2-more {
 
 .home2-proof__label {
   margin-top: 0.25rem;
-  color: #ffffff;
+  color: rgba(255, 255, 255, 0.9);
   font-size: var(--h2-text-eyebrow);
   line-height: 1.4;
 }
@@ -734,7 +734,7 @@ a:hover > .home2-more {
 
 .home2-quote figcaption {
   position: relative;
-  color: #ffffff;
+  color: rgba(255, 255, 255, 0.9);
   font-size: var(--h2-text-eyebrow);
   line-height: 1.5;
 }
@@ -1351,7 +1351,7 @@ a:hover > .home2-more {
 }
 
 .home2-brief__contents-heading {
-  color: #ffffff;
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .home2-subscribe {
@@ -1369,7 +1369,7 @@ a:hover > .home2-more {
 }
 
 .home2-subscribe label {
-  color: #ffffff;
+  color: rgba(255, 255, 255, 0.9);
   font-size: var(--h2-text-eyebrow);
   line-height: 1.4;
 }
@@ -1403,7 +1403,7 @@ a:hover > .home2-more {
 }
 
 .home2-form__status--light {
-  color: #ffffff;
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .home2-form__status--light a {
@@ -1449,7 +1449,7 @@ a:hover > .home2-more {
 
 .home2-signals__summary,
 .home2-signals__note {
-  color: #ffffff;
+  color: rgba(255, 255, 255, 0.9);
   font-size: var(--h2-text-small);
   line-height: var(--h2-lh-small);
 }
@@ -1463,7 +1463,7 @@ a:hover > .home2-more {
 }
 
 .home2-signals__label {
-  color: #ffffff;
+  color: rgba(255, 255, 255, 0.9);
   font-size: var(--h2-text-label);
   line-height: 1.4;
 }

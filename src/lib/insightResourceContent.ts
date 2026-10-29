@@ -51,7 +51,6 @@ export interface InsightWebinarPage {
   takeaways: string[];
   topicsHeading: string;
   topics: string[];
-  formId: string;
 }
 
 export interface InsightVideoPage {
@@ -351,7 +350,6 @@ const resourcePages: InsightResourcePage[] = [
     takeawayHeading: 'What You’ll Walk Away With',
     takeawayIntro: 'By the end of this session, you’ll have:',
     topicsHeading: 'Topics Covered',
-    formId: '2c65e995-aba0-4239-955c-9beb15b0791d',
     ...webinarText,
   },
   {
@@ -370,7 +368,6 @@ const resourcePages: InsightResourcePage[] = [
     takeawayHeading: 'What You’ll Walk Away With',
     takeawayIntro: 'By the end of this session, you’ll have:',
     topicsHeading: 'Topics We’ll Cover',
-    formId: '2c65e995-aba0-4239-955c-9beb15b0791d',
     ...webinarText,
   },
   {

@@ -11,6 +11,7 @@ interface Props {
   imageAlt?: string;
   videoUrl?: string;
   hubspotFormId?: string;
+  acFormId?: string;
   imagePosition?: 'left' | 'right';
   mediaHeight?: 'standard' | 'short' | 'hero';
   theme?: 'light' | 'muted' | 'dark';
@@ -24,7 +25,7 @@ const {
   image,
   imageAlt,
   videoUrl,
-  hubspotFormId,
+  acFormId,
   imagePosition = 'left',
   mediaHeight = 'standard',
   theme = 'light',
@@ -39,7 +40,7 @@ const ctaLink = cta?.label && cta.href ? { label: cta.label, href: cta.href } : 
   body={richText(body)}
   bodyHtml={richHtml(body)}
   image={imageProps({ image, imageAlt, videoUrl })}
-  hubspotFormId={hubspotFormId}
+  acFormId={acFormId}
   imagePosition={imagePosition}
   mediaHeight={mediaHeight}
   theme={theme}

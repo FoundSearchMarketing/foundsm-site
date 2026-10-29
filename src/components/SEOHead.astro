@@ -98,6 +98,11 @@ posthog.init('phc_qmD24PPGw4kaEu99sCFUNiaNjU8uznXtNgqaANjauLk4',{
 </script>
 )}
 
+<!-- HubSpot tracking waits for OneTrust consent. See /scripts/hubspot-consent.js. -->
+{enableThirdPartyScripts && (
+  <script is:inline src="/scripts/hubspot-consent.js"></script>
+)}
+
 <!-- Google Tag Manager -->
 {enableThirdPartyScripts && (
 <script is:inline>

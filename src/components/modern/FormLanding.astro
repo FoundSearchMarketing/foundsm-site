@@ -7,7 +7,7 @@ interface Props {
   lead?: string;
   formId: string;
   portalId?: string;
-  /** ActiveCampaign form id. When set, the AC embed replaces the HubSpot frame. */
+  /** ActiveCampaign form id. When set, the page embeds that form. */
   acFormId?: string;
   summary?: string;
   summaryHtml?: string;
@@ -23,8 +23,6 @@ const {
   intro,
   introHtml,
   lead,
-  formId,
-  portalId = '5045186',
   acFormId,
   summary,
   summaryHtml,
@@ -49,8 +47,6 @@ const sectionId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-
     <div class:list={['form-landing__form-card', { 'form-landing__form-card--bare': !showFormCard }]}>
       {acFormId ? (
         <div class={`_form_${acFormId} form-landing__frame`} id="form-landing-ac"></div>
-      ) : loadFormScript ? (
-        <div class="hs-form-frame form-landing__frame" data-region="na1" data-form-id={formId} data-portal-id={portalId}></div>
       ) : (
         <div class="form-landing__frame form-landing__frame--placeholder" aria-hidden="true">
           <span></span>
@@ -71,10 +67,8 @@ const sectionId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-
   </section>
 )}
 
-{acFormId ? (
+{acFormId && (
   <script is:inline src={`https://foundsm.activehosted.com/f/embed.php?id=${acFormId}`} charset="utf-8" defer></script>
-) : loadFormScript && (
-  <script is:inline src="https://js.hsforms.net/forms/embed/5045186.js" defer></script>
 )}
 
 <style>

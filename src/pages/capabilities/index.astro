@@ -4,25 +4,20 @@ import MediaAsset from '../../components/MediaAsset.astro';
 import StatementBand from '../../components/modern/StatementBand.astro';
 import PracticeCard from '../../components/capabilities/PracticeCard.astro';
 import HomeProofStats from '../../components/home/HomeProofStats.astro';
-import HomeWorkResults from '../../components/home/HomeWorkResults.astro';
+import HomeTalk from '../../components/home/HomeTalk.astro';
 import { capabilitiesPageQuery, homePageQuery, sanityClient } from '../../lib/sanity';
 import { defaultCapabilitiesPageData, mergeCapabilitiesPageData } from '../../lib/fixedPageData';
 import { imageProps, richHtml } from '../../lib/fixedPageRender';
 import { aiSection, outcomeIntroBlocks, outcomesHeading, practiceCards } from '../../lib/capabilitiesHub';
 import { mergeHomePageData } from '../../lib/homePageData';
-import {
-  buildRoasDots,
-  formatMetric,
-  mergeHomeV2Content,
-  selectClientLogos,
-} from '../../lib/homeV2Data';
+import { formatMetric, mergeHomeV2Content } from '../../lib/homeV2Data';
 import '../../styles/homepage-v2.css';
 import '../../styles/capabilities-hub.css';
 
 /*
   Hub: hero, no-silos band, outcomes header + 2x2 practice cards, AI section,
-  homepage logo strip and 46% results, homepage stats, closing button.
-  Long practice copy stays in the data and on the child pages. It is not rendered here.
+  homepage stats, and the homepage contact form.
+  The long Outcomes intro paragraph stays in the data and is not rendered here.
 */
 
 const [sanityPage, homeDoc] = await Promise.all([
@@ -56,14 +51,11 @@ const outcomeIntro = richHtml(outcomeIntroBlocks(page));
 const cards = practiceCards(page).map((card) => ({
   ...card,
   src: imageProps({ image: card.image, imageAlt: card.imageAlt })?.src || '',
+  bodyHtml: richHtml(card.body),
 }));
 const ai = aiSection(page);
 const aiMedia = imageProps({ image: ai.image, imageAlt: ai.imageAlt });
 
-const clientLogos = selectClientLogos(homeSanity.clientLogos.logos);
-const testimonial = homeSanity.metrics.testimonial;
-const testimonialRole = [testimonial.authorTitle, testimonial.authorCompany].filter(Boolean).join(', ');
-const roasDots = buildRoasDots(11);
 const proof = [
   { icon: 'chart', value: formatMetric(homeSanity.metrics.spend), label: homeContent.proof.spendLabel },
   { icon: 'people', value: formatMetric(homeSanity.metrics.leads), label: homeContent.proof.leadsLabel },
@@ -133,6 +125,7 @@ const schema = {
               imageAlt={card.imageAlt}
               heading={card.heading}
               lead={card.lead}
+              bodyHtml={card.bodyHtml}
               label={card.label}
             />
           ))}
@@ -165,26 +158,9 @@ const schema = {
       </div>
     </section>
 
-    <HomeWorkResults
-      work={homeContent.work}
-      logos={clientLogos}
-      quote={testimonial.quote}
-      quoteName={testimonial.authorName}
-      quoteRole={testimonialRole}
-      dots={roasDots}
-    />
-
     <HomeProofStats items={proof} />
 
-    <section class="home2-section home2-section--paper home2-talk" id="capabilities-talk" aria-labelledby="capabilities-talk-title">
-      <div class="home2-shell capabilities-close">
-        <div class="home2-head">
-          <p class="home2-eyebrow">{homeContent.talk.eyebrow}</p>
-          <h2 id="capabilities-talk-title">{homeContent.talk.heading}</h2>
-        </div>
-        <a class="btn btn--primary" href="/contact-us/">Talk with us</a>
-      </div>
-    </section>
+    <HomeTalk talk={homeContent.talk} />
   </div>
 </BaseLayout>
 

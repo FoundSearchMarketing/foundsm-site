@@ -1,0 +1,147 @@
+---
+/*
+  Homepage "Talk with us" section. The form posts to the ActiveCampaign
+  contact form (foundsm.activehosted.com). The homepage and the capabilities
+  hub both render this markup.
+*/
+import { homeV2Forms, type HomeV2Content } from '../../lib/homeV2Content';
+
+interface Props {
+  talk: HomeV2Content['talk'];
+}
+
+const { talk } = Astro.props;
+---
+
+<section class="home2-section home2-section--paper home2-talk" id="home2-talk" aria-labelledby="home2-talk-title">
+  <div class="home2-shell home2-talk__inner">
+    <div class="home2-head home2-talk__copy">
+      <p class="home2-eyebrow">{talk.eyebrow}</p>
+      <h2 id="home2-talk-title">{talk.heading}</h2>
+      <p>{talk.intro}</p>
+    </div>
+    <form
+      class="home2-form"
+      method="post"
+      action={homeV2Forms.contact.action}
+      data-home2-contact
+      data-success={talk.success}
+      data-error={talk.error}
+      data-fallback-href={talk.fallback.href}
+      data-fallback-label={talk.fallback.label}
+    >
+      {Object.entries(homeV2Forms.contact.hidden).map(([name, value]) => (
+        <input type="hidden" name={name} value={value} />
+      ))}
+      <input type="hidden" name="firstname" value="" />
+      <input type="hidden" name="lastname" value="" />
+      <div class="home2-form__fields">
+        <div class="home2-form__field">
+          <label for="home2-talk-name">{talk.fields.name}</label>
+          <input id="home2-talk-name" name="fullname" type="text" autocomplete="name" required />
+        </div>
+        <div class="home2-form__field">
+          <label for="home2-talk-email">{talk.fields.email}</label>
+          <input id="home2-talk-email" name="email" type="email" autocomplete="email" required />
+        </div>
+        <div class="home2-form__field home2-form__field--wide">
+          <label for="home2-talk-notes">{talk.fields.notes}</label>
+          <textarea id="home2-talk-notes" name={homeV2Forms.contact.messageField} rows="3"></textarea>
+        </div>
+        <div class="home2-form__actions">
+          <button class="btn btn--primary" type="submit">{talk.button}</button>
+        </div>
+      </div>
+      <p class="home2-form__status" role="status" aria-live="polite" hidden></p>
+    </form>
+  </div>
+</section>
+
+<script>
+  type FormState = 'idle' | 'sending' | 'sent' | 'error';
+
+  const showStatus = (form: HTMLFormElement, message: string, fallback?: { href: string; label: string }) => {
+    const status = form.querySelector<HTMLElement>('.home2-form__status');
+    if (!status) return;
+    status.replaceChildren();
+    status.append(document.createTextNode(message));
+    if (fallback) {
+      status.append(document.createTextNode(' '));
+      const link = document.createElement('a');
+      link.href = fallback.href;
+      link.textContent = fallback.label;
+      status.append(link);
+    }
+    status.hidden = false;
+  };
+
+  const setState = (form: HTMLFormElement, state: FormState) => {
+    form.dataset.state = state;
+  };
+
+  const fallbackFor = (form: HTMLFormElement) =>
+    form.dataset.fallbackHref && form.dataset.fallbackLabel
+      ? { href: form.dataset.fallbackHref, label: form.dataset.fallbackLabel }
+      : undefined;
+
+  /* Posts to ActiveCampaign the way its embed does (multipart POST, JSON reply).
+     The single "Full name" field is split for AC's first/last. No-JS visitors
+     still get the plain POST. A page that also inits this form only binds once. */
+  const initContactForm = (form: HTMLFormElement) => {
+    if (form.dataset.contactBound === 'true') return;
+    form.dataset.contactBound = 'true';
+    const fullName = form.elements.namedItem('fullname') as HTMLInputElement | null;
+    const firstName = form.elements.namedItem('firstname') as HTMLInputElement | null;
+    const lastName = form.elements.namedItem('lastname') as HTMLInputElement | null;
+    const fields = form.querySelector<HTMLElement>('.home2-form__fields');
+
+    const nameParts = () => (fullName?.value.trim() || '').split(/\s+/).filter(Boolean);
+    const validateName = () => {
+      if (!fullName) return;
+      fullName.setCustomValidity(fullName.value.trim() && nameParts().length < 2 ? 'Please enter your first and last name.' : '');
+    };
+    fullName?.addEventListener('input', validateName);
+    fullName?.addEventListener('blur', validateName);
+
+    form.addEventListener('submit', async (event) => {
+      validateName();
+      if (!form.checkValidity()) return;
+      event.preventDefault();
+
+      const parts = nameParts();
+      if (firstName) firstName.value = parts[0] || '';
+      if (lastName) lastName.value = parts.slice(1).join(' ');
+      const body = new FormData(form);
+      body.delete('fullname');
+
+      setState(form, 'sending');
+      try {
+        const response = await fetch(`${form.action}?jsonp=true`, {
+          method: 'POST',
+          body,
+          headers: { Accept: 'application/json' },
+        });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const payload = (await response.json().catch(() => ({}))) as { js?: string };
+        if (typeof payload.js === 'string' && payload.js.includes('_show_error')) throw new Error('rejected');
+        if (fields) fields.hidden = true;
+        setState(form, 'sent');
+        showStatus(form, form.dataset.success || 'Thanks, we will be in touch.');
+      } catch {
+        setState(form, 'error');
+        showStatus(form, form.dataset.error || 'That did not go through.', fallbackFor(form));
+      }
+    });
+  };
+
+  const initTalkForms = () => {
+    document.querySelectorAll<HTMLFormElement>('[data-home2-contact]').forEach(initContactForm);
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTalkForms, { once: true });
+  } else {
+    initTalkForms();
+  }
+  document.addEventListener('astro:page-load', initTalkForms);
+</script>

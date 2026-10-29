@@ -86,9 +86,6 @@ const resourceImage = (src: string | undefined) => normalizeLegacyAssetUrl(src) 
         <aside class="webinar-form-card" aria-label={page.formHeading}>
           <img src={resourceImage(page.heroImage)} alt={page.heroImageAlt} width="1024" height="576" loading="eager" fetchpriority="high" />
           <h2>{page.formHeading}</h2>
-          <div class="webinar-form-card__embed">
-            <div class="hs-form-frame" data-region="na1" data-form-id={page.formId} data-portal-id="5045186"></div>
-          </div>
         </aside>
       </div>
     </section>
@@ -459,11 +456,6 @@ const resourceImage = (src: string | undefined) => normalizeLegacyAssetUrl(src) 
     line-height: 44px;
     letter-spacing: 0;
     text-transform: uppercase;
-  }
-
-  .webinar-form-card__embed {
-    min-block-size: 305px;
-    background: #231f20;
   }
 
   .webinar-body {

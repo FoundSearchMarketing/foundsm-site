@@ -10,8 +10,20 @@ export default defineType({
     defineField({ name: 'title', title: 'Title', type: 'string', validation: (Rule) => Rule.required() }),
     defineField({ name: 'lead', title: 'Lead', type: 'string' }),
     richTextField('intro', 'Intro'),
-    defineField({ name: 'hubspotFormId', title: 'HubSpot Form ID', type: 'string', validation: (Rule) => Rule.required() }),
+    defineField({
+      name: 'hubspotFormId',
+      title: 'HubSpot Form ID',
+      type: 'string',
+      description: 'Legacy field kept so existing pages still validate. The site no longer loads HubSpot forms.',
+      validation: (Rule) => Rule.required(),
+    }),
     defineField({ name: 'portalId', title: 'HubSpot Portal ID', type: 'string', initialValue: '5045186' }),
+    defineField({
+      name: 'acFormId',
+      title: 'ActiveCampaign Form ID',
+      type: 'string',
+      description: 'When set, the page embeds this ActiveCampaign form.',
+    }),
     richTextField('summary', 'Summary'),
     defineField({
       name: 'variant',

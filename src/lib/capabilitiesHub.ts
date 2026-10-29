@@ -15,9 +15,9 @@ const LONG_INTRO_PREFIX = 'We build smart, custom systems for performance market
 const RETIRED_AI_HREF = /^\/capabilities\/ai-automation\/?$/;
 
 const CARD_SLOTS = [
-  { id: 'data', anchor: 'capabilities-data-reporting-analytics', href: '/capabilities/data-analytics/' },
-  { id: 'activation', anchor: 'capabilities-data-activation', href: '/capabilities/data-activation/' },
   { id: 'paid', anchor: 'capabilities-paid-media', href: '/capabilities/paid-media/' },
+  { id: 'activation', anchor: 'capabilities-data-activation', href: '/capabilities/data-activation/' },
+  { id: 'data', anchor: 'capabilities-data-reporting-analytics', href: '/capabilities/data-analytics/' },
   { id: 'creative', anchor: 'capabilities-performance-creative', href: '/capabilities/performance-creative/' },
 ] as const;
 

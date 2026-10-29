@@ -6,9 +6,11 @@ interface Props {
   theme?: 'dark' | 'muted' | 'light';
   pattern?: boolean;
   width?: 'default' | 'narrow';
+  /** Optional pill button under the body. Omitted on every page except Capabilities. */
+  cta?: { label: string; href: string };
 }
 
-const { lead, body, bodyHtml, theme = 'dark', pattern = false, width = 'default' } = Astro.props;
+const { lead, body, bodyHtml, theme = 'dark', pattern = false, width = 'default', cta } = Astro.props;
 const paragraphs = Array.isArray(body) ? body : [body];
 const bodyClasses = ['statement-band__body', pattern && theme === 'dark' ? 'dark-band__body' : ''].filter(Boolean).join(' ');
 // A dark patterned band is the canonical .dark-band treatment in global.css.
@@ -24,12 +26,23 @@ const classes = [
 <section class={classes}>
   <div class="statement-band__inner">
     <p class="statement-band__lead">{lead}</p>
-    {bodyHtml ? (
+    {cta ? (
+      <div class="statement-band__aside">
+        {bodyHtml ? (
+          <div class={bodyClasses} set:html={bodyHtml} />
+        ) : (
+          <div class={bodyClasses}>
+            {paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+          </div>
+        )}
+        <a class="btn btn--primary statement-band__button" href={cta.href}>{cta.label}</a>
+      </div>
+    ) : bodyHtml ? (
       <div class={bodyClasses} set:html={bodyHtml} />
     ) : (
-    <div class={bodyClasses}>
-      {paragraphs.map((paragraph) => <p>{paragraph}</p>)}
-    </div>
+      <div class={bodyClasses}>
+        {paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
     )}
   </div>
 </section>
@@ -89,6 +102,17 @@ const classes = [
     font-size: 1rem;
     line-height: 1.875;
     opacity: 0.82;
+  }
+
+  .statement-band__aside {
+    display: grid;
+    align-content: start;
+    justify-items: start;
+    gap: 1.25rem;
+  }
+
+  .statement-band__button {
+    justify-self: start;
   }
 
   @media (max-width: 800px) {

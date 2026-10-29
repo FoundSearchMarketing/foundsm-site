@@ -37,15 +37,9 @@ const robots = page.robots || defaultCapabilitiesPageData.robots;
 const heroMedia = imageProps(page.hero, 'eager');
 const heroImageAlt = page.hero.imageAlt || '';
 
-const escapeHtml = (value: string) =>
-  value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const calloutLead = page.workflow.heading || '';
 const calloutCta = page.workflow.cta?.label && page.workflow.cta?.href ? page.workflow.cta : null;
-const calloutHtml =
-  richHtml(page.workflow.body) +
-  (calloutCta
-    ? `<p class="capabilities-callout__link"><a class="more-2026 more-2026--light" href="${escapeHtml(calloutCta.href as string)}">${escapeHtml(calloutCta.label as string)}</a></p>`
-    : '');
+const calloutHtml = richHtml(page.workflow.body);
 
 const outcomeIntro = richHtml(outcomeIntroBlocks(page));
 const cards = practiceCards(page).map((card) => ({
@@ -103,7 +97,14 @@ const schema = {
 
     {calloutLead && (
       <div class="capabilities-callout">
-        <StatementBand lead={calloutLead} body="" bodyHtml={calloutHtml} theme="dark" pattern />
+        <StatementBand
+          lead={calloutLead}
+          body=""
+          bodyHtml={calloutHtml}
+          theme="dark"
+          pattern
+          cta={calloutCta?.label && calloutCta?.href ? { label: calloutCta.label, href: calloutCta.href } : undefined}
+        />
       </div>
     )}
   </div>
@@ -240,10 +241,6 @@ const schema = {
 
   .capabilities-callout :global(.statement-band__inner) {
     inline-size: min(84.375rem, 100%);
-  }
-
-  .capabilities-callout :global(.capabilities-callout__link) {
-    margin-top: 0.25rem;
   }
 
   @media (max-width: 1024px) {

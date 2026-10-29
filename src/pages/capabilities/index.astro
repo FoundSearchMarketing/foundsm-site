@@ -129,10 +129,19 @@ const schema = {
   <div class="home2 capabilities-hub">
     <section class="home2-section capabilities-outcomes" id="practices" aria-labelledby="capabilities-outcomes-title">
       <div class="home2-shell capabilities-outcomes__inner">
-        <div class="home2-head">
+        <div class="capabilities-outcomes__intro">
           {page.outcomes.eyebrow && <p class="home2-eyebrow">{page.outcomes.eyebrow}</p>}
-          <h2 id="capabilities-outcomes-title">{outcomesHeading(page)}</h2>
-          <div set:html={outcomeIntro} />
+          <div class="capabilities-outcomes__split">
+            <div class="home2-head">
+              <h2 id="capabilities-outcomes-title">{outcomesHeading(page)}</h2>
+              <div set:html={outcomeIntro} />
+            </div>
+            <ul class="capabilities-outcomes__rail">
+              <li>Launch</li>
+              <li>Expansion</li>
+              <li>Efficiency</li>
+            </ul>
+          </div>
         </div>
         <div class="capabilities-hub__grid">
           {cards.map((card) => (

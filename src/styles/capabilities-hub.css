@@ -1,0 +1,87 @@
+/*
+  Capabilities hub layout on top of homepage-v2.css. Selectors stay under
+  .capabilities-hub so the homepage cards, proof band and work block are unchanged.
+*/
+
+.capabilities-outcomes__inner,
+.capabilities-ai__copy,
+.capabilities-close {
+  display: grid;
+}
+
+.capabilities-outcomes__inner {
+  gap: 2.5rem;
+}
+
+.capabilities-hub__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+/* Larger than the homepage's four-up cards: full-bleed 16:9 inside the same card. */
+.capabilities-hub .home2-card img {
+  height: auto;
+  aspect-ratio: 16 / 9;
+}
+
+.capabilities-ai__inner {
+  display: grid;
+  gap: 2rem;
+}
+
+.capabilities-ai__copy {
+  align-content: start;
+  gap: 1.25rem;
+}
+
+.capabilities-ai__text {
+  display: grid;
+  gap: 1rem;
+}
+
+.capabilities-ai__text p {
+  margin: 0;
+}
+
+.capabilities-ai__copy .btn,
+.capabilities-close .btn {
+  justify-self: start;
+}
+
+.capabilities-hub .capabilities-ai__image {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--h2-radius, 1rem);
+}
+
+/* The dark-band head rule outranks .home2-eyebrow--light. Keep the green eyebrow. */
+.capabilities-hub .home2-section--dark .home2-eyebrow--light {
+  color: var(--h2-green);
+}
+
+.capabilities-hub .btn--primary,
+.capabilities-hub .btn--primary:hover,
+.capabilities-hub .btn--primary:focus-visible {
+  color: var(--color-dark);
+}
+
+.capabilities-close {
+  justify-items: start;
+  gap: 1.75rem;
+}
+
+@media (min-width: 640px) {
+  .capabilities-hub__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1025px) {
+  .capabilities-ai__inner {
+    grid-template-columns: minmax(0, 1.8fr) minmax(16rem, 0.9fr);
+    align-items: center;
+    gap: 3rem 4rem;
+  }
+}

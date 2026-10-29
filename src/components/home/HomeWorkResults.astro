@@ -1,0 +1,156 @@
+---
+/*
+  Homepage Work block: client logo strip, the 46% ROAS story, and the quote.
+  Markup matches the homepage so the motion graphic and marquee stay in sync.
+*/
+import type { HomeV2Content, HomeV2Logo, RoasDot } from '../../lib/homeV2Content';
+
+interface Props {
+  work: HomeV2Content['work'];
+  logos: HomeV2Logo[];
+  quote?: string;
+  quoteName?: string;
+  quoteRole?: string;
+  dots: RoasDot[];
+}
+
+const { work, logos, quote, quoteName, quoteRole, dots } = Astro.props;
+const logoLoop = [...logos, ...logos];
+---
+
+<section class="home2-section home2-work" id="work" aria-labelledby="home2-work-title">
+  <div class="home2-shell home2-work__inner">
+    {logos.length > 0 && (
+      <div class="home2-logos">
+        <h2 id="home2-logos-title">{work.logosHeading}</h2>
+        <div class="home2-marquee" aria-label="Client logos">
+          <div class="home2-marquee__track">
+            {logoLoop.map((logo, index) => (
+              <figure class="home2-marquee__item" aria-hidden={index >= logos.length ? 'true' : undefined}>
+                <img src={logo.src} alt={index >= logos.length ? '' : logo.alt} width={logo.width} height={logo.height} loading="lazy" />
+              </figure>
+            ))}
+          </div>
+        </div>
+      </div>
+    )}
+
+    <div class="home2-case">
+      <a class="home2-case__story" href={work.cta.href}>
+        <div class="home2-case__copy">
+          <p class="home2-eyebrow">{work.eyebrow}</p>
+          <h2 id="home2-work-title">{work.heading}</h2>
+          <p>{work.body}</p>
+          <span class="home2-more">{work.cta.label}</span>
+        </div>
+        <div class="home2-case__visual">
+          <div class="rx" data-home2-roas aria-hidden="true">
+            <div class="rx-stage">
+              <span class="rx-eyebrow">{work.chart.eyebrow}</span>
+              <span class="rx-key">{work.chart.key}</span>
+              <span class="rx-axis"></span>
+              <span class="rx-ceil"></span>
+              {dots.map((dot) => (
+                <span class={dot.className} style={dot.style}></span>
+              ))}
+              <span class="rx-bracket"></span>
+              <span class="rx-num">+<span class="rx-count"></span>%</span>
+              <span class="rx-lbl rx-lbl--0">{work.chart.startLabel}</span>
+              <span class="rx-lbl rx-lbl--60">{work.chart.endLabel}</span>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      {quote && (
+        <figure class="home2-quote">
+          <span class="home2-quote__disc" aria-hidden="true"></span>
+          <span class="home2-quote__ring" aria-hidden="true"></span>
+          <span class="home2-quote__mark" aria-hidden="true">&ldquo;</span>
+          <blockquote>&ldquo;{quote}&rdquo;</blockquote>
+          <figcaption>
+            {quoteName && <strong>{quoteName}</strong>}
+            {quoteRole && (
+              <Fragment>
+                <br />
+                {quoteRole}
+              </Fragment>
+            )}
+          </figcaption>
+        </figure>
+      )}
+    </div>
+  </div>
+</section>
+
+<script>
+  /* Work card: 'rest' shows the finished chart, 'armed' holds frame 0 while
+     off screen, 'play' runs the sequence once the panel is 55% visible.
+     The homepage calls the same guard, so a page that includes both only binds once. */
+  const initRoasPanel = (panel: HTMLElement) => {
+    if (panel.dataset.roasBound === 'true') return;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce || typeof IntersectionObserver !== 'function') return;
+    panel.dataset.roasBound = 'true';
+
+    let state: 'rest' | 'armed' | 'play' = 'rest';
+    let seen = false;
+    let raf = 0;
+    let done = 0;
+
+    const set = (next: typeof state) => {
+      state = next;
+      panel.classList.toggle('is-armed', next === 'armed');
+      panel.classList.toggle('is-play', next === 'play');
+    };
+    const arm = () => {
+      window.clearTimeout(done);
+      window.cancelAnimationFrame(raf);
+      if (state === 'play') {
+        set('rest');
+        raf = window.requestAnimationFrame(() => {
+          raf = window.requestAnimationFrame(() => set('armed'));
+        });
+      } else if (state === 'rest') {
+        set('armed');
+      }
+    };
+    const play = () => {
+      window.cancelAnimationFrame(raf);
+      window.clearTimeout(done);
+      if (state === 'play') {
+        set('rest');
+        void panel.offsetWidth;
+      }
+      set('play');
+      done = window.setTimeout(() => set('rest'), 5900);
+    };
+
+    new IntersectionObserver(
+      (entries) => {
+        const entry = entries[entries.length - 1];
+        if (entry.intersectionRatio >= 0.55) {
+          if (!seen) {
+            seen = true;
+            play();
+          }
+        } else if (!entry.isIntersecting || !seen) {
+          seen = false;
+          arm();
+        }
+      },
+      { threshold: [0, 0.55] },
+    ).observe(panel);
+  };
+
+  const initWorkResults = () => {
+    document.querySelectorAll<HTMLElement>('[data-home2-roas]').forEach(initRoasPanel);
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initWorkResults, { once: true });
+  } else {
+    initWorkResults();
+  }
+  document.addEventListener('astro:page-load', initWorkResults);
+</script>

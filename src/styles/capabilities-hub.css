@@ -12,6 +12,11 @@
   gap: 2.5rem;
 }
 
+/* The playbook paragraph follows the outcomes intro and uses the same measure. */
+.capabilities-outcomes .home2-head p + p {
+  margin-top: var(--h2-stack-gap);
+}
+
 .capabilities-hub__grid {
   display: grid;
   grid-template-columns: 1fr;

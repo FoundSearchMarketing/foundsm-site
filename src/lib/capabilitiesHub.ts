@@ -12,6 +12,7 @@ export { defaultCapabilitiesPageData, defaultCapabilityDetailPages, mergeCapabil
 import type { SimplePortableTextBlock } from './simplePortableTextCore';
 
 const LONG_INTRO_PREFIX = 'We build smart, custom systems for performance marketing';
+const PLAYBOOK_PREFIX = 'Every engagement starts with a custom playbook';
 const RETIRED_AI_HREF = /^\/capabilities\/ai-automation\/?$/;
 
 const CARD_SLOTS = [
@@ -76,19 +77,23 @@ export function withTerminalPeriod(value?: string) {
   return `${trimmed}.`;
 }
 
-/** The hub shows one supporting line. The long opening paragraph stays in the data and is not rendered. */
+/** Supporting copy under the outcomes heading. The long opening paragraph stays in the data and is not rendered. */
 export function outcomeIntroBlocks(page: CapabilitiesPageData): SimplePortableTextBlock[] {
   const blocks = (page.outcomes.body || []).filter((item) => item?._type === 'block');
   const supporting = blocks.filter((item) => {
     const text = textOf(item);
     return Boolean(text) && !text.startsWith(LONG_INTRO_PREFIX);
   });
-  if (supporting.length > 0) return [supporting[0]];
-  const fallback = (defaultCapabilitiesPageData.outcomes.body || []).find((item) => {
+  const defaults = (defaultCapabilitiesPageData.outcomes.body || []).filter((item) => {
     const text = textOf(item);
     return Boolean(text) && !text.startsWith(LONG_INTRO_PREFIX);
   });
-  return fallback ? [fallback] : [];
+  const shown = supporting.length > 0 ? supporting : defaults;
+  if (shown.some((item) => textOf(item).startsWith(PLAYBOOK_PREFIX))) return shown;
+  const playbook = defaults.find((item) => textOf(item).startsWith(PLAYBOOK_PREFIX));
+  if (!playbook) return shown;
+  if (shown.length === 0) return [playbook];
+  return [shown[0], playbook, ...shown.slice(1)];
 }
 
 export function outcomesHeading(page: CapabilitiesPageData) {

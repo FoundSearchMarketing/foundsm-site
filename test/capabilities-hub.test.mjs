@@ -10,12 +10,13 @@ const modulePromise = loadModule();
 
 const LONG_INTRO = 'We build smart, custom systems for performance marketing by combining first-party data with our proven approach.';
 const SHORT_INTRO = 'We handle every aspect of your performance lead generation ecosystem, making sure strategy and execution are always aligned.';
+const PLAYBOOK = 'Every engagement starts with a custom playbook that maps solutions to business outcomes and sets the first KPIs. We build versions for launch, expansion and efficiency, weighing brand strength, demand, revenue, profitability and opportunity cost.';
 
 test('hub defaults are the four cards, the short outcomes line, and /ai/', async () => {
   const { defaultCapabilitiesPageData, defaultCapabilityDetailPages, mergeCapabilitiesPageData, practiceCards, outcomeIntroBlocks, aiSection, outcomesHeading } = await modulePromise;
   const page = mergeCapabilitiesPageData(null);
   const cards = practiceCards(page);
-  const intro = outcomeIntroBlocks(page).map(textOf).join(' ');
+  const intros = outcomeIntroBlocks(page).map(textOf);
 
   assert.deepEqual(cards.map((card) => card.heading), [
     'Paid Media',
@@ -47,8 +48,8 @@ test('hub defaults are the four cards, the short outcomes line, and /ai/', async
     'capabilities-data-reporting-analytics',
     'capabilities-performance-creative',
   ]);
-  assert.equal(intro, SHORT_INTRO);
-  assert.equal(intro.includes(LONG_INTRO.slice(0, 40)), false);
+  assert.deepEqual(intros, [SHORT_INTRO, PLAYBOOK]);
+  assert.equal(intros.join(' ').includes(LONG_INTRO.slice(0, 40)), false);
   assert.equal(outcomesHeading(page), 'Outcomes that Outperform.');
   assert.equal(aiSection(page).href, '/ai/');
   assert.equal(aiSection(page).heading, 'AI, Inside Every Practice.');
@@ -65,7 +66,7 @@ test('hub defaults are the four cards, the short outcomes line, and /ai/', async
   const activation = cards.find((card) => card.id === 'activation');
   const heroBody = defaultCapabilityDetailPages.dataActivation.hero.body.map(textOf).join('\n\n');
   assert.equal(activation.body.map(textOf).join('\n\n'), heroBody.slice(activation.lead.length).trim());
-  assert.equal(intro.includes('We build smart'), false);
+  assert.equal(intros.join(' ').includes('We build smart'), false);
 });
 
 test('an older four-item document still gets Data Activation and keeps card leads', async () => {
@@ -112,9 +113,9 @@ test('retired AI and dataconnect hrefs resolve to the child pages', async () => 
   assert.equal(practiceCards(legacyData).find((card) => card.id === 'data').href, '/capabilities/data-analytics/');
   assert.equal(aiSection(page).href, '/ai/');
   assert.equal(aiSection(page).heading, 'AI, Inside Every Practice.');
-  const intro = outcomeIntroBlocks(page).map(textOf).join(' ');
-  assert.equal(intro.includes('We build smart'), false);
-  assert.equal(intro.includes('making sure strategy and execution are always aligned'), true);
+  const intros = outcomeIntroBlocks(page).map(textOf);
+  assert.deepEqual(intros, [SHORT_INTRO, PLAYBOOK]);
+  assert.equal(intros.join(' ').includes('We build smart'), false);
 });
 
 test('hub copy has no em dashes', async () => {

@@ -162,7 +162,7 @@ export default defineType({
         },
       ],
     }),
-    ...createSeoFields({ group: false, descriptionMax: 180 }),
+    ...createSeoFields({ group: false, descriptionMax: 200 }),
   ],
   preview: {
     select: {

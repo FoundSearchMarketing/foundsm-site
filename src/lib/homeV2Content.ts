@@ -369,7 +369,7 @@ export const homeV2Content: HomeV2Content = {
     intro:
       'Partner status with every platform we buy on. Google, Microsoft and Meta certify the people who run your account and recertify them as the platforms change, which brings early access to alpha and beta programs, a direct line into platform roadmaps, and the credentials buyers ask about before the first call.',
     cards: [
-      { title: 'Microsoft Advertising', body: 'Partner of the Year finalist, 2026' },
+      { title: 'Microsoft Advertising', body: 'Search Performance Partner of the Year finalist, 2026' },
       { title: 'Certification', body: 'Certified women-owned business' },
       { title: 'Indianapolis Business Journal', body: 'Top 25 agency list, three years running' },
     ],

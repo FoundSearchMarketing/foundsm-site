@@ -184,8 +184,8 @@ const linkAttrs = (link?: { href: string; newTab?: boolean }) =>
                 alt={badge.alt}
                 width={badge.width}
                 height={badge.height}
-                loading="lazy"
-                decoding="async"
+                loading="eager"
+                decoding="sync"
               />
             </li>
           ))}

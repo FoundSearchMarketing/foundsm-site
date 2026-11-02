@@ -1,0 +1,600 @@
+/*
+  Shared capabilities child template. Spacing and type follow the capabilities
+  hub (home2 tokens). The what-we-run row and the partnership rail follow the
+  approved layout files: wwr-head / wA, and pH.
+*/
+
+.capability-child {
+  background: #fff;
+}
+
+.capability-child :focus-visible {
+  outline: 2px solid var(--h2-ink);
+  outline-offset: 3px;
+}
+
+.capability-child__band :focus-visible,
+.capability-child .cap-sib--parent :focus-visible {
+  outline-color: var(--h2-green);
+}
+
+.capability-child h1 {
+  font-size: clamp(2.5rem, 5.4vw, 4rem);
+  line-height: 0.96;
+}
+
+.capability-child__hero {
+  padding-block: clamp(2.5rem, 5vw, 3.75rem) clamp(3rem, 6vw, 4.5rem);
+}
+
+.capability-child__crumbs {
+  margin: 0 0 1.375rem;
+}
+
+.capability-child__crumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.65rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--h2-muted);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.capability-child__crumbs li {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.capability-child__crumbs li + li::before {
+  content: "/";
+  color: #a7ada2;
+}
+
+.capability-child__crumbs a {
+  color: var(--h2-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--h2-green);
+  text-underline-offset: 0.25rem;
+}
+
+.capability-child__crumbs [aria-current="page"] {
+  color: var(--h2-muted);
+}
+
+.capability-child__hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 40rem) minmax(0, 1fr);
+  gap: 3rem;
+  align-items: center;
+}
+
+.capability-child__hero-grid--solo {
+  grid-template-columns: minmax(0, 40rem);
+}
+
+.capability-child__hero-copy {
+  display: grid;
+  justify-items: start;
+  gap: 1.375rem;
+}
+
+.capability-child__lead {
+  color: var(--h2-muted);
+  font-size: var(--h2-text-lead);
+  line-height: var(--h2-lh-body);
+}
+
+.capability-child__copy {
+  color: var(--h2-muted);
+  font-size: var(--h2-text-body);
+  line-height: var(--h2-lh-body);
+}
+
+.capability-child__lead p,
+.capability-child__copy p {
+  margin: 0;
+  color: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.capability-child__copy p + p {
+  margin-top: 0.875rem;
+}
+
+.capability-child__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.capability-child__media img,
+.capability-child__media video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: var(--h2-radius);
+}
+
+/* Statement band. Lead left, body and pill right, roads from .dark-band. */
+.capability-child__band {
+  padding-block: clamp(3.5rem, 6vw, 4rem);
+}
+
+.capability-child__band-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 3rem;
+  align-items: start;
+}
+
+.capability-child__band-lead {
+  margin: 0;
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.29;
+}
+
+.capability-child__band-aside {
+  display: grid;
+  justify-items: start;
+  gap: 0.875rem;
+}
+
+.capability-child__band-aside p {
+  margin: 0;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.85;
+}
+
+.capability-child__pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.375rem;
+  padding: 0.5rem 1.125rem;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  box-shadow: inset 0 0 0 1px #fff;
+}
+
+.capability-child__pill:hover,
+.capability-child__pill:focus-visible {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+/* What we run. Partnerships follows with no top padding, so the two share this gap. */
+.capability-child__run {
+  scroll-margin-top: 5.5rem;
+}
+
+.wwr-head {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: 3rem;
+  align-items: end;
+}
+
+.wwr-head .home2-head {
+  max-width: none;
+}
+
+.wA {
+  display: grid;
+  grid-template-columns: repeat(var(--wA-cols, 5), minmax(0, 1fr));
+  margin-top: 2.125rem;
+  padding: 2rem 0;
+  background: var(--h2-paper);
+  border-radius: var(--h2-radius);
+  list-style: none;
+}
+
+.wA li {
+  padding: 0 1.625rem;
+  border-left: 1px solid #d3d8cf;
+}
+
+.wA li:first-child {
+  border-left: 0;
+}
+
+.wA li::before {
+  content: "";
+  display: block;
+  width: 0.625rem;
+  height: 0.625rem;
+  margin-bottom: 0.875rem;
+  background: var(--h2-green);
+  border-radius: 2px;
+}
+
+.capability-child .wtitle {
+  display: block;
+  min-height: 3rem;
+  color: var(--h2-ink);
+  font-family: var(--h2-display);
+  font-size: 1.375rem;
+  font-weight: 900;
+  font-stretch: 82%;
+  font-variation-settings: "wdth" 82;
+  letter-spacing: 0.005em;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.wbody {
+  display: block;
+  margin-top: 0.5rem;
+  color: var(--h2-muted);
+  font-size: 0.90625rem;
+  font-weight: 400;
+  line-height: 1.5;
+  text-transform: none;
+}
+
+.wbody p {
+  margin: 0;
+  color: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.wbody p + p {
+  margin-top: 0.5rem;
+}
+
+/* Platform partnerships. */
+.pH {
+  padding: 0 0 var(--h2-section);
+}
+
+.pH__split {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: clamp(1.5rem, 3vw, 2.75rem);
+  align-items: stretch;
+}
+
+.pH__head {
+  display: grid;
+  gap: 0.875rem;
+  align-content: start;
+}
+
+.pH__head .home2-head {
+  max-width: none;
+}
+
+.pH__intro {
+  display: grid;
+  gap: 0.875rem;
+}
+
+.pH__rail {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0;
+  padding: 0.375rem 1.75rem;
+  list-style: none;
+  background: var(--h2-paper);
+  border-radius: var(--h2-radius);
+}
+
+.pH__rail li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 7.25rem;
+  gap: 1.25rem;
+  align-items: center;
+  padding: 1.375rem 0.125rem;
+}
+
+.pH__rail li + li {
+  border-top: 1px solid rgba(35, 31, 32, 0.14);
+}
+
+.capability-child .pH__label {
+  display: flex;
+  gap: 1rem;
+  margin: 0;
+  color: var(--h2-ink);
+  font-family: var(--h2-display);
+  font-size: 1.4375rem;
+  font-weight: 900;
+  font-stretch: 82%;
+  font-variation-settings: "wdth" 82;
+  letter-spacing: 0.005em;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.pH__label::before {
+  content: "";
+  flex: none;
+  width: 0.6875rem;
+  height: 0.6875rem;
+  margin-top: 0.35rem;
+  background: var(--h2-green);
+  border-radius: 2px;
+}
+
+.pH__note {
+  display: block;
+  margin: 0.375rem 0 0 1.6875rem;
+  color: var(--h2-muted);
+  font-size: 0.9375rem;
+  line-height: 1.45;
+}
+
+.pH__rail .badge {
+  display: block;
+  width: 7.25rem;
+  height: auto;
+  background: #fff;
+  border-radius: 14%;
+  aspect-ratio: 293 / 285;
+  object-fit: contain;
+}
+
+/* Leak cards. */
+.capability-child__grid-title {
+  max-width: none;
+}
+
+.capability-child__grid-title p {
+  margin: 0;
+  color: var(--h2-muted);
+}
+
+.capability-child__leaks {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+  margin-top: 1.875rem;
+}
+
+.capability-child__leak {
+  padding: 1.625rem 1.75rem;
+  background: #fff;
+  border: 1px solid var(--h2-line);
+  border-radius: var(--h2-radius);
+}
+
+.capability-child__leak-top {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  margin-bottom: 0.75rem;
+}
+
+.capability-child__leak-top h3 {
+  font-size: 1.3125rem;
+}
+
+.capability-child__leak-icon {
+  width: auto;
+  max-width: 4.5rem;
+  height: 2.25rem;
+  object-fit: contain;
+}
+
+.capability-child__leak-lead {
+  margin: 0 0 0.375rem;
+  color: var(--h2-ink);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.capability-child__leak-body,
+.capability-child__leak-body p {
+  margin: 0;
+  color: var(--h2-muted);
+  font-size: 0.9375rem;
+  line-height: 1.55;
+}
+
+.capability-child__leak-body p + p {
+  margin-top: 0.5rem;
+}
+
+/* Related capabilities. */
+.capability-child__relhead {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.capability-child__relhead .home2-head {
+  max-width: none;
+}
+
+.capability-child__related-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.25rem;
+  margin-top: 1.75rem;
+}
+
+.cap-sib {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-width: 0;
+  padding: 1.625rem;
+  background: #fff;
+  border: 1px solid var(--h2-line);
+  border-radius: var(--h2-radius);
+}
+
+.cap-sib h3 {
+  font-size: 1.3125rem;
+}
+
+.cap-sib h3 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.cap-sib h3 a:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.cap-sib p:not(.cap-sib__kicker) {
+  flex: 1;
+  margin: 0;
+  color: var(--h2-muted);
+  font-size: 0.9375rem;
+  line-height: 1.55;
+}
+
+.cap-sib__kicker {
+  margin: 0;
+  color: var(--h2-muted);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.cap-sib--parent {
+  background: var(--h2-ink);
+  border-color: var(--h2-ink);
+}
+
+.capability-child .cap-sib--parent h3,
+.capability-child .cap-sib--parent p:not(.cap-sib__kicker) {
+  color: #fff;
+}
+
+.cap-sib--parent p.cap-sib__kicker {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.capability-child .more-2026 {
+  align-self: flex-start;
+  margin-top: auto;
+}
+
+@media (max-width: 1024px) {
+  .capability-child h1 {
+    max-width: none;
+    font-size: clamp(2.25rem, 8vw, 3.25rem);
+  }
+
+  .capability-child__hero-grid,
+  .capability-child__hero-grid--solo,
+  .capability-child__band-grid,
+  .wwr-head,
+  .pH__split {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
+  }
+
+  .capability-child__related-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .wwr-head {
+    align-items: start;
+  }
+}
+
+@media (max-width: 700px) {
+  .capability-child__leaks,
+  .capability-child__related-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .capability-child__relhead {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .capability-child__band-lead {
+    font-size: 1.375rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .wA {
+    grid-template-columns: minmax(0, 1fr);
+    margin-top: 1.5rem;
+    padding: 0.375rem 1.375rem;
+  }
+
+  .wA li {
+    padding: 1.125rem 0;
+    border-top: 1px solid #d3d8cf;
+    border-left: 0;
+  }
+
+  .wA li:first-child {
+    border-top: 0;
+  }
+
+  .capability-child .wtitle {
+    min-height: 0;
+    font-size: 1.1875rem;
+  }
+
+  .pH {
+    padding-bottom: 3.25rem;
+  }
+
+  .pH__head p {
+    font-size: 1rem;
+  }
+
+  .pH__rail {
+    padding: 0.25rem 1.125rem;
+  }
+
+  .pH__rail li {
+    grid-template-columns: minmax(0, 1fr) 5.25rem;
+    gap: 0.875rem;
+    padding: 1.125rem 0;
+  }
+
+  .capability-child .pH__label {
+    gap: 0.75rem;
+    font-size: 1.1875rem;
+  }
+
+  .pH__label::before {
+    width: 0.625rem;
+    height: 0.625rem;
+    margin-top: 0.3rem;
+  }
+
+  .pH__note {
+    margin-left: 1.375rem;
+    font-size: 0.875rem;
+  }
+
+  .pH__rail .badge {
+    width: 5.25rem;
+  }
+}

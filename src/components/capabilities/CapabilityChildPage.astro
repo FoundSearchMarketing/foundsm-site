@@ -1,0 +1,261 @@
+---
+/*
+  Shared capabilities child template. Paid Search is the only page that
+  renders it. Sections are placed by block role, so the Sanity order can stay
+  as it is. Logo bars, stats and other proof blocks are not rendered.
+*/
+import HomeTalk from '../home/HomeTalk.astro';
+import MediaAsset from '../MediaAsset.astro';
+import { sanityClient } from '../../lib/sanity';
+import { cardsFor, imageProps, richHtml, richText } from '../../lib/fixedPageRender';
+import { homeV2Content } from '../../lib/homeV2Content';
+import {
+  RUN_ANCHOR,
+  SEE_WHAT_WE_RUN,
+  TALK_EYEBROW,
+  capabilityPlace,
+  groupCapabilitySections,
+  partnerBadges,
+} from '../../lib/capabilityChild';
+import '../../styles/homepage-v2.css';
+import '../../styles/capabilities-child.css';
+
+interface Props {
+  page: {
+    title?: string;
+    sections?: any[];
+  };
+  path: string;
+}
+
+const { page, path } = Astro.props;
+const place = capabilityPlace(path, page.title || '');
+const grouped = groupCapabilitySections(page.sections || []);
+const hero = grouped.hero;
+const band = grouped.band;
+const run = grouped.run;
+const partners = grouped.partners;
+const grids = grouped.grids;
+const cta = grouped.cta;
+
+const heroMedia = hero ? imageProps(hero, 'eager') : undefined;
+const heroIntro = richHtml(hero?.intro);
+const heroCta = hero?.cta?.label && hero?.cta?.href
+  ? { label: hero.cta.label, href: hero.cta.href, newTab: hero.cta.newTab === true }
+  : undefined;
+const bandHtml = richHtml(band?.body);
+const runIntro = richHtml(run?.body);
+const runItems = Array.isArray(run?.items) ? run.items.filter((item: { title?: string }) => item?.title) : [];
+const partnerHtml = richHtml(partners?.body);
+const showRunLink = Boolean(run?.title);
+
+const siblingSlugs = place.related.cards
+  .filter((card) => card.kind === 'sibling')
+  .map((card) => card.slug);
+const heroRows = siblingSlugs.length
+  ? await sanityClient.fetch(
+      `*[_type == "landingPage" && slug.current in $slugs]{
+        "slug": slug.current,
+        "title": sections[_type == "modernHeroBlock"][0].title
+      }`,
+      { slugs: siblingSlugs },
+    )
+  : [];
+const heroTitleBySlug = new Map(
+  (heroRows || []).map((row: { slug?: string; title?: string }) => [row.slug, (row.title || '').trim()]),
+);
+
+const talkIntro = richText(cta?.body);
+const talk = cta?.title
+  ? {
+      ...homeV2Content.talk,
+      eyebrow: TALK_EYEBROW,
+      heading: cta.title,
+      intro: talkIntro,
+    }
+  : undefined;
+
+const linkAttrs = (link?: { href: string; newTab?: boolean }) =>
+  link?.newTab ? { target: '_blank', rel: 'noopener noreferrer' } : {};
+---
+
+<div class="home2 capability-child">
+  {hero?.title && (
+    <section class="capability-child__hero" aria-labelledby="capability-child-hero-title">
+      <div class="home2-shell">
+        <nav class="capability-child__crumbs" aria-label="Breadcrumb">
+          <ol>
+            {place.crumbs.map((crumb) => (
+              <li>
+                {crumb.href ? (
+                  <a href={crumb.href}>{crumb.label}</a>
+                ) : (
+                  <span aria-current="page">{crumb.label}</span>
+                )}
+              </li>
+            ))}
+          </ol>
+        </nav>
+        <div class:list={['capability-child__hero-grid', { 'capability-child__hero-grid--solo': !heroMedia }]}>
+          <div class="capability-child__hero-copy">
+            {place.eyebrow && <p class="home2-eyebrow">{place.eyebrow}</p>}
+            <h1 id="capability-child-hero-title">{hero.title}</h1>
+            {heroIntro && <div class="capability-child__lead" set:html={heroIntro} />}
+            {(heroCta || showRunLink) && (
+              <div class="capability-child__actions">
+                {heroCta && (
+                  <a class="btn btn--primary" href={heroCta.href} {...linkAttrs(heroCta)}>{heroCta.label}</a>
+                )}
+                {showRunLink && (
+                  <a class="btn btn--outline" href={`#${RUN_ANCHOR}`}>{SEE_WHAT_WE_RUN}</a>
+                )}
+              </div>
+            )}
+          </div>
+          {heroMedia && (
+            <div class="capability-child__media">
+              <MediaAsset src={heroMedia.src} alt={heroMedia.alt} loading="eager" />
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {band?.lead && (
+    <section class="capability-child__band dark-band" aria-label={band.lead}>
+      <div class="home2-shell capability-child__band-grid">
+        <p class="capability-child__band-lead">{band.lead}</p>
+        <div class="capability-child__band-aside">
+          {bandHtml && <div set:html={bandHtml} />}
+          {showRunLink && (
+            <a class="capability-child__pill" href={`#${RUN_ANCHOR}`}>{SEE_WHAT_WE_RUN}</a>
+          )}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {run?.title && (
+    <section class="home2-section capability-child__run" id={RUN_ANCHOR} aria-labelledby="capability-child-run-title">
+      <div class="home2-shell">
+        <div class="wwr-head">
+          <div class="home2-head">
+            {run.eyebrow && <p class="home2-eyebrow">{run.eyebrow}</p>}
+            <h2 id="capability-child-run-title">{run.title}</h2>
+          </div>
+          {runIntro && <div class="capability-child__copy" set:html={runIntro} />}
+        </div>
+        {runItems.length > 0 && (
+          <ul class="wA" style={`--wA-cols: ${runItems.length}`}>
+            {runItems.map((item: { title: string; body?: any[] }) => (
+              <li>
+                <h3 class="wtitle">{item.title}</h3>
+                {richHtml(item.body) && <div class="wbody" set:html={richHtml(item.body)} />}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </section>
+  )}
+
+  {partners?.title && (
+    <section class="pH" aria-labelledby="capability-child-partners-title">
+      <div class="home2-shell pH__intro">
+        {partners.eyebrow && <p class="home2-eyebrow">{partners.eyebrow}</p>}
+        <div class="pH__split">
+        <div class="pH__head">
+          <div class="home2-head">
+            <h2 id="capability-child-partners-title">{partners.title}</h2>
+          </div>
+          {partnerHtml && <div class="capability-child__copy" set:html={partnerHtml} />}
+        </div>
+        <ul class="pH__rail">
+          {partnerBadges.map((badge) => (
+            <li>
+              <div>
+                <p class="pH__label">{badge.label}</p>
+                <p class="pH__note">{badge.note}</p>
+              </div>
+              <img
+                class="badge"
+                src={badge.src}
+                alt={badge.alt}
+                width={badge.width}
+                height={badge.height}
+                loading="eager"
+                decoding="sync"
+              />
+            </li>
+          ))}
+        </ul>
+        </div>
+      </div>
+    </section>
+  )}
+
+  {grids.map((grid: any) => {
+    const cards = cardsFor(grid.cards).filter((card) => card.title);
+    if (!grid.title && cards.length === 0) return null;
+    const titleId = `capability-child-grid-${grid._key || 'cards'}`;
+    return (
+      <section class="home2-section home2-section--paper" aria-labelledby={grid.title ? titleId : undefined}>
+        <div class="home2-shell">
+          {grid.title && (
+            <div class="home2-head capability-child__grid-title">
+              <h2 id={titleId}>{grid.title}</h2>
+              {grid.subtitle && <p>{grid.subtitle}</p>}
+            </div>
+          )}
+          {cards.length > 0 && (
+            <ul class="capability-child__leaks">
+              {cards.map((card) => (
+                <li class="capability-child__leak">
+                  <div class="capability-child__leak-top">
+                    {card.icon && (
+                      <img class="capability-child__leak-icon" src={card.icon} alt="" decoding="async" />
+                    )}
+                    <h3>{card.title}</h3>
+                  </div>
+                  {card.lead && <p class="capability-child__leak-lead">{card.lead}</p>}
+                  {card.bodyHtml && <div class="capability-child__leak-body" set:html={card.bodyHtml} />}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </section>
+    );
+  })}
+
+  {place.related.cards.length > 0 && (
+    <section class="home2-section" aria-labelledby="capability-child-related-title">
+      <div class="home2-shell">
+        <div class="capability-child__relhead">
+          <div class="home2-head">
+            <p class="home2-eyebrow">{place.related.eyebrow}</p>
+            <h2 id="capability-child-related-title">{place.related.title}</h2>
+          </div>
+          <a class="btn btn--outline" href={place.related.back.href}>{place.related.back.label}</a>
+        </div>
+        <ul class="capability-child__related-grid">
+          {place.related.cards.map((card) => {
+            const line = card.kind === 'sibling' ? heroTitleBySlug.get(card.slug) : card.description;
+            const kicker = card.kind === 'parent' ? card.kicker : '';
+            return (
+              <li class:list={['cap-sib', { 'cap-sib--parent': card.kind === 'parent' }]}>
+                {kicker && <p class="cap-sib__kicker">{kicker}</p>}
+                <h3><a href={card.href}>{card.label}</a></h3>
+                {line && <p>{line}</p>}
+                <a class="more-2026" href={card.href}>{card.linkLabel}</a>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  {talk && <HomeTalk talk={talk} />}
+</div>

@@ -1,6 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import BlockRenderer from '../components/blocks/BlockRenderer.astro';
+import CapabilityChildPage from '../components/capabilities/CapabilityChildPage.astro';
+import { usesCapabilityChildTemplate } from '../lib/capabilityChild';
 import { sanityClient, landingPageBySlugQuery, allLandingPagesQuery } from '../lib/sanity';
 
 // Renders landingPage documents whose slug is a nested site path
@@ -30,6 +32,7 @@ if (!page) {
   return Astro.redirect('/404');
 }
 
+const childTemplate = usesCapabilityChildTemplate(path);
 const seoTitle = page.seoTitle || page.title;
 const seoDescription = page.seoDescription || '';
 ---
@@ -49,8 +52,13 @@ const seoDescription = page.seoDescription || '';
   schemaJson={page.schemaJson}
   hideNavigation={page.hideNavigation}
   hideFooter={page.hideFooter}
+  bodyClass={childTemplate ? 'site-2026' : undefined}
 >
-  {page.sections?.map((section: any) => (
-    <BlockRenderer section={section} />
-  ))}
+  {childTemplate ? (
+    <CapabilityChildPage page={page} path={path || ''} />
+  ) : (
+    page.sections?.map((section: any) => (
+      <BlockRenderer section={section} />
+    ))
+  )}
 </BaseLayout>

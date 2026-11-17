@@ -39,7 +39,7 @@ Say yes, change, or skip on each line. The full proposal follows in the same ord
 4. Restyle Life at Found with the 2026 type system, keep every benefit, tradition, and photo, and add the Talk with us form.
 5. Keep ActiveCampaign form 4, make the dark-panel labels white, and replace the one em dash.
 6. Keep form 8 and the current heading. Restyle the page so the form matches the homepage without copying the homepage intro.
-7. Restyle Results with the 2026 type system, keep every number, flag the contested claims, and add the Talk with us form.
+7. Restyle Results with the 2026 type system. Keep the IBJ #4 line exactly. Propose a 2025 and 2026 Microsoft line for approval. Add the form.
 8. Restyle the industry hub with the 2026 type system and add the Talk with us form. Keep the three industry cards.
 9. Restyle Home services with the 2026 type system. Keep the 46% HVAC line, the logos, and the proof block.
 10. Restyle Higher education with the 2026 type system. Keep the tabs, logos, and every card.
@@ -66,32 +66,31 @@ Say yes, change, or skip on each line. The full proposal follows in the same ord
 31. Propose Landing page design on the Option A child template from open PR #411, without the partner badge rail.
 32. Apply the 2026 type system only. Leave the magazine redesign to open PR #412. Keep every post link.
 33. Restyle Events with the 2026 type system and keep every event card.
-34. Restyle the lunch and learn page, keep the April 15, 2026 date until you confirm it, and do not pretend the register button submits.
-35. Keep ActiveCampaign form 6 and every section. Apply the 2026 type system around the paper.
-36. Restyle Tools with the 2026 type system. Keep the 46% calculator line and both closing sections.
-37. Restyle the build library with the 2026 type system and keep every build card.
-38. Keep the quiz embed and frame the page in the 2026 type system.
-39. Layout and type only. Do not change any legal sentence.
-40. Restyle the thank-you page. Keep the confirmation and the latest-insights module.
-41. Restyle the safelist page, keep every email-client step, and replace the em dash.
-42. Restyle DataConnect and keep its current ActiveCampaign form.
-43. Restyle the author directory. Keep every contributor link and the latest-posts row.
-44. One template proposal for every author page. Julie is the sample. Bios stay, with punctuation-only em dash edits.
-45. Shared legacy template, this listing: 2026 type, keep every webinar link.
-46. Shared legacy template. Keep this page's webinar copy and links.
-47. Shared legacy template. Keep the tools and guides listing, and replace its em dash.
-48. Shared legacy template. Keep the white paper listing.
-49. Shared legacy template. Keep the on-demand webinar copy and video.
-50. Shared legacy template. Keep this on-demand webinar.
-51. Shared legacy template. Keep this resource page.
-52. Shared legacy template. Keep the cookies webinar.
-53. Restyle this campaign page with the 2026 type system. Keep every section. Do not publish it to production.
+34. Keep ActiveCampaign form 6 and every section. Apply the 2026 type system around the paper.
+35. Restyle Tools with the 2026 type system. Keep the 46% calculator line and both closing sections.
+36. Restyle the build library with the 2026 type system and keep every build card.
+37. Keep the quiz embed and frame the page in the 2026 type system.
+38. Layout and type only. Do not change any legal sentence.
+39. Restyle the thank-you page. Keep the confirmation and the latest-insights module.
+40. Restyle the safelist page, keep every email-client step, and replace the em dash.
+41. Restyle DataConnect and keep its current ActiveCampaign form.
+42. Restyle the author directory. Keep every contributor link and the latest-posts row.
+43. One template for every author page. Julie is the sample. Her $215M line becomes the homepage's $210M. Found stays Found.
+44. Shared legacy template, this listing: 2026 type, keep every webinar link.
+45. Shared legacy template. Keep this page's webinar copy and links.
+46. Shared legacy template. Keep the tools and guides listing, and replace its em dash.
+47. Shared legacy template. Keep the white paper listing.
+48. Shared legacy template. Keep the on-demand webinar copy and video.
+49. Shared legacy template. Keep this on-demand webinar.
+50. Shared legacy template. Keep this resource page.
+51. Shared legacy template. Keep the cookies webinar.
+52. Restyle this campaign page with the 2026 type system. Keep every section. Do not publish it to production.
+53. Restyle this campaign page with the 2026 type system. Keep every section.
 54. Restyle this campaign page with the 2026 type system. Keep every section.
-55. Restyle this campaign page with the 2026 type system. Keep every section.
-56. Restyle the meetup page with the 2026 type system. Keep the agenda and the form block that is already there.
-57. Restyle this draft campaign page with the 2026 type system. It is a local JSON page, not a Sanity document.
-58. Restyle the 404 page with the 2026 type system. Keep the heading, the explanation, and every link.
-59. One template proposal for every post. Article bodies stay. Em dashes become commas. The award post is the sample.
+55. Restyle the meetup page with the 2026 type system. Keep the agenda and the form block that is already there.
+56. Restyle this draft campaign page with the 2026 type system. It is a local JSON page, not a Sanity document.
+57. Restyle the 404 page with the 2026 type system. Keep the heading, the explanation, and every link.
+58. One template proposal for every post. Article bodies stay. Em dashes become commas. The award post is the sample.
 
 ## Shared design
 
@@ -103,25 +102,37 @@ The 2026 type system is `src/styles/site-2026.css`, already used by `/capabiliti
 - Text on a black or dark band is white. Green eyebrows can stay.
 - Buttons are caps.
 - No em dashes in copy we are allowed to edit. Legal text is not edited.
-- Company name in prose becomes FoundSM, except the protected names listed in each proposal.
+- Found and FoundSM both stay. Nothing is renamed from one to the other.
 - Forms that already exist keep their ActiveCampaign id. Contact-intent pages that only link to `/contact-us/` gain form 8, which is the homepage Talk with us form and the contact page form (`src/lib/homeV2Content.ts`). No new form id and no list change.
 - Robots, canonicals, redirects, and the sitemap stay as they are.
 
-## Open questions that apply to more than one page
+## Decisions from Megan, November 17, 2026
 
-- Results says $210M. The header says $210M. Julie Warnecke's author bio says more than $215M. I did not pick a winner.
-- Results shows an IBJ rank of #4 and also says three years running. The claims rule was "three years running" with no rank. I left the #4.
-- Results calls the Microsoft line "Microsoft Performance Partner of the Year finalist, 2025." The Insights page, the thank-you page, and the post `post-microsoft-partner-awards-2026-finalist` call the 2026 categories the Data Integration Excellence Award and Search Performance Partner of the Year. I did not rename the 2025 line, and I did not remove the 2026 lines.
-- I did not find the phrase "leading agency in applied AI" on the captured pages. I did not add it.
-- The 46% ROAS line is on Results, Home services, and Tools. It is not on the capability child pages. I kept it everywhere it already appears. Child pages do not gain a 46% block or a logo bar.
-- PR #411 is still open. Child-page proposals are written against that template and say so. They omit the partner badge rail. Phase 2 should not start from a second copy of the template if #411 can be reused. Paid search stays on #411 either way.
-- `contactPage`, `newsletterPage`, `privacyPolicyPage`, `eventLandingPage`, and `notFoundPage` are not documents in the staging dataset. Those pages render from `src/lib/morePageData.ts`. Phase 2 copy for them belongs in that file, or in a new staging document, never in the production dataset.
-- Blog titles that use an en dash (–) are listed in the blog proposal. I did not rewrite them, because the rule I was given is em dashes.
-- Lunch and learn still advertises April 15, 2026, and the register button does not submit.
+- Media spend is $210M. The live homepage says "Paid Media Spend $210M Managed in 2025". Julie's author bio is the only place that says more than $215M. That phrase is a fact correction to $210M. Before and After are on her page.
+- IBJ: keep "#4" and "three years running" exactly as they are on Results. Do not remove the rank.
+- Results keeps the 2025 Microsoft finalist line because it is accurate. A multi-year line is proposed for approval: 2025 Performance Partner of the Year, plus the two 2026 categories from the September 8, 2026 post (Data Integration Excellence Award and Search Performance Partner of the Year). It is not final until Megan says so.
+- Found and FoundSM are both fine. No rename sweep, including the two blog titles and Julie's bio.
+- Lunch and learn (`/events/lunch-and-learn/`) is excluded. No proposal. The page stays as it is, `noindex, nofollow`, and it is not linked from the header, footer, Events cards, or the published sitemap.
+
+## Excluded by Megan
+
+`/events/lunch-and-learn/` is out of this review. Megan said to ignore it on November 17, 2026. Do not restyle it. Do not change its copy. Leave `robots` as `noindex, nofollow`.
+
+The published staging sitemap does not list it, because noindex pages are filtered out. The generator in `src/pages/sitemap.xml.ts` still names the route (the static route list, and `addRoute`). Phase 2, if you want that registration gone: remove those two entries only. Do not delete the page.
+
+No header link, footer link, or Events card points at it. `vercel.json` still redirects `/lunch-and-learn` and `/events/lunch-and-learn` (no slash) to `/events/lunch-and-learn/`. Those redirects were not changed.
+
+## Still open
+
+- The proposed Results Microsoft line above is waiting on approval.
+- I did not find "leading agency in applied AI" on these pages, and I did not add it.
+- The 46% ROAS line stays where it already is (Results, Home services, Tools). Child pages do not gain one.
+- PR #411 is still open. Child pages are written against that template and leave out the partner badge rail. Paid search stays on #411.
+- `contactPage`, `newsletterPage`, `privacyPolicyPage`, `eventLandingPage`, and `notFoundPage` are not in the staging dataset. Those pages render from code defaults.
 
 ## Shared header and footer
 
-Kept as is on every page in this proposal. Page inventories below are the content inside `<main>`, plus the lunch and learn page's own header and footer because that page does not use the site chrome.
+Kept as is on every page in this proposal. Page inventories below are the content inside `<main>`.
 
 Header (`src/components/Header.astro`):
 
@@ -143,7 +154,7 @@ Footer (`src/components/Footer.astro`):
 6. Company: About, Team, Life at Found, Career opportunities
 7. Privacy Policy, Cookie Settings, copyright line
 
-Results in the header is described as "Twenty years, $210M in media, and the numbers behind the work." That $210M string stays. See the open question on $210M and $215M.
+Results in the header is described as "Twenty years, $210M in media, and the numbers behind the work." That $210M string stays. It matches the live homepage.
 
 
 ## 1. About
@@ -177,26 +188,35 @@ Heading order stays: Built for Paid Media Performance | Who We Are | We're Also:
 
 **Copy to optimize.**
 
-Rewrites below keep the facts and change punctuation or the company name to FoundSM. Named things stay spelled as they are: The Found Loop, The Found Brief, Found Signals, Life at Found, Found Search Marketing, Get Found, and 'Are Found'.
+Rewrites below are punctuation, or the two fact edits Megan decided or asked to see. Found is not changed to FoundSM. Both names stay.
 
-- Before: Our company was founded in 2006 by Julie Warnecke—the fourth employee on the Google Ads team. Based in the suburbs of Indianapolis, Indiana, Found has grown to include more than 50 employees—including three former Googlers—across 12 states.
-  After: Our company was founded in 2006 by Julie Warnecke, the fourth employee on the Google Ads team. Based in the suburbs of Indianapolis, Indiana, FoundSM has grown to include more than 50 employees, including three former Googlers, across 12 states.
-- Before: We are more than partners—we sit on the same side of the table. We work alongside our clients, driven by trust, shared goals, and a commitment to long-term growth.
-  After: We are more than partners, we sit on the same side of the table. We work alongside our clients, driven by trust, shared goals, and a commitment to long-term growth.
-- Before: We encourage our team, agency, and clients to question the status quo. Innovation starts with curiosity—and better outcomes come from testing, learning, and evolving together.
-  After: We encourage our team, agency, and clients to question the status quo. Innovation starts with curiosity, and better outcomes come from testing, learning, and evolving together.
-- Before: We focus on what works, measure what matters, and are committed to quality and doing things the right way for our clients—always for the growth of our team and agency.
-  After: We focus on what works, measure what matters, and are committed to quality and doing things the right way for our clients, always for the growth of our team and agency.
-- Before: Smart growth is shared growth. Our strategies are built to drive measurable, sustainable impact—for our clients, for our agency, and for the people who make it happen.
-  After: Smart growth is shared growth. Our strategies are built to drive measurable, sustainable impact, for our clients, for our agency, and for the people who make it happen.
-- Before: First-party data. Custom playbooks. Automation. Innovative bid strategies. Bespoke dashboards. Our approach combines all of these things and more to create a self-reinforcing optimization cycle that gives us the complete picture of your paid media ecosystem. It's all about turning your data into better insights—and more clicks into more customers.
-  After: First-party data. Custom playbooks. Automation. Innovative bid strategies. Bespoke dashboards. Our approach combines all of these things and more to create a self-reinforcing optimization cycle that gives us the complete picture of your paid media ecosystem. It's all about turning your data into better insights, and more clicks into more customers.
-- Before: Over nearly two decades, our agency has grown substantially. The reason is our team—they're among the best in the world at what they do. That's because we're client-first thinkers. We move fast—but always with intention. We focus on working smarter, while executing through the minutia. We put our egos in the back seat. And we love what we do.
-  After: Over nearly two decades, our agency has grown substantially. The reason is our team, they're among the best in the world at what they do. That's because we're client-first thinkers. We move fast, but always with intention. We focus on working smarter, while executing through the minutia. We put our egos in the back seat. And we love what we do.
-- Before: We also work together seamlessly for the benefit of our clients—a big reason many of our team members stay for five or even ten-plus years.
-  After: We also work together seamlessly for the benefit of our clients, a big reason many of our team members stay for five or even ten-plus years.
-- Before: We don't have any openings right now, but we're always interested in meeting great people — check back soon.
-  After: We don't have any openings right now, but we're always interested in meeting great people, check back soon.
+- kept, reworded (em dash replaced with a comma)
+  - Before: Our company was founded in 2006 by Julie Warnecke—the fourth employee on the Google Ads team. Based in the suburbs of Indianapolis, Indiana, Found has grown to include more than 50 employees—including three former Googlers—across 12 states.
+  - After: Our company was founded in 2006 by Julie Warnecke, the fourth employee on the Google Ads team. Based in the suburbs of Indianapolis, Indiana, Found has grown to include more than 50 employees, including three former Googlers, across 12 states.
+- kept, reworded (em dash replaced with a comma)
+  - Before: We are more than partners—we sit on the same side of the table. We work alongside our clients, driven by trust, shared goals, and a commitment to long-term growth.
+  - After: We are more than partners, we sit on the same side of the table. We work alongside our clients, driven by trust, shared goals, and a commitment to long-term growth.
+- kept, reworded (em dash replaced with a comma)
+  - Before: We encourage our team, agency, and clients to question the status quo. Innovation starts with curiosity—and better outcomes come from testing, learning, and evolving together.
+  - After: We encourage our team, agency, and clients to question the status quo. Innovation starts with curiosity, and better outcomes come from testing, learning, and evolving together.
+- kept, reworded (em dash replaced with a comma)
+  - Before: We focus on what works, measure what matters, and are committed to quality and doing things the right way for our clients—always for the growth of our team and agency.
+  - After: We focus on what works, measure what matters, and are committed to quality and doing things the right way for our clients, always for the growth of our team and agency.
+- kept, reworded (em dash replaced with a comma)
+  - Before: Smart growth is shared growth. Our strategies are built to drive measurable, sustainable impact—for our clients, for our agency, and for the people who make it happen.
+  - After: Smart growth is shared growth. Our strategies are built to drive measurable, sustainable impact, for our clients, for our agency, and for the people who make it happen.
+- kept, reworded (em dash replaced with a comma)
+  - Before: First-party data. Custom playbooks. Automation. Innovative bid strategies. Bespoke dashboards. Our approach combines all of these things and more to create a self-reinforcing optimization cycle that gives us the complete picture of your paid media ecosystem. It's all about turning your data into better insights—and more clicks into more customers.
+  - After: First-party data. Custom playbooks. Automation. Innovative bid strategies. Bespoke dashboards. Our approach combines all of these things and more to create a self-reinforcing optimization cycle that gives us the complete picture of your paid media ecosystem. It's all about turning your data into better insights, and more clicks into more customers.
+- kept, reworded (em dash replaced with a comma)
+  - Before: Over nearly two decades, our agency has grown substantially. The reason is our team—they're among the best in the world at what they do. That's because we're client-first thinkers. We move fast—but always with intention. We focus on working smarter, while executing through the minutia. We put our egos in the back seat. And we love what we do.
+  - After: Over nearly two decades, our agency has grown substantially. The reason is our team, they're among the best in the world at what they do. That's because we're client-first thinkers. We move fast, but always with intention. We focus on working smarter, while executing through the minutia. We put our egos in the back seat. And we love what we do.
+- kept, reworded (em dash replaced with a comma)
+  - Before: We also work together seamlessly for the benefit of our clients—a big reason many of our team members stay for five or even ten-plus years.
+  - After: We also work together seamlessly for the benefit of our clients, a big reason many of our team members stay for five or even ten-plus years.
+- kept, reworded (em dash replaced with a comma)
+  - Before: We don't have any openings right now, but we're always interested in meeting great people — check back soon.
+  - After: We don't have any openings right now, but we're always interested in meeting great people, check back soon.
 
 **Content to add.**
 
@@ -302,9 +322,9 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 23. kept as is: FoundSM is a full-service data engineering agency that leverages advanced analytics to drive smart, paid media strategies. By integrating data-driven insights, strategy and paid media execution under one roof, we deliver customized solutions that generate high-intent leads and measurable results.
 24. kept as is: Our team values transparency, accountability, and innovative problem solving. That's why many of our clients have stuck with us for more than a decade.
 25. kept as is: EST. 2006
-26. kept, reworded
+26. kept, reworded (em dash replaced with a comma)
     - Before: Our company was founded in 2006 by Julie Warnecke—the fourth employee on the Google Ads team. Based in the suburbs of Indianapolis, Indiana, Found has grown to include more than 50 employees—including three former Googlers—across 12 states.
-    - After: Our company was founded in 2006 by Julie Warnecke, the fourth employee on the Google Ads team. Based in the suburbs of Indianapolis, Indiana, FoundSM has grown to include more than 50 employees, including three former Googlers, across 12 states.
+    - After: Our company was founded in 2006 by Julie Warnecke, the fourth employee on the Google Ads team. Based in the suburbs of Indianapolis, Indiana, Found has grown to include more than 50 employees, including three former Googlers, across 12 states.
 27. kept as is: Certified in many Google marketing products
 28. kept as is: Named one of the largest Marketing Firms in Indianapolis
 29. kept as is: Independently owned, certified Women-Owned Business
@@ -317,17 +337,17 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 36. kept, moved: shown in the Rooted In Our Values grid instead of a hidden tab: We encourage our team, agency, and clients to question the status quo. Innovation starts with curiosity—and better outcomes come from testing, learning, and evolving together.
 37. kept, moved: shown in the Rooted In Our Values grid instead of a hidden tab: We focus on what works, measure what matters, and are committed to quality and doing things the right way for our clients—always for the growth of our team and agency.
 38. kept, moved: shown in the Rooted In Our Values grid instead of a hidden tab: Smart growth is shared growth. Our strategies are built to drive measurable, sustainable impact—for our clients, for our agency, and for the people who make it happen.
-39. kept, reworded
+39. kept, reworded (em dash replaced with a comma)
     - Before: First-party data. Custom playbooks. Automation. Innovative bid strategies. Bespoke dashboards. Our approach combines all of these things and more to create a self-reinforcing optimization cycle that gives us the complete picture of your paid media ecosystem. It's all about turning your data into better insights—and more clicks into more customers.
     - After: First-party data. Custom playbooks. Automation. Innovative bid strategies. Bespoke dashboards. Our approach combines all of these things and more to create a self-reinforcing optimization cycle that gives us the complete picture of your paid media ecosystem. It's all about turning your data into better insights, and more clicks into more customers.
-40. kept, reworded
+40. kept, reworded (em dash replaced with a comma)
     - Before: Over nearly two decades, our agency has grown substantially. The reason is our team—they're among the best in the world at what they do. That's because we're client-first thinkers. We move fast—but always with intention. We focus on working smarter, while executing through the minutia. We put our egos in the back seat. And we love what we do.
     - After: Over nearly two decades, our agency has grown substantially. The reason is our team, they're among the best in the world at what they do. That's because we're client-first thinkers. We move fast, but always with intention. We focus on working smarter, while executing through the minutia. We put our egos in the back seat. And we love what we do.
-41. kept, reworded
+41. kept, reworded (em dash replaced with a comma)
     - Before: We also work together seamlessly for the benefit of our clients—a big reason many of our team members stay for five or even ten-plus years.
     - After: We also work together seamlessly for the benefit of our clients, a big reason many of our team members stay for five or even ten-plus years.
 42. kept as is: CAREERS
-43. kept, reworded
+43. kept, reworded (em dash replaced with a comma)
     - Before: We don't have any openings right now, but we're always interested in meeting great people — check back soon.
     - After: We don't have any openings right now, but we're always interested in meeting great people, check back soon.
 44. kept as is: Let's Talk (/contact-us/)
@@ -394,14 +414,7 @@ Heading order stays: Together, We Solve. | Leadership | Julie Warnecke | Adam Pe
 
 **Copy to optimize.**
 
-Rewrites below keep the facts and change punctuation or the company name to FoundSM. Named things stay spelled as they are: The Found Loop, The Found Brief, Found Signals, Life at Found, Found Search Marketing, Get Found, and 'Are Found'.
-
-- Before: Our clients have access to the people behind their brand. Unlike traditional agencies, Found is built to foster cross-functional expertise. Our integrated team structure breaks down silos and acts as a catalyst for client-focused strategy, deep analysis, and results-driven execution.
-  After: Our clients have access to the people behind their brand. Unlike traditional agencies, FoundSM is built to foster cross-functional expertise. Our integrated team structure breaks down silos and acts as a catalyst for client-focused strategy, deep analysis, and results-driven execution.
-- Before: At Found, leadership isn't just about setting direction: it's about driving innovation, empowering each other to ask hard questions, and navigating complexity with care and intent to transform challenges into breakthroughs. Our executive team brings decades of hands-on experience in paid media, data engineering and analytics, and customer acquisition strategy, including foundational roles at Google.
-  After: At FoundSM, leadership isn't just about setting direction: it's about driving innovation, empowering each other to ask hard questions, and navigating complexity with care and intent to transform challenges into breakthroughs. Our executive team brings decades of hands-on experience in paid media, data engineering and analytics, and customer acquisition strategy, including foundational roles at Google.
-- Before: Found's leadership stays close to the work, thinks like clients, and focuses on results. That's helped build an agency culture rooted in innovation, precision, and high-impact collaboration.
-  After: FoundSM's leadership stays close to the work, thinks like clients, and focuses on results. That's helped build an agency culture rooted in innovation, precision, and high-impact collaboration.
+None. The wording on the page already matches the facts I could verify. Sections move or restyle only.
 
 **Content to add.**
 
@@ -476,15 +489,9 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 16. kept as is: H3: Ryan Eme
 17. kept as is: In an industry that never stops evolving, FoundSM stands out as an agency that knows exactly who we are. Grounded in a deep commitment to our clients, we combine precision with agility to thrive in a fast-moving world. We're proud cool nerds, energized by the pursuit of high-ceiling, complex problems that drive significant business impact.
 18. kept as is: While many chase the next shiny idea, we stay focused, unapologetically ourselves.
-19. kept, reworded
-    - Before: Our clients have access to the people behind their brand. Unlike traditional agencies, Found is built to foster cross-functional expertise. Our integrated team structure breaks down silos and acts as a catalyst for client-focused strategy, deep analysis, and results-driven execution.
-    - After: Our clients have access to the people behind their brand. Unlike traditional agencies, FoundSM is built to foster cross-functional expertise. Our integrated team structure breaks down silos and acts as a catalyst for client-focused strategy, deep analysis, and results-driven execution.
-20. kept, reworded
-    - Before: At Found, leadership isn't just about setting direction: it's about driving innovation, empowering each other to ask hard questions, and navigating complexity with care and intent to transform challenges into breakthroughs. Our executive team brings decades of hands-on experience in paid media, data engineering and analytics, and customer acquisition strategy, including foundational roles at Google.
-    - After: At FoundSM, leadership isn't just about setting direction: it's about driving innovation, empowering each other to ask hard questions, and navigating complexity with care and intent to transform challenges into breakthroughs. Our executive team brings decades of hands-on experience in paid media, data engineering and analytics, and customer acquisition strategy, including foundational roles at Google.
-21. kept, reworded
-    - Before: Found's leadership stays close to the work, thinks like clients, and focuses on results. That's helped build an agency culture rooted in innovation, precision, and high-impact collaboration.
-    - After: FoundSM's leadership stays close to the work, thinks like clients, and focuses on results. That's helped build an agency culture rooted in innovation, precision, and high-impact collaboration.
+19. kept as is: Our clients have access to the people behind their brand. Unlike traditional agencies, Found is built to foster cross-functional expertise. Our integrated team structure breaks down silos and acts as a catalyst for client-focused strategy, deep analysis, and results-driven execution.
+20. kept as is: At Found, leadership isn't just about setting direction: it's about driving innovation, empowering each other to ask hard questions, and navigating complexity with care and intent to transform challenges into breakthroughs. Our executive team brings decades of hands-on experience in paid media, data engineering and analytics, and customer acquisition strategy, including foundational roles at Google.
+21. kept as is: Found's leadership stays close to the work, thinks like clients, and focuses on results. That's helped build an agency culture rooted in innovation, precision, and high-impact collaboration.
 22. kept as is: CEO
 23. kept as is: Head of Strategic Media
 24. kept as is: Director, Finance
@@ -549,10 +556,7 @@ Heading order stays: It's Not What We Do. It's How We Do It. | Your Search for a
 
 **Copy to optimize.**
 
-Rewrites below keep the facts and change punctuation or the company name to FoundSM. Named things stay spelled as they are: The Found Loop, The Found Brief, Found Signals, Life at Found, Found Search Marketing, Get Found, and 'Are Found'.
-
-- Before: At Found, we have a deep understanding of how privacy impacts marketing. As a certified OneTrust partner, we bring expertise in privacy, security, and data governance - empowering your organization to confidently navigate today's complex regulatory landscape.
-  After: At FoundSM, we have a deep understanding of how privacy impacts marketing. As a certified OneTrust partner, we bring expertise in privacy, security, and data governance - empowering your organization to confidently navigate today's complex regulatory landscape.
+None. The wording on the page already matches the facts I could verify. Sections move or restyle only.
 
 **Content to add.**
 
@@ -693,9 +697,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 47. kept as is: Elite Partner status is Microsoft's highest recognition, granted only to a select group of top-performing agencies globally. This status translates to many benefits for you, including exclusive access to new programs, and early visibility into product roadmaps, search trends, and audience insights.
 48. kept as is: Being named a Google Partner is recognition for maximizing campaign success for our clients by driving growth and demonstrating Google Ads skills and expertise. You can rest assured that many of our team members are certified in Google Ads and its products.
 49. kept as is: Earning a partnership with Meta means doing more than just demonstrating excellence across Meta platforms. It means giving our clients early access to Meta alpha and beta programs, a direct connection to Meta's evolving roadmap, and assurance that our team is leveraging exclusive tools that drive higher-performing campaigns.
-50. kept, reworded
-    - Before: At Found, we have a deep understanding of how privacy impacts marketing. As a certified OneTrust partner, we bring expertise in privacy, security, and data governance - empowering your organization to confidently navigate today's complex regulatory landscape.
-    - After: At FoundSM, we have a deep understanding of how privacy impacts marketing. As a certified OneTrust partner, we bring expertise in privacy, security, and data governance - empowering your organization to confidently navigate today's complex regulatory landscape.
+50. kept as is: At Found, we have a deep understanding of how privacy impacts marketing. As a certified OneTrust partner, we bring expertise in privacy, security, and data governance - empowering your organization to confidently navigate today's complex regulatory landscape.
 51. kept as is: Let's Talk (/contact-us/)
 52. kept as is: Let's Find A Solution (/contact-us/)
 53. kept as is: 1. Google Background
@@ -764,12 +766,7 @@ Heading order stays: Do the best work of your career, with people who stay. | Wh
 
 **Copy to optimize.**
 
-Rewrites below keep the facts and change punctuation or the company name to FoundSM. Named things stay spelled as they are: The Found Loop, The Found Brief, Found Signals, Life at Found, Found Search Marketing, Get Found, and 'Are Found'.
-
-- Before: H3: National Superhero Day, Found edition
-  After: H3: National Superhero Day, FoundSM edition
-- Before: Found is a paid media and data engineering agency based in Fishers, Indiana, with people in the office, hybrid and fully remote across the US. Twenty years in, nearly a third of the team has been here ten years or more.
-  After: FoundSM is a paid media and data engineering agency based in Fishers, Indiana, with people in the office, hybrid and fully remote across the US. Twenty years in, nearly a third of the team has been here ten years or more.
+None. The wording on the page already matches the facts I could verify. Sections move or restyle only.
 
 **Content to add.**
 
@@ -896,14 +893,10 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 26. kept as is: H3: Volunteering with The Salvation Army
 27. kept as is: H3: Making Midwest with the creative team
 28. kept as is: H3: Out of the office and into Austin
-29. kept, reworded
-    - Before: H3: National Superhero Day, Found edition
-    - After: H3: National Superhero Day, FoundSM edition
+29. kept as is: H3: National Superhero Day, Found edition
 30. kept as is: H3: Appetizer Day, an annual tradition
 31. kept as is: H2: No openings right now. Introduce yourself anyway.
-32. kept, reworded
-    - Before: Found is a paid media and data engineering agency based in Fishers, Indiana, with people in the office, hybrid and fully remote across the US. Twenty years in, nearly a third of the team has been here ten years or more.
-    - After: FoundSM is a paid media and data engineering agency based in Fishers, Indiana, with people in the office, hybrid and fully remote across the US. Twenty years in, nearly a third of the team has been here ten years or more.
+32. kept as is: Found is a paid media and data engineering agency based in Fishers, Indiana, with people in the office, hybrid and fully remote across the US. Twenty years in, nearly a third of the team has been here ten years or more.
 33. kept as is: Client-first thinkers. Fast, but always with intention.
 34. kept as is: We work smarter while executing through the minutiae, we put our egos in the back seat, and we love what we do. It is why more than half of the team has been here five years or longer, and why clients have stayed with us for more than a decade.
 35. kept as is: Four values, in the words we actually use.
@@ -999,10 +992,11 @@ Heading order stays: Sign Up for Our Newsletter
 
 **Copy to optimize.**
 
-Rewrites below keep the facts and change punctuation or the company name to FoundSM. Named things stay spelled as they are: The Found Loop, The Found Brief, Found Signals, Life at Found, Found Search Marketing, Get Found, and 'Are Found'.
+Rewrites below are punctuation, or the two fact edits Megan decided or asked to see. Found is not changed to FoundSM. Both names stay.
 
-- Before: Problem-first strategy from the Found team, the platform changes that actually move your budget, and first invites to our events — plus recaps of the ones you missed.
-  After: Problem-first strategy from the FoundSM team, the platform changes that actually move your budget, and first invites to our events, plus recaps of the ones you missed.
+- kept, reworded (em dash replaced with a comma)
+  - Before: Problem-first strategy from the Found team, the platform changes that actually move your budget, and first invites to our events — plus recaps of the ones you missed.
+  - After: Problem-first strategy from the Found team, the platform changes that actually move your budget, and first invites to our events, plus recaps of the ones you missed.
 
 **Content to add.**
 
@@ -1027,9 +1021,9 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 
 1. kept as is: Section 1: Sign Up for Our Newsletter
 2. kept as is: H1: Sign Up for Our Newsletter
-3. kept, reworded
+3. kept, reworded (em dash replaced with a comma)
     - Before: Problem-first strategy from the Found team, the platform changes that actually move your budget, and first invites to our events — plus recaps of the ones you missed.
-    - After: Problem-first strategy from the FoundSM team, the platform changes that actually move your budget, and first invites to our events, plus recaps of the ones you missed.
+    - After: Problem-first strategy from the Found team, the platform changes that actually move your budget, and first invites to our events, plus recaps of the ones you missed.
 4. kept as is: By subscribing, you agree to receive marketing emails from FoundSM. You can unsubscribe anytime.
 5. kept as is: Get Found →
 6. kept as is: Form action https://foundsm.activehosted.com/proc.php; fields: First Name*, Email Address*, Job Title
@@ -1125,7 +1119,7 @@ medium
 
 ## 7. Results
 
-**Approve?** Restyle Results with the 2026 type system, keep every number, flag the contested claims, and add the Talk with us form.
+**Approve?** Restyle Results with the 2026 type system. Keep the IBJ #4 line exactly. Propose a 2025 and 2026 Microsoft line for approval. Add the form.
 
 - Staging URL: https://staging.foundsm.com/results/
 - Source: `src/pages/results/index.astro`
@@ -1146,16 +1140,23 @@ Full page on staging, November 17, 2026. Scroll-in sections are shown open so th
 
 **Layout and design.** Headings move from Fraunces to the 2026 type system in `src/styles/site-2026.css`: Archivo Black, 82% width, uppercase, ink `#231f20` on paper `#eef1ec`. Body stays Poppins. Eyebrows are green `#8dc63f`. Buttons are caps. The header and footer keep their own type. Dark-band body text is white. Sections that are only a heading over a large empty area get pulled up so the copy sits with the heading. This is scoped to this page. It does not restyle the homepage, `/capabilities/`, `/ai/`, or the paid search page on PR #411.
 
+IBJ stays exactly as it is: '#4' and 'IBJ Top 25 Indianapolis agencies, three years running.' Megan said not to remove the rank.
+
+The $210M figures on this page stay. They match the live homepage: Paid Media Spend $210M Managed in 2025.
+
+The 2025 Microsoft sentence stays accurate. The After version adds 2026 and is waiting on Megan's approval.
+
 Add the homepage Talk with us form (ActiveCampaign form 8, `homeV2Forms.contact` in `src/lib/homeV2Content.ts`, the same form already on /contact-us/). Put it in the existing closing section. The intro is this page's closing paragraph, not the homepage intro. The button label is 'Let's Talk', not 'Start the conversation'. Keep the existing contact link as well.
 
 Heading order stays: Twenty years. $210 million in media. One way of working. | 2025 in numbers | What that looks like on an account | 46% ROAS increase in 60 days | Recognition that tracks the work | The things behind the numbers | Founded in 2006 | People who stay | Certified where it counts | Where should your numbers be a year from now?
 
 **Copy to optimize.**
 
-Rewrites below keep the facts and change punctuation or the company name to FoundSM. Named things stay spelled as they are: The Found Loop, The Found Brief, Found Signals, Life at Found, Found Search Marketing, Get Found, and 'Are Found'.
+Rewrites below are punctuation, or the two fact edits Megan decided or asked to see. Found is not changed to FoundSM. Both names stay.
 
-- Before: Found was started in 2006 by one of the first employees on the Google AdWords ad operations team. Two decades later the method has not changed much: connect the business data to the media, and let the results argue for themselves.
-  After: FoundSM was started in 2006 by one of the first employees on the Google AdWords ad operations team. Two decades later the method has not changed much: connect the business data to the media, and let the results argue for themselves.
+- kept, reworded (proposed for Megan's approval, not final)
+  - Before: Microsoft Performance Partner of the Year finalist, 2025.
+  - After: Microsoft Advertising Partner Awards finalist, 2025 and 2026. 2025: Performance Partner of the Year. 2026: Data Integration Excellence Award and Search Performance Partner of the Year.
 
 **Content to add.**
 
@@ -1224,9 +1225,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 14. kept as is: H3: People who stay
 15. kept as is: H3: Certified where it counts
 16. kept as is: H2: Where should your numbers be a year from now?
-17. kept, reworded
-    - Before: Found was started in 2006 by one of the first employees on the Google AdWords ad operations team. Two decades later the method has not changed much: connect the business data to the media, and let the results argue for themselves.
-    - After: FoundSM was started in 2006 by one of the first employees on the Google AdWords ad operations team. Two decades later the method has not changed much: connect the business data to the media, and let the results argue for themselves.
+17. kept as is: Found was started in 2006 by one of the first employees on the Google AdWords ad operations team. Two decades later the method has not changed much: connect the business data to the media, and let the results argue for themselves.
 18. kept as is: No vanity metrics. No cherry-picked stats.
 19. kept as is: Scale is context, not proof. What matters is whether the work moves your numbers, which is why every engagement gets measured against business outcomes rather than against impressions we can take credit for.
 20. kept as is: $210M+
@@ -1239,7 +1238,9 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 27. kept as is: IBJ Top 25 Indianapolis agencies, three years running
 28. kept as is: A regional HVAC company.
 29. kept as is: Server-side tracking recovered the conversion signal the browser was dropping, and wasted spend fell 29% over the same period once bidding could see which calls became jobs.
-30. kept as is: Microsoft Performance Partner of the Year finalist, 2025.
+30. kept, reworded (proposed for Megan's approval, not final)
+    - Before: Microsoft Performance Partner of the Year finalist, 2025.
+    - After: Microsoft Advertising Partner Awards finalist, 2025 and 2026. 2025: Performance Partner of the Year. 2026: Data Integration Excellence Award and Search Performance Partner of the Year.
 31. kept as is: Alongside Microsoft Advertising Elite Partner status, granted to a small group of agencies globally, and Google Marketing Platform certification.
 32. kept as is: By one of Google AdWords' first ad ops employees.
 33. kept as is: Three team members are former Google employees, which is part of why platform changes tend to reach our clients early.
@@ -1254,9 +1255,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 
 ### Open questions
 
-- The page says '#4 IBJ Top 25 Indianapolis agencies, three years running.' The claims rule you gave me is 'three years running' with no rank. I left the #4 in place. Should it stay?
-- The Microsoft line on this page is 'Microsoft Performance Partner of the Year finalist, 2025.' The homepage recognition card says 'Search Performance Partner of the Year finalist, 2026.' The award post and the Insights page say the 2026 finalist categories are the Data Integration Excellence Award and Search Performance Partner of the Year. I did not rename the Results line. Which wording should Results keep?
-- Results says '$210 million' and '$210M+'. Julie Warnecke's author page says 'more than $215M in media spend annually' (src/lib/legacyPageData.ts and the live author page). I did not change either number.
+- The multi-year Microsoft line in the Before/After is waiting on your approval. The 2025 wording stays in that line. The IBJ #4 and three years running stay exactly as they are, per your Nov 17 answer.
 
 ### Effort
 
@@ -1383,10 +1382,7 @@ Heading order stays: Home services lead gen has a math problem. We fixed it. | T
 
 **Copy to optimize.**
 
-Rewrites below keep the facts and change punctuation or the company name to FoundSM. Named things stay spelled as they are: The Found Loop, The Found Brief, Found Signals, Life at Found, Found Search Marketing, Get Found, and 'Are Found'.
-
-- Before: H2: Home services brands that trust Found
-  After: H2: Home services brands that trust FoundSM
+None. The wording on the page already matches the facts I could verify. Sections move or restyle only.
 
 **Content to add.**
 
@@ -1465,9 +1461,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 10. kept as is: H3: Call value invisibility
 11. kept as is: H3: Lead quality vs. volume
 12. kept as is: H3: Multi-location chaos
-13. kept, reworded
-    - Before: H2: Home services brands that trust Found
-    - After: H2: Home services brands that trust FoundSM
+13. kept as is: H2: Home services brands that trust Found
 14. kept as is: H2: Built for businesses where the phone is the cash register
 15. kept as is: H3: Call tracking and call-to-revenue integration +
 16. kept as is: H3: Server-side tracking +
@@ -1548,10 +1542,7 @@ Heading order stays: An inquiry in March is not a student in August. | Three enr
 
 **Copy to optimize.**
 
-Rewrites below keep the facts and change punctuation or the company name to FoundSM. Named things stay spelled as they are: The Found Loop, The Found Brief, Found Signals, Life at Found, Found Search Marketing, Get Found, and 'Are Found'.
-
-- Before: H2: Institutions that trust Found
-  After: H2: Institutions that trust FoundSM
+None. The wording on the page already matches the facts I could verify. Sections move or restyle only.
 
 **Content to add.**
 
@@ -1619,9 +1610,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 9. kept as is: H3: Undergraduate
 10. kept as is: H3: Graduate
 11. kept as is: H3: Executive
-12. kept, reworded
-    - Before: H2: Institutions that trust Found
-    - After: H2: Institutions that trust FoundSM
+12. kept as is: H2: Institutions that trust Found
 13. kept as is: H2: How we close the gap between inquiry and enrollment
 14. kept as is: H3: Inquiry-to-enrollment tracking
 15. kept as is: H3: Cycle-aware pacing
@@ -1693,10 +1682,7 @@ Heading order stays: In healthcare, the data you cannot use is the whole problem
 
 **Copy to optimize.**
 
-Rewrites below keep the facts and change punctuation or the company name to FoundSM. Named things stay spelled as they are: The Found Loop, The Found Brief, Found Signals, Life at Found, Found Search Marketing, Get Found, and 'Are Found'.
-
-- Before: H2: Healthcare and life sciences brands that trust Found
-  After: H2: Healthcare and life sciences brands that trust FoundSM
+None. The wording on the page already matches the facts I could verify. Sections move or restyle only.
 
 **Content to add.**
 
@@ -1773,9 +1759,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 10. kept as is: H3: Restricted categories and policy limits
 11. kept as is: H3: HCP and patient are two different businesses
 12. kept as is: H3: Review cycles outlast the media plan
-13. kept, reworded
-    - Before: H2: Healthcare and life sciences brands that trust Found
-    - After: H2: Healthcare and life sciences brands that trust FoundSM
+13. kept as is: H2: Healthcare and life sciences brands that trust Found
 14. kept as is: H2: Compliance is an architecture problem. We solve it upstream.
 15. kept as is: H3: Privacy-compliant data architecture +
 16. kept as is: H3: Server-side tracking without the exposure +
@@ -1862,12 +1846,7 @@ Heading order stays: Achieve the Perfect Mix of Paid Media | How We Work | Maxim
 
 **Copy to optimize.**
 
-Rewrites below keep the facts and change punctuation or the company name to FoundSM. Named things stay spelled as they are: The Found Loop, The Found Brief, Found Signals, Life at Found, Found Search Marketing, Get Found, and 'Are Found'.
-
-- Before: Found creates a diverse media mix that builds awareness, nurtures interest, and captures intent at the right moment.
-  After: FoundSM creates a diverse media mix that builds awareness, nurtures interest, and captures intent at the right moment.
-- Before: Found's Paid Media and Data Intelligence teams work hand-in-hand to leverage first-party data, media mix modeling, and real-time performance alerts.
-  After: FoundSM's Paid Media and Data Intelligence teams work hand-in-hand to leverage first-party data, media mix modeling, and real-time performance alerts.
+None. The wording on the page already matches the facts I could verify. Sections move or restyle only.
 
 **Content to add.**
 
@@ -1981,9 +1960,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 23. kept as is: From target-ROAS to Advantage+ bidding, strategies are intentionally crafted based on your specific business goals to balance volume with efficiency.
 24. kept as is: We use data from each channel to inform the next, ensuring your customers see the right message at the right moment. By treating every platform as an interconnected engine, your media mix continuously optimizes to maximize returns.
 25. kept as is: Performance scorecards, dashboards, and real-time monitoring tools keep us aligned on spend, CPL, downstream performance, and more, allowing our team to quickly adapt while your team has visibility into performance.
-26. kept, reworded
-    - Before: Found creates a diverse media mix that builds awareness, nurtures interest, and captures intent at the right moment.
-    - After: FoundSM creates a diverse media mix that builds awareness, nurtures interest, and captures intent at the right moment.
+26. kept as is: Found creates a diverse media mix that builds awareness, nurtures interest, and captures intent at the right moment.
 27. kept as is: Reach qualified prospects the moment they signal intent.
 28. kept as is: By combining smart data engineering, value-based bidding, and first-party data, we design search strategies that maximize your investment and reach the right prospects at the most impactful point in their research process.
 29. kept as is: Drive consideration and engagement across key platforms.
@@ -1992,9 +1969,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 32. kept as is: We look beyond last-click attribution to understand the role display has on search and the broader customer journey, then tie every adjustment back to your data.
 33. kept as is: Expand your reach with precision on programmatic networks and native platforms.
 34. kept as is: Audience-based bid multipliers, frequency capping, and dynamic creative optimization help control ad fatigue and scale efficiently, with every adjustment informed by data.
-35. kept, reworded
-    - Before: Found's Paid Media and Data Intelligence teams work hand-in-hand to leverage first-party data, media mix modeling, and real-time performance alerts.
-    - After: FoundSM's Paid Media and Data Intelligence teams work hand-in-hand to leverage first-party data, media mix modeling, and real-time performance alerts.
+35. kept as is: Found's Paid Media and Data Intelligence teams work hand-in-hand to leverage first-party data, media mix modeling, and real-time performance alerts.
 36. kept as is: Using a powerful tech stack guided by our team's expertise, we identify what's working and reallocate budgets to the initiatives driving the strongest outcomes.
 37. kept as is: We use AI-driven optimization to detect outliers in CPC and conversion rate, triggering automated bid adjustments before costs spiral.
 38. kept as is: Our projections help you anticipate spend pacing and ROI, so you can hit targets without guesswork.
@@ -2081,12 +2056,7 @@ Heading order stays: Transform Complex Data Into Growth | How We Work | Your Dat
 
 **Copy to optimize.**
 
-Rewrites below keep the facts and change punctuation or the company name to FoundSM. Named things stay spelled as they are: The Found Loop, The Found Brief, Found Signals, Life at Found, Found Search Marketing, Get Found, and 'Are Found'.
-
-- Before: Let Found unlock the potential of your data.
-  After: Let FoundSM unlock the potential of your data.
-- Before: As a certified OneTrust partner, our team has a strategic understanding of how privacy impacts your marketing. By partnering with Found, you gain a trusted advisor that will help you stay compliant, and turn privacy into a competitive advantage.
-  After: As a certified OneTrust partner, our team has a strategic understanding of how privacy impacts your marketing. By partnering with FoundSM, you gain a trusted advisor that will help you stay compliant, and turn privacy into a competitive advantage.
+None. The wording on the page already matches the facts I could verify. Sections move or restyle only.
 
 **Content to add.**
 
@@ -2179,17 +2149,13 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 16. kept as is: H2: Your data gives YOU unlimited potential.
 17. kept as is: Data sits at the core of our operations. From powering your CRM, to feeding downstream systems, it’s used to inform channel mixes, create audience models and more. Your data lives everywhere. We bring it together: cross-platform, API-driven, and unified into a single view.
 18. kept as is: Our Data Intelligence team serves as a catalyst to paid media and creative solutions, ensuring campaigns are built on accuracy, agility, and insight. Certified in Google Analytics and Google Cloud, our DI specialists integrate seamlessly with client systems, whether it’s IT, compliance, or sales, to ensure data integrity and alignment on what matters most. Our platform-agnostic approach allows us to easily adapt to your tools and workflows to create clarity, speed, and confidence in every move.
-19. kept, reworded
-    - Before: Let Found unlock the potential of your data.
-    - After: Let FoundSM unlock the potential of your data.
+19. kept as is: Let Found unlock the potential of your data.
 20. kept as is: The process begins by mapping your entire data landscape to get the full picture of your business. Then, we perform an in-depth analysis of your tech stack to uncover insights that drive clear recommendations and implementation plans.
 21. kept as is: To ensure maximum measurement durability, our team configures the tracking and validates every event and conversion. Whether it’s deploying scripts through GTM or building accurate tracking parameters back to your CRM, we’ll ensure your downstream outcomes are connected to marketing data.
 22. kept as is: We don’t just use data to activate campaigns; we engineer high-intent audience models that uncover your most valuable customers with precision. Those audiences are activated across channels to drive efficiency, relevance and growth.
 23. kept as is: We create customized solutions for you and your stakeholders, so each report or dashboard speaks your language and tells a clear story based on your business goals. From clicks to downstream metrics, our expertise pulls your data into one clear, powerful view.
 24. kept as is: We specialize in leveraging APIs that connect disparate, complex data sources into one unified view, no matter the platform or quantity of data sources. Our team is fluent across platforms, working within your existing stack to drive results.
-25. kept, reworded
-    - Before: As a certified OneTrust partner, our team has a strategic understanding of how privacy impacts your marketing. By partnering with Found, you gain a trusted advisor that will help you stay compliant, and turn privacy into a competitive advantage.
-    - After: As a certified OneTrust partner, our team has a strategic understanding of how privacy impacts your marketing. By partnering with FoundSM, you gain a trusted advisor that will help you stay compliant, and turn privacy into a competitive advantage.
+25. kept as is: As a certified OneTrust partner, our team has a strategic understanding of how privacy impacts your marketing. By partnering with Found, you gain a trusted advisor that will help you stay compliant, and turn privacy into a competitive advantage.
 26. kept as is: We go beyond dashboards, leveraging a variety of tools to:
 27. kept as is: Detect anomalies in real time, enabling rapid media adjustments.
 28. kept as is: Run predictive models for customer behavior.
@@ -2272,12 +2238,7 @@ Heading order stays: Activate Your Customer Data To Actually Drive Revenue | Wha
 
 **Copy to optimize.**
 
-Rewrites below keep the facts and change punctuation or the company name to FoundSM. Named things stay spelled as they are: The Found Loop, The Found Brief, Found Signals, Life at Found, Found Search Marketing, Get Found, and 'Are Found'.
-
-- Before: Found solves this by bringing together first-party data and insights from across your organization into one centralized, actionable system. This unified data feeds directly into ad platforms, powering advanced targeting, better lead quality, and more efficient scaling.
-  After: FoundSM solves this by bringing together first-party data and insights from across your organization into one centralized, actionable system. This unified data feeds directly into ad platforms, powering advanced targeting, better lead quality, and more efficient scaling.
-- Before: Through Found's proven process, we pull valuable data from every corner of your business to fuel smarter automation, reduce waste, and create a foundation for continuous, AI-powered growth.
-  After: Through FoundSM's proven process, we pull valuable data from every corner of your business to fuel smarter automation, reduce waste, and create a foundation for continuous, AI-powered growth.
+None. The wording on the page already matches the facts I could verify. Sections move or restyle only.
 
 **Content to add.**
 
@@ -2326,12 +2287,8 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 14. kept as is: Build upon the AI systems already driving these platforms, ensuring the algorithms are learning from your real customer insights, not generic lookalike data
 15. kept as is: In today's AI-driven marketing world, your product, data, and creative are what truly set you apart. We're moving away from a time when marketers could manually tweak campaigns, handpick audiences, and rely on human judgment to outperform the competition.
 16. kept as is: AI and automation now drive performance, but their success depends entirely on the quality of the data they're given. If the system is fed incomplete, outdated or misaligned information, it will optimize toward the wrong outcomes, wasting ad spend and missing high-value opportunities.
-17. kept, reworded
-    - Before: Found solves this by bringing together first-party data and insights from across your organization into one centralized, actionable system. This unified data feeds directly into ad platforms, powering advanced targeting, better lead quality, and more efficient scaling.
-    - After: FoundSM solves this by bringing together first-party data and insights from across your organization into one centralized, actionable system. This unified data feeds directly into ad platforms, powering advanced targeting, better lead quality, and more efficient scaling.
-18. kept, reworded
-    - Before: Through Found's proven process, we pull valuable data from every corner of your business to fuel smarter automation, reduce waste, and create a foundation for continuous, AI-powered growth.
-    - After: Through FoundSM's proven process, we pull valuable data from every corner of your business to fuel smarter automation, reduce waste, and create a foundation for continuous, AI-powered growth.
+17. kept as is: Found solves this by bringing together first-party data and insights from across your organization into one centralized, actionable system. This unified data feeds directly into ad platforms, powering advanced targeting, better lead quality, and more efficient scaling.
+18. kept as is: Through Found's proven process, we pull valuable data from every corner of your business to fuel smarter automation, reduce waste, and create a foundation for continuous, AI-powered growth.
 19. kept as is: In a world where everyone uses AI and data, it's too risky to fly blind. Clean, connected data fueling your systems and paid media is the only path to smarter growth. That's what we deliver.
 20. kept as is: Let's Chat Data (https://foundsm.com/dataconnect/)
 21. kept as is: video https://cdn.sanity.io/files/vzneqxsx/staging/82d1f01f9ffa97aa8a8889bf75fb1a8e794b34bf.mp4
@@ -2381,12 +2338,7 @@ Heading order stays: Make Every Interaction Count. | How We Work | End to End Ex
 
 **Copy to optimize.**
 
-Rewrites below keep the facts and change punctuation or the company name to FoundSM. Named things stay spelled as they are: The Found Loop, The Found Brief, Found Signals, Life at Found, Found Search Marketing, Get Found, and 'Are Found'.
-
-- Before: At Found, Performance Creative is where strategy meets storytelling. Our Creative and CRO teams collaborate closely with Paid Media and Data Intelligence to ensure every concept, variation, and landing page is informed by real-time data and optimized for measurable results. You have a significant investment in paid media, and we optimize each touch point to reduce CPL and improve CVR. We built our team to fast-track creative and landing page production specifically for paid media campaigns.
-  After: At FoundSM, Performance Creative is where strategy meets storytelling. Our Creative and CRO teams collaborate closely with Paid Media and Data Intelligence to ensure every concept, variation, and landing page is informed by real-time data and optimized for measurable results. You have a significant investment in paid media, and we optimize each touch point to reduce CPL and improve CVR. We built our team to fast-track creative and landing page production specifically for paid media campaigns.
-- Before: Found's Performance Creative Team combines inventive motion design, data-driven landing page builds and conversion rate optimization into one seamless workflow. While we are no stranger to creative sprints, we hold brand safety and compliance to the highest standards.
-  After: FoundSM's Performance Creative Team combines inventive motion design, data-driven landing page builds and conversion rate optimization into one seamless workflow. While we are no stranger to creative sprints, we hold brand safety and compliance to the highest standards.
+None. The wording on the page already matches the facts I could verify. Sections move or restyle only.
 
 **Content to add.**
 
@@ -2440,15 +2392,11 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 7. kept as is: H2: End to End Experience Design
 8. kept as is: Our Performance Creative and CRO teams have one goal: transform prospects into customers. We understand the impact creative can have on CPL and your bottom line.
 9. kept as is: It's not just about looking good. It's about making data-based decisions that optimize your investment. Creative and landing pages are powerful levers to improve performance, drive efficiencies, and control costs.
-10. kept, reworded
-    - Before: At Found, Performance Creative is where strategy meets storytelling. Our Creative and CRO teams collaborate closely with Paid Media and Data Intelligence to ensure every concept, variation, and landing page is informed by real-time data and optimized for measurable results. You have a significant investment in paid media, and we optimize each touch point to reduce CPL and improve CVR. We built our team to fast-track creative and landing page production specifically for paid media campaigns.
-    - After: At FoundSM, Performance Creative is where strategy meets storytelling. Our Creative and CRO teams collaborate closely with Paid Media and Data Intelligence to ensure every concept, variation, and landing page is informed by real-time data and optimized for measurable results. You have a significant investment in paid media, and we optimize each touch point to reduce CPL and improve CVR. We built our team to fast-track creative and landing page production specifically for paid media campaigns.
+10. kept as is: At Found, Performance Creative is where strategy meets storytelling. Our Creative and CRO teams collaborate closely with Paid Media and Data Intelligence to ensure every concept, variation, and landing page is informed by real-time data and optimized for measurable results. You have a significant investment in paid media, and we optimize each touch point to reduce CPL and improve CVR. We built our team to fast-track creative and landing page production specifically for paid media campaigns.
 11. kept as is: We love digging into metrics and session behavior. From heat maps, click paths, and funnel drop-off points, all of these help us better understand your audiences, their motivations and what moves them down the funnel.
 12. kept as is: No months-long VFX shoots here. We specialize in fast-tracked creative that has one goal - perform. Our team creates images, videos, and landing pages in days or hours, not weeks. Our project managers plug in with your internal team so you have full visibility and can review and approve all assets.
 13. kept as is: Using innovative tools that include eye-tracking and scroll-map data, we validate creative and page tweaks in real time. Each test is measured, refined, and expanded according to results.
-14. kept, reworded
-    - Before: Found's Performance Creative Team combines inventive motion design, data-driven landing page builds and conversion rate optimization into one seamless workflow. While we are no stranger to creative sprints, we hold brand safety and compliance to the highest standards.
-    - After: FoundSM's Performance Creative Team combines inventive motion design, data-driven landing page builds and conversion rate optimization into one seamless workflow. While we are no stranger to creative sprints, we hold brand safety and compliance to the highest standards.
+14. kept as is: Found's Performance Creative Team combines inventive motion design, data-driven landing page builds and conversion rate optimization into one seamless workflow. While we are no stranger to creative sprints, we hold brand safety and compliance to the highest standards.
 15. kept as is: Our team has a detailed understanding of landing page UX/UI and how to use it to drive action, not just get attention. By incorporating CRO best practices, compliance intelligence, and data, we build landing pages that convert.
 16. kept as is: Data-Led Page Builds: We design around proven CRO principles with your goals top of mind, while measuring every scroll, click, and drop-off.
 17. kept as is: Iterative Improvements: Form fields, button colors, and countless details are refined through rapid A/B cycles and multivariate testing to fuel continuous conversion gains.
@@ -2518,10 +2466,7 @@ Heading order stays: Search captures demand. Social has to create it. | Three pl
 
 **Copy to optimize.**
 
-Rewrites below keep the facts and change punctuation or the company name to FoundSM. Named things stay spelled as they are: The Found Loop, The Found Brief, Found Signals, Life at Found, Found Search Marketing, Get Found, and 'Are Found'.
-
-- Before: Found is a Meta Business Partner. That is not a badge on a website. It comes with named reps and a standing call every other week, early access to Meta alpha and beta programs, and a direct line into how the platform is changing.
-  After: FoundSM is a Meta Business Partner. That is not a badge on a website. It comes with named reps and a standing call every other week, early access to Meta alpha and beta programs, and a direct line into how the platform is changing.
+None. The wording on the page already matches the facts I could verify. Sections move or restyle only.
 
 **Content to add.**
 
@@ -2642,9 +2587,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 44. kept as is: Fatigue is a certainty, not a surprise.
 45. kept as is: Frequency and performance decay are tracked so replacements are in production before the numbers turn, instead of after.
 46. kept as is: PLATFORM PARTNERSHIPS
-47. kept, reworded
-    - Before: Found is a Meta Business Partner. That is not a badge on a website. It comes with named reps and a standing call every other week, early access to Meta alpha and beta programs, and a direct line into how the platform is changing.
-    - After: FoundSM is a Meta Business Partner. That is not a badge on a website. It comes with named reps and a standing call every other week, early access to Meta alpha and beta programs, and a direct line into how the platform is changing.
+47. kept as is: Found is a Meta Business Partner. That is not a badge on a website. It comes with named reps and a standing call every other week, early access to Meta alpha and beta programs, and a direct line into how the platform is changing.
 48. kept as is: Meta changes delivery and measurement constantly, and most of it arrives unannounced. That cadence is how new formats, policy shifts, and beta access reach your account as a plan rather than as an explanation after the quarter.
 49. kept as is: Start with what social is costing you today and what it is actually returning.
 50. kept as is: Let's talk paid social (/contact-us/)
@@ -2709,10 +2652,7 @@ Heading order stays: Most display budgets buy impressions nobody saw. | What qui
 
 **Copy to optimize.**
 
-Rewrites below keep the facts and change punctuation or the company name to FoundSM. Named things stay spelled as they are: The Found Loop, The Found Brief, Found Signals, Life at Found, Found Search Marketing, Get Found, and 'Are Found'.
-
-- Before: Found is Google Marketing Platform certified, with a team trained across the GMP tools rather than one person who picked up a platform on the job. In programmatic that distinction shows up in the controls, because the difference between running the stack and understanding it is measured in wasted impressions.
-  After: FoundSM is Google Marketing Platform certified, with a team trained across the GMP tools rather than one person who picked up a platform on the job. In programmatic that distinction shows up in the controls, because the difference between running the stack and understanding it is measured in wasted impressions.
+None. The wording on the page already matches the facts I could verify. Sections move or restyle only.
 
 **Content to add.**
 
@@ -2818,9 +2758,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 37. kept as is: Allowlists, exclusions, and ongoing placement review, because the default open-exchange setup is not built in your interest.
 38. kept as is: Geo holdouts and structured tests that answer whether display drove anything, so the budget is defensible in a room with finance in it.
 39. kept as is: PLATFORM PARTNERSHIPS
-40. kept, reworded
-    - Before: Found is Google Marketing Platform certified, with a team trained across the GMP tools rather than one person who picked up a platform on the job. In programmatic that distinction shows up in the controls, because the difference between running the stack and understanding it is measured in wasted impressions.
-    - After: FoundSM is Google Marketing Platform certified, with a team trained across the GMP tools rather than one person who picked up a platform on the job. In programmatic that distinction shows up in the controls, because the difference between running the stack and understanding it is measured in wasted impressions.
+40. kept as is: Found is Google Marketing Platform certified, with a team trained across the GMP tools rather than one person who picked up a platform on the job. In programmatic that distinction shows up in the controls, because the difference between running the stack and understanding it is measured in wasted impressions.
 41. kept as is: Paired with a weekly call with Google, new inventory controls, measurement features, and alpha programs reach your account while they are still an advantage rather than a standard.
 42. kept as is: Bring us the placement report. It usually tells the story within about ten minutes.
 43. kept as is: Let's talk programmatic (/contact-us/)
@@ -3036,10 +2974,7 @@ Heading order stays: Acquired a brand? Don’t let ad accounts kill the deal val
 
 **Copy to optimize.**
 
-Rewrites below keep the facts and change punctuation or the company name to FoundSM. Named things stay spelled as they are: The Found Loop, The Found Brief, Found Signals, Life at Found, Found Search Marketing, Get Found, and 'Are Found'.
-
-- Before: H2: How Found handles it
-  After: H2: How FoundSM handles it
+None. The wording on the page already matches the facts I could verify. Sections move or restyle only.
 
 **Content to add.**
 
@@ -3109,9 +3044,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 9. kept as is: H3: Conversion history is fragmented
 10. kept as is: H3: Tracking breaks mid-consolidation
 11. kept as is: H3: Nobody owns the combined picture
-12. kept, reworded
-    - Before: H2: How Found handles it
-    - After: H2: How FoundSM handles it
+12. kept as is: H2: How Found handles it
 13. kept as is: H3: Signal-preserving account structure +
 14. kept as is: H3: Tracking migration without a blackout +
 15. kept as is: H3: Negative-conflict elimination +
@@ -4913,18 +4846,7 @@ Heading order stays: Where Bold Ideas Are Found. | FEATURED INSIGHTS | Closing t
 
 **Copy to optimize.**
 
-Rewrites below keep the facts and change punctuation or the company name to FoundSM. Named things stay spelled as they are: The Found Loop, The Found Brief, Found Signals, Life at Found, Found Search Marketing, Get Found, and 'Are Found'.
-
-- Before: H3: 20 Years of Found: A Conversation With Julie Warnecke
-  After: H3: 20 Years of FoundSM: A Conversation With Julie Warnecke
-- Before: H3: Wrapping Up 19 Years With Purpose: Found’s Year-End Tradition of Giving Back
-  After: H3: Wrapping Up 19 Years With Purpose: FoundSM’s Year-End Tradition of Giving Back
-- Before: Find inspiration and insights from the experts at Found.
-  After: Find inspiration and insights from the experts at FoundSM.
-- Before: Found has always believed that great work starts with great people, and great people make an even greater impact when they come together for good. This year, our team leaned into compassion, local involvement, and service.
-  After: FoundSM has always believed that great work starts with great people, and great people make an even greater impact when they come together for good. This year, our team leaned into compassion, local involvement, and service.
-- Before: Found Search + Marketing has been chosen by the Indiana Chamber of Commerce as a 2016 Best Place to Work in Indiana. See what makes this place the best!
-  After: FoundSM Search + Marketing has been chosen by the Indiana Chamber of Commerce as a 2016 Best Place to Work in Indiana. See what makes this place the best!
+None. The wording on the page already matches the facts I could verify. Sections move or restyle only.
 
 **Content to add.**
 
@@ -5407,9 +5329,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 9. kept as is: H2: Articles
 10. kept as is: H3: Microsoft Named Its 2026 Partner Awards Finalists. Here's the Work Behind Ours.
 11. kept as is: H3: Midwest HVAC Demand Triples Before the Heat Hits: How Marketers Get Ahead of It
-12. kept, reworded
-    - Before: H3: 20 Years of Found: A Conversation With Julie Warnecke
-    - After: H3: 20 Years of FoundSM: A Conversation With Julie Warnecke
+12. kept as is: H3: 20 Years of Found: A Conversation With Julie Warnecke
 13. kept as is: H3: 20 Years of Higher Ed Marketing: What's Changed, What's Coming, and How to Test What's Next
 14. kept as is: H3: Bot Traffic and Bad Lookalikes: How Dirty Signals Can Wreck Your Funnel and Your Targeting
 15. kept as is: H3: Google Ads API Update: A Critical Change for Customer Match
@@ -5417,9 +5337,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 17. kept as is: H3: Google’s Vision for 2026: Building a Revenue Engine Powered by Data
 18. kept as is: H3: ICDPA Isn’t Just Compliance. It’s the Foundation of Smarter Data Strategy.
 19. kept as is: H3: Closing the Loop: How Conversion APIs and Value-Based Bidding Transform Performance Marketing
-20. kept, reworded
-    - Before: H3: Wrapping Up 19 Years With Purpose: Found’s Year-End Tradition of Giving Back
-    - After: H3: Wrapping Up 19 Years With Purpose: FoundSM’s Year-End Tradition of Giving Back
+20. kept as is: H3: Wrapping Up 19 Years With Purpose: Found’s Year-End Tradition of Giving Back
 21. kept as is: H3: A 3 Minute Implementation Guide to Segmenting AI Traffic in GA4
 22. kept as is: H3: How Advantage+ Is Reshaping Student Recruitment, Insights from a Meta Education Summit
 23. kept as is: H3: Our Top Takeaways From Search Marketing Expo Advanced 2025
@@ -5469,9 +5387,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 67. kept as is: BLOG
 68. kept as is: March 20, 2026
 69. kept as is: Leads are up. Pipeline quality is down. Dirty signals can poison optimization and steer budget to the wrong audiences. Here’s what executives should watch.
-70. kept, reworded
-    - Before: Find inspiration and insights from the experts at Found.
-    - After: Find inspiration and insights from the experts at FoundSM.
+70. kept as is: Find inspiration and insights from the experts at Found.
 71. kept as is: September 8, 2026
 72. kept as is: Microsoft named Found Search Marketing a finalist in two categories of its 2026 Microsoft Advertising Partner Awards: the Data Integration Excellence Award and Search Performance Partner of the Year. In neither case was the work campaign management.
 73. kept as is: July 7, 2026
@@ -5493,9 +5409,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 89. kept as is: January 23, 2026
 90. kept as is: Pixel tracking alone can’t feed today’s bidding algorithms. Here’s how Conversion APIs and value-based bidding send better signals and drive stronger ROI.
 91. kept as is: January 6, 2026
-92. kept, reworded
-    - Before: Found has always believed that great work starts with great people, and great people make an even greater impact when they come together for good. This year, our team leaned into compassion, local involvement, and service.
-    - After: FoundSM has always believed that great work starts with great people, and great people make an even greater impact when they come together for good. This year, our team leaned into compassion, local involvement, and service.
+92. kept as is: Found has always believed that great work starts with great people, and great people make an even greater impact when they come together for good. This year, our team leaned into compassion, local involvement, and service.
 93. kept as is: January 2, 2026
 94. kept as is: Segmenting AI search traffic in GA4 allows you to see traffic trends from answer engines over time and analyze correlations between other traffic sources (for example, organic search). This change in Google Analytics is very straightforward and should not take more than 3 minutes to implement.
 95. kept as is: November 10, 2025
@@ -5573,9 +5487,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 167. kept as is: May 31, 2016
 168. kept as is: Back in March, Inside INdiana Business interviewed our founder Julie Warnecke during their exclusive women entrepreneur show. Watch the clip!
 169. kept as is: February 29, 2016
-170. kept, reworded
-    - Before: Found Search + Marketing has been chosen by the Indiana Chamber of Commerce as a 2016 Best Place to Work in Indiana. See what makes this place the best!
-    - After: FoundSM Search + Marketing has been chosen by the Indiana Chamber of Commerce as a 2016 Best Place to Work in Indiana. See what makes this place the best!
+170. kept as is: Found Search + Marketing has been chosen by the Indiana Chamber of Commerce as a 2016 Best Place to Work in Indiana. See what makes this place the best!
 171. kept as is: January 25, 2016
 172. kept as is: Don't ruin your social street cred. Read along as we share our must-know tips for protecting your brand and channels from unwanted time in the spotlight.
 173. kept as is: January 7, 2016
@@ -5644,9 +5556,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 236. kept as is: Midwest HVAC Demand Triples Before the Heat Hits: How Marketers Get Ahead of It (/insights/midwest-hvac-paid-media-seasonal-demand/)
 237. kept as is: Get Ahead of HVAC Season → (/insights/midwest-hvac-paid-media-seasonal-demand/)
 238. kept as is: (no text) (/insights/20-year-anniversary/)
-239. kept, reworded
-    - Before: 20 Years of Found: A Conversation With Julie Warnecke (/insights/20-year-anniversary/)
-    - After: 20 Years of FoundSM: A Conversation With Julie Warnecke (/insights/20-year-anniversary/)
+239. kept as is: 20 Years of Found: A Conversation With Julie Warnecke (/insights/20-year-anniversary/)
 240. kept as is: Hear Julie's Story → (/insights/20-year-anniversary/)
 241. kept as is: (no text) (/insights/20-years-of-higher-ed-marketing/)
 242. kept as is: 20 Years of Higher Ed Marketing: What's Changed, What's Coming, and How to Test What's Next (/insights/20-years-of-higher-ed-marketing/)
@@ -5670,9 +5580,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 260. kept as is: Closing the Loop: How Conversion APIs and Value-Based Bidding Transform Performance Marketing (/insights/closing-the-loop-how-conversion-apis-and-value-based-bidding-transform-performance-marketing/)
 261. kept as is: Close the Loop → (/insights/closing-the-loop-how-conversion-apis-and-value-based-bidding-transform-performance-marketing/)
 262. kept as is: (no text) (/insights/wrapping-up-19-years-with-purpose-founds-year-end-tradition-of-giving-back/)
-263. kept, reworded
-    - Before: Wrapping Up 19 Years With Purpose: Found’s Year-End Tradition of Giving Back (/insights/wrapping-up-19-years-with-purpose-founds-year-end-tradition-of-giving-back/)
-    - After: Wrapping Up 19 Years With Purpose: FoundSM’s Year-End Tradition of Giving Back (/insights/wrapping-up-19-years-with-purpose-founds-year-end-tradition-of-giving-back/)
+263. kept as is: Wrapping Up 19 Years With Purpose: Found’s Year-End Tradition of Giving Back (/insights/wrapping-up-19-years-with-purpose-founds-year-end-tradition-of-giving-back/)
 264. kept as is: See How We Give Back → (/insights/wrapping-up-19-years-with-purpose-founds-year-end-tradition-of-giving-back/)
 265. kept as is: (no text) (/insights/a-3-minute-implementation-guide-to-segmenting-ai-traffic-in-ga4/)
 266. kept as is: A 3 Minute Implementation Guide to Segmenting AI Traffic in GA4 (/insights/a-3-minute-implementation-guide-to-segmenting-ai-traffic-in-ga4/)
@@ -5908,36 +5816,7 @@ Heading order stays: We don’t just talk about the work. We teach it. | Coming 
 
 **Copy to optimize.**
 
-Rewrites below keep the facts and change punctuation or the company name to FoundSM. Named things stay spelled as they are: The Found Loop, The Found Brief, Found Signals, Life at Found, Found Search Marketing, Get Found, and 'Are Found'.
-
-- Before: H3: AMA Indy: GA4 Keynote at Found
-  After: H3: AMA Indy: GA4 Keynote at FoundSM
-- Before: H2: Want Found in your room?
-  After: H2: Want FoundSM in your room?
-- Before: Where you can catch the Found team next.
-  After: Where you can catch the FoundSM team next.
-- Before: Found is exhibiting at AMA Indy’s marketing conference, a full day of practical sessions for marketers built around the theme “Mastering the Craft: Excellence Is a Practice.” Come find the team and say hello.
-  After: FoundSM is exhibiting at AMA Indy’s marketing conference, a full day of practical sessions for marketers built around the theme “Mastering the Craft: Excellence Is a Practice.” Come find the team and say hello.
-- Before: Found is sponsoring The Startup Ladies’ summit, where nine women founders from across the country take the stage for live interviews with executives, founders, and investors as part of the Top 9 Investor Readiness Accelerator.
-  After: FoundSM is sponsoring The Startup Ladies’ summit, where nine women founders from across the country take the stage for live interviews with executives, founders, and investors as part of the Top 9 Investor Readiness Accelerator.
-- Before: AI Meetup, Hosted by Found
-  After: AI Meetup, Hosted by FoundSM
-- Before: Hosted, taught, or keynoted by the Found team.
-  After: Hosted, taught, or keynoted by the FoundSM team.
-- Before: Marketing leaders from across industries around small tables at Found, working through what AI actually changes about marketing and what it does not. Attendees left with working answers, not a pitch.
-  After: Marketing leaders from across industries around small tables at FoundSM, working through what AI actually changes about marketing and what it does not. Attendees left with working answers, not a pitch.
-- Before: Found hosted AMA Indy for a rooftop evening on getting real value out of Google Analytics 4, with Ryan Eme and Matthew Dragoo presenting how marketers can extract the most from GA4 in 2026.
-  After: FoundSM hosted AMA Indy for a rooftop evening on getting real value out of Google Analytics 4, with Ryan Eme and Matthew Dragoo presenting how marketers can extract the most from GA4 in 2026.
-- Before: Found’s first formal partner webinar, co-presented with analytics and data governance partner InfoTrust on measurement, first-party data, and what marketers should actually do about signal loss.
-  After: FoundSM’s first formal partner webinar, co-presented with analytics and data governance partner InfoTrust on measurement, first-party data, and what marketers should actually do about signal loss.
-- Before: Found sponsored Search Engine Land's SMX Next, and Julie Warnecke presented a session for attendees on what actually moves paid search performance.
-  After: FoundSM sponsored Search Engine Land's SMX Next, and Julie Warnecke presented a session for attendees on what actually moves paid search performance.
-- Before: Found opened its rooftop patio to celebrate ten years of The Startup Ladies: a Found-led session on effective KPIs, followed by their awards ceremony and an evening of networking.
-  After: FoundSM opened its rooftop patio to celebrate ten years of The Startup Ladies: a FoundSM-led session on effective KPIs, followed by their awards ceremony and an evening of networking.
-- Before: Found joined founder Kristen Cooper for a recorded Q&A on practical, project-based marketing for early-stage companies, distributed to The Startup Ladies’ founder network.
-  After: FoundSM joined founder Kristen Cooper for a recorded Q&A on practical, project-based marketing for early-stage companies, distributed to The Startup Ladies’ founder network.
-- Before: Google's invitation-only measurement gathering at its New York office, focused on building a first-party data foundation and proving what marketing actually returns. Found is in the room for the parts that never make it into a public recap.
-  After: Google's invitation-only measurement gathering at its New York office, focused on building a first-party data foundation and proving what marketing actually returns. FoundSM is in the room for the parts that never make it into a public recap.
+None. The wording on the page already matches the facts I could verify. Sections move or restyle only.
 
 **Content to add.**
 
@@ -6051,9 +5930,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 13. kept as is: H3: Boston University Digital Marketing Summit
 14. kept as is: H3: Startup Study Hall: Before You Spend Another Dollar on Marketing
 15. kept as is: H3: AI x Marketing Roundtable: Marketing Under the Microscope
-16. kept, reworded
-    - Before: H3: AMA Indy: GA4 Keynote at Found
-    - After: H3: AMA Indy: GA4 Keynote at FoundSM
+16. kept as is: H3: AMA Indy: GA4 Keynote at Found
 17. kept as is: H3: InfoTrust Co-Webinar
 18. kept as is: H3: Meta Education Summit
 19. kept as is: H3: Invest In Women Founders Summit
@@ -6068,67 +5945,43 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 28. kept as is: H3: Google Veo Master Class
 29. kept as is: H3: Google Rethink ROI
 30. kept as is: H3: Google Marketing Live
-31. kept, reworded
-    - Before: H2: Want Found in your room?
-    - After: H2: Want FoundSM in your room?
+31. kept as is: H2: Want Found in your room?
 32. kept as is: FoundSM hosts roundtables, teaches workshops, and takes the stage at industry events, because the fastest way to prove expertise is to hand it over in a room full of smart people. Here is where we have been and where we are headed.
 33. kept as is: Twenty years of paid media expertise, handed over in person.
 34. kept as is: Every event below produced something the attendees kept: a framework, a test plan, a working answer to a hard question. That is the standard for anything we put our name on.
-35. kept, reworded
-    - Before: Where you can catch the Found team next.
-    - After: Where you can catch the FoundSM team next.
+35. kept as is: Where you can catch the Found team next.
 36. kept as is: OCT · 1 · 8:00 AM ET
 37. kept as is: Exhibitor · Indianapolis
-38. kept, reworded
-    - Before: Found is exhibiting at AMA Indy’s marketing conference, a full day of practical sessions for marketers built around the theme “Mastering the Craft: Excellence Is a Practice.” Come find the team and say hello.
-    - After: FoundSM is exhibiting at AMA Indy’s marketing conference, a full day of practical sessions for marketers built around the theme “Mastering the Craft: Excellence Is a Practice.” Come find the team and say hello.
+38. kept as is: Found is exhibiting at AMA Indy’s marketing conference, a full day of practical sessions for marketers built around the theme “Mastering the Craft: Excellence Is a Practice.” Come find the team and say hello.
 39. kept as is: NOV · 5 · 12:00 PM ET
 40. kept as is: Sponsor · Indianapolis
-41. kept, reworded
-    - Before: Found is sponsoring The Startup Ladies’ summit, where nine women founders from across the country take the stage for live interviews with executives, founders, and investors as part of the Top 9 Investor Readiness Accelerator.
-    - After: FoundSM is sponsoring The Startup Ladies’ summit, where nine women founders from across the country take the stage for live interviews with executives, founders, and investors as part of the Top 9 Investor Readiness Accelerator.
+41. kept as is: Found is sponsoring The Startup Ladies’ summit, where nine women founders from across the country take the stage for live interviews with executives, founders, and investors as part of the Top 9 Investor Readiness Accelerator.
 42. kept as is: NOV · 6 · 11:30 AM ET
-43. kept, reworded
-    - Before: AI Meetup, Hosted by Found
-    - After: AI Meetup, Hosted by FoundSM
+43. kept as is: AI Meetup, Hosted by Found
 44. kept as is: Built for teams moving AI forward inside bigger, more structured organizations. We’ll dig into the false starts and half starts that stall so many AI projects, how to choose the right model for the problem, and real cases submitted in advance, including how to position them, frame them, and get buy-in.
-45. kept, reworded
-    - Before: Hosted, taught, or keynoted by the Found team.
-    - After: Hosted, taught, or keynoted by the FoundSM team.
+45. kept as is: Hosted, taught, or keynoted by the Found team.
 46. kept as is: KEYNOTE · SEPTEMBER 2026
 47. kept as is: Brian Walker, Group Account Director, delivered the summit keynote on the state of marketing: how AI, changing audience expectations, search behavior, privacy, personalization, and digital maturity are reshaping the work across industries and higher education.
 48. kept as is: HOSTED BY FOUND · AUGUST 2026
 49. kept as is: A hands-on workshop where every founder designed one measurable customer-acquisition experiment for their own company. Dinner provided, then a working roundtable led by Julie Warnecke and Brian Walker.
 50. kept as is: HOSTED BY FOUND · JUNE 2026
-51. kept, reworded
-    - Before: Marketing leaders from across industries around small tables at Found, working through what AI actually changes about marketing and what it does not. Attendees left with working answers, not a pitch.
-    - After: Marketing leaders from across industries around small tables at FoundSM, working through what AI actually changes about marketing and what it does not. Attendees left with working answers, not a pitch.
+51. kept as is: Marketing leaders from across industries around small tables at Found, working through what AI actually changes about marketing and what it does not. Attendees left with working answers, not a pitch.
 52. kept as is: HOSTED + KEYNOTE · JUNE 2026
-53. kept, reworded
-    - Before: Found hosted AMA Indy for a rooftop evening on getting real value out of Google Analytics 4, with Ryan Eme and Matthew Dragoo presenting how marketers can extract the most from GA4 in 2026.
-    - After: FoundSM hosted AMA Indy for a rooftop evening on getting real value out of Google Analytics 4, with Ryan Eme and Matthew Dragoo presenting how marketers can extract the most from GA4 in 2026.
+53. kept as is: Found hosted AMA Indy for a rooftop evening on getting real value out of Google Analytics 4, with Ryan Eme and Matthew Dragoo presenting how marketers can extract the most from GA4 in 2026.
 54. kept as is: CO-PRESENTED · FEBRUARY 2026
-55. kept, reworded
-    - Before: Found’s first formal partner webinar, co-presented with analytics and data governance partner InfoTrust on measurement, first-party data, and what marketers should actually do about signal loss.
-    - After: FoundSM’s first formal partner webinar, co-presented with analytics and data governance partner InfoTrust on measurement, first-party data, and what marketers should actually do about signal loss.
+55. kept as is: Found’s first formal partner webinar, co-presented with analytics and data governance partner InfoTrust on measurement, first-party data, and what marketers should actually do about signal loss.
 56. kept as is: PANELIST · NOVEMBER 2025
 57. kept as is: Meta invited Julie Warnecke to join a panel at its invite-only summit for education marketers, on how automation and creative now work together to discover student audiences. She published the takeaways for everyone.
 58. kept as is: SPEAKER · NOVEMBER 2025
 59. kept as is: Julie Warnecke welcomed founders and investors at The Startup Ladies’ summit spotlighting the funding gap: of the $209 billion invested in U.S. startups in 2025, women founders received just 2%.
 60. kept as is: SPONSOR + SPEAKER · NOVEMBER 2025
-61. kept, reworded
-    - Before: Found sponsored Search Engine Land's SMX Next, and Julie Warnecke presented a session for attendees on what actually moves paid search performance.
-    - After: FoundSM sponsored Search Engine Land's SMX Next, and Julie Warnecke presented a session for attendees on what actually moves paid search performance.
+61. kept as is: Found sponsored Search Engine Land's SMX Next, and Julie Warnecke presented a session for attendees on what actually moves paid search performance.
 62. kept as is: JUDGE + HOST · NOVEMBER 2025
 63. kept as is: Julie Warnecke served on the Search Engine Land Awards judging panel, reviewing the strongest search and PPC work of the year, then hosted the live Q&A with the winners.
 64. kept as is: HOSTED BY FOUND · AUGUST 2024
-65. kept, reworded
-    - Before: Found opened its rooftop patio to celebrate ten years of The Startup Ladies: a Found-led session on effective KPIs, followed by their awards ceremony and an evening of networking.
-    - After: FoundSM opened its rooftop patio to celebrate ten years of The Startup Ladies: a FoundSM-led session on effective KPIs, followed by their awards ceremony and an evening of networking.
+65. kept as is: Found opened its rooftop patio to celebrate ten years of The Startup Ladies: a Found-led session on effective KPIs, followed by their awards ceremony and an evening of networking.
 66. kept as is: GUEST FEATURE · 2024
-67. kept, reworded
-    - Before: Found joined founder Kristen Cooper for a recorded Q&A on practical, project-based marketing for early-stage companies, distributed to The Startup Ladies’ founder network.
-    - After: FoundSM joined founder Kristen Cooper for a recorded Q&A on practical, project-based marketing for early-stage companies, distributed to The Startup Ladies’ founder network.
+67. kept as is: Found joined founder Kristen Cooper for a recorded Q&A on practical, project-based marketing for early-stage companies, distributed to The Startup Ladies’ founder network.
 68. kept as is: Platform sessions and industry conferences we sit in on, where what is changing lands before it reaches the blogs.
 69. kept as is: BY INVITATION · SEPTEMBER 2026
 70. kept as is: Back in New York for Google's Rethink, this time alongside one of our higher education clients. Julie Warnecke, CEO, and Rachel Puls, VP of Delivery, sat in on Google's latest on first-party data, measurement, and proving what every marketing dollar returns.
@@ -6139,9 +5992,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 75. kept as is: ATTENDED · NOVEMBER 2025
 76. kept as is: An agency-only session on Google's generative video and creative tooling, Veo included. Our creative and paid media teams went so we could pressure test the output ourselves before recommending it to anyone.
 77. kept as is: BY INVITATION · MARCH 2025
-78. kept, reworded
-    - Before: Google's invitation-only measurement gathering at its New York office, focused on building a first-party data foundation and proving what marketing actually returns. Found is in the room for the parts that never make it into a public recap.
-    - After: Google's invitation-only measurement gathering at its New York office, focused on building a first-party data foundation and proving what marketing actually returns. FoundSM is in the room for the parts that never make it into a public recap.
+78. kept as is: Google's invitation-only measurement gathering at its New York office, focused on building a first-party data foundation and proving what marketing actually returns. Found is in the room for the parts that never make it into a public recap.
 79. kept as is: ANNUAL · EVERY MAY
 80. kept as is: Google's largest product announcement of the year. The team clears the day for it, then does the harder work of separating what is genuinely new from what is a rename.
 81. kept as is: We speak, teach, and host on paid media, data, and AI. If your event or team needs a session with substance, let’s talk.
@@ -6160,106 +6011,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 
 medium
 
-## 34. Lunch and learn
-
-**Approve?** Restyle the lunch and learn page, keep the April 15, 2026 date until you confirm it, and do not pretend the register button submits.
-
-- Staging URL: https://staging.foundsm.com/events/lunch-and-learn/
-- Source: `src/pages/events/lunch-and-learn.astro, src/lib/morePageData.ts`
-- Sanity document: `eventLandingPage (not in the staging dataset; page uses the code default)`
-- Robots, kept as is: `noindex, nofollow`
-- Canonical, kept as is: `https://foundsm.com/events/lunch-and-learn/`
-- Current heading font: Fraunces, serif
-
-### Current state
-
-Full page on staging, November 17, 2026. Scroll-in sections are shown open so the picture matches what a visitor sees after scrolling.
-
-![1440px full page of Lunch and learn](screenshots/events-lunch-and-learn-1440.jpg)
-
-![375px full page of Lunch and learn](screenshots/events-lunch-and-learn-375.jpg)
-
-### Proposed changes
-
-**Layout and design.** Headings move from Fraunces to the 2026 type system in `src/styles/site-2026.css`: Archivo Black, 82% width, uppercase, ink `#231f20` on paper `#eef1ec`. Body stays Poppins. Eyebrows are green `#8dc63f`. Buttons are caps. The header and footer keep their own type. Dark-band body text is white. Sections that are only a heading over a large empty area get pulled up so the copy sits with the heading. This is scoped to this page. It does not restyle the homepage, `/capabilities/`, `/ai/`, or the paid search page on PR #411.
-
-The page is a self-contained dark layout (`src/pages/events/lunch-and-learn.astro`) with its own header and footer. Those stay on this page. Body text on the dark background should be white. The green 'AI-Powered' accent can stay, because that green is the 2026 eyebrow color (`--s26-green` in `src/styles/site-2026.css`).
-
-Placeholder text on the fields is `rgba(255, 255, 255, 0.48)`, which is gray on dark. Make placeholders white or near-white. Do not change the field list.
-
-The register control is `<a href="#">`. It does not post anywhere. I am not wiring it to a new form. See the open question.
-
-Text on a dark background that is not white: FOUND SEARCH MARKETING LUNCH & LEARN. Make that text white. Green eyebrows can stay.
-
-Heading order stays: Scale Smarter with AI-Powered Paid Media | What We'll Cover | Built for Performance-Minded Teams
-
-**Copy to optimize.**
-
-None. The wording on the page already matches the facts I could verify. Sections move or restyle only.
-
-**Content to add.**
-
-No new claims. A working submit is an open question, not an added paragraph.
-
-### Content inventory
-
-Everything in `<main>` on staging today. The shared header and footer are inventoried once at the top of this file and stay on this page.
-1. Section 1: Scale Smarter with AI-Powered Paid Media
-2. Section 2: What We'll Cover
-3. Section 3: Built for Performance-Minded Teams
-4. Section 4: register
-5. H1: Scale Smarter with AI-Powered Paid Media
-6. H2: What We'll Cover
-7. H2: Built for Performance-Minded Teams
-8. Join FoundSM for an interactive session exploring how AI and automation are reshaping lead generation strategy across education, healthcare, and B2B verticals.
-9. A curated deep-dive into the strategies, tools, and frameworks driving measurable impact for performance-focused teams.
-10. Whether you're leading marketing at a national brand or managing campaigns in a specialized vertical, this session is designed to give you actionable frameworks.
-11. Space is limited to keep the session interactive. Register now to secure your seat at the table.
-12. FOUND SEARCH MARKETING LUNCH & LEARN (/)
-13. Topics (#topics)
-14. Why Attend (#benefits)
-15. Register Now (#register)
-16. Reserve Your Spot (#register)
-17. View Agenda (#topics)
-18. Register Now (#)
-19. foundsm.com (/)
-20. Contact Us (/contact-us)
-21. Newsletter (/newsletter)
-
-### Content check
-
-1. kept as is: Section 1: Scale Smarter with AI-Powered Paid Media
-2. kept as is: Section 2: What We'll Cover
-3. kept as is: Section 3: Built for Performance-Minded Teams
-4. kept as is: Section 4: register
-5. kept as is: H1: Scale Smarter with AI-Powered Paid Media
-6. kept as is: H2: What We'll Cover
-7. kept as is: H2: Built for Performance-Minded Teams
-8. kept as is: Join FoundSM for an interactive session exploring how AI and automation are reshaping lead generation strategy across education, healthcare, and B2B verticals.
-9. kept as is: A curated deep-dive into the strategies, tools, and frameworks driving measurable impact for performance-focused teams.
-10. kept as is: Whether you're leading marketing at a national brand or managing campaigns in a specialized vertical, this session is designed to give you actionable frameworks.
-11. kept as is: Space is limited to keep the session interactive. Register now to secure your seat at the table.
-12. kept as is: FOUND SEARCH MARKETING LUNCH & LEARN (/)
-13. kept as is: Topics (#topics)
-14. kept as is: Why Attend (#benefits)
-15. kept as is: Register Now (#register)
-16. kept as is: Reserve Your Spot (#register)
-17. kept as is: View Agenda (#topics)
-18. kept as is: Register Now (#)
-19. kept as is: foundsm.com (/)
-20. kept as is: Contact Us (/contact-us)
-21. kept as is: Newsletter (/newsletter)
-
-### Open questions
-
-- The page still says April 15, 2026, 12:00 to 1:00 PM ET. Today is November 17, 2026, so that date is in the past. I did not change it.
-- The register button is a link to '#' and the fields are not inside a form, so a registration does not submit. Form 8 (the homepage Talk with us form) does not have Company, Role, or Vertical fields. Which existing ActiveCampaign form should this post to?
-
-### Effort
-
-large
-
-## 35. First-party data white paper
+## 34. First-party data white paper
 
 **Approve?** Keep ActiveCampaign form 6 and every section. Apply the 2026 type system around the paper.
 
@@ -6381,7 +6133,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 
 medium
 
-## 36. Tools and custom builds
+## 35. Tools and custom builds
 
 **Approve?** Restyle Tools with the 2026 type system. Keep the 46% calculator line and both closing sections.
 
@@ -6410,10 +6162,7 @@ Heading order stays: Tools we built because nothing off the shelf worked. | The 
 
 **Copy to optimize.**
 
-Rewrites below keep the facts and change punctuation or the company name to FoundSM. Named things stay spelled as they are: The Found Loop, The Found Brief, Found Signals, Life at Found, Found Search Marketing, Get Found, and 'Are Found'.
-
-- Before: H2: The Found build library
-  After: H2: The FoundSM build library
+None. The wording on the page already matches the facts I could verify. Sections move or restyle only.
 
 **Content to add.**
 
@@ -6484,9 +6233,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 6. kept as is: Section 6: Need something that does not exist yet?
 7. kept as is: Section 7: Let’s build your unfair advantage.
 8. kept as is: H1: Tools we built because nothing off the shelf worked.
-9. kept, reworded
-    - Before: H2: The Found build library
-    - After: H2: The FoundSM build library
+9. kept as is: H2: The Found build library
 10. kept as is: H3: One-click report refresh
 11. kept as is: H3: Account watchdog agents
 12. kept as is: H3: Content intelligence
@@ -6538,7 +6285,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 
 medium
 
-## 37. Custom builds library
+## 36. Custom builds library
 
 **Approve?** Restyle the build library with the 2026 type system and keep every build card.
 
@@ -6688,7 +6435,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 
 medium
 
-## 38. Signal quiz
+## 37. Signal quiz
 
 **Approve?** Keep the quiz embed and frame the page in the 2026 type system.
 
@@ -6750,7 +6497,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 
 small
 
-## 39. Privacy policy
+## 38. Privacy policy
 
 **Approve?** Layout and type only. Do not change any legal sentence.
 
@@ -7444,7 +7191,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 
 medium
 
-## 40. Thank you
+## 39. Thank you
 
 **Approve?** Restyle the thank-you page. Keep the confirmation and the latest-insights module.
 
@@ -7471,12 +7218,7 @@ Heading order stays: You've Just Made a Smart Move. | Curious? Dive Into Our Lat
 
 **Copy to optimize.**
 
-Rewrites below keep the facts and change punctuation or the company name to FoundSM. Named things stay spelled as they are: The Found Loop, The Found Brief, Found Signals, Life at Found, Found Search Marketing, Get Found, and 'Are Found'.
-
-- Before: H3: 20 Years of Found: A Conversation With Julie Warnecke
-  After: H3: 20 Years of FoundSM: A Conversation With Julie Warnecke
-- Before: Thanks for connecting with Found!
-  After: Thanks for connecting with FoundSM!
+None. The wording on the page already matches the facts I could verify. Sections move or restyle only.
 
 **Content to add.**
 
@@ -7537,15 +7279,11 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 4. kept as is: H2: Curious? Dive Into Our Latest Insights Below.
 5. kept as is: H3: Microsoft Named Its 2026 Partner Awards Finalists. Here's the Work Behind Ours.
 6. kept as is: H3: Midwest HVAC Demand Triples Before the Heat Hits: How Marketers Get Ahead of It
-7. kept, reworded
-    - Before: H3: 20 Years of Found: A Conversation With Julie Warnecke
-    - After: H3: 20 Years of FoundSM: A Conversation With Julie Warnecke
+7. kept as is: H3: 20 Years of Found: A Conversation With Julie Warnecke
 8. kept as is: H3: 20 Years of Higher Ed Marketing: What's Changed, What's Coming, and How to Test What's Next
 9. kept as is: H3: Bot Traffic and Bad Lookalikes: How Dirty Signals Can Wreck Your Funnel and Your Targeting
 10. kept as is: H3: Google Ads API Update: A Critical Change for Customer Match
-11. kept, reworded
-    - Before: Thanks for connecting with Found!
-    - After: Thanks for connecting with FoundSM!
+11. kept as is: Thanks for connecting with Found!
 12. kept as is: Someone from our team will reach out within 1–2 business days to talk about how we can help you grow faster, smarter, and with data on your side.
 13. kept as is: PAID MEDIA
 14. kept as is: Microsoft named Found Search Marketing a finalist in two categories of its 2026 Microsoft Advertising Partner Awards: the Data Integration Excellence Award and Search Performance Partner of the Year. In neither case was the work campaign management.
@@ -7563,9 +7301,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 26. kept as is: Read Article → (/insights/microsoft-partner-awards-2026-finalist/)
 27. kept as is: Midwest HVAC Demand Triples Before the Heat Hits: How Marketers Get Ahead of It (/insights/midwest-hvac-paid-media-seasonal-demand/)
 28. kept as is: Read Article → (/insights/midwest-hvac-paid-media-seasonal-demand/)
-29. kept, reworded
-    - Before: 20 Years of Found: A Conversation With Julie Warnecke (/insights/20-year-anniversary/)
-    - After: 20 Years of FoundSM: A Conversation With Julie Warnecke (/insights/20-year-anniversary/)
+29. kept as is: 20 Years of Found: A Conversation With Julie Warnecke (/insights/20-year-anniversary/)
 30. kept as is: Read Article → (/insights/20-year-anniversary/)
 31. kept as is: 20 Years of Higher Ed Marketing: What's Changed, What's Coming, and How to Test What's Next (/insights/20-years-of-higher-ed-marketing/)
 32. kept as is: Read Article → (/insights/20-years-of-higher-ed-marketing/)
@@ -7589,7 +7325,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 
 small
 
-## 41. Safelist
+## 40. Safelist
 
 **Approve?** Restyle the safelist page, keep every email-client step, and replace the em dash.
 
@@ -7618,10 +7354,11 @@ Heading order stays: Thank You for Signing Up! | How to Safelist Our Emails | Gm
 
 **Copy to optimize.**
 
-Rewrites below keep the facts and change punctuation or the company name to FoundSM. Named things stay spelled as they are: The Found Loop, The Found Brief, Found Signals, Life at Found, Found Search Marketing, Get Found, and 'Are Found'.
+Rewrites below are punctuation, or the two fact edits Megan decided or asked to see. Found is not changed to FoundSM. Both names stay.
 
-- Before: So glad you've found your way to us—welcome aboard! To make sure our emails land straight in your inbox and not your spam or junk folder, follow these quick steps to safelist us:
-  After: So glad you've found your way to us, welcome aboard! To make sure our emails land straight in your inbox and not your spam or junk folder, follow these quick steps to safelist us:
+- kept, reworded (em dash replaced with a comma)
+  - Before: So glad you've found your way to us—welcome aboard! To make sure our emails land straight in your inbox and not your spam or junk folder, follow these quick steps to safelist us:
+  - After: So glad you've found your way to us, welcome aboard! To make sure our emails land straight in your inbox and not your spam or junk folder, follow these quick steps to safelist us:
 
 **Content to add.**
 
@@ -7665,7 +7402,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 7. kept as is: H3: Outlook
 8. kept as is: H3: Yahoo
 9. kept as is: H2: Happy reading!
-10. kept, reworded
+10. kept, reworded (em dash replaced with a comma)
     - Before: So glad you've found your way to us—welcome aboard! To make sure our emails land straight in your inbox and not your spam or junk folder, follow these quick steps to safelist us:
     - After: So glad you've found your way to us, welcome aboard! To make sure our emails land straight in your inbox and not your spam or junk folder, follow these quick steps to safelist us:
 11. kept as is: That's it! You're all set to stay updated with our latest news, tips, and exclusive content. If you don't see our emails, check your spam folder just in case.
@@ -7690,7 +7427,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 
 small
 
-## 42. DataConnect
+## 41. DataConnect
 
 **Approve?** Restyle DataConnect and keep its current ActiveCampaign form.
 
@@ -7768,7 +7505,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 
 medium
 
-## 43. Authors
+## 42. Authors
 
 **Approve?** Restyle the author directory. Keep every contributor link and the latest-posts row.
 
@@ -7797,22 +7534,7 @@ Heading order stays: From Google Roots to Agile Results | Blog Contributors | Mi
 
 **Copy to optimize.**
 
-Rewrites below keep the facts and change punctuation or the company name to FoundSM. Named things stay spelled as they are: The Found Loop, The Found Brief, Found Signals, Life at Found, Found Search Marketing, Get Found, and 'Are Found'.
-
-- Before: H3: 20 Years of Found: A Conversation With Julie Warnecke
-  After: H3: 20 Years of FoundSM: A Conversation With Julie Warnecke
-- Before: Julie Warnecke is the Founder and CEO of FoundSM, a Midwest firm managing over $200M in annual media spend. An early Google employee instrumental in launching AdWords, she established Found in 2006. Today, she leads a team of 50+ that serves as a seamless extension of client teams.
-  After: Julie Warnecke is the Founder and CEO of FoundSM, a Midwest firm managing over $200M in annual media spend. An early Google employee instrumental in launching AdWords, she established FoundSM in 2006. Today, she leads a team of 50+ that serves as a seamless extension of client teams.
-- Before: Kelley, Found's VP of Strategy & Growth, brings 25+ years of experience, starting at Google Ads. She has led strategic planning for Fortune 1000 clients like Home Depot and Staples across CPG, Retail, and Higher Ed. Her focus is on strategic oversight and building strong relationships that exceed client goals.
-  After: Kelley, FoundSM's VP of Strategy & Growth, brings 25+ years of experience, starting at Google Ads. She has led strategic planning for Fortune 1000 clients like Home Depot and Staples across CPG, Retail, and Higher Ed. Her focus is on strategic oversight and building strong relationships that exceed client goals.
-- Before: Ryan Eme is the Head of Data Intelligence at Found, bringing 20 years of experience in data-driven marketing. A Certified Google Cloud Data Engineer, he helps clients in higher ed and healthcare unlock business growth. Known for his innovative problem-solving, Ryan is so effective that clients frequently ask to clone him.
-  After: Ryan Eme is the Head of Data Intelligence at FoundSM, bringing 20 years of experience in data-driven marketing. A Certified Google Cloud Data Engineer, he helps clients in higher ed and healthcare unlock business growth. Known for his innovative problem-solving, Ryan is so effective that clients frequently ask to clone him.
-- Before: Since joining Found in 2019, Purdue graduate Matt crafts data-driven paid media strategies. Certified across multiple platforms, he leverages his expertise in B2B and Higher Education to maximize client ROI. Known for predicting problems, Matt spends his free time gaming, cooking, and exploring Indianapolis.
-  After: Since joining FoundSM in 2019, Purdue graduate Matt crafts data-driven paid media strategies. Certified across multiple platforms, he leverages his expertise in B2B and Higher Education to maximize client ROI. Known for predicting problems, Matt spends his free time gaming, cooking, and exploring Indianapolis.
-- Before: Strategist Emily Williams-Hempstead untangles complex challenges by applying her Indiana State Psychology and Marketing background to understand human behavior. Her knack for organizing chaos drives clear results for many clients at Found. Away from the agency, she enjoys traveling, hosting game nights, and relaxing with her two dogs.
-  After: Strategist Emily Williams-Hempstead untangles complex challenges by applying her Indiana State Psychology and Marketing background to understand human behavior. Her knack for organizing chaos drives clear results for many clients at FoundSM. Away from the agency, she enjoys traveling, hosting game nights, and relaxing with her two dogs.
-- Before: Maria leverages her Purdue MS in Business Analytics to transform complex datasets into actionable, strategic insights. With over three years at Found, this Google-certified expert effectively bridges technical analysis with business goals. Outside work, Maria enjoys teaching spin classes, cooking, and reading.
-  After: Maria leverages her Purdue MS in Business Analytics to transform complex datasets into actionable, strategic insights. With over three years at FoundSM, this Google-certified expert effectively bridges technical analysis with business goals. Outside work, Maria enjoys teaching spin classes, cooking, and reading.
+None. The wording on the page already matches the facts I could verify. Sections move or restyle only.
 
 **Content to add.**
 
@@ -7937,34 +7659,20 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 5. kept as is: H2: Blog Contributors
 6. kept as is: H3: Microsoft Named Its 2026 Partner Awards Finalists. Here's the Work Behind Ours.
 7. kept as is: H3: Midwest HVAC Demand Triples Before the Heat Hits: How Marketers Get Ahead of It
-8. kept, reworded
-    - Before: H3: 20 Years of Found: A Conversation With Julie Warnecke
-    - After: H3: 20 Years of FoundSM: A Conversation With Julie Warnecke
+8. kept as is: H3: 20 Years of Found: A Conversation With Julie Warnecke
 9. kept as is: H3: 20 Years of Higher Ed Marketing: What's Changed, What's Coming, and How to Test What's Next
 10. kept as is: Meet FoundSM: an agency where decades of expertise meet agile execution. With leadership grounded in foundational roles at Google and a team energized by complex problem-solving, we break down silos to offer fully integrated strategies.
 11. kept as is: Dive into the articles below to see how our hands-on, results-obsessed experts apply this deep technical knowledge to transform business challenges into breakthroughs.
-12. kept, reworded
-    - Before: Julie Warnecke is the Founder and CEO of FoundSM, a Midwest firm managing over $200M in annual media spend. An early Google employee instrumental in launching AdWords, she established Found in 2006. Today, she leads a team of 50+ that serves as a seamless extension of client teams.
-    - After: Julie Warnecke is the Founder and CEO of FoundSM, a Midwest firm managing over $200M in annual media spend. An early Google employee instrumental in launching AdWords, she established FoundSM in 2006. Today, she leads a team of 50+ that serves as a seamless extension of client teams.
-13. kept, reworded
-    - Before: Kelley, Found's VP of Strategy & Growth, brings 25+ years of experience, starting at Google Ads. She has led strategic planning for Fortune 1000 clients like Home Depot and Staples across CPG, Retail, and Higher Ed. Her focus is on strategic oversight and building strong relationships that exceed client goals.
-    - After: Kelley, FoundSM's VP of Strategy & Growth, brings 25+ years of experience, starting at Google Ads. She has led strategic planning for Fortune 1000 clients like Home Depot and Staples across CPG, Retail, and Higher Ed. Her focus is on strategic oversight and building strong relationships that exceed client goals.
+12. kept as is: Julie Warnecke is the Founder and CEO of FoundSM, a Midwest firm managing over $200M in annual media spend. An early Google employee instrumental in launching AdWords, she established Found in 2006. Today, she leads a team of 50+ that serves as a seamless extension of client teams.
+13. kept as is: Kelley, Found's VP of Strategy & Growth, brings 25+ years of experience, starting at Google Ads. She has led strategic planning for Fortune 1000 clients like Home Depot and Staples across CPG, Retail, and Higher Ed. Her focus is on strategic oversight and building strong relationships that exceed client goals.
 14. kept as is: With over 15 years of experience, Head of Data Engineering Nicholas Hoium builds advanced pipelines and web analytics solutions. The IU Bloomington graduate and Google Cloud Certified Engineer transforms raw information into accessible intelligence. Off the clock, Nicholas enjoys indie games, traveling, and watching soccer.
-15. kept, reworded
-    - Before: Ryan Eme is the Head of Data Intelligence at Found, bringing 20 years of experience in data-driven marketing. A Certified Google Cloud Data Engineer, he helps clients in higher ed and healthcare unlock business growth. Known for his innovative problem-solving, Ryan is so effective that clients frequently ask to clone him.
-    - After: Ryan Eme is the Head of Data Intelligence at FoundSM, bringing 20 years of experience in data-driven marketing. A Certified Google Cloud Data Engineer, he helps clients in higher ed and healthcare unlock business growth. Known for his innovative problem-solving, Ryan is so effective that clients frequently ask to clone him.
+15. kept as is: Ryan Eme is the Head of Data Intelligence at Found, bringing 20 years of experience in data-driven marketing. A Certified Google Cloud Data Engineer, he helps clients in higher ed and healthcare unlock business growth. Known for his innovative problem-solving, Ryan is so effective that clients frequently ask to clone him.
 16. kept as is: Adam joined FoundSM in 2016, leveraging his media strategy background to drive client results through research and testing. A Brown University graduate in Cognitive Neuroscience and Economics, he began his career with the Indianapolis Colts. Outside the office, Adam stays active through CrossFit, backpacking, and various team sports.
 17. kept as is: As one of only 10 Unbounce Experts worldwide, Caroline specializes in creating high-performing landing pages and optimizing conversion rates. Her background spans CRO, web design, and SEO, with a focus on higher education. When not driving client results, Caroline enjoys gardening, cozy video games, and exploring the city with her family.
 18. kept as is: As Group Account Director, Kylie leverages 15+ years of experience to orchestrate cross-channel strategies that drive client growth. Having supported brands like General Motors at top Chicago agencies, she brings calm, collaborative leadership to her team. Outside work, Kylie enjoys life with her daughter and dog.
-19. kept, reworded
-    - Before: Since joining Found in 2019, Purdue graduate Matt crafts data-driven paid media strategies. Certified across multiple platforms, he leverages his expertise in B2B and Higher Education to maximize client ROI. Known for predicting problems, Matt spends his free time gaming, cooking, and exploring Indianapolis.
-    - After: Since joining FoundSM in 2019, Purdue graduate Matt crafts data-driven paid media strategies. Certified across multiple platforms, he leverages his expertise in B2B and Higher Education to maximize client ROI. Known for predicting problems, Matt spends his free time gaming, cooking, and exploring Indianapolis.
-20. kept, reworded
-    - Before: Strategist Emily Williams-Hempstead untangles complex challenges by applying her Indiana State Psychology and Marketing background to understand human behavior. Her knack for organizing chaos drives clear results for many clients at Found. Away from the agency, she enjoys traveling, hosting game nights, and relaxing with her two dogs.
-    - After: Strategist Emily Williams-Hempstead untangles complex challenges by applying her Indiana State Psychology and Marketing background to understand human behavior. Her knack for organizing chaos drives clear results for many clients at FoundSM. Away from the agency, she enjoys traveling, hosting game nights, and relaxing with her two dogs.
-21. kept, reworded
-    - Before: Maria leverages her Purdue MS in Business Analytics to transform complex datasets into actionable, strategic insights. With over three years at Found, this Google-certified expert effectively bridges technical analysis with business goals. Outside work, Maria enjoys teaching spin classes, cooking, and reading.
-    - After: Maria leverages her Purdue MS in Business Analytics to transform complex datasets into actionable, strategic insights. With over three years at FoundSM, this Google-certified expert effectively bridges technical analysis with business goals. Outside work, Maria enjoys teaching spin classes, cooking, and reading.
+19. kept as is: Since joining Found in 2019, Purdue graduate Matt crafts data-driven paid media strategies. Certified across multiple platforms, he leverages his expertise in B2B and Higher Education to maximize client ROI. Known for predicting problems, Matt spends his free time gaming, cooking, and exploring Indianapolis.
+20. kept as is: Strategist Emily Williams-Hempstead untangles complex challenges by applying her Indiana State Psychology and Marketing background to understand human behavior. Her knack for organizing chaos drives clear results for many clients at Found. Away from the agency, she enjoys traveling, hosting game nights, and relaxing with her two dogs.
+21. kept as is: Maria leverages her Purdue MS in Business Analytics to transform complex datasets into actionable, strategic insights. With over three years at Found, this Google-certified expert effectively bridges technical analysis with business goals. Outside work, Maria enjoys teaching spin classes, cooking, and reading.
 22. kept as is: Kelsey brings nearly 20 years of expertise as Director of Agency Marketing and Brand Strategy. She fosters seamless client-agency collaboration to drive results through authentic leadership. A proud Hoosier with an MBA, Kelsey serves the community as REV Committee Chair and enjoys flipping houses and cheering on her family.
 23. kept as is: September 8, 2026
 24. kept as is: July 7, 2026
@@ -8019,9 +7727,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 73. kept as is: Midwest HVAC Demand Triples Before the Heat Hits: How Marketers Get Ahead of It (/insights/midwest-hvac-paid-media-seasonal-demand/)
 74. kept as is: READ MORE » (/insights/midwest-hvac-paid-media-seasonal-demand/)
 75. kept as is: (no text) (/insights/20-year-anniversary/)
-76. kept, reworded
-    - Before: 20 Years of Found: A Conversation With Julie Warnecke (/insights/20-year-anniversary/)
-    - After: 20 Years of FoundSM: A Conversation With Julie Warnecke (/insights/20-year-anniversary/)
+76. kept as is: 20 Years of Found: A Conversation With Julie Warnecke (/insights/20-year-anniversary/)
 77. kept as is: READ MORE » (/insights/20-year-anniversary/)
 78. kept as is: (no text) (/insights/20-years-of-higher-ed-marketing/)
 79. kept as is: 20 Years of Higher Ed Marketing: What's Changed, What's Coming, and How to Test What's Next (/insights/20-years-of-higher-ed-marketing/)
@@ -8061,9 +7767,9 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 
 medium
 
-## 44. Author pages
+## 43. Author pages
 
-**Approve?** One template proposal for every author page. Julie is the sample. Bios stay, with punctuation-only em dash edits.
+**Approve?** One template for every author page. Julie is the sample. Her $215M line becomes the homepage's $210M. Found stays Found.
 
 - Staging URL: https://staging.foundsm.com/insights/authors/julie/
 - Source: `src/pages/insights/authors/[slug].astro, src/components/AuthorDetailPage.astro`
@@ -8084,20 +7790,22 @@ Full page on staging, November 17, 2026. Scroll-in sections are shown open so th
 
 **Layout and design.** Headings move from Fraunces to the 2026 type system in `src/styles/site-2026.css`: Archivo Black, 82% width, uppercase, ink `#231f20` on paper `#eef1ec`. Body stays Poppins. Eyebrows are green `#8dc63f`. Buttons are caps. The header and footer keep their own type. Dark-band body text is white. Sections that are only a heading over a large empty area get pulled up so the copy sits with the heading. This is scoped to this page. It does not restyle the homepage, `/capabilities/`, `/ai/`, or the paid search page on PR #411.
 
-Every author URL below returned HTTP 200 on staging. They share `AuthorDetailPage.astro`. Julie's page is the screenshot and the full inventory. Other author bios stay as they are, with the same punctuation-only em dash rule where a bio has an em dash. Do not merge authors or drop a profile.
+Fact correction, from the live homepage: 'more than $215M in media spend annually' becomes '$210M in media spend, the 2025 figure on the live homepage'. The rest of the bio stays, including the name Found.
+
+Every author URL below returned HTTP 200 on staging. They share `AuthorDetailPage.astro`. Julie's page is the screenshot and the full inventory. Other bios stay. Where a bio has an em dash, only the punctuation changes. Found is not renamed to FoundSM. Julie's spend figure is the one fact correction, from more than $215M to $210M, matching the live homepage.
 
 Heading order stays: About the Author | JULIE WARNECKE | CEO | Microsoft Named Its 2026 Partner Awards Finalists. Here's the Work Behind Ours. | 20 Years of Found: A Conversation With Julie Warnecke | How Advantage+ Is Reshaping Student Recruitment, Insights from a Meta Education Summit
 
 **Copy to optimize.**
 
-Rewrites below keep the facts and change punctuation or the company name to FoundSM. Named things stay spelled as they are: The Found Loop, The Found Brief, Found Signals, Life at Found, Found Search Marketing, Get Found, and 'Are Found'.
+Rewrites below are punctuation, or the two fact edits Megan decided or asked to see. Found is not changed to FoundSM. Both names stay.
 
-- Before: H3: 20 Years of Found: A Conversation With Julie Warnecke
-  After: H3: 20 Years of FoundSM: A Conversation With Julie Warnecke
-- Before: In 2006, Julie returned to the Midwest with a mission: build a new kind of agency that serves as a seamless extension of existing client teams. Found was born from that idea—and it continues to fuel the company’s success today.
-  After: In 2006, Julie returned to the Midwest with a mission: build a new kind of agency that serves as a seamless extension of existing client teams. FoundSM was born from that idea, and it continues to fuel the company’s success today.
-- Before: Julie is known for prioritizing client outcomes, empowering her teams to thrive, and building trust through transparency and measurable results. Under her leadership, Found has grown to more than 50 employees, manages more than $215M in media spend annually, and maintains a 95% client retention rate. She continues to be hands-on with client strategy—deeply focused on building the right teams and custom solutions for every client—so growth feels intentional, not lucky.
-  After: Julie is known for prioritizing client outcomes, empowering her teams to thrive, and building trust through transparency and measurable results. Under her leadership, FoundSM has grown to more than 50 employees, manages more than $215M in media spend annually, and maintains a 95% client retention rate. She continues to be hands-on with client strategy, deeply focused on building the right teams and custom solutions for every client, so growth feels intentional, not lucky.
+- kept, reworded (em dash replaced with a comma)
+  - Before: In 2006, Julie returned to the Midwest with a mission: build a new kind of agency that serves as a seamless extension of existing client teams. Found was born from that idea—and it continues to fuel the company’s success today.
+  - After: In 2006, Julie returned to the Midwest with a mission: build a new kind of agency that serves as a seamless extension of existing client teams. Found was born from that idea, and it continues to fuel the company’s success today.
+- kept, reworded (fact correction from the live homepage, which says Paid Media Spend $210M Managed in 2025; em dash replaced with a comma)
+  - Before: Julie is known for prioritizing client outcomes, empowering her teams to thrive, and building trust through transparency and measurable results. Under her leadership, Found has grown to more than 50 employees, manages more than $215M in media spend annually, and maintains a 95% client retention rate. She continues to be hands-on with client strategy—deeply focused on building the right teams and custom solutions for every client—so growth feels intentional, not lucky.
+  - After: Julie is known for prioritizing client outcomes, empowering her teams to thrive, and building trust through transparency and measurable results. Under her leadership, Found has grown to more than 50 employees, manages $210M in media spend, the 2025 figure on the live homepage, and maintains a 95% client retention rate. She continues to be hands-on with client strategy, deeply focused on building the right teams and custom solutions for every client, so growth feels intentional, not lucky.
 
 **Content to add.**
 
@@ -8145,18 +7853,16 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 4. kept as is: H2: About the Author
 5. kept as is: H1: JULIE WARNECKE | CEO
 6. kept as is: H3: Microsoft Named Its 2026 Partner Awards Finalists. Here's the Work Behind Ours.
-7. kept, reworded
-    - Before: H3: 20 Years of Found: A Conversation With Julie Warnecke
-    - After: H3: 20 Years of FoundSM: A Conversation With Julie Warnecke
+7. kept as is: H3: 20 Years of Found: A Conversation With Julie Warnecke
 8. kept as is: H3: How Advantage+ Is Reshaping Student Recruitment, Insights from a Meta Education Summit
 9. kept as is: After getting her start at Google in 2001 as one of the first employees on the AdWords Ad Operations team, Julie helped launch initiatives that shaped the future of paid media and search.
 10. kept as is: This included AdWords Select, a groundbreaking CPC platform, as well as the industry-changing AOL syndication deal. She was also a key figure in helping open Google’s Paris office in 2002.
-11. kept, reworded
+11. kept, reworded (em dash replaced with a comma)
     - Before: In 2006, Julie returned to the Midwest with a mission: build a new kind of agency that serves as a seamless extension of existing client teams. Found was born from that idea—and it continues to fuel the company’s success today.
-    - After: In 2006, Julie returned to the Midwest with a mission: build a new kind of agency that serves as a seamless extension of existing client teams. FoundSM was born from that idea, and it continues to fuel the company’s success today.
-12. kept, reworded
+    - After: In 2006, Julie returned to the Midwest with a mission: build a new kind of agency that serves as a seamless extension of existing client teams. Found was born from that idea, and it continues to fuel the company’s success today.
+12. kept, reworded (fact correction from the live homepage, which says Paid Media Spend $210M Managed in 2025; em dash replaced with a comma)
     - Before: Julie is known for prioritizing client outcomes, empowering her teams to thrive, and building trust through transparency and measurable results. Under her leadership, Found has grown to more than 50 employees, manages more than $215M in media spend annually, and maintains a 95% client retention rate. She continues to be hands-on with client strategy—deeply focused on building the right teams and custom solutions for every client—so growth feels intentional, not lucky.
-    - After: Julie is known for prioritizing client outcomes, empowering her teams to thrive, and building trust through transparency and measurable results. Under her leadership, FoundSM has grown to more than 50 employees, manages more than $215M in media spend annually, and maintains a 95% client retention rate. She continues to be hands-on with client strategy, deeply focused on building the right teams and custom solutions for every client, so growth feels intentional, not lucky.
+    - After: Julie is known for prioritizing client outcomes, empowering her teams to thrive, and building trust through transparency and measurable results. Under her leadership, Found has grown to more than 50 employees, manages $210M in media spend, the 2025 figure on the live homepage, and maintains a 95% client retention rate. She continues to be hands-on with client strategy, deeply focused on building the right teams and custom solutions for every client, so growth feels intentional, not lucky.
 13. kept as is: As a leader, Julie has helped create a strong company culture. Long before remote work became the norm, she designed policies to support flexibility, mental health, and work/life balance. Her goal is to create space for people to do great work and love doing it. That’s always been her key to building a successful business.
 14. kept as is: September 8, 2026
 15. kept as is: June 9, 2026
@@ -8166,9 +7872,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 19. kept as is: Microsoft Named Its 2026 Partner Awards Finalists. Here's the Work Behind Ours. (/insights/microsoft-partner-awards-2026-finalist/)
 20. kept as is: READ MORE » (/insights/microsoft-partner-awards-2026-finalist/)
 21. kept as is: (no text) (/insights/20-year-anniversary/)
-22. kept, reworded
-    - Before: 20 Years of Found: A Conversation With Julie Warnecke (/insights/20-year-anniversary/)
-    - After: 20 Years of FoundSM: A Conversation With Julie Warnecke (/insights/20-year-anniversary/)
+22. kept as is: 20 Years of Found: A Conversation With Julie Warnecke (/insights/20-year-anniversary/)
 23. kept as is: READ MORE » (/insights/20-year-anniversary/)
 24. kept as is: (no text) (/insights/how-advantage-is-reshaping-student-recruitment-insights-from-a-meta-education-summit/)
 25. kept as is: How Advantage+ Is Reshaping Student Recruitment, Insights from a Meta Education Summit (/insights/how-advantage-is-reshaping-student-recruitment-insights-from-a-meta-education-summit/)
@@ -8180,7 +7884,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 
 ### Open questions
 
-- This bio says more than $215M in annual media spend. Results and the header say $210M. I did not change the number.
+- None for this page. Shared questions are at the top of the file.
 
 ### Effort
 
@@ -8212,7 +7916,7 @@ large
 
 All of those URLs returned HTTP 200 on November 17, 2026. Bios, titles, and latest-post modules stay. Julie's inventory above is the template sample.
 
-## 45. Webinars
+## 44. Webinars
 
 **Approve?** Shared legacy template, this listing: 2026 type, keep every webinar link.
 
@@ -8310,7 +8014,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 
 medium
 
-## 46. Webinar
+## 45. Webinar
 
 **Approve?** Shared legacy template. Keep this page's webinar copy and links.
 
@@ -8368,7 +8072,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 
 small
 
-## 47. Tools and guides
+## 46. Tools and guides
 
 **Approve?** Shared legacy template. Keep the tools and guides listing, and replace its em dash.
 
@@ -8397,10 +8101,11 @@ Heading order stays: Actionable Tools & Resources | TOOLS AND GUIDES | Server-Si
 
 **Copy to optimize.**
 
-Rewrites below keep the facts and change punctuation or the company name to FoundSM. Named things stay spelled as they are: The Found Loop, The Found Brief, Found Signals, Life at Found, Found Search Marketing, Get Found, and 'Are Found'.
+Rewrites below are punctuation, or the two fact edits Megan decided or asked to see. Found is not changed to FoundSM. Both names stay.
 
-- Before: AI has permanently rewritten the rules of digital advertising. The brands that win will be the ones that control and activate their own first-party data — this whitepaper is your blueprint for doing exactly that.
-  After: AI has permanently rewritten the rules of digital advertising. The brands that win will be the ones that control and activate their own first-party data, this whitepaper is your blueprint for doing exactly that.
+- kept, reworded (em dash replaced with a comma)
+  - Before: AI has permanently rewritten the rules of digital advertising. The brands that win will be the ones that control and activate their own first-party data — this whitepaper is your blueprint for doing exactly that.
+  - After: AI has permanently rewritten the rules of digital advertising. The brands that win will be the ones that control and activate their own first-party data, this whitepaper is your blueprint for doing exactly that.
 
 **Content to add.**
 
@@ -8464,7 +8169,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 14. kept as is: QUIZ
 15. kept as is: Are you scaling profit or just burning cash? Answer 7 questions to uncover your Revenue Engineering Score and identify the leaks in your paid media budget.
 16. kept as is: GUIDE
-17. kept, reworded
+17. kept, reworded (em dash replaced with a comma)
     - Before: AI has permanently rewritten the rules of digital advertising. The brands that win will be the ones that control and activate their own first-party data — this whitepaper is your blueprint for doing exactly that.
     - After: AI has permanently rewritten the rules of digital advertising. The brands that win will be the ones that control and activate their own first-party data, this whitepaper is your blueprint for doing exactly that.
 18. kept as is: Home (/)
@@ -8495,7 +8200,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 
 small
 
-## 48. White papers listing
+## 47. White papers listing
 
 **Approve?** Shared legacy template. Keep the white paper listing.
 
@@ -8577,7 +8282,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 
 small
 
-## 49. Man vs Machine webinar
+## 48. Man vs Machine webinar
 
 **Approve?** Shared legacy template. Keep the on-demand webinar copy and video.
 
@@ -8633,7 +8338,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 
 small
 
-## 50. Modernize your data architecture webinar
+## 49. Modernize your data architecture webinar
 
 **Approve?** Shared legacy template. Keep this on-demand webinar.
 
@@ -8731,7 +8436,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 
 small
 
-## 51. Modernize your data architecture
+## 50. Modernize your data architecture
 
 **Approve?** Shared legacy template. Keep this resource page.
 
@@ -8823,7 +8528,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 
 small
 
-## 52. Website cookies webinar
+## 51. Website cookies webinar
 
 **Approve?** Shared legacy template. Keep the cookies webinar.
 
@@ -8879,7 +8584,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 
 small
 
-## 53. Enterprise marketing pipeline
+## 52. Enterprise marketing pipeline
 
 **Approve?** Restyle this campaign page with the 2026 type system. Keep every section. Do not publish it to production.
 
@@ -9057,7 +8762,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 
 medium
 
-## 54. Enterprise paid media pipeline
+## 53. Enterprise paid media pipeline
 
 **Approve?** Restyle this campaign page with the 2026 type system. Keep every section.
 
@@ -9205,7 +8910,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 
 medium
 
-## 55. Enterprise paid media revenue system
+## 54. Enterprise paid media revenue system
 
 **Approve?** Restyle this campaign page with the 2026 type system. Keep every section.
 
@@ -9371,7 +9076,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 
 medium
 
-## 56. Found AI meetup
+## 55. Found AI meetup
 
 **Approve?** Restyle the meetup page with the 2026 type system. Keep the agenda and the form block that is already there.
 
@@ -9400,10 +9105,7 @@ Heading order stays: Indy AI: a community for people building with AI | Event de
 
 **Copy to optimize.**
 
-Rewrites below keep the facts and change punctuation or the company name to FoundSM. Named things stay spelled as they are: The Found Loop, The Found Brief, Found Signals, Life at Found, Found Search Marketing, Get Found, and 'Are Found'.
-
-- Before: H3: Found office
-  After: H3: FoundSM office
+None. The wording on the page already matches the facts I could verify. Sections move or restyle only.
 
 **Content to add.**
 
@@ -9457,9 +9159,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 6. kept as is: H1: Indy AI: a community for people building with AI
 7. kept as is: H2: Event details
 8. kept as is: H3: First Tuesday, monthly
-9. kept, reworded
-    - Before: H3: Found office
-    - After: H3: FoundSM office
+9. kept as is: H3: Found office
 10. kept as is: H3: Marketing pros
 11. kept as is: H2: Why we started this
 12. kept as is: H2: Save your spot for the next Meetup
@@ -9494,7 +9194,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 
 medium
 
-## 57. Paid media pipeline clarity
+## 56. Paid media pipeline clarity
 
 **Approve?** Restyle this draft campaign page with the 2026 type system. It is a local JSON page, not a Sanity document.
 
@@ -9702,7 +9402,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 
 medium
 
-## 58. 404
+## 57. 404
 
 **Approve?** Restyle the 404 page with the 2026 type system. Keep the heading, the explanation, and every link.
 
@@ -9731,10 +9431,7 @@ Heading order stays: Page Not Found
 
 **Copy to optimize.**
 
-Rewrites below keep the facts and change punctuation or the company name to FoundSM. Named things stay spelled as they are: The Found Loop, The Found Brief, Found Signals, Life at Found, Found Search Marketing, Get Found, and 'Are Found'.
-
-- Before: H1: Page Not Found
-  After: H1: Page Not FoundSM
+None. The wording on the page already matches the facts I could verify. Sections move or restyle only.
 
 **Content to add.**
 
@@ -9757,9 +9454,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 ### Content check
 
 1. kept as is: Section 1: Page Not Found
-2. kept, reworded
-    - Before: H1: Page Not Found
-    - After: H1: Page Not FoundSM
+2. kept as is: H1: Page Not Found
 3. kept as is: ERROR 404
 4. kept as is: The page you're looking for doesn't exist or has been moved.
 5. kept as is: SIGNAL REROUTING
@@ -9777,7 +9472,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 
 small
 
-## 59. Blog posts
+## 58. Blog posts
 
 **Approve?** One template proposal for every post. Article bodies stay. Em dashes become commas. The award post is the sample.
 
@@ -9800,7 +9495,7 @@ Full page on staging, November 17, 2026. Scroll-in sections are shown open so th
 
 **Layout and design.** Headings move from Fraunces to the 2026 type system in `src/styles/site-2026.css`: Archivo Black, 82% width, uppercase, ink `#231f20` on paper `#eef1ec`. Body stays Poppins. Eyebrows are green `#8dc63f`. Buttons are caps. The header and footer keep their own type. Dark-band body text is white. Sections that are only a heading over a large empty area get pulled up so the copy sits with the heading. This is scoped to this page. It does not restyle the homepage, `/capabilities/`, `/ai/`, or the paid search page on PR #411.
 
-All 53 `blogPost` documents in the staging dataset returned HTTP 200 at `/insights/{slug}/`. They share `BlogPostTemplate.astro`. The sample screenshot is the Microsoft Partner Awards post. Article bodies stay. The only body edit is punctuation: an em dash becomes a comma, and the words stay. Titles that use an en dash (–) are listed as an open question. I did not treat an en dash as an em dash.
+All 53 `blogPost` documents in the staging dataset returned HTTP 200 at `/insights/{slug}/`. They share `BlogPostTemplate.astro`. The sample screenshot is the Microsoft Partner Awards post. Article bodies stay. The only body edit is punctuation: an em dash becomes a comma, and the words stay. Titles are not renamed. Found and FoundSM both stay. Titles that use an en dash are listed and were not rewritten.
 
 Heading order stays: Microsoft Named Its 2026 Partner Awards Finalists. Here's the Work Behind Ours. | Why the data nomination | Why the search nomination | The through-line | Thank you
 
@@ -9918,14 +9613,9 @@ Posts with an em dash in the body, from the staging `blogPost` documents. The ed
 
 All 53 posts returned HTTP 200. Posts that are not in the table have no em dash in the body. Their text stays as it is.
 
-Two titles use Found as the company name. The proposed title edit, if you approve the FoundSM sweep, is punctuation-free and keeps the rest of the title:
+No blog title is renamed. Found and FoundSM both stay, including '20 Years of Found' and 'Found's Year-End Tradition'.
 
-- Before: 20 Years of Found: A Conversation With Julie Warnecke
-  After: 20 Years of FoundSM: A Conversation With Julie Warnecke
-- Before: Wrapping Up 19 Years With Purpose: Found's Year-End Tradition of Giving Back
-  After: Wrapping Up 19 Years With Purpose: FoundSM's Year-End Tradition of Giving Back
-
-Older post used as the punctuation example. The body stays. The two em dashes are in the table above.
+Older post used as the punctuation example. The body stays. The two em dashes are in the table above. The title stays 'Welcome to the New FoundSM'.
 
 ![1440px full page of Welcome to the New FoundSM](screenshots/insights-found-sm-website-1440.jpg)
 

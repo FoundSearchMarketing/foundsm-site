@@ -1,0 +1,78 @@
+:root {
+  --ink: #231f20;
+  --paper: #eef1ec;
+  --green: #8dc63f;
+  --line: #e3e6e1;
+  --muted: #4a4547;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  font-size: 1rem;
+  line-height: 1.55;
+}
+a { color: inherit; }
+img { max-width: 100%; height: auto; }
+.wrap { width: min(76rem, calc(100% - 2rem)); margin: 0 auto; }
+.top {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem 0;
+}
+.brand { font-weight: 700; letter-spacing: 0.08em; text-decoration: none; }
+.top nav { display: flex; gap: 1rem; font-size: 0.875rem; }
+.top a { text-decoration: none; }
+.hero { padding: 0.5rem 0 1.5rem; }
+.hero h1 { font-size: clamp(2rem, 4vw, 3.4rem); line-height: 1.05; margin: 0.2rem 0 0.6rem; letter-spacing: -0.03em; }
+.lede { max-width: 42rem; margin: 0; color: var(--muted); }
+.kicker { margin: 0; color: #5d8a22; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+.decisions { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0.75rem; margin: 1.25rem 0 2rem; }
+.decision { background: #fff; border-radius: 1rem; padding: 0.9rem 1rem 1rem; }
+.decision h2 { font-size: 1rem; margin: 0.35rem 0; }
+.decision p { margin: 0; color: var(--muted); font-size: 0.875rem; }
+.tag { display: inline-block; border-radius: 999px; padding: 0.15rem 0.5rem; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+.tag.decided { background: #e5f5c8; }
+.tag.wait { background: #fff3c4; }
+.tag.out { background: #eceae8; }
+.group { margin: 0 0 2rem; }
+.group h2 { margin: 0 0 0.8rem; font-size: 1.35rem; }
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(15.5rem, 1fr)); gap: 0.9rem; }
+.card { display: flex; flex-direction: column; background: #fff; border-radius: 1rem; overflow: hidden; text-decoration: none; min-height: 100%; }
+.card img { aspect-ratio: 16 / 10; object-fit: cover; object-position: top; background: #ddd; width: 100%; }
+.card div { padding: 0.85rem 0.95rem 1rem; display: flex; flex-direction: column; gap: 0.35rem; flex: 1; }
+.card strong { font-size: 1.02rem; }
+.card p { margin: 0; color: var(--muted); font-size: 0.875rem; }
+.effort { align-self: flex-start; margin-top: auto; }
+.effort.small { background: #e5f5c8; }
+.effort.medium { background: #fff3c4; }
+.effort.large { background: #231f20; color: #fff; }
+.page-head { padding-bottom: 1rem; }
+.page-head h1 { font-size: clamp(1.8rem, 3vw, 2.8rem); line-height: 1.1; margin: 0.25rem 0; }
+.meta { color: var(--muted); font-size: 0.9rem; }
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin: 0.4rem 0 1.2rem; }
+.shot { background: #fff; border-radius: 1rem; padding: 0.6rem; }
+.shot span { display: block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.4rem; }
+.shot img { width: 100%; border-radius: 0.6rem; background: var(--paper); }
+.changes, .edits, .count { background: #fff; border-radius: 1rem; padding: 1rem 1.1rem; margin: 0 0 0.9rem; }
+.changes h2, .edits h2, .count h2 { margin: 0 0 0.5rem; font-size: 1.15rem; }
+.changes li, .edits li { margin: 0.35rem 0; }
+.edit { padding: 0.7rem 0; border-top: 1px solid var(--line); }
+.edit p { margin: 0.2rem 0; }
+.before { color: var(--muted); }
+.pager { display: flex; gap: 0.7rem; margin: 1rem 0 2rem; }
+.pager a { flex: 1; background: #fff; border-radius: 0.9rem; padding: 0.8rem 1rem; text-decoration: none; }
+.pager small { display: block; color: var(--muted); font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; }
+details { background: #fff; border-radius: 1rem; padding: 0.8rem 1rem 1rem; margin-bottom: 1.5rem; }
+details summary { cursor: pointer; font-weight: 700; }
+details ol { padding-left: 1.2rem; }
+details li { margin: 0.25rem 0; }
+@media (max-width: 900px) {
+  .decisions, .pair { grid-template-columns: 1fr; }
+  .top { align-items: flex-start; flex-direction: column; }
+}

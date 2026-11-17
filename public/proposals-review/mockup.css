@@ -1,0 +1,45 @@
+/* Layout for proposal AFTER mockups. Type and color come from site-2026.css. */
+body.site-2026 {
+  --gutter: 1.25rem;
+  --font-body: "Poppins", sans-serif;
+  --color-primary: #8dc63f;
+  margin: 0;
+  background: #fff;
+  color: var(--s26-ink);
+  font-family: var(--font-body);
+  font-size: var(--s26-text-body);
+  line-height: var(--s26-lh-body);
+}
+
+.m-shell { width: min(72rem, calc(100% - 2 * var(--gutter))); margin: 0 auto; }
+.m-hero { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 2.5rem; align-items: center; padding: 4.5rem 0 3.5rem; }
+.m-hero h1 { font-size: var(--s26-size-h1); line-height: 0.94; }
+.m-lead { font-size: var(--s26-text-lead); line-height: 1.6; margin: 1rem 0 0; }
+.m-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.5rem; }
+.btn { display: inline-flex; align-items: center; border-radius: 999px; padding: 0.8rem 1.15rem; text-decoration: none; }
+.btn--primary { background: var(--s26-green); color: #fff; }
+.m-figure { margin: 0; background: var(--s26-paper); border-radius: var(--s26-radius); overflow: hidden; min-height: 16rem; }
+.m-figure img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.m-band { background: #231f20; color: #fff; padding: 3rem 0; }
+body.site-2026 main .m-band :is(h1, h2, h3, p) { color: #fff; }
+.m-band p { margin: 0; font-size: 1.35rem; line-height: 1.45; }
+.m-section { padding: var(--s26-section) 0; }
+.m-section--paper { background: var(--s26-paper); }
+.m-section h2 { font-size: var(--s26-size-h2); line-height: 1.05; max-width: 18ch; }
+.m-copy { max-width: 42rem; }
+.m-copy p { margin: 0.8rem 0 0; }
+.m-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+.m-card { background: #fff; border-radius: var(--s26-radius); padding: 1.15rem 1.2rem 1.3rem; }
+.m-section:not(.m-section--paper) .m-card { background: var(--s26-paper); }
+.m-card h3 { font-size: var(--s26-size-h3); line-height: 1.1; margin-bottom: 0.55rem; }
+.m-card p, .m-card li { margin: 0.35rem 0 0; font-size: var(--s26-text-small); line-height: var(--s26-lh-small); }
+.m-related { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.25rem; }
+.m-related a { color: var(--s26-ink); text-decoration: none; border-radius: 999px; padding: 0.45rem 0.8rem; box-shadow: inset 0 0 0 1.5px var(--s26-line); font-size: 0.875rem; font-weight: 600; }
+.m-form { display: grid; gap: 0.75rem; margin-top: 1.25rem; max-width: 28rem; }
+.m-form label { font-size: var(--s26-text-label); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+.m-form input, .m-form textarea { width: 100%; border: 0; border-radius: 0.6rem; padding: 0.75rem 0.85rem; font: inherit; background: #fff; color: var(--s26-ink); }
+.m-legal p { max-width: 46rem; }
+@media (max-width: 800px) {
+  .m-hero, .m-grid { grid-template-columns: 1fr; }
+  .m-hero { padding-top: 2.5rem; }
+}

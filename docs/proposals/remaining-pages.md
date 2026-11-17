@@ -126,7 +126,17 @@ No header link, footer link, or Events card points at it. `vercel.json` still re
 
 Megan's note on the first mockups: every section looked the same. The after mockups now change layout from section to section, and each template has its own sequence. Two sections with the same layout are not placed next to each other.
 
-Backgrounds are paper (`#eef1ec`), light green (`--s26-section-green`, `#e7f4d4`), and light gray (`--s26-section-gray`, `#e6e6e3`). Bright green (`#8dc63f`) is only a rule, a number, or a small highlight, not a section fill. A dark ink band appears at most once, on the form, and the text there is white. Everywhere else the text is ink. On About, the founding story sits beside its photo so that side is not empty.
+Backgrounds are paper (`#eef1ec`), light green (`--s26-section-green`, `#e7f4d4`), and light gray (`#f2f3f2`, the muted field already used on gray sections). Bright green (`#8dc63f`) is only a rule, a number, or a small highlight, not a section fill. A dark ink band appears at most once, on the form, and the text there is white. Everywhere else the text is ink. On About, the founding story sits beside its photo so that side is not empty.
+
+Gray sections use the designs already on the site, not new patterns:
+
+- Topography, `/images/pages/our-approach/topography-light.svg`, from `.card-grid-section--muted` (`src/components/modern/CardGrid.astro`), `.proof-mosaic--muted` (`src/components/blocks/ProofMosaicBlock.astro`), `.lp-accordion--pattern` (`src/components/blocks/AccordionBlock.astro`), and `.approach-intro::before` (`src/pages/our-approach.astro`). This is the default on light gray mockup sections.
+- Paid media topography, `/images/pages/paid-media/topography-light.svg`, from `.paid-media-tabs__inner` (`src/pages/capabilities/paid-media.astro`) and `.feature-tabs--pattern .feature-tabs__inner` (`src/components/modern/FeatureTabs.astro`). Used on Paid Media and Performance Creative gray sections.
+- Contour, `/images/pages/data-activation/contour-2.png`, from `.da-actions` (`src/components/DataActivationPage.astro`). Used on Data Activation gray sections.
+- Street map, `/images/pages/our-approach/streets-light.svg`, from `.approach-advantages::before` on the gray advantages field and from `.green-band::before` (`src/styles/global.css`). Proposed on the light green sections too, at low opacity, because that is already how the green band is textured.
+- The form's dark band uses `/images/pages/our-approach/contact-bg-fc.svg` from `.dark-band` (`src/styles/global.css`). That is the one dark section, not a gray one.
+
+The homepage paper sections (`home2-section--paper` in `src/styles/homepage-v2.css`) and the Paid Search child panels (`background: var(--h2-paper)` in the PR #411 stylesheet) are flat color, with no extra artwork.
 
 - Company and main pages: editorial or split hero, light green band, zigzag rows, numbered steps, pull quote, light gray band, open FAQ rows, and one dark form 8 band. Our Approach adds the homepage Found Loop (Connect, Model, Activate, Measure) from `src/lib/homeV2Content.ts` and keeps the eight advantages.
 - Capabilities practice pages: rule hero, light green band, numbered steps, zigzag rows, light gray band, open FAQ rows, pull quote, form 8 band. Partner images stay. Panels are not hidden.

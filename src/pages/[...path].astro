@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import LandingSections from '../components/LandingSections.astro';
 import BlockRenderer from '../components/blocks/BlockRenderer.astro';
 import { sanityClient, landingPageBySlugQuery, allLandingPagesQuery } from '../lib/sanity';
 
@@ -24,6 +25,7 @@ export async function getStaticPaths() {
 }
 
 const { path } = Astro.params;
+const leaveUnstyled = path === 'capabilities/paid-media/paid-search';
 const page = await sanityClient.fetch(landingPageBySlugQuery, { slug: path });
 
 if (!page) {
@@ -50,7 +52,9 @@ const seoDescription = page.seoDescription || '';
   hideNavigation={page.hideNavigation}
   hideFooter={page.hideFooter}
 >
-  {page.sections?.map((section: any) => (
+  {leaveUnstyled ? page.sections?.map((section: any) => (
     <BlockRenderer section={section} />
-  ))}
+  )) : (
+    <LandingSections sections={page.sections} path={`/${path}/`} />
+  )}
 </BaseLayout>

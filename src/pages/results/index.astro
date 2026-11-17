@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import BlockRenderer from '../../components/blocks/BlockRenderer.astro';
+import LandingSections from '../../components/LandingSections.astro';
 import { sanityClient, landingPageBySlugQuery } from '../../lib/sanity';
 
 const page = await sanityClient.fetch(landingPageBySlugQuery, { slug: 'results' });
@@ -25,7 +25,5 @@ const seoDescription = page?.seoDescription || '';
   hideNavigation={page?.hideNavigation}
   hideFooter={page?.hideFooter}
 >
-  {page?.sections?.map((section: any) => (
-    <BlockRenderer section={section} />
-  ))}
+  <LandingSections sections={page?.sections} path="/results/" />
 </BaseLayout>

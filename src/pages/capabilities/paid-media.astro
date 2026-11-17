@@ -81,8 +81,8 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
 ---
 
 <BaseLayout title={title} description={description} canonical={canonical} robots={page.robots} schema={schema}>
-  <div class="paid-media-page">
-    <section class="paid-media-hero" aria-labelledby="paid-media-hero-heading">
+  <div class="paid-media-page" data-s26-pattern="paid">
+    <section class="paid-media-hero s26-band s26-band--white" aria-labelledby="paid-media-hero-heading">
       <div class="paid-media-hero__inner">
         <div class="paid-media-hero__copy">
           <h1 id="paid-media-hero-heading">{page.hero.heading || placeholder('hero heading')}</h1>
@@ -98,7 +98,7 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
       </div>
     </section>
 
-    <section class="paid-media-work" aria-labelledby="paid-media-work-heading">
+    <section class="paid-media-work s26-band s26-band--gray" aria-labelledby="paid-media-work-heading">
       <div class="paid-media-work__inner">
         <div class="paid-media-work__media">
           {splitImage ? (
@@ -115,7 +115,7 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
     </section>
 
     {tabs.length > 0 ? (
-      <section class="paid-media-tabs" data-paid-media-tabs aria-label="Paid media capabilities">
+      <section class="paid-media-tabs s26-band s26-band--mint" data-paid-media-tabs aria-label="Paid media capabilities">
         <div class="paid-media-tabs__inner">
           <div class="paid-media-tabs__nav" role="tablist" aria-label="Paid media capabilities">
             {tabs.map((tab, index) => {
@@ -177,7 +177,7 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
       <section class="paid-media-tabs"><p class="paid-media-placeholder">Missing paid media tabs</p></section>
     )}
 
-    <section class="paid-media-journey dark-band" aria-labelledby="paid-media-journey-heading">
+    <section class="paid-media-journey dark-band s26-band s26-band--ink" aria-labelledby="paid-media-journey-heading">
       <div class="paid-media-journey__inner">
         <div class="paid-media-section-heading paid-media-section-heading--center paid-media-section-heading--dark">
           <h2 id="paid-media-journey-heading">{page.primaryCards?.title || placeholder('journey heading')}</h2>
@@ -220,7 +220,7 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
       </div>
     </section>
 
-    <section class="paid-media-analytics" aria-labelledby="paid-media-analytics-heading">
+    <section class="paid-media-analytics s26-band s26-band--white" aria-labelledby="paid-media-analytics-heading">
       <div class="paid-media-analytics__inner">
         <div class="paid-media-section-heading paid-media-section-heading--center">
           <h2 id="paid-media-analytics-heading">{page.secondaryCards?.title || placeholder('analytics heading')}</h2>
@@ -242,7 +242,7 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
       </div>
     </section>
 
-    <section class="paid-media-cta green-band" aria-label={page.cta?.title || page.cta?.cta?.label || 'Paid media call to action'}>
+    <section class="paid-media-cta green-band s26-band s26-band--gray" aria-label={page.cta?.title || page.cta?.cta?.label || 'Paid media call to action'}>
       <div class="paid-media-cta__inner">
         <div class="paid-media-cta__copy">
           {page.cta?.title && <h2>{page.cta.title}</h2>}

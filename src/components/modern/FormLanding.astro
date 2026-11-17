@@ -35,7 +35,7 @@ const introParagraphs = Array.isArray(intro) ? intro : [intro];
 const sectionId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 ---
 
-<section id={sectionId} class:list={['form-landing', `form-landing--${variant}`, `form-landing--theme-${theme}`, { 'dark-band': variant === 'contact', 'form-landing--loads-form': loadFormScript }]} aria-labelledby={`${variant}-form-heading`}>
+<section id={sectionId} class:list={['form-landing', 's26-band', 's26-band--ink', `form-landing--${variant}`, `form-landing--theme-${theme}`, { 'dark-band': variant === 'contact', 'form-landing--loads-form': loadFormScript }]} aria-labelledby={`${variant}-form-heading`}>
   <div class="form-landing__inner">
     <div class="form-landing__copy">
       {eyebrow && <p class="form-landing__eyebrow">{eyebrow}</p>}

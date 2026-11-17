@@ -14,7 +14,7 @@ const resourceImage = (src: string | undefined) => normalizeLegacyAssetUrl(src) 
 
 {page.kind === 'archive' && (
   <>
-    <section class="resource-hero" aria-label={page.heroTitle}>
+    <section class="resource-hero s26-band s26-band--white" aria-label={page.heroTitle}>
       <div class="resource-hero__inner">
         <div class="resource-hero__copy">
           <h1>{page.heroTitle}</h1>
@@ -34,7 +34,7 @@ const resourceImage = (src: string | undefined) => normalizeLegacyAssetUrl(src) 
       </div>
     </nav>
 
-    <section class:list={['resource-listing', { 'resource-listing--narrow': page.breadcrumbLabel === 'Tools and Guides' }]} aria-labelledby="resource-listing-title">
+    <section class:list={['resource-listing', 's26-band', 's26-band--gray', { 'resource-listing--narrow': page.breadcrumbLabel === 'Tools and Guides' }]} aria-labelledby="resource-listing-title">
       <div class="resource-listing__inner">
         <header class="resource-listing__header">
           <h2 id="resource-listing-title">{page.sectionTitle}</h2>
@@ -71,7 +71,7 @@ const resourceImage = (src: string | undefined) => normalizeLegacyAssetUrl(src) 
 
 {page.kind === 'webinar' && (
   <>
-    <section class="webinar-hero" style={`--webinar-hero-bg: url('${webinarHeroBg}')`} aria-label={page.heroTitle}>
+    <section class="webinar-hero s26-band s26-band--white" style={`--webinar-hero-bg: url('${webinarHeroBg}')`} aria-label={page.heroTitle}>
       <div class="webinar-hero__inner">
         <div class="webinar-hero__copy">
           <h1>{page.heroTitle}</h1>
@@ -90,7 +90,7 @@ const resourceImage = (src: string | undefined) => normalizeLegacyAssetUrl(src) 
       </div>
     </section>
 
-    <section class="webinar-body" aria-label="Webinar details">
+    <section class="webinar-body s26-band s26-band--mint" aria-label="Webinar details">
       <div class="webinar-body__inner">
         <div class="webinar-body__content">
           <h2>{page.bodyHeading}</h2>
@@ -113,7 +113,7 @@ const resourceImage = (src: string | undefined) => normalizeLegacyAssetUrl(src) 
 )}
 
 {page.kind === 'video' && (
-  <section class="video-page" aria-label={page.heading}>
+  <section class="video-page s26-band s26-band--white" aria-label={page.heading}>
     <div class="video-page__inner">
       <h1>{page.heading}</h1>
       <div class="video-page__frame">
@@ -131,7 +131,7 @@ const resourceImage = (src: string | undefined) => normalizeLegacyAssetUrl(src) 
 )}
 
 {page.kind === 'thank-you' && (
-  <section class="thank-you-page" aria-label={page.heading}>
+  <section class="thank-you-page s26-band s26-band--white" aria-label={page.heading}>
     <div class="thank-you-page__inner">
       <div class="thank-you-page__icon" aria-hidden="true">
         <svg viewBox="0 0 32 32">

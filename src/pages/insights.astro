@@ -77,14 +77,22 @@ const schema = {
     <!-- ============================================
          HERO SECTION
          ============================================ -->
+    <div class="s26-band s26-band--white">
     <InsightsHero headline={page.hero.headline} body={page.hero.body} imageSrc={heroMedia} imageAlt={page.hero.imageAlt} />
+    </div>
 
+    <div class="s26-band s26-band--gray">
     <LatestPostsSection posts={latestPosts} />
+    </div>
 
+    <div class="s26-band s26-band--ink">
     <InsightsArticlesTabs tabs={articleTabs} />
+    </div>
 
+    <div class="s26-band s26-band--mint">
     <InsightsArticleCards articles={articleCards} postsPerPage={postsPerPage}>
       <InsightsPagination slot="pagination" pageSize={postsPerPage} totalPages={totalPages} />
     </InsightsArticleCards>
+    </div>
 
 </BaseLayout>

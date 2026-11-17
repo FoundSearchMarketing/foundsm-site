@@ -26,8 +26,8 @@ const firstActionColumn = actionItems.slice(0, 3);
 const secondActionColumn = actionItems.slice(3);
 ---
 
-<div class="data-activation-page">
-  <section class="da-hero" aria-labelledby="data-activation-hero-heading">
+<div class="data-activation-page" data-s26-pattern="da">
+  <section class="da-hero s26-band s26-band--white" aria-labelledby="data-activation-hero-heading">
     <div class="da-hero__inner">
       <div class="da-hero__copy">
         <h1 id="data-activation-hero-heading">{page.hero.heading}</h1>
@@ -50,7 +50,7 @@ const secondActionColumn = actionItems.slice(3);
   </section>
 
   {actionItems.length > 0 && (
-    <section class="da-actions" aria-labelledby="data-activation-actions-heading">
+    <section class="da-actions s26-band s26-band--gray" aria-labelledby="data-activation-actions-heading">
       <div class="da-actions__inner">
         <h2 id="data-activation-actions-heading">{page.primaryCards?.title}</h2>
         <div class="da-actions__grid">
@@ -66,7 +66,7 @@ const secondActionColumn = actionItems.slice(3);
   )}
 
   {page.statement && (
-    <section class="da-why" aria-labelledby="data-activation-why-heading">
+    <section class="da-why s26-band s26-band--mint" aria-labelledby="data-activation-why-heading">
       <div class="da-why__inner">
         <h2 id="data-activation-why-heading">{page.statement.lead}</h2>
         <div class="da-why__panel" set:html={richHtml(page.statement.body)} />
@@ -75,7 +75,7 @@ const secondActionColumn = actionItems.slice(3);
   )}
 
   {page.cta && (
-    <section class="da-cta green-band" aria-label={page.cta.title || page.cta.cta?.label || 'Contact FoundSM'}>
+    <section class="da-cta green-band s26-band s26-band--ink" aria-label={page.cta.title || page.cta.cta?.label || 'Contact FoundSM'}>
       <div class="da-cta__inner">
         <div class="da-cta__copy">
           {page.cta.title && <h2>{page.cta.title}</h2>}

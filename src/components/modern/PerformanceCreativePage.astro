@@ -58,7 +58,7 @@ const cardTitle = (value: string) => value.endsWith(':') ? value : `${value}:`;
 const stripOuterParagraph = (value: string) => value.replace(/^<p>/, '').replace(/<\/p>$/, '');
 ---
 
-<section class="pc-hero" aria-labelledby={`${idPrefix}-hero-heading`}>
+<section class="pc-hero s26-band s26-band--white" data-s26-pattern="paid" aria-labelledby={`${idPrefix}-hero-heading`}>
   <div class="pc-hero__inner">
     <div class="pc-hero__copy">
       <h1 id={`${idPrefix}-hero-heading`}>{hero.title}</h1>
@@ -86,7 +86,7 @@ const stripOuterParagraph = (value: string) => value.replace(/^<p>/, '').replace
   </div>
 </section>
 
-<section class="pc-work" aria-labelledby={`${idPrefix}-work-heading`}>
+<section class="pc-work s26-band s26-band--gray" data-s26-pattern="paid" aria-labelledby={`${idPrefix}-work-heading`}>
   <div class="pc-work__inner">
     {split.image && (
       <figure class="pc-work__media">
@@ -108,7 +108,7 @@ const stripOuterParagraph = (value: string) => value.replace(/^<p>/, '').replace
 </section>
 
 {tabs.length > 0 && (
-  <section class="pc-tabs" aria-label="Performance creative methods">
+  <section class="pc-tabs s26-band s26-band--mint" data-s26-pattern="paid" aria-label="Performance creative methods">
     <div class="pc-tabs__inner" data-pc-tabs>
       <div class="pc-tabs__nav" role="tablist" aria-label="Performance creative methods">
         {tabs.map((tab, index) => {
@@ -163,7 +163,7 @@ const stripOuterParagraph = (value: string) => value.replace(/^<p>/, '').replace
   </section>
 )}
 
-<section class="pc-experience" aria-labelledby={`${idPrefix}-experience-heading`}>
+<section class="pc-experience s26-band s26-band--ink" data-s26-pattern="paid" aria-labelledby={`${idPrefix}-experience-heading`}>
   <div class="pc-experience__inner">
     <h2 id={`${idPrefix}-experience-heading`}>{secondary.title}</h2>
 

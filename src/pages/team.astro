@@ -53,6 +53,7 @@ const leaders = leaderSource
 ---
 
 <BaseLayout title={title} description={description} canonical={canonical} robots={page.robots} schema={schema}>
+  <div class="s26-band s26-band--white">
   <ModernHero
     tone="light"
     title={page.hero.heading || ''}
@@ -63,14 +64,18 @@ const leaders = leaderSource
     imageShape="rounded"
     className="team-hero"
   />
+  </div>
 
+  <div class="s26-band s26-band--ink">
   <StatementBand
     lead={page.statement.lead || ''}
     body={richText(page.statement.body)}
     bodyHtml={richHtml(page.statement.body)}
     pattern
   />
+  </div>
 
+  <div class="s26-band s26-band--gray">
   <LeadershipGrid
     layout="centered"
     title={page.leadership.heading || ''}
@@ -79,6 +84,7 @@ const leaders = leaderSource
     leaders={leaders}
     showImages
   />
+  </div>
 
 </BaseLayout>
 

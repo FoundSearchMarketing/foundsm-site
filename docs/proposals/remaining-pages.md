@@ -124,16 +124,18 @@ No header link, footer link, or Events card points at it. `vercel.json` still re
 
 ## Layout rhythm
 
-Megan's note on the first mockups: every section looked the same. The after mockups now change layout from section to section, and each template has its own sequence. Two sections with the same layout are not placed next to each other. Text on the ink band (`#231f20`) is white. The green accent is `#8dc63f` with ink text. About no longer uses small cards in an empty field. Those items are full-width rows sized to the copy.
+Megan's note on the first mockups: every section looked the same. The after mockups now change layout from section to section, and each template has its own sequence. Two sections with the same layout are not placed next to each other.
 
-- Company and main pages: editorial or split hero, ink band, zigzag rows, numbered steps, pull quote, green callout, open FAQ rows, form 8 band. Our Approach adds the homepage Found Loop (Connect, Model, Activate, Measure) from `src/lib/homeV2Content.ts` and keeps the eight advantages.
-- Capabilities practice pages: rule hero, ink band, numbered steps, zigzag rows, green callout, open FAQ rows, form 8 band. Partner images stay. Panels are not hidden.
-- Capabilities child template: breadcrumb hero, ink band, open FAQ rows, numbered steps, pull quote, green callout, related text links, form 8 band. No partner badge rail, no 46% block, no brand logos.
-- Results: editorial hero, stat row (`$210M`, `1M+`, `20`, `#4`), ink band, zigzag, pull quote, green callout, form 8 band. The IBJ #4 line stays. The multi-year Microsoft line is still a proposal.
-- Legacy insights: masthead, pull quote, prose, link list.
+Backgrounds are paper (`#eef1ec`), light green (`--s26-section-green`, `#e7f4d4`), and light gray (`--s26-section-gray`, `#e6e6e3`). Bright green (`#8dc63f`) is only a rule, a number, or a small highlight, not a section fill. A dark ink band appears at most once, on the form, and the text there is white. Everywhere else the text is ink. On About, the founding story sits beside its photo so that side is not empty.
+
+- Company and main pages: editorial or split hero, light green band, zigzag rows, numbered steps, pull quote, light gray band, open FAQ rows, and one dark form 8 band. Our Approach adds the homepage Found Loop (Connect, Model, Activate, Measure) from `src/lib/homeV2Content.ts` and keeps the eight advantages.
+- Capabilities practice pages: rule hero, light green band, numbered steps, zigzag rows, light gray band, open FAQ rows, pull quote, form 8 band. Partner images stay. Panels are not hidden.
+- Capabilities child template: breadcrumb hero, light gray band, open FAQ rows, numbered steps, pull quote, light green band, related text links, form 8 band. No partner badge rail, no 46% block, no brand logos.
+- Results: editorial hero, stat row (`$210M`, `1M+`, `20`, `#4`) on light gray, zigzag, pull quote, light green band, form 8 band. The IBJ #4 line stays. The multi-year Microsoft line is still a proposal.
+- Legacy insights: masthead, pull quote, prose, link list. No dark fill.
 - Author pages: profile, prose, pull quote, link list. Julie's `$215M` line is the `$210M` fact correction. Found stays Found.
 - Blog posts: article header, pull quote, prose. Titles are not renamed.
-- Campaign landing pages: offer hero, ink band, numbered steps, zigzag, green callout, FAQ rows, form 8 band.
+- Campaign landing pages: offer hero, light green band, numbered steps, zigzag, light gray band, FAQ rows, form 8 band.
 
 ## Still open
 

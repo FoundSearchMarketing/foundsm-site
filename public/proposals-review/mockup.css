@@ -34,16 +34,24 @@ body.site-2026 {
 .m-mast h1, .m-article h1 { font-size: clamp(2.4rem, 5vw, 4rem); line-height: 0.96; max-width: 18ch; }
 .m-meta { margin: 0.8rem 0 0; color: var(--s26-muted); font-size: var(--s26-text-small); }
 
-/* Full-bleed ink. All text white. */
-.m-ink { background: #231f20; color: #fff; padding: 3.25rem 0; }
-body.site-2026 main .m-ink :is(h1, h2, h3, p, a, li) { color: #fff; }
-.m-ink p { margin: 0.6rem 0 0; font-size: clamp(1.35rem, 2.4vw, 2rem); line-height: 1.35; max-width: 22ch; }
-.m-ink h2 { font-size: var(--s26-size-h2); line-height: 1.05; max-width: 16ch; }
+/* Light section grounds. Dark text. Bright green is not a fill. */
+.m-mint { background: var(--s26-section-green, #e7f4d4); color: #231f20; padding: 2.75rem 0; }
+.m-gray { background: var(--s26-section-gray, #e6e6e3); color: #231f20; padding: 2.75rem 0; }
+body.site-2026 main .m-mint :is(h1, h2, h3, p, li),
+body.site-2026 main .m-gray :is(h1, h2, h3, p, li) { color: #231f20; }
+.m-mint p, .m-gray p { margin: 0.7rem 0 0; max-width: 40rem; }
+.m-mint h2, .m-gray h2 { font-size: var(--s26-size-h2); line-height: 1.05; max-width: 18ch; }
 
-/* Green accent. Ink text, because the ground is light. */
-.m-green { background: #8dc63f; color: #231f20; padding: 3rem 0; }
-body.site-2026 main .m-green :is(h1, h2, h3, p) { color: #231f20; }
-.m-green p { margin: 0.75rem 0 0; max-width: 36rem; font-size: var(--s26-text-lead); }
+/* Founding story and other image splits. The photo fills the right side. */
+.m-split { padding: 2.75rem 0; }
+.m-split--mint { background: var(--s26-section-green, #e7f4d4); }
+.m-split--gray { background: var(--s26-section-gray, #e6e6e3); }
+.m-split__grid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(16rem, 0.95fr); gap: 2rem; align-items: center; }
+.m-split h2 { font-size: var(--s26-size-h2); max-width: 16ch; }
+.m-split p { margin: 0.7rem 0 0; }
+.m-split ul { margin: 1rem 0 0; padding: 0; list-style: none; }
+.m-split li { margin: 0.35rem 0 0; padding-top: 0.35rem; border-top: 1px solid var(--s26-line); font-size: var(--s26-text-small); }
+.m-split img { display: block; width: 100%; height: 100%; max-height: 28rem; object-fit: cover; border-radius: var(--s26-radius); }
 
 /* Stats: a row of figures, no empty cards. */
 .m-stats { padding: 2.5rem 0; background: var(--s26-paper); }
@@ -72,11 +80,11 @@ body.site-2026 main .m-green :is(h1, h2, h3, p) { color: #231f20; }
 .m-zig__mark { font-family: var(--font-heading); font-weight: 900; font-stretch: 82%; font-size: clamp(3rem, 6vw, 5rem); line-height: 0.9; color: var(--s26-green); }
 .m-zig img { width: 100%; max-height: 16rem; object-fit: cover; border-radius: var(--s26-radius); }
 
-/* Pull quote. */
-.m-quote { background: #231f20; color: #fff; padding: 3rem 0; }
-body.site-2026 main .m-quote :is(h2, p) { color: #fff; }
-.m-quote blockquote { margin: 0; max-width: 40rem; }
-.m-quote p { margin: 0; font-size: clamp(1.5rem, 2.6vw, 2.15rem); line-height: 1.3; }
+/* Pull quote on a light ground, with a bright green rule. */
+.m-quote { background: var(--s26-paper); padding: 2.75rem 0; }
+body.site-2026 main .m-quote :is(h2, p) { color: #231f20; }
+.m-quote blockquote { margin: 0; max-width: 40rem; border-left: 4px solid var(--s26-green); padding-left: 1.25rem; }
+.m-quote p { margin: 0; font-size: clamp(1.35rem, 2.2vw, 1.85rem); line-height: 1.35; }
 
 /* Open accordion rows. Copy stays visible. */
 .m-faq { padding: 2.75rem 0; }
@@ -105,7 +113,8 @@ body.site-2026 main .m-quote :is(h2, p) { color: #fff; }
 body.site-2026 main .m-formband--ink :is(h2, p, label) { color: #fff; }
 
 @media (max-width: 800px) {
-  .m-hero--split, .m-zig__row, .m-zig__row--flip, .m-formband__grid, .m-profile { display: block; direction: ltr; }
+  .m-hero--split, .m-zig__row, .m-zig__row--flip, .m-formband__grid, .m-profile, .m-split__grid { display: block; direction: ltr; }
+  .m-split img { margin-top: 1rem; max-height: 16rem; }
   .m-zig__mark { margin-top: 0.5rem; }
   .m-hero img, .m-zig img { margin-top: 1rem; max-height: 14rem; }
   .m-profile img { margin-bottom: 1rem; }

@@ -1,0 +1,169 @@
+/*
+  Approved section rhythm for the remaining pages.
+  White #ffffff, one gray #f2f3f2, light green #e7f4d4, and plain ink #231f20.
+  Patterns sit only on gray and light green. White and ink are solid.
+*/
+
+.s26-band,
+section.s26-band {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.s26-band > section {
+  background: transparent !important;
+  background-image: none !important;
+}
+
+.s26-band > section::before,
+section.s26-band--white::before,
+section.s26-band--gray::before,
+section.s26-band--ink::before {
+  content: none !important;
+}
+
+.s26-band--white,
+section.s26-band--white {
+  background-color: #ffffff !important;
+  background-image: none !important;
+  color: #231f20;
+}
+
+.s26-band--gray,
+section.s26-band--gray {
+  background-color: #f2f3f2 !important;
+  background-image: url('/images/pages/our-approach/topography-light.svg') !important;
+  background-position: center;
+  background-size: cover;
+  color: #231f20;
+}
+
+[data-s26-pattern='paid'].s26-band--gray,
+[data-s26-pattern='paid'] .s26-band--gray {
+  background-image: url('/images/pages/paid-media/topography-light.svg') !important;
+}
+
+[data-s26-pattern='da'].s26-band--gray,
+[data-s26-pattern='da'] .s26-band--gray {
+  background-image: url('/images/pages/data-activation/contour-2.png') !important;
+}
+
+.s26-band--mint,
+section.s26-band--mint {
+  background-color: #e7f4d4 !important;
+  background-image: none !important;
+  color: #231f20;
+}
+
+.s26-band--mint::before,
+section.s26-band--mint::before {
+  content: '' !important;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: url('/images/pages/our-approach/streets-light.svg') center / cover no-repeat;
+  opacity: 0.22;
+  pointer-events: none;
+}
+
+.s26-band--ink,
+section.s26-band--ink,
+section.s26-band--ink.dark-band,
+section.s26-band--ink.green-band {
+  background-color: #231f20 !important;
+  background-image: none !important;
+  color: #fff;
+}
+
+.s26-band > *,
+section.s26-band > * {
+  position: relative;
+  z-index: 1;
+}
+
+.s26-band .hero__overlay,
+.s26-band .hero__bg-image,
+section.s26-band .hero__overlay,
+section.s26-band .hero__bg-image {
+  display: none;
+}
+
+.s26-band--white :is(h1, h2, h3, h4, p, li),
+.s26-band--gray :is(h1, h2, h3, h4, p, li),
+.s26-band--mint :is(h1, h2, h3, h4, p, li),
+section.s26-band--white :is(h1, h2, h3, h4, p, li),
+section.s26-band--gray :is(h1, h2, h3, h4, p, li),
+section.s26-band--mint :is(h1, h2, h3, h4, p, li) {
+  color: #231f20 !important;
+}
+
+.s26-band--ink :is(h1, h2, h3, h4, p, li, label, blockquote, summary),
+section.s26-band--ink :is(h1, h2, h3, h4, p, li, label, blockquote, summary) {
+  color: #fff !important;
+}
+
+.s26-band--ink :is(input, textarea, select),
+section.s26-band--ink :is(input, textarea, select) {
+  color: #231f20 !important;
+  background: #fff !important;
+}
+
+.s26-band :is(h1, h2, h3),
+section.s26-band :is(h1, h2, h3) {
+  font-family: Archivo, 'Arial Narrow', 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 900;
+  font-stretch: 82%;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
+}
+
+.s26-band .btn--primary,
+section.s26-band .btn--primary {
+  background: #8dc63f !important;
+  color: #fff !important;
+}
+
+.s26-loop {
+  padding: 3rem 1.25rem;
+}
+
+.s26-loop__inner {
+  width: min(72rem, 100%);
+  margin: 0 auto;
+}
+
+.s26-loop h2 {
+  max-width: 16ch;
+  margin: 0 0 1.25rem;
+}
+
+.s26-loop ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 1.25rem 1.5rem;
+}
+
+.s26-loop li {
+  border-top: 2px solid #231f20;
+  padding-top: 0.75rem;
+}
+
+.s26-loop b {
+  display: block;
+  color: #8dc63f;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+}
+
+.s26-loop h3 {
+  margin: 0.35rem 0;
+  font-size: 1.35rem;
+}
+
+.s26-loop p {
+  margin: 0;
+}

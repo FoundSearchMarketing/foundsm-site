@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import BlockRenderer from '../../components/blocks/BlockRenderer.astro';
+import LandingSections from '../../components/LandingSections.astro';
 import { sanityClient, landingPageBySlugQuery, allLandingPagesQuery } from '../../lib/sanity';
 
 export async function getStaticPaths() {
@@ -41,7 +41,5 @@ const seoDescription = page.seoDescription || '';
   hideNavigation={page.hideNavigation}
   hideFooter={page.hideFooter}
 >
-  {page.sections?.map((section: any) => (
-    <BlockRenderer section={section} />
-  ))}
+  <LandingSections sections={page.sections} path={`/lp/${slug}/`} />
 </BaseLayout>

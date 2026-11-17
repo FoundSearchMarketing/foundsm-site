@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import BlockRenderer from '../../components/blocks/BlockRenderer.astro';
+import LandingSections from '../../components/LandingSections.astro';
 import page from '../../../docs/ai-page-builder/foundsm-paid-media-pipeline-clarity.landing-page-draft.json';
 
 const draft = page as any;
@@ -25,7 +25,5 @@ const seoDescription = draft.seoDescription || '';
   hideNavigation={draft.hideNavigation}
   hideFooter={draft.hideFooter}
 >
-  {draft.sections?.map((section: any) => (
-    <BlockRenderer section={section} />
-  ))}
+  <LandingSections sections={draft.sections} path={`/lp/${slug}/`} />
 </BaseLayout>

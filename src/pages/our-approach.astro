@@ -4,6 +4,7 @@ import MediaAsset from '../components/MediaAsset.astro';
 import { approachPageQuery, sanityClient } from '../lib/sanity';
 import { defaultApproachPageData, mergeApproachPageData } from '../lib/morePageData';
 import { imageProps, richHtml, srcFor } from '../lib/fixedPageRender';
+import { homeV2Content } from '../lib/homeV2Content';
 
 const assetPath = '/images/pages/our-approach';
 
@@ -65,7 +66,7 @@ const schema = {
   schema={schema}
 >
   <div class="approach-page">
-    <section class="approach-hero" aria-labelledby="approach-hero-title">
+    <section class="approach-hero s26-band s26-band--white" aria-labelledby="approach-hero-title">
       <div class:list={['approach-shell', 'approach-hero__grid', !heroImage && 'approach-hero__grid--without-media']}>
         <div class="approach-hero__copy">
           <h1 id="approach-hero-title">
@@ -91,7 +92,24 @@ const schema = {
       </div>
     </section>
 
-    <section class="approach-intro" aria-labelledby="approach-intro-title">
+    <section class="s26-loop s26-band s26-band--gray" aria-labelledby="approach-loop-title">
+      <div class="s26-loop__inner">
+        <p class="approach-eyebrow">{homeV2Content.loop.eyebrow}</p>
+        <h2 id="approach-loop-title">{homeV2Content.loop.heading}</h2>
+        <p>{homeV2Content.loop.intro}</p>
+        <ol>
+          {homeV2Content.loop.stages.map((stage) => (
+            <li>
+              <b>{stage.number}</b>
+              <h3>{stage.title}</h3>
+              <p>{stage.body}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <section class="approach-intro s26-band s26-band--mint" aria-labelledby="approach-intro-title">
       <div class="approach-shell">
         {page.intro.eyebrow && <p class="approach-eyebrow">{page.intro.eyebrow}</p>}
         <h2 id="approach-intro-title">
@@ -118,7 +136,7 @@ const schema = {
       </div>
     </section>
 
-    <section class="approach-callout dark-band" aria-label="Approach callout">
+    <section class="approach-callout dark-band s26-band s26-band--ink" aria-label="Approach callout">
       <div class="approach-shell approach-callout__grid">
         <h2>{page.callout.heading}</h2>
         <div class="approach-callout__action">
@@ -127,7 +145,7 @@ const schema = {
       </div>
     </section>
 
-    <section class="approach-advantages" aria-labelledby="approach-advantages-title">
+    <section class="approach-advantages s26-band s26-band--white" aria-labelledby="approach-advantages-title">
       <div class="approach-shell">
         <div class="approach-section-header approach-section-header--center">
           {page.advantages.eyebrow && <p class="approach-eyebrow">{page.advantages.eyebrow}</p>}
@@ -185,7 +203,7 @@ const schema = {
       </div>
     </section>
 
-    <section class="approach-partnerships" id="partnerships" aria-labelledby="approach-partnerships-title">
+    <section class="approach-partnerships s26-band s26-band--gray" id="partnerships" aria-labelledby="approach-partnerships-title">
       <div class="approach-shell">
         <div class="approach-section-header approach-section-header--center">
           {page.partnerships.eyebrow && <p class="approach-eyebrow">{page.partnerships.eyebrow}</p>}

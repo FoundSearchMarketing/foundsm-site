@@ -39,8 +39,8 @@ const stripDuplicateTitle = (title: string, body: string) => {
 
 ---
 
-<div class="di-page">
-  <section class="di-hero" aria-labelledby="di-hero-heading">
+<div class="di-page" data-s26-pattern="topo">
+  <section class="di-hero s26-band s26-band--white" aria-labelledby="di-hero-heading">
     <div class="di-hero__inner">
       <div class="di-hero__copy">
         <h1 id="di-hero-heading">{page.hero.heading}</h1>
@@ -61,7 +61,7 @@ const stripDuplicateTitle = (title: string, body: string) => {
     </div>
   </section>
 
-  <section class="di-work" aria-labelledby="di-work-heading">
+  <section class="di-work s26-band s26-band--gray" aria-labelledby="di-work-heading">
     <div class="di-work__inner">
       {splitImage && (
         <div class="di-work__media">
@@ -82,7 +82,7 @@ const stripDuplicateTitle = (title: string, body: string) => {
     </div>
   </section>
 
-  <section class="di-intelligence" aria-labelledby="di-intelligence-heading">
+  <section class="di-intelligence s26-band s26-band--mint" aria-labelledby="di-intelligence-heading">
     <div class="di-intelligence__inner">
       <div class="di-intelligence__header">
         <h2 id="di-intelligence-heading">{page.primaryCards?.title}</h2>
@@ -115,7 +115,7 @@ const stripDuplicateTitle = (title: string, body: string) => {
     </div>
   </section>
 
-  <section class="di-analytics" aria-labelledby="di-analytics-heading">
+  <section class="di-analytics s26-band s26-band--white" aria-labelledby="di-analytics-heading">
     <div class="di-analytics__inner">
       <h2 id="di-analytics-heading">{page.secondarySplit?.heading}</h2>
 
@@ -149,7 +149,7 @@ const stripDuplicateTitle = (title: string, body: string) => {
     </div>
   </section>
 
-  <section class="di-cta green-band" aria-label={page.cta?.title || page.cta?.cta?.label || 'Contact FoundSM'}>
+  <section class="di-cta green-band s26-band s26-band--ink" aria-label={page.cta?.title || page.cta?.cta?.label || 'Contact FoundSM'}>
     <div class="di-cta__inner">
       <div class="di-cta__copy">
         {page.cta?.title && <h2>{page.cta.title}</h2>}

@@ -1,0 +1,21 @@
+---
+import BlockRenderer from './blocks/BlockRenderer.astro';
+import { assignBands, patternForPath } from '../lib/sectionBands';
+
+interface Props {
+  sections?: any[];
+  path: string;
+}
+
+const { sections = [], path } = Astro.props;
+const bands = assignBands(sections.map((section) => section?._type || 'textBlock'));
+const pattern = patternForPath(path);
+---
+
+<div class="s26-page" data-s26-pattern={pattern}>
+  {sections.map((section, index) => (
+    <div class={`s26-band s26-band--${bands[index]}`}>
+      <BlockRenderer section={section} />
+    </div>
+  ))}
+</div>

@@ -15,7 +15,7 @@ const hasHeroMedia = Boolean(post.featuredVideo || post.heroImage);
 
 <div class="blog-post" data-post-slug={post.slug}>
   <article class="blog-post__article" aria-labelledby="post-title" itemscope itemtype="https://schema.org/BlogPosting">
-    <header class="blog-post__hero">
+    <header class="blog-post__hero s26-band s26-band--white">
       <div class="blog-post__hero-inner">
         <div class="blog-post__hero-copy">
           <a class="blog-post__back-link" href="/insights/">← All Articles</a>
@@ -51,7 +51,7 @@ const hasHeroMedia = Boolean(post.featuredVideo || post.heroImage);
       </div>
     </header>
 
-    <div class="blog-post__body">
+    <div class="blog-post__body s26-band s26-band--gray">
       <StaleNotice post={post} />
       <Fragment set:html={post.contentHtml} />
 

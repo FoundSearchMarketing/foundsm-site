@@ -29,7 +29,8 @@ body.site-2026 {
   --s26-green: var(--color-primary, #8dc63f);
   /* Section grounds for the 2026 proposals. Bright green stays an accent, not a fill. */
   --s26-section-green: #e7f4d4;
-  --s26-section-gray: #e6e6e3;
+  /* One gray for every gray section. Matches the muted field the topography sits on. */
+  --s26-section-gray: #f2f3f2;
   --s26-radius: 1rem;
   --s26-section: clamp(3.5rem, 7vw, 5.5rem);
   --s26-shell: min(84.375rem, calc(100% - 2 * var(--gutter)));

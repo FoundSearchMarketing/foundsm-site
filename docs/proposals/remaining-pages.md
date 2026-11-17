@@ -126,7 +126,7 @@ No header link, footer link, or Events card points at it. `vercel.json` still re
 
 Megan's note on the first mockups: every section looked the same. The after mockups now change layout from section to section, and each template has its own sequence. Two sections with the same layout are not placed next to each other.
 
-Backgrounds are paper (`#eef1ec`), light green (`--s26-section-green`, `#e7f4d4`), and light gray (`#f2f3f2`, the muted field already used on gray sections). Bright green (`#8dc63f`) is only a rule, a number, or a small highlight, not a section fill. A dark ink band appears at most once, on the form, and the text there is white. Everywhere else the text is ink. On About, the founding story sits beside its photo so that side is not empty.
+One gray only: `#f2f3f2` (`--s26-section-gray`). That is the muted field the topography and contour already sit on. Paper `#eef1ec`, `#e6e6e3`, and `#eef0ed` are not used as section fills, so two grays never sit together. Sections alternate gray, then light green `#e7f4d4` with the street map, then gray. The hero starts on gray. The form is the only dark band, and its text is white. Bright green (`#8dc63f`) is only a rule, a number, or a small highlight. On About, the founding story sits beside its photo.
 
 Gray sections use the designs already on the site, not new patterns:
 

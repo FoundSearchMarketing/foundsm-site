@@ -36,14 +36,19 @@ body.site-2026 {
 .m-mast h1, .m-article h1 { font-size: clamp(2.4rem, 5vw, 4rem); line-height: 0.96; max-width: 18ch; }
 .m-meta { margin: 0.8rem 0 0; color: var(--s26-muted); font-size: var(--s26-text-small); }
 
-/* Strict alternation. One gray, then light green, then gray. No paper or white band. */
+/* White, gray, light green, and an occasional ink band. Each section paints its own fill. */
+.m-bg-white,
 .m-bg-gray,
-.m-bg-mint {
+.m-bg-mint,
+.m-bg-ink {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  color: #231f20;
 }
+.m-bg-white,
+.m-bg-gray,
+.m-bg-mint { color: #231f20; }
+.m-bg-ink { color: #fff; }
 .m-bg-gray { background-color: var(--s26-section-gray, #f2f3f2); }
 .m-bg-mint { background-color: var(--s26-section-green, #e7f4d4); }
 .m-bg-gray::before,
@@ -147,12 +152,16 @@ body.site-2026 main .m-quote :is(h2, p) { color: #231f20; }
 .m-form input, .m-form textarea { width: 100%; border: 0; border-radius: 0.55rem; padding: 0.7rem 0.8rem; font: inherit; background: #fff; color: #231f20; }
 .m-formband--ink {
   background-color: #231f20;
-  background-image: url("../images/pages/our-approach/contact-bg-fc.svg");
-  background-position: center;
-  background-size: cover;
+  background-image: none;
+  color: #fff;
 }
 
-/* These win over layout classes that also set a background. One gray, then light green. */
+/* These win over layout classes that also set a background. */
+section.m-bg-white {
+  background-color: #ffffff;
+  background-image: none;
+}
+section.m-bg-white::before { content: none; }
 section.m-bg-gray {
   background-color: #f2f3f2;
   background-image: url("../images/pages/our-approach/topography-light.svg");
@@ -174,6 +183,15 @@ section.m-bg-mint::before {
   background: url("../images/pages/our-approach/streets-light.svg") center / cover no-repeat;
   opacity: 0.22;
 }
+section.m-bg-ink {
+  background-color: #231f20;
+  background-image: none;
+  color: #fff;
+}
+section.m-bg-ink::before { content: none; }
+body.site-2026 main section.m-bg-ink :is(h1, h2, h3, h4, p, li, span, a, blockquote, summary, label, strong) { color: #fff; }
+body.site-2026 main section.m-bg-ink :is(.eyebrow-2026, .m-steps b, .m-zig__mark, .m-related a) { color: var(--s26-green); }
+body.site-2026 main section.m-bg-ink .btn--outline { color: #fff; }
 body.site-2026 main .m-formband--ink :is(h2, p, label) { color: #fff; }
 
 @media (max-width: 800px) {

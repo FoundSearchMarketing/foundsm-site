@@ -52,6 +52,7 @@ img { max-width: 100%; height: auto; }
 .effort.small { background: #e5f5c8; }
 .effort.medium { background: #fff3c4; }
 .effort.large { background: #231f20; color: #fff; }
+.effort.none { background: #f2f3f2; color: #231f20; }
 .page-head { padding-bottom: 1rem; }
 .page-head h1 { font-size: clamp(1.8rem, 3vw, 2.8rem); line-height: 1.1; margin: 0.25rem 0; }
 .meta { color: var(--muted); font-size: 0.9rem; }

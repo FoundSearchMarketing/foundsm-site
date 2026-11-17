@@ -75,7 +75,7 @@ Say yes, change, or skip on each line. The full proposal follows in the same ord
 40. Restyle the safelist page, keep every email-client step, and replace the em dash.
 41. Restyle DataConnect and keep its current ActiveCampaign form.
 42. Restyle the author directory. Keep every contributor link and the latest-posts row.
-43. One template for every author page. Julie is the sample. Her $215M line becomes the homepage's $210M. Found stays Found.
+43. No change. The author template stays as it is. Julie's page is the sample, and the other author pages are not redesigned.
 44. Shared legacy template, this listing: 2026 type, keep every webinar link.
 45. Shared legacy template. Keep this page's webinar copy and links.
 46. Shared legacy template. Keep the tools and guides listing, and replace its em dash.
@@ -108,7 +108,7 @@ The 2026 type system is `src/styles/site-2026.css`, already used by `/capabiliti
 
 ## Decisions from Megan, November 17, 2026
 
-- Media spend is $210M. The live homepage says "Paid Media Spend $210M Managed in 2025". Julie's author bio is the only place that says more than $215M. That phrase is a fact correction to $210M. Before and After are on her page.
+- Media spend on the live homepage and on Results is $210M ("Paid Media Spend $210M Managed in 2025"). Author pages stay as they are, so Julie's bio is not changed in this proposal.
 - IBJ: keep "#4" and "three years running" exactly as they are on Results. Do not remove the rank.
 - Results keeps the 2025 Microsoft finalist line because it is accurate. A multi-year line is proposed for approval: 2025 Performance Partner of the Year, plus the two 2026 categories from the September 8, 2026 post (Data Integration Excellence Award and Search Performance Partner of the Year). It is not final until Megan says so.
 - Found and FoundSM are both fine. No rename sweep, including the two blog titles and Julie's bio.
@@ -126,26 +126,25 @@ No header link, footer link, or Events card points at it. `vercel.json` still re
 
 Megan's note on the first mockups: every section looked the same. The after mockups now change layout from section to section, and each template has its own sequence. Two sections with the same layout are not placed next to each other.
 
-One gray only: `#f2f3f2` (`--s26-section-gray`). That is the muted field the topography and contour already sit on. Paper `#eef1ec`, `#e6e6e3`, and `#eef0ed` are not used as section fills, so two grays never sit together. Sections alternate gray, then light green `#e7f4d4` with the street map, then gray. The hero starts on gray. The form is the only dark band, and its text is white. Bright green (`#8dc63f`) is only a rule, a number, or a small highlight. On About, the founding story sits beside its photo.
+Section fills rotate through true white `#ffffff`, one gray `#f2f3f2` (`--s26-section-gray`), and light green `#e7f4d4`. Paper `#eef1ec` is not a section fill. One or two sections per page are dark ink `#231f20`, plus the form. A pull quote, a stat row, or a key statement takes the dark band. Two dark sections are never next to each other, and text on them is white. Neighboring sections do not share a color. Bright green (`#8dc63f`) is only a rule, a number, or a small highlight. On About, the founding story sits beside its photo.
 
-Gray sections use the designs already on the site, not new patterns:
+Background designs sit only on gray and light green. White and dark, including the form, are plain solid fills.
 
-- Topography, `/images/pages/our-approach/topography-light.svg`, from `.card-grid-section--muted` (`src/components/modern/CardGrid.astro`), `.proof-mosaic--muted` (`src/components/blocks/ProofMosaicBlock.astro`), `.lp-accordion--pattern` (`src/components/blocks/AccordionBlock.astro`), and `.approach-intro::before` (`src/pages/our-approach.astro`). This is the default on light gray mockup sections.
+- Topography, `/images/pages/our-approach/topography-light.svg`, from `.card-grid-section--muted` (`src/components/modern/CardGrid.astro`), `.proof-mosaic--muted` (`src/components/blocks/ProofMosaicBlock.astro`), `.lp-accordion--pattern` (`src/components/blocks/AccordionBlock.astro`), and `.approach-intro::before` (`src/pages/our-approach.astro`). This is the default on gray sections.
 - Paid media topography, `/images/pages/paid-media/topography-light.svg`, from `.paid-media-tabs__inner` (`src/pages/capabilities/paid-media.astro`) and `.feature-tabs--pattern .feature-tabs__inner` (`src/components/modern/FeatureTabs.astro`). Used on Paid Media and Performance Creative gray sections.
 - Contour, `/images/pages/data-activation/contour-2.png`, from `.da-actions` (`src/components/DataActivationPage.astro`). Used on Data Activation gray sections.
-- Street map, `/images/pages/our-approach/streets-light.svg`, from `.approach-advantages::before` on the gray advantages field and from `.green-band::before` (`src/styles/global.css`). Proposed on the light green sections too, at low opacity, because that is already how the green band is textured.
-- The form's dark band uses `/images/pages/our-approach/contact-bg-fc.svg` from `.dark-band` (`src/styles/global.css`). That is the one dark section, not a gray one.
+- Street map, `/images/pages/our-approach/streets-light.svg`, from `.approach-advantages::before` and `.green-band::before` (`src/styles/global.css`). Used on light green sections at low opacity.
 
-The homepage paper sections (`home2-section--paper` in `src/styles/homepage-v2.css`) and the Paid Search child panels (`background: var(--h2-paper)` in the PR #411 stylesheet) are flat color, with no extra artwork.
+The homepage paper sections (`home2-section--paper` in `src/styles/homepage-v2.css`) and the Paid Search child panels (`background: var(--h2-paper)` in the PR #411 stylesheet) stay flat. This proposal does not use that paper color as a section fill.
 
-- Company and main pages: editorial or split hero, light green band, zigzag rows, numbered steps, pull quote, light gray band, open FAQ rows, and one dark form 8 band. Our Approach adds the homepage Found Loop (Connect, Model, Activate, Measure) from `src/lib/homeV2Content.ts` and keeps the eight advantages.
-- Capabilities practice pages: rule hero, light green band, numbered steps, zigzag rows, light gray band, open FAQ rows, pull quote, form 8 band. Partner images stay. Panels are not hidden.
-- Capabilities child template: breadcrumb hero, light gray band, open FAQ rows, numbered steps, pull quote, light green band, related text links, form 8 band. No partner badge rail, no 46% block, no brand logos.
-- Results: editorial hero, stat row (`$210M`, `1M+`, `20`, `#4`) on light gray, zigzag, pull quote, light green band, form 8 band. The IBJ #4 line stays. The multi-year Microsoft line is still a proposal.
-- Legacy insights: masthead, pull quote, prose, link list. No dark fill.
-- Author pages: profile, prose, pull quote, link list. Julie's `$215M` line is the `$210M` fact correction. Found stays Found.
+- Company and main pages: editorial or split hero, zigzag rows, numbered steps, pull quote, open FAQ rows, and form 8. Our Approach adds the homepage Found Loop (Connect, Model, Activate, Measure) from `src/lib/homeV2Content.ts` and keeps the eight advantages.
+- Capabilities practice pages: rule hero, numbered steps, zigzag rows, open FAQ rows, pull quote, form 8. Partner images stay. Panels are not hidden.
+- Capabilities child template: breadcrumb hero, open FAQ rows, numbered steps, pull quote, related text links, form 8. No partner badge rail, no 46% block, no brand logos.
+- Results: editorial hero, stat row (`$210M`, `1M+`, `20`, `#4`), zigzag, pull quote, form 8. The IBJ #4 line stays. The multi-year Microsoft line is still a proposal.
+- Legacy insights: masthead, pull quote, prose, link list.
+- Author pages: no change. The current template stays, including Julie's page. No new design is proposed.
 - Blog posts: article header, pull quote, prose. Titles are not renamed.
-- Campaign landing pages: offer hero, light green band, numbered steps, zigzag, light gray band, FAQ rows, form 8 band.
+- Campaign landing pages: offer hero, numbered steps, zigzag, FAQ rows, form 8.
 
 ## Still open
 
@@ -7794,7 +7793,7 @@ medium
 
 ## 43. Author pages
 
-**Approve?** One template for every author page. Julie is the sample. Her $215M line becomes the homepage's $210M. Found stays Found.
+**Approve?** No change. The author template stays as it is. Julie's page is the sample, and the other author pages are not redesigned.
 
 - Staging URL: https://staging.foundsm.com/insights/authors/julie/
 - Source: `src/pages/insights/authors/[slug].astro, src/components/AuthorDetailPage.astro`
@@ -7813,28 +7812,17 @@ Full page on staging, November 17, 2026. Scroll-in sections are shown open so th
 
 ### Proposed changes
 
-**Layout and design.** Headings move from Fraunces to the 2026 type system in `src/styles/site-2026.css`: Archivo Black, 82% width, uppercase, ink `#231f20` on paper `#eef1ec`. Body stays Poppins. Eyebrows are green `#8dc63f`. Buttons are caps. The header and footer keep their own type. Dark-band body text is white. Sections that are only a heading over a large empty area get pulled up so the copy sits with the heading. This is scoped to this page. It does not restyle the homepage, `/capabilities/`, `/ai/`, or the paid search page on PR #411.
-
-Fact correction, from the live homepage: 'more than $215M in media spend annually' becomes '$210M in media spend, the 2025 figure on the live homepage'. The rest of the bio stays, including the name Found.
-
-Every author URL below returned HTTP 200 on staging. They share `AuthorDetailPage.astro`. Julie's page is the screenshot and the full inventory. Other bios stay. Where a bio has an em dash, only the punctuation changes. Found is not renamed to FoundSM. Julie's spend figure is the one fact correction, from more than $215M to $210M, matching the live homepage.
+**No change.** The author template stays as it is. There is no new layout, no new color system, and no copy edit. Julie's page is the sample. Every other author URL uses `AuthorDetailPage.astro` and stays as it is too.
 
 Heading order stays: About the Author | JULIE WARNECKE | CEO | Microsoft Named Its 2026 Partner Awards Finalists. Here's the Work Behind Ours. | 20 Years of Found: A Conversation With Julie Warnecke | How Advantage+ Is Reshaping Student Recruitment, Insights from a Meta Education Summit
 
 **Copy to optimize.**
 
-Rewrites below are punctuation, or the two fact edits Megan decided or asked to see. Found is not changed to FoundSM. Both names stay.
-
-- kept, reworded (em dash replaced with a comma)
-  - Before: In 2006, Julie returned to the Midwest with a mission: build a new kind of agency that serves as a seamless extension of existing client teams. Found was born from that idea—and it continues to fuel the company’s success today.
-  - After: In 2006, Julie returned to the Midwest with a mission: build a new kind of agency that serves as a seamless extension of existing client teams. Found was born from that idea, and it continues to fuel the company’s success today.
-- kept, reworded (fact correction from the live homepage, which says Paid Media Spend $210M Managed in 2025; em dash replaced with a comma)
-  - Before: Julie is known for prioritizing client outcomes, empowering her teams to thrive, and building trust through transparency and measurable results. Under her leadership, Found has grown to more than 50 employees, manages more than $215M in media spend annually, and maintains a 95% client retention rate. She continues to be hands-on with client strategy—deeply focused on building the right teams and custom solutions for every client—so growth feels intentional, not lucky.
-  - After: Julie is known for prioritizing client outcomes, empowering her teams to thrive, and building trust through transparency and measurable results. Under her leadership, Found has grown to more than 50 employees, manages $210M in media spend, the 2025 figure on the live homepage, and maintains a 95% client retention rate. She continues to be hands-on with client strategy, deeply focused on building the right teams and custom solutions for every client, so growth feels intentional, not lucky.
+None. The bio stays, including the current $215M line and the name Found.
 
 **Content to add.**
 
-No new facts. Author bios, legacy copy, and the 404 links stay.
+Nothing.
 
 ### Content inventory
 
@@ -7882,12 +7870,8 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 8. kept as is: H3: How Advantage+ Is Reshaping Student Recruitment, Insights from a Meta Education Summit
 9. kept as is: After getting her start at Google in 2001 as one of the first employees on the AdWords Ad Operations team, Julie helped launch initiatives that shaped the future of paid media and search.
 10. kept as is: This included AdWords Select, a groundbreaking CPC platform, as well as the industry-changing AOL syndication deal. She was also a key figure in helping open Google’s Paris office in 2002.
-11. kept, reworded (em dash replaced with a comma)
-    - Before: In 2006, Julie returned to the Midwest with a mission: build a new kind of agency that serves as a seamless extension of existing client teams. Found was born from that idea—and it continues to fuel the company’s success today.
-    - After: In 2006, Julie returned to the Midwest with a mission: build a new kind of agency that serves as a seamless extension of existing client teams. Found was born from that idea, and it continues to fuel the company’s success today.
-12. kept, reworded (fact correction from the live homepage, which says Paid Media Spend $210M Managed in 2025; em dash replaced with a comma)
-    - Before: Julie is known for prioritizing client outcomes, empowering her teams to thrive, and building trust through transparency and measurable results. Under her leadership, Found has grown to more than 50 employees, manages more than $215M in media spend annually, and maintains a 95% client retention rate. She continues to be hands-on with client strategy—deeply focused on building the right teams and custom solutions for every client—so growth feels intentional, not lucky.
-    - After: Julie is known for prioritizing client outcomes, empowering her teams to thrive, and building trust through transparency and measurable results. Under her leadership, Found has grown to more than 50 employees, manages $210M in media spend, the 2025 figure on the live homepage, and maintains a 95% client retention rate. She continues to be hands-on with client strategy, deeply focused on building the right teams and custom solutions for every client, so growth feels intentional, not lucky.
+11. kept as is: In 2006, Julie returned to the Midwest with a mission: build a new kind of agency that serves as a seamless extension of existing client teams. Found was born from that idea—and it continues to fuel the company’s success today.
+12. kept as is: Julie is known for prioritizing client outcomes, empowering her teams to thrive, and building trust through transparency and measurable results. Under her leadership, Found has grown to more than 50 employees, manages more than $215M in media spend annually, and maintains a 95% client retention rate. She continues to be hands-on with client strategy—deeply focused on building the right teams and custom solutions for every client—so growth feels intentional, not lucky.
 13. kept as is: As a leader, Julie has helped create a strong company culture. Long before remote work became the norm, she designed policies to support flexibility, mental health, and work/life balance. Her goal is to create space for people to do great work and love doing it. That’s always been her key to building a successful business.
 14. kept as is: September 8, 2026
 15. kept as is: June 9, 2026
@@ -7913,7 +7897,7 @@ Everything in `<main>` on staging today. The shared header and footer are invent
 
 ### Effort
 
-large
+No change. The template stays.
 
 | Author | Slug | Sanity id | Staging |
 | --- | --- | --- | --- |

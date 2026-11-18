@@ -44,6 +44,15 @@ const {
   ...seoProps
 } = Astro.props;
 const seo = resolveSeo(Astro.url.pathname, seoProps);
+const path = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`;
+const skip2026Type = path === '/'
+  || path === '/ai/'
+  || path === '/capabilities/'
+  || path.startsWith('/capabilities/paid-media/paid-search/')
+  || path.startsWith('/insights/authors/')
+  || path.startsWith('/sanity-page-builder-demo/')
+  || path.startsWith('/events/lunch-and-learn/');
+const resolvedBodyClass = [bodyClass, skip2026Type ? '' : 'site-2026'].filter(Boolean).join(' ');
 ---
 
 <!DOCTYPE html>
@@ -91,7 +100,7 @@ const seo = resolveSeo(Astro.url.pathname, seoProps);
   })();
   </script>
 </head>
-<body class={bodyClass}>
+<body class={resolvedBodyClass}>
   <!-- Google Tag Manager (noscript) -->
   {enableThirdPartyScripts && (
     <noscript><iframe src="https://sst.foundsm.com/ns.html?id=GTM-PG7TGGG" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>

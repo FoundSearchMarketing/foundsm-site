@@ -115,7 +115,7 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
     </section>
 
     {tabs.length > 0 ? (
-      <section class="paid-media-tabs s26-band s26-band--gray" data-paid-media-tabs aria-label="Paid media capabilities">
+      <section class="paid-media-tabs s26-band s26-band--white" data-paid-media-tabs aria-label="Paid media capabilities">
         <div class="paid-media-tabs__inner">
           <div class="paid-media-tabs__nav" role="tablist" aria-label="Paid media capabilities">
             {tabs.map((tab, index) => {
@@ -429,11 +429,31 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
     .paid-media-cta__inner {
       inline-size: var(--page-visual-content-width);
     }
-
   }
 
   .paid-media-work {
     padding: 0 var(--gutter) clamp(3rem, 5vw, 5rem);
+  }
+
+  @media (min-width: 1025px) {
+    .paid-media-work {
+      padding-bottom: 0;
+    }
+
+    .paid-media-work__inner {
+      align-items: end;
+    }
+
+    .paid-media-work__media {
+      align-self: end;
+      margin: 0;
+    }
+
+    .paid-media-work__media :global(.media-asset),
+    .paid-media-work__media :global(img) {
+      display: block;
+      margin-bottom: 0;
+    }
   }
 
   .paid-media-work__inner {
@@ -462,20 +482,17 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
   }
 
   .paid-media-tabs {
-    padding: 0 var(--gutter) clamp(4.25rem, 6vw, 6rem);
+    padding: clamp(2rem, 4vw, 3rem) var(--gutter) clamp(1.25rem, 2vw, 1.75rem);
   }
 
   .paid-media-tabs__inner {
     display: grid;
     grid-template-columns: minmax(16rem, 0.42fr) minmax(0, 1fr);
     gap: clamp(2rem, 4vw, 4rem);
-    min-block-size: 32rem;
-    padding: clamp(3rem, 5vw, 5rem);
-    border-radius: 1.75rem;
-    background-color: #eef0ed;
-    background-image: url('/images/pages/paid-media/topography-light.svg');
-    background-position: center;
-    background-size: cover;
+    min-block-size: 0;
+    padding: 0;
+    border-radius: 0;
+    background: transparent;
   }
 
   .paid-media-tabs__nav {
@@ -903,13 +920,13 @@ const journeyTones = ['green', 'red', 'orange', 'blue'];
     }
 
     .paid-media-tabs {
-      padding-block-end: 3rem;
+      padding-block-end: 1.25rem;
     }
 
     .paid-media-tabs__inner {
       gap: 1.5rem;
-      padding: 1.25rem;
-      border-radius: 1.25rem;
+      padding: 0;
+      border-radius: 0;
     }
 
     .paid-media-tabs__tab {

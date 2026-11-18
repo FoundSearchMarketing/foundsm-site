@@ -4,7 +4,11 @@ on:
   push:
     branches: [develop]
   workflow_dispatch:
-    # Allow manual triggers (e.g. from Sanity webhook relay)
+    # Allow manual triggers (manual redeploy).
+    # NOTE: Sanity content changes do NOT come through here. The Sanity webhooks
+    # ("Rebuild staging site" / "Rebuild production site", project vzneqxsx) POST
+    # directly to Vercel deploy hooks, which produce a git-source deployment on the
+    # bound branch. Nothing Sanity-related touches GitHub Actions.
 
 concurrency:
   group: deploy-staging

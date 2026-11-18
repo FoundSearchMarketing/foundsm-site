@@ -1,0 +1,203 @@
+/* AFTER mockups. Type tokens come from site-2026.css. Layouts are sized to their content. */
+body.site-2026 {
+  --gutter: 1.25rem;
+  --font-body: "Poppins", sans-serif;
+  --color-primary: #8dc63f;
+  margin: 0;
+  background: var(--s26-section-gray, #f2f3f2);
+  color: var(--s26-ink);
+  font-family: var(--font-body);
+  font-size: var(--s26-text-body);
+  line-height: var(--s26-lh-body);
+}
+.m-shell { width: min(72rem, calc(100% - 2 * var(--gutter))); margin: 0 auto; }
+.btn { display: inline-flex; align-items: center; border-radius: 999px; padding: 0.8rem 1.15rem; text-decoration: none; border: 0; cursor: pointer; }
+.btn--primary { background: var(--s26-green); color: #fff; }
+.btn--outline { background: transparent; color: var(--s26-ink); box-shadow: inset 0 0 0 1.5px currentColor; }
+.btn--on-dark { background: #fff; color: #231f20; }
+
+/* Hero: editorial, or a real split only when an image exists. */
+.m-hero { padding: 3.5rem 0 2.75rem; }
+.m-hero--split { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(16rem, 0.85fr); gap: 2rem; align-items: center; }
+.m-hero h1 { font-size: var(--s26-size-h1); line-height: 0.94; max-width: 16ch; }
+.m-hero p { margin: 1rem 0 0; font-size: var(--s26-text-lead); max-width: 38rem; }
+.m-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.25rem; }
+.m-hero figure { margin: 0; }
+.m-hero img { display: block; width: 100%; max-height: 22rem; object-fit: cover; border-radius: var(--s26-radius); }
+.m-hero--rule { border-top: 0.45rem solid var(--s26-green); }
+.m-crumbs { margin: 0 0 0.8rem; font-size: var(--s26-text-label); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+.m-crumbs a { color: var(--s26-ink); text-decoration: none; }
+.m-hero--offer { background-color: transparent; }
+.m-profile { padding: 3rem 0 1rem; }
+.m-profile__grid { display: grid; grid-template-columns: 8.5rem minmax(0, 1fr); gap: 1.5rem; align-items: center; }
+.m-profile img { width: 8.5rem; height: 8.5rem; object-fit: cover; border-radius: 50%; }
+.m-mast, .m-article { padding: 3.25rem 0 1rem; }
+.m-mast .m-shell, .m-article .m-shell { max-width: 46rem; }
+.m-mast h1, .m-article h1 { font-size: clamp(2.4rem, 5vw, 4rem); line-height: 0.96; max-width: 18ch; }
+.m-meta { margin: 0.8rem 0 0; color: var(--s26-muted); font-size: var(--s26-text-small); }
+
+/* White, gray, light green, and an occasional ink band. Each section paints its own fill. */
+.m-bg-white,
+.m-bg-gray,
+.m-bg-mint,
+.m-bg-ink {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+.m-bg-white,
+.m-bg-gray,
+.m-bg-mint { color: #231f20; }
+.m-bg-ink { color: #fff; }
+.m-bg-gray { background-color: var(--s26-section-gray, #f2f3f2); }
+.m-bg-mint { background-color: var(--s26-section-green, #e7f4d4); }
+.m-bg-gray::before,
+.m-bg-mint::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.m-bg-gray::before {
+  background: url("../images/pages/our-approach/topography-light.svg") center / cover no-repeat;
+}
+.tpl-paid .m-bg-gray::before {
+  background-image: url("../images/pages/paid-media/topography-light.svg");
+}
+.tpl-da .m-bg-gray::before {
+  background-image: url("../images/pages/data-activation/contour-2.png");
+}
+.m-bg-mint::before {
+  background: url("../images/pages/our-approach/streets-light.svg") center / cover no-repeat;
+  opacity: 0.22;
+}
+.m-bg-gray > *,
+.m-bg-mint > * { position: relative; z-index: 1; }
+.m-mint,
+.m-gray,
+.m-split--mint,
+.m-split--gray { color: #231f20; padding: 2.75rem 0; }
+body.site-2026 main .m-mint :is(h1, h2, h3, p, li),
+body.site-2026 main .m-gray :is(h1, h2, h3, p, li) { color: #231f20; }
+.m-mint p, .m-gray p { margin: 0.7rem 0 0; max-width: 40rem; }
+.m-mint h2, .m-gray h2 { font-size: var(--s26-size-h2); line-height: 1.05; max-width: 18ch; }
+
+/* Founding story and other image splits. The photo fills the right side. */
+.m-split { padding: 2.75rem 0; }
+.m-split--mint,
+.m-split--gray { background-color: transparent; }
+.m-split__grid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(16rem, 0.95fr); gap: 2rem; align-items: center; }
+.m-split h2 { font-size: var(--s26-size-h2); max-width: 16ch; }
+.m-split p { margin: 0.7rem 0 0; }
+.m-split ul { margin: 1rem 0 0; padding: 0; list-style: none; }
+.m-split li { margin: 0.35rem 0 0; padding-top: 0.35rem; border-top: 1px solid var(--s26-line); font-size: var(--s26-text-small); }
+.m-split img { display: block; width: 100%; height: 100%; max-height: 28rem; object-fit: cover; border-radius: var(--s26-radius); }
+
+/* Stats: a row of figures, no empty cards. */
+.m-stats { padding: 2.5rem 0; }
+.m-stats h2 { font-size: var(--s26-size-h2); margin-bottom: 1.25rem; }
+.m-stats__row { display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: 1.25rem 1.5rem; }
+.m-stats strong { display: block; font-family: var(--font-heading); font-weight: 900; font-stretch: 82%; font-size: clamp(2.4rem, 4vw, 3.6rem); line-height: 0.95; letter-spacing: 0.005em; }
+.m-stats span { display: block; margin-top: 0.35rem; font-size: var(--s26-text-small); max-width: 14ch; }
+
+/* Numbered process. */
+.m-steps { padding: 3rem 0; }
+.m-steps h2 { font-size: var(--s26-size-h2); max-width: 16ch; margin-bottom: 1.25rem; }
+.m-steps ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 1.25rem 1.5rem; }
+.m-steps li { border-top: 2px solid #231f20; padding-top: 0.75rem; }
+.m-steps b { display: block; color: var(--s26-green); font-size: var(--s26-text-label); letter-spacing: 0.12em; }
+.m-steps h3 { font-size: 1.35rem; margin: 0.35rem 0; }
+.m-steps p { margin: 0; font-size: var(--s26-text-small); }
+
+/* Zigzag rows. Each row is only as tall as its copy. */
+.m-zig { padding: 2.5rem 0; }
+.m-zig h2 { font-size: var(--s26-size-h2); max-width: 18ch; margin-bottom: 0.5rem; }
+.m-zig__row { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: 1.5rem; align-items: center; padding: 1.25rem 0; border-top: 1px solid var(--s26-line); }
+.m-zig__row--flip { direction: rtl; }
+.m-zig__row--flip > * { direction: ltr; }
+.m-zig h3 { font-size: 1.5rem; margin: 0 0 0.4rem; }
+.m-zig p { margin: 0.35rem 0 0; }
+.m-zig__mark { font-family: var(--font-heading); font-weight: 900; font-stretch: 82%; font-size: clamp(3rem, 6vw, 5rem); line-height: 0.9; color: var(--s26-green); }
+.m-zig img { width: 100%; max-height: 16rem; object-fit: cover; border-radius: var(--s26-radius); }
+
+/* Pull quote on a light ground, with a bright green rule. */
+.m-quote { padding: 2.75rem 0; }
+body.site-2026 main .m-quote :is(h2, p) { color: #231f20; }
+.m-quote blockquote { margin: 0; max-width: 40rem; border-left: 4px solid var(--s26-green); padding-left: 1.25rem; }
+.m-quote p { margin: 0; font-size: clamp(1.35rem, 2.2vw, 1.85rem); line-height: 1.35; }
+
+/* Open accordion rows. Copy stays visible. */
+.m-faq { padding: 2.75rem 0; }
+.m-faq h2 { font-size: var(--s26-size-h2); max-width: 16ch; margin-bottom: 0.5rem; }
+.m-faq details { border-top: 1px solid #231f20; padding: 0.9rem 0; }
+.m-faq summary { font-family: var(--font-heading); font-weight: 900; font-stretch: 82%; font-size: 1.25rem; letter-spacing: 0.005em; text-transform: uppercase; cursor: pointer; }
+.m-faq details p { margin: 0.55rem 0 0; max-width: 40rem; }
+
+.m-prose { padding: 2rem 0 2.5rem; }
+.m-prose h2 { font-size: var(--s26-size-h2); margin: 1.75rem 0 0.4rem; max-width: 20ch; }
+.m-prose p { margin: 0.7rem 0 0; max-width: 42rem; }
+
+.m-list { padding: 1rem 0 2.5rem; }
+.m-list a { display: block; padding: 0.85rem 0; border-top: 1px solid var(--s26-line); text-decoration: none; font-weight: 600; }
+.m-related { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; padding-top: 0.5rem; }
+.m-related a { color: var(--s26-green); font-size: var(--s26-text-label); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; }
+
+/* Form 8 band. Two columns, no empty field. */
+.m-formband { padding: 3rem 0; }
+.m-formband__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(16rem, 22rem); gap: 2rem; align-items: start; }
+.m-formband h2 { font-size: var(--s26-size-h2); max-width: 14ch; }
+.m-form { display: grid; gap: 0.7rem; }
+.m-form label { display: grid; gap: 0.3rem; font-size: var(--s26-text-label); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+.m-form input, .m-form textarea { width: 100%; border: 0; border-radius: 0.55rem; padding: 0.7rem 0.8rem; font: inherit; background: #fff; color: #231f20; }
+.m-formband--ink {
+  background-color: #231f20;
+  background-image: none;
+  color: #fff;
+}
+
+/* These win over layout classes that also set a background. */
+section.m-bg-white {
+  background-color: #ffffff;
+  background-image: none;
+}
+section.m-bg-white::before { content: none; }
+section.m-bg-gray {
+  background-color: #f2f3f2;
+  background-image: url("../images/pages/our-approach/topography-light.svg");
+  background-position: center;
+  background-size: cover;
+}
+section.m-bg-gray::before { content: none; }
+.tpl-paid section.m-bg-gray {
+  background-image: url("../images/pages/paid-media/topography-light.svg");
+}
+.tpl-da section.m-bg-gray {
+  background-image: url("../images/pages/data-activation/contour-2.png");
+}
+section.m-bg-mint {
+  background-color: #e7f4d4;
+  background-image: none;
+}
+section.m-bg-mint::before {
+  background: url("../images/pages/our-approach/streets-light.svg") center / cover no-repeat;
+  opacity: 0.22;
+}
+section.m-bg-ink {
+  background-color: #231f20;
+  background-image: none;
+  color: #fff;
+}
+section.m-bg-ink::before { content: none; }
+body.site-2026 main section.m-bg-ink :is(h1, h2, h3, h4, p, li, span, a, blockquote, summary, label, strong) { color: #fff; }
+body.site-2026 main section.m-bg-ink :is(.eyebrow-2026, .m-steps b, .m-zig__mark, .m-related a) { color: var(--s26-green); }
+body.site-2026 main section.m-bg-ink .btn--outline { color: #fff; }
+body.site-2026 main .m-formband--ink :is(h2, p, label) { color: #fff; }
+
+@media (max-width: 800px) {
+  .m-hero--split, .m-zig__row, .m-zig__row--flip, .m-formband__grid, .m-profile__grid, .m-split__grid { display: block; direction: ltr; }
+  .m-split img { margin-top: 1rem; max-height: 16rem; }
+  .m-zig__mark { margin-top: 0.5rem; }
+  .m-hero img, .m-zig img { margin-top: 1rem; max-height: 14rem; }
+  .m-profile img { margin-bottom: 1rem; }
+}

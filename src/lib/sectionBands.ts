@@ -43,26 +43,44 @@ export function assignBands(types: string[]): SectionBand[] {
     chosen.delete(drop);
   }
 
-  const lights: SectionBand[] = ['white', 'gray', 'mint'];
+  const forcedGray = new Set<number>();
+  types.forEach((type, index) => {
+    if (type === 'featureTabsBlock' && !chosen.has(index)) forcedGray.add(index);
+  });
+
+  const lights: SectionBand[] = ['white', 'mint', 'gray'];
+  const tones: SectionBand[] = [];
   let cursor = 0;
-  let previous: SectionBand | null = null;
-  return types.map((_, index) => {
-    let tone: SectionBand;
+  for (let index = 0; index < count; index += 1) {
     if (chosen.has(index)) {
-      tone = 'ink';
-    } else {
+      tones[index] = 'ink';
+      continue;
+    }
+    if (forcedGray.has(index)) {
+      tones[index] = 'gray';
+      continue;
+    }
+    const previous = index > 0 ? tones[index - 1] : null;
+    const nextIsGray = index + 1 < count && forcedGray.has(index + 1);
+    let tone = lights[cursor % 3];
+    cursor += 1;
+    let guard = 0;
+    while ((tone === previous || (nextIsGray && tone === 'gray')) && guard < 6) {
       tone = lights[cursor % 3];
       cursor += 1;
-      let guard = 0;
-      while (tone === previous && guard < 3) {
-        tone = lights[cursor % 3];
-        cursor += 1;
-        guard += 1;
-      }
+      guard += 1;
     }
-    previous = tone;
-    return tone;
-  });
+    tones[index] = tone;
+  }
+  for (let index = 1; index < count; index += 1) {
+    if (tones[index] !== tones[index - 1]) continue;
+    const flexible = !forcedGray.has(index - 1) && !chosen.has(index - 1) ? index - 1 : index;
+    if (forcedGray.has(flexible) || chosen.has(flexible)) continue;
+    const before = flexible > 0 ? tones[flexible - 1] : null;
+    const after = flexible + 1 < count ? tones[flexible + 1] : null;
+    tones[flexible] = (['white', 'mint', 'gray'] as SectionBand[]).find((tone) => tone !== before && tone !== after) || 'mint';
+  }
+  return tones;
 }
 
 export function patternForPath(path: string): 'paid' | 'da' | 'topo' {
